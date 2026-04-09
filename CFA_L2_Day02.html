@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 2 · Model Significance Testing</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #fafaf8;
+  --bg2:     #f4f3ef;
+  --bg3:     #eeece7;
+  --border:  rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text:    #1a1a2e;
+  --text2:   #4a4a6a;
+  --text3:   #8a8aaa;
+  --gold:    #9a6e1a;
+  --gold2:   #7a5010;
+  --gold-bg: rgba(154,110,26,0.08);
+  --blue:    #1a5fa8;
+  --blue-bg: rgba(26,95,168,0.08);
+  --green:   #1a7a4a;
+  --green-bg:rgba(26,122,74,0.08);
+  --red:     #b83232;
+  --red-bg:  rgba(184,50,50,0.08);
+  --amber:   #a06010;
+  --amber-bg:rgba(160,96,16,0.08);
+  --purple:  #6a3ab0;
+  --purple-bg:rgba(106,58,176,0.08);
+  --r:10px;--r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.7;min-height:100vh;}
+.page{max-width:820px;margin:0 auto;padding:40px 24px 80px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.hero{margin-bottom:32px;}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:32px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:14px;color:var(--text2);}
+.meta-row{display:flex;gap:16px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+.obj-box{background:var(--gold-bg);border:1px solid rgba(201,168,76,0.25);border-radius:var(--r);padding:16px 18px;margin-bottom:24px;}
+.obj-box-title{font-size:11px;color:var(--gold);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;font-weight:500;}
+.obj-list{list-style:none;}
+.obj-list li{font-size:13px;color:var(--text2);padding:3px 0 3px 16px;position:relative;}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--gold);font-size:11px;top:5px;}
+.section{margin-bottom:28px;}
+.section-label{font-size:10px;color:var(--text3);letter-spacing:0.09em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.concept-grid{display:flex;flex-direction:column;gap:14px;}
+.concept-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+.concept-card-header{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);}
+.concept-num{width:26px;height:26px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--gold);flex-shrink:0;}
+.concept-title{font-size:14px;font-weight:500;color:var(--text);}
+.concept-body{padding:14px 16px;font-size:13px;color:var(--text2);line-height:1.75;}
+.concept-body p{margin-bottom:10px;}
+.concept-body p:last-child{margin-bottom:0;}
+.formula{background:var(--bg3);border:1px solid var(--border2);border-left:3px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:12px 16px;margin:10px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);line-height:1.8;}
+.formula .comment{color:var(--text3);font-style:italic;font-family:'DM Sans',sans-serif;font-size:12px;}
+.insight{background:var(--blue-bg);border:1px solid rgba(91,156,246,0.2);border-radius:var(--r);padding:14px 16px;margin:12px 0;font-size:13px;color:var(--text2);}
+.insight strong{color:var(--blue);}
+.trap{background:var(--red-bg);border:1px solid rgba(240,108,108,0.2);border-radius:var(--r);padding:14px 16px;margin:12px 0;}
+.trap-label{font-size:10px;color:var(--red);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:6px;font-weight:500;}
+.trap p{font-size:13px;color:var(--text2);}
+.tip{background:var(--green-bg);border:1px solid rgba(86,217,138,0.2);border-radius:var(--r);padding:14px 16px;margin:12px 0;}
+.tip-label{font-size:10px;color:var(--green);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:6px;font-weight:500;}
+.tip p{font-size:13px;color:var(--text2);}
+
+/* comparison table */
+.comp-table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0;}
+.comp-table th{text-align:left;padding:9px 12px;background:var(--bg3);color:var(--text2);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid var(--border2);}
+.comp-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+.comp-table tr:last-child td{border-bottom:none;}
+.comp-table .name{font-weight:500;color:var(--text);}
+.badge{display:inline-flex;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;}
+.badge-blue{background:var(--blue-bg);color:var(--blue);}
+.badge-amber{background:var(--amber-bg);color:var(--amber);}
+.badge-green{background:var(--green-bg);color:var(--green);}
+.badge-red{background:var(--red-bg);color:var(--red);}
+.badge-purple{background:var(--purple-bg);color:var(--purple);}
+
+/* ANOVA table visual */
+.anova-table{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.anova-table th{padding:8px 10px;background:var(--bg3);color:var(--text3);font-size:10px;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid var(--border2);font-family:'DM Sans',sans-serif;}
+.anova-table td{padding:8px 10px;border-bottom:1px solid var(--border);color:var(--text2);}
+.anova-table .highlight{color:var(--gold2);font-weight:500;}
+.anova-table tr:last-child td{border-bottom:none;}
+
+.cheat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:540px){.cheat-grid{grid-template-columns:1fr;}}
+.cheat-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;}
+.cheat-key{font-size:11px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em;}
+.cheat-val{font-size:12px;color:var(--text);font-family:'JetBrains Mono',monospace;line-height:1.5;}
+.divider{height:1px;background:var(--border);margin:28px 0;}
+.practice-header{background:var(--gold-bg);border:1px solid rgba(201,168,76,0.2);border-radius:var(--r) var(--r) 0 0;padding:14px 18px;display:flex;align-items:center;gap:12px;}
+.practice-icon{font-size:18px;}
+.practice-header-text{flex:1;}
+.practice-header-title{font-size:15px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);}
+.practice-body{background:var(--bg2);border:1px solid rgba(201,168,76,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:20px;}
+.vignette{background:var(--bg3);border-left:3px solid var(--gold);padding:16px 18px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:24px;font-size:13px;color:var(--text2);line-height:1.8;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;font-weight:500;}
+.question-block{margin-bottom:22px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:5px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:11px;line-height:1.6;}
+.option{display:block;width:100%;text-align:left;padding:10px 14px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:7px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.5;}
+.option:hover:not(:disabled){border-color:var(--border2);color:var(--text);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);margin-top:8px;line-height:1.7;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:24px;margin-top:16px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:48px;margin-bottom:6px;}
+.score-msg{font-size:13px;color:var(--text2);}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+.nav-day{font-size:12px;color:var(--text3);text-align:center;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II · <span>Quantitative Methods</span> · LM2</div>
+    <div class="day-badge">Day 2 of 90</div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Tuesday, 7 April 2026</div>
+    <h1 class="hero-title">Model Significance Testing</h1>
+    <p class="hero-sub">Evaluating Regression Model Fit — Subtopic 1 of 2: ANOVA, F-test, Adjusted R², AIC/BIC</p>
+    <div class="meta-row">
+      <div class="meta-pill">⏱ <b>60 min</b> total</div>
+      <div class="meta-pill">📖 <b>30 min</b> theory</div>
+      <div class="meta-pill">📝 <b>30 min</b> practice</div>
+      <div class="meta-pill">⚖️ Exam weight <b>~6%</b></div>
+    </div>
+  </div>
+
+  <div class="obj-box">
+    <div class="obj-box-title">Learning Objectives — Hari ini lo harus bisa:</div>
+    <ul class="obj-list">
+      <li>Baca dan interpretasikan ANOVA table: SSR, SSE, SST, MSR, MSE, F-statistic</li>
+      <li>Jelaskan perbedaan R² vs Adjusted R² dan kapan adjusted R² naik/turun</li>
+      <li>Gunakan AIC dan BIC untuk membandingkan model — mana yang lebih baik dan kapan</li>
+      <li>Lakukan joint F-test untuk restricted vs unrestricted model (nested models)</li>
+    </ul>
+  </div>
+
+  <!-- THEORY -->
+  <div class="section">
+    <div class="section-label">Theory · 30 min</div>
+    <div class="concept-grid">
+
+      <!-- Card 1: ANOVA Table -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">1</div>
+          <div class="concept-title">ANOVA Table — Anatomy & Interpretation</div>
+        </div>
+        <div class="concept-body">
+          <p>ANOVA table memecah total variasi Y (SST) menjadi dua komponen:</p>
+
+          <table class="anova-table">
+            <thead>
+              <tr><th>Source</th><th>df</th><th>Sum of Squares</th><th>Mean Square</th><th>F-stat</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="highlight">Regression</td>
+                <td>k</td>
+                <td>SSR = Σ(Ŷᵢ − Ȳ)²</td>
+                <td class="highlight">MSR = SSR/k</td>
+                <td rowspan="2" style="vertical-align:middle;color:var(--gold2);font-weight:500;">MSR/MSE</td>
+              </tr>
+              <tr>
+                <td>Residual (Error)</td>
+                <td>n−k−1</td>
+                <td>SSE = Σ(Yᵢ − Ŷᵢ)²</td>
+                <td>MSE = SSE/(n−k−1)</td>
+              </tr>
+              <tr>
+                <td>Total</td>
+                <td>n−1</td>
+                <td>SST = Σ(Yᵢ − Ȳ)²</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p style="margin-top:10px;"><strong style="color:var(--text);">R² dari ANOVA:</strong></p>
+          <div class="formula">R² = SSR / SST
+<span class="comment">// Proportion of Y variation explained by the model</span></div>
+
+          <p><strong style="color:var(--text);">F-statistic (General Linear F-test):</strong><br>
+          H₀: b₁ = b₂ = ... = bₖ = 0 (tidak ada X yang signifikan)<br>
+          Hₐ: at least one bⱼ ≠ 0</p>
+          <div class="formula">F = MSR / MSE  ~  F(k, n−k−1)
+<span class="comment">// Reject H₀ if F_calculated > F_critical</span></div>
+
+          <div class="insight">
+            <strong>Contoh baca ANOVA (dari CFA):</strong> 5-factor model, n=50:<br>
+            SSR=90.62, SSE=56.62, SST=147.24, df_regression=5, df_residual=44<br>
+            → R² = 90.62/147.24 = 0.6155 → F = (90.62/5)/(56.62/44) = 18.12/1.29 = <strong style="color:var(--gold2);">14.09</strong> → Reject H₀ (at least one factor significant)
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: R² vs Adjusted R² -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">2</div>
+          <div class="concept-title">R² vs Adjusted R² — Kenapa Adjusted Lebih Baik</div>
+        </div>
+        <div class="concept-body">
+          <p><strong style="color:var(--text);">Masalah dengan R²:</strong> R² tidak pernah turun ketika variabel baru ditambahkan — bahkan variabel yang tidak relevan sekalipun akan meningkatkan (atau minimal maintain) R². Ini mendorong overfitting.</p>
+
+          <div class="formula">Adjusted R² = 1 − [(n−1)/(n−k−1)] × (1 − R²)
+<span class="comment">// k = jumlah independent variables</span></div>
+
+          <p>Adjusted R² memberikan penalti untuk setiap variabel yang ditambahkan. Hasilnya:</p>
+
+          <table class="comp-table">
+            <thead><tr><th>Kondisi Saat Tambah Variabel Baru</th><th>Efek pada Adj. R²</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>|t-statistic variabel baru| <span class="badge badge-green">&gt; 1.0</span></td>
+                <td style="color:var(--green);">↑ Naik</td>
+              </tr>
+              <tr>
+                <td>|t-statistic variabel baru| <span class="badge badge-red">&lt; 1.0</span></td>
+                <td style="color:var(--red);">↓ Turun</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="trap">
+            <div class="trap-label">⚠ Exam Trap</div>
+            <p>Bar |t| > 1.0 untuk meningkatkan Adjusted R² itu <em>rendah</em> — jauh di bawah threshold signifikansi 5% (yang butuh t ≈ 2.0). Artinya Adjusted R² bisa naik bahkan untuk variabel yang secara statistik <em>tidak signifikan</em>. Jangan gunakan Adjusted R² sebagai satu-satunya ukuran model quality.</p>
+          </div>
+
+          <p><strong style="color:var(--text);">Catatan penting:</strong> Adjusted R² bisa negatif (kalau R² sangat kecil dan k besar). Ini tidak punya interpretasi intuitif seperti "persentase variasi yang dijelaskan" — tidak seperti R² dalam simple regression.</p>
+        </div>
+      </div>
+
+      <!-- Card 3: AIC & BIC -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">3</div>
+          <div class="concept-title">AIC & BIC — Model Selection Criteria</div>
+        </div>
+        <div class="concept-body">
+          <p>Ketika membandingkan beberapa model dengan dependent variable yang sama, gunakan AIC atau BIC. Keduanya mengukur <em>parsimony</em> — model yang lebih sederhana lebih disukai kalau fit-nya serupa.</p>
+
+          <div class="formula">AIC = n × ln(SSE/n) + 2(k+1)
+BIC = n × ln(SSE/n) + ln(n)(k+1)
+<span class="comment">// Lower is better untuk keduanya</span>
+<span class="comment">// Penalty AIC: 2(k+1) | Penalty BIC: ln(n)(k+1)</span></div>
+
+          <table class="comp-table">
+            <thead><tr><th>Kriteria</th><th>Penalty</th><th>Lebih Ketat?</th><th>Gunakan Kalau...</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="name">AIC</td>
+                <td>2(k+1)</td>
+                <td><span class="badge badge-blue">Lebih longgar</span></td>
+                <td style="color:var(--text2);">Tujuan model adalah <strong style="color:var(--blue);">prediksi</strong></td>
+              </tr>
+              <tr>
+                <td class="name">BIC</td>
+                <td>ln(n)(k+1)</td>
+                <td><span class="badge badge-amber">Lebih ketat</span></td>
+                <td style="color:var(--text2);">Tujuan model adalah <strong style="color:var(--amber);">goodness of fit</strong></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="insight">
+            <strong>Intuisi:</strong> BIC lebih ketat karena ln(n) > 2 untuk semua n ≥ 8. Artinya BIC mengenakan penalti lebih besar pada model yang kompleks, sehingga cenderung memilih model yang lebih parsimonious (sedikit variabel).
+          </div>
+
+          <div class="trap">
+            <div class="trap-label">⚠ Exam Trap</div>
+            <p>Nilai absolut AIC atau BIC sendiri <strong>tidak bermakna</strong> — yang penting adalah <em>perbandingan relatif</em> antar model. AIC model A = 18 vs model B = 22 → model A lebih baik. Tapi AIC = 18 sendiri tidak bisa diinterpretasikan apa pun.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4: Joint F-test (Nested Models) -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">4</div>
+          <div class="concept-title">Joint F-Test — Restricted vs Unrestricted Model</div>
+        </div>
+        <div class="concept-body">
+          <p>Kadang kita ingin test apakah <em>sekelompok</em> variabel secara bersama-sama signifikan, bukan satu per satu. Gunakan <strong style="color:var(--text);">joint F-test</strong> untuk nested models:</p>
+
+          <p><strong style="color:var(--text);">Setup:</strong><br>
+          <em>Unrestricted model:</em> Y = b₀ + b₁X₁ + b₂X₂ + b₃X₃ + b₄X₄ + b₅X₅ + ε<br>
+          <em>Restricted model:</em> Y = b₀ + b₁X₁ + b₂X₂ + b₃X₃ + ε<br>
+          H₀: b₄ = b₅ = 0 &nbsp;|&nbsp; Hₐ: at least one ≠ 0</p>
+
+          <div class="formula">F = [(SSE_restricted − SSE_unrestricted) / q]
+    / [SSE_unrestricted / (n−k−1)]
+
+<span class="comment">// q = jumlah variabel yang di-restrict (di-drop)</span>
+<span class="comment">// Degrees of freedom: q (numerator), n−k−1 (denominator)</span></div>
+
+          <div class="insight">
+            <strong>Intuisi:</strong> Kalau F besar → dropping X₄ dan X₅ menyebabkan SSE naik signifikan → mereka memang berkontribusi → tolak H₀ → keep mereka. Kalau F kecil → SSE hampir tidak berubah → tidak ada kontribusi signifikan → fail to reject H₀ → parsimonious model lebih baik.
+          </div>
+
+          <div class="tip">
+            <div class="tip-label">💡 Contoh Numerik (dari CFA)</div>
+            <p>SSE_restricted (3 factors) = 64.52, SSE_unrestricted (5 factors) = 56.62, q=2, n−k−1=44<br>
+            F = [(64.52 − 56.62)/2] / [56.62/44] = 3.95/1.29 = <strong style="color:var(--green);">3.07</strong><br>
+            Critical F (2, 44) at 1% = 5.12 → <strong style="color:var(--green);">Fail to reject H₀</strong> → factors 4 & 5 tidak signifikan bersama-sama → gunakan restricted 3-factor model.</p>
+          </div>
+
+          <div class="trap">
+            <div class="trap-label">⚠ Exam Trap</div>
+            <p>Dua variabel bisa signifikan secara individual (t-test) tapi tidak signifikan secara joint (F-test), atau sebaliknya — terutama kalau ada korelasi antar X. Selalu lakukan <em>kedua</em> test kalau relevan. Jangan assume individual significance = joint significance.</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /concept-grid -->
+  </div>
+
+  <!-- Cheat Sheet -->
+  <div class="section">
+    <div class="section-label">Quick Reference Cheat Sheet</div>
+    <div class="cheat-grid">
+      <div class="cheat-item">
+        <div class="cheat-key">R²</div>
+        <div class="cheat-val">SSR/SST — never decreases when adding vars</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Adjusted R²</div>
+        <div class="cheat-val">↑ if |t_new| > 1.0 | ↓ if |t_new| &lt; 1.0</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">General F-test</div>
+        <div class="cheat-val">F = MSR/MSE | df: k, n−k−1</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Joint F-test</div>
+        <div class="cheat-val">F = [(SSE_R−SSE_U)/q] / [SSE_U/(n−k−1)]</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">AIC vs BIC</div>
+        <div class="cheat-val">AIC = prediction | BIC = goodness of fit | Lower = better</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">BIC vs AIC penalty</div>
+        <div class="cheat-val">BIC lebih ketat: ln(n) > 2 untuk semua n ≥ 8</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PRACTICE -->
+  <div class="practice-header">
+    <div class="practice-icon">📝</div>
+    <div class="practice-header-text">
+      <div class="practice-header-title">Practice — Item Set Vignette</div>
+      <div class="practice-header-sub">Format CFA L2 · 4 soal · ~30 menit · Jawab dulu sebelum lihat penjelasan</div>
+    </div>
+  </div>
+  <div class="practice-body">
+
+    <div class="vignette">
+      <div class="vignette-label">Case Vignette</div>
+      Siti Rahayu, CFA, adalah kepala riset kuantitatif di PT Mandiri Investasi, Jakarta. Timnya sedang membangun model untuk memprediksi return bulanan saham-saham sektor konsumer di IDX. Mereka mengestimasi tiga model dengan dependent variable yang sama (CONS_RET = monthly return saham konsumer) menggunakan 60 observasi bulanan:<br><br>
+
+      <strong>Model A:</strong> CONS_RET = b₀ + b₁×IHSG_RET + ε<br>
+      <strong>Model B:</strong> CONS_RET = b₀ + b₁×IHSG_RET + b₂×ΔCPI + b₃×ΔUSD_IDR + ε<br>
+      <strong>Model C:</strong> CONS_RET = b₀ + b₁×IHSG_RET + b₂×ΔCPI + b₃×ΔUSD_IDR + b₄×ΔOIL + b₅×ΔINT_RATE + ε<br><br>
+
+      Hasil goodness-of-fit:
+      <table class="anova-table" style="margin-top:10px;">
+        <thead><tr><th>Model</th><th>k</th><th>SSE</th><th>R²</th><th>Adj. R²</th><th>AIC</th><th>BIC</th></tr></thead>
+        <tbody>
+          <tr><td class="highlight">A</td><td>1</td><td>42.80</td><td>0.612</td><td>0.606</td><td>18.4</td><td>21.2</td></tr>
+          <tr><td class="highlight">B</td><td>3</td><td>38.10</td><td>0.654</td><td>0.636</td><td>16.8</td><td>22.4</td></tr>
+          <tr><td class="highlight">C</td><td>5</td><td>37.60</td><td>0.659</td><td>0.628</td><td>18.2</td><td>26.9</td></tr>
+        </tbody>
+      </table>
+      <br>
+      Untuk Model C, t-statistic untuk ΔOIL = 0.62 dan ΔINT_RATE = −0.85. Siti ingin menguji apakah ΔOIL dan ΔINT_RATE secara bersama-sama berkontribusi signifikan pada Model C, menggunakan α = 5%. Critical F(2, 54) at 5% = 3.17.
+    </div>
+
+    <!-- Q1 -->
+    <div class="question-block" id="qb0">
+      <div class="q-num">Question 1 of 4</div>
+      <div class="q-text">Dari perbandingan Model A dan Model C, manakah pernyataan yang paling tepat mengenai R² dan Adjusted R²?</div>
+      <button class="option" onclick="answer(0,'A','B')">A. R² Model C lebih tinggi karena memiliki lebih banyak variabel, dan Adjusted R² Model C juga lebih tinggi karena semua variabel tambahan signifikan</button>
+      <button class="option" onclick="answer(0,'B','B')">B. R² Model C lebih tinggi karena R² tidak pernah turun saat variabel ditambahkan, namun Adjusted R² Model C lebih rendah dari Model B karena variabel tambahan (ΔOIL, ΔINT_RATE) memiliki |t| &lt; 1.0</button>
+      <button class="option" onclick="answer(0,'C','B')">C. R² dan Adjusted R² Model C keduanya lebih rendah dari Model A karena penambahan variabel yang tidak signifikan</button>
+      <div class="explanation" id="exp0">
+        <strong>B adalah jawaban yang benar.</strong> R² tidak pernah turun saat variabel baru ditambahkan — itulah mengapa R² Model C (0.659) > Model A (0.612). Namun Adjusted R² menggunakan penalti: kalau |t-statistic| variabel baru &lt; 1.0, Adjusted R² turun. Di sini, |t| ΔOIL = 0.62 &lt; 1.0 dan |t| ΔINT_RATE = 0.85 &lt; 1.0 → Adjusted R² Model C (0.628) lebih rendah dari Model B (0.636). Opsi C salah karena R² tidak bisa turun saat variabel ditambahkan.
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question-block" id="qb1">
+      <div class="q-num">Question 2 of 4</div>
+      <div class="q-text">Jika Siti bertujuan membangun model untuk <em>prediksi</em> return saham konsumer ke depan, model mana yang paling sesuai dipilih berdasarkan kriteria informasi?</div>
+      <button class="option" onclick="answer(1,'A','B')">A. Model C, karena memiliki R² tertinggi (0.659)</button>
+      <button class="option" onclick="answer(1,'B','B')">B. Model B, karena memiliki AIC terendah (16.8) dan tujuannya adalah prediksi</button>
+      <button class="option" onclick="answer(1,'C','B')">C. Model A, karena BIC-nya paling rendah (21.2) dan model paling parsimonious</button>
+      <div class="explanation" id="exp1">
+        <strong>B adalah jawaban yang benar.</strong> Untuk tujuan <em>prediksi</em>, gunakan AIC — pilih model dengan AIC terendah. Model B memiliki AIC = 16.8 (terendah di antara ketiganya). Opsi A salah karena R² tidak cocok untuk pemilihan model karena selalu naik. Opsi C salah karena BIC digunakan untuk tujuan goodness of fit, bukan prediksi — dan meski Model A punya BIC rendah, AIC-nya bukan yang terendah.
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question-block" id="qb2">
+      <div class="q-num">Question 3 of 4</div>
+      <div class="q-text">Untuk joint F-test apakah ΔOIL dan ΔINT_RATE secara bersama-sama signifikan (Model B = restricted, Model C = unrestricted), berapakah nilai F-statistic yang dihitung?</div>
+      <button class="option" onclick="answer(2,'A','A')">A. F = [(42.80 − 37.60)/2] / [37.60/54] ≈ 0.35 — Fail to reject H₀</button>
+      <button class="option" onclick="answer(2,'B','A')">B. F = [(42.80 − 37.60)/2] / [37.60/54] ≈ 3.73 — Reject H₀</button>
+      <button class="option" onclick="answer(2,'C','A')">C. F = [(38.10 − 37.60)/2] / [37.60/54] ≈ 0.36 — Fail to reject H₀</button>
+      <div class="explanation" id="exp2">
+        <strong>C adalah jawaban yang benar.</strong> Untuk joint F-test Model B (restricted, 3 vars) vs Model C (unrestricted, 5 vars), q=2 variabel yang di-restrict (ΔOIL dan ΔINT_RATE), dan SSE yang digunakan adalah SSE Model B (restricted) = 38.10 dan SSE Model C (unrestricted) = 37.60:<br>
+        F = [(38.10 − 37.60)/2] / [37.60/(60−5−1)] = (0.50/2) / (37.60/54) = 0.25/0.696 ≈ <strong>0.36</strong><br>
+        F = 0.36 &lt; F_critical = 3.17 → Fail to reject H₀ → ΔOIL dan ΔINT_RATE tidak signifikan bersama-sama. Opsi A salah karena menggunakan SSE Model A (bukan Model B) sebagai restricted. Opsi B salah karena menggunakan SSE yang keliru.
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question-block" id="qb3">
+      <div class="q-num">Question 4 of 4</div>
+      <div class="q-text">Berdasarkan semua analisis (Adjusted R², AIC, BIC, joint F-test), kesimpulan yang paling tepat adalah:</div>
+      <button class="option" onclick="answer(3,'A','B')">A. Model C adalah model terbaik karena R²-nya paling tinggi dan paling lengkap</button>
+      <button class="option" onclick="answer(3,'B','B')">B. Model B adalah model terbaik — AIC terendah untuk prediksi, Adjusted R² tertinggi, dan joint F-test mengkonfirmasi ΔOIL & ΔINT_RATE tidak memberikan kontribusi signifikan</button>
+      <button class="option" onclick="answer(3,'C','B')">C. Model A adalah model terbaik karena paling parsimonious dan BIC-nya lebih rendah dari Model B</button>
+      <div class="explanation" id="exp3">
+        <strong>B adalah jawaban yang benar.</strong> Semua bukti mengarah ke Model B: (1) Adjusted R² Model B (0.636) adalah tertinggi, (2) AIC Model B (16.8) adalah terendah untuk tujuan prediksi, (3) Joint F-test menunjukkan ΔOIL dan ΔINT_RATE tidak signifikan bersama-sama → tidak menambah nilai. BIC Model A memang lebih rendah dari Model B, tapi Siti menyatakan tujuannya adalah prediksi → AIC lebih relevan, dan Model B menang di AIC. Ini adalah contoh klasik di mana berbagai goodness-of-fit metrics mengarah ke kesimpulan konsisten.
+      </div>
+    </div>
+
+    <div class="score-panel" id="score-panel">
+      <div class="score-num" id="score-num">0/4</div>
+      <div class="score-msg" id="score-msg">—</div>
+    </div>
+
+  </div><!-- /practice body -->
+
+  <div class="nav-bottom">
+    <a class="nav-btn" href="CFA_L2_Day01.html">← Day 1</a>
+    <div class="nav-day">Day 2 of 90<br><span style="font-size:11px;color:var(--text3);">Next: Day 3 · Model Misspecification</span></div>
+    <a class="nav-btn primary" href="CFA_L2_Day03.html">Day 3 →</a>
+  </div>
+
+</div>
+
+<script>
+const answers = {};
+const correct = {0:'B', 1:'B', 2:'C', 3:'B'};
+const total = 4;
+
+function answer(qIdx, chosen, correctAns) {
+  if (answers[qIdx]) return;
+  answers[qIdx] = chosen;
+  const block = document.getElementById('qb' + qIdx);
+  const exp   = document.getElementById('exp' + qIdx);
+  block.querySelectorAll('.option').forEach(btn => {
+    btn.disabled = true;
+    const letter = btn.textContent.trim()[0];
+    if (letter === correctAns) btn.classList.add('correct');
+    else if (letter === chosen && chosen !== correctAns) btn.classList.add('wrong');
+  });
+  exp.classList.add('show');
+  if (Object.keys(answers).length === total) showScore();
+}
+
+function showScore() {
+  const score = Object.keys(correct).filter(k => answers[k] === correct[k]).length;
+  const panel = document.getElementById('score-panel');
+  const num   = document.getElementById('score-num');
+  const msg   = document.getElementById('score-msg');
+  num.textContent = score + '/' + total;
+  num.style.color = score === 4 ? 'var(--green)' : score >= 3 ? 'var(--amber)' : 'var(--red)';
+  const msgs = {
+    4:'🎯 Perfect! ANOVA dan model selection sudah solid.',
+    3:'✅ Good. Review soal yang salah sekali lagi.',
+    2:'⚠️ Perlu review — fokus ke AIC/BIC dan joint F-test.',
+    1:'🔁 Ulangi theory section sebelum lanjut ke Day 3.',
+    0:'🔁 Ulangi theory section sebelum lanjut ke Day 3.'
+  };
+  msg.textContent = msgs[score] || msgs[0];
+  panel.style.display = 'block';
+}
+</script>
+</body>
+</html>

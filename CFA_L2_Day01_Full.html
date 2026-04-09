@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 1 · Full · Dasar-Dasar Multiple Regression</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #fafaf8;
+  --bg2:     #f4f3ef;
+  --bg3:     #eeece7;
+  --border:  rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text:    #1a1a2e;
+  --text2:   #4a4a6a;
+  --text3:   #8a8aaa;
+  --gold:    #9a6e1a;
+  --gold2:   #7a5010;
+  --gold-bg: rgba(154,110,26,0.08);
+  --blue:    #1a5fa8;
+  --blue-bg: rgba(26,95,168,0.08);
+  --green:   #1a7a4a;
+  --green-bg:rgba(26,122,74,0.08);
+  --red:     #b83232;
+  --red-bg:  rgba(184,50,50,0.08);
+  --amber:   #a06010;
+  --amber-bg:rgba(160,96,16,0.08);
+  --r:10px; --r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.8;}
+
+.page{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+
+/* top bar */
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;border:1px solid rgba(26,95,168,0.2);}
+
+/* hero */
+.hero{margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--border);}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:36px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:15px;color:var(--text2);}
+.meta-row{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+
+/* toc */
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:36px;}
+.toc-title{font-size:12px;color:var(--text3);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:12px;font-weight:500;}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.toc-list li a{font-size:13px;color:var(--blue);text-decoration:none;display:flex;align-items:center;gap:8px;}
+.toc-list li a:hover{text-decoration:underline;}
+.toc-num{font-size:11px;color:var(--text3);min-width:20px;}
+
+/* section headers */
+.chapter{margin-bottom:40px;}
+.chapter-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--gold-bg);}
+.chapter-num{font-family:'DM Serif Display',serif;font-size:28px;color:var(--gold);line-height:1;}
+.chapter-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);line-height:1.2;}
+
+.sub-header{font-size:17px;font-weight:500;color:var(--text);margin:24px 0 12px;padding-left:12px;border-left:3px solid var(--gold);}
+
+/* prose */
+.prose{font-size:14px;color:var(--text2);line-height:1.85;margin-bottom:14px;}
+.prose strong{color:var(--text);font-weight:500;}
+.prose em{font-style:italic;}
+
+/* formula */
+.formula-block{background:var(--bg2);border:1px solid var(--border2);border-left:4px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:16px 20px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold2);line-height:2;}
+.formula-block .label{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:8px;}
+.formula-block .note{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text3);font-style:italic;display:block;margin-top:8px;}
+
+/* exhibit / regression table */
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:20px 0;}
+.exhibit-title{background:var(--bg3);padding:10px 16px;font-size:12px;font-weight:500;color:var(--text2);border-bottom:1px solid var(--border);letter-spacing:0.03em;}
+.exhibit-body{padding:16px;}
+.reg-table{width:100%;border-collapse:collapse;font-size:13px;}
+.reg-table th{text-align:right;padding:8px 12px;background:var(--bg3);color:var(--text3);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border2);}
+.reg-table th:first-child{text-align:left;}
+.reg-table td{padding:8px 12px;border-bottom:1px solid var(--border);text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text2);}
+.reg-table td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);font-weight:500;}
+.reg-table tr:last-child td{border-bottom:none;}
+.reg-table .sig{color:var(--green);font-weight:500;}
+.reg-table .section-row td{background:var(--bg3);font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text3);font-weight:500;text-transform:uppercase;letter-spacing:0.04em;}
+
+/* callout boxes */
+.callout{border-radius:var(--r);padding:16px 18px;margin:16px 0;}
+.callout-title{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;}
+.callout p{font-size:13px;color:var(--text2);line-height:1.75;}
+.callout p + p{margin-top:8px;}
+.callout.blue{background:var(--blue-bg);border:1px solid rgba(26,95,168,0.15);}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.green{background:var(--green-bg);border:1px solid rgba(26,122,74,0.15);}
+.callout.green .callout-title{color:var(--green);}
+.callout.amber{background:var(--amber-bg);border:1px solid rgba(160,96,16,0.15);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.red{background:var(--red-bg);border:1px solid rgba(184,50,50,0.15);}
+.callout.red .callout-title{color:var(--red);}
+.callout.gold{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);}
+.callout.gold .callout-title{color:var(--gold);}
+
+/* knowledge check */
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:24px 0;overflow:hidden;}
+.kc-header{background:var(--gold-bg);padding:12px 18px;border-bottom:1px solid rgba(154,110,26,0.15);}
+.kc-header-title{font-size:12px;font-weight:500;color:var(--gold);letter-spacing:0.06em;text-transform:uppercase;}
+.kc-body{padding:18px;}
+.kc-q{font-size:13px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.6;}
+.kc-answer{background:var(--bg3);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);line-height:1.75;display:none;}
+.kc-answer.show{display:block;}
+.kc-answer strong{color:var(--green);}
+.kc-toggle{background:none;border:1px solid var(--border2);border-radius:var(--r-sm);padding:6px 14px;font-size:12px;color:var(--text3);cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px;transition:all 0.15s;}
+.kc-toggle:hover{border-color:var(--gold);color:var(--gold);}
+
+/* assumption list */
+.assume-list{list-style:none;display:flex;flex-direction:column;gap:12px;margin:12px 0;}
+.assume-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;display:flex;gap:14px;}
+.assume-num{width:28px;height:28px;border-radius:50%;background:var(--gold-bg);border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--gold);flex-shrink:0;margin-top:2px;}
+.assume-content{}
+.assume-name{font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px;}
+.assume-desc{font-size:13px;color:var(--text2);line-height:1.7;}
+.assume-violation{font-size:12px;color:var(--amber);margin-top:6px;padding:4px 10px;background:var(--amber-bg);border-radius:4px;display:inline-block;}
+
+/* numbered list */
+.num-list{list-style:none;counter-reset:num;display:flex;flex-direction:column;gap:8px;margin:10px 0;}
+.num-list li{counter-increment:num;display:flex;gap:12px;font-size:13px;color:var(--text2);line-height:1.7;}
+.num-list li::before{content:counter(num)".";color:var(--gold);font-weight:500;min-width:20px;flex-shrink:0;}
+
+/* bullet list */
+.bullet-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin:10px 0;}
+.bullet-list li{display:flex;gap:10px;font-size:13px;color:var(--text2);line-height:1.7;}
+.bullet-list li::before{content:'■';color:var(--gold);font-size:9px;margin-top:5px;flex-shrink:0;}
+
+/* inline code */
+code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--bg3);padding:2px 6px;border-radius:4px;color:var(--gold2);}
+
+/* divider */
+.divider{height:1px;background:var(--border);margin:36px 0;}
+
+/* practice */
+.practice-header{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);border-radius:var(--r) var(--r) 0 0;padding:16px 20px;display:flex;align-items:center;gap:12px;}
+.practice-header-title{font-size:16px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);margin-top:2px;}
+.practice-body{background:var(--bg2);border:1px solid rgba(154,110,26,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:24px;}
+.vignette{background:var(--bg3);border-left:4px solid var(--gold);padding:18px 20px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:28px;font-size:13px;color:var(--text2);line-height:1.85;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;font-weight:500;}
+.question-block{margin-bottom:24px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:6px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:12px;line-height:1.65;}
+.option{display:block;width:100%;text-align:left;padding:11px 16px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:8px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.6;}
+.option:hover:not(:disabled){border-color:var(--border2);background:var(--bg2);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:14px 16px;font-size:13px;color:var(--text2);margin-top:10px;line-height:1.8;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:28px;margin-top:20px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:52px;margin-bottom:8px;}
+.score-msg{font-size:14px;color:var(--text2);}
+
+/* nav */
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+.nav-day{font-size:12px;color:var(--text3);text-align:center;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II · <span>Quantitative Methods</span> · LM1</div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <div class="version-badge">Versi Full</div>
+      <div class="day-badge">Day 1 of 90</div>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-tag">Senin, 6 April 2026</div>
+    <h1 class="hero-title">Dasar-Dasar Multiple Regression dan Asumsi-Asumsinya</h1>
+    <p class="hero-sub">Learning Module 1 — Quantitative Methods · CFA Level II 2026</p>
+    <div class="meta-row">
+      <div class="meta-pill">📖 Materi lengkap</div>
+      <div class="meta-pill">🇮🇩 Bahasa Indonesia</div>
+      <div class="meta-pill">⚖️ Exam weight <b>~6%</b></div>
+      <div class="meta-pill">⏱ Est. baca <b>45–60 menit</b></div>
+    </div>
+  </div>
+
+  <!-- Table of Contents -->
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ul class="toc-list">
+      <li><a href="#lo"><span class="toc-num">0</span>Learning Outcomes</a></li>
+      <li><a href="#intro"><span class="toc-num">1</span>Pendahuluan & Kegunaan Multiple Regression</a></li>
+      <li><a href="#basics"><span class="toc-num">2</span>Dasar-Dasar Multiple Regression</a></li>
+      <li><a href="#assumptions"><span class="toc-num">3</span>Lima Asumsi Underlying OLS</a></li>
+      <li><a href="#diagnostic"><span class="toc-num">4</span>Diagnostic Plots — Cara Membaca & Menginterpretasikan</a></li>
+      <li><a href="#practice"><span class="toc-num">5</span>Latihan Soal — Item Set Vignette</a></li>
+    </ul>
+  </div>
+
+  <!-- ═══ SECTION 0: Learning Outcomes ═══ -->
+  <div class="chapter" id="lo">
+    <div class="chapter-header">
+      <div class="chapter-num">0</div>
+      <div class="chapter-title">Learning Outcomes</div>
+    </div>
+
+    <p class="prose">Setelah mempelajari modul ini, kamu harus mampu:</p>
+    <ul class="bullet-list">
+      <li>Menjelaskan jenis-jenis masalah investasi yang diselesaikan dengan multiple linear regression dan menggambarkan proses regression</li>
+      <li>Memformulasikan model multiple linear regression, mendeskripsikan hubungan antara dependent variable dengan beberapa independent variables, dan menginterpretasikan estimated regression coefficients</li>
+      <li>Menjelaskan asumsi-asumsi yang mendasari model multiple linear regression dan menginterpretasikan residual plots yang mengindikasikan potensi pelanggaran asumsi</li>
+    </ul>
+  </div>
+
+  <!-- ═══ SECTION 1: Intro ═══ -->
+  <div class="chapter" id="intro">
+    <div class="chapter-header">
+      <div class="chapter-num">1</div>
+      <div class="chapter-title">Pendahuluan & Kegunaan Multiple Regression</div>
+    </div>
+
+    <p class="prose">Multiple linear regression menggunakan dua atau lebih independent variables untuk mendeskripsikan variasi dari dependent variable — berbeda dengan simple linear regression yang hanya menggunakan satu independent variable. Dengan pendekatan yang lebih kompleks ini, analis bisa membangun model yang lebih realistis karena dalam dunia investasi yang sesungguhnya, hampir tidak ada fenomena finansial yang hanya dipengaruhi satu faktor saja.</p>
+
+    <p class="prose">Kalau digunakan dengan benar, multiple regression bisa menghasilkan prediksi yang lebih akurat, konstruksi portfolio yang lebih baik, dan pemahaman yang lebih dalam tentang driver-driver return sekuritas. Namun kalau digunakan sembarangan, hasilnya bisa berupa spurious relationships (hubungan palsu), prediksi yang buruk, dan kesimpulan yang menyesatkan.</p>
+
+    <div class="sub-header">1.1 Tiga Kegunaan Utama Multiple Regression</div>
+
+    <p class="prose">Dalam praktik investasi, multiple regression digunakan untuk tiga tujuan utama:</p>
+
+    <ul class="num-list">
+      <li><strong>Mengidentifikasi hubungan antar variabel.</strong> Misalnya, seorang portfolio manager ingin memahami bagaimana return saham-sahamnya dipengaruhi oleh serangkaian faktor — size effect, value effect, profitability, dan investment aggressiveness. Tujuannya adalah mengestimasi Fama-French five-factor model yang akan memberikan pemahaman tentang faktor-faktor yang paling penting dalam menggerakkan excess return saham tertentu.</li>
+      <li><strong>Menguji teori yang sudah ada.</strong> Misalnya, seorang financial adviser ingin mengidentifikasi apakah variabel-variabel tertentu seperti financial leverage, profitability, revenue growth, dan perubahan market share dapat memprediksi apakah suatu perusahaan akan mengalami financial distress.</li>
+      <li><strong>Membuat forecast.</strong> Misalnya, seorang analis ingin menguji pengaruh berbagai dimensi country risk — seperti stabilitas politik, kondisi ekonomi, dan pertimbangan ESG — terhadap equity returns di negara tersebut.</li>
+    </ul>
+
+    <div class="sub-header">1.2 Proses Regression — Alur Kerja Analis</div>
+
+    <p class="prose">Proses membangun dan menggunakan regression model mengikuti alur yang sistematis. Analis harus membuat beberapa keputusan penting di sepanjang proses ini:</p>
+
+    <ul class="bullet-list">
+      <li><strong>Langkah pertama:</strong> Apakah dependent variable bersifat kontinu (seperti return dalam %)? Kalau ya → gunakan multiple linear regression. Kalau tidak, atau bersifat diskrit/biner (misalnya: apakah perusahaan ini akan jadi target akuisisi atau tidak? — jawabannya 1 atau 0) → gunakan logistic regression.</li>
+      <li><strong>Langkah kedua:</strong> Spesifikasi model — tentukan variabel apa yang masuk sebagai independent variables. Variabel-variabel ini bisa berupa variabel kontinu (seperti financial ratios) atau variabel diskrit (dummy variables yang mengindikasikan keanggotaan dalam suatu kelompok, misalnya sektor industri).</li>
+      <li><strong>Langkah ketiga:</strong> Estimasi model menggunakan software (Excel, Python, R, SAS, Stata) dan analisis output-nya — pastikan asumsi-asumsi regression terpenuhi dan goodness-of-fit criteria terpenuhi.</li>
+      <li><strong>Langkah keempat:</strong> Setelah model diuji dan out-of-sample performance-nya dianggap memuaskan, gunakan model tersebut untuk mengidentifikasi hubungan, menguji teori, atau membuat forecast.</li>
+    </ul>
+
+    <div class="callout blue">
+      <div class="callout-title">💡 Catatan Penting</div>
+      <p>Software yang mengestimasi model (Python, R, Excel) bekerja otomatis — tugas utama analis bukanlah melakukan kalkulasi manual, melainkan: (1) menspesifikasikan model dengan benar, dan (2) menginterpretasikan output dengan tepat. Kedua hal inilah yang diuji di CFA Level II.</p>
+    </div>
+
+    <div class="kc" id="kc1">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 1.1</div></div>
+      <div class="kc-body">
+        <p class="kc-q">Sebagai analis junior, kamu diminta menentukan tindakan yang tepat untuk setiap situasi berikut:</p>
+        <p class="kc-q" style="margin-top:10px;">(a) Dependent variable bernilai 1 jika perusahaan adalah merger target dan 0 jika bukan.</p>
+        <button class="kc-toggle" onclick="toggleKC('kc1a')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc1a"><strong>Gunakan logistic regression.</strong> Karena dependent variable bersifat diskrit/biner (hanya bernilai 0 atau 1), bukan kontinu, maka ordinary linear regression tidak tepat. Logistic regression dirancang khusus untuk dependent variable yang bersifat kategorikal.</div>
+        <p class="kc-q" style="margin-top:14px;">(b) Analis mengestimasi model dengan lima independent variables, dan tidak ada satupun yang signifikan secara statistik.</p>
+        <button class="kc-toggle" onclick="toggleKC('kc1b')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc1b"><strong>Adjust the model and re-estimate.</strong> Kalau tidak ada variabel yang signifikan, kemungkinan ada masalah dengan spesifikasi model — mungkin salah pilih variabel, ada multicollinearity, atau memang hubungannya tidak linear. Perlu ditinjau ulang.</div>
+        <p class="kc-q" style="margin-top:14px;">(c) Residual tidak tampak homoskedastis, sehingga melanggar asumsi regression.</p>
+        <button class="kc-toggle" onclick="toggleKC('kc1c')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc1c"><strong>Adjust the model and re-estimate.</strong> Heteroskedasticity (variance residual tidak konstan) adalah pelanggaran asumsi yang harus diperbaiki — bisa dengan weighted least squares (WLS) atau robust standard errors — sebelum model bisa digunakan untuk inferensi statistik yang valid.</div>
+        <p class="kc-q" style="margin-top:14px;">(d) Semua asumsi regression terpenuhi, overall fit signifikan, dan ini adalah model terbaik dari semua kemungkinan model.</p>
+        <button class="kc-toggle" onclick="toggleKC('kc1d')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc1d"><strong>Gunakan model tersebut untuk analisis dan prediksi.</strong> Kalau semua kriteria sudah terpenuhi, model siap digunakan.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 2: Basics ═══ -->
+  <div class="chapter" id="basics">
+    <div class="chapter-header">
+      <div class="chapter-num">2</div>
+      <div class="chapter-title">Dasar-Dasar Multiple Regression</div>
+    </div>
+
+    <p class="prose">Tujuan simple regression adalah menjelaskan variasi dependent variable Y menggunakan variasi satu independent variable X. Tujuan multiple regression sama persis, hanya saja kita menggunakan variasi dari <em>sekumpulan</em> independent variables X₁, X₂, ..., Xₖ.</p>
+
+    <p class="prose">Ingat bahwa variasi Y didefinisikan sebagai:</p>
+
+    <div class="formula-block">
+      <span class="label">Variasi Y (Sum of Squares Total)</span>
+      Variasi Y = Σᵢ (Yᵢ − Ȳ)²
+      <span class="note">di mana Ȳ adalah rata-rata Y dari seluruh n observasi</span>
+    </div>
+
+    <div class="sub-header">2.1 Persamaan Model</div>
+
+    <p class="prose">Persamaan simple regression adalah:</p>
+    <div class="formula-block">
+      Yᵢ = b₀ + b₁Xᵢ + εᵢ,  i = 1, 2, 3, ..., n
+    </div>
+
+    <p class="prose">Ketika kita menambahkan independent variables tambahan untuk membantu menjelaskan variasi Y, kita mendapatkan persamaan multiple regression:</p>
+
+    <div class="formula-block">
+      <span class="label">Persamaan Multiple Regression</span>
+      Yᵢ = b₀ + b₁X₁ᵢ + b₂X₂ᵢ + b₃X₃ᵢ + ... + bₖXₖᵢ + εᵢ
+      <span class="note">i = 1, 2, 3, ..., n  |  k = jumlah independent variables  |  n harus lebih besar dari k</span>
+    </div>
+
+    <p class="prose">Dalam persamaan ini, suku-suku yang melibatkan k independent variables merupakan <strong>bagian deterministik</strong> dari model, sedangkan error term εᵢ adalah <strong>bagian stokastik/acak</strong> dari model.</p>
+
+    <div class="sub-header">2.2 Interpretasi Koefisien</div>
+
+    <p class="prose"><strong>b₀ (intercept):</strong> Nilai yang diharapkan dari Y apabila semua independent variables bernilai nol. Dalam konteks multiple regression, ini adalah titik referensi baseline — kalau semua faktor yang kita masukkan ke model sama dengan nol, berapa nilai Y yang kita ekspektasikan?</p>
+
+    <p class="prose"><strong>b₁ sampai bₖ (slope coefficients / partial regression coefficients):</strong> Ini adalah bagian paling krusial yang perlu dipahami dengan benar. Setiap slope coefficient bⱼ dalam multiple regression dikenal sebagai <strong>partial regression coefficient</strong> atau <strong>partial slope coefficient</strong>, dan harus diinterpretasikan dengan sangat hati-hati.</p>
+
+    <div class="callout amber">
+      <div class="callout-title">⚠ Definisi Kritis — Partial Regression Coefficient</div>
+      <p>Partial regression coefficient bⱼ mendeskripsikan dampak independent variable Xⱼ terhadap dependent variable Y, <strong>dengan menahan semua independent variable lain tetap konstan (holding all other independent variables constant)</strong>.</p>
+      <p style="margin-top:8px;">Ini berbeda fundamental dari koefisien dalam simple regression. Kata kunci "ceteris paribus" (hal lain dianggap sama) ini adalah inti dari interpretasi koefisien multiple regression, dan sering menjadi jebakan di exam.</p>
+    </div>
+
+    <p class="prose">Misalnya, dalam persamaan:</p>
+    <div class="formula-block">
+      Yᵢ = b₀ + b₁X₁ᵢ + b₂X₂ᵢ + b₃X₃ᵢ + εᵢ
+    </div>
+    <p class="prose">Koefisien b₂ mengukur perubahan Y untuk setiap perubahan satu unit dalam X₂, <em>dengan asumsi X₁ dan X₃ ditahan konstan</em>. Koefisien estimasi ditulis dengan tanda ^ (hat): b̂₀, b̂₁, b̂₂, b̂₃.</p>
+
+    <div class="sub-header">2.3 Contoh Numerik Lengkap — Bond Index Returns</div>
+
+    <p class="prose">Mari kita lihat contoh konkret. Pertimbangkan persamaan estimated regression di mana monthly excess return dari sebuah bond index (RET) diregresi terhadap perubahan monthly government bond yields (BY) dan perubahan investment-grade credit spreads (CS). Regression ini menggunakan 60 observasi bulanan:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Model: Monthly Excess Return Bond Index vs. Bond Yields & Credit Spreads</div>
+      <div class="exhibit-body">
+        <div class="formula-block" style="margin:0;">
+          RET = 0.0023 − 5.0585 × BY − 2.1901 × CS
+          <span class="note">n = 60 monthly observations</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">Dari regression ini, kita dapat menyimpulkan empat hal:</p>
+
+    <ul class="num-list">
+      <li><strong>Intercept (0.0023):</strong> Bond index menghasilkan return rata-rata 0.0023% per bulan, atau sekitar 0.028% per tahun, apabila perubahan government bond yields DAN perubahan credit spreads keduanya bernilai nol. Ini adalah baseline return ketika kedua faktor tidak bergerak.</li>
+      <li><strong>Koefisien BY (−5.0585):</strong> Untuk setiap perubahan satu unit dalam monthly government bond yield (BY), return bond index berubah sebesar −5.0585%, <em>dengan asumsi credit spread (CS) tidak berubah</em>. Ini berarti bond index ini memiliki empirical duration sebesar 5.0585 — artinya durasi yang diestimasi dari data pasar, bukan dari perhitungan teoretis.</li>
+      <li><strong>Koefisien CS (−2.1901):</strong> Kalau investment-grade credit spreads naik satu unit, return bond index berubah sebesar −2.1901%, <em>dengan asumsi BY tidak berubah</em>. Ini mencerminkan sensitivitas bond index terhadap perubahan credit conditions.</li>
+      <li><strong>Prediksi:</strong> Untuk bulan di mana perubahan credit spreads = 0.001 dan perubahan government bond yields = 0.005, expected excess return bond index adalah:
+        <div class="formula-block" style="margin-top:10px;">
+          RET = 0.0023 − 5.0585(0.005) − 2.1901(0.001)
+              = 0.0023 − 0.0253 − 0.0022
+              = −0.0252, atau −2.52%
+        </div>
+      </li>
+    </ul>
+
+    <div class="sub-header">2.4 Contoh Fama-French Three-Factor Model</div>
+
+    <p class="prose">Berikut adalah contoh lain yang sangat relevan dengan pekerjaan lo sebagai fund manager — regression monthly excess return suatu portfolio terhadap tiga Fama-French factors:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Fama-French Three-Factor Regression</div>
+      <div class="exhibit-body">
+        <div class="formula-block" style="margin:0 0 12px;">
+          RETRF = 1.5324 + 0.5892×MKTRF + (−0.8719)×SMB + (−0.0560)×HML
+        </div>
+        <p style="font-size:12px;color:var(--text3);">RETRF = portfolio excess return | MKTRF = market excess return | SMB = small-minus-big (size factor) | HML = high-minus-low (value factor) | Semua return dalam persentase penuh (1 untuk 1%)</p>
+      </div>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 2.1 — Interpretasi Koefisien Fama-French</div></div>
+      <div class="kc-body">
+        <p class="kc-q">(1) Interpretasikan intercept.</p>
+        <button class="kc-toggle" onclick="toggleKC('kc2a')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc2a"><strong>Jawaban:</strong> Apabila market excess return, SMB, dan HML masing-masing bernilai nol, kita mengekspektasikan return portfolio sebesar 1.5324%. Ini adalah alpha — return yang tidak dapat dijelaskan oleh ketiga faktor.</div>
+
+        <p class="kc-q" style="margin-top:14px;">(2) Interpretasikan setiap slope coefficient.</p>
+        <button class="kc-toggle" onclick="toggleKC('kc2b')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc2b">
+          <strong>Setiap koefisien diinterpretasikan dengan asumsi variabel lain ditahan konstan:</strong>
+          <ul style="margin-top:8px;padding-left:16px;">
+            <li style="margin-bottom:6px;"><strong>MKTRF (0.5892):</strong> Jika market return naik 1%, kita mengekspektasikan return portfolio naik 0.5892%. Portfolio ini memiliki beta pasar yang lebih rendah dari 1 — kurang sensitif terhadap pergerakan pasar secara keseluruhan.</li>
+            <li style="margin-bottom:6px;"><strong>SMB (−0.8719):</strong> Jika size factor returns naik 1% (artinya saham-saham kecil outperform saham-saham besar), kita mengekspektasikan return portfolio turun 0.8719%. Ini mengindikasikan portfolio ini memiliki bias ke saham-saham besar (large-cap tilt).</li>
+            <li><strong>HML (−0.0560):</strong> Jika value factor returns naik 1% (artinya saham-saham value outperform saham-saham growth), kita mengekspektasikan return portfolio turun 0.056%. Koefisien ini sangat kecil dan kemungkinan tidak signifikan secara statistik — portfolio ini hampir tidak memiliki bias value/growth.</li>
+          </ul>
+        </div>
+
+        <p class="kc-q" style="margin-top:14px;">(3) Hitung predicted return portfolio jika MKTRF = 1, SMB = 4, dan HML = −2.</p>
+        <button class="kc-toggle" onclick="toggleKC('kc2c')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc2c">
+          <strong>Kalkulasi:</strong>
+          <div class="formula-block" style="margin-top:8px;">
+            RETRF = 1.5324 + 0.5892(1) − 0.8719(4) − 0.0560(−2)
+                  = 1.5324 + 0.5892 − 3.4876 + 0.1120
+                  = −1.2540 ≈ −1.25%
+          </div>
+          Portfolio diperkirakan mengalami excess return negatif sebesar −1.25% dalam skenario ini, terutama karena faktor SMB yang sangat besar (4%) yang berdampak besar mengingat koefisien −0.8719.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 3: Assumptions ═══ -->
+  <div class="chapter" id="assumptions">
+    <div class="chapter-header">
+      <div class="chapter-num">3</div>
+      <div class="chapter-title">Lima Asumsi Underlying OLS</div>
+    </div>
+
+    <p class="prose">Sebelum kita bisa melakukan statistical inference yang valid pada model multiple linear regression yang diestimasi menggunakan Ordinary Least Squares (OLS), kita perlu memastikan bahwa asumsi-asumsi yang mendasari model tersebut terpenuhi.</p>
+
+    <p class="prose">Dalam simple regression, ada empat asumsi yang perlu dipenuhi. Dalam multiple regression, asumsi-asumsi tersebut sedikit dimodifikasi untuk mencerminkan adanya beberapa independent variables:</p>
+
+    <ul class="assume-list">
+      <li class="assume-item">
+        <div class="assume-num">1</div>
+        <div class="assume-content">
+          <div class="assume-name">Linearitas (Linearity)</div>
+          <div class="assume-desc">Hubungan antara dependent variable dan independent variables harus bersifat linear. Ini berarti model yang kita spesifikasikan (Yi = b₀ + b₁X₁ᵢ + ... + bₖXₖᵢ + εᵢ) adalah representasi yang tepat dari hubungan sebenarnya di antara variabel-variabel tersebut. Kalau hubungan sebenarnya bersifat non-linear (misalnya kuadratik atau eksponensial), menggunakan model linear akan menghasilkan koefisien yang bias.</div>
+          <div class="assume-violation">⚠ Pelanggaran: Pola kurva/non-random pada residual vs. fitted plot atau residual vs. X plot</div>
+        </div>
+      </li>
+      <li class="assume-item">
+        <div class="assume-num">2</div>
+        <div class="assume-content">
+          <div class="assume-name">Homoskedastisitas (Homoskedasticity)</div>
+          <div class="assume-desc">Variance dari regression residuals harus sama untuk semua observasi — Var(εᵢ) = σ² untuk semua i. Kalau variance residual tidak konstan (heteroskedasticity), OLS masih menghasilkan estimasi yang unbiased, tetapi standard errors menjadi tidak valid, sehingga t-tests dan F-tests tidak bisa dipercaya.</div>
+          <div class="assume-violation">⚠ Pelanggaran: Fan shape (kipas) atau pola melebar/menyempit pada residual plot</div>
+        </div>
+      </li>
+      <li class="assume-item">
+        <div class="assume-num">3</div>
+        <div class="assume-content">
+          <div class="assume-name">Independensi Error (Independence of Errors)</div>
+          <div class="assume-desc">Observasi-observasi harus bersifat independen satu sama lain. Implikasinya adalah regression residuals tidak berkorelasi antar observasi — Cov(εᵢ, εⱼ) = 0 untuk i ≠ j. Pelanggaran asumsi ini paling umum terjadi pada data time series, di mana residual periode sekarang berkorelasi dengan residual periode sebelumnya (serial correlation atau autocorrelation).</div>
+          <div class="assume-violation">⚠ Pelanggaran: Pola sinusoidal/cyclical pada residual vs. time plot; Durbin-Watson statistic jauh dari 2</div>
+        </div>
+      </li>
+      <li class="assume-item">
+        <div class="assume-num">4</div>
+        <div class="assume-content">
+          <div class="assume-name">Normalitas (Normality)</div>
+          <div class="assume-desc">Regression residuals harus berdistribusi normal. Asumsi ini diperlukan agar t-tests dan F-tests menghasilkan p-values yang valid, terutama untuk sample size yang kecil. Untuk sample size yang besar, Central Limit Theorem memungkinkan inferensi yang valid meskipun residuals tidak perfectly normal.</div>
+          <div class="assume-violation">⚠ Pelanggaran: Titik-titik menyimpang dari diagonal pada Q-Q plot, terutama di kedua ujung (fat tails)</div>
+        </div>
+      </li>
+      <li class="assume-item">
+        <div class="assume-num">5</div>
+        <div class="assume-content">
+          <div class="assume-name">Independensi Independent Variables (Independence of Independent Variables)</div>
+          <div class="assume-desc">
+            Asumsi ini terdiri dari dua bagian:<br><br>
+            <strong>5a.</strong> Independent variables tidak bersifat random (non-stochastic).<br>
+            <strong>5b.</strong> Tidak ada hubungan linear yang eksak antara dua atau lebih independent variables, atau kombinasinya (no perfect multicollinearity).<br><br>
+            Asumsi independensi ini diperlukan agar koefisien bisa diestimasi. Kalau ada hubungan linear yang eksak antara independent variables, model tidak bisa diestimasi sama sekali. Dalam kasus yang lebih umum — di mana ada hubungan linear yang <em>approxiate</em> (multicollinearity) — model masih bisa diestimasi, namun interpretasinya menjadi bermasalah: koefisien mungkin memiliki tanda yang salah, confidence intervals yang sangat lebar, dan signifikansi statistik yang tidak dapat diandalkan.
+          </div>
+          <div class="assume-violation">⚠ Pelanggaran: Korelasi pairwise yang tinggi antar X; VIF (Variance Inflation Factor) yang besar</div>
+        </div>
+      </li>
+    </ul>
+
+    <div class="callout green">
+      <div class="callout-title">✅ Properti BLUE — Ketika Semua Asumsi Terpenuhi</div>
+      <p>Apabila semua lima asumsi terpenuhi, estimator OLS memiliki properti yang disebut <strong>BLUE — Best Linear Unbiased Estimator</strong>. Ini berarti:</p>
+      <p><strong>Best:</strong> Di antara semua linear estimators yang tidak bias, OLS memiliki variance terkecil (Gauss-Markov Theorem).</p>
+      <p><strong>Linear:</strong> Estimator adalah fungsi linear dari observed values.</p>
+      <p><strong>Unbiased:</strong> Rata-rata dari estimasi koefisien, di atas semua possible samples, sama dengan nilai parameter sebenarnya.</p>
+    </div>
+
+    <div class="callout amber">
+      <div class="callout-title">⚠ Mnemonic: LINE + I</div>
+      <p><strong>L</strong>inearity · <strong>I</strong>ndependence of errors · <strong>N</strong>ormality · <strong>E</strong>qual variance (Homoskedasticity) · <strong>I</strong>ndependence of X's</p>
+      <p>Kalau semua terpenuhi → OLS adalah BLUE. Pelanggaran masing-masing asumsi menghasilkan masalah berbeda yang akan dibahas lebih mendalam di LM3 (Model Misspecification).</p>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 4: Diagnostic Plots ═══ -->
+  <div class="chapter" id="diagnostic">
+    <div class="chapter-header">
+      <div class="chapter-num">4</div>
+      <div class="chapter-title">Diagnostic Plots — Cara Membaca & Menginterpretasikan</div>
+    </div>
+
+    <p class="prose">Regression software menghasilkan diagnostic plots yang merupakan alat yang sangat berguna untuk mendeteksi potensi pelanggaran asumsi-asumsi multiple linear regression. Untuk mengilustrasikan penggunaan plot-plot ini, kita akan menganalisis 10 tahun data monthly excess returns dari saham ABC menggunakan Fama-French three-factor model:</p>
+
+    <div class="formula-block">
+      ABC_RETRFₜ = b₀ + b₁×MKTRFₜ + b₂×SMBₜ + b₃×HMLₜ + εₜ
+    </div>
+
+    <div class="sub-header">4.1 Scatterplot Matrix (Pairs Plot)</div>
+
+    <p class="prose">Langkah pertama dalam analisis residual adalah melihat scatterplot matrix — matriks yang menampilkan scatterplot pairwise antara semua variabel dalam model. Dari matrix ini, kita bisa melihat:</p>
+
+    <ul class="bullet-list">
+      <li><strong>Baris bawah (scatterplots antara ABC_RETRF dan setiap faktor):</strong>
+        <ul style="padding-left:20px;margin-top:6px;">
+          <li style="margin-bottom:4px;">Ada hubungan positif antara ABC_RETRF dan market factor (MKTRF) — masuk akal karena hampir semua saham bergerak searah dengan pasar.</li>
+          <li style="margin-bottom:4px;">Tampaknya tidak ada hubungan yang jelas antara ABC_RETRF dan size factor (SMB) di scatterplot. <em>Namun ini bukan berarti SMB tidak signifikan dalam regression!</em> Scatterplot hanya menampilkan hubungan bivariate, bukan hubungan parsial (partial) yang dikontrol oleh variabel lain. SMB bisa saja signifikan di regression ketika dikontrol MKTRF dan HML, meskipun bivariate plot-nya tidak menunjukkan hubungan yang jelas.</li>
+          <li>Ada hubungan negatif antara ABC_RETRF dan value factor (HML).</li>
+        </ul>
+      </li>
+      <li><strong>Scatterplot antar independent variables:</strong> SMB dan HML tampak memiliki sedikit atau tidak ada korelasi (garis regression-nya hampir datar). Ini adalah karakteristik yang diinginkan antara variabel-variabel penjelas — kalau ada korelasi tinggi di sini, kita perlu waspada terhadap multicollinearity.</li>
+    </ul>
+
+    <div class="callout blue">
+      <div class="callout-title">💡 Perbedaan Bivariate Correlation vs. Partial Correlation</div>
+      <p>Ini adalah salah satu konsep yang sering membingungkan. Scatterplot matrix menampilkan hubungan <strong>bivariate</strong> — hubungan antara dua variabel secara terpisah, tanpa mengontrol variabel lain. Regression mengukur <strong>partial correlation</strong> — hubungan antara X dan Y setelah mengontrol semua X lainnya.</p>
+      <p>Inilah mengapa sebuah variabel bisa tampak tidak berkorelasi dengan Y di scatterplot, tetapi tetap signifikan dalam regression — karena regression "menyaring" informasi yang dibagi dengan variabel lain dan mengidentifikasi kontribusi unik masing-masing variabel.</p>
+    </div>
+
+    <div class="sub-header">4.2 Hasil Estimasi Regression — ABC Stock Returns</div>
+
+    <p class="prose">Berikut adalah hasil estimasi regression ABC_RETRF terhadap Fama-French three-factor model, menggunakan 120 bulan (10 tahun) data:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 4: ABC Returns Explained Using Fama–French Three-Factor Model</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Regression Statistics</th><th>Value</th></tr>
+          </thead>
+          <tbody>
+            <tr class="section-row"><td colspan="2">Summary Statistics</td></tr>
+            <tr><td>Multiple R</td><td>0.6238</td></tr>
+            <tr><td>R-Squared</td><td>0.3891</td></tr>
+            <tr><td>Adjusted R-Squared</td><td>0.3733</td></tr>
+            <tr><td>Standard Error</td><td>0.0628</td></tr>
+            <tr><td>Observations</td><td>120</td></tr>
+          </tbody>
+        </table>
+        <table class="reg-table" style="margin-top:16px;">
+          <thead>
+            <tr><th>ANOVA</th><th>df</th><th>SS</th><th>MS</th><th>F</th><th>Sig. F</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Regression</td><td>3</td><td>0.2914</td><td>0.0971</td><td class="sig">24.63</td><td class="sig">0.0000</td></tr>
+            <tr><td>Residual</td><td>116</td><td>0.4575</td><td>0.0039</td><td>—</td><td>—</td></tr>
+            <tr><td>Total</td><td>119</td><td>0.7489</td><td>—</td><td>—</td><td>—</td></tr>
+          </tbody>
+        </table>
+        <table class="reg-table" style="margin-top:16px;">
+          <thead>
+            <tr><th>Variable</th><th>Coefficient</th><th>Std Error</th><th>t-Stat</th><th>P-value</th><th>Lower 95%</th><th>Upper 95%</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Intercept</td><td>0.0052</td><td>0.0061</td><td>0.8435</td><td>0.4007</td><td>−0.0070</td><td>0.0173</td></tr>
+            <tr><td>MKTRF</td><td>1.2889</td><td>0.1538</td><td class="sig">8.3791</td><td class="sig">0.0000</td><td>0.9842</td><td>1.5935</td></tr>
+            <tr><td>SMB</td><td>−0.5841</td><td>0.2664</td><td class="sig">−2.1922</td><td class="sig">0.0304</td><td>−1.1118</td><td>−0.0564</td></tr>
+            <tr><td>HML</td><td>−0.6810</td><td>0.2231</td><td class="sig">−3.0523</td><td class="sig">0.0028</td><td>−1.1229</td><td>−0.2391</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Beberapa hal yang bisa kita baca dari output ini:</p>
+    <ul class="num-list">
+      <li><strong>R² = 0.3891:</strong> Ketiga faktor Fama-French bersama-sama menjelaskan sekitar 38.91% dari variasi return ABC. Ini relatif rendah — lebih dari 61% variasi return ABC tidak dijelaskan oleh tiga faktor ini.</li>
+      <li><strong>F-statistic = 24.63, p-value = 0.0000:</strong> Model secara keseluruhan sangat signifikan — kita menolak hipotesis nol bahwa semua koefisien slope sama dengan nol.</li>
+      <li><strong>MKTRF (β = 1.2889, p = 0.0000):</strong> Sangat signifikan. ABC bergerak lebih dari proporsional terhadap pergerakan pasar — market beta lebih dari 1, artinya ini adalah saham yang agresif.</li>
+      <li><strong>SMB (β = −0.5841, p = 0.0304):</strong> Signifikan pada 5%. Koefisien negatif berarti ABC memiliki large-cap bias — ketika saham kecil outperform saham besar, ABC cenderung underperform.</li>
+      <li><strong>HML (β = −0.6810, p = 0.0028):</strong> Sangat signifikan. Koefisien negatif berarti ABC memiliki growth tilt — ketika saham value outperform growth, ABC cenderung underperform.</li>
+      <li><strong>Intercept (β = 0.0052, p = 0.4007):</strong> Tidak signifikan — tidak ada bukti bahwa ABC menghasilkan alpha yang berbeda dari nol setelah dikontrol ketiga faktor.</li>
+    </ul>
+
+    <div class="sub-header">4.3 Tiga Diagnostic Plot Utama</div>
+
+    <p class="prose">Setelah mengestimasi model, kita perlu memeriksa apakah asumsi-asumsi OLS terpenuhi melalui diagnostic plots. Ada tiga plot utama yang harus dikuasai:</p>
+
+    <div class="callout gold">
+      <div class="callout-title">📊 Plot 1: Residuals vs. Fitted Value (Predicted Value)</div>
+      <p><strong>Tujuan:</strong> Mendeteksi heteroskedasticity, non-linearity, dan outliers.</p>
+      <p><strong>Cara baca:</strong> Plot residual (εᵢ) di sumbu Y terhadap predicted value (Ŷᵢ) di sumbu X.</p>
+      <p><strong>Apa yang diharapkan (asumsi terpenuhi):</strong> Titik-titik tersebar secara random di sekitar garis horizontal εᵢ = 0, tanpa ada pola yang jelas. Variance residual tampak konstan di seluruh range fitted values.</p>
+      <p><strong>Tanda-tanda masalah:</strong></p>
+      <p>— <em>Fan shape (pola kipas):</em> Residuals menyebar lebih lebar seiring bertambahnya fitted value → heteroskedasticity</p>
+      <p>— <em>Pola kurva/U-shape:</em> Ada hubungan non-linear yang tidak tertangkap oleh model → model misspecification</p>
+      <p>— <em>Titik-titik yang jauh terisolasi:</em> Potential outliers yang perlu diinvestigasi</p>
+      <p><strong>Hasil untuk ABC:</strong> Tidak ada directional relationship yang terlihat — line referensi berada dekat εᵢ = 0. Namun ada tiga potential outliers (bulan 7, 25, dan 95) yang ditandai dengan square markers.</p>
+    </div>
+
+    <div class="callout gold">
+      <div class="callout-title">📊 Plot 2: Residuals vs. Each Independent Variable (X)</div>
+      <p><strong>Tujuan:</strong> Mendeteksi apakah ada hubungan antara residuals dengan masing-masing X — yang mengindikasikan model misspecification atau heteroskedasticity yang berkaitan dengan X tertentu.</p>
+      <p><strong>Cara baca:</strong> Buat satu plot terpisah untuk setiap independent variable — residual (εᵢ) di sumbu Y, nilai X di sumbu X.</p>
+      <p><strong>Apa yang diharapkan:</strong> Titik-titik tersebar random tanpa pola direktional (tidak ada kecenderungan naik atau turun seiring berubahnya nilai X).</p>
+      <p><strong>Tanda-tanda masalah:</strong></p>
+      <p>— <em>Pola direktional (tren naik/turun):</em> Residuals berkorelasi dengan X tertentu → model misspecification, mungkin perlu transformasi X</p>
+      <p>— <em>Fan shape untuk X tertentu:</em> Heteroskedasticity yang berkaitan dengan variabel tersebut</p>
+      <p><strong>Hasil untuk ABC:</strong> Ketiga plot (residual vs. MKTRF, vs. SMB, vs. HML) tidak menunjukkan directional relationship — tidak ada bukti pelanggaran asumsi. Tiga outlier yang sama (bulan 7, 25, 95) muncul konsisten di semua plot.</p>
+    </div>
+
+    <div class="callout gold">
+      <div class="callout-title">📊 Plot 3: Normal Q-Q Plot</div>
+      <p><strong>Tujuan:</strong> Memeriksa apakah regression residuals berdistribusi normal (Asumsi 4).</p>
+      <p><strong>Cara baca:</strong> Q-Q plot (Quantile-Quantile plot) membandingkan distribusi empiris dari standardized residuals dengan distribusi normal teoritis. Jika residuals normal, titik-titik seharusnya berada sepanjang diagonal garis 45 derajat.</p>
+      <p><strong>Cara interpretasi:</strong> Kalau 5% observasi yang berdistribusi normal seharusnya berada di bawah −1.65 standard deviations, maka observasi pada persentil ke-5 seharusnya muncul pada −1.65 standard deviations di Q-Q plot.</p>
+      <p><strong>Tanda-tanda masalah:</strong></p>
+      <p>— <em>Penyimpangan di kedua ujung (tails):</em> Distribusi residuals memiliki fat tails — lebih banyak extreme values daripada yang diharapkan dari distribusi normal. Ini sangat umum terjadi pada data finansial.</p>
+      <p>— <em>Titik-titik membentuk kurva S:</em> Distribusi skewed (condong ke satu arah)</p>
+      <p><strong>Hasil untuk ABC:</strong> Secara keseluruhan, titik-titik berada sepanjang diagonal — residuals mendekati normal. Namun observasi 25 dan 95 berada jauh di bawah garis diagonal setelah −2 standard deviations, sementara observasi 7 berada sedikit di atas garis sekitar +2.5 standard deviations. Ini mengkonfirmasi tiga outlier yang sama.</p>
+    </div>
+
+    <div class="callout blue">
+      <div class="callout-title">💡 Konsistensi Outlier Antar Plot</div>
+      <p>Perhatikan bahwa tiga observasi yang sama — bulan 7, 25, dan 95 — muncul sebagai potential outliers di semua tiga jenis diagnostic plot: residual vs. fitted, residual vs. setiap X, dan Q-Q plot. Konsistensi ini mengonfirmasi bahwa ketiga observasi tersebut memang genuine outliers yang perlu diinvestigasi.</p>
+      <p>Langkah selanjutnya adalah memeriksa apa yang terjadi pada bulan-bulan tersebut — apakah ada shocks dari faktor-faktor yang tidak dimasukkan ke dalam model? Misalnya, earnings surprise yang besar, kejadian korporat luar biasa, atau gangguan pasar yang tidak tertangkap oleh ketiga faktor Fama-French.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 4.1 — Diagnostic Plots</div></div>
+      <div class="kc-body">
+        <p class="kc-q">(1) Apa tujuan dari scatterplot antara residuals dengan predicted value of CRYPTO?</p>
+        <button class="kc-toggle" onclick="toggleKC('kc4a')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc4a"><strong>Jawaban:</strong> Plot ini berguna untuk memeriksa apakah ada clustering atau pola yang mengindikasikan residuals tidak homoskedastis (variance tidak konstan) — fan shape adalah tanda klasiknya. Plot ini juga berguna untuk mengidentifikasi potential outliers.</div>
+
+        <p class="kc-q" style="margin-top:14px;">(2) Apa tujuan dari plot residuals vs. GOLD (salah satu independent variable)?</p>
+        <button class="kc-toggle" onclick="toggleKC('kc4b')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc4b"><strong>Jawaban:</strong> Plot ini berguna untuk memeriksa apakah ada extreme values dari independent variable yang mungkin mempengaruhi estimated regression parameters (influential points), dan apakah ada hubungan antara residuals dengan independent variable tersebut — yang mengindikasikan model misspecification.</div>
+
+        <p class="kc-q" style="margin-top:14px;">(3) Pairwise scatterplot digunakan untuk mendeteksi apa?</p>
+        <button class="kc-toggle" onclick="toggleKC('kc4c')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc4c"><strong>Jawaban: A — ada hubungan linear antara dependent dan independent variables.</strong> Pairwise scatterplot berguna untuk memvisualisasikan hubungan antara variabel-variabel dalam model. Ini <em>bukan</em> untuk mendeteksi heteroskedasticity (itu residual vs. fitted plot) maupun normalitas residuals (itu Q-Q plot).</div>
+
+        <p class="kc-q" style="margin-top:14px;">(4) Q-Q plot digunakan untuk mendeteksi apa?</p>
+        <button class="kc-toggle" onclick="toggleKC('kc4d')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc4d"><strong>Jawaban: C — apakah regression residuals berdistribusi normal.</strong> Q-Q plot membandingkan distribusi empiris residuals dengan distribusi normal teoritis. Kalau titik-titik berada sepanjang diagonal, residuals mendekati normal. Penyimpangan di tails mengindikasikan fat-tailed distribution — yang sangat umum pada data finansial.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ═══ SECTION 5: Practice ═══ -->
+  <div id="practice">
+  <div class="practice-header">
+    <div>
+      <div class="practice-header-title">📝 Latihan Soal — Item Set Vignette</div>
+      <div class="practice-header-sub">Format CFA L2 asli · 4 soal · ~30 menit · Jawab dulu sebelum lihat penjelasan</div>
+    </div>
+  </div>
+  <div class="practice-body">
+
+    <div class="vignette">
+      <div class="vignette-label">Case Vignette</div>
+      Arif Nugroho, CFA candidate, adalah analis ekuitas di PT Garuda Investama, Jakarta. Ia sedang membangun model untuk memprediksi return bulanan saham-saham di sektor perbankan IDX menggunakan data bulanan 5 tahun terakhir (60 observasi). Model yang ia estimasikan adalah:<br><br>
+      <strong>BANK_RETᵢ = b₀ + b₁×IHSG_RETᵢ + b₂×ΔNPLᵢ + b₃×ΔNIMᵢ + εᵢ</strong><br><br>
+      Hasil estimasi OLS menghasilkan: b₀ = 0.004, b₁ = 1.15, b₂ = −3.20, b₃ = 2.80.<br><br>
+      Ketika Arif menjalankan diagnostic plots, ia menemukan tiga temuan penting: (1) Pada residual vs. fitted value plot, variance residual tampak membesar seiring meningkatnya fitted value — membentuk pola seperti kipas; (2) Pada Q-Q plot, titik-titik di kedua ujung menyimpang cukup jauh dari diagonal, mengindikasikan distribusi dengan ekor yang lebih tebal dari distribusi normal; (3) Ketika ia cek scatterplot matrix, korelasi antara ΔNPL dan ΔNIM adalah −0.72, yang cukup besar.<br><br>
+      Rekannya menyarankan agar Arif menggunakan logistic regression untuk model ini, berargumen bahwa model linear tidak tepat karena ada masalah dengan residuals.
+    </div>
+
+    <div class="question-block" id="qb0">
+      <div class="q-num">Question 1 of 4</div>
+      <div class="q-text">Berdasarkan residual vs. fitted value plot yang berbentuk kipas (fan shape), pelanggaran asumsi OLS yang paling mungkin terjadi adalah:</div>
+      <button class="option" onclick="answer(0,'A','B')">A. Serial correlation, karena residual menunjukkan pola yang sistematis terhadap waktu</button>
+      <button class="option" onclick="answer(0,'B','B')">B. Heteroskedasticity, karena variance residual tidak konstan — meningkat seiring bertambahnya fitted value</button>
+      <button class="option" onclick="answer(0,'C','B')">C. Multicollinearity, karena korelasi −0.72 antara ΔNPL dan ΔNIM mengindikasikan hubungan linear yang kuat antar independent variables</button>
+      <div class="explanation" id="exp0">
+        <strong>B adalah jawaban yang benar.</strong> Fan shape (pola kipas) pada residual vs. fitted plot adalah tanda klasik dari heteroskedasticity — Var(εᵢ) meningkat seiring meningkatnya fitted value, melanggar asumsi homoskedasticity (Equal variance). Serial correlation biasanya terdeteksi lewat pola cyclical/sinusoidal pada residual vs. time plot, bukan pada residual vs. fitted plot. Multicollinearity tidak tampak di residual plots — ia terdeteksi dari korelasi pairwise antar X atau VIF, dan dampaknya adalah pada koefisien (bukan pada pola residual).
+      </div>
+    </div>
+
+    <div class="question-block" id="qb1">
+      <div class="q-num">Question 2 of 4</div>
+      <div class="q-text">Koefisien b₂ = −3.20 pada ΔNPL (perubahan rasio NPL) diinterpretasikan sebagai:</div>
+      <button class="option" onclick="answer(1,'A','A')">A. Jika ΔNPL naik 1 unit, BANK_RET turun 3.20%, <em>dengan asumsi IHSG_RET dan ΔNIM tidak berubah</em></button>
+      <button class="option" onclick="answer(1,'B','A')">B. Jika ΔNPL naik 1 unit, BANK_RET turun 3.20%, tanpa mempertimbangkan pengaruh variabel lain dalam model</button>
+      <button class="option" onclick="answer(1,'C','A')">C. Korelasi antara ΔNPL dan BANK_RET adalah −3.20, mengindikasikan hubungan negatif yang kuat</button>
+      <div class="explanation" id="exp1">
+        <strong>A adalah jawaban yang benar.</strong> Ini adalah partial regression coefficient — interpretasinya selalu <em>holding other independent variables constant</em> (ceteris paribus). Inilah yang membedakan multiple regression dari simple regression. Opsi B salah karena menghilangkan kata kunci "holding others constant" — tanpa frasa itu, interpretasinya menjadi interpretasi simple regression coefficient, bukan partial. Opsi C salah total — koefisien regression bukan korelasi; korelasi dibatasi antara −1 dan +1, sementara regression coefficient bisa bernilai berapa saja.
+      </div>
+    </div>
+
+    <div class="question-block" id="qb2">
+      <div class="q-num">Question 3 of 4</div>
+      <div class="q-text">Temuan Q-Q plot yang menunjukkan titik-titik menyimpang jauh dari diagonal di kedua ujung paling tepat mengindikasikan:</div>
+      <button class="option" onclick="answer(2,'A','B')">A. Heteroskedasticity — variance residual meningkat di bagian tengah distribusi</button>
+      <button class="option" onclick="answer(2,'B','B')">B. Distribusi residuals memiliki fat tails (ekor lebih tebal dari distribusi normal) — asumsi normality mungkin dilanggar</button>
+      <button class="option" onclick="answer(2,'C','B')">C. Model mengalami omitted variable bias karena ada variabel penting yang tidak dimasukkan</button>
+      <div class="explanation" id="exp2">
+        <strong>B adalah jawaban yang benar.</strong> Q-Q plot membandingkan distribusi empiris residuals dengan distribusi normal teoritis. Penyimpangan di kedua ujung (tails) — khususnya titik-titik yang berada di luar diagonal setelah ±2 standard deviations — mengindikasikan distribusi residuals memiliki fat tails (lebih banyak extreme values daripada yang diharapkan dari distribusi normal). Ini adalah pelanggaran asumsi normality dan sangat umum terjadi pada data time series finansial. Heteroskedasticity terdeteksi dari residual vs. fitted plot (bukan Q-Q plot). Omitted variable bias adalah masalah model specification yang tidak dapat dideteksi langsung dari Q-Q plot.
+      </div>
+    </div>
+
+    <div class="question-block" id="qb3">
+      <div class="q-num">Question 4 of 4</div>
+      <div class="q-text">Saran rekan Arif untuk menggunakan logistic regression sebagai respons terhadap masalah pada residuals adalah:</div>
+      <button class="option" onclick="answer(3,'A','C')">A. Tepat, karena logistic regression lebih robust terhadap heteroskedasticity dan non-normality residuals</button>
+      <button class="option" onclick="answer(3,'B','C')">B. Tepat, karena korelasi tinggi antara ΔNPL dan ΔNIM mengharuskan penggunaan model alternatif</button>
+      <button class="option" onclick="answer(3,'C','C')">C. Tidak tepat — logistic regression digunakan ketika dependent variable bersifat diskrit/biner, bukan kontinu. BANK_RET adalah return dalam persentase (kontinu), sehingga OLS dengan koreksi yang tepat adalah pendekatan yang benar</button>
+      <div class="explanation" id="exp3">
+        <strong>C adalah jawaban yang benar.</strong> Pemilihan antara OLS dan logistic regression didasarkan pada <em>sifat dependent variable</em>, bukan pada kondisi residuals. Logistic regression digunakan ketika dependent variable adalah diskrit/biner — misalnya "apakah bank ini akan default dalam 12 bulan ke depan?" (1=ya, 0=tidak). BANK_RET adalah return persentase bulanan — ini adalah variabel kontinu, sehingga OLS adalah pendekatan yang tepat. Masalah heteroskedasticity diselesaikan dengan Weighted Least Squares (WLS) atau robust standard errors (Huber-White), dan masalah non-normality pada large samples biasanya tidak terlalu mengkhawatirkan karena Central Limit Theorem.
+      </div>
+    </div>
+
+    <div class="score-panel" id="score-panel">
+      <div class="score-num" id="score-num">0/4</div>
+      <div class="score-msg" id="score-msg">—</div>
+    </div>
+
+  </div>
+  </div>
+
+  <!-- Nav -->
+  <div class="nav-bottom">
+    <span style="font-size:13px;color:var(--text3);">← Awal program</span>
+    <div class="nav-day">Day 1 of 90<br><span style="font-size:11px;color:var(--text3);">Selanjutnya: Day 2 · Model Significance Testing</span></div>
+    <a class="nav-btn primary" href="CFA_L2_Day02.html">Day 2 →</a>
+  </div>
+
+</div>
+
+<script>
+function toggleKC(id) {
+  const el = document.getElementById(id);
+  const btn = el.previousElementSibling;
+  if (el.classList.contains('show')) {
+    el.classList.remove('show');
+    btn.textContent = 'Lihat Jawaban';
+  } else {
+    el.classList.add('show');
+    btn.textContent = 'Sembunyikan Jawaban';
+  }
+}
+
+const answers = {};
+const correct = {0:'B', 1:'A', 2:'B', 3:'C'};
+const total = 4;
+
+function answer(qIdx, chosen, correctAns) {
+  if (answers[qIdx]) return;
+  answers[qIdx] = chosen;
+  const block = document.getElementById('qb' + qIdx);
+  const exp   = document.getElementById('exp' + qIdx);
+  block.querySelectorAll('.option').forEach(btn => {
+    btn.disabled = true;
+    const letter = btn.textContent.trim()[0];
+    if (letter === correctAns) btn.classList.add('correct');
+    else if (letter === chosen && chosen !== correctAns) btn.classList.add('wrong');
+  });
+  exp.classList.add('show');
+  if (Object.keys(answers).length === total) showScore();
+}
+
+function showScore() {
+  const score = Object.keys(correct).filter(k => answers[k] === correct[k]).length;
+  const panel = document.getElementById('score-panel');
+  const num   = document.getElementById('score-num');
+  const msg   = document.getElementById('score-msg');
+  num.textContent = score + '/' + total;
+  num.style.color = score === 4 ? 'var(--green)' : score >= 3 ? 'var(--amber)' : 'var(--red)';
+  const msgs = {
+    4:'🎯 Sempurna! Konsep LM1 sudah solid.',
+    3:'✅ Bagus. Review soal yang salah sekali lagi.',
+    2:'⚠️ Perlu review ulang — baca kembali bagian yang terlewat.',
+    1:'🔁 Ulangi bagian theory sebelum lanjut ke Day 2.',
+    0:'🔁 Ulangi bagian theory sebelum lanjut ke Day 2.'
+  };
+  msg.textContent = msgs[score] || msgs[0];
+  panel.style.display = 'block';
+}
+</script>
+</body>
+</html>

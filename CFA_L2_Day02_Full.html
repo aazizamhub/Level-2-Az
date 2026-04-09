@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 2 · Full · Model Significance Testing</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;
+  --border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+  --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;
+  --gold:#9a6e1a;--gold2:#7a5010;--gold-bg:rgba(154,110,26,0.08);
+  --blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);
+  --green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);
+  --red:#b83232;--red-bg:rgba(184,50,50,0.08);
+  --amber:#a06010;--amber-bg:rgba(160,96,16,0.08);
+  --r:10px;--r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.8;}
+.page{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;border:1px solid rgba(26,95,168,0.2);}
+.hero{margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--border);}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:36px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:15px;color:var(--text2);}
+.meta-row{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:36px;}
+.toc-title{font-size:12px;color:var(--text3);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:12px;font-weight:500;}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.toc-list li a{font-size:13px;color:var(--blue);text-decoration:none;display:flex;align-items:center;gap:8px;}
+.toc-list li a:hover{text-decoration:underline;}
+.toc-num{font-size:11px;color:var(--text3);min-width:20px;}
+.chapter{margin-bottom:40px;}
+.chapter-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--gold-bg);}
+.chapter-num{font-family:'DM Serif Display',serif;font-size:28px;color:var(--gold);line-height:1;}
+.chapter-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);line-height:1.2;}
+.sub-header{font-size:17px;font-weight:500;color:var(--text);margin:24px 0 12px;padding-left:12px;border-left:3px solid var(--gold);}
+.prose{font-size:14px;color:var(--text2);line-height:1.85;margin-bottom:14px;}
+.prose strong{color:var(--text);font-weight:500;}
+.formula-block{background:var(--bg2);border:1px solid var(--border2);border-left:4px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:16px 20px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold2);line-height:2;}
+.formula-block .label{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:8px;}
+.formula-block .note{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text3);font-style:italic;display:block;margin-top:8px;}
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:20px 0;}
+.exhibit-title{background:var(--bg3);padding:10px 16px;font-size:12px;font-weight:500;color:var(--text2);border-bottom:1px solid var(--border);}
+.exhibit-body{padding:16px;}
+.reg-table{width:100%;border-collapse:collapse;font-size:13px;}
+.reg-table th{text-align:right;padding:8px 12px;background:var(--bg3);color:var(--text3);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border2);}
+.reg-table th:first-child{text-align:left;}
+.reg-table td{padding:8px 12px;border-bottom:1px solid var(--border);text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text2);}
+.reg-table td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);font-weight:500;}
+.reg-table tr:last-child td{border-bottom:none;}
+.reg-table .sig{color:var(--green);font-weight:500;}
+.reg-table .nsig{color:var(--text3);}
+.callout{border-radius:var(--r);padding:16px 18px;margin:16px 0;}
+.callout-title{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;}
+.callout p{font-size:13px;color:var(--text2);line-height:1.75;}
+.callout p+p{margin-top:8px;}
+.callout.blue{background:var(--blue-bg);border:1px solid rgba(26,95,168,0.15);}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.green{background:var(--green-bg);border:1px solid rgba(26,122,74,0.15);}
+.callout.green .callout-title{color:var(--green);}
+.callout.amber{background:var(--amber-bg);border:1px solid rgba(160,96,16,0.15);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.red{background:var(--red-bg);border:1px solid rgba(184,50,50,0.15);}
+.callout.red .callout-title{color:var(--red);}
+.callout.gold{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);}
+.callout.gold .callout-title{color:var(--gold);}
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:24px 0;overflow:hidden;}
+.kc-header{background:var(--gold-bg);padding:12px 18px;border-bottom:1px solid rgba(154,110,26,0.15);}
+.kc-header-title{font-size:12px;font-weight:500;color:var(--gold);letter-spacing:0.06em;text-transform:uppercase;}
+.kc-body{padding:18px;}
+.kc-q{font-size:13px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.6;}
+.kc-answer{background:var(--bg3);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);line-height:1.75;display:none;}
+.kc-answer.show{display:block;}
+.kc-answer strong{color:var(--green);}
+.kc-toggle{background:none;border:1px solid var(--border2);border-radius:var(--r-sm);padding:6px 14px;font-size:12px;color:var(--text3);cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px;transition:all 0.15s;}
+.kc-toggle:hover{border-color:var(--gold);color:var(--gold);}
+.comp-table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;}
+.comp-table th{text-align:left;padding:9px 12px;background:var(--bg3);color:var(--text2);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border2);}
+.comp-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;color:var(--text2);}
+.comp-table tr:last-child td{border-bottom:none;}
+.comp-table .name{font-weight:500;color:var(--text);}
+.badge{display:inline-flex;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;}
+.badge-green{background:var(--green-bg);color:var(--green);}
+.badge-red{background:var(--red-bg);color:var(--red);}
+.badge-amber{background:var(--amber-bg);color:var(--amber);}
+.badge-blue{background:var(--blue-bg);color:var(--blue);}
+.step-box{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:14px 16px;margin:8px 0;}
+.step-num{font-size:11px;color:var(--gold);font-weight:500;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;}
+.step-content{font-size:13px;color:var(--text2);line-height:1.7;}
+.step-content strong{color:var(--text);}
+.bullet-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin:10px 0;}
+.bullet-list li{display:flex;gap:10px;font-size:13px;color:var(--text2);line-height:1.7;}
+.bullet-list li::before{content:'■';color:var(--gold);font-size:9px;margin-top:5px;flex-shrink:0;}
+.divider{height:1px;background:var(--border);margin:36px 0;}
+.practice-header{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);border-radius:var(--r) var(--r) 0 0;padding:16px 20px;}
+.practice-header-title{font-size:16px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);margin-top:2px;}
+.practice-body{background:var(--bg2);border:1px solid rgba(154,110,26,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:24px;}
+.vignette{background:var(--bg3);border-left:4px solid var(--gold);padding:18px 20px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:28px;font-size:13px;color:var(--text2);line-height:1.85;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;font-weight:500;}
+.question-block{margin-bottom:24px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:6px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:12px;line-height:1.65;}
+.option{display:block;width:100%;text-align:left;padding:11px 16px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:8px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.6;}
+.option:hover:not(:disabled){border-color:var(--border2);background:var(--bg2);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:14px 16px;font-size:13px;color:var(--text2);margin-top:10px;line-height:1.8;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:28px;margin-top:20px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:52px;margin-bottom:8px;}
+.score-msg{font-size:14px;color:var(--text2);}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+.nav-day{font-size:12px;color:var(--text3);text-align:center;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II · <span>Quantitative Methods</span> · LM2</div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <div class="version-badge">Versi Full</div>
+      <div class="day-badge">Day 2 of 90</div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Selasa, 7 April 2026</div>
+    <h1 class="hero-title">Evaluating Regression Model Fit & Interpreting Results</h1>
+    <p class="hero-sub">Learning Module 2 — Quantitative Methods · CFA Level II 2026</p>
+    <div class="meta-row">
+      <div class="meta-pill">📖 Materi lengkap</div>
+      <div class="meta-pill">🇮🇩 Bahasa Indonesia</div>
+      <div class="meta-pill">⚖️ Exam weight <b>~6%</b></div>
+      <div class="meta-pill">⏱ Est. baca <b>45–60 menit</b></div>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ul class="toc-list">
+      <li><a href="#anova"><span class="toc-num">1</span>ANOVA Table — Anatomy & Interpretasi Lengkap</a></li>
+      <li><a href="#r2"><span class="toc-num">2</span>R² vs Adjusted R² — Kenapa Adjusted Lebih Baik</a></li>
+      <li><a href="#aic"><span class="toc-num">3</span>AIC & BIC — Kriteria Pemilihan Model</a></li>
+      <li><a href="#ftest"><span class="toc-num">4</span>General F-Test — Signifikansi Keseluruhan Model</a></li>
+      <li><a href="#joint"><span class="toc-num">5</span>Joint F-Test — Restricted vs Unrestricted (Nested Models)</a></li>
+      <li><a href="#forecast"><span class="toc-num">6</span>Forecasting — Prediksi dengan Estimated Model</a></li>
+      <li><a href="#practice"><span class="toc-num">7</span>Latihan Soal</a></li>
+    </ul>
+  </div>
+
+  <!-- ═══════════ SECTION 1 ═══════════ -->
+  <div class="chapter" id="anova">
+    <div class="chapter-header">
+      <div class="chapter-num">1</div>
+      <div class="chapter-title">ANOVA Table — Anatomy & Interpretasi Lengkap</div>
+    </div>
+
+    <p class="prose">ANOVA (Analysis of Variance) table adalah output inti dari regression software yang memecah total variasi Y menjadi dua komponen: bagian yang <em>dijelaskan</em> oleh model dan bagian yang <em>tidak bisa dijelaskan</em> (residual).</p>
+
+    <div class="sub-header">1.1 Dekomposisi Variasi — SST = SSR + SSE</div>
+
+    <div class="formula-block">
+      <span class="label">Dekomposisi Variasi Total</span>
+      SST = SSR + SSE
+      <span class="note">SST = Sum of Squares Total = Σ(Yᵢ − Ȳ)²  → total variasi Y dari mean-nya</span>
+      <span class="note">SSR = Sum of Squares Regression = Σ(Ŷᵢ − Ȳ)²  → variasi yang dijelaskan model</span>
+      <span class="note">SSE = Sum of Squares Error = Σ(Yᵢ − Ŷᵢ)²  → variasi residual (tidak dijelaskan)</span>
+    </div>
+
+    <div class="sub-header">1.2 Struktur Lengkap ANOVA Table</div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Template ANOVA Table — Hubungan antar Komponen</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Source</th><th>df</th><th>Sum of Squares</th><th>Mean Squares</th><th>F-statistic</th></tr></thead>
+          <tbody>
+            <tr><td>Regression</td><td>k</td><td>SSR</td><td>MSR = SSR / k</td><td rowspan="2" style="vertical-align:middle;text-align:right;font-family:'JetBrains Mono',monospace;font-weight:500;color:var(--gold2);">F = MSR / MSE</td></tr>
+            <tr><td>Residual (Error)</td><td>n − k − 1</td><td>SSE</td><td>MSE = SSE / (n−k−1)</td></tr>
+            <tr><td><strong>Total</strong></td><td>n − 1</td><td>SST = SSR + SSE</td><td>—</td><td>—</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:12px;color:var(--text3);margin-top:10px;">k = jumlah independent variables &nbsp;|&nbsp; n = jumlah observasi &nbsp;|&nbsp; df total = df regression + df residual = k + (n−k−1) = n−1 ✓</p>
+      </div>
+    </div>
+
+    <p class="prose">Dari ANOVA table, dua statistik paling penting langsung bisa dihitung:</p>
+
+    <div class="formula-block">
+      <span class="label">R² dari ANOVA</span>
+      R² = SSR / SST
+      <span class="note">Proporsi variasi Y yang dijelaskan oleh seluruh set independent variables</span>
+    </div>
+
+    <div class="formula-block">
+      <span class="label">General F-statistic dari ANOVA</span>
+      F = MSR / MSE = (SSR/k) / (SSE/(n−k−1))
+      <span class="note">H₀: b₁ = b₂ = ... = bₖ = 0 &nbsp;(tidak ada X yang menjelaskan Y)</span>
+      <span class="note">Hₐ: at least one bⱼ ≠ 0</span>
+      <span class="note">df: k (numerator), n−k−1 (denominator) &nbsp;|&nbsp; one-tail right-side test</span>
+    </div>
+
+    <div class="sub-header">1.3 Contoh Numerik — Five-Factor Portfolio Model (n=50, k=5)</div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 1: ANOVA Table dan Regression Output — Five-Factor Model</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Source</th><th>df</th><th>SS</th><th>MS</th><th>F</th><th>Sig. F</th></tr></thead>
+          <tbody>
+            <tr><td>Regression</td><td>5</td><td>90.6234</td><td>18.1247</td><td class="sig">14.0853</td><td class="sig">&lt;0.000</td></tr>
+            <tr><td>Residual</td><td>44</td><td>56.6182</td><td>1.2868</td><td>—</td><td>—</td></tr>
+            <tr><td>Total</td><td>49</td><td>147.2416</td><td>—</td><td>—</td><td>—</td></tr>
+          </tbody>
+        </table>
+        <table class="reg-table" style="margin-top:16px;">
+          <thead><tr><th>Variable</th><th>Coeff.</th><th>SE</th><th>t-Stat</th><th>P-value</th><th>CI Lower</th><th>CI Upper</th></tr></thead>
+          <tbody>
+            <tr><td>Intercept</td><td>−2.1876</td><td>0.1767</td><td class="sig">−12.38</td><td class="sig">0.000</td><td>−2.544</td><td>−1.831</td></tr>
+            <tr><td>Factor 1</td><td>1.5992</td><td>0.2168</td><td class="sig">7.376</td><td class="sig">0.000</td><td>1.162</td><td>2.036</td></tr>
+            <tr><td>Factor 2</td><td>0.1923</td><td>0.7406</td><td class="nsig">0.260</td><td class="nsig">0.796</td><td>−1.300</td><td>1.685</td></tr>
+            <tr><td>Factor 3</td><td>−0.7126</td><td>0.5854</td><td class="nsig">−1.217</td><td class="nsig">0.230</td><td>−1.893</td><td>0.467</td></tr>
+            <tr><td>Factor 4</td><td>3.3376</td><td>1.3493</td><td class="sig">2.474</td><td class="sig">0.017</td><td>0.618</td><td>6.057</td></tr>
+            <tr><td>Factor 5</td><td>−2.6832</td><td>8.3919</td><td class="nsig">−0.320</td><td class="nsig">0.751</td><td>−19.60</td><td>14.23</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:12px;color:var(--text3);margin-top:8px;">R² = 0.6155 &nbsp;|&nbsp; Adjusted R² = 0.5718 &nbsp;|&nbsp; SE of regression = 0.0113</p>
+      </div>
+    </div>
+
+    <p class="prose">Cara membaca output ini secara sistematis:</p>
+    <ul class="bullet-list">
+      <li><strong>Verifikasi R²:</strong> SSR/SST = 90.6234/147.2416 = 0.6155 ✓</li>
+      <li><strong>Verifikasi F:</strong> MSR/MSE = 18.1247/1.2868 = 14.09 ✓ dan p &lt; 0.0001 → tolak H₀ → setidaknya satu faktor signifikan</li>
+      <li><strong>Individual significance:</strong> Factor 1 (t=7.38) dan Factor 4 (t=2.47) signifikan. Factor 2, 3, 5 tidak signifikan secara individual</li>
+      <li><strong>Paradoks:</strong> Overall F sangat signifikan, tapi 3 dari 5 faktor tidak signifikan individual → mengisyaratkan model bisa disederhanakan, atau ada multicollinearity</li>
+    </ul>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 1.1 — Membaca dan Menghitung ANOVA</div></div>
+      <div class="kc-body">
+        <p class="kc-q">Model 3 ROA (CAPEX+ADV+R&D): SSRegression = 410.9591, SSTotal = 466.3540, n = 26, k = 3. Hitung R², Adjusted R², dan F-statistic. Apakah signifikan pada α = 1%? Critical F(3,22) = 4.8166.</p>
+        <button class="kc-toggle" onclick="toggleKC('kc1a')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc1a">
+          <strong>SSE = 466.3540 − 410.9591 = 55.3949</strong><br>
+          <strong>R² = 410.9591/466.3540 = 0.8812 (88.12%)</strong><br><br>
+          Adjusted R² = 1 − [(n−1)/(n−k−1)]×(1−R²) = 1 − [25/22]×(1−0.8812)<br>
+          = 1 − 1.1364×0.1188 = 1 − 0.1350 = <strong>0.8650</strong><br><br>
+          MSR = 410.9591/3 = 136.9864 &nbsp;|&nbsp; MSE = 55.3949/22 = 2.5180<br>
+          <strong>F = 136.9864/2.5180 = 54.40</strong><br><br>
+          54.40 >> 4.8166 → <strong>Tolak H₀ pada α=1%</strong>. Setidaknya satu koefisien berbeda dari nol.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ SECTION 2 ═══════════ -->
+  <div class="chapter" id="r2">
+    <div class="chapter-header">
+      <div class="chapter-num">2</div>
+      <div class="chapter-title">R² vs Adjusted R² — Kenapa Adjusted Lebih Baik</div>
+    </div>
+
+    <p class="prose">R² memiliki kelemahan fundamental dalam multiple regression: ia <strong>tidak pernah turun</strong> saat variabel ditambahkan, bahkan kalau variabel tersebut sama sekali tidak relevan. Ini menciptakan insentif yang salah untuk terus menambah variabel.</p>
+
+    <div class="sub-header">2.1 Tiga Masalah R² dalam Multiple Regression</div>
+
+    <ul class="bullet-list">
+      <li><strong>Tidak pernah turun saat variabel ditambahkan</strong> — mendorong overfitting. Model yang terlalu kompleks akan punya R² tinggi tapi gagal memprediksi out-of-sample.</li>
+      <li><strong>Tidak memberikan info tentang signifikansi koefisien</strong> — R² tinggi tidak berarti koefisien individual signifikan.</li>
+      <li><strong>Tidak bisa membedakan model bagus dari model overfit</strong> — model dengan banyak variabel tidak relevan bisa punya R² sama tingginya dengan model parsimonious yang baik.</li>
+    </ul>
+
+    <div class="sub-header">2.2 Adjusted R² — Formula dan Propertinya</div>
+
+    <div class="formula-block">
+      <span class="label">Adjusted R² — Dua Formulasi Ekuivalen</span>
+      Adj. R² = 1 − [SSE/(n−k−1)] / [SST/(n−1)]
+      <br>
+      Adj. R² = 1 − [(n−1)/(n−k−1)] × (1 − R²)
+      <span class="note">Selalu: Adjusted R² &lt; R² (bila k ≥ 1)</span>
+      <span class="note">Bisa negatif jika R² sangat kecil dan k besar relatif terhadap n</span>
+      <span class="note">Tidak ada interpretasi langsung sebagai "% variasi yang dijelaskan" dalam multiple regression</span>
+    </div>
+
+    <div class="callout gold">
+      <div class="callout-title">📊 Rule Kritis — Kapan Adjusted R² Naik atau Turun?</div>
+      <p>Saat menambahkan satu variabel baru ke model:</p>
+      <p><strong>|t-statistic variabel baru| &gt; 1.0</strong> → Adjusted R² <span style="color:var(--green);font-weight:500;">naik ↑</span></p>
+      <p><strong>|t-statistic variabel baru| &lt; 1.0</strong> → Adjusted R² <span style="color:var(--red);font-weight:500;">turun ↓</span></p>
+      <p>Threshold |t| = 1.0 bukan threshold signifikansi (yang 1.96 atau 2.0). Artinya Adjusted R² bisa naik meskipun variabelnya <em>tidak signifikan secara statistik</em>. Jangan gunakan ini sebagai satu-satunya kriteria.</p>
+    </div>
+
+    <div class="sub-header">2.3 Ilustrasi — Menambah Faktor Satu per Satu</div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 3: Dinamika R² dan Adjusted R² Saat Faktor Ditambahkan Bertahap</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Model</th><th>R²</th><th>Adj. R²</th><th>Perubahan Adj. R²</th><th>|t| variabel baru</th></tr></thead>
+          <tbody>
+            <tr><td>Factor 1 only</td><td>0.5409</td><td>0.5313</td><td>—</td><td>—</td></tr>
+            <tr><td>+ Factor 2</td><td>0.5409</td><td class="nsig">0.5214</td><td style="color:var(--red);">↓ −0.0099</td><td class="nsig">0.26 &lt; 1.0</td></tr>
+            <tr><td>+ Factor 3</td><td>0.5618</td><td class="sig">0.5332</td><td style="color:var(--green);">↑ +0.0118</td><td class="sig">1.22 &gt; 1.0</td></tr>
+            <tr><td>+ Factor 4</td><td>0.6146</td><td class="sig">0.5803</td><td style="color:var(--green);">↑ +0.0471</td><td class="sig">2.47 &gt; 1.0</td></tr>
+            <tr><td>+ Factor 5</td><td>0.6155</td><td class="nsig">0.5718</td><td style="color:var(--red);">↓ −0.0085</td><td class="nsig">0.32 &lt; 1.0</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:12px;color:var(--text3);margin-top:8px;">R² tidak pernah turun. Adjusted R² turun persis saat |t| variabel baru &lt; 1.0 (Factor 2 dan Factor 5).</p>
+      </div>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 2.1 — R² vs Adjusted R²</div></div>
+      <div class="kc-body">
+        <p class="kc-q">Model 1 (CAPEX only): R²=0.8799, Adj. R²=0.8749. Model 2 (CAPEX+ADV): R²=0.8805, Adj. R²=0.8701. t-statistic ADV = −0.3320. Interpretasikan dan simpulkan mana yang lebih baik.</p>
+        <button class="kc-toggle" onclick="toggleKC('kc2a')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc2a">
+          R² Model 2 (0.8805) lebih tinggi dari Model 1 (0.8799) — konsisten dengan rule R² tidak pernah turun.<br><br>
+          <strong>Adjusted R² Model 2 (0.8701) lebih rendah dari Model 1 (0.8749)</strong> — konsisten karena |t|ADV = 0.3320 &lt; 1.0, maka penambahan ADV menurunkan Adjusted R².<br><br>
+          Kesimpulan: <strong>Model 1 lebih baik</strong>. ADV tidak berkontribusi secara bermakna — ia menurunkan Adjusted R² dan AIC/BIC-nya pun lebih buruk.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ SECTION 3 ═══════════ -->
+  <div class="chapter" id="aic">
+    <div class="chapter-header">
+      <div class="chapter-num">3</div>
+      <div class="chapter-title">AIC & BIC — Kriteria Pemilihan Model yang Rigorous</div>
+    </div>
+
+    <p class="prose">AIC dan BIC mengukur parsimony — keseimbangan antara fit model dan kompleksitasnya. Keduanya memberikan penalti eksplisit untuk setiap variabel yang ditambahkan, sehingga lebih reliable daripada R² dan bahkan Adjusted R² dalam pemilihan model.</p>
+
+    <div class="sub-header">3.1 Formula AIC dan BIC</div>
+
+    <div class="formula-block">
+      <span class="label">AIC — Akaike's Information Criterion</span>
+      AIC = n × ln(SSE/n) + 2(k+1)
+      <span class="note">Penalty: 2(k+1) — relatif lebih kecil, model lebih kompleks ditoleransi</span>
+      <span class="note">Lower AIC = better &nbsp;|&nbsp; Gunakan untuk tujuan PREDIKSI</span>
+    </div>
+
+    <div class="formula-block">
+      <span class="label">BIC — Schwarz's Bayesian Information Criterion</span>
+      BIC = n × ln(SSE/n) + ln(n)(k+1)
+      <span class="note">Penalty: ln(n)(k+1) — lebih besar dari AIC karena ln(n) &gt; 2 untuk n ≥ 8</span>
+      <span class="note">Lower BIC = better &nbsp;|&nbsp; Gunakan untuk GOODNESS OF FIT / parsimony</span>
+    </div>
+
+    <table class="comp-table">
+      <thead><tr><th>Aspek</th><th>AIC</th><th>BIC</th></tr></thead>
+      <tbody>
+        <tr><td class="name">Penalty per variabel</td><td>2(k+1) — lebih kecil</td><td>ln(n)(k+1) — lebih besar</td></tr>
+        <tr><td class="name">Cenderung pilih</td><td>Model lebih kompleks</td><td>Model lebih sederhana</td></tr>
+        <tr><td class="name">Gunakan untuk</td><td><strong>Prediksi / forecasting</strong></td><td><strong>Goodness of fit, parsimony</strong></td></tr>
+        <tr><td class="name">Kriteria</td><td>Nilai lebih rendah lebih baik</td><td>Nilai lebih rendah lebih baik</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout red">
+      <div class="callout-title">🚨 Exam Trap yang Paling Sering Muncul</div>
+      <p>Nilai absolut AIC atau BIC tidak bermakna sama sekali. Yang bermakna hanya perbandingan <em>relatif</em> antar model dengan <strong>dependent variable yang sama</strong>. "AIC = 18.2 artinya bagus" → salah total. Yang benar: "AIC model B = 16.8 lebih rendah dari model A = 18.4, jadi model B lebih baik untuk prediksi."</p>
+    </div>
+
+    <div class="sub-header">3.2 Contoh Numerik — 5 Model dari 5 Faktor</div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 4: Goodness-of-Fit Measures untuk Portfolio Excess Returns (berbagai kombinasi faktor)</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Model</th><th>R²</th><th>Adj. R²</th><th>AIC</th><th>BIC</th></tr></thead>
+          <tbody>
+            <tr><td>Factor 1 only</td><td>0.541</td><td>0.531</td><td>19.079</td><td class="sig">22.903 ← Best BIC</td></tr>
+            <tr><td>Factors 1, 2</td><td>0.541</td><td>0.521</td><td>21.078</td><td>26.814</td></tr>
+            <tr><td>Factors 1, 2, 3</td><td>0.562</td><td>0.533</td><td>20.743</td><td>28.393</td></tr>
+            <tr><td>Factors 1, 2, 3, 4</td><td>0.615</td><td>0.580</td><td class="sig">16.331 ← Best AIC</td><td>25.891</td></tr>
+            <tr><td>Factors 1–5 (full)</td><td>0.615</td><td>0.572</td><td>18.215</td><td>29.687</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <ul class="bullet-list">
+      <li><strong>Untuk prediksi:</strong> pilih model Factors 1,2,3,4 — AIC terendah (16.331)</li>
+      <li><strong>Untuk goodness of fit:</strong> pilih model Factor 1 saja — BIC terendah (22.903), model paling parsimonious</li>
+      <li>Model full (5 faktor) memiliki R² sama dengan model 4-faktor (0.615) tapi AIC dan BIC lebih tinggi → Factor 5 tidak memberikan nilai tambah</li>
+    </ul>
+
+    <div class="callout blue">
+      <div class="callout-title">💡 Relevansi Praktis untuk Fund Management</div>
+      <p>Saat membangun factor model untuk <strong>return attribution</strong> (memahami dari mana return berasal), gunakan BIC — lo ingin model sesederhana mungkin yang tetap fit. Saat membangun model untuk <strong>alpha forecasting</strong> (prediksi return bulan depan), gunakan AIC — lebih banyak variabel relevan lebih baik untuk forecast accuracy.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 3.1 — Interpretasi AIC dan BIC</div></div>
+      <div class="kc-body">
+        <p class="kc-q">Model 1 (CAPEX): AIC=23.899, BIC=26.523. Model 2 (CAPEX+ADV): AIC=25.804, BIC=28.792. Mana model terbaik, dan apakah kesimpulannya konsisten dengan Adjusted R²?</p>
+        <button class="kc-toggle" onclick="toggleKC('kc3a')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc3a">
+          <strong>Model 1 (CAPEX saja) lebih baik berdasarkan semua kriteria:</strong><br>
+          • AIC Model 1 (23.899) &lt; Model 2 (25.804) → Model 1 lebih baik untuk prediksi<br>
+          • BIC Model 1 (26.523) &lt; Model 2 (28.792) → Model 1 lebih parsimonious<br><br>
+          <strong>Konsisten dengan Adjusted R²:</strong> Adj. R² Model 1 (0.875) &gt; Model 2 (0.870) — semua metrics mengarah ke kesimpulan yang sama. Menambahkan ADV tidak meningkatkan model dalam ukuran apapun.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ SECTION 4 ═══════════ -->
+  <div class="chapter" id="ftest">
+    <div class="chapter-header">
+      <div class="chapter-num">4</div>
+      <div class="chapter-title">General F-Test — Uji Signifikansi Keseluruhan Model</div>
+    </div>
+
+    <p class="prose">General linear F-test adalah uji formal apakah model regression sebagai keseluruhan signifikan — apakah setidaknya satu independent variable berhubungan linear dengan Y. Ini adalah "omnibus test" yang selalu dilaporkan dalam regression output.</p>
+
+    <div class="formula-block">
+      <span class="label">General F-Test</span>
+      H₀: b₁ = b₂ = ... = bₖ = 0
+      Hₐ: at least one bⱼ ≠ 0
+      <br>
+      F = MSR / MSE = (SSR/k) / (SSE/(n−k−1))
+      <span class="note">df: k (numerator), n−k−1 (denominator) &nbsp;|&nbsp; One-tail right-side</span>
+    </div>
+
+    <div class="sub-header">4.1 Step-by-Step — Five-Factor Model (α = 5%)</div>
+
+    <div class="step-box">
+      <div class="step-num">Step 1 — Hipotesis</div>
+      <div class="step-content">H₀: b₁=b₂=b₃=b₄=b₅=0 &nbsp;|&nbsp; Hₐ: at least one bⱼ ≠ 0</div>
+    </div>
+    <div class="step-box">
+      <div class="step-num">Step 2 — Test Statistic</div>
+      <div class="step-content">F = MSR/MSE, df = 5 (num.) dan 44 (denom.)</div>
+    </div>
+    <div class="step-box">
+      <div class="step-num">Step 3 — Level of Significance</div>
+      <div class="step-content">α = 5%, one-tail right</div>
+    </div>
+    <div class="step-box">
+      <div class="step-num">Step 4 — Decision Rule</div>
+      <div class="step-content">Critical F(5,44) at 5% = 2.427. <strong>Tolak H₀ jika F &gt; 2.427</strong></div>
+    </div>
+    <div class="step-box">
+      <div class="step-num">Step 5 — Calculate</div>
+      <div class="step-content">F = 18.1247 / 1.2868 = <strong>14.0853</strong></div>
+    </div>
+    <div class="step-box" style="background:var(--green-bg);border-color:rgba(26,122,74,0.3);">
+      <div class="step-num" style="color:var(--green);">Step 6 — Decision</div>
+      <div class="step-content"><strong>Tolak H₀.</strong> 14.09 &gt;&gt; 2.427. Ada cukup bukti bahwa setidaknya satu dari lima faktor signifikan. Model secara keseluruhan signifikan.</div>
+    </div>
+
+    <div class="callout amber">
+      <div class="callout-title">⚠ F-test Signifikan ≠ Semua Koefisien Signifikan</div>
+      <p>Dari five-factor model: F-test sangat signifikan (p &lt; 0.001), tapi hanya Factor 1 dan Factor 4 yang signifikan secara individual. Ini tidak kontradiksi — F-test hanya mengatakan "setidaknya satu variabel berkontribusi." Kita perlu individual t-tests dan joint F-tests untuk melihat variabel mana yang berkontribusi.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════ SECTION 5 ═══════════ -->
+  <div class="chapter" id="joint">
+    <div class="chapter-header">
+      <div class="chapter-num">5</div>
+      <div class="chapter-title">Joint F-Test — Restricted vs Unrestricted (Nested Models)</div>
+    </div>
+
+    <p class="prose">Joint F-test menjawab pertanyaan yang lebih spesifik: apakah <em>sekelompok variabel tertentu</em> secara bersama-sama berkontribusi signifikan pada model? Ini membandingkan dua nested models — satu yang lebih lengkap (unrestricted) dan satu yang lebih terbatas (restricted).</p>
+
+    <div class="sub-header">5.1 Konsep Nested Models</div>
+
+    <div class="formula-block">
+      <span class="label">Setup — Restricted vs Unrestricted</span>
+      Unrestricted: Y = b₀ + b₁X₁ + b₂X₂ + b₃X₃ + b₄X₄ + b₅X₅ + ε  (k = 5)
+      Restricted:   Y = b₀ + b₁X₁ + b₂X₂ + b₃X₃ + ε  (k = 3, drop X₄ dan X₅)
+      <span class="note">H₀: b₄ = b₅ = 0 &nbsp;|&nbsp; q = 2 (jumlah restrictions)</span>
+      <span class="note">Hₐ: at least one of b₄, b₅ ≠ 0</span>
+    </div>
+
+    <div class="formula-block">
+      <span class="label">Joint F-Test Statistic</span>
+      F = [(SSE_restricted − SSE_unrestricted) / q] / [SSE_unrestricted / (n−k−1)]
+      <span class="note">q = jumlah restrictions (variabel yang di-drop dari unrestricted ke restricted)</span>
+      <span class="note">df: q (numerator), n−k−1 dari unrestricted model (denominator)</span>
+      <span class="note">Kalau F besar → menghapus q variabel menyebabkan SSE naik banyak → variabel itu penting</span>
+    </div>
+
+    <div class="callout blue">
+      <div class="callout-title">💡 Kenapa Joint Test dan Bukan Individual t-tests Saja?</div>
+      <p>Kalau X₄ dan X₅ berkorelasi satu sama lain, mereka berbagi explanatory power. Individual t-test pada X₄ tidak menangkap kontribusi kolektifnya bersama X₅. Joint F-test mengukur kontribusi bersama kedua variabel tersebut di atas kontribusi variabel yang sudah ada (X₁, X₂, X₃).</p>
+    </div>
+
+    <div class="sub-header">5.2 Contoh Numerik Lengkap — Test Factors 4 & 5 (α = 1%)</div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 5: Partial ANOVA — Restricted (Factors 1-3) vs Unrestricted (Factors 1-5)</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Model</th><th>Factors</th><th>df Residual</th><th>SSE</th><th>MSE</th></tr></thead>
+          <tbody>
+            <tr><td>Restricted</td><td>1, 2, 3</td><td>46</td><td>64.5176</td><td>1.4026</td></tr>
+            <tr><td>Unrestricted</td><td>1, 2, 3, 4, 5</td><td>44</td><td>56.6182</td><td>1.2868</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="step-box">
+      <div class="step-num">Step 1</div>
+      <div class="step-content">H₀: b₄ = b₅ = 0 &nbsp;|&nbsp; Hₐ: at least one of b₄, b₅ ≠ 0</div>
+    </div>
+    <div class="step-box">
+      <div class="step-num">Step 2</div>
+      <div class="step-content">F dengan q = 2 restrictions dan df_denominator = 44 (dari unrestricted)</div>
+    </div>
+    <div class="step-box">
+      <div class="step-num">Step 3</div>
+      <div class="step-content">α = 1%, one-tail right</div>
+    </div>
+    <div class="step-box">
+      <div class="step-num">Step 4</div>
+      <div class="step-content">Critical F(2,44) at 1% = 5.120. Tolak H₀ jika F &gt; 5.120</div>
+    </div>
+    <div class="step-box">
+      <div class="step-num">Step 5 — Kalkulasi</div>
+      <div class="step-content">
+        F = [(64.5176 − 56.6182) / 2] / [56.6182 / 44]<br>
+        = [7.8994 / 2] / 1.2868<br>
+        = 3.9497 / 1.2868<br>
+        = <strong>3.0694</strong>
+      </div>
+    </div>
+    <div class="step-box" style="background:var(--amber-bg);border-color:rgba(160,96,16,0.3);">
+      <div class="step-num" style="color:var(--amber);">Step 6 — Decision</div>
+      <div class="step-content"><strong>Gagal tolak H₀.</strong> 3.0694 &lt; 5.120. Factor 4 dan Factor 5 secara bersama-sama tidak memberikan kontribusi yang cukup signifikan. Model parsimonious dengan 3 faktor saja sudah cukup.</div>
+    </div>
+
+    <div class="callout amber">
+      <div class="callout-title">⚠ Nuansa — Factor 4 Signifikan Individual tapi Tidak dalam Joint Test</div>
+      <p>Factor 4 secara individual signifikan (t=2.47, p=0.017). Tapi dalam joint test dengan Factor 5, keduanya tidak signifikan bersama-sama. Ini terjadi karena Factor 5 sangat tidak signifikan (|t|=0.32) sehingga "menyeret" F-statistic ke bawah threshold walau Factor 4 sendiri bagus. Implikasinya: model dengan Factor 1, Factor 3, dan Factor 4 (tanpa Factor 2 dan 5) bisa jadi model terbaik — ini yang divalidasi oleh AIC minimum pada model 4-faktor.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 5.1 — Joint F-Test Lengkap</div></div>
+      <div class="kc-body">
+        <p class="kc-q">Model 1 (CAPEX, restricted): SSE = 55.9934, df = 24. Model 3 (CAPEX+ADV+R&D, unrestricted, k=3): SSE = 55.3949, df = 22. Uji apakah ADV dan R&D bersama-sama signifikan pada α = 1%. Critical F(2,22) = 5.7190.</p>
+        <button class="kc-toggle" onclick="toggleKC('kc5a')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc5a">
+          <strong>Setup:</strong> Restricted = Model 1 (CAPEX), Unrestricted = Model 3 (CAPEX+ADV+R&D), q = 2, df_denom = 22<br><br>
+          F = [(55.9934 − 55.3949) / 2] / [55.3949 / 22]<br>
+          = [0.5985 / 2] / 2.5180<br>
+          = 0.2993 / 2.5180<br>
+          = <strong>0.1188</strong><br><br>
+          0.1188 &lt;&lt; 5.7190 → <strong>Gagal tolak H₀</strong>. ADV dan R&D bersama-sama tidak signifikan. Menambahkan keduanya ke CAPEX hampir tidak mengubah SSE (turun hanya 0.60 dari 55.99 ke 55.39). Model 1 dengan CAPEX saja adalah model terbaik.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ SECTION 6 ═══════════ -->
+  <div class="chapter" id="forecast">
+    <div class="chapter-header">
+      <div class="chapter-num">6</div>
+      <div class="chapter-title">Forecasting — Prediksi dengan Estimated Model</div>
+    </div>
+
+    <p class="prose">Setelah model dievaluasi dan dipilih, langkah terakhir adalah menggunakannya untuk memprediksi nilai Y. Proses ini mirip dengan simple regression — jumlahkan koefisien dikali nilai X yang diasumsikan.</p>
+
+    <div class="formula-block">
+      <span class="label">Predicted Value</span>
+      Ŷf = b̂₀ + b̂₁X₁f + b̂₂X₂f + ... + b̂ₖXₖf = b̂₀ + Σ b̂ⱼXⱼf
+      <span class="note">Gunakan SEMUA k variabel dalam model, termasuk yang tidak signifikan secara individual</span>
+      <span class="note">Jangan lupa intercept (b̂₀ dikali 1)</span>
+    </div>
+
+    <div class="callout amber">
+      <div class="callout-title">⚠ Dua Hal Penting saat Forecasting</div>
+      <p><strong>1. Sertakan semua variabel:</strong> Kalau model diestimasi dengan k variabel, prediksi harus menggunakan semua k variabel — meskipun beberapa tidak signifikan individual. Korelasi antar variabel digunakan saat estimasi koefisien, jadi menghilangkan satu variabel akan mengubah prediksi dan membuatnya tidak konsisten dengan model yang diestimasi.</p>
+      <p><strong>2. Forecast interval lebih lebar dari within-sample CI:</strong> Kalau nilai X yang digunakan untuk prediksi adalah hasil forecast (bukan nilai pasti), ada dua sumber error: model error (residual) dan sampling error dari forecasting X itu sendiri. Gabungan keduanya membuat forecast interval lebih lebar.</p>
+    </div>
+
+    <div class="sub-header">6.1 Contoh Numerik Lengkap — Five-Factor Model</div>
+
+    <p class="prose">Model: Ŷ = −2.1876 + 1.5992F₁ + 0.1923F₂ − 0.7126F₃ + 3.3376F₄ − 2.6832F₅</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 9: Prediksi Portfolio Return dengan Assumed Factor Values</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Variable</th><th>Assumed Xf</th><th>Coefficient b̂</th><th>Product</th></tr></thead>
+          <tbody>
+            <tr><td>Intercept</td><td>1.000</td><td>−2.1876</td><td>−2.1876</td></tr>
+            <tr><td>Factor 1</td><td>0.110</td><td>1.5992</td><td>0.1759</td></tr>
+            <tr><td>Factor 2</td><td>0.040</td><td>0.1923</td><td>0.0077</td></tr>
+            <tr><td>Factor 3</td><td>0.080</td><td>−0.7126</td><td>−0.0570</td></tr>
+            <tr><td>Factor 4</td><td>−0.010</td><td>3.3376</td><td>−0.0334</td></tr>
+            <tr><td>Factor 5</td><td>0.001</td><td>−2.6832</td><td>−0.0027</td></tr>
+            <tr style="border-top:2px solid var(--border2);"><td><strong>Predicted Ŷf</strong></td><td>—</td><td>—</td><td><strong style="color:var(--gold2);font-size:14px;">−2.0971%</strong></td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:12px;color:var(--text3);margin-top:8px;">SE of forecast = 1.1466 &nbsp;|&nbsp; 95% CI: [−4.41, 0.21] — lebih lebar dari within-sample interval karena X₁ hingga X₅ sendiri adalah forecasts</p>
+      </div>
+    </div>
+
+    <p class="prose">Semua 5 faktor digunakan dalam prediksi, meskipun Factor 2, 3, dan 5 tidak signifikan secara individual. Forecast interval yang sangat lebar (−4.41 sampai +0.21) mencerminkan ketidakpastian yang besar — wajar untuk model dengan banyak faktor yang diforecast secara bersamaan.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════ PRACTICE ═══════════ -->
+  <div id="practice">
+  <div class="practice-header">
+    <div class="practice-header-title">📝 Latihan Soal — Item Set Vignette</div>
+    <div class="practice-header-sub">Format CFA L2 asli · 4 soal · ~30 menit</div>
+  </div>
+  <div class="practice-body">
+
+    <div class="vignette">
+      <div class="vignette-label">Case Vignette</div>
+      Siti Rahayu, CFA, kepala riset kuantitatif di PT Mandiri Investasi, membangun model untuk memprediksi return bulanan saham konsumer IDX (CONS_RET) menggunakan n = 60 observasi. Tiga model diestimasi:<br><br>
+      <strong>Model A:</strong> CONS_RET = b₀ + b₁×IHSG_RET (k=1, SSE=42.80)<br>
+      <strong>Model B:</strong> CONS_RET = b₀ + b₁×IHSG_RET + b₂×ΔCPI + b₃×ΔUSD_IDR (k=3, SSE=38.10)<br>
+      <strong>Model C:</strong> CONS_RET = b₀ + b₁×IHSG_RET + b₂×ΔCPI + b₃×ΔUSD_IDR + b₄×ΔOIL + b₅×ΔINT_RATE (k=5, SSE=37.60)<br><br>
+      <table style="width:100%;border-collapse:collapse;font-size:12px;margin:10px 0;">
+        <thead><tr style="background:var(--bg2);font-family:'DM Sans',sans-serif;font-size:10px;color:var(--text3);text-transform:uppercase;">
+          <th style="padding:6px 10px;text-align:left;">Model</th>
+          <th style="padding:6px 10px;text-align:right;">R²</th>
+          <th style="padding:6px 10px;text-align:right;">Adj. R²</th>
+          <th style="padding:6px 10px;text-align:right;">AIC</th>
+          <th style="padding:6px 10px;text-align:right;">BIC</th>
+        </tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border);"><td style="padding:5px 10px;color:var(--text);">A</td><td style="padding:5px 10px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text2);">0.612</td><td style="padding:5px 10px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text2);">0.606</td><td style="padding:5px 10px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text2);">18.4</td><td style="padding:5px 10px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--green);font-weight:500;">21.2</td></tr>
+          <tr style="border-bottom:1px solid var(--border);"><td style="padding:5px 10px;color:var(--text);">B</td><td style="padding:5px 10px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text2);">0.654</td><td style="padding:5px 10px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--green);font-weight:500;">0.636</td><td style="padding:5px 10px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--green);font-weight:500;">16.8</td><td style="padding:5px 10px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text2);">22.4</td></tr>
+          <tr><td style="padding:5px 10px;color:var(--text);">C</td><td style="padding:5px 10px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text2);">0.659</td><td style="padding:5px 10px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text2);">0.628</td><td style="padding:5px 10px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text2);">18.2</td><td style="padding:5px 10px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text2);">26.9</td></tr>
+        </tbody>
+      </table>
+      t-statistic dalam Model C: ΔOIL = 0.62, ΔINT_RATE = −0.85. Critical F(2,54) at 5% = 3.17.
+    </div>
+
+    <div class="question-block" id="qb0">
+      <div class="q-num">Question 1 of 4</div>
+      <div class="q-text">Mengapa Adjusted R² Model C (0.628) lebih rendah dari Model B (0.636), padahal R² Model C (0.659) lebih tinggi dari Model B (0.654)?</div>
+      <button class="option" onclick="answer(0,'A','C')">A. Karena SSE Model C lebih kecil, sehingga denominator dalam formula Adjusted R² berkurang dan hasilnya lebih kecil</button>
+      <button class="option" onclick="answer(0,'B','C')">B. Karena n dalam Model C berbeda dari Model B, menyebabkan perbedaan dalam penalti degrees of freedom</button>
+      <button class="option" onclick="answer(0,'C','C')">C. Karena |t-statistic| ΔOIL (0.62) dan ΔINT_RATE (0.85) keduanya di bawah 1.0 — penambahan kedua variabel ini mengonsumsi degrees of freedom lebih besar daripada peningkatan fit yang mereka berikan</button>
+      <div class="explanation" id="exp0">
+        <strong>C adalah jawaban yang benar.</strong> Rule: Adjusted R² turun ketika |t-statistic variabel baru| &lt; 1.0. Di sini |t|ΔOIL = 0.62 dan |t|ΔINT_RATE = 0.85 — keduanya &lt; 1.0. Penambahan dua variabel ini "membuang" 2 degrees of freedom (df residual turun dari 56 ke 54), tapi penurunan SSE yang dihasilkan (38.10 → 37.60, hanya 0.50) terlalu kecil untuk mengimbangi hilangnya df tersebut. Maka Adjusted R² turun meski R² naik. Opsi A salah — SSE yang lebih kecil seharusnya meningkatkan Adjusted R², tapi itu harus dibobot dengan df. Opsi B salah — n sama untuk ketiga model (60).
+      </div>
+    </div>
+
+    <div class="question-block" id="qb1">
+      <div class="q-num">Question 2 of 4</div>
+      <div class="q-text">Siti ingin mem-forecast return bulan depan. Model mana yang tepat dipilih, dan berdasarkan kriteria apa?</div>
+      <button class="option" onclick="answer(1,'A','B')">A. Model C — R² tertinggi (0.659) berarti model paling akurat untuk prediksi</button>
+      <button class="option" onclick="answer(1,'B','B')">B. Model B — AIC terendah (16.8), dan AIC adalah kriteria yang relevan untuk tujuan prediksi</button>
+      <button class="option" onclick="answer(1,'C','B')">C. Model A — BIC terendah (21.2) menunjukkan model terbaik secara keseluruhan termasuk untuk prediksi</button>
+      <div class="explanation" id="exp1">
+        <strong>B adalah jawaban yang benar.</strong> Untuk tujuan prediksi (forecasting), kriteria yang relevan adalah AIC — pilih model dengan AIC terendah. Model B memiliki AIC = 16.8, terendah di antara ketiga model. Opsi A salah: R² tidak cocok untuk pemilihan model karena selalu naik saat variabel ditambahkan, terlepas dari relevansinya. Opsi C salah: BIC adalah kriteria untuk goodness of fit dan parsimony, bukan prediksi; dan meski BIC Model A terendah (21.2), itu bukan kriteria untuk forecasting.
+      </div>
+    </div>
+
+    <div class="question-block" id="qb2">
+      <div class="q-num">Question 3 of 4</div>
+      <div class="q-text">Hitung joint F-statistic untuk menguji apakah ΔOIL dan ΔINT_RATE bersama-sama signifikan (Model B = restricted, Model C = unrestricted, q=2, df denom = 54). Bandingkan dengan critical F(2,54) = 3.17.</div>
+      <button class="option" onclick="answer(2,'A','C')">A. F = [(42.80 − 37.60)/2] / [37.60/54] = 3.73 → Tolak H₀, keduanya signifikan bersama</button>
+      <button class="option" onclick="answer(2,'B','C')">B. F = [(42.80 − 38.10)/2] / [38.10/54] = 3.33 → Tolak H₀, keduanya signifikan bersama</button>
+      <button class="option" onclick="answer(2,'C','C')">C. F = [(38.10 − 37.60)/2] / [37.60/54] = 0.36 → Gagal tolak H₀, keduanya tidak signifikan bersama</button>
+      <div class="explanation" id="exp2">
+        <strong>C adalah jawaban yang benar.</strong> Restricted = Model B (SSE=38.10), Unrestricted = Model C (SSE=37.60), q=2, df_denom = n−k−1 = 60−5−1 = 54:<br>
+        F = [(38.10 − 37.60)/2] / [37.60/54] = (0.50/2) / 0.6963 = 0.25/0.6963 ≈ <strong>0.36</strong><br>
+        0.36 &lt;&lt; 3.17 → Gagal tolak H₀. ΔOIL dan ΔINT_RATE tidak berkontribusi signifikan saat ditambahkan di atas Model B. Opsi A menggunakan SSE Model A (42.80) yang salah sebagai restricted model. Opsi B juga salah — membandingkan Model A vs C, bukan B vs C.
+      </div>
+    </div>
+
+    <div class="question-block" id="qb3">
+      <div class="q-num">Question 4 of 4</div>
+      <div class="q-text">Berdasarkan semua analisis — Adjusted R², AIC, BIC, joint F-test — kesimpulan komprehensif yang paling tepat adalah:</div>
+      <button class="option" onclick="answer(3,'A','B')">A. Model C terbaik karena R²-nya tertinggi; Adjusted R² yang lebih rendah tidak relevan untuk pemilihan model</button>
+      <button class="option" onclick="answer(3,'B','B')">B. Model B terbaik — AIC terendah untuk prediksi, Adjusted R² tertinggi, dan joint F-test mengkonfirmasi ΔOIL & ΔINT_RATE tidak menambah nilai signifikan di atas Model B</button>
+      <button class="option" onclick="answer(3,'C','B')">C. Model A terbaik karena BIC terendah dan paling parsimonious, sehingga paling robust untuk semua tujuan termasuk prediksi</button>
+      <div class="explanation" id="exp3">
+        <strong>B adalah jawaban yang benar.</strong> Semua evidence mengarah ke Model B: (1) Adjusted R² tertinggi (0.636) — lebih baik dari A (0.606) dan C (0.628); (2) AIC terendah (16.8) — terbaik untuk prediksi; (3) Joint F-test F=0.36 jauh di bawah critical 3.17 — mengkonfirmasi ΔOIL dan ΔINT_RATE tidak berkontribusi signifikan di atas Model B. Ini adalah contoh di mana beberapa metrics memberikan kesimpulan konsisten. Opsi A salah — R² bukan kriteria yang valid untuk pemilihan model. Opsi C: meski BIC Model A terendah (untuk parsimony), tujuan Siti adalah forecasting sehingga AIC lebih relevan, dan Model B mengungguli Model A di AIC.
+      </div>
+    </div>
+
+    <div class="score-panel" id="score-panel">
+      <div class="score-num" id="score-num">0/4</div>
+      <div class="score-msg" id="score-msg">—</div>
+    </div>
+  </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a class="nav-btn" href="CFA_L2_Day01_Full.html">← Day 1 Full</a>
+    <div class="nav-day">Day 2 of 90 · Versi Full<br><span style="font-size:11px;color:var(--text3);">Next: Day 3 · Model Misspecification</span></div>
+    <a class="nav-btn primary" href="CFA_L2_Day03_Full.html">Day 3 Full →</a>
+  </div>
+
+</div>
+<script>
+function toggleKC(id){
+  const el=document.getElementById(id);
+  const btn=el.previousElementSibling;
+  if(el.classList.contains('show')){el.classList.remove('show');btn.textContent='Lihat Jawaban';}
+  else{el.classList.add('show');btn.textContent='Sembunyikan Jawaban';}
+}
+const answers={};
+const correct={0:'C',1:'B',2:'C',3:'B'};
+const total=4;
+function answer(qIdx,chosen,correctAns){
+  if(answers[qIdx])return;
+  answers[qIdx]=chosen;
+  const block=document.getElementById('qb'+qIdx);
+  const exp=document.getElementById('exp'+qIdx);
+  block.querySelectorAll('.option').forEach(btn=>{
+    btn.disabled=true;
+    const letter=btn.textContent.trim()[0];
+    if(letter===correctAns)btn.classList.add('correct');
+    else if(letter===chosen&&chosen!==correctAns)btn.classList.add('wrong');
+  });
+  exp.classList.add('show');
+  if(Object.keys(answers).length===total)showScore();
+}
+function showScore(){
+  const score=Object.keys(correct).filter(k=>answers[k]===correct[k]).length;
+  const panel=document.getElementById('score-panel');
+  const num=document.getElementById('score-num');
+  const msg=document.getElementById('score-msg');
+  num.textContent=score+'/'+total;
+  num.style.color=score===4?'var(--green)':score>=3?'var(--amber)':'var(--red)';
+  const msgs={4:'🎯 Sempurna! LM2 solid.',3:'✅ Bagus. Review soal yang salah.',2:'⚠️ Review joint F-test dan AIC vs BIC untuk tujuan prediksi vs parsimony.',1:'🔁 Ulangi bagian theory dulu.',0:'🔁 Ulangi bagian theory dulu.'};
+  msg.textContent=msgs[score]||msgs[0];
+  panel.style.display='block';
+}
+</script>
+</body>
+</html>

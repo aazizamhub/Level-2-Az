@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 4 · Multicollinearity</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;
+  --border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+  --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;
+  --gold:#9a6e1a;--gold2:#7a5010;--gold-bg:rgba(154,110,26,0.08);
+  --blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);
+  --green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);
+  --red:#b83232;--red-bg:rgba(184,50,50,0.08);
+  --amber:#a06010;--amber-bg:rgba(160,96,16,0.08);
+  --purple:#6a3ab0;--purple-bg:rgba(106,58,176,0.08);
+  --r:10px;--r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.7;min-height:100vh;}
+.page{max-width:820px;margin:0 auto;padding:40px 24px 80px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.hero{margin-bottom:32px;}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:32px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:14px;color:var(--text2);}
+.meta-row{display:flex;gap:16px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+.obj-box{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.25);border-radius:var(--r);padding:16px 18px;margin-bottom:24px;}
+.obj-box-title{font-size:11px;color:var(--gold);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;font-weight:500;}
+.obj-list{list-style:none;}
+.obj-list li{font-size:13px;color:var(--text2);padding:3px 0 3px 16px;position:relative;}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--gold);font-size:11px;top:5px;}
+.section{margin-bottom:28px;}
+.section-label{font-size:10px;color:var(--text3);letter-spacing:0.09em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.concept-grid{display:flex;flex-direction:column;gap:14px;}
+.concept-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+.concept-card-header{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);}
+.concept-num{width:26px;height:26px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--gold);flex-shrink:0;}
+.concept-title{font-size:14px;font-weight:500;color:var(--text);}
+.concept-body{padding:14px 16px;font-size:13px;color:var(--text2);line-height:1.75;}
+.concept-body p{margin-bottom:10px;}
+.concept-body p:last-child{margin-bottom:0;}
+.formula{background:var(--bg3);border:1px solid var(--border2);border-left:3px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:12px 16px;margin:10px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold2);line-height:1.8;}
+.formula .comment{color:var(--text3);font-style:italic;font-family:'DM Sans',sans-serif;font-size:12px;}
+.insight{background:var(--blue-bg);border:1px solid rgba(26,95,168,0.2);border-radius:var(--r);padding:14px 16px;margin:12px 0;font-size:13px;color:var(--text2);}
+.insight strong{color:var(--blue);}
+.trap{background:var(--red-bg);border:1px solid rgba(184,50,50,0.2);border-radius:var(--r);padding:14px 16px;margin:12px 0;}
+.trap-label{font-size:10px;color:var(--red);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:6px;font-weight:500;}
+.trap p{font-size:13px;color:var(--text2);}
+.tip{background:var(--green-bg);border:1px solid rgba(26,122,74,0.2);border-radius:var(--r);padding:14px 16px;margin:12px 0;}
+.tip-label{font-size:10px;color:var(--green);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:6px;font-weight:500;}
+.tip p{font-size:13px;color:var(--text2);}
+.comp-table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0;}
+.comp-table th{text-align:left;padding:9px 12px;background:var(--bg3);color:var(--text2);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid var(--border2);}
+.comp-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;color:var(--text2);}
+.comp-table tr:last-child td{border-bottom:none;}
+.comp-table .name{font-weight:500;color:var(--text);}
+.badge{display:inline-flex;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;}
+.badge-blue{background:var(--blue-bg);color:var(--blue);}
+.badge-amber{background:var(--amber-bg);color:var(--amber);}
+.badge-green{background:var(--green-bg);color:var(--green);}
+.badge-red{background:var(--red-bg);color:var(--red);}
+.reg-mini{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0;font-family:'JetBrains Mono',monospace;}
+.reg-mini th{padding:7px 10px;background:var(--bg3);color:var(--text3);font-size:10px;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border2);font-family:'DM Sans',sans-serif;}
+.reg-mini th:first-child{text-align:left;}
+.reg-mini td{padding:7px 10px;border-bottom:1px solid var(--border);color:var(--text2);text-align:right;}
+.reg-mini td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);font-weight:500;}
+.reg-mini tr:last-child td{border-bottom:none;}
+.reg-mini .bad{color:var(--red);font-weight:500;}
+.reg-mini .good{color:var(--green);font-weight:500;}
+.cheat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:540px){.cheat-grid{grid-template-columns:1fr;}}
+.cheat-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;}
+.cheat-key{font-size:11px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em;}
+.cheat-val{font-size:12px;color:var(--text);font-family:'JetBrains Mono',monospace;line-height:1.5;}
+.divider{height:1px;background:var(--border);margin:28px 0;}
+.practice-header{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);border-radius:var(--r) var(--r) 0 0;padding:14px 18px;display:flex;align-items:center;gap:12px;}
+.practice-icon{font-size:18px;}
+.practice-header-text{flex:1;}
+.practice-header-title{font-size:15px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);}
+.practice-body{background:var(--bg2);border:1px solid rgba(154,110,26,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:20px;}
+.vignette{background:var(--bg3);border-left:3px solid var(--gold);padding:16px 18px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:24px;font-size:13px;color:var(--text2);line-height:1.8;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;font-weight:500;}
+.question-block{margin-bottom:22px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:5px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:11px;line-height:1.6;}
+.option{display:block;width:100%;text-align:left;padding:10px 14px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:7px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.5;}
+.option:hover:not(:disabled){border-color:var(--border2);background:var(--bg2);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);margin-top:8px;line-height:1.7;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:24px;margin-top:16px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:48px;margin-bottom:6px;}
+.score-msg{font-size:13px;color:var(--text2);}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+.nav-day{font-size:12px;color:var(--text3);text-align:center;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II · <span>Quantitative Methods</span> · LM3</div>
+    <div class="day-badge">Day 4 of 90</div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Friday, 10 April 2026</div>
+    <h1 class="hero-title">Multicollinearity</h1>
+    <p class="hero-sub">Model Misspecification — Subtopic 2 of 2 · LM3 selesai hari ini</p>
+    <div class="meta-row">
+      <div class="meta-pill">⏱ <b>60 min</b> total</div>
+      <div class="meta-pill">📖 <b>30 min</b> theory</div>
+      <div class="meta-pill">📝 <b>30 min</b> practice</div>
+      <div class="meta-pill">⚖️ Exam weight <b>~6%</b></div>
+    </div>
+  </div>
+
+  <div class="obj-box">
+    <div class="obj-box-title">Learning Objectives — Hari ini lo harus bisa:</div>
+    <ul class="obj-list">
+      <li>Jelaskan apa itu multicollinearity dan kenapa beda dari heteroskedasticity/serial correlation dalam hal dampak pada SE</li>
+      <li>Identifikasi "classic symptom" multicollinearity: high R², significant F, tapi t-stats tidak signifikan</li>
+      <li>Hitung VIF dari R²ⱼ dan interpretasikan thresholds (VIF > 5 dan > 10)</li>
+      <li>Rekomendasikan solusi yang tepat untuk multicollinearity</li>
+    </ul>
+  </div>
+
+  <!-- THEORY -->
+  <div class="section">
+    <div class="section-label">Theory · 30 min</div>
+    <div class="concept-grid">
+
+      <!-- Card 1 -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">1</div>
+          <div class="concept-title">Apa Itu Multicollinearity & Dampaknya</div>
+        </div>
+        <div class="concept-body">
+          <p>Multicollinearity terjadi ketika dua atau lebih independent variables memiliki korelasi yang tinggi satu sama lain, atau ketika ada approximate linear relationship di antara beberapa independent variables.</p>
+
+          <p><strong style="color:var(--text);">Dua tingkatan:</strong></p>
+          <p><strong>Perfect multicollinearity:</strong> Ada hubungan linear yang eksak antar X → model tidak bisa diestimasi sama sekali (software akan error). Jarang terjadi dalam praktik.</p>
+          <p><strong>Approximate/imperfect multicollinearity:</strong> Hubungan linear yang mendekati — model masih bisa diestimasi tapi interpretasinya bermasalah. Ini yang umum dan diuji di exam.</p>
+
+          <div class="trap">
+            <div class="trap-label">⚠ Perbedaan Kritis vs Heteroskedasticity</div>
+            <p>Heteroskedasticity & serial correlation → SE <strong>underestimated</strong> → t-stats inflated → Type I error ↑ (terlalu banyak menolak H₀)</p>
+            <p>Multicollinearity → SE <strong>overestimated</strong> → t-stats deflated → Type II error ↑ (terlalu jarang menolak H₀ — variabel penting tampak tidak signifikan)</p>
+            <p>Arahnya berlawanan! Ini sering jadi jebakan exam.</p>
+          </div>
+
+          <p><strong style="color:var(--text);">Dampak multicollinearity:</strong></p>
+          <p>Coefficient estimates tetap <em>unbiased dan consistent</em> — ini sama dengan heteroskedasticity. Yang rusak adalah standard errors, yang menjadi sangat besar (inflated). Akibatnya t-statistics turun drastis → variabel yang sebenarnya penting tampak tidak signifikan secara individual.</p>
+          <p>Juga menjadi mustahil untuk memisahkan kontribusi individual masing-masing variabel yang saling berkorelasi — karena kita tidak tahu mana yang "benar-benar" menjelaskan Y.</p>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">2</div>
+          <div class="concept-title">Classic Symptom & VIF — Cara Deteksi</div>
+        </div>
+        <div class="concept-body">
+          <p><strong style="color:var(--text);">Classic symptom multicollinearity:</strong> High R² dan significant F-statistic (model secara keseluruhan signifikan), <em>tapi</em> t-statistics untuk koefisien individual tidak signifikan karena SE mereka sangat besar. Ini paradoks yang khas.</p>
+
+          <div class="insight">
+            <strong>Kenapa pairwise correlation saja tidak cukup?</strong> Kalau ada lebih dari 2 independent variables, bisa saja pairwise correlations semuanya rendah tapi tetap ada multicollinearity — karena ada linear combination dari beberapa X yang berkorelasi tinggi (tidak terlihat dari pairwise saja). VIF menangkap ini.
+          </div>
+
+          <p><strong style="color:var(--text);">Variance Inflation Factor (VIF):</strong><br>
+          Untuk setiap independent variable Xⱼ, regresi Xⱼ terhadap semua X lainnya (k−1 variables). Catat R²ⱼ dari regression tersebut.</p>
+
+          <div class="formula">
+            VIFⱼ = 1 / (1 − R²ⱼ)
+            <span class="comment">// R²ⱼ = seberapa baik Xⱼ bisa diprediksi oleh X lainnya</span>
+            <span class="comment">// VIF minimum = 1 (ketika R²ⱼ = 0 — tidak ada korelasi)</span>
+          </div>
+
+          <table class="comp-table">
+            <thead><tr><th>Nilai VIF</th><th>Interpretasi</th><th>Tindakan</th></tr></thead>
+            <tbody>
+              <tr><td>VIF = 1</td><td>Tidak ada korelasi dengan X lain</td><td><span class="badge badge-green">Aman</span></td></tr>
+              <tr><td>1 &lt; VIF ≤ 5</td><td>Korelasi moderat — tidak mengkhawatirkan</td><td><span class="badge badge-green">Aman</span></td></tr>
+              <tr><td>5 &lt; VIF ≤ 10</td><td>Multicollinearity signifikan — perlu investigasi</td><td><span class="badge badge-amber">Investigasi</span></td></tr>
+              <tr><td>VIF &gt; 10</td><td>Multicollinearity serius — perlu koreksi</td><td><span class="badge badge-red">Koreksi</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">3</div>
+          <div class="concept-title">Contoh Numerik — FSPTX Fund (dari CFA Curriculum)</div>
+        </div>
+        <div class="concept-body">
+          <p>Seorang analis memodelkan return Fidelity Select Technology Portfolio (FSPTX) terhadap S&P 500 Growth Index (SGX) dan S&P 500 Value Index (SVX):</p>
+
+          <p><strong style="color:var(--text);">Model tanpa SPX — tidak ada multicollinearity:</strong></p>
+          <table class="reg-mini">
+            <thead><tr><th>Variable</th><th>Coefficient</th><th>SE</th><th>t-Stat</th><th>P-Value</th><th>VIF</th></tr></thead>
+            <tbody>
+              <tr><td>SGX</td><td>1.7765</td><td>0.196</td><td class="good">9.064</td><td class="good">0.000</td><td class="good">3.97</td></tr>
+              <tr><td>SVX</td><td>−0.4488</td><td>0.196</td><td class="good">−2.292</td><td class="good">0.026</td><td class="good">3.97</td></tr>
+            </tbody>
+          </table>
+          <p style="font-size:12px;color:var(--text3);margin-bottom:10px;">R² = 0.782 | Adj R² = 0.774 | VIF keduanya &lt; 5 → tidak ada masalah multicollinearity</p>
+
+          <p><strong style="color:var(--text);">Model dengan SPX ditambahkan — severe multicollinearity:</strong></p>
+          <table class="reg-mini">
+            <thead><tr><th>Variable</th><th>Coefficient</th><th>SE</th><th>t-Stat</th><th>P-Value</th><th>VIF</th></tr></thead>
+            <tbody>
+              <tr><td>SGX</td><td>1.5302</td><td class="bad">6.166</td><td class="bad">0.248</td><td class="bad">0.805</td><td class="bad">3,864</td></tr>
+              <tr><td>SVX</td><td>−0.6686</td><td class="bad">5.503</td><td class="bad">−0.121</td><td class="bad">0.904</td><td class="bad">3,083</td></tr>
+              <tr><td>SPX</td><td>0.4658</td><td class="bad">11.657</td><td class="bad">0.040</td><td class="bad">0.968</td><td class="bad">12,905</td></tr>
+            </tbody>
+          </table>
+          <p style="font-size:12px;color:var(--text3);">R² = 0.782 (sama!) | Adj R² = 0.770 | Semua VIF ribuan → multicollinearity ekstrem</p>
+
+          <div class="insight">
+            <strong>Kenapa SPX menyebabkan masalah?</strong> S&P 500 Index (SPX) adalah komposit dari SGX (growth) dan SVX (value). Artinya SPX adalah kombinasi linear dari dua variabel yang sudah ada → perfect multicollinearity mendekati. Korelasi SPX dengan SGX = 0.97 dan dengan SVX = 0.96 — sangat tinggi. SE meledak dari 0.196 menjadi ribuan, dan semua variabel tampak tidak signifikan meski R² model tidak berubah.
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">4</div>
+          <div class="concept-title">Solusi & Kapan Multicollinearity Tidak Masalah</div>
+        </div>
+        <div class="concept-body">
+          <p><strong style="color:var(--text);">Tiga solusi utama:</strong></p>
+
+          <table class="comp-table">
+            <thead><tr><th>#</th><th>Solusi</th><th>Kapan Digunakan</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td class="name">Drop satu atau lebih variabel</td><td>Kalau ada variabel yang secara ekonomi redundan (seperti menambahkan SPX ke model yang sudah ada SGX + SVX)</td></tr>
+              <tr><td>2</td><td class="name">Ganti dengan proxy berbeda</td><td>Kalau konsep yang ingin diukur tetap relevan tapi proxy yang digunakan terlalu berkorelasi dengan X lain</td></tr>
+              <tr><td>3</td><td class="name">Tambah sample size (n)</td><td>Lebih banyak data → lebih banyak variasi → precision estimasi meningkat → SE turun</td></tr>
+            </tbody>
+          </table>
+
+          <div class="tip">
+            <div class="tip-label">💡 Kapan multicollinearity tidak masalah</div>
+            <p>Kalau tujuan model hanya untuk <strong>prediksi</strong> (bukan untuk memahami kontribusi individual masing-masing variabel), multicollinearity tidak harus diselesaikan. Model dengan multicollinearity tetap bisa membuat prediksi yang akurat — yang rusak hanya kemampuan untuk menginterpretasikan coefficient individual.</p>
+          </div>
+
+          <div class="trap">
+            <div class="trap-label">⚠ Tidak Ada "Easy Fix"</div>
+            <p>Berbeda dari heteroskedasticity (fix dengan robust SE) atau serial correlation (fix dengan Newey-West SE), multicollinearity tidak punya "mechanical fix" yang mudah. Seringkali perlu eksperimen — coba include/exclude kombinasi variabel berbeda dan perhatikan hasilnya secara iteratif.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Cheat Sheet -->
+  <div class="section">
+    <div class="section-label">Quick Reference — LM3 Complete Summary</div>
+    <div class="cheat-grid">
+      <div class="cheat-item">
+        <div class="cheat-key">VIF Formula</div>
+        <div class="cheat-val">VIFⱼ = 1/(1 − R²ⱼ)<br>Min VIF = 1 (no correlation)</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">VIF Thresholds</div>
+        <div class="cheat-val">&gt;5 → investigate<br>&gt;10 → serious, needs fix</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Multicollinearity Effect on SE</div>
+        <div class="cheat-val">SE overestimated ↑<br>t-stats deflated ↓<br>Type II error ↑</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Classic Symptom</div>
+        <div class="cheat-val">High R² + sig F-stat<br>BUT individual t-stats not sig</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Solutions</div>
+        <div class="cheat-val">Drop vars · Use proxy<br>Increase n</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Coeff Estimates</div>
+        <div class="cheat-val">Still unbiased ✓<br>But imprecise/unreliable</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PRACTICE -->
+  <div class="practice-header">
+    <div class="practice-icon">📝</div>
+    <div class="practice-header-text">
+      <div class="practice-header-title">Practice — Item Set Vignette</div>
+      <div class="practice-header-sub">Format CFA L2 · 4 soal · ~30 menit</div>
+    </div>
+  </div>
+  <div class="practice-body">
+
+    <div class="vignette">
+      <div class="vignette-label">Case Vignette</div>
+      Maya Sari, CFA, adalah risk analyst di PT Danareksa Investment Management. Ia membangun model untuk menjelaskan monthly return reksa dana saham (FUND_RET) terhadap empat faktor: IHSG excess return (MKTRF), size factor (SMB), value factor (HML), dan IHSG volatility index (IVOL). Menggunakan 60 bulan data, ia mendapatkan hasil berikut:<br><br>
+
+      <strong>Regression Output:</strong>
+      <table style="width:100%;border-collapse:collapse;font-size:12px;margin:10px 0;font-family:'JetBrains Mono',monospace;">
+        <thead><tr style="background:var(--bg2);"><th style="padding:6px 10px;text-align:left;font-family:'DM Sans',sans-serif;font-size:10px;color:var(--text3);text-transform:uppercase;">Variable</th><th style="padding:6px 10px;text-align:right;font-family:'DM Sans',sans-serif;font-size:10px;color:var(--text3);text-transform:uppercase;">Coeff</th><th style="padding:6px 10px;text-align:right;font-family:'DM Sans',sans-serif;font-size:10px;color:var(--text3);text-transform:uppercase;">SE</th><th style="padding:6px 10px;text-align:right;font-family:'DM Sans',sans-serif;font-size:10px;color:var(--text3);text-transform:uppercase;">t-Stat</th><th style="padding:6px 10px;text-align:right;font-family:'DM Sans',sans-serif;font-size:10px;color:var(--text3);text-transform:uppercase;">P-Value</th><th style="padding:6px 10px;text-align:right;font-family:'DM Sans',sans-serif;font-size:10px;color:var(--text3);text-transform:uppercase;">VIF</th></tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 10px;color:var(--text);">MKTRF</td><td style="padding:6px 10px;text-align:right;color:var(--text2);">1.185</td><td style="padding:6px 10px;text-align:right;color:var(--text2);">0.082</td><td style="padding:6px 10px;text-align:right;color:var(--green);">14.45</td><td style="padding:6px 10px;text-align:right;color:var(--green);">0.000</td><td style="padding:6px 10px;text-align:right;color:var(--green);">2.14</td></tr>
+          <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 10px;color:var(--text);">SMB</td><td style="padding:6px 10px;text-align:right;color:var(--text2);">0.421</td><td style="padding:6px 10px;text-align:right;color:var(--red);">3.842</td><td style="padding:6px 10px;text-align:right;color:var(--red);">0.109</td><td style="padding:6px 10px;text-align:right;color:var(--red);">0.913</td><td style="padding:6px 10px;text-align:right;color:var(--red);">18.73</td></tr>
+          <tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 10px;color:var(--text);">HML</td><td style="padding:6px 10px;text-align:right;color:var(--text2);">0.318</td><td style="padding:6px 10px;text-align:right;color:var(--red);">2.915</td><td style="padding:6px 10px;text-align:right;color:var(--red);">0.109</td><td style="padding:6px 10px;text-align:right;color:var(--red);">0.914</td><td style="padding:6px 10px;text-align:right;color:var(--red);">14.58</td></tr>
+          <tr><td style="padding:6px 10px;color:var(--text);">IVOL</td><td style="padding:6px 10px;text-align:right;color:var(--text2);">−0.284</td><td style="padding:6px 10px;text-align:right;color:var(--red);">2.631</td><td style="padding:6px 10px;text-align:right;color:var(--red);">−0.108</td><td style="padding:6px 10px;text-align:right;color:var(--red);">0.915</td><td style="padding:6px 10px;text-align:right;color:var(--red);">11.42</td></tr>
+        </tbody>
+      </table>
+      R² = 0.847 | Adjusted R² = 0.836 | F-statistic = 74.2 (p-value = 0.000)
+    </div>
+
+    <!-- Q1 -->
+    <div class="question-block" id="qb0">
+      <div class="q-num">Question 1 of 4</div>
+      <div class="q-text">Berdasarkan output regression, manakah pernyataan yang paling tepat menggambarkan kondisi model Maya?</div>
+      <button class="option" onclick="answer(0,'A','B')">A. Model tidak signifikan secara keseluruhan karena mayoritas variabel memiliki p-value > 0.05</button>
+      <button class="option" onclick="answer(0,'B','B')">B. Model menunjukkan classic symptom multicollinearity — R² tinggi dan F-statistic signifikan, tetapi t-statistics untuk SMB, HML, dan IVOL sangat rendah</button>
+      <button class="option" onclick="answer(0,'C','B')">C. Model memiliki conditional heteroskedasticity karena standard errors beberapa variabel sangat besar</button>
+      <div class="explanation" id="exp0">
+        <strong>B adalah jawaban yang benar.</strong> Ini adalah textbook classic symptom of multicollinearity: R² = 0.847 dan F-statistic = 74.2 (p = 0.000) menunjukkan model secara keseluruhan sangat signifikan — variabel secara bersama menjelaskan 84.7% variasi FUND_RET. Namun t-statistics untuk SMB (0.109), HML (0.109), dan IVOL (−0.108) sangat kecil dengan p-value hampir 0.91 — jauh tidak signifikan. Paradoks ini adalah tanda klasik multicollinearity. Opsi A salah karena overall F-test tetap signifikan. Opsi C salah karena SE yang besar akibat multicollinearity tidak sama dengan heteroskedasticity — keduanya sangat berbeda dalam penyebab dan koreksinya.
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question-block" id="qb1">
+      <div class="q-num">Question 2 of 4</div>
+      <div class="q-text">Maya menghitung VIF untuk SMB dan mendapatkan R²ⱼ = 0.947. Berapakah VIF untuk SMB, dan apa kesimpulannya?</div>
+      <button class="option" onclick="answer(1,'A','C')">A. VIF = 0.947 / (1 − 0.947) = 17.87 → multicollinearity moderate, perlu investigasi</button>
+      <button class="option" onclick="answer(1,'B','C')">B. VIF = 1 − 0.947 = 0.053 → tidak ada masalah multicollinearity</button>
+      <button class="option" onclick="answer(1,'C','C')">C. VIF = 1 / (1 − 0.947) = 18.87 → multicollinearity serius, perlu koreksi segera</button>
+      <div class="explanation" id="exp1">
+        <strong>C adalah jawaban yang benar.</strong> VIFⱼ = 1 / (1 − R²ⱼ) = 1 / (1 − 0.947) = 1 / 0.053 = 18.87. VIF 18.87 jauh di atas threshold serius (>10), mengonfirmasi multicollinearity yang parah — SMB dapat diprediksi dengan akurasi 94.7% dari kombinasi variabel lain (MKTRF, HML, IVOL). Ini konsisten dengan VIF yang ditampilkan di tabel (18.73). Opsi A salah karena formula VIF yang digunakan terbalik. Opsi B salah total — itu bukan formula VIF.
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question-block" id="qb2">
+      <div class="q-num">Question 3 of 4</div>
+      <div class="q-text">Rekan Maya menyarankan untuk mengoreksi multicollinearity dengan menggunakan robust/Newey-West standard errors. Saran ini:</div>
+      <button class="option" onclick="answer(2,'A','C')">A. Tepat — robust SE adalah solusi universal untuk semua violations of regression assumptions</button>
+      <button class="option" onclick="answer(2,'B','C')">B. Tepat — karena multicollinearity menyebabkan SE underestimated, robust SE akan mengoreksinya</button>
+      <button class="option" onclick="answer(2,'C','C')">C. Tidak tepat — robust/Newey-West SE dirancang untuk mengoreksi heteroskedasticity dan serial correlation, bukan multicollinearity. Solusi untuk multicollinearity adalah menghapus/mengganti variabel atau menambah data</button>
+      <div class="explanation" id="exp2">
+        <strong>C adalah jawaban yang benar.</strong> Robust SE (White-corrected) dan Newey-West SE dirancang khusus untuk mengoreksi bias dalam SE yang disebabkan oleh heteroskedasticity dan serial correlation. Multicollinearity adalah masalah yang berbeda — ia menyebabkan SE menjadi <em>overestimated</em> (bukan underestimated seperti pada heteroskedasticity). Tidak ada "mechanical fix" untuk multicollinearity seperti halnya robust SE. Solusinya struktural: drop variabel yang redundan, ganti dengan proxy berbeda, atau tambah sample size.
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question-block" id="qb3">
+      <div class="q-num">Question 4 of 4</div>
+      <div class="q-text">Maya mencurigai bahwa SMB, HML, dan IVOL mungkin sangat berkorelasi satu sama lain di pasar Indonesia. Solusi terbaik yang bisa direkomendasikan adalah:</div>
+      <button class="option" onclick="answer(3,'A','A')">A. Drop IVOL dari model — karena IVOL kemungkinan bisa dijelaskan dari kombinasi SMB dan HML (pasar Indonesia yang volatil cenderung berkorelasi dengan size dan value effects). Kemudian re-estimasi dan periksa VIF kembali</button>
+      <button class="option" onclick="answer(3,'B','A')">B. Tambahkan lebih banyak variabel ke model untuk "mengencerkan" efek multicollinearity</button>
+      <button class="option" onclick="answer(3,'C','A')">C. Tidak perlu tindakan apa pun — multicollinearity tidak mempengaruhi coefficient estimates sehingga model tetap valid untuk semua tujuan</button>
+      <div class="explanation" id="exp3">
+        <strong>A adalah jawaban yang benar.</strong> Menghilangkan variabel yang paling redundan (IVOL dalam skenario ini) dan re-estimasi adalah pendekatan yang tepat. Perlu diingat bahwa solusi multicollinearity bersifat iteratif — setelah drop IVOL, periksa VIF lagi untuk melihat apakah masalah terselesaikan. Opsi B salah — menambahkan variabel akan memperburuk multicollinearity. Opsi C salah karena meskipun coefficients masih unbiased, model dengan multicollinearity tidak berguna untuk memahami kontribusi individual variabel dan prediction intervals menjadi sangat lebar. Tujuan model juga penting: kalau hanya untuk prediksi (bukan interpretasi koefisien), multicollinearity memang tidak terlalu masalah — tapi kalau tujuannya adalah attribution analysis (seperti ini), multicollinearity harus diselesaikan.
+      </div>
+    </div>
+
+    <div class="score-panel" id="score-panel">
+      <div class="score-num" id="score-num">0/4</div>
+      <div class="score-msg" id="score-msg">—</div>
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a class="nav-btn" href="CFA_L2_Day03.html">← Day 3</a>
+    <div class="nav-day">Day 4 of 90<br><span style="font-size:11px;color:var(--text3);">Next: Day 5 · Extensions of Multiple Regression</span></div>
+    <a class="nav-btn primary" href="CFA_L2_Day05.html">Day 5 →</a>
+  </div>
+
+</div>
+<script>
+const answers={};
+const correct={0:'B',1:'C',2:'C',3:'A'};
+const total=4;
+function answer(qIdx,chosen,correctAns){
+  if(answers[qIdx])return;
+  answers[qIdx]=chosen;
+  const block=document.getElementById('qb'+qIdx);
+  const exp=document.getElementById('exp'+qIdx);
+  block.querySelectorAll('.option').forEach(btn=>{
+    btn.disabled=true;
+    const letter=btn.textContent.trim()[0];
+    if(letter===correctAns)btn.classList.add('correct');
+    else if(letter===chosen&&chosen!==correctAns)btn.classList.add('wrong');
+  });
+  exp.classList.add('show');
+  if(Object.keys(answers).length===total)showScore();
+}
+function showScore(){
+  const score=Object.keys(correct).filter(k=>answers[k]===correct[k]).length;
+  const panel=document.getElementById('score-panel');
+  const num=document.getElementById('score-num');
+  const msg=document.getElementById('score-msg');
+  num.textContent=score+'/'+total;
+  num.style.color=score===4?'var(--green)':score>=3?'var(--amber)':'var(--red)';
+  const msgs={4:'🎯 Perfect! LM3 selesai. Siap lanjut ke LM4.',3:'✅ Good. Review soal yang salah.',2:'⚠️ Review VIF formula dan perbedaan multicollinearity vs heteroskedasticity.',1:'🔁 Ulangi theory section sebelum lanjut.',0:'🔁 Ulangi theory section sebelum lanjut.'};
+  msg.textContent=msgs[score]||msgs[0];
+  panel.style.display='block';
+}
+</script>
+</body>
+</html>

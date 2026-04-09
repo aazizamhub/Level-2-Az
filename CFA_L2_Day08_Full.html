@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 8 · Full · Logistic Regression</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #fafaf8;
+  --bg2:     #f4f3ef;
+  --bg3:     #eeece7;
+  --border:  rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text:    #1a1a2e;
+  --text2:   #4a4a6a;
+  --text3:   #8a8aaa;
+  --gold:    #9a6e1a;
+  --gold2:   #7a5010;
+  --gold-bg: rgba(154,110,26,0.08);
+  --blue:    #1a5fa8;
+  --blue-bg: rgba(26,95,168,0.08);
+  --green:   #1a7a4a;
+  --green-bg:rgba(26,122,74,0.08);
+  --red:     #b83232;
+  --red-bg:  rgba(184,50,50,0.08);
+  --amber:   #a06010;
+  --amber-bg:rgba(160,96,16,0.08);
+  --r:10px; --r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.8;}
+
+.page{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+
+/* top bar */
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;border:1px solid rgba(26,95,168,0.2);}
+
+/* hero */
+.hero{margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--border);}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:36px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:15px;color:var(--text2);}
+.meta-row{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+
+/* toc */
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:36px;}
+.toc-title{font-size:12px;color:var(--text3);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:12px;font-weight:500;}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.toc-list li a{font-size:13px;color:var(--blue);text-decoration:none;display:flex;align-items:center;gap:8px;}
+.toc-list li a:hover{text-decoration:underline;}
+.toc-num{font-size:11px;color:var(--text3);min-width:20px;}
+
+/* section headers */
+.chapter{margin-bottom:40px;}
+.chapter-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--gold-bg);}
+.chapter-num{font-family:'DM Serif Display',serif;font-size:28px;color:var(--gold);line-height:1;}
+.chapter-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);line-height:1.2;}
+
+.sub-header{font-size:17px;font-weight:500;color:var(--text);margin:24px 0 12px;padding-left:12px;border-left:3px solid var(--gold);}
+
+/* prose */
+.prose{font-size:14px;color:var(--text2);line-height:1.85;margin-bottom:14px;}
+.prose strong{color:var(--text);font-weight:500;}
+.prose em{font-style:italic;}
+
+/* formula */
+.formula-block{background:var(--bg2);border:1px solid var(--border2);border-left:4px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:16px 20px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold2);line-height:2;}
+.formula-block .label{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:8px;}
+.formula-block .note{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text3);font-style:italic;display:block;margin-top:8px;}
+
+/* exhibit / regression table */
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:20px 0;}
+.exhibit-title{background:var(--bg3);padding:10px 16px;font-size:12px;font-weight:500;color:var(--text2);border-bottom:1px solid var(--border);letter-spacing:0.03em;}
+.exhibit-body{padding:16px;}
+.reg-table{width:100%;border-collapse:collapse;font-size:13px;}
+.reg-table th{text-align:right;padding:8px 12px;background:var(--bg3);color:var(--text3);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border2);}
+.reg-table th:first-child{text-align:left;}
+.reg-table td{padding:8px 12px;border-bottom:1px solid var(--border);text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text2);}
+.reg-table td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);font-weight:500;}
+.reg-table tr:last-child td{border-bottom:none;}
+.reg-table .sig{color:var(--green);font-weight:500;}
+.reg-table .section-row td{background:var(--bg3);font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text3);font-weight:500;text-transform:uppercase;letter-spacing:0.04em;}
+
+/* callout boxes */
+.callout{border-radius:var(--r);padding:16px 18px;margin:16px 0;}
+.callout-title{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;}
+.callout p{font-size:13px;color:var(--text2);line-height:1.75;}
+.callout p + p{margin-top:8px;}
+.callout.blue{background:var(--blue-bg);border:1px solid rgba(26,95,168,0.15);}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.green{background:var(--green-bg);border:1px solid rgba(26,122,74,0.15);}
+.callout.green .callout-title{color:var(--green);}
+.callout.amber{background:var(--amber-bg);border:1px solid rgba(160,96,16,0.15);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.red{background:var(--red-bg);border:1px solid rgba(184,50,50,0.15);}
+.callout.red .callout-title{color:var(--red);}
+.callout.gold{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);}
+.callout.gold .callout-title{color:var(--gold);}
+
+/* knowledge check */
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:24px 0;overflow:hidden;}
+.kc-header{background:var(--gold-bg);padding:12px 18px;border-bottom:1px solid rgba(154,110,26,0.15);}
+.kc-header-title{font-size:12px;font-weight:500;color:var(--gold);letter-spacing:0.06em;text-transform:uppercase;}
+.kc-body{padding:18px;}
+.kc-q{font-size:13px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.6;}
+.kc-answer{background:var(--bg3);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);line-height:1.75;display:none;}
+.kc-answer.show{display:block;}
+.kc-answer strong{color:var(--green);}
+.kc-toggle{background:none;border:1px solid var(--border2);border-radius:var(--r-sm);padding:6px 14px;font-size:12px;color:var(--text3);cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px;transition:all 0.15s;}
+.kc-toggle:hover{border-color:var(--gold);color:var(--gold);}
+
+/* assumption list */
+.assume-list{list-style:none;display:flex;flex-direction:column;gap:12px;margin:12px 0;}
+.assume-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;display:flex;gap:14px;}
+.assume-num{width:28px;height:28px;border-radius:50%;background:var(--gold-bg);border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--gold);flex-shrink:0;margin-top:2px;}
+.assume-content{}
+.assume-name{font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px;}
+.assume-desc{font-size:13px;color:var(--text2);line-height:1.7;}
+.assume-violation{font-size:12px;color:var(--amber);margin-top:6px;padding:4px 10px;background:var(--amber-bg);border-radius:4px;display:inline-block;}
+
+/* numbered list */
+.num-list{list-style:none;counter-reset:num;display:flex;flex-direction:column;gap:8px;margin:10px 0;}
+.num-list li{counter-increment:num;display:flex;gap:12px;font-size:13px;color:var(--text2);line-height:1.7;}
+.num-list li::before{content:counter(num)".";color:var(--gold);font-weight:500;min-width:20px;flex-shrink:0;}
+
+/* bullet list */
+.bullet-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin:10px 0;}
+.bullet-list li{display:flex;gap:10px;font-size:13px;color:var(--text2);line-height:1.7;}
+.bullet-list li::before{content:'■';color:var(--gold);font-size:9px;margin-top:5px;flex-shrink:0;}
+
+/* inline code */
+code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--bg3);padding:2px 6px;border-radius:4px;color:var(--gold2);}
+
+/* divider */
+.divider{height:1px;background:var(--border);margin:36px 0;}
+
+/* practice */
+.practice-header{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);border-radius:var(--r) var(--r) 0 0;padding:16px 20px;display:flex;align-items:center;gap:12px;}
+.practice-header-title{font-size:16px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);margin-top:2px;}
+.practice-body{background:var(--bg2);border:1px solid rgba(154,110,26,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:24px;}
+.vignette{background:var(--bg3);border-left:4px solid var(--gold);padding:18px 20px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:28px;font-size:13px;color:var(--text2);line-height:1.85;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;font-weight:500;}
+.question-block{margin-bottom:24px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:6px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:12px;line-height:1.65;}
+.option{display:block;width:100%;text-align:left;padding:11px 16px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:8px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.6;}
+.option:hover:not(:disabled){border-color:var(--border2);background:var(--bg2);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:14px 16px;font-size:13px;color:var(--text2);margin-top:10px;line-height:1.8;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:28px;margin-top:20px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:52px;margin-bottom:8px;}
+.score-msg{font-size:14px;color:var(--text2);}
+
+/* nav */
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+.nav-day{font-size:12px;color:var(--text3);text-align:center;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II · <span>Quantitative Methods</span> · LM4</div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <div class="version-badge">Versi Full</div>
+      <div class="day-badge">Day 8 of 90</div>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-tag">Jumat, 17 April 2026</div>
+    <h1 class="hero-title">Logistic Regression — Model Regresi untuk Variabel Dependen Kualitatif</h1>
+    <p class="hero-sub">Learning Module 4 — Extensions of Multiple Regression · Subtopic 2 of 2 · CFA Level II 2026</p>
+    <div class="meta-row">
+      <div class="meta-pill">📖 Materi lengkap</div>
+      <div class="meta-pill">🇮🇩 Bahasa Indonesia</div>
+      <div class="meta-pill">⚖️ Exam weight <b>~6%</b></div>
+      <div class="meta-pill">⏱ Est. baca <b>45–60 menit</b></div>
+    </div>
+  </div>
+
+  <!-- Table of Contents -->
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ul class="toc-list">
+      <li><a href="#lo"><span class="toc-num">0</span> Learning Outcomes</a></li>
+      <li><a href="#ch1"><span class="toc-num">1</span> Masalah Linear Probability Model & Motivasi Logistic Regression</a></li>
+      <li><a href="#ch2"><span class="toc-num">2</span> Formulasi Model: Log-Odds, Odds Ratio & Fungsi Sigmoid</a></li>
+      <li><a href="#ch3"><span class="toc-num">3</span> Interpretasi Koefisien & Marginal Effects</a></li>
+      <li><a href="#ch4"><span class="toc-num">4</span> Evaluasi Model: Likelihood Ratio Test, Pseudo-R², Confusion Matrix & ROC/AUC</a></li>
+      <li><a href="#ch5"><span class="toc-num">5</span> Aplikasi: Logistic Regression dalam Machine Learning & Finance</a></li>
+      <li><a href="#practice"><span class="toc-num">6</span> Latihan Soal — Item Set Vignette</a></li>
+    </ul>
+  </div>
+
+  <!-- Section 0: Learning Outcomes -->
+  <div class="chapter" id="lo">
+    <div class="chapter-header">
+      <div class="chapter-num">0</div>
+      <div class="chapter-title">Learning Outcomes</div>
+    </div>
+    <div class="callout gold">
+      <div class="callout-title">Setelah menyelesaikan modul ini, kandidat harus mampu:</div>
+      <ul class="num-list">
+        <li>Memformulasikan dan menginterpretasikan model logistic regression, termasuk transformasi log-odds dan estimasi menggunakan maximum likelihood estimation (MLE).</li>
+        <li>Menjelaskan mengapa linear probability model tidak tepat untuk variabel dependen biner dan bagaimana logistic transformation mengatasi masalah tersebut.</li>
+        <li>Menginterpretasikan koefisien logistic regression sebagai perubahan log-odds, menghitung odds ratio, dan mengestimasi marginal effects pada titik tertentu.</li>
+        <li>Mengevaluasi performa model logistic regression menggunakan likelihood ratio test, pseudo-R², confusion matrix, dan ROC/AUC.</li>
+        <li>Menjelaskan peran logistic regression sebagai building block dalam binary classification, machine learning, dan neural networks di konteks finance.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Chapter 1 -->
+  <div class="chapter" id="ch1">
+    <div class="chapter-header">
+      <div class="chapter-num">1</div>
+      <div class="chapter-title">Masalah Linear Probability Model & Motivasi Logistic Regression</div>
+    </div>
+
+    <p class="prose">Dalam analisis investasi, kita sering menghadapi pertanyaan yang jawabannya bukan angka kontinu melainkan <strong>kategori biner</strong>: apakah perusahaan akan bangkrut atau tidak? Apakah nasabah akan default atau tidak? Apakah sentimen positif atau negatif? Variabel dependen seperti ini disebut <strong>qualitative dependent variable</strong> (categorical dependent variable), yang mengambil nilai diskrit — biasanya 1 (event terjadi) dan 0 (tidak terjadi).</p>
+
+    <div class="sub-header">Linear Probability Model (LPM) — Pendekatan Naif</div>
+
+    <p class="prose">Pendekatan paling sederhana adalah langsung meregresikan variabel binary (Y = 0/1) terhadap variabel independen menggunakan OLS biasa. Model ini disebut <strong>Linear Probability Model (LPM)</strong>:</p>
+
+    <div class="formula-block">
+      <span class="label">Linear Probability Model</span>
+      Y<sub>i</sub> = b₀ + b₁X<sub>1i</sub> + b₂X<sub>2i</sub> + b₃X<sub>3i</sub> + ε<sub>i</sub>
+      <span class="note">Dimana Y = 1 jika event terjadi (misal bangkrut), Y = 0 jika tidak</span>
+    </div>
+
+    <p class="prose">LPM memiliki dua masalah fundamental yang serius:</p>
+
+    <ul class="num-list">
+      <li><strong>Predicted values di luar rentang [0, 1]:</strong> Karena model linear, nilai prediksi Ŷ bisa lebih besar dari 1 atau kurang dari 0 tergantung pada koefisien dan nilai variabel independen. Ini invalid karena probabilitas secara definisi harus berada di antara 0 dan 1.</li>
+      <li><strong>Asumsi linearitas yang unrealistic:</strong> LPM mengasumsikan hubungan antara setiap variabel independen dan probabilitas event bersifat linear di seluruh rentang. Pada kenyataannya, dampak perubahan variabel (misalnya debt-to-equity) terhadap probabilitas bangkrut tidak konstan — di level sangat rendah atau sangat tinggi, dampaknya biasanya lebih kecil dibanding di level moderat.</li>
+    </ul>
+
+    <div class="callout amber">
+      <div class="callout-title">Contoh Konkret</div>
+      <p>Bayangkan model: P(bankrupt) = 0.30 + 0.40 × DE. Untuk perusahaan dengan DE = 2.0, prediksi = 0.30 + 0.40(2.0) = 1.10 — probabilitas 110%? Tidak masuk akal. Sebaliknya, untuk DE = −1.0, prediksi = −0.10 — probabilitas negatif?</p>
+    </div>
+
+    <p class="prose">Untuk mengatasi kedua masalah ini, kita memerlukan transformasi non-linear yang memetakan output model ke rentang (0, 1). Transformasi yang paling umum digunakan dalam statistik dan machine learning adalah <strong>logistic transformation</strong>, yang menghasilkan model <strong>logistic regression</strong> (atau model logit).</p>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 1</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Seorang analis membangun model untuk memprediksi apakah perusahaan akan melakukan stock split (Y = 1) atau tidak (Y = 0). Ia menggunakan OLS dan mendapatkan Ŷ = 1.15 untuk salah satu perusahaan. Apa masalah utama dari hasil ini, dan apa solusinya?</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show')">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          <strong>Masalah:</strong> Predicted probability 1.15 (atau 115%) berada di luar rentang valid [0, 1]. Ini terjadi karena OLS linear tidak membatasi output — ini kelemahan fundamental Linear Probability Model. <strong>Solusi:</strong> Gunakan logistic regression yang mentransformasi output melalui fungsi sigmoid, sehingga predicted probability selalu berada di antara 0 dan 1.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chapter 2 -->
+  <div class="chapter" id="ch2">
+    <div class="chapter-header">
+      <div class="chapter-num">2</div>
+      <div class="chapter-title">Formulasi Model: Log-Odds, Odds Ratio & Fungsi Sigmoid</div>
+    </div>
+
+    <div class="sub-header">Odds dan Log-Odds</div>
+
+    <p class="prose">Sebelum memahami logistic regression, kita perlu memahami konsep <strong>odds</strong>. Jika P adalah probabilitas suatu event terjadi, maka:</p>
+
+    <div class="formula-block">
+      <span class="label">Odds</span>
+      Odds = P / (1 − P)
+      <span class="note">Rasio probabilitas event terjadi terhadap probabilitas event tidak terjadi</span>
+    </div>
+
+    <p class="prose">Contoh: jika probabilitas perusahaan bangkrut P = 0.75, maka odds = 0.75 / (1 − 0.75) = 0.75 / 0.25 = 3. Artinya odds bangkrut adalah <strong>3 banding 1</strong> — probabilitas bangkrut tiga kali lebih besar daripada probabilitas tidak bangkrut.</p>
+
+    <p class="prose">Karena odds bisa bernilai dari 0 sampai +∞, kita ambil logaritma natural-nya untuk mendapatkan <strong>log-odds</strong> (juga dikenal sebagai <strong>logit</strong>), yang bisa bernilai dari −∞ sampai +∞. Ini yang menjadi variabel dependen dalam logistic regression:</p>
+
+    <div class="formula-block">
+      <span class="label">Logistic Regression Model (Logit Model)</span>
+      ln(P / (1 − P)) = b₀ + b₁X₁ + b₂X₂ + ... + bₖXₖ + ε
+      <span class="note">Log-odds diregresikan secara linear terhadap variabel independen</span>
+    </div>
+
+    <div class="sub-header">Fungsi Sigmoid — Dari Log-Odds ke Probabilitas</div>
+
+    <p class="prose">Setelah mengestimasi koefisien model, kita perlu mengkonversi log-odds kembali ke probabilitas. Ini dilakukan dengan menerapkan <strong>inverse logit</strong>, yang menghasilkan fungsi <strong>sigmoid</strong> (berbentuk S-curve):</p>
+
+    <div class="formula-block">
+      <span class="label">Sigmoid Function (Inverse Logit)</span>
+      P = 1 / (1 + e<sup>−(b₀ + b₁X₁ + b₂X₂ + ... + bₖXₖ)</sup>)
+      <span class="note">Selalu menghasilkan nilai antara 0 dan 1 — valid sebagai probabilitas</span>
+    </div>
+
+    <p class="prose">Kita definisikan z = b₀ + b₁X₁ + ... + bₖXₖ. Maka P = 1/(1 + e<sup>−z</sup>). Perhatikan sifat-sifat sigmoid:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 1 — Sifat-Sifat Fungsi Sigmoid</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th style="text-align:left;">Nilai z</th><th>P = sigmoid(z)</th><th>Interpretasi</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>z → −∞</td><td>→ 0</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Probabilitas mendekati 0</td></tr>
+            <tr><td>z = −2</td><td>0.119</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Probabilitas rendah</td></tr>
+            <tr><td>z = −1</td><td>0.269</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Probabilitas cukup rendah</td></tr>
+            <tr><td>z = 0</td><td>0.500</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Titik tengah — fifty-fifty</td></tr>
+            <tr><td>z = +1</td><td>0.731</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Probabilitas cukup tinggi</td></tr>
+            <tr><td>z = +2</td><td>0.881</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Probabilitas tinggi</td></tr>
+            <tr><td>z → +∞</td><td>→ 1</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Probabilitas mendekati 1</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">Estimasi: Maximum Likelihood Estimation (MLE)</div>
+
+    <p class="prose">Berbeda dengan linear regression yang diestimasi menggunakan Ordinary Least Squares (OLS), logistic regression diestimasi menggunakan <strong>Maximum Likelihood Estimation (MLE)</strong>. MLE mencari set koefisien (b₀, b₁, ..., bₖ) yang membuat data observasi <em>paling mungkin</em> terjadi — yaitu yang memaksimalkan <strong>likelihood function</strong>.</p>
+
+    <p class="prose">Karena setiap observasi bersifat biner (0 atau 1), distribusi probabilitas yang digunakan untuk membangun likelihood function adalah <strong>distribusi binomial</strong>. MLE membutuhkan iterasi numerik (tidak ada closed-form solution seperti OLS), sehingga selalu dihitung menggunakan software statistik.</p>
+
+    <p class="prose">Logistic regression mengasumsikan error term mengikuti <strong>distribusi logistik</strong>, yang bentuknya mirip distribusi normal tetapi dengan ekor yang lebih tebal (<em>fatter tails</em>).</p>
+
+    <div class="callout blue">
+      <div class="callout-title">Perbandingan OLS vs MLE</div>
+      <p><strong>OLS:</strong> Meminimalkan jumlah kuadrat residual (Σε²). Cocok untuk dependent variable kontinu. Menghasilkan R² sebagai goodness of fit.</p>
+      <p><strong>MLE:</strong> Memaksimalkan probabilitas data terjadi. Cocok untuk dependent variable biner/categorical. Menghasilkan log-likelihood dan pseudo-R² sebagai ukuran fit.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 2</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Jika probabilitas suatu perusahaan melakukan share repurchase adalah P = 0.20, berapakah: (a) odds repurchase, (b) log-odds, dan (c) berapa nilai z pada sigmoid function yang menghasilkan P = 0.20?</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show')">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          <strong>(a)</strong> Odds = P/(1−P) = 0.20/0.80 = 0.25. Artinya probabilitas repurchase hanya seperempat dari probabilitas tidak repurchase. <strong>(b)</strong> Log-odds = ln(0.25) = −1.386. Nilai negatif menunjukkan event kurang likely dari non-event. <strong>(c)</strong> z = −1.386. Verifikasi: P = 1/(1 + e<sup>1.386</sup>) = 1/(1 + 3.999) = 1/4.999 ≈ 0.20. ✓
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chapter 3 -->
+  <div class="chapter" id="ch3">
+    <div class="chapter-header">
+      <div class="chapter-num">3</div>
+      <div class="chapter-title">Interpretasi Koefisien & Marginal Effects</div>
+    </div>
+
+    <div class="sub-header">Interpretasi Koefisien sebagai Perubahan Log-Odds</div>
+
+    <p class="prose">Koefisien dalam logistic regression <strong>tidak bisa diinterpretasikan</strong> sama seperti koefisien OLS. Dalam OLS, b₁ berarti "perubahan Y per unit perubahan X₁." Dalam logistic regression, b₁ berarti <strong>perubahan log-odds per unit perubahan X₁</strong>, holding all other variables constant. Ini bukan perubahan probabilitas!</p>
+
+    <p class="prose">Hypothesis test untuk koefisien logistic regression mirip dengan OLS. Software biasanya menghasilkan <strong>z-statistic</strong> (bukan t-statistic) karena MLE menggunakan distribusi normal asymptotic. Null hypothesis: H₀: bⱼ = 0 (variabel tidak signifikan).</p>
+
+    <div class="sub-header">Odds Ratio — Interpretasi yang Lebih Intuitif</div>
+
+    <p class="prose">Karena "perubahan log-odds" sulit dibayangkan, interpretasi yang lebih praktis menggunakan <strong>odds ratio</strong>:</p>
+
+    <div class="formula-block">
+      <span class="label">Odds Ratio</span>
+      Odds Ratio = e<sup>bⱼ</sup>
+      <span class="note">Faktor pengali odds untuk setiap kenaikan 1 unit Xⱼ, ceteris paribus</span>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 2 — Contoh Interpretasi Odds Ratio</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th style="text-align:left;">Variabel</th><th>Koefisien (bⱼ)</th><th>Odds Ratio (e<sup>bⱼ</sup>)</th><th style="text-align:left;">Interpretasi</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>DE (Debt/Equity)</td><td>+0.80</td><td>2.226</td><td style="text-align:left;font-family:'DM Sans';font-size:12px;">↑1 unit DE → odds bangkrut ×2.23</td></tr>
+            <tr><td>ROE</td><td>−1.50</td><td>0.223</td><td style="text-align:left;font-family:'DM Sans';font-size:12px;">↑1 unit ROE → odds bangkrut ×0.22 (↓78%)</td></tr>
+            <tr><td>SIZE (ln aset)</td><td>−0.30</td><td>0.741</td><td style="text-align:left;font-family:'DM Sans';font-size:12px;">↑1 unit SIZE → odds bangkrut ×0.74 (↓26%)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Jika odds ratio &gt; 1, kenaikan variabel meningkatkan odds event. Jika odds ratio &lt; 1, kenaikan variabel menurunkan odds event. Odds ratio = 1 berarti variabel tidak berpengaruh.</p>
+
+    <div class="sub-header">Marginal Effects — Dampak pada Probabilitas</div>
+
+    <p class="prose">Pertanyaan yang paling sering diajukan praktisi: "Kalau DE naik 1%, berapa perubahan <em>probabilitas</em> bangkrut?" Ini membutuhkan perhitungan <strong>marginal effect</strong>, yang dalam logistic regression bersifat <strong>non-konstan</strong> — dampaknya berbeda-beda tergantung level semua variabel.</p>
+
+    <p class="prose">Cara menghitung marginal effect untuk "perusahaan rata-rata":</p>
+
+    <ul class="num-list">
+      <li>Hitung P₀ menggunakan nilai mean semua variabel independen: P₀ = 1/(1 + e<sup>−z₀</sup>)</li>
+      <li>Naikkan variabel yang ingin diteliti sebesar 1 unit (atau 1%), hitung P₁ = 1/(1 + e<sup>−z₁</sup>)</li>
+      <li>Marginal effect = P₁ − P₀</li>
+    </ul>
+
+    <div class="callout amber">
+      <div class="callout-title">Perbedaan Kunci: OLS vs Logistic</div>
+      <p>Dalam OLS, marginal effect = b₁ (konstan di semua level X). Dalam logistic regression, marginal effect <strong>berubah-ubah</strong>. Di sekitar P = 0.5 (inflection point sigmoid), perubahan 1 unit X punya dampak terbesar pada probabilitas. Di ekstrem (P mendekati 0 atau 1), dampaknya kecil karena kurva sigmoid sangat landai.</p>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 3 — Contoh Perhitungan Marginal Effect (Share Repurchase Model)</div>
+      <div class="exhibit-body">
+        <p style="font-size:13px;color:var(--text2);line-height:1.75;margin-bottom:12px;">Model: ln(P/(1−P)) = −0.4738 − 0.9118×CASH − 0.3186×DE + 0.9407×NPM</p>
+        <table class="reg-table">
+          <thead>
+            <tr><th style="text-align:left;">Step</th><th style="text-align:left;">Perhitungan</th><th>Hasil</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>P₀ (mean values)</td><td style="text-align:left;font-family:'DM Sans';font-size:12px;">CASH=0.083, DE=0.918, NPM=−0.054</td><td>29.06%</td></tr>
+            <tr><td>P₁ (CASH + 1%)</td><td style="text-align:left;font-family:'DM Sans';font-size:12px;">CASH=0.093, DE=0.918, NPM=−0.054</td><td>28.87%</td></tr>
+            <tr><td>Marginal effect CASH</td><td style="text-align:left;font-family:'DM Sans';font-size:12px;">28.87% − 29.06%</td><td>−0.19%</td></tr>
+            <tr class="section-row"><td colspan="3"></td></tr>
+            <tr><td>P₁ (NPM + 1%)</td><td style="text-align:left;font-family:'DM Sans';font-size:12px;">CASH=0.083, DE=0.918, NPM=−0.044</td><td>29.26%</td></tr>
+            <tr><td>Marginal effect NPM</td><td style="text-align:left;font-family:'DM Sans';font-size:12px;">29.26% − 29.06%</td><td>+0.20%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout red">
+      <div class="callout-title">Exam Trap</div>
+      <p>Jangan pernah menginterpretasikan koefisien logistic regression sebagai perubahan probabilitas langsung. Jika b₁ = 2.50, ini <strong>bukan</strong> berarti "probabilitas naik 2.50 per unit X." Ini berarti <em>log-odds</em> naik 2.50, atau odds menjadi e<sup>2.50</sup> = 12.18 kali lipat. Perubahan probabilitas harus dihitung terpisah menggunakan marginal effects.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 3</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Model logistic regression untuk default: ln(P/(1−P)) = −2.0 + 3.0×DE. Untuk perusahaan dengan DE = 1.0, berapa probabilitas default? Jika DE naik menjadi 1.5, berapa probabilitas baru dan marginal effect dari kenaikan 0.5 unit DE?</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show')">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          <strong>DE = 1.0:</strong> z = −2.0 + 3.0(1.0) = 1.0. P = 1/(1 + e<sup>−1</sup>) = 1/1.368 = <strong>73.1%</strong>.<br>
+          <strong>DE = 1.5:</strong> z = −2.0 + 3.0(1.5) = 2.5. P = 1/(1 + e<sup>−2.5</sup>) = 1/1.082 = <strong>92.4%</strong>.<br>
+          <strong>Marginal effect:</strong> 92.4% − 73.1% = +19.3 percentage points untuk kenaikan 0.5 unit DE.<br>
+          Perhatikan bahwa perubahan 0.5 unit DE dari 1.0 ke 1.5 memberikan dampak +19.3pp. Jika kita hitung dari DE=2.0 ke 2.5: z₁=4.0→P=98.2%, z₂=5.5→P=99.6%, marginal effect hanya +1.4pp. Ini menunjukkan sifat non-linear dari marginal effects.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chapter 4 -->
+  <div class="chapter" id="ch4">
+    <div class="chapter-header">
+      <div class="chapter-num">4</div>
+      <div class="chapter-title">Evaluasi Model: Likelihood Ratio Test, Pseudo-R², Confusion Matrix & ROC/AUC</div>
+    </div>
+
+    <div class="sub-header">Likelihood Ratio (LR) Test</div>
+
+    <p class="prose">Karena logistic regression tidak diestimasi menggunakan OLS, kita tidak bisa menggunakan F-test tradisional untuk menguji signifikansi keseluruhan model. Sebagai gantinya, kita menggunakan <strong>Likelihood Ratio (LR) test</strong>, yang membandingkan fit antara model unrestricted (lengkap) dan model restricted (biasanya intercept-only model).</p>
+
+    <div class="formula-block">
+      <span class="label">Likelihood Ratio Test Statistic</span>
+      LR = −2 × (Log-likelihood<sub>restricted</sub> − Log-likelihood<sub>unrestricted</sub>)
+      <span class="note">Terdistribusi chi-squared dengan q degrees of freedom (q = jumlah restriksi/variabel yang diuji)</span>
+    </div>
+
+    <p class="prose">Log-likelihood selalu bernilai negatif (semakin mendekati 0, semakin baik fit). H₀: model restricted (lebih kecil) lebih baik. Jika LR &gt; critical chi-squared value, tolak H₀ — artinya model unrestricted secara signifikan lebih baik.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 4 — Contoh LR Test</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th style="text-align:left;">Model</th><th>Log-Likelihood</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Restricted (intercept only)</td><td>−312.68</td></tr>
+            <tr><td>Unrestricted (3 variabel)</td><td>−304.20</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:13px;color:var(--text2);margin-top:12px;">LR = −2 × (−312.68 − (−304.20)) = −2 × (−8.48) = <strong>16.96</strong>. Critical χ² (df=3, α=5%) = 7.815. Karena 16.96 &gt; 7.815 → <strong style="color:var(--green);">tolak H₀</strong>. Model unrestricted lebih baik.</p>
+      </div>
+    </div>
+
+    <div class="sub-header">Pseudo-R²</div>
+
+    <p class="prose">Logistic regression tidak memiliki R² yang setara dengan OLS karena model tidak diestimasi menggunakan least squares. Sebagai alternatif, software menghasilkan <strong>Pseudo-R²</strong> yang mengukur explained variation. Namun, pseudo-R² harus diinterpretasikan dengan hati-hati: hanya valid untuk <strong>membandingkan spesifikasi berbeda dari model yang sama</strong> (dataset sama), bukan untuk membandingkan model dari dataset yang berbeda.</p>
+
+    <div class="sub-header">Confusion Matrix</div>
+
+    <p class="prose">Untuk mengevaluasi seberapa baik model mengklasifikasikan observasi, kita menggunakan <strong>confusion matrix</strong>. Setelah memilih threshold (biasanya 0.5), setiap observasi diklasifikasikan sebagai predicted positive (P ≥ threshold) atau predicted negative (P &lt; threshold), lalu dibandingkan dengan nilai aktualnya.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 5 — Struktur Confusion Matrix</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th style="text-align:left;"></th><th>Predicted = 1 (Positive)</th><th>Predicted = 0 (Negative)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Actual = 1</td><td><span class="sig">True Positive (TP)</span></td><td style="color:var(--red);">False Negative (FN) — Type II</td></tr>
+            <tr><td>Actual = 0</td><td style="color:var(--red);">False Positive (FP) — Type I</td><td><span class="sig">True Negative (TN)</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Dari confusion matrix, kita menghitung beberapa metrik kinerja:</p>
+
+    <div class="formula-block">
+      <span class="label">Classification Metrics</span>
+      Accuracy = (TP + TN) / (TP + TN + FP + FN)
+      Precision = TP / (TP + FP)        → dari predicted positive, berapa yang benar?
+      Recall    = TP / (TP + FN)         → dari actual positive, berapa yang terdeteksi?
+      Specificity = TN / (TN + FP)      → dari actual negative, berapa yang benar?
+      F1 Score  = 2 × (Precision × Recall) / (Precision + Recall)
+    </div>
+
+    <div class="callout blue">
+      <div class="callout-title">Precision vs Recall — Trade-off</div>
+      <p>Dalam konteks credit risk, <strong>recall</strong> sering lebih penting: kita ingin mendeteksi semua perusahaan yang benar-benar akan default (minimize FN), bahkan kalau ada beberapa false alarm (FP lebih banyak). Menurunkan threshold dari 0.5 ke 0.3 meningkatkan recall tapi menurunkan precision. Sebaliknya, dalam fraud detection dengan volume sangat tinggi, precision mungkin lebih penting untuk mengurangi investigasi yang sia-sia.</p>
+    </div>
+
+    <div class="sub-header">ROC Curve & AUC</div>
+
+    <p class="prose"><strong>ROC (Receiver Operating Characteristic) curve</strong> adalah grafik yang memplot <strong>True Positive Rate</strong> (recall/sensitivity) terhadap <strong>False Positive Rate</strong> (1 − specificity) di berbagai threshold. Kurva ini memberikan gambaran menyeluruh tentang performa model di semua threshold — bukan hanya di satu threshold tertentu.</p>
+
+    <p class="prose"><strong>AUC (Area Under the ROC Curve)</strong> merangkum performa keseluruhan model dalam satu angka:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 6 — Interpretasi AUC</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th style="text-align:left;">AUC Range</th><th style="text-align:left;">Interpretasi</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>0.50</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Sama dengan tebak random — model tidak berguna</td></tr>
+            <tr><td>0.50 – 0.70</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Poor discrimination</td></tr>
+            <tr><td>0.70 – 0.80</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Acceptable discrimination</td></tr>
+            <tr><td>0.80 – 0.90</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Good/excellent discrimination</td></tr>
+            <tr><td>0.90 – 1.00</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Outstanding (jarang tercapai di finance)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 4</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Sebuah model distress menghasilkan confusion matrix: TP=20, FP=10, FN=5, TN=65 dari 100 observasi. Hitung accuracy, precision, dan recall. Mana metrik yang paling relevan untuk bank yang ingin meminimalkan unexpected loan losses?</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show')">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          <strong>Accuracy</strong> = (20+65)/100 = 85%. <strong>Precision</strong> = 20/(20+10) = 66.7%. <strong>Recall</strong> = 20/(20+5) = 80.0%.<br>
+          Untuk bank yang ingin meminimalkan unexpected loan losses, <strong>recall adalah yang paling relevan</strong>. Recall mengukur persentase perusahaan yang benar-benar distress dan berhasil terdeteksi model. FN (5 perusahaan distress yang tidak terdeteksi) menyebabkan unexpected losses — ini yang ingin diminimalkan. Beberapa false positives (FP=10) lebih bisa ditoleransi karena bank hanya perlu melakukan due diligence tambahan.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chapter 5 -->
+  <div class="chapter" id="ch5">
+    <div class="chapter-header">
+      <div class="chapter-num">5</div>
+      <div class="chapter-title">Aplikasi: Logistic Regression dalam Machine Learning & Finance</div>
+    </div>
+
+    <p class="prose">Logistic regression adalah salah satu algoritma <strong>supervised learning</strong> yang paling fundamental dalam machine learning. Di CFA Level II, logistic regression menjadi jembatan antara materi "traditional statistics" (LM1–LM4) dan materi machine learning (LM5+).</p>
+
+    <div class="sub-header">Aplikasi Utama di Finance</div>
+
+    <ul class="num-list">
+      <li><strong>Credit Scoring & Default Prediction:</strong> Bank dan lembaga rating menggunakan logistic regression untuk mengestimasi probabilitas default berdasarkan rasio keuangan perusahaan (debt-to-equity, interest coverage, ROA, dll). Model Altman Z-score yang lebih modern sering menggunakan logit framework.</li>
+      <li><strong>Sentiment Classification:</strong> Logistic regression dikombinasikan dengan Natural Language Processing (NLP) untuk mengklasifikasikan sentimen teks keuangan (press releases, earnings calls, annual reports) menjadi positif (1) atau negatif (0). Variabel independen berupa tokens — kata kunci atau frasa dari teks keuangan.</li>
+      <li><strong>Fraud Detection:</strong> Mengklasifikasikan transaksi sebagai fraudulent (1) atau legitimate (0) berdasarkan pola transaksi (jumlah, frekuensi, lokasi, dll).</li>
+      <li><strong>M&A Prediction:</strong> Memprediksi apakah perusahaan akan menjadi target akuisisi berdasarkan karakteristik fundamental (undervaluation, cash holdings, market share).</li>
+    </ul>
+
+    <div class="sub-header">Koneksi ke Neural Networks</div>
+
+    <p class="prose">Fungsi sigmoid yang digunakan dalam logistic regression adalah <strong>activation function</strong> yang sama yang digunakan di output layer neural networks untuk binary classification. Sebuah neural network tanpa hidden layer yang menggunakan sigmoid activation pada dasarnya adalah logistic regression. Oleh karena itu, memahami logistic regression adalah fondasi untuk memahami deep learning.</p>
+
+    <div class="callout green">
+      <div class="callout-title">Konteks Indonesia</div>
+      <p>Di pasar modal Indonesia, OJK (Otoritas Jasa Keuangan) menggunakan model-model berbasis logistic regression untuk early warning system risiko perbankan. Bank-bank besar seperti BCA, BRI, dan Mandiri juga menggunakan logit models dalam internal credit scoring mereka. Model ini mengestimasi probability of default (PD) yang menjadi input kunci dalam perhitungan modal minimum sesuai Basel framework.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 5</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Seorang analis NLP membangun model logistic regression untuk sentiment classification pada press releases perusahaan IDX. Variabel dependen: sentiment (1=positif, 0=negatif). Variabel independen: kata-kata seperti "growth", "profit", "loss", "restructuring". Kenapa logistic regression cocok di sini, dan apa hubungannya dengan neural networks?</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show')">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          <strong>Logistic regression cocok</strong> karena dependent variable bersifat biner (positif/negatif), bukan kontinu. Model mengestimasi probabilitas teks memiliki sentimen positif berdasarkan keberadaan dan frekuensi kata-kata tertentu. <strong>Hubungan dengan neural networks:</strong> Logistic regression adalah neural network paling sederhana — single layer tanpa hidden layers, menggunakan sigmoid activation function. Neural network yang lebih kompleks (dengan hidden layers) bisa menangkap pola non-linear antar tokens yang logistic regression tidak bisa, tetapi prinsip dasar outputnya sama: sigmoid function menghasilkan probabilitas antara 0 dan 1.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Practice -->
+  <div class="chapter" id="practice">
+    <div class="practice-header">
+      <div style="flex:1;">
+        <div class="practice-header-title">Latihan Soal — Item Set Vignette</div>
+        <div class="practice-header-sub">Format CFA L2 · 6 soal · Jawab dulu sebelum lihat penjelasan</div>
+      </div>
+    </div>
+    <div class="practice-body">
+
+      <div class="vignette">
+        <div class="vignette-label">Case Vignette</div>
+        Siti Rahmawati, CFA, adalah Head of Quantitative Research di PT Garuda Capital, Jakarta. Tim-nya membangun model logistic regression untuk memprediksi <em>corporate default</em> pada perusahaan yang terdaftar di IDX. Variabel dependen: DEFAULT (1 jika default dalam 12 bulan, 0 jika tidak). Sampel: 400 perusahaan.<br><br>
+        <strong>Model:</strong> ln(P/(1−P)) = −3.20 + 1.80×DE + 0.50×VOLATILITY − 2.40×ICR + 0.90×SIZE_DUMMY</strong><br><br>
+        Dimana DE = debt-to-equity ratio, VOLATILITY = annualized stock return volatility, ICR = interest coverage ratio, SIZE_DUMMY = 1 jika small cap (market cap &lt; Rp 1 triliun), 0 otherwise. Estimasi menggunakan MLE.<br><br>
+
+        <strong>Hasil Regresi (Exhibit A):</strong><br>
+        <table style="width:100%;font-size:12px;border-collapse:collapse;margin:10px 0;">
+          <tr style="background:rgba(0,0,0,0.04);"><th style="text-align:left;padding:6px;">Variable</th><th style="padding:6px;">Coefficient</th><th style="padding:6px;">Std Error</th><th style="padding:6px;">z-Stat</th><th style="padding:6px;">P-Value</th></tr>
+          <tr><td style="padding:6px;">Intercept</td><td style="padding:6px;text-align:right;">−3.200</td><td style="padding:6px;text-align:right;">0.85</td><td style="padding:6px;text-align:right;">−3.76</td><td style="padding:6px;text-align:right;">0.0002</td></tr>
+          <tr><td style="padding:6px;">DE</td><td style="padding:6px;text-align:right;">1.800</td><td style="padding:6px;text-align:right;">0.45</td><td style="padding:6px;text-align:right;">4.00</td><td style="padding:6px;text-align:right;">0.0001</td></tr>
+          <tr><td style="padding:6px;">VOLATILITY</td><td style="padding:6px;text-align:right;">0.500</td><td style="padding:6px;text-align:right;">0.30</td><td style="padding:6px;text-align:right;">1.67</td><td style="padding:6px;text-align:right;">0.0960</td></tr>
+          <tr><td style="padding:6px;">ICR</td><td style="padding:6px;text-align:right;">−2.400</td><td style="padding:6px;text-align:right;">0.55</td><td style="padding:6px;text-align:right;">−4.36</td><td style="padding:6px;text-align:right;">0.0000</td></tr>
+          <tr><td style="padding:6px;">SIZE_DUMMY</td><td style="padding:6px;text-align:right;">0.900</td><td style="padding:6px;text-align:right;">0.35</td><td style="padding:6px;text-align:right;">2.57</td><td style="padding:6px;text-align:right;">0.0102</td></tr>
+        </table>
+        <br>
+        Log-likelihood (unrestricted): −142.50<br>
+        Log-likelihood (intercept only): −168.30<br>
+        Pseudo-R²: 0.153<br><br>
+
+        <strong>Confusion Matrix — Out-of-sample test (100 perusahaan, threshold = 0.5):</strong><br>
+        TP = 18, FP = 7, FN = 4, TN = 71<br><br>
+
+        Siti diminta menganalisis perusahaan PT Indo Textile (DE = 1.20, VOLATILITY = 0.45, ICR = 0.80, small cap) dan PT Mega Mining (DE = 0.60, VOLATILITY = 0.30, ICR = 2.50, large cap).
+      </div>
+
+      <!-- Q1 -->
+      <div class="question-block" id="qb0">
+        <div class="q-num">Question 1 of 6</div>
+        <div class="q-text">Pada level signifikansi 5%, variabel mana yang TIDAK signifikan dalam model Siti?</div>
+        <button class="option" onclick="answer(0,'A','B')">A. DE, karena koefisiennya positif yang bertentangan dengan teori keuangan</button>
+        <button class="option" onclick="answer(0,'B','B')">B. VOLATILITY, karena p-value 0.096 melebihi α = 0.05</button>
+        <button class="option" onclick="answer(0,'C','B')">C. SIZE_DUMMY, karena dummy variable tidak bisa diuji menggunakan z-test</button>
+        <div class="explanation" id="exp0">
+          <strong>B adalah jawaban yang benar.</strong> VOLATILITY memiliki p-value = 0.096, yang lebih besar dari α = 0.05, sehingga kita gagal menolak H₀: b(VOLATILITY) = 0 pada level 5%. Variabel ini tidak signifikan secara statistik. Opsi A salah — koefisien DE positif justru sesuai teori (DE tinggi → risiko default tinggi). Opsi C salah — dummy variable bisa dan harus diuji signifikansinya; SIZE_DUMMY signifikan (p = 0.0102 &lt; 0.05).
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="question-block" id="qb1">
+        <div class="q-num">Question 2 of 6</div>
+        <div class="q-text">Odds ratio untuk variabel ICR adalah <em>closest to</em>:</div>
+        <button class="option" onclick="answer(1,'A','A')">A. 0.091 — artinya kenaikan 1 unit ICR menurunkan odds default sebesar ~91%</button>
+        <button class="option" onclick="answer(1,'B','A')">B. 2.400 — artinya kenaikan 1 unit ICR meningkatkan odds default 2.4 kali</button>
+        <button class="option" onclick="answer(1,'C','A')">C. 11.023 — artinya kenaikan 1 unit ICR meningkatkan odds default ~11 kali</button>
+        <div class="explanation" id="exp1">
+          <strong>A adalah jawaban yang benar.</strong> Odds ratio = e<sup>b</sup> = e<sup>−2.40</sup> = 0.0907 ≈ 0.091. Karena odds ratio &lt; 1, kenaikan 1 unit ICR <em>menurunkan</em> odds default. Secara spesifik, odds menjadi 9.1% dari sebelumnya — penurunan ~91%. Ini masuk akal: perusahaan dengan interest coverage lebih tinggi lebih mampu membayar bunga. Opsi B salah — 2.40 adalah koefisien (log-odds), bukan odds ratio. Opsi C menghitung e<sup>+2.40</sup> = 11.02, yang salah tanda (seharusnya negatif).
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="question-block" id="qb2">
+        <div class="q-num">Question 3 of 6</div>
+        <div class="q-text">Probabilitas default untuk PT Indo Textile (DE=1.20, VOL=0.45, ICR=0.80, small cap) adalah <em>closest to</em>:</div>
+        <button class="option" onclick="answer(2,'A','B')">A. 5.2%</button>
+        <button class="option" onclick="answer(2,'B','B')">B. 13.8%</button>
+        <button class="option" onclick="answer(2,'C','B')">C. 49.0%</button>
+        <div class="explanation" id="exp2">
+          <strong>B adalah jawaban yang benar.</strong> Step 1 — hitung z: z = −3.200 + 1.80(1.20) + 0.50(0.45) − 2.40(0.80) + 0.90(1) = −3.200 + 2.160 + 0.225 − 1.920 + 0.900 = <strong>−1.835</strong>. Step 2 — sigmoid: P = 1/(1 + e<sup>1.835</sup>) = 1/(1 + 6.264) = 1/7.264 ≈ <strong>13.8%</strong>. Meskipun PT Indo Textile memiliki DE tinggi dan small cap, interest coverage ratio 0.80 dan efek intercept yang besar (−3.20) menekan probabilitas. Opsi A (5.2%) sesuai z ≈ −2.9, terlalu rendah. Opsi C (49%) sesuai z ≈ 0, terlalu tinggi.
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="question-block" id="qb3">
+        <div class="q-num">Question 4 of 6</div>
+        <div class="q-text">Recall (sensitivity) model Siti berdasarkan confusion matrix out-of-sample adalah:</div>
+        <button class="option" onclick="answer(3,'A','B')">A. 72.0% — TP/(TP+FP) = 18/25</button>
+        <button class="option" onclick="answer(3,'B','B')">B. 81.8% — TP/(TP+FN) = 18/22</button>
+        <button class="option" onclick="answer(3,'C','B')">C. 89.0% — (TP+TN)/Total = 89/100</button>
+        <div class="explanation" id="exp3">
+          <strong>B adalah jawaban yang benar.</strong> Recall = TP/(TP+FN) = 18/(18+4) = 18/22 = 81.8%. Recall mengukur: dari semua perusahaan yang benar-benar default (22), berapa persen yang berhasil dideteksi model (18). Opsi A menghitung precision = TP/(TP+FP) = 18/25 = 72.0%. Opsi C menghitung accuracy = (TP+TN)/Total = (18+71)/100 = 89.0%.
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="question-block" id="qb4">
+        <div class="q-num">Question 5 of 6</div>
+        <div class="q-text">LR test statistic untuk model Siti, dibandingkan dengan critical χ² (df=4, α=5%) = 9.488, menghasilkan kesimpulan:</div>
+        <button class="option" onclick="answer(4,'A','A')">A. LR = 51.60; tolak H₀ — model dengan 4 variabel secara signifikan lebih baik dari intercept-only model</button>
+        <button class="option" onclick="answer(4,'B','A')">B. LR = 25.80; tolak H₀ tetapi hanya marginal improvement</button>
+        <button class="option" onclick="answer(4,'C','A')">C. LR = 310.80; model practically overfit</button>
+        <div class="explanation" id="exp4">
+          <strong>A adalah jawaban yang benar.</strong> LR = −2 × (LL<sub>R</sub> − LL<sub>U</sub>) = −2 × (−168.30 − (−142.50)) = −2 × (−25.80) = 51.60. Karena 51.60 &gt;&gt; 9.488 (critical value), kita menolak H₀ dengan sangat kuat. Model unrestricted dengan 4 variabel secara signifikan lebih baik daripada intercept-only model. Opsi B salah — 25.80 adalah selisih log-likelihood, bukan LR statistic (lupa dikali −2). Opsi C salah perhitungannya.
+        </div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="question-block" id="qb5">
+        <div class="q-num">Question 6 of 6</div>
+        <div class="q-text">Siti ingin membandingkan pseudo-R² modelnya (0.153) dengan pseudo-R² model lain yang diestimasi menggunakan dataset dari pasar saham Thailand. Pernyataan mana yang paling tepat?</div>
+        <button class="option" onclick="answer(5,'A','C')">A. Model Siti lebih baik jika pseudo-R² nya lebih tinggi dari model Thailand</button>
+        <button class="option" onclick="answer(5,'B','C')">B. Pseudo-R² 0.153 menunjukkan model hanya menjelaskan 15.3% variasi, sehingga model lemah</button>
+        <button class="option" onclick="answer(5,'C','C')">C. Perbandingan tidak valid — pseudo-R² hanya bisa digunakan untuk membandingkan spesifikasi berbeda dari model yang sama (dataset sama)</button>
+        <div class="explanation" id="exp5">
+          <strong>C adalah jawaban yang benar.</strong> Sesuai kurikulum CFA, pseudo-R² harus diinterpretasikan dengan hati-hati dan hanya bisa digunakan untuk membandingkan <strong>spesifikasi berbeda dari model yang sama</strong> (artinya dataset yang sama). Membandingkan pseudo-R² antar dataset (Indonesia vs Thailand) tidak valid. Opsi A salah karena mengasumsikan perbandingan cross-dataset valid. Opsi B salah karena menginterpretasikan pseudo-R² seolah-olah identik dengan R² dari OLS — pseudo-R² tidak bisa diinterpretasikan langsung sebagai "proporsi variasi yang dijelaskan."
+        </div>
+      </div>
+
+      <!-- Score -->
+      <div class="score-panel" id="score-panel">
+        <div class="score-num" id="score-num">0/6</div>
+        <div class="score-msg" id="score-msg">—</div>
+      </div>
+
+    </div><!-- /practice body -->
+  </div>
+
+  <!-- Bottom nav -->
+  <div class="nav-bottom">
+    <a class="nav-btn" href="CFA_L2_Day07_Full.html">← Day 7</a>
+    <div class="nav-day">Day 8 of 90<br><span style="font-size:11px;color:var(--text3);">Prev: Dummy Variables & Interactions · Next: AR Models & Stationarity</span></div>
+    <a class="nav-btn primary" href="CFA_L2_Day09_Full.html">Day 9 →</a>
+  </div>
+
+</div><!-- /page -->
+
+<script>
+const answers = {};
+const correct = {0:'B', 1:'A', 2:'B', 3:'B', 4:'A', 5:'C'};
+const total = 6;
+
+function answer(qIdx, chosen, correctAns) {
+  if (answers[qIdx]) return;
+  answers[qIdx] = chosen;
+
+  const block = document.getElementById('qb' + qIdx);
+  const exp   = document.getElementById('exp' + qIdx);
+
+  block.querySelectorAll('.option').forEach(btn => {
+    btn.disabled = true;
+    const letter = btn.textContent.trim()[0];
+    if (letter === correctAns) btn.classList.add('correct');
+    else if (letter === chosen && chosen !== correctAns) btn.classList.add('wrong');
+  });
+
+  exp.classList.add('show');
+
+  if (Object.keys(answers).length === total) showScore();
+}
+
+function showScore() {
+  const score = Object.keys(correct).filter(k => answers[k] === correct[k]).length;
+  const panel = document.getElementById('score-panel');
+  const num   = document.getElementById('score-num');
+  const msg   = document.getElementById('score-msg');
+
+  num.textContent = score + '/' + total;
+  num.style.color = score === 6 ? 'var(--green)' : score >= 4 ? 'var(--amber)' : 'var(--red)';
+
+  const msgs = {
+    6: '🎯 Perfect! Logistic regression sudah dikuasai secara mendalam.',
+    5: '✅ Excellent. Tinggal satu yang perlu direview.',
+    4: '✅ Good. Review soal yang salah untuk penguatan.',
+    3: '⚠️ Perlu review beberapa konsep. Baca ulang bagian yang lemah.',
+    2: '🔁 Review ulang materi terutama interpretasi dan evaluation.',
+    1: '🔁 Ulangi seluruh modul sebelum lanjut.',
+    0: '🔁 Ulangi seluruh modul sebelum lanjut.'
+  };
+  msg.textContent = msgs[score] || msgs[0];
+  panel.style.display = 'block';
+}
+</script>
+</body>
+</html>

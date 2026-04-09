@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 3 · Full · Model Misspecification</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;
+  --border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+  --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;
+  --gold:#9a6e1a;--gold2:#7a5010;--gold-bg:rgba(154,110,26,0.08);
+  --blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);
+  --green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);
+  --red:#b83232;--red-bg:rgba(184,50,50,0.08);
+  --amber:#a06010;--amber-bg:rgba(160,96,16,0.08);
+  --r:10px;--r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.8;}
+.page{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;border:1px solid rgba(26,95,168,0.2);}
+.hero{margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--border);}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:36px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:15px;color:var(--text2);}
+.meta-row{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:36px;}
+.toc-title{font-size:12px;color:var(--text3);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:12px;font-weight:500;}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.toc-list li a{font-size:13px;color:var(--blue);text-decoration:none;display:flex;align-items:center;gap:8px;}
+.toc-list li a:hover{text-decoration:underline;}
+.toc-num{font-size:11px;color:var(--text3);min-width:20px;}
+.chapter{margin-bottom:40px;}
+.chapter-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--gold-bg);}
+.chapter-num{font-family:'DM Serif Display',serif;font-size:28px;color:var(--gold);line-height:1;}
+.chapter-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);line-height:1.2;}
+.sub-header{font-size:17px;font-weight:500;color:var(--text);margin:24px 0 12px;padding-left:12px;border-left:3px solid var(--gold);}
+.prose{font-size:14px;color:var(--text2);line-height:1.85;margin-bottom:14px;}
+.prose strong{color:var(--text);font-weight:500;}
+.formula-block{background:var(--bg2);border:1px solid var(--border2);border-left:4px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:16px 20px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold2);line-height:2;}
+.formula-block .label{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:8px;}
+.formula-block .note{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text3);font-style:italic;display:block;margin-top:8px;}
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:20px 0;}
+.exhibit-title{background:var(--bg3);padding:10px 16px;font-size:12px;font-weight:500;color:var(--text2);border-bottom:1px solid var(--border);}
+.exhibit-body{padding:16px;}
+.reg-table{width:100%;border-collapse:collapse;font-size:13px;}
+.reg-table th{text-align:right;padding:8px 12px;background:var(--bg3);color:var(--text3);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border2);}
+.reg-table th:first-child{text-align:left;}
+.reg-table td{padding:8px 12px;border-bottom:1px solid var(--border);text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text2);}
+.reg-table td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);font-weight:500;}
+.reg-table tr:last-child td{border-bottom:none;}
+.reg-table .sig{color:var(--green);font-weight:500;}
+.reg-table .warn{color:var(--red);font-weight:500;}
+.callout{border-radius:var(--r);padding:16px 18px;margin:16px 0;}
+.callout-title{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;}
+.callout p{font-size:13px;color:var(--text2);line-height:1.75;}
+.callout p+p{margin-top:8px;}
+.callout.blue{background:var(--blue-bg);border:1px solid rgba(26,95,168,0.15);}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.green{background:var(--green-bg);border:1px solid rgba(26,122,74,0.15);}
+.callout.green .callout-title{color:var(--green);}
+.callout.amber{background:var(--amber-bg);border:1px solid rgba(160,96,16,0.15);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.red{background:var(--red-bg);border:1px solid rgba(184,50,50,0.15);}
+.callout.red .callout-title{color:var(--red);}
+.callout.gold{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);}
+.callout.gold .callout-title{color:var(--gold);}
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:24px 0;overflow:hidden;}
+.kc-header{background:var(--gold-bg);padding:12px 18px;border-bottom:1px solid rgba(154,110,26,0.15);}
+.kc-header-title{font-size:12px;font-weight:500;color:var(--gold);letter-spacing:0.06em;text-transform:uppercase;}
+.kc-body{padding:18px;}
+.kc-q{font-size:13px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.6;}
+.kc-answer{background:var(--bg3);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);line-height:1.75;display:none;}
+.kc-answer.show{display:block;}
+.kc-answer strong{color:var(--green);}
+.kc-toggle{background:none;border:1px solid var(--border2);border-radius:var(--r-sm);padding:6px 14px;font-size:12px;color:var(--text3);cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px;transition:all 0.15s;}
+.kc-toggle:hover{border-color:var(--gold);color:var(--gold);}
+.comp-table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;}
+.comp-table th{text-align:left;padding:9px 12px;background:var(--bg3);color:var(--text2);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border2);}
+.comp-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;color:var(--text2);}
+.comp-table tr:last-child td{border-bottom:none;}
+.comp-table .name{font-weight:500;color:var(--text);}
+.badge{display:inline-flex;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;}
+.badge-green{background:var(--green-bg);color:var(--green);}
+.badge-red{background:var(--red-bg);color:var(--red);}
+.badge-amber{background:var(--amber-bg);color:var(--amber);}
+.num-list{list-style:none;counter-reset:num;display:flex;flex-direction:column;gap:8px;margin:10px 0;}
+.num-list li{counter-increment:num;display:flex;gap:12px;font-size:13px;color:var(--text2);line-height:1.7;}
+.num-list li::before{content:counter(num)".";color:var(--gold);font-weight:500;min-width:20px;flex-shrink:0;}
+.bullet-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin:10px 0;}
+.bullet-list li{display:flex;gap:10px;font-size:13px;color:var(--text2);line-height:1.7;}
+.bullet-list li::before{content:'■';color:var(--gold);font-size:9px;margin-top:5px;flex-shrink:0;}
+.divider{height:1px;background:var(--border);margin:36px 0;}
+.practice-header{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);border-radius:var(--r) var(--r) 0 0;padding:16px 20px;display:flex;align-items:center;gap:12px;}
+.practice-header-title{font-size:16px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);margin-top:2px;}
+.practice-body{background:var(--bg2);border:1px solid rgba(154,110,26,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:24px;}
+.vignette{background:var(--bg3);border-left:4px solid var(--gold);padding:18px 20px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:28px;font-size:13px;color:var(--text2);line-height:1.85;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;font-weight:500;}
+.question-block{margin-bottom:24px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:6px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:12px;line-height:1.65;}
+.option{display:block;width:100%;text-align:left;padding:11px 16px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:8px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.6;}
+.option:hover:not(:disabled){border-color:var(--border2);background:var(--bg2);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:14px 16px;font-size:13px;color:var(--text2);margin-top:10px;line-height:1.8;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:28px;margin-top:20px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:52px;margin-bottom:8px;}
+.score-msg{font-size:14px;color:var(--text2);}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+.nav-day{font-size:12px;color:var(--text3);text-align:center;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II · <span>Quantitative Methods</span> · LM3</div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <div class="version-badge">Versi Full</div>
+      <div class="day-badge">Day 3 of 90</div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Kamis, 9 April 2026</div>
+    <h1 class="hero-title">Model Misspecification — Heteroskedasticity & Serial Correlation</h1>
+    <p class="hero-sub">Learning Module 3 — Quantitative Methods · CFA Level II 2026 · Subtopik 1 dari 2</p>
+    <div class="meta-row">
+      <div class="meta-pill">📖 Materi lengkap</div>
+      <div class="meta-pill">🇮🇩 Bahasa Indonesia</div>
+      <div class="meta-pill">⚖️ Exam weight <b>~6%</b></div>
+      <div class="meta-pill">⏱ Est. baca <b>45–60 menit</b></div>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ul class="toc-list">
+      <li><a href="#spec"><span class="toc-num">1</span>Model Specification — Prinsip & Kesalahan Umum</a></li>
+      <li><a href="#hetero"><span class="toc-num">2</span>Heteroskedasticity — Tipe, Dampak, Deteksi & Koreksi</a></li>
+      <li><a href="#serial"><span class="toc-num">3</span>Serial Correlation — Dampak, Deteksi & Koreksi</a></li>
+      <li><a href="#summary"><span class="toc-num">4</span>Ringkasan — Tabel Perbandingan</a></li>
+      <li><a href="#practice"><span class="toc-num">5</span>Latihan Soal</a></li>
+    </ul>
+  </div>
+
+  <!-- ═══ SECTION 1: Model Spec ═══ -->
+  <div class="chapter" id="spec">
+    <div class="chapter-header">
+      <div class="chapter-num">1</div>
+      <div class="chapter-title">Model Specification — Prinsip & Kesalahan Umum</div>
+    </div>
+
+    <p class="prose">Model specification mengacu pada set variabel yang dimasukkan ke dalam regression dan bentuk fungsi persamaan regression. Memahami prinsip-prinsip spesifikasi model yang baik dan jenis-jenis kesalahan umum adalah fondasi untuk memahami mengapa heteroskedasticity dan serial correlation bisa muncul.</p>
+
+    <div class="sub-header">1.1 Lima Prinsip Spesifikasi Model yang Baik</div>
+
+    <table class="comp-table">
+      <thead><tr><th>Prinsip</th><th>Penjelasan</th></tr></thead>
+      <tbody>
+        <tr><td class="name">Grounded in economic reasoning</td><td>Setiap variabel yang dimasukkan harus memiliki justifikasi ekonomi — bukan sekadar karena data tersedia atau karena meningkatkan R²</td></tr>
+        <tr><td class="name">Parsimonious (sederhana)</td><td>Setiap variabel harus memainkan peran esensial. Model yang terlalu kompleks rentan terhadap overfitting</td></tr>
+        <tr><td class="name">Good out-of-sample performance</td><td>Model yang bagus dalam sample tapi jelek out-of-sample kemungkinan overfit pada data training</td></tr>
+        <tr><td class="name">Appropriate functional form</td><td>Kalau hubungan non-linear secara teoritis, model harus mengakomodasi non-linearity (misalnya dengan logarithm atau squared term)</td></tr>
+        <tr><td class="name">No violations of regression assumptions</td><td>Kalau terdeteksi heteroskedasticity, serial correlation, atau multicollinearity — revisi variabel dan/atau functional form</td></tr>
+      </tbody>
+    </table>
+
+    <div class="sub-header">1.2 Empat Kegagalan Functional Form</div>
+
+    <p class="prose">Berikut adalah empat jenis kesalahan functional form yang paling sering muncul, beserta konsekuensinya:</p>
+
+    <table class="comp-table">
+      <thead><tr><th>Jenis Kegagalan</th><th>Penjelasan Konkret</th><th>Konsekuensi</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="name">Omitted Variables</td>
+          <td>Model yang benar: Y = b₀ + b₁X₁ + b₂X₂ + ε, tapi kita estimasi hanya Y = b₀ + b₁X₁ + ε. X₂ yang penting dihilangkan.</td>
+          <td>Kalau X₂ berkorelasi dengan X₁ → coefficient b₁ biased dan inconsistent + SE tidak valid. Kalau X₂ tidak berkorelasi dengan X₁ → hanya intercept bias, b₁ masih oke</td>
+        </tr>
+        <tr>
+          <td class="name">Wrong form of variables</td>
+          <td>Hubungan Y dan X sebenarnya logaritmik atau kuadratik, tapi kita modelkan linear</td>
+          <td>Residuals akan menunjukkan pola non-random — heteroskedasticity</td>
+        </tr>
+        <tr>
+          <td class="name">Inappropriate scaling</td>
+          <td>Membandingkan revenue absolut perusahaan kecil dan besar tanpa scaling (common-size)</td>
+          <td>Heteroskedasticity atau multicollinearity</td>
+        </tr>
+        <tr>
+          <td class="name">Inappropriate data pooling</td>
+          <td>Menggabungkan data pre-2008 dan post-2008 crisis tanpa structural break adjustment</td>
+          <td>Heteroskedasticity atau serial correlation — karena data dari dua regime yang sangat berbeda</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout amber">
+      <div class="callout-title">⚠ Implikasi Omitted Variable — Detail Penting</div>
+      <p>Perhatikan nuansa penting dalam omitted variable bias: dampaknya bergantung pada apakah variabel yang dihilangkan (X₂) berkorelasi dengan variabel yang dipertahankan (X₁) atau tidak.</p>
+      <p><strong>Kalau X₂ tidak berkorelasi dengan X₁:</strong> Residual menjadi b₂X₂ᵢ + εᵢ. Residual tidak lagi memiliki expected value nol, dan tidak iid. Akibatnya hanya intercept yang bias — b₁ masih terestimasi dengan benar.</p>
+      <p><strong>Kalau X₂ berkorelasi dengan X₁:</strong> Error term berkorelasi dengan X₁ → b₁ (dan intercept) menjadi biased dan inconsistent. Standard error estimasi juga tidak valid → tidak bisa digunakan untuk uji statistik.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 1.1 — Omitted Variable</div></div>
+      <div class="kc-body">
+        <p class="kc-q">Seorang analis membangun model untuk menjelaskan excess return portofolio precious metals (PORTA) menggunakan dua faktor (X1 dan X2). Adjusted R² = 43%. Ketika ia mem-plot residuals dari model ini terhadap MKTRF (excess market return), ia menemukan pola linear yang jelas — garis regresi residuals vs MKTRF memiliki slope ≈ 1.02 dan R² = 0.647.</p>
+        <p class="kc-q" style="margin-top:10px;">(1) Jenis model misspecification apa yang ditunjukkan oleh scatterplot ini?</p>
+        <button class="kc-toggle" onclick="toggleKC('kc1a')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc1a"><strong>Omitted variable bias.</strong> Model memiliki dua variabel (X1 dan X2), namun residuals dari model ini memiliki hubungan yang jelas dengan MKTRF. Ini mengindikasikan bahwa MKTRF adalah variabel penting yang seharusnya dimasukkan ke dalam model tetapi tidak ada. Residuals seharusnya tidak berkorelasi dengan variabel apapun yang relevan — kalau berkorelasi, itu berarti ada informasi yang tidak tertangkap oleh model saat ini.</div>
+        <p class="kc-q" style="margin-top:14px;">(2) Bagaimana misspecification ini mempengaruhi model yang diestimasi?</p>
+        <button class="kc-toggle" onclick="toggleKC('kc1b')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc1b"><strong>Coefficient estimates untuk X1 dan X2 menjadi biased dan inconsistent, begitu pula standard error mereka.</strong> Karena MKTRF kemungkinan berkorelasi dengan X1 dan/atau X2 (mengingat R² yang tinggi antara residuals dan MKTRF), kondisi omitted variable yang berkorelasi dengan regressor yang ada terpenuhi. Akibatnya, model tidak bisa diandalkan untuk inferensi statistik maupun prediksi.</div>
+        <p class="kc-q" style="margin-top:14px;">(3) Apa rekomendasi koreksinya?</p>
+        <button class="kc-toggle" onclick="toggleKC('kc1c')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc1c"><strong>Masukkan MKTRF sebagai independent variable dan estimasi ulang model.</strong> Begitu variabel yang dihilangkan ditambahkan, masalah omitted variable bias akan terselesaikan — coefficient X1 dan X2 akan menjadi unbiased kembali (asumsi tidak ada masalah spesifikasi lain).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 2: Heteroskedasticity ═══ -->
+  <div class="chapter" id="hetero">
+    <div class="chapter-header">
+      <div class="chapter-num">2</div>
+      <div class="chapter-title">Heteroskedasticity — Tipe, Dampak, Deteksi & Koreksi</div>
+    </div>
+
+    <p class="prose">Asumsi penting underlying OLS adalah bahwa variance dari errors konstan di seluruh observasi (homoskedasticity): Var(εᵢ) = σ² untuk semua i. Dalam estimasi model keuangan, residuals sering kali heteroskedastic — variance-nya berbeda-beda antar observasi.</p>
+
+    <p class="prose">Heteroskedasticity dapat muncul dari berbagai sumber: model misspecification (omitted variables, incorrect functional form), transformasi data yang tidak tepat, atau extreme values dari independent variables.</p>
+
+    <div class="sub-header">2.1 Dua Tipe Heteroskedasticity</div>
+
+    <table class="comp-table">
+      <thead><tr><th>Tipe</th><th>Definisi Teknis</th><th>Dampak pada Inference</th><th>Seberapa Serius?</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="name">Unconditional Heteroskedasticity</td>
+          <td>Error variance tidak berkorelasi dengan independent variables — Var(εᵢ) bervariasi antar observasi tapi tidak bergantung pada nilai X</td>
+          <td>Melanggar asumsi OLS, namun <strong>tidak menciptakan masalah besar</strong> untuk statistical inference</td>
+          <td><span class="badge badge-amber">Ringan</span></td>
+        </tr>
+        <tr>
+          <td class="name">Conditional Heteroskedasticity</td>
+          <td>Error variance berkorelasi dengan (conditional on) nilai independent variables — Var(εᵢ|Xᵢ) bergantung pada Xᵢ</td>
+          <td><strong>Bermasalah serius</strong> — leads to biased standard errors, inflated t-statistics, unreliable F-tests</td>
+          <td><span class="badge badge-red">Serius</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="sub-header">2.2 Konsekuensi Conditional Heteroskedasticity</div>
+
+    <p class="prose">Ketika errors bersifat conditional heteroskedastic:</p>
+
+    <ul class="bullet-list">
+      <li><strong>F-test untuk overall regression significance menjadi tidak reliable</strong> — karena MSE menjadi biased estimator dari true population variance (σ²)</li>
+      <li><strong>Standard errors dari coefficient estimates menjadi biased</strong> — kondisional heteroskedasticity memasukkan bias ke dalam estimasi standard error. Dampaknya adalah standard errors <em>underestimated</em></li>
+      <li><strong>t-statistics menjadi inflated</strong> — karena t = coefficient/SE, dan SE terlalu kecil maka t terlalu besar</li>
+      <li><strong>Type I error meningkat</strong> — kita menolak H₀ lebih sering dari seharusnya, menemukan hubungan signifikan di mana sebenarnya tidak ada</li>
+    </ul>
+
+    <div class="callout amber">
+      <div class="callout-title">⚠ Poin Kritis yang Sering Keliru</div>
+      <p>Heteroskedasticity membuat coefficient estimates tetap <strong>unbiased</strong> — OLS masih menghasilkan koefisien yang on average benar. Yang rusak adalah <strong>standard errors</strong>, bukan koefisiennya. Ini berbeda dari omitted variable bias yang membuat koefisien itu sendiri bias.</p>
+      <p>Implikasinya: kalau kita hanya ingin point estimate koefisien (bukan interval atau hypothesis test), heteroskedasticity tidak masalah. Tapi kalau kita ingin melakukan uji signifikansi, kita perlu koreksi.</p>
+    </div>
+
+    <div class="sub-header">2.3 Visualisasi — Homoskedastic vs Heteroskedastic</div>
+
+    <p class="prose">Cara paling intuitif memahami heteroskedasticity adalah melalui visualisasi residuals:</p>
+
+    <div class="callout gold">
+      <div class="callout-title">📊 Cara Baca Residual Plot untuk Heteroskedasticity</div>
+      <p><strong>Homoskedastic (normal, tidak ada masalah):</strong> Residuals tersebar dalam "band" yang lebarnya konstan di seluruh range nilai X atau fitted values. Tidak ada pola — titik-titik tersebar random.</p>
+      <p><strong>Heteroskedastic (ada masalah):</strong></p>
+      <p>— <em>Fan shape (menyebar ke kanan):</em> Residuals semakin besar seiring meningkatnya nilai X atau fitted value. Classic conditional heteroskedasticity.</p>
+      <p>— <em>Menyempit ke kanan:</em> Sebaliknya — residuals lebih kecil untuk nilai X yang besar.</p>
+      <p>— <em>Non-linear pattern:</em> Residuals membesar di tengah range X lalu mengecil lagi (atau sebaliknya).</p>
+    </div>
+
+    <div class="sub-header">2.4 Breusch-Pagan Test — Prosedur Lengkap</div>
+
+    <p class="prose">Breusch-Pagan (BP) test adalah test formal untuk mendeteksi conditional heteroskedasticity. Prosedurnya mengikuti tiga langkah:</p>
+
+    <ul class="num-list">
+      <li><strong>Step 1 — Estimasi regression awal:</strong> Jalankan regression normal: Yₜ = b₀ + b₁X₁ₜ + b₂X₂ₜ + uₜ. Simpan residuals ûₜ dari regression ini.</li>
+      <li><strong>Step 2 — Regresi squared residuals:</strong> Gunakan squared residuals (ûₜ²) sebagai dependent variable dan regresikan terhadap semua independent variables dari Step 1: ûₜ² = a₀ + a₁X₁ₜ + a₂X₂ₜ + εₜ. Catat R² dari regression ini.</li>
+      <li><strong>Step 3 — Uji hipotesis:</strong> H₀: a₁ = a₂ = 0 (tidak ada conditional heteroskedasticity — squared residuals tidak berkorelasi dengan X). Hₐ: paling sedikit satu aⱼ ≠ 0.</li>
+    </ul>
+
+    <div class="formula-block">
+      <span class="label">BP Test Statistic</span>
+      BP = n × R² (R² dari regresi Step 2)
+      <span class="note">Didistribusikan chi-square dengan k degrees of freedom (k = jumlah variabel X di Step 1)</span>
+      <span class="note">One-tail right-side test: Tolak H₀ jika BP > chi-square critical value</span>
+    </div>
+
+    <p class="prose">Intuisinya: kalau conditional heteroskedasticity ada, nilai X akan bisa menjelaskan sebagian variasi dalam squared residuals (karena error variance berkorelasi dengan X). Semakin besar R² dari Step 2, semakin kuat bukti heteroskedasticity.</p>
+
+    <div class="sub-header">2.5 Contoh Numerik — BP Test pada Fama-French Model</div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 5 Panel A: Fama-French Three-Factor Model — Stock XYZ</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Variable</th><th>Coefficient</th><th>Std Error</th><th>t-Stat</th><th>P-Value</th></tr></thead>
+          <tbody>
+            <tr><td>Intercept</td><td>−0.0026</td><td>0.0024</td><td>−1.0735</td><td>0.2853</td></tr>
+            <tr><td>MKTRF</td><td>1.2414</td><td>0.0601</td><td class="sig">20.6419</td><td class="sig">0.0000</td></tr>
+            <tr><td>SMB</td><td>1.0953</td><td>0.1042</td><td class="sig">10.5147</td><td class="sig">0.0000</td></tr>
+            <tr><td>HML</td><td>−0.1065</td><td>0.0872</td><td>−1.2205</td><td>0.2248</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:12px;color:var(--text3);margin-top:8px;">n = 120 bulan | R² = 0.8788 | Adjusted R² = 0.8757</p>
+      </div>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 5 Panel B: Breusch-Pagan Test Results</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Statistic</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td>BP Test Statistic</td><td class="warn">13.40264</td></tr>
+            <tr><td>P-value</td><td class="warn">0.00038</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">BP statistic = 13.40 dengan p-value = 0.00038 &lt; 0.01 → tolak H₀ → ada conditional heteroskedasticity dalam model. Ini berarti variance error berkorelasi dengan salah satu atau lebih dari ketiga faktor Fama-French.</p>
+
+    <div class="sub-header">2.6 Koreksi — Robust Standard Errors</div>
+
+    <p class="prose">Cara paling mudah untuk mengoreksi conditional heteroskedasticity adalah dengan menghitung <strong>robust standard errors</strong> — juga dikenal sebagai:</p>
+    <ul class="bullet-list">
+      <li>Heteroskedasticity-consistent standard errors</li>
+      <li>White-corrected standard errors</li>
+      <li>Huber-White standard errors</li>
+    </ul>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 6: Fama-French Model dengan White-Corrected Standard Errors</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Variable</th><th>Coefficient</th><th>SE (Original)</th><th>SE (Robust)</th><th>t-Stat (Robust)</th><th>P-Value (Robust)</th></tr></thead>
+          <tbody>
+            <tr><td>Intercept</td><td>−0.0026</td><td>0.0024</td><td>0.0021</td><td>−1.2347</td><td>0.2194</td></tr>
+            <tr><td>MKTRF</td><td>1.2414</td><td>0.0601</td><td class="warn">0.0910</td><td class="sig">13.6483</td><td class="sig">0.0000</td></tr>
+            <tr><td>SMB</td><td>1.0953</td><td>0.1042</td><td class="warn">0.1111</td><td class="sig">9.8605</td><td class="sig">0.0000</td></tr>
+            <tr><td>HML</td><td>−0.1065</td><td>0.0872</td><td class="warn">0.1015</td><td>−1.0488</td><td>0.2965</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Perhatikan: <strong>coefficient estimates tidak berubah</strong> (1.2414, 1.0953, −0.1065 tetap sama). Yang berubah hanya standard errors — menjadi lebih besar (MKTRF: 0.0601 → 0.0910; SMB: 0.1042 → 0.1111). Akibatnya t-statistics turun dan P-values naik — inference menjadi lebih konservatif dan valid.</p>
+
+    <div class="callout blue">
+      <div class="callout-title">💡 Implikasi Market Efficiency</div>
+      <p>Market efficiency menyiratkan bahwa dalam pasar yang efisien, heteroskedasticity <em>seharusnya tidak</em> terlihat dalam data finansial. Kenapa? Karena heteroskedasticity berarti ada pola dalam variance error yang bisa dieksploitasi.</p>
+      <p>Kalau heteroskedasticity terdeteksi (misalnya dalam bentuk <strong>volatility clustering</strong> — di mana perubahan besar diikuti perubahan besar lagi), ini sebenarnya adalah <strong>peluang alpha</strong>. Ini adalah dasar dari GARCH models yang digunakan untuk memprediksi volatility. Jadi jangan sekadar "koreksi" dan lanjutkan — pahami pola underlying-nya.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 2.1 — BP Test & Interpretation</div></div>
+      <div class="kc-body">
+        <p class="kc-q">Tiga model regression (A, B, C) menggunakan faktor ESG untuk menjelaskan stock returns. Dari scatterplot residuals vs X dan BP test:</p>
+        <p class="kc-q" style="margin-top:8px;">Model A: Residuals menyempit dramatis seiring X bertambah | BP stat = 7.183, p-value = 0.0072</p>
+        <p class="kc-q">Model B: Tidak ada pola jelas (hanya noise) | BP stat = 0.035, p-value = 0.8523</p>
+        <p class="kc-q">Model C: Residuals melebar dalam pola non-linear | BP stat = 29.586, p-value = 0.0001</p>
+        <p class="kc-q" style="margin-top:10px;">(1) Identifikasi model mana yang mengalami heteroskedasticity dan kesimpulan dari masing-masing.</p>
+        <button class="kc-toggle" onclick="toggleKC('kc2a')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc2a">
+          <strong>Model A: Heteroskedastic.</strong> Residuals yang menyempit dramatis adalah tanda heteroskedasticity (variance residuals berubah seiring nilai X). BP stat = 7.183 > critical value dan p-value = 0.0072 &lt; 0.05 → tolak H₀.<br><br>
+          <strong>Model B: Homoskedastic.</strong> Tidak ada pola discernible di residual plot. BP stat = 0.035, p-value = 0.8523 &gt;&gt; 0.05 → gagal tolak H₀ → tidak ada bukti conditional heteroskedasticity.<br><br>
+          <strong>Model C: Heteroskedastic.</strong> Residuals yang melebar dalam pola non-linear mengindikasikan heteroskedasticity DAN non-linearity. BP stat = 29.586, p-value = 0.0001 &lt; 0.05 → tolak H₀.
+        </div>
+        <p class="kc-q" style="margin-top:14px;">(2) Kalau White's correction diterapkan pada Model A, apa yang akan terjadi pada coefficient SEs, t-statistics, dan P-values?</p>
+        <button class="kc-toggle" onclick="toggleKC('kc2b')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc2b"><strong>Standard errors akan meningkat → t-statistics akan turun → P-values akan naik.</strong> White's correction (robust SE) mengoreksi ke atas standard errors yang sebelumnya underestimated akibat heteroskedasticity. Hasilnya, t-statistics menjadi lebih kecil dan P-values lebih besar — inference menjadi lebih konservatif. Coefficients sendiri tidak berubah.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 3: Serial Correlation ═══ -->
+  <div class="chapter" id="serial">
+    <div class="chapter-header">
+      <div class="chapter-num">3</div>
+      <div class="chapter-title">Serial Correlation — Dampak, Deteksi & Koreksi</div>
+    </div>
+
+    <p class="prose">Serial correlation (autocorrelation) terjadi ketika regression errors berkorelasi antar observasi — melanggar asumsi independence of errors. Masalah ini paling sering muncul dalam time-series regressions, dan juga bisa muncul dalam panel data (cross-sectional time-series).</p>
+
+    <div class="sub-header">3.1 Konsekuensi Serial Correlation — Distingsi Kritis</div>
+
+    <p class="prose">Dampak serial correlation bergantung pada apakah ada lagged dependent variable sebagai independent variable:</p>
+
+    <table class="comp-table">
+      <thead><tr><th>Kondisi Model</th><th>Coefficient Estimates</th><th>Standard Error Estimates</th><th>Implikasi</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Tidak ada lagged DV sebagai X</td>
+          <td><span class="badge badge-green">Consistent ✓</span></td>
+          <td><span class="badge badge-red">Biased/Invalid ✗</span></td>
+          <td>Coefficients masih bisa digunakan, tapi uji statistik tidak valid. Koreksi dengan robust SE.</td>
+        </tr>
+        <tr>
+          <td>Ada lagged DV sebagai X (Yₜ₋₁)</td>
+          <td><span class="badge badge-red">Inconsistent ✗</span></td>
+          <td><span class="badge badge-red">Biased/Invalid ✗</span></td>
+          <td>Model tidak bisa dipercaya sama sekali — coefficient estimates salah bahkan dengan n → ∞. Model perlu direvisi.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout red">
+      <div class="callout-title">🚨 Poin Paling Kritis di Exam</div>
+      <p>Distingsi "ada/tidak lagged DV" ini adalah salah satu poin paling sering diuji di CFA L2. Hafalkan tabel di atas. Ketika ada lagged DV dan serial correlation, situasinya jauh lebih serius — bukan sekadar SE yang perlu dikoreksi, tapi seluruh model yang perlu direvisi karena coefficients sendiri inconsistent.</p>
+    </div>
+
+    <div class="sub-header">3.2 Positive vs Negative Serial Correlation</div>
+
+    <p class="prose"><strong>Positive serial correlation</strong> (paling umum): Residual positif di satu periode meningkatkan kemungkinan residual positif di periode berikutnya. Dalam time series, ini berarti tanda residual cenderung persist dari satu periode ke periode berikutnya. Visualisasinya: residual plot vs. time akan menunjukkan pola smooth/cyclical, bukan random noise.</p>
+
+    <p class="prose"><strong>Negative serial correlation:</strong> Residual positif di satu periode meningkatkan kemungkinan residual negatif di periode berikutnya. Lebih jarang terjadi, dan visualisasinya: residual plot akan terlihat zig-zag/oscillating.</p>
+
+    <p class="prose">Positive serial correlation adalah yang paling umum dan paling dibahas. Dampaknya pada inference: F-statistic menjadi inflated (MSE underestimates population variance), dan standard errors underestimated → t-statistics inflated → Type I error meningkat. Persis seperti dampak conditional heteroskedasticity pada standard errors.</p>
+
+    <div class="callout blue">
+      <div class="callout-title">💡 Implikasi Market Efficiency — Serial Correlation</div>
+      <p>Kalau pasar efisien (bahkan hanya weak-form efficient), seharusnya tidak ada serial correlation yang predictable dalam return aset. Mengapa? Karena kalau ada pola dalam residuals (prediksi bisa ditingkatkan dengan menggunakan residual periode sebelumnya), investor yang cerdas akan mengeksploitasi pola ini hingga pattern tersebut hilang.</p>
+      <p>Temuan serial correlation yang persistent dalam data return bisa berarti: (1) pasar tidak efisien dalam bentuk tertentu, atau (2) model belum lengkap — ada variabel atau faktor yang belum tertangkap yang menciptakan pola dalam residuals.</p>
+    </div>
+
+    <div class="sub-header">3.3 Breusch-Godfrey Test vs Durbin-Watson Test</div>
+
+    <p class="prose">Ada dua test utama untuk serial correlation. Memahami perbedaannya penting untuk exam:</p>
+
+    <table class="comp-table">
+      <thead><tr><th>Aspek</th><th>Durbin-Watson (DW)</th><th>Breusch-Godfrey (BG)</th></tr></thead>
+      <tbody>
+        <tr><td class="name">Order deteksi</td><td>Hanya first-order (lag 1)</td><td>Hingga lag-p yang ditentukan analis</td></tr>
+        <tr><td class="name">Valid dengan lagged DV?</td><td><span class="badge badge-red">Tidak valid</span></td><td><span class="badge badge-green">Valid</span></td></tr>
+        <tr><td class="name">Distribusi test statistic</td><td>DW distribution (tabel khusus)</td><td>F-distributed atau chi-square</td></tr>
+        <tr><td class="name">Preferred test di CFA?</td><td>Lebih sederhana tapi terbatas</td><td><span class="badge badge-green">Lebih robust, direkomendasikan</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="sub-header">3.4 Breusch-Godfrey Test — Prosedur Lengkap</div>
+
+    <ul class="num-list">
+      <li><strong>Step 1 — Estimasi regression awal:</strong> Jalankan regression normal: Yₜ = b₀ + b₁X₁ₜ + b₂X₂ₜ + uₜ. Simpan residuals ûₜ.</li>
+      <li><strong>Step 2 — Regresi residuals:</strong> Gunakan residuals ûₜ sebagai dependent variable, regresikan terhadap semua X original PLUS lagged residuals: ûₜ = a₀ + a₁X₁ₜ + a₂X₂ₜ + ρ₁ûₜ₋₁ + eₜ. Di sini order p = 1 (satu lagged residual). Untuk order lebih tinggi, tambahkan ûₜ₋₂, ûₜ₋₃, dst.</li>
+      <li><strong>Step 3 — Uji hipotesis:</strong> H₀: ρ₁ = 0 (tidak ada serial correlation). Hₐ: ρ₁ ≠ 0. Test statistic mengikuti distribusi F (dengan n−p−k−1 dan p degrees of freedom) atau chi-square. P-value dibandingkan dengan level signifikansi yang dipilih.</li>
+    </ul>
+
+    <p class="prose">Intuisinya: kalau serial correlation ada, maka ûₜ₋₁ (residual periode sebelumnya) seharusnya dapat menjelaskan sebagian dari ûₜ (residual periode sekarang). Kalau koefisien ρ₁ signifikan, berarti ada serial correlation.</p>
+
+    <div class="sub-header">3.5 Contoh Numerik — GDP vs Consumer Spending</div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 9: Regression of GDP on Consumer Expenditures (CONS) — 30 tahun quarterly data</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Variable</th><th>Coefficient</th><th>Std Error (OLS)</th><th>t-Stat</th><th>P-Value</th></tr></thead>
+          <tbody>
+            <tr><td>Intercept</td><td>0.0991</td><td>0.050</td><td>1.974</td><td>0.051</td></tr>
+            <tr><td>CONS</td><td>0.8696</td><td>0.027</td><td class="sig">31.990</td><td class="sig">0.000</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:12px;color:var(--text3);margin-top:8px;">R² = 0.896 | n = 121</p>
+        <p style="font-size:12px;color:var(--amber);margin-top:4px;">BG Test: F = 23.6113, p-value = 0.0230 → Serial correlation terdeteksi!</p>
+      </div>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 10: Setelah Koreksi dengan Newey-West (HAC) Standard Errors</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Variable</th><th>Coefficient</th><th>SE (OLS)</th><th>SE (HAC/Newey-West)</th><th>t-Stat (HAC)</th><th>P-Value (HAC)</th></tr></thead>
+          <tbody>
+            <tr><td>Intercept</td><td>0.0991</td><td>0.050</td><td class="warn">0.058</td><td>1.701</td><td>0.091</td></tr>
+            <tr><td>CONS</td><td>0.8696</td><td>0.027</td><td class="warn">0.036</td><td class="sig">24.310</td><td class="sig">0.000</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Perhatikan beberapa hal penting dari perbandingan ini:</p>
+    <ul class="bullet-list">
+      <li><strong>Coefficients tidak berubah</strong> (0.0991 dan 0.8696 tetap sama) — serial correlation tidak membuat coefficient menjadi biased (karena tidak ada lagged DV)</li>
+      <li><strong>Standard errors meningkat</strong> (SE CONS: 0.027 → 0.036) — koreksi HAC mengakui bahwa OLS underestimated uncertainty</li>
+      <li><strong>t-statistics turun</strong> (31.990 → 24.310) dan <strong>P-values naik</strong> — inference menjadi lebih konservatif</li>
+      <li>Meski t-stat turun, CONS masih sangat signifikan — dalam kasus ini serial correlation tidak mengubah kesimpulan substantif</li>
+    </ul>
+
+    <div class="sub-header">3.6 Koreksi Serial Correlation</div>
+
+    <p class="prose">Metode koreksi paling umum adalah menyesuaikan standard errors regression untuk mengakomodasi serial correlation. Koreksi ini dikenal dengan berbagai nama:</p>
+    <ul class="bullet-list">
+      <li><strong>Serial-correlation consistent standard errors</strong></li>
+      <li><strong>Newey-West standard errors</strong></li>
+      <li><strong>HAC (Heteroskedasticity and Autocorrelation Consistent) standard errors</strong></li>
+      <li><strong>Robust standard errors</strong> — istilah generik yang bisa merujuk koreksi untuk heteroskedasticity saja atau untuk keduanya (heteroskedasticity + serial correlation)</li>
+    </ul>
+
+    <div class="callout green">
+      <div class="callout-title">✅ Keunggulan HAC/Newey-West</div>
+      <p>HAC standard errors menangani <strong>dua masalah sekaligus</strong>: serial correlation DAN conditional heteroskedasticity. Dalam praktik, ini adalah "satu koreksi untuk semua" yang paling sering digunakan. Banyak software statistik menyediakan ini secara default dalam opsi "robust standard errors".</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 3.1 — BG Test</div></div>
+      <div class="kc-body">
+        <p class="kc-q">Empat model regression dengan BG test results berikut (signifikansi 5%):</p>
+        <p class="kc-q">Model A: F = 5.1634, df = (4,13) | Model B: F = 22.0560, df = (6,15)</p>
+        <p class="kc-q">Model C: F = 2.3400, df = (4,15) | Model D: F = 1.9800, df = (3,35)</p>
+        <p class="kc-q" style="margin-top:10px;">Tentukan critical F-value dan kesimpulan untuk masing-masing model.</p>
+        <button class="kc-toggle" onclick="toggleKC('kc3a')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc3a">
+          <strong>Model A: Critical F(4,13) = 3.1791.</strong> F = 5.1634 > 3.1791 → Ada serial correlation.<br>
+          <strong>Model B: Critical F(6,15) = 2.7905.</strong> F = 22.0560 > 2.7905 → Ada serial correlation.<br>
+          <strong>Model C: Critical F(4,15) = 3.0556.</strong> F = 2.3400 &lt; 3.0556 → Tidak ada bukti serial correlation.<br>
+          <strong>Model D: Critical F(3,35) = 2.8742.</strong> F = 1.9800 &lt; 2.8742 → Tidak ada bukti serial correlation.
+        </div>
+        <p class="kc-q" style="margin-top:14px;">Apa itu robust standard errors dan mengapa berguna?</p>
+        <button class="kc-toggle" onclick="toggleKC('kc3b')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc3b"><strong>Robust standard errors adalah standard errors coefficient regression yang dikoreksi untuk bias yang mungkin muncul dari autocorrelation dan heteroskedasticity.</strong> Mereka lebih besar dari OLS standard errors standar. Kegunaannya: memungkinkan hasil regression model digunakan untuk inferensi statistik yang valid, meskipun ada serial correlation dan/atau heteroskedasticity dalam data. Tanpa koreksi, t-statistics yang inflated akan menyesatkan analis tentang signifikansi variabel.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 4: Summary ═══ -->
+  <div class="chapter" id="summary">
+    <div class="chapter-header">
+      <div class="chapter-num">4</div>
+      <div class="chapter-title">Ringkasan — Tabel Perbandingan Lengkap</div>
+    </div>
+
+    <table class="comp-table">
+      <thead><tr><th>Violation</th><th>Asumsi yang Dilanggar</th><th>Dampak pada Coeff</th><th>Dampak pada SE</th><th>Test</th><th>Koreksi</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="name">Conditional Heteroskedasticity</td>
+          <td>Homoskedasticity</td>
+          <td><span class="badge badge-green">Unbiased ✓</span></td>
+          <td><span class="badge badge-red">Underestimated ✗</span></td>
+          <td>Breusch-Pagan (χ²)</td>
+          <td>Robust/White-corrected SE</td>
+        </tr>
+        <tr>
+          <td class="name">Serial Corr. (no lagged DV)</td>
+          <td>Independence of errors</td>
+          <td><span class="badge badge-green">Consistent ✓</span></td>
+          <td><span class="badge badge-red">Underestimated ✗</span></td>
+          <td>Breusch-Godfrey (F)</td>
+          <td>Newey-West/HAC SE</td>
+        </tr>
+        <tr>
+          <td class="name">Serial Corr. (with lagged DV)</td>
+          <td>Independence of errors</td>
+          <td><span class="badge badge-red">Inconsistent ✗</span></td>
+          <td><span class="badge badge-red">Biased ✗</span></td>
+          <td>Breusch-Godfrey (F)</td>
+          <td>Revisi model</td>
+        </tr>
+        <tr>
+          <td class="name">Multicollinearity</td>
+          <td>Independence of X's</td>
+          <td><span class="badge badge-green">Unbiased ✓</span></td>
+          <td><span class="badge badge-red">Overestimated ✗</span></td>
+          <td>VIF</td>
+          <td>Drop/replace variabel, tambah n</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout amber">
+      <div class="callout-title">⚠ Perhatikan Arah Bias SE</div>
+      <p>Heteroskedasticity dan serial correlation keduanya menyebabkan SE <strong>underestimated</strong> → t-stats inflated → Type I error meningkat (terlalu banyak menolak H₀).</p>
+      <p>Multicollinearity sebaliknya: SE <strong>overestimated</strong> → t-stats deflated → Type II error meningkat (terlalu jarang menolak H₀ — variabel penting tampak tidak signifikan).</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Practice -->
+  <div id="practice">
+  <div class="practice-header">
+    <div>
+      <div class="practice-header-title">📝 Latihan Soal — Item Set Vignette</div>
+      <div class="practice-header-sub">Format CFA L2 asli · 4 soal · ~30 menit</div>
+    </div>
+  </div>
+  <div class="practice-body">
+
+    <div class="vignette">
+      <div class="vignette-label">Case Vignette</div>
+      Budi Santoso, CFA, adalah quantitative analyst di PT Bahana Sekuritas, Jakarta. Ia membangun dua model regression untuk klien institutional-nya:<br><br>
+      <strong>Model Alpha:</strong> Regresi monthly excess return portofolio saham (PORT_RET) terhadap IHSG excess return (MKTRF), size factor (SMB), dan value factor (HML) menggunakan 120 bulan data. Model ini <em>tidak</em> menggunakan lagged PORT_RET sebagai independent variable.<br><br>
+      <strong>Model Beta:</strong> Regresi quarterly GDP growth (ΔGDP) terhadap quarterly change in consumer spending (ΔCONS) dan ΔGDP dari kuartal sebelumnya (ΔGDPₜ₋₁) sebagai independent variables, menggunakan 60 kuartal data.<br><br>
+      Hasil diagnostic tests:<br>
+      — Model Alpha: BP test statistic = 13.40, p-value = 0.0038 (critical χ² at 5% with k=3: 7.815)<br>
+      — Model Alpha: BG test F-statistic = 1.85, p-value = 0.182 (critical F at 5%: 3.92)<br>
+      — Model Beta: BG test F-statistic = 18.62, p-value = 0.0015 (critical F at 5%: 3.15)<br><br>
+      Rekan Budi, Rina, menyarankan untuk menggunakan DW test pada Model Beta. Rekan lainnya, Dodi, menyarankan bahwa kalau conditional heteroskedasticity terdeteksi, "coefficient estimates Model Alpha tidak bisa dipercaya."
+    </div>
+
+    <div class="question-block" id="qb0">
+      <div class="q-num">Question 1 of 4</div>
+      <div class="q-text">Berdasarkan diagnostic test results, pernyataan yang paling tepat tentang Model Alpha adalah:</div>
+      <button class="option" onclick="answer(0,'A','C')">A. Model Alpha memiliki serial correlation tetapi tidak conditional heteroskedasticity</button>
+      <button class="option" onclick="answer(0,'B','C')">B. Model Alpha memiliki keduanya — conditional heteroskedasticity dan serial correlation</button>
+      <button class="option" onclick="answer(0,'C','C')">C. Model Alpha memiliki conditional heteroskedasticity tetapi tidak serial correlation</button>
+      <div class="explanation" id="exp0">
+        <strong>C adalah jawaban yang benar.</strong> BP test: statistic 13.40 > critical 7.815 dan p-value 0.0038 &lt; 0.05 → tolak H₀ → ada conditional heteroskedasticity. BG test: F = 1.85 &lt; critical 3.92 dan p-value 0.182 > 0.05 → gagal tolak H₀ → tidak ada serial correlation. Jadi Model Alpha hanya memiliki conditional heteroskedasticity.
+      </div>
+    </div>
+
+    <div class="question-block" id="qb1">
+      <div class="q-num">Question 2 of 4</div>
+      <div class="q-text">Pernyataan Dodi bahwa "coefficient estimates Model Alpha tidak bisa dipercaya" karena adanya conditional heteroskedasticity adalah:</div>
+      <button class="option" onclick="answer(1,'A','B')">A. Benar — conditional heteroskedasticity membuat semua output regression tidak valid</button>
+      <button class="option" onclick="answer(1,'B','B')">B. Tidak tepat — conditional heteroskedasticity tidak membuat coefficient estimates bias; yang bermasalah adalah standard errors yang underestimated</button>
+      <button class="option" onclick="answer(1,'C','B')">C. Tidak tepat — conditional heteroskedasticity sebenarnya membuat standard errors overestimated, bukan underestimated</button>
+      <div class="explanation" id="exp1">
+        <strong>B adalah jawaban yang benar.</strong> Conditional heteroskedasticity tidak membuat coefficient estimates biased — OLS masih menghasilkan unbiased estimates. Yang terpengaruh adalah standard errors, yang menjadi underestimated → t-statistics inflated → Type I error meningkat. Koreksi yang tepat adalah menggunakan robust/White-corrected standard errors — ini akan mengoreksi SE tanpa mengubah coefficient estimates. Opsi A salah karena coefficient estimates masih valid. Opsi C salah karena arahnya terbalik — heteroskedasticity menyebabkan SE underestimated, bukan overestimated.
+      </div>
+    </div>
+
+    <div class="question-block" id="qb2">
+      <div class="q-num">Question 3 of 4</div>
+      <div class="q-text">Model Beta terbukti memiliki serial correlation (BG F = 18.62 > 3.15). Mengingat Model Beta menggunakan ΔGDPₜ₋₁ sebagai independent variable, apa implikasi yang paling serius?</div>
+      <button class="option" onclick="answer(2,'A','C')">A. Standard errors underestimated, tapi coefficient estimates masih consistent — cukup koreksi dengan Newey-West SE</button>
+      <button class="option" onclick="answer(2,'B','C')">B. F-test keseluruhan model menjadi tidak reliable, tapi individual t-tests masih valid</button>
+      <button class="option" onclick="answer(2,'C','C')">C. Coefficient estimates menjadi inconsistent karena ada lagged dependent variable — seluruh model tidak dapat diandalkan dan perlu direvisi</button>
+      <div class="explanation" id="exp2">
+        <strong>C adalah jawaban yang benar.</strong> Ketika model menggunakan lagged dependent variable (ΔGDPₜ₋₁) sebagai independent variable DAN ada serial correlation dalam error term, coefficient estimates menjadi inconsistent — biased bahkan ketika n → ∞. Ini jauh lebih serius daripada kasus serial correlation tanpa lagged DV (di mana hanya SE yang bermasalah). Dalam kondisi ini, menggunakan Newey-West SE saja tidak cukup — model itu sendiri perlu diperbaiki strukturnya.
+      </div>
+    </div>
+
+    <div class="question-block" id="qb3">
+      <div class="q-num">Question 4 of 4</div>
+      <div class="q-text">Saran Rina untuk menggunakan DW test sebagai pengganti BG test pada Model Beta tidak tepat karena:</div>
+      <button class="option" onclick="answer(3,'A','B')">A. DW test memerlukan lebih banyak data dibanding BG test untuk menghasilkan hasil yang valid</button>
+      <button class="option" onclick="answer(3,'B','B')">B. DW test tidak valid ketika model menggunakan lagged dependent variable sebagai regressor, dan hanya mendeteksi first-order serial correlation — BG test lebih robust untuk kedua keterbatasan ini</button>
+      <button class="option" onclick="answer(3,'C','B')">C. DW test hanya bisa digunakan untuk cross-sectional data, sementara BG test cocok untuk time series</button>
+      <div class="explanation" id="exp3">
+        <strong>B adalah jawaban yang benar.</strong> DW test memiliki dua keterbatasan kritis: (1) hanya menguji first-order (lag-1) serial correlation — tidak mendeteksi higher-order autocorrelation; dan (2) tidak valid ketika ada lagged dependent variable sebagai regressor — ini persis kondisi Model Beta yang menggunakan ΔGDPₜ₋₁. BG test mengatasi kedua keterbatasan ini: bisa mendeteksi serial correlation hingga lag-p yang ditentukan, dan tetap valid meski ada lagged DV.
+      </div>
+    </div>
+
+    <div class="score-panel" id="score-panel">
+      <div class="score-num" id="score-num">0/4</div>
+      <div class="score-msg" id="score-msg">—</div>
+    </div>
+  </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a class="nav-btn" href="CFA_L2_Day02_Full.html">← Day 2 Full</a>
+    <div class="nav-day">Day 3 of 90 · Versi Full<br><span style="font-size:11px;color:var(--text3);">Next: Day 4 · Multicollinearity</span></div>
+    <a class="nav-btn primary" href="CFA_L2_Day04_Full.html">Day 4 Full →</a>
+  </div>
+
+</div>
+<script>
+function toggleKC(id){
+  const el=document.getElementById(id);
+  const btn=el.previousElementSibling;
+  if(el.classList.contains('show')){el.classList.remove('show');btn.textContent='Lihat Jawaban';}
+  else{el.classList.add('show');btn.textContent='Sembunyikan Jawaban';}
+}
+const answers={};
+const correct={0:'C',1:'B',2:'C',3:'B'};
+const total=4;
+function answer(qIdx,chosen,correctAns){
+  if(answers[qIdx])return;
+  answers[qIdx]=chosen;
+  const block=document.getElementById('qb'+qIdx);
+  const exp=document.getElementById('exp'+qIdx);
+  block.querySelectorAll('.option').forEach(btn=>{
+    btn.disabled=true;
+    const letter=btn.textContent.trim()[0];
+    if(letter===correctAns)btn.classList.add('correct');
+    else if(letter===chosen&&chosen!==correctAns)btn.classList.add('wrong');
+  });
+  exp.classList.add('show');
+  if(Object.keys(answers).length===total)showScore();
+}
+function showScore(){
+  const score=Object.keys(correct).filter(k=>answers[k]===correct[k]).length;
+  const panel=document.getElementById('score-panel');
+  const num=document.getElementById('score-num');
+  const msg=document.getElementById('score-msg');
+  num.textContent=score+'/'+total;
+  num.style.color=score===4?'var(--green)':score>=3?'var(--amber)':'var(--red)';
+  const msgs={4:'🎯 Sempurna! LM3 subtopik 1 sudah solid.',3:'✅ Bagus. Review soal yang salah.',2:'⚠️ Review kembali distingsi serial correlation dengan/tanpa lagged DV.',1:'🔁 Ulangi bagian theory sebelum lanjut.',0:'🔁 Ulangi bagian theory sebelum lanjut.'};
+  msg.textContent=msgs[score]||msgs[0];
+  panel.style.display='block';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 6 · Full · Logistic Regression</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;
+  --border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+  --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;
+  --gold:#9a6e1a;--gold2:#7a5010;--gold-bg:rgba(154,110,26,0.08);
+  --blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);
+  --green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);
+  --red:#b83232;--red-bg:rgba(184,50,50,0.08);
+  --amber:#a06010;--amber-bg:rgba(160,96,16,0.08);
+  --r:10px;--r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.8;}
+.page{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;border:1px solid rgba(26,95,168,0.2);}
+.hero{margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--border);}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:36px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:15px;color:var(--text2);}
+.meta-row{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:36px;}
+.toc-title{font-size:12px;color:var(--text3);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:12px;font-weight:500;}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.toc-list li a{font-size:13px;color:var(--blue);text-decoration:none;display:flex;align-items:center;gap:8px;}
+.toc-list li a:hover{text-decoration:underline;}
+.toc-num{font-size:11px;color:var(--text3);min-width:20px;}
+.chapter{margin-bottom:40px;}
+.chapter-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--gold-bg);}
+.chapter-num{font-family:'DM Serif Display',serif;font-size:28px;color:var(--gold);line-height:1;}
+.chapter-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);line-height:1.2;}
+.sub-header{font-size:17px;font-weight:500;color:var(--text);margin:24px 0 12px;padding-left:12px;border-left:3px solid var(--gold);}
+.prose{font-size:14px;color:var(--text2);line-height:1.85;margin-bottom:14px;}
+.prose strong{color:var(--text);font-weight:500;}
+.formula-block{background:var(--bg2);border:1px solid var(--border2);border-left:4px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:16px 20px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold2);line-height:2;}
+.formula-block .label{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:8px;}
+.formula-block .note{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text3);font-style:italic;display:block;margin-top:8px;}
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:20px 0;}
+.exhibit-title{background:var(--bg3);padding:10px 16px;font-size:12px;font-weight:500;color:var(--text2);border-bottom:1px solid var(--border);}
+.exhibit-body{padding:16px;}
+.reg-table{width:100%;border-collapse:collapse;font-size:13px;}
+.reg-table th{text-align:right;padding:8px 12px;background:var(--bg3);color:var(--text3);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border2);}
+.reg-table th:first-child{text-align:left;}
+.reg-table td{padding:8px 12px;border-bottom:1px solid var(--border);text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text2);}
+.reg-table td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);font-weight:500;}
+.reg-table tr:last-child td{border-bottom:none;}
+.reg-table .sig{color:var(--green);font-weight:500;}
+.reg-table .nsig{color:var(--text3);}
+.callout{border-radius:var(--r);padding:16px 18px;margin:16px 0;}
+.callout-title{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;}
+.callout p{font-size:13px;color:var(--text2);line-height:1.75;}
+.callout p+p{margin-top:8px;}
+.callout.blue{background:var(--blue-bg);border:1px solid rgba(26,95,168,0.15);}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.green{background:var(--green-bg);border:1px solid rgba(26,122,74,0.15);}
+.callout.green .callout-title{color:var(--green);}
+.callout.amber{background:var(--amber-bg);border:1px solid rgba(160,96,16,0.15);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.red{background:var(--red-bg);border:1px solid rgba(184,50,50,0.15);}
+.callout.red .callout-title{color:var(--red);}
+.callout.gold{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);}
+.callout.gold .callout-title{color:var(--gold);}
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:24px 0;overflow:hidden;}
+.kc-header{background:var(--gold-bg);padding:12px 18px;border-bottom:1px solid rgba(154,110,26,0.15);}
+.kc-header-title{font-size:12px;font-weight:500;color:var(--gold);letter-spacing:0.06em;text-transform:uppercase;}
+.kc-body{padding:18px;}
+.kc-q{font-size:13px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.6;}
+.kc-answer{background:var(--bg3);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);line-height:1.75;display:none;}
+.kc-answer.show{display:block;}
+.kc-answer strong{color:var(--green);}
+.kc-toggle{background:none;border:1px solid var(--border2);border-radius:var(--r-sm);padding:6px 14px;font-size:12px;color:var(--text3);cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px;transition:all 0.15s;}
+.kc-toggle:hover{border-color:var(--gold);color:var(--gold);}
+.comp-table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;}
+.comp-table th{text-align:left;padding:9px 12px;background:var(--bg3);color:var(--text2);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border2);}
+.comp-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;color:var(--text2);}
+.comp-table tr:last-child td{border-bottom:none;}
+.comp-table .name{font-weight:500;color:var(--text);}
+.badge{display:inline-flex;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;}
+.badge-green{background:var(--green-bg);color:var(--green);}
+.badge-red{background:var(--red-bg);color:var(--red);}
+.badge-amber{background:var(--amber-bg);color:var(--amber);}
+.badge-blue{background:var(--blue-bg);color:var(--blue);}
+.step-box{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:13px 16px;margin:8px 0;}
+.step-num{font-size:11px;color:var(--gold);font-weight:500;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;}
+.step-content{font-size:13px;color:var(--text2);line-height:1.7;}
+.bullet-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin:10px 0;}
+.bullet-list li{display:flex;gap:10px;font-size:13px;color:var(--text2);line-height:1.7;}
+.bullet-list li::before{content:'■';color:var(--gold);font-size:9px;margin-top:5px;flex-shrink:0;}
+.divider{height:1px;background:var(--border);margin:36px 0;}
+.practice-header{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);border-radius:var(--r) var(--r) 0 0;padding:16px 20px;}
+.practice-header-title{font-size:16px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);margin-top:2px;}
+.practice-body{background:var(--bg2);border:1px solid rgba(154,110,26,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:24px;}
+.vignette{background:var(--bg3);border-left:4px solid var(--gold);padding:18px 20px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:28px;font-size:13px;color:var(--text2);line-height:1.85;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;font-weight:500;}
+.question-block{margin-bottom:24px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:6px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:12px;line-height:1.65;}
+.option{display:block;width:100%;text-align:left;padding:11px 16px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:8px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.6;}
+.option:hover:not(:disabled){border-color:var(--border2);background:var(--bg2);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:14px 16px;font-size:13px;color:var(--text2);margin-top:10px;line-height:1.8;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:28px;margin-top:20px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:52px;margin-bottom:8px;}
+.score-msg{font-size:14px;color:var(--text2);}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+.nav-day{font-size:12px;color:var(--text3);text-align:center;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II · <span>Quantitative Methods</span> · LM4</div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <div class="version-badge">Versi Full</div>
+      <div class="day-badge">Day 6 of 90</div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Selasa, 14 April 2026</div>
+    <h1 class="hero-title">Logistic Regression — Model untuk Binary Dependent Variable</h1>
+    <p class="hero-sub">Learning Module 4 — Quantitative Methods · CFA Level II 2026 · Subtopik 2 dari 2 · LM4 Selesai</p>
+    <div class="meta-row">
+      <div class="meta-pill">📖 Materi lengkap</div>
+      <div class="meta-pill">🇮🇩 Bahasa Indonesia</div>
+      <div class="meta-pill">⚖️ Exam weight <b>~6%</b></div>
+      <div class="meta-pill">⏱ Est. baca <b>45–55 menit</b></div>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ul class="toc-list">
+      <li><a href="#why"><span class="toc-num">1</span>Kenapa Logistic Regression? Masalah Linear Probability Model</a></li>
+      <li><a href="#logit-model"><span class="toc-num">2</span>Model Logistik — Odds, Log-Odds, dan Sigmoid</a></li>
+      <li><a href="#coeff"><span class="toc-num">3</span>Estimasi MLE dan Interpretasi Koefisien</a></li>
+      <li><a href="#marginal"><span class="toc-num">4</span>Marginal Effect — Prosedur Dua Langkah</a></li>
+      <li><a href="#fit"><span class="toc-num">5</span>Model Fit — Log-Likelihood, Pseudo-R², dan LR Test</a></li>
+      <li><a href="#example"><span class="toc-num">6</span>Contoh Numerik Lengkap — Share Repurchase Model</a></li>
+      <li><a href="#compare"><span class="toc-num">7</span>Perbandingan Lengkap OLS vs Logistic Regression</a></li>
+      <li><a href="#practice"><span class="toc-num">8</span>Latihan Soal</a></li>
+    </ul>
+  </div>
+
+  <!-- ═══ SECTION 1 ═══ -->
+  <div class="chapter" id="why">
+    <div class="chapter-header">
+      <div class="chapter-num">1</div>
+      <div class="chapter-title">Kenapa Logistic Regression? Masalah Linear Probability Model</div>
+    </div>
+
+    <p class="prose">Sejauh ini kita membahas regression dengan <em>continuous dependent variable</em>. Tapi dalam banyak analisis keuangan, kita ingin memprediksi outcomes yang bersifat binary — ya/tidak, terjadi/tidak terjadi:</p>
+    <ul class="bullet-list">
+      <li>Apakah perusahaan ini akan <strong>default</strong> dalam 12 bulan?</li>
+      <li>Apakah emiten akan melakukan <strong>share repurchase</strong> tahun ini?</li>
+      <li>Apakah ETF ini akan menjadi <strong>"winning fund"</strong> bulan depan?</li>
+      <li>Apakah sentimen press release ini <strong>positif atau negatif</strong>?</li>
+    </ul>
+
+    <div class="sub-header">1.1 Masalah Linear Probability Model (LPM)</div>
+
+    <p class="prose">Bayangkan kita coba langsung pakai OLS dengan Y = 1 jika event terjadi, Y = 0 jika tidak:</p>
+    <p class="prose" style="font-family:var(--font-mono);background:var(--bg3);padding:10px 14px;border-radius:var(--r-sm);font-size:13px;font-family:'JetBrains Mono',monospace;color:var(--text2);">Yᵢ = b₀ + b₁X₁ᵢ + b₂X₂ᵢ + b₃X₃ᵢ + εᵢ, di mana Y ∈ {0,1}</p>
+
+    <p class="prose">Ada <strong>dua masalah fundamental</strong> dengan pendekatan ini:</p>
+    <ul class="bullet-list">
+      <li><strong>Predicted values di luar [0,1]:</strong> Bergantung pada koefisien dan nilai X, Ŷ bisa menghasilkan angka di atas 1.0 atau di bawah 0 — tidak valid sebagai probabilitas. Probabilitas tidak bisa &gt;100% atau &lt;0%.</li>
+      <li><strong>Hubungan non-linear:</strong> Logika menyarankan bahwa ketika perusahaan sudah sangat sehat (DER sangat rendah), tambahan penurunan DER hampir tidak mengubah probabilitas default. Begitu juga ketika perusahaan sudah hampir pasti default. Hubungannya berbentuk S-curve, bukan garis lurus.</li>
+    </ul>
+
+    <div class="callout gold">
+      <div class="callout-title">📊 Visualisasi — LPM vs Logit Model</div>
+      <p><strong>Linear Probability Model (Panel A):</strong> Garis lurus yang bisa menembus 0 dan 1. Tidak valid untuk probability.</p>
+      <p><strong>Logit Model (Panel B):</strong> S-curve (sigmoidal) yang dimulai mendekati 0 untuk X sangat rendah, naik perlahan, lalu cepat di tengah, kemudian mendatar mendekati 1 untuk X sangat tinggi. Selalu antara 0 dan 1.</p>
+      <p>Kurva sigmoidal juga realistis secara ekonomi: di ujung-ujung distribusi, perubahan X kecil dampaknya terhadap probabilitas, tapi di tengah (sekitar P = 0.5), perubahan X paling impactful.</p>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 2 ═══ -->
+  <div class="chapter" id="logit-model">
+    <div class="chapter-header">
+      <div class="chapter-num">2</div>
+      <div class="chapter-title">Model Logistik — Odds, Log-Odds, dan Sigmoid</div>
+    </div>
+
+    <p class="prose">Untuk mengatasi masalah LPM, kita aplikasikan <strong>logistic transformation</strong> — mentransformasi probability P ke dalam log-odds yang rangenya tidak terbatas (−∞ sampai +∞), sehingga bisa diregresikan secara linear.</p>
+
+    <div class="sub-header">2.1 Tiga Konsep Terhubung</div>
+
+    <div class="formula-block">
+      <span class="label">Step 1: Dari Probability ke Odds</span>
+      Odds = P / (1 − P)
+      <span class="note">Range: 0 sampai +∞</span>
+      <span class="note">Contoh: P = 0.75 → Odds = 0.75/0.25 = 3.0 (peluang 3 berbanding 1)</span>
+      <span class="note">Contoh: P = 0.50 → Odds = 1.0 (even odds)</span>
+    </div>
+
+    <div class="formula-block">
+      <span class="label">Step 2: Dari Odds ke Log-Odds (Logit)</span>
+      Log-odds = ln[P / (1 − P)]
+      <span class="note">Range: −∞ sampai +∞ → bisa di-regresi linear!</span>
+      <span class="note">P = 0.5 → Log-odds = 0</span>
+      <span class="note">P &gt; 0.5 → Log-odds &gt; 0 (positif)</span>
+      <span class="note">P &lt; 0.5 → Log-odds &lt; 0 (negatif)</span>
+    </div>
+
+    <div class="formula-block">
+      <span class="label">Model Logistik Lengkap</span>
+      ln[P / (1−P)] = b₀ + b₁X₁ + b₂X₂ + b₃X₃ + ε  ← diestimasi
+      <br>
+      P = 1 / {1 + exp[−(b₀ + b₁X₁ + b₂X₂ + b₃X₃)]}  ← dikonversi
+      <span class="note">Selalu menghasilkan P antara 0 dan 1 ✓</span>
+    </div>
+
+    <div class="callout blue">
+      <div class="callout-title">💡 Intuisi Sigmoid</div>
+      <p>Formula P = 1/(1 + e^(−z)) di mana z = linear predictor menghasilkan fungsi sigmoidal:</p>
+      <p>— Ketika z → +∞: e^(−z) → 0, sehingga P → 1/(1+0) = 1</p>
+      <p>— Ketika z = 0: e^0 = 1, sehingga P = 1/(1+1) = 0.5</p>
+      <p>— Ketika z → −∞: e^(−z) → +∞, sehingga P → 0</p>
+      <p>Ini berarti model selalu menghasilkan P antara 0 dan 1, dan slope kurva (marginal effect) paling besar di P = 0.5 serta paling kecil di ujung-ujung distribusi.</p>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 3 ═══ -->
+  <div class="chapter" id="coeff">
+    <div class="chapter-header">
+      <div class="chapter-num">3</div>
+      <div class="chapter-title">Estimasi MLE dan Interpretasi Koefisien</div>
+    </div>
+
+    <div class="sub-header">3.1 Maximum Likelihood Estimation (MLE)</div>
+
+    <p class="prose">Logistic regression tidak menggunakan OLS (least squares) karena tidak ada closed-form solution. Sebagai gantinya, koefisien diestimasi dengan <strong>MLE (Maximum Likelihood Estimation)</strong> — mencari nilai b₀, b₁, ..., bₖ yang membuat data yang kita observasi "paling mungkin" terjadi.</p>
+
+    <p class="prose">Secara teknis: MLE memaksimalkan <em>likelihood function</em> — produk dari probabilitas tiap observasi diklasifikasikan dengan benar. Untuk binary outcome (binomial distribution), ini setara dengan memaksimalkan log-likelihood. Software menghitungnya secara iteratif menggunakan algoritma seperti Newton-Raphson.</p>
+
+    <div class="callout amber">
+      <div class="callout-title">⚠ MLE Properties — Yang Perlu Diketahui untuk Exam</div>
+      <p>MLE menghasilkan estimator yang <strong>consistent</strong> (semakin besar n → semakin mendekati nilai benar) dan <strong>asymptotically normal</strong> (distribusi sampling mendekati normal untuk sampel besar). Ini mengapa hypothesis test di logit menggunakan <strong>z-statistic</strong>, bukan t-statistic. Untuk sampel besar, z-statistic dan t-statistic memberikan hasil yang sangat mirip.</p>
+    </div>
+
+    <div class="sub-header">3.2 Interpretasi Koefisien — Paling Sering Diuji</div>
+
+    <div class="callout red">
+      <div class="callout-title">🚨 Interpretasi yang Benar — Exam-Critical</div>
+      <p><strong>Koefisien bⱼ dalam logit model = perubahan log-odds per unit kenaikan Xⱼ, holding all other variables constant.</strong></p>
+      <p>Ini BUKAN perubahan probabilitas P. Karena hubungannya non-linear, perubahan probabilitas per unit Xⱼ berbeda-beda tergantung nilai semua X saat ini.</p>
+      <p>Perbandingan:<br>
+      OLS: b₁ = 0.5 artinya "Y naik 0.5 per unit X₁ naik, ceteris paribus"<br>
+      Logit: b₁ = 0.5 artinya "log-odds naik 0.5 per unit X₁ naik, ceteris paribus" — untuk tahu dampaknya terhadap P, perlu kalkulasi terpisah</p>
+    </div>
+
+    <p class="prose">Dari logit model share repurchase (curriculum), koefisien DE = −0.3186. Interpretasi: kenaikan 1 unit DE <em>menurunkan</em> log-odds repurchase sebesar 0.3186 — holding CASH dan NPM constant. Ini konsisten dengan intuisi ekonomi: perusahaan yang lebih leverage (DER tinggi) cenderung tidak buyback karena lebih perlu jaga cash.</p>
+
+    <div class="sub-header">3.3 Interpretasi Intercept</div>
+
+    <p class="prose">Intercept b₀ adalah log-odds dari event ketika <strong>semua independent variables = 0</strong>. Untuk mengkonversi ke probabilitas:</p>
+
+    <div class="formula-block">
+      <span class="label">Probability dari Intercept (semua X = 0)</span>
+      P(Y=1 | X₁=X₂=...=Xₖ=0) = 1 / (1 + e^(−b₀))
+      <span class="note">Contoh: b₀ = −0.4738 → P = 1/(1+e^0.4738) = 1/(1+1.606) = 38.37%</span>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 3.1 — Interpretasi Koefisien Logit</div></div>
+      <div class="kc-body">
+        <p class="kc-q">Dari model ETF winning fund (Logistic Regression 1): koefisien price_sales = 0.3432 (z=4.416, p=0.000). Bagaimana interpretasi yang tepat untuk koefisien ini?</p>
+        <button class="kc-toggle" onclick="toggleKC('kc3a')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc3a"><strong>Kenaikan price-to-sales ratio (P/S) sebesar 1 unit meningkatkan log-odds ETF menjadi "winning fund" sebesar 0.3432, holding semua variabel lain constant.</strong> Ini bukan berarti probabilitas naik 34.32% — itu salah total. Koefisien positif menunjukkan bahwa ETF dengan P/S lebih tinggi cenderung lebih mungkin menjadi winning fund, tapi besaran dampaknya terhadap probabilitas tergantung pada nilai semua variabel lain untuk ETF tersebut.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 4 ═══ -->
+  <div class="chapter" id="marginal">
+    <div class="chapter-header">
+      <div class="chapter-num">4</div>
+      <div class="chapter-title">Marginal Effect — Prosedur Dua Langkah</div>
+    </div>
+
+    <p class="prose">Untuk mendapat dampak aktual perubahan Xⱼ terhadap probabilitas, kita perlu menghitung <strong>marginal effect</strong> secara eksplisit. Karena hubungannya non-linear, marginal effect bervariasi per observasi.</p>
+
+    <div class="sub-header">4.1 Marginal Effect pada "Average Observation"</div>
+
+    <p class="prose">Cara paling umum: hitung marginal effect pada nilai rata-rata semua variabel — ini memberikan dampak "tipikal" dalam dataset.</p>
+
+    <div class="formula-block">
+      <span class="label">Prosedur Marginal Effect — Dua Langkah</span>
+      Step 1: P₀ = 1 / {1 + exp[−(b₀ + b₁X̄₁ + b₂X̄₂ + ... + bₖX̄ₖ)]}
+      Step 2: P₁ = 1 / {1 + exp[−(b₀ + b₁X̄₁ + ... + bⱼ(X̄ⱼ + δ) + ... + bₖX̄ₖ)]}
+      <br>
+      Marginal Effect = P₁ − P₀
+      <span class="note">di mana δ adalah perubahan Xⱼ (biasanya 1 unit atau 0.01 = 1%)</span>
+      <span class="note">Semua X lain tetap di nilai rata-rata</span>
+    </div>
+
+    <div class="callout amber">
+      <div class="callout-title">⚠ Marginal Effect Bervariasi per Observasi</div>
+      <p>Marginal effect 0.20% untuk NPM dalam contoh curriculum berlaku <em>hanya untuk perusahaan dengan karakteristik rata-rata</em>. Untuk perusahaan yang sudah sangat dekat defaultnya (P mendekati 1) atau sangat sehat (P mendekati 0), dampak perubahan NPM yang sama akan jauh lebih kecil karena kurva sigmoid mendatar di ujung-ujung. Di P ≈ 0.5, marginal effect paling besar.</p>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 5 ═══ -->
+  <div class="chapter" id="fit">
+    <div class="chapter-header">
+      <div class="chapter-num">5</div>
+      <div class="chapter-title">Model Fit — Log-Likelihood, Pseudo-R², dan LR Test</div>
+    </div>
+
+    <p class="prose">Karena logistic regression tidak menggunakan OLS, tidak ada R² konvensional. Tiga metrik pengganti yang perlu dikuasai:</p>
+
+    <div class="sub-header">5.1 Log-Likelihood</div>
+
+    <p class="prose">Log-likelihood (LL) mengukur seberapa baik model menjelaskan data yang diobservasi. Secara teknis: jumlah dari ln(probabilitas prediksi yang benar) untuk semua observasi. Karena probabilitas &lt; 1, ln-nya selalu negatif, sehingga log-likelihood <strong>selalu negatif</strong>.</p>
+
+    <div class="callout red">
+      <div class="callout-title">🚨 Arah Perbandingan — Selalu Membingungkan</div>
+      <p>Log-likelihood yang <strong>lebih tinggi (mendekati 0) = model lebih baik</strong>. Ini berlawanan dengan AIC/BIC (yang lebih rendah = lebih baik). Jangan terkecoh!</p>
+      <p>Contoh: LL Model A = −198.42, LL Model B = −203.15. <strong>Model A lebih baik</strong> karena −198.42 &gt; −203.15 (lebih mendekati 0).</p>
+      <p>Analogi: suhu −5°C "lebih tinggi" daripada −10°C, meski keduanya negatif.</p>
+    </div>
+
+    <div class="sub-header">5.2 Pseudo-R²</div>
+
+    <p class="prose">Pseudo-R² diusulkan sebagai analog R² untuk logit, tapi interpretasinya berbeda:</p>
+    <ul class="bullet-list">
+      <li>Tidak bisa diinterpretasikan sebagai "% variasi yang dijelaskan" seperti R² OLS</li>
+      <li>Hanya bermakna untuk <strong>membandingkan model dengan dependent variable yang sama</strong></li>
+      <li>Nilai Pseudo-R² yang kecil tidak berarti model jelek — dalam logistic regression, nilai 0.05–0.10 saja sudah cukup baik untuk banyak aplikasi</li>
+    </ul>
+
+    <div class="sub-header">5.3 Likelihood Ratio (LR) Test — Analog Joint F-Test</div>
+
+    <p class="prose">LR test adalah cara formal untuk menguji apakah sekelompok variabel secara bersama-sama signifikan — analog dengan joint F-test dalam OLS. Membandingkan restricted model vs unrestricted model, tapi menggunakan log-likelihoods bukan SSE.</p>
+
+    <div class="formula-block">
+      <span class="label">LR Test Statistic</span>
+      LR = −2 × (LL_restricted − LL_unrestricted)
+      <span class="note">Distribusi chi-square (χ²) dengan df = q (jumlah restrictions)</span>
+      <span class="note">H₀: koefisien variabel yang di-restrict = 0 (restricted model lebih baik)</span>
+      <span class="note">Hₐ: setidaknya satu koefisien ≠ 0 (unrestricted model lebih baik)</span>
+      <span class="note">Tolak H₀ jika LR &gt; χ²_critical(q, α)</span>
+    </div>
+
+    <div class="callout blue">
+      <div class="callout-title">💡 Kenapa LR Selalu Positif?</div>
+      <p>LL_unrestricted selalu ≥ LL_restricted (unrestricted model dengan lebih banyak variabel selalu bisa fit data setidaknya sama baiknya). Keduanya negatif, tapi LL_restricted lebih negatif. Sehingga LL_restricted − LL_unrestricted selalu negatif, dan −2 × (angka negatif) = positif. LR statistic selalu ≥ 0.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 5.1 — LR Test Lengkap</div></div>
+      <div class="kc-body">
+        <p class="kc-q">Model share repurchase (intercept only): LL = −312.68. Full model (CASH, DE, NPM): LL = −304.20. Lakukan LR test pada α = 5% untuk menguji apakah ketiga variabel bersama-sama signifikan. Critical χ²(3) = 7.815.</p>
+        <button class="kc-toggle" onclick="toggleKC('kc5a')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc5a">
+          <strong>Step 1:</strong> H₀: b_CASH = b_DE = b_NPM = 0 | Hₐ: at least one bⱼ ≠ 0<br>
+          <strong>Step 2:</strong> LR statistic, df = 3<br>
+          <strong>Step 3:</strong> α = 5%<br>
+          <strong>Step 4:</strong> Tolak H₀ jika LR &gt; 7.815<br>
+          <strong>Step 5:</strong> LR = −2 × (−312.68 − (−304.20)) = −2 × (−8.48) = <strong>16.96</strong><br>
+          <strong>Step 6:</strong> 16.96 &gt; 7.815 → <strong>Tolak H₀</strong> → CASH, DE, dan NPM bersama-sama signifikan. Full model lebih baik dari intercept-only model.<br><br>
+          Note: p-value dari LR test ini = 0.0007 (ditunjukkan dalam output sebagai LLR-P-Value), sangat signifikan.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 6 ═══ -->
+  <div class="chapter" id="example">
+    <div class="chapter-header">
+      <div class="chapter-num">6</div>
+      <div class="chapter-title">Contoh Numerik Lengkap — Share Repurchase Model</div>
+    </div>
+
+    <p class="prose">Contoh dari CFA curriculum: model untuk memprediksi propensity perusahaan melakukan share repurchase (Repurchase = 1 jika buyback, 0 jika tidak), n = 500 perusahaan.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 13: Logistic Regression Results — Share Repurchase</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Variable</th><th>Coefficient</th><th>Std Error</th><th>z-Stat</th><th>P-Value</th></tr></thead>
+          <tbody>
+            <tr><td>Intercept</td><td>−0.4738</td><td>0.196</td><td class="sig">−2.415</td><td class="sig">0.016</td></tr>
+            <tr><td>CASH</td><td>−0.9118</td><td>1.154</td><td class="nsig">−0.790</td><td class="nsig">0.430</td></tr>
+            <tr><td>DE</td><td>−0.3186</td><td>0.133</td><td class="sig">−2.396</td><td class="sig">0.017</td></tr>
+            <tr><td>NPM</td><td>0.9407</td><td>0.417</td><td class="sig">2.255</td><td class="sig">0.024</td></tr>
+          </tbody>
+        </table>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;font-size:12px;color:var(--text2);">
+          <div>LL (full model): −304.20</div>
+          <div>LL (intercept only): −312.68</div>
+          <div>Pseudo-R²: 0.0271</div>
+          <div>LLR p-value: 0.0007</div>
+        </div>
+        <table class="reg-table" style="margin-top:16px;">
+          <thead><tr><th>Variable</th><th>Mean</th><th>Standard Dev.</th></tr></thead>
+          <tbody>
+            <tr><td>CASH</td><td>0.083</td><td>0.0894</td></tr>
+            <tr><td>DE</td><td>0.9182</td><td>0.7638</td></tr>
+            <tr><td>NPM</td><td>−0.0535</td><td>1.4592</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">6.1 Interpretasi Intercept</div>
+    <p class="prose">Intercept = −0.4738 adalah log-odds repurchase ketika semua X = 0. Probabilitasnya: P = 1/(1 + e^0.4738) = 1/(1 + 1.6063) = 38.37%. Ini adalah probabilitas baseline yang tidak dijelaskan oleh variabel-variabel dalam model.</p>
+
+    <div class="sub-header">6.2 Hitung Probabilitas pada Nilai Rata-Rata</div>
+
+    <p class="prose">Dengan menggunakan mean semua variabel:</p>
+    <p class="prose" style="font-family:'JetBrains Mono',monospace;background:var(--bg3);padding:12px 16px;border-radius:var(--r-sm);font-size:13px;line-height:1.8;color:var(--text2);">
+      Linear predictor = −0.4738 + (−0.9118)(0.083) + (0.9407)(−0.0535) + (−0.3186)(0.9182)<br>
+      = −0.4738 − 0.0757 − 0.0503 − 0.2926<br>
+      = −0.8924<br>
+      P₀ = 1/(1 + e^0.8924) = 1/(1 + 2.441) = <strong>29.06%</strong>
+    </p>
+    <p class="prose">Untuk perusahaan dengan karakteristik rata-rata, probabilitas melakukan share repurchase adalah 29.06%.</p>
+
+    <div class="sub-header">6.3 Marginal Effects</div>
+
+    <table class="comp-table">
+      <thead><tr><th>Variabel</th><th>P₀ (baseline)</th><th>Perubahan X</th><th>P₁ (setelah ΔX)</th><th>Marginal Effect</th><th>Arah</th></tr></thead>
+      <tbody>
+        <tr><td class="name">CASH</td><td>29.06%</td><td>+1% (0.083→0.093)</td><td>28.87%</td><td>−0.19%</td><td>↓ (negatif sesuai koefisien negatif)</td></tr>
+        <tr><td class="name">NPM</td><td>29.06%</td><td>+1% (−0.0535→−0.0435)</td><td>29.26%</td><td>+0.20%</td><td>↑ (positif sesuai koefisien positif)</td></tr>
+        <tr><td class="name">DE</td><td>29.06%</td><td>+1% (0.9182→0.9282)</td><td>29.00%</td><td>−0.07%</td><td>↓ (negatif sesuai koefisien negatif)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout blue">
+      <div class="callout-title">💡 Mengapa CASH Tidak Signifikan tapi DE dan NPM Signifikan?</div>
+      <p>CASH memiliki z-statistic = −0.790 (p=0.430) → tidak signifikan pada 5%. DE (p=0.017) dan NPM (p=0.024) keduanya signifikan. Ini menunjukkan bahwa setelah mengontrol DE dan NPM, cash ratio tidak memberikan informasi tambahan yang signifikan tentang propensity repurchase. Model bisa disederhanakan dengan drop CASH, tapi LR test overall masih signifikan karena kontribusi DE dan NPM.</p>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 7 ═══ -->
+  <div class="chapter" id="compare">
+    <div class="chapter-header">
+      <div class="chapter-num">7</div>
+      <div class="chapter-title">Perbandingan Lengkap — OLS vs Logistic Regression</div>
+    </div>
+
+    <table class="comp-table">
+      <thead><tr><th>Dimensi</th><th>OLS Regression</th><th>Logistic Regression</th></tr></thead>
+      <tbody>
+        <tr><td class="name">Dependent variable</td><td>Continuous (tak terbatas)</td><td>Binary (0 atau 1)</td></tr>
+        <tr><td class="name">Model untuk Yᵢ</td><td>Y = b₀ + b₁X₁ + ... + ε (langsung)</td><td>ln[P/(1−P)] = b₀ + b₁X₁ + ... (log-odds)</td></tr>
+        <tr><td class="name">Estimasi koefisien</td><td>Least Squares (minimize SSE)</td><td>MLE (maximize log-likelihood)</td></tr>
+        <tr><td class="name">Interpretasi bⱼ</td><td>ΔY per unit ΔXⱼ (konstan)</td><td>Δlog-odds per unit ΔXⱼ (bukan ΔP!)</td></tr>
+        <tr><td class="name">Marginal effect</td><td>Konstan = bⱼ</td><td>Non-konstan; tergantung nilai semua X</td></tr>
+        <tr><td class="name">Individual test</td><td>t-statistic, df = n−k−1</td><td>z-statistic (same intuition)</td></tr>
+        <tr><td class="name">Overall model fit</td><td>F-test (MSR/MSE)</td><td>LR test (χ², based on log-likelihood)</td></tr>
+        <tr><td class="name">Goodness of fit</td><td>R², Adjusted R², AIC, BIC</td><td>Pseudo-R², Log-likelihood, LR p-value</td></tr>
+        <tr><td class="name">Nested model test</td><td>Joint F-test: (ΔSSE/q) / MSE_unres</td><td>LR test: −2(LL_res − LL_unres) ~ χ²(q)</td></tr>
+        <tr><td class="name">Predicted output</td><td>Predicted value of Y (continuous)</td><td>P(Y=1) antara 0 dan 1</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout green">
+      <div class="callout-title">✅ Analogi untuk Mengingat</div>
+      <p>Joint F-test (OLS) ↔ LR test (Logit) — keduanya membandingkan restricted vs unrestricted model</p>
+      <p>SSE (OLS) ↔ Log-likelihood (Logit) — keduanya mengukur "fit" model terhadap data</p>
+      <p>R² (OLS) ↔ Pseudo-R² (Logit) — keduanya mengukur goodness of fit, tapi interpretasinya berbeda</p>
+      <p>t-statistic (OLS) ↔ z-statistic (Logit) — keduanya menguji signifikansi koefisien individual</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Practice -->
+  <div id="practice">
+  <div class="practice-header">
+    <div class="practice-header-title">📝 Latihan Soal — Item Set Vignette</div>
+    <div class="practice-header-sub">Format CFA L2 asli · 4 soal · ~30 menit</div>
+  </div>
+  <div class="practice-body">
+
+    <div class="vignette">
+      <div class="vignette-label">Case Vignette</div>
+      Arif Wicaksono, CFA, credit analyst di PT Bank Mandiri Tbk, membangun model prediksi default obligasi korporasi Indonesia. Dependent variable: DEFAULT = 1 jika default dalam 12 bulan, 0 jika tidak. n = 400 obligasi, diestimasi dengan MLE.<br><br>
+      <strong>Model Full (3 variabel):</strong><br>
+      Intercept: −1.820 (z = −3.12, p = 0.002) | DE: 0.485 (z = 2.84, p = 0.005)<br>
+      ICR: −0.312 (z = −3.01, p = 0.003) | ROA: −1.640 (z = −2.55, p = 0.011)<br>
+      LL (full): −198.42 | LL (intercept only): −214.60 | Pseudo-R²: 0.0754<br><br>
+      <strong>Model Reduced (tanpa ROA):</strong> LL = −203.15<br><br>
+      Mean values: DE = 1.25, ICR = 3.80, ROA = 0.062<br>
+      Critical values: z at 5% = ±1.96 | χ²(3) at 5% = 7.815 | χ²(1) at 5% = 3.841
+    </div>
+
+    <div class="question-block" id="qb0">
+      <div class="q-num">Question 1 of 4</div>
+      <div class="q-text">Interpretasi koefisien ICR (−0.312) yang paling tepat adalah:</div>
+      <button class="option" onclick="answer(0,'A','B')">A. Kenaikan ICR 1 unit menurunkan probabilitas default sebesar 31.2%, ceteris paribus</button>
+      <button class="option" onclick="answer(0,'B','B')">B. Kenaikan ICR 1 unit menurunkan log-odds default sebesar 0.312, ceteris paribus. Dampak aktual terhadap probabilitas bergantung pada level semua variabel saat itu</button>
+      <button class="option" onclick="answer(0,'C','B')">C. Kenaikan ICR 1 unit menurunkan odds default menjadi e^(−0.312) = 0.732 kali lipat, ceteris paribus — odds turun 26.8%</button>
+      <div class="explanation" id="exp0">
+        <strong>B adalah jawaban yang benar.</strong> Interpretasi standar koefisien logit: bⱼ = perubahan log-odds per unit ΔXⱼ, holding all else constant. Untuk ICR: kenaikan 1 unit ICR menurunkan log-odds default sebesar 0.312. Arah negatif konsisten dengan intuisi — ICR lebih tinggi berarti perusahaan lebih mampu menutup beban bunga → lebih kecil kemungkinan default. Opsi A salah karena menginterpretasikan koefisien seolah OLS. Opsi C secara teknis benar (odds ratio interpretation) tapi bukan cara standar CFA menginterpretasikan koefisien logit — CFA konsisten meminta interpretasi dalam log-odds.
+      </div>
+    </div>
+
+    <div class="question-block" id="qb1">
+      <div class="q-num">Question 2 of 4</div>
+      <div class="q-text">Hitung probabilitas default untuk obligasi dengan nilai rata-rata semua variabel. Linear predictor = −1.820 + 0.485(1.25) + (−0.312)(3.80) + (−1.640)(0.062).</div>
+      <button class="option" onclick="answer(1,'A','B')">A. P = 1 − e^(linear predictor) ≈ 1 − e^(−2.502) ≈ 91.8%</button>
+      <button class="option" onclick="answer(1,'B','B')">B. P = 1/(1 + e^(−linear predictor)) → linear predictor ≈ −2.502 → P = 1/(1 + e^2.502) ≈ 7.6%</button>
+      <button class="option" onclick="answer(1,'C','B')">C. P = Pseudo-R² × 100% = 7.54%</button>
+      <div class="explanation" id="exp1">
+        <strong>B adalah jawaban yang benar.</strong> Hitung linear predictor: −1.820 + 0.485(1.25) − 0.312(3.80) − 1.640(0.062) = −1.820 + 0.606 − 1.186 − 0.102 = −2.502. Kemudian P = 1/(1 + e^2.502) = 1/(1 + 12.20) ≈ 7.6%. Probabilitas default rata-rata sekitar 7.6% — rendah, konsisten dengan bahwa tidak semua obligasi default. Opsi A menggunakan formula yang salah. Opsi C adalah kebetulan numerik — Pseudo-R² bukan probabilitas default.
+      </div>
+    </div>
+
+    <div class="question-block" id="qb2">
+      <div class="q-num">Question 3 of 4</div>
+      <div class="q-text">Apakah ketiga variabel (DE, ICR, ROA) secara bersama-sama signifikan? Gunakan LR test pada α = 5%.</div>
+      <button class="option" onclick="answer(2,'A','C')">A. LR = 2 × (−198.42 − (−214.60)) = 32.36 → tidak bisa disimpulkan karena formula salah</button>
+      <button class="option" onclick="answer(2,'B','C')">B. LR = −2 × (−198.42 − (−214.60)) = −32.36 → negatif, jadi gagal tolak H₀</button>
+      <button class="option" onclick="answer(2,'C','C')">C. LR = −2 × (−214.60 − (−198.42)) = 32.36 > χ²(3) = 7.815 → tolak H₀ → ketiga variabel signifikan bersama-sama</button>
+      <div class="explanation" id="exp2">
+        <strong>C adalah jawaban yang benar.</strong> Formula: LR = −2 × (LL_restricted − LL_unrestricted). Restricted = intercept only (LL = −214.60), Unrestricted = full model (LL = −198.42).<br>
+        LR = −2 × (−214.60 − (−198.42)) = −2 × (−16.18) = <strong>32.36</strong><br>
+        32.36 >> 7.815 → tolak H₀ → DE, ICR, ROA bersama-sama berkontribusi signifikan.<br>
+        Opsi A menggunakan −2 yang hilang (LR pasti negatif kalau formula salah). Opsi B membalik posisi restricted dan unrestricted, menghasilkan nilai negatif yang salah.
+      </div>
+    </div>
+
+    <div class="question-block" id="qb3">
+      <div class="q-num">Question 4 of 4</div>
+      <div class="q-text">Arif ingin menguji apakah ROA memberikan kontribusi inkremental yang signifikan di atas DE dan ICR saja. Model reduced (tanpa ROA) memiliki LL = −203.15. Gunakan LR test pada α = 5%.</div>
+      <button class="option" onclick="answer(3,'A','B')">A. Tidak perlu LR test — karena z-statistic ROA = −2.55 sudah signifikan individual, pasti berkontribusi inkremental</button>
+      <button class="option" onclick="answer(3,'B','B')">B. LR = −2 × (−203.15 − (−198.42)) = 9.46 > χ²(1) = 3.841 → ROA berkontribusi signifikan inkremental di atas model tanpa ROA</button>
+      <button class="option" onclick="answer(3,'C','B')">C. LR = −2 × (−198.42 − (−203.15)) = −9.46 → negatif, berarti model dengan ROA lebih buruk</button>
+      <div class="explanation" id="exp3">
+        <strong>B adalah jawaban yang benar.</strong> Restricted = model tanpa ROA (LL = −203.15), Unrestricted = full model (LL = −198.42), q = 1.<br>
+        LR = −2 × (−203.15 − (−198.42)) = −2 × (−4.73) = <strong>9.46</strong><br>
+        9.46 > χ²(1, α=5%) = 3.841 → tolak H₀ → ROA berkontribusi signifikan.<br>
+        Opsi A: meski z-statistic individual sudah cukup di sini, LR test adalah cara formal untuk membandingkan nested models — terutama berguna ketika ada beberapa variabel yang di-test bersama (q>1). Opsi C membalik formula dan salah arah — LR selalu positif.
+      </div>
+    </div>
+
+    <div class="score-panel" id="score-panel">
+      <div class="score-num" id="score-num">0/4</div>
+      <div class="score-msg" id="score-msg">—</div>
+    </div>
+  </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a class="nav-btn" href="CFA_L2_Day05_Full.html">← Day 5 Full</a>
+    <div class="nav-day">Day 6 of 90 · Versi Full · LM4 ✓<br><span style="font-size:11px;color:var(--text3);">Next: Day 7 · Time Series — AR Models</span></div>
+    <a class="nav-btn primary" href="CFA_L2_Day07_Full.html">Day 7 Full →</a>
+  </div>
+
+</div>
+<script>
+function toggleKC(id){
+  const el=document.getElementById(id);
+  const btn=el.previousElementSibling;
+  if(el.classList.contains('show')){el.classList.remove('show');btn.textContent='Lihat Jawaban';}
+  else{el.classList.add('show');btn.textContent='Sembunyikan Jawaban';}
+}
+const answers={};
+const correct={0:'B',1:'B',2:'C',3:'B'};
+const total=4;
+function answer(qIdx,chosen,correctAns){
+  if(answers[qIdx])return;
+  answers[qIdx]=chosen;
+  const block=document.getElementById('qb'+qIdx);
+  const exp=document.getElementById('exp'+qIdx);
+  block.querySelectorAll('.option').forEach(btn=>{
+    btn.disabled=true;
+    const letter=btn.textContent.trim()[0];
+    if(letter===correctAns)btn.classList.add('correct');
+    else if(letter===chosen&&chosen!==correctAns)btn.classList.add('wrong');
+  });
+  exp.classList.add('show');
+  if(Object.keys(answers).length===total)showScore();
+}
+function showScore(){
+  const score=Object.keys(correct).filter(k=>answers[k]===correct[k]).length;
+  const panel=document.getElementById('score-panel');
+  const num=document.getElementById('score-num');
+  const msg=document.getElementById('score-msg');
+  num.textContent=score+'/'+total;
+  num.style.color=score===4?'var(--green)':score>=3?'var(--amber)':'var(--red)';
+  const msgs={4:'🎯 Sempurna! LM4 selesai. Masuk ke LM5 time series.',3:'✅ Bagus. Review soal yang salah.',2:'⚠️ Review LR test formula dan arah log-likelihood.',1:'🔁 Ulangi theory sebelum lanjut.',0:'🔁 Ulangi theory sebelum lanjut.'};
+  msg.textContent=msgs[score]||msgs[0];
+  panel.style.display='block';
+}
+</script>
+</body>
+</html>
