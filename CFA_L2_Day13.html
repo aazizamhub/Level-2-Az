@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 13 · Data Types & Wrangling</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #fafaf8;
+  --bg2:     #f4f3ef;
+  --bg3:     #eeece7;
+  --border:  rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text:    #1a1a2e;
+  --text2:   #4a4a6a;
+  --text3:   #8a8aaa;
+  --gold:    #9a6e1a;
+  --gold2:   #7a5010;
+  --gold-bg: rgba(154,110,26,0.08);
+  --blue:    #1a5fa8;
+  --blue-bg: rgba(26,95,168,0.08);
+  --green:   #1a7a4a;
+  --green-bg:rgba(26,122,74,0.08);
+  --red:     #b83232;
+  --red-bg:  rgba(184,50,50,0.08);
+  --amber:   #a06010;
+  --amber-bg:rgba(160,96,16,0.08);
+  --purple:  #6a3ab0;
+  --purple-bg:rgba(106,58,176,0.08);
+  --r:10px;--r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.7;min-height:100vh;}
+.page{max-width:820px;margin:0 auto;padding:40px 24px 80px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.hero{margin-bottom:32px;}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:32px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:14px;color:var(--text2);}
+.meta-row{display:flex;gap:16px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+.section{margin-bottom:28px;}
+.section-label{font-size:10px;color:var(--text3);letter-spacing:0.09em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.obj-box{background:var(--gold-bg);border:1px solid rgba(201,168,76,0.25);border-radius:var(--r);padding:16px 18px;margin-bottom:24px;}
+.obj-box-title{font-size:11px;color:var(--gold);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;font-weight:500;}
+.obj-list{list-style:none;}
+.obj-list li{font-size:13px;color:var(--text2);padding:3px 0 3px 16px;position:relative;}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--gold);font-size:11px;top:5px;}
+.concept-grid{display:flex;flex-direction:column;gap:14px;}
+.concept-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+.concept-card-header{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);}
+.concept-num{width:26px;height:26px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--gold);flex-shrink:0;}
+.concept-title{font-size:14px;font-weight:500;color:var(--text);}
+.concept-body{padding:14px 16px;font-size:13px;color:var(--text2);line-height:1.75;}
+.concept-body p{margin-bottom:10px;}
+.concept-body p:last-child{margin-bottom:0;}
+.formula{background:var(--bg3);border:1px solid var(--border2);border-left:3px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:12px 16px;margin:10px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);line-height:1.6;}
+.formula .comment{color:var(--text3);font-style:italic;}
+.assume-table{width:100%;border-collapse:collapse;font-size:13px;}
+.assume-table th{text-align:left;padding:9px 12px;background:var(--bg3);color:var(--text2);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid var(--border2);}
+.assume-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+.assume-table tr:last-child td{border-bottom:none;}
+.assume-table .name{font-weight:500;color:var(--text);}
+.insight{background:var(--blue-bg);border:1px solid rgba(91,156,246,0.2);border-radius:var(--r);padding:14px 16px;margin:12px 0;font-size:13px;color:var(--text2);}
+.insight strong{color:var(--blue);}
+.trap{background:var(--red-bg);border:1px solid rgba(240,108,108,0.2);border-radius:var(--r);padding:14px 16px;margin:12px 0;}
+.trap-label{font-size:10px;color:var(--red);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:6px;font-weight:500;}
+.trap p{font-size:13px;color:var(--text2);}
+.divider{height:1px;background:var(--border);margin:28px 0;}
+.practice-header{background:var(--gold-bg);border:1px solid rgba(201,168,76,0.2);border-radius:var(--r) var(--r) 0 0;padding:14px 18px;display:flex;align-items:center;gap:12px;}
+.practice-icon{font-size:18px;}
+.practice-header-text{flex:1;}
+.practice-header-title{font-size:15px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);}
+.practice-body{background:var(--bg2);border:1px solid rgba(201,168,76,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:20px;}
+.vignette{background:var(--bg3);border-left:3px solid var(--gold);padding:16px 18px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:24px;font-size:13px;color:var(--text2);line-height:1.8;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;font-weight:500;}
+.question-block{margin-bottom:22px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:5px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:11px;line-height:1.6;}
+.option{display:block;width:100%;text-align:left;padding:10px 14px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:7px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.5;}
+.option:hover:not(:disabled){border-color:var(--border2);color:var(--text);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);margin-top:8px;line-height:1.7;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:24px;margin-top:16px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:48px;margin-bottom:6px;}
+.score-msg{font-size:13px;color:var(--text2);}
+.cheat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:540px){.cheat-grid{grid-template-columns:1fr;}}
+.cheat-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;}
+.cheat-key{font-size:11px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em;}
+.cheat-val{font-size:13px;color:var(--text);font-family:'JetBrains Mono',monospace;}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+.nav-day{font-size:12px;color:var(--text3);text-align:center;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II · <span>Quantitative Methods</span> · LM7</div>
+    <div class="day-badge">Day 13 of 90</div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Monday, 27 April 2026</div>
+    <h1 class="hero-title">Data Types & Wrangling</h1>
+    <p class="hero-sub">Big Data Projects — Subtopic 1 of 2</p>
+    <div class="meta-row">
+      <div class="meta-pill">⏱ <b>60 min</b> total</div>
+      <div class="meta-pill">📖 <b>30 min</b> theory</div>
+      <div class="meta-pill">📝 <b>30 min</b> practice</div>
+      <div class="meta-pill">⚖️ Exam weight <b>~6%</b></div>
+    </div>
+  </div>
+
+  <div class="obj-box">
+    <div class="obj-box-title">Learning Objectives — Hari ini lo harus bisa:</div>
+    <ul class="obj-list">
+      <li>Bedakan karakteristik big data (4 Vs: Volume, Variety, Velocity, Veracity) dan pisahkan structured vs unstructured data (text, image, audio)</li>
+      <li>Jelaskan lima langkah ML model building untuk structured data dan empat langkah pertama yang berbeda untuk text ML</li>
+      <li>Hitung dan terapkan teknik data cleansing (6 jenis error) serta preprocessing (extraction, aggregation, filtration, selection, conversion, scaling)</li>
+      <li>Terapkan pipeline text processing: cleansing → tokenization → normalization → bag-of-words → document term matrix</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Theory · 30 min</div>
+
+    <div class="concept-grid">
+
+      <!-- Concept 1: Big Data 4 Vs -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">1</div>
+          <div class="concept-title">Big Data: Karakteristik 4 Vs & Structured vs Unstructured</div>
+        </div>
+        <div class="concept-body">
+          <p><strong style="color:var(--text);">Big data</strong> (a.k.a. alternative data) mencakup data dari financial markets, businesses, governments, individuals, sensors, dan IoT. Yang membedakan big data dari traditional data adalah empat karakteristik — <strong>4 Vs</strong>:</p>
+          <table class="assume-table">
+            <thead>
+              <tr><th>V</th><th>Definisi</th><th>Implikasi</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="name">Volume</td><td>Kuantitas data (petabytes, exabytes)</td><td>Perlu infrastructure komputasi & storage modern</td></tr>
+              <tr><td class="name">Variety</td><td>Beragam sumber: structured, semi-, unstructured</td><td>Legal/ethical issues (privacy); butuh integrasi multi-format</td></tr>
+              <tr><td class="name">Velocity</td><td>Kecepatan data dibuat (real-time)</td><td>Relevan untuk real-time predictive analytics ("data-in-motion")</td></tr>
+              <tr><td class="name">Veracity</td><td>Kredibilitas & reliabilitas data (V ke-4 untuk inference)</td><td>Social media: 10-15% fake; web spam &gt;20%. Critical untuk ML quality</td></tr>
+            </tbody>
+          </table>
+          <p><strong style="color:var(--gold2);">Structured data</strong> — tersusun dalam format sistematis (rows = observations, columns = features); langsung dibaca komputer. Contoh: database transaksi, rasio finansial. <strong style="color:var(--gold2);">Unstructured data</strong> — ~80% data dunia. Format untuk manusia, bukan komputer. Bentuk: text (tweets, 10-K reports), images (satelit), audio (earnings calls), video. Harus di-transform dulu menjadi structured format sebelum bisa dipakai ML.</p>
+          <div class="insight">
+            <strong>Key Insight:</strong> Fund managers pakai textual big data (news, social media, filings) untuk ekstrak <em>topics</em> (apa yang dibicarakan) dan <em>sentiment</em> (bagaimana perasaan/pandangan). Studi US menunjukkan positive sentiment di Twitter bisa prediksi trend DJIA sampai 3 hari ke depan dengan akurasi ~87%.
+          </div>
+        </div>
+      </div>
+
+      <!-- Concept 2: 5 Steps of ML Model Building -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">2</div>
+          <div class="concept-title">Lima Langkah ML Model Building (Structured vs Text)</div>
+        </div>
+        <div class="concept-body">
+          <p>Untuk <strong style="color:var(--text);">structured data</strong>, ML model building ada 5 langkah iteratif:</p>
+          <div class="formula">
+            1. Conceptualization → 2. Data Collection → 3. Data Preparation &amp; Wrangling
+            <br>→ 4. Data Exploration → 5. Model Training
+            <br><span class="comment">// Iteratif — insights dari satu iterasi inform iterasi berikutnya.</span>
+          </div>
+          <p>Untuk <strong style="color:var(--text);">unstructured text data</strong>, 4 langkah pertama berbeda (tujuan akhirnya menghasilkan structured output):</p>
+          <table class="assume-table">
+            <thead>
+              <tr><th>Step</th><th>Structured Data</th><th>Text Data</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="name">1</td><td>Conceptualization</td><td>Text Problem Formulation</td></tr>
+              <tr><td class="name">2</td><td>Data Collection</td><td>Data (Text) Curation</td></tr>
+              <tr><td class="name">3</td><td>Data Prep &amp; Wrangling</td><td>Text Prep &amp; Wrangling</td></tr>
+              <tr><td class="name">4</td><td>Data Exploration</td><td>Text Exploration</td></tr>
+              <tr><td class="name">5</td><td>Model Training</td><td>Model Training (sama)</td></tr>
+            </tbody>
+          </table>
+          <div class="insight">
+            <strong>Key Insight:</strong> Output dari text ML model (misal sentiment scores) bisa di-combine dengan structured features lain atau dipakai langsung untuk forecasting/analysis. Step <em>Data/Text Preparation &amp; Wrangling</em> biasanya mengkonsumsi paling banyak waktu project (sering disebut "80% of the work").
+          </div>
+        </div>
+      </div>
+
+      <!-- Concept 3: Structured Data Cleansing & Preprocessing -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">3</div>
+          <div class="concept-title">Structured Data: Cleansing (6 Errors) & Preprocessing</div>
+        </div>
+        <div class="concept-body">
+          <p><strong style="color:var(--gold2);">Data Cleansing</strong> — identifikasi & perbaiki errors. Ada 6 jenis error yang harus diingat:</p>
+          <table class="assume-table">
+            <thead>
+              <tr><th>Error</th><th>Definisi</th><th>Contoh</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="name">Incompleteness</td><td>Data hilang (NA)</td><td>Kolom "Salary" kosong</td></tr>
+              <tr><td class="name">Invalidity</td><td>Di luar range masuk akal</td><td>Date of birth = 1/1/1900; income negatif</td></tr>
+              <tr><td class="name">Inaccuracy</td><td>Bukan nilai sebenarnya</td><td>Credit card = "Don't know"</td></tr>
+              <tr><td class="name">Inconsistency</td><td>Bertentangan dengan field lain</td><td>Name "Ms. XYZ" tapi Gender = M</td></tr>
+              <tr><td class="name">Non-uniformity</td><td>Format tidak identik</td><td>Tanggal "12/5/1970" vs "15 Jan 1975"</td></tr>
+              <tr><td class="name">Duplication</td><td>Observasi duplikat</td><td>Row 7 = Row 3 (customer sama)</td></tr>
+            </tbody>
+          </table>
+          <p><strong style="color:var(--gold2);">Data Preprocessing (Wrangling)</strong> — 5 transformasi utama untuk menyiapkan data training:</p>
+          <div class="formula">
+            1. <b>Extraction</b>: buat variabel baru dari yg ada (DoB → Age)
+            <br>2. <b>Aggregation</b>: gabungkan variabel (Salary + Other Income → Total Income)
+            <br>3. <b>Filtration</b>: hapus rows yang tidak relevan (customer non-US)
+            <br>4. <b>Selection</b>: hapus columns yang tidak perlu (Name, jika ada ID)
+            <br>5. <b>Conversion</b>: sesuaikan tipe variabel (nominal, ordinal, continuous, categorical)
+          </div>
+          <p><strong style="color:var(--gold2);">Outliers</strong>: deteksi via standard deviation (±3σ) atau IQR (di luar Q3+1.5·IQR atau Q1−1.5·IQR). Penanganan: <strong>trimming</strong> (hapus top/bottom %) atau <strong>winsorization</strong> (replace dengan nilai batas non-outlier).</p>
+          <div class="formula">
+            <span class="comment">// Normalization (min-max scaling): range [0,1]</span>
+            <br>X_norm = (X − X_min) / (X_max − X_min)
+            <br><br>
+            <span class="comment">// Standardization (z-score): mean = 0, std = 1</span>
+            <br>X_std  = (X − μ) / σ
+            <br><span class="comment">// Normalization sensitif outliers — bersihkan outlier dulu.</span>
+            <br><span class="comment">// Standardization asumsi data normally distributed.</span>
+          </div>
+          <div class="trap">
+            <div class="trap-label">⚠ Exam Trap</div>
+            <p>Normalization ≠ Standardization. Normalization (min-max) mengharuskan data bebas outlier; range-nya selalu [0,1]. Standardization (z-score) asumsinya data normally distributed; hasilnya bisa negatif/positif. Keduanya penting untuk ML methods seperti SVM dan ANN yang sensitif terhadap skala.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Concept 4: Text Processing Pipeline -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">4</div>
+          <div class="concept-title">Text Processing: Cleansing → Tokenization → Normalization → BOW → DTM</div>
+        </div>
+        <div class="concept-body">
+          <p><strong style="color:var(--gold2);">Text Cleansing</strong> (4 operasi, urutan penting):</p>
+          <div class="formula">
+            1. Remove HTML tags (regex: <span style="color:var(--text2);">"&lt;.*?&gt;"</span>)
+            <br>2. Remove/replace punctuations (%, $, ? → /percentSign/, /dollarSign/, /questionMark/)
+            <br>3. Remove/replace numbers (→ /number/)
+            <br>4. Remove extra white spaces
+            <br><span class="comment">// Urutan penting: jika punctuation dihapus sebelum numbers, "1.2 million" → "12 million"</span>
+          </div>
+          <p><strong style="color:var(--gold2);">Text Wrangling (Preprocessing)</strong> — normalisasi token:</p>
+          <ol style="padding-left:18px;">
+            <li style="margin-bottom:4px;"><strong>Tokenization</strong>: pecah teks jadi tokens (biasanya word-level)</li>
+            <li style="margin-bottom:4px;"><strong>Lowercasing</strong>: hilangkan perbedaan case ("The" = "the")</li>
+            <li style="margin-bottom:4px;"><strong>Stop words removal</strong>: buang "the", "is", "a" — tidak bermakna untuk ML</li>
+            <li style="margin-bottom:4px;"><strong>Stemming</strong>: rule-based → stem ("analyzed" → "analyz"). Porter's algorithm.</li>
+            <li><strong>Lemmatization</strong>: algorithmic, morphological root ("analyzed" → "analyze"). Lebih akurat, lebih mahal.</li>
+          </ol>
+          <p>Output akhir: <strong>Bag-of-Words (BOW)</strong> — kumpulan distinct tokens. Lalu bangun <strong>Document Term Matrix (DTM)</strong>: rows = documents, columns = tokens, cells = frequency counts. DTM adalah structured data yang siap di-training ML.</p>
+          <div class="formula">
+            <span class="comment">// N-grams: sequences of n words</span>
+            <br>unigram (n=1): "market"
+            <br>bigram  (n=2): "market_today"
+            <br>trigram (n=3): "went_to_market"
+            <br><span class="comment">// N-grams menyelamatkan informasi posisi/konteks yang hilang di BOW biasa.</span>
+          </div>
+          <div class="trap">
+            <div class="trap-label">⚠ Exam Trap</div>
+            <p>BOW <strong>tidak</strong> memelihara urutan kata — "no market" dan "market no" sama di unigram BOW. Gunakan <strong>n-grams</strong> untuk preserve context (misalnya bigram "no_market" menangkap negasi). Juga: stop word removal bisa menghilangkan informasi penting — misalnya "no" yang merupakan negasi sering jadi stop word. Karena itu custom stop word list sering dibutuhkan sesuai domain.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Quick Reference Cheat Sheet -->
+  <div class="section">
+    <div class="section-label">Quick Reference Cheat Sheet</div>
+    <div class="cheat-grid">
+      <div class="cheat-item">
+        <div class="cheat-key">4 Vs of Big Data</div>
+        <div class="cheat-val">Volume, Variety, Velocity, Veracity</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">ML Steps (Structured)</div>
+        <div class="cheat-val">Concept → Collect → Prep → Explore → Train</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">6 Cleansing Errors</div>
+        <div class="cheat-val">Incomp · Invalid · Inaccu · Inconsist · Non-unif · Dup</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Preprocessing</div>
+        <div class="cheat-val">Extract · Aggregate · Filter · Select · Convert</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Scaling</div>
+        <div class="cheat-val">Norm = [0,1] · Std = (x−μ)/σ</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Text Pipeline</div>
+        <div class="cheat-val">Cleanse → Token → Norm → BOW → DTM</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Practice Section -->
+  <div class="section">
+    <div class="section-label">Practice · 30 min</div>
+
+    <div class="practice-header">
+      <div class="practice-icon">📝</div>
+      <div class="practice-header-text">
+        <div class="practice-header-title">Mini Case: Data Science Team PT Indo Premier</div>
+        <div class="practice-header-sub">4 soal · Vignette-based · Pilih jawaban terbaik</div>
+      </div>
+    </div>
+
+    <div class="practice-body">
+
+      <div class="vignette">
+        <div class="vignette-label">Vignette</div>
+        Rina Wulandari, head of data science di PT Indo Premier Sekuritas, sedang membangun platform analytics untuk memantau 300 saham IDX. Timnya mengumpulkan data dari berbagai sumber: database internal (harga saham, volume, rasio finansial), feed dari Bursa Efek Indonesia (BEI), dan 12.000 transkrip earnings calls perusahaan IDX dalam 3 tahun terakhir. Tim menemukan masalah berikut saat review data:<br><br>
+        <strong>Issue 1:</strong> Pada dataset investor profile, kolom "Tanggal Lahir" mencatat tanggal "1/1/1900" untuk 47 nasabah; kolom "Pendapatan Tahunan" kosong untuk 82 nasabah; dan 15 baris memiliki nasabah yang sama tercatat dua kali.<br><br>
+        <strong>Issue 2:</strong> Salah satu analis junior, Bima Saputra, baru saja menjalankan SVM (support vector machine) langsung pada dataset yang memiliki dua features: "Total Aset" (range Rp 1 juta – Rp 50 miliar) dan "Usia Nasabah" (range 18–85). Model memberikan prediksi aneh di mana "Total Aset" seolah mendominasi semua keputusan.<br><br>
+        <strong>Issue 3:</strong> Dalam pipeline NLP untuk transkrip earnings calls, tim menghapus punctuation sebelum menangani numbers. Hasil: kalimat "Revenue grew 12.5% to USD 1.2 million" menjadi "Revenue grew 125 to USD 12 million" yang salah interpretasi.<br><br>
+        <strong>Issue 4:</strong> Tim ingin menangkap negasi dalam teks (misalnya "no growth" vs "strong growth"). Pipeline saat ini menggunakan unigram BOW dan menghilangkan stop words termasuk kata "no" dan "not".
+      </div>
+
+      <div class="question-block" id="qb0">
+        <div class="q-num">Soal 1 / 4</div>
+        <div class="q-text">Berdasarkan Issue 1, jenis error yang ada pada data investor profile adalah:</div>
+        <button class="option" onclick="answer(0,'A','C')">A. Invalidity error dan inconsistency error saja</button>
+        <button class="option" onclick="answer(0,'B','C')">B. Incompleteness error dan non-uniformity error saja</button>
+        <button class="option" onclick="answer(0,'C','C')">C. Invalidity error (tanggal 1/1/1900), incompleteness error (pendapatan kosong), dan duplication error (nasabah tercatat dua kali)</button>
+        <div class="explanation" id="exp0">
+          <strong>C adalah jawaban yang benar.</strong> Tanggal lahir 1/1/1900 = <strong>invalidity error</strong> (di luar range masuk akal untuk umur manusia modern). Pendapatan kosong = <strong>incompleteness error</strong>. Nasabah tercatat dua kali = <strong>duplication error</strong>. A salah karena melewatkan duplication dan incompleteness. B salah karena tidak ada indikasi non-uniformity di data yang disebutkan (format tidak seragam).
+        </div>
+      </div>
+
+      <div class="question-block" id="qb1">
+        <div class="q-num">Soal 2 / 4</div>
+        <div class="q-text">Untuk memperbaiki masalah Bima di Issue 2 (SVM dengan features berbeda skala drastis), tindakan yang paling tepat adalah:</div>
+        <button class="option" onclick="answer(1,'A','B')">A. Mengganti algoritma dari SVM ke decision tree karena SVM tidak cocok untuk data finansial</button>
+        <button class="option" onclick="answer(1,'B','B')">B. Menerapkan scaling (normalization atau standardization) pada kedua features sebelum training SVM, karena SVM sensitif terhadap skala features</button>
+        <button class="option" onclick="answer(1,'C','B')">C. Menghapus feature "Usia Nasabah" karena feature "Total Aset" lebih informatif</button>
+        <div class="explanation" id="exp1">
+          <strong>B adalah jawaban yang benar.</strong> SVM (dan ANN) sangat sensitif terhadap skala features. Features dengan range jauh lebih besar ("Total Aset") akan mendominasi model. Solusinya: <em>scaling</em> — normalization (min-max ke [0,1]) atau standardization (z-score, mean=0, std=1) — agar semua features berkontribusi setara. A salah karena SVM bisa sangat efektif untuk data finansial setelah scaling dilakukan. C salah karena menghapus feature tanpa justifikasi statistis adalah pemborosan informasi.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb2">
+        <div class="q-num">Soal 3 / 4</div>
+        <div class="q-text">Untuk menghindari masalah seperti Issue 3 di pipeline NLP, urutan operasi text cleansing yang benar adalah:</div>
+        <button class="option" onclick="answer(2,'A','A')">A. Remove HTML tags → Handle punctuations (dengan annotations) → Replace numbers dengan /number/ → Remove extra white spaces</button>
+        <button class="option" onclick="answer(2,'B','A')">B. Remove extra white spaces → Remove numbers → Remove punctuations → Remove HTML tags</button>
+        <button class="option" onclick="answer(2,'C','A')">C. Tokenization → Remove stop words → Stemming → Remove HTML tags</button>
+        <div class="explanation" id="exp2">
+          <strong>A adalah jawaban yang benar.</strong> Urutan cleansing matters: HTML tags dulu (karena bisa mengandung punctuation/numbers), lalu punctuations (dengan annotation seperti /dollarSign/, /percentSign/ untuk simbol penting), kemudian numbers (dengan /number/ annotation), terakhir white spaces (yang muncul setelah operasi sebelumnya). Dalam Issue 3, numbers harus ditangani <em>sebelum</em> punctuations — atau punctuation harus diganti dengan annotation, bukan dihapus — supaya "1.2 million" tidak menjadi "12 million". B salah (urutan terbalik). C salah karena itu adalah tahap wrangling/normalization, bukan cleansing.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb3">
+        <div class="q-num">Soal 4 / 4</div>
+        <div class="q-text">Solusi terbaik untuk Issue 4 (menangkap negasi dalam teks) adalah:</div>
+        <button class="option" onclick="answer(3,'A','B')">A. Meningkatkan jumlah observations (transkrip) dari 12.000 menjadi 50.000 untuk mengurangi noise</button>
+        <button class="option" onclick="answer(3,'B','B')">B. Menggunakan n-grams (bigrams atau trigrams) dalam BOW, atau mempertahankan kata "no" dan "not" (custom stop word list) agar negasi dapat ditangkap</button>
+        <button class="option" onclick="answer(3,'C','B')">C. Mengganti logistic regression dengan linear regression untuk output yang lebih halus</button>
+        <div class="explanation" id="exp3">
+          <strong>B adalah jawaban yang benar.</strong> BOW unigram kehilangan konteks karena tidak menangkap urutan kata dan menghapus negasi ("no", "not") sebagai stop words. Dua solusi: (1) gunakan <strong>bigrams/trigrams</strong> sehingga "no_growth" menjadi token tunggal yang merepresentasikan negasi, dan/atau (2) <strong>custom stop word list</strong> yang mempertahankan kata-kata negasi penting. A salah karena menambah data tidak memperbaiki limitasi struktural BOW terhadap negasi. C salah karena linear regression bukan pilihan untuk binary classification sentiment (positive/negative); juga tidak mengatasi masalah representasi negasi.
+        </div>
+      </div>
+
+      <div class="score-panel" id="score-panel">
+        <div class="score-num" id="score-num">0/4</div>
+        <div class="score-msg" id="score-msg">—</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a class="nav-btn" href="CFA_L2_Day12.html">← Day 12</a>
+    <div class="nav-day">Day 13 of 90<br><span style="font-size:11px;color:var(--text3);">Prev: Unsupervised &amp; Deep Learning · Next: Model Training &amp; Validation</span></div>
+    <a class="nav-btn primary" href="CFA_L2_Day14.html">Day 14 →</a>
+  </div>
+
+</div>
+
+<script>
+const answers = {};
+const correct = {0:'C', 1:'B', 2:'A', 3:'B'};
+const total = 4;
+
+function answer(qIdx, chosen, correctAns) {
+  if (answers[qIdx]) return;
+  answers[qIdx] = chosen;
+
+  const block = document.getElementById('qb' + qIdx);
+  const exp   = document.getElementById('exp' + qIdx);
+
+  block.querySelectorAll('.option').forEach(btn => {
+    btn.disabled = true;
+    const letter = btn.textContent.trim()[0];
+    if (letter === correctAns) btn.classList.add('correct');
+    else if (letter === chosen && chosen !== correctAns) btn.classList.add('wrong');
+  });
+
+  exp.classList.add('show');
+  if (Object.keys(answers).length === total) showScore();
+}
+
+function showScore() {
+  const score = Object.keys(correct).filter(k => answers[k] === correct[k]).length;
+  const panel = document.getElementById('score-panel');
+  const num   = document.getElementById('score-num');
+  const msg   = document.getElementById('score-msg');
+
+  num.textContent = score + '/' + total;
+  num.style.color = score === 4 ? 'var(--green)' : score >= 3 ? 'var(--amber)' : 'var(--red)';
+
+  const msgs = {
+    4: '🎯 Perfect! Data Types & Wrangling sudah dikuasai — siap ke Model Training!',
+    3: '✅ Good. Review soal yang salah sekali lagi.',
+    2: '⚠️ Perlu review — baca ulang theory section yang terkait.',
+    1: '🔁 Ulangi theory section sebelum lanjut ke Day 14.',
+    0: '🔁 Ulangi theory section sebelum lanjut ke Day 14.'
+  };
+  msg.textContent = msgs[score] || msgs[0];
+  panel.style.display = 'block';
+}
+</script>
+</body>
+</html>

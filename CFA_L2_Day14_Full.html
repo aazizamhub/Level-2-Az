@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 14 · Full · Model Training & Validation</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #fafaf8;
+  --bg2:     #f4f3ef;
+  --bg3:     #eeece7;
+  --border:  rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text:    #1a1a2e;
+  --text2:   #4a4a6a;
+  --text3:   #8a8aaa;
+  --gold:    #9a6e1a;
+  --gold2:   #7a5010;
+  --gold-bg: rgba(154,110,26,0.08);
+  --blue:    #1a5fa8;
+  --blue-bg: rgba(26,95,168,0.08);
+  --green:   #1a7a4a;
+  --green-bg:rgba(26,122,74,0.08);
+  --red:     #b83232;
+  --red-bg:  rgba(184,50,50,0.08);
+  --amber:   #a06010;
+  --amber-bg:rgba(160,96,16,0.08);
+  --r:10px; --r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.8;}
+.page{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;border:1px solid rgba(26,95,168,0.2);}
+.hero{margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--border);}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:36px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:15px;color:var(--text2);}
+.meta-row{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:36px;}
+.toc-title{font-size:12px;color:var(--text3);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:12px;font-weight:500;}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.toc-list li a{font-size:13px;color:var(--blue);text-decoration:none;display:flex;align-items:center;gap:8px;}
+.toc-list li a:hover{text-decoration:underline;}
+.toc-num{font-size:11px;color:var(--text3);min-width:20px;}
+.chapter{margin-bottom:40px;}
+.chapter-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--gold-bg);}
+.chapter-num{font-family:'DM Serif Display',serif;font-size:28px;color:var(--gold);line-height:1;}
+.chapter-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);line-height:1.2;}
+.sub-header{font-size:17px;font-weight:500;color:var(--text);margin:24px 0 12px;padding-left:12px;border-left:3px solid var(--gold);}
+.prose{font-size:14px;color:var(--text2);line-height:1.85;margin-bottom:14px;}
+.prose strong{color:var(--text);font-weight:500;}
+.prose em{font-style:italic;}
+.formula-block{background:var(--bg2);border:1px solid var(--border2);border-left:4px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:16px 20px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold2);line-height:2;}
+.formula-block .label{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:8px;}
+.formula-block .note{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text3);font-style:italic;display:block;margin-top:8px;}
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:20px 0;}
+.exhibit-title{background:var(--bg3);padding:10px 16px;font-size:12px;font-weight:500;color:var(--text2);border-bottom:1px solid var(--border);letter-spacing:0.03em;}
+.exhibit-body{padding:16px;}
+.reg-table{width:100%;border-collapse:collapse;font-size:13px;}
+.reg-table th{text-align:right;padding:8px 12px;background:var(--bg3);color:var(--text3);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border2);}
+.reg-table th:first-child{text-align:left;}
+.reg-table td{padding:8px 12px;border-bottom:1px solid var(--border);text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text2);}
+.reg-table td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);font-weight:500;}
+.reg-table tr:last-child td{border-bottom:none;}
+.reg-table .sig{color:var(--green);font-weight:500;}
+.callout{border-radius:var(--r);padding:16px 18px;margin:16px 0;}
+.callout-title{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;}
+.callout p{font-size:13px;color:var(--text2);line-height:1.75;}
+.callout p + p{margin-top:8px;}
+.callout.blue{background:var(--blue-bg);border:1px solid rgba(26,95,168,0.15);}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.amber{background:var(--amber-bg);border:1px solid rgba(160,96,16,0.15);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.red{background:var(--red-bg);border:1px solid rgba(184,50,50,0.15);}
+.callout.red .callout-title{color:var(--red);}
+.callout.gold{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);}
+.callout.gold .callout-title{color:var(--gold);}
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:24px 0;overflow:hidden;}
+.kc-header{background:var(--gold-bg);padding:12px 18px;border-bottom:1px solid rgba(154,110,26,0.15);}
+.kc-header-title{font-size:12px;font-weight:500;color:var(--gold);letter-spacing:0.06em;text-transform:uppercase;}
+.kc-body{padding:18px;}
+.kc-q{font-size:13px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.6;}
+.kc-answer{background:var(--bg3);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);line-height:1.75;display:none;}
+.kc-answer.show{display:block;}
+.kc-answer strong{color:var(--green);}
+.kc-toggle{background:none;border:1px solid var(--border2);border-radius:var(--r-sm);padding:6px 14px;font-size:12px;color:var(--text3);cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px;transition:all 0.15s;}
+.kc-toggle:hover{border-color:var(--gold);color:var(--gold);}
+.num-list{list-style:none;counter-reset:num;display:flex;flex-direction:column;gap:8px;margin:10px 0;}
+.num-list li{counter-increment:num;display:flex;gap:12px;font-size:13px;color:var(--text2);line-height:1.7;}
+.num-list li::before{content:counter(num)".";color:var(--gold);font-weight:500;min-width:20px;flex-shrink:0;}
+.bullet-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin:10px 0;}
+.bullet-list li{display:flex;gap:10px;font-size:13px;color:var(--text2);line-height:1.7;}
+.bullet-list li::before{content:'■';color:var(--gold);font-size:9px;margin-top:5px;flex-shrink:0;}
+code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--bg3);padding:2px 6px;border-radius:4px;color:var(--gold2);}
+.divider{height:1px;background:var(--border);margin:36px 0;}
+.practice-header{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);border-radius:var(--r) var(--r) 0 0;padding:16px 20px;display:flex;align-items:center;gap:12px;}
+.practice-header-title{font-size:16px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);margin-top:2px;}
+.practice-body{background:var(--bg2);border:1px solid rgba(154,110,26,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:24px;}
+.vignette{background:var(--bg3);border-left:4px solid var(--gold);padding:18px 20px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:28px;font-size:13px;color:var(--text2);line-height:1.85;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;font-weight:500;}
+.question-block{margin-bottom:24px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:6px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:12px;line-height:1.65;}
+.option{display:block;width:100%;text-align:left;padding:11px 16px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:8px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.6;}
+.option:hover:not(:disabled){border-color:var(--border2);background:var(--bg2);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:14px 16px;font-size:13px;color:var(--text2);margin-top:10px;line-height:1.8;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:28px;margin-top:20px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:52px;margin-bottom:8px;}
+.score-msg{font-size:14px;color:var(--text2);}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+.nav-day{font-size:12px;color:var(--text3);text-align:center;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II · <span>Quantitative Methods</span> · LM7</div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <div class="version-badge">Versi Full</div>
+      <div class="day-badge">Day 14 of 90</div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Selasa, 28 April 2026</div>
+    <h1 class="hero-title">Big Data Projects: Model Training, Evaluation & Tuning</h1>
+    <p class="hero-sub">Learning Module 7 — Big Data Projects · Subtopic 2 of 2 · CFA Level II 2026</p>
+    <div class="meta-row">
+      <div class="meta-pill">📖 Materi lengkap</div>
+      <div class="meta-pill">🇮🇩 Bahasa Indonesia</div>
+      <div class="meta-pill">⚖️ Exam weight <b>~6%</b></div>
+      <div class="meta-pill">⏱ Est. baca <b>45-60 menit</b></div>
+    </div>
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ul class="toc-list">
+      <li><a href="#s0"><span class="toc-num">0</span> Learning Outcomes</a></li>
+      <li><a href="#s1"><span class="toc-num">1</span> Method Selection: Supervised vs Unsupervised, Data Type, Data Size</a></li>
+      <li><a href="#s2"><span class="toc-num">2</span> Dataset Partitioning: Train/Validation/Test (60:20:20) & Class Imbalance</a></li>
+      <li><a href="#s3"><span class="toc-num">3</span> Bias–Variance Tradeoff & Model Fitting Scenarios</a></li>
+      <li><a href="#s4"><span class="toc-num">4</span> Cross-Validation: k-Fold, LOOCV, dan Walk-Forward untuk Time Series</a></li>
+      <li><a href="#s5"><span class="toc-num">5</span> Performance Evaluation: Confusion Matrix, Precision, Recall, F1, ROC/AUC, RMSE</a></li>
+      <li><a href="#s6"><span class="toc-num">6</span> Hyperparameter Tuning: Grid Search, Fitting Curves, Ceiling Analysis</a></li>
+      <li><a href="#s7"><span class="toc-num">7</span> Model Interpretability & Backtesting ML Signals</a></li>
+      <li><a href="#s8"><span class="toc-num">8</span> Latihan Soal — Item Set Vignette</a></li>
+    </ul>
+  </div>
+
+  <!-- SECTION 0 -->
+  <div class="chapter" id="s0">
+    <div class="chapter-header">
+      <div class="chapter-num">0</div>
+      <div class="chapter-title">Learning Outcomes</div>
+    </div>
+    <p class="prose">Setelah menyelesaikan modul ini, kandidat diharapkan mampu:</p>
+    <ul class="num-list">
+      <li>Menjelaskan tujuan, langkah-langkah, dan teknik dalam model training, termasuk method selection, performance evaluation, dan tuning.</li>
+      <li>Menjelaskan cara membagi master dataset menjadi training, validation (cross-validation), dan test samples, serta menjelaskan fungsi masing-masing sample (60:20:20).</li>
+      <li>Menjelaskan bias–variance tradeoff dan bagaimana fitting curve di-interpretasi untuk memilih hyperparameter regularization yang optimal.</li>
+      <li>Menghitung dan menginterpretasi error analysis metrics — true/false positives, true/false negatives, precision, recall, F1 score, accuracy — dari confusion matrix untuk binary classification.</li>
+      <li>Menggambarkan dan menginterpretasi ROC curve dan AUC; serta menghitung RMSE untuk continuous prediction (regression).</li>
+      <li>Menjelaskan k-fold cross-validation, grid search untuk hyperparameter tuning, dan ceiling analysis untuk pipeline model yang kompleks.</li>
+      <li>Menjelaskan mengapa k-fold random shuffle tidak cocok untuk time-series financial data dan bagaimana walk-forward validation dipakai sebagai pengganti.</li>
+    </ul>
+  </div>
+
+  <!-- SECTION 1 -->
+  <div class="chapter" id="s1">
+    <div class="chapter-header">
+      <div class="chapter-num">1</div>
+      <div class="chapter-title">Method Selection: Supervised vs Unsupervised, Data Type, Data Size</div>
+    </div>
+
+    <p class="prose"><strong>Model training</strong> — seperti dijelaskan di Exhibit 20 kurikulum CFA — adalah proses iteratif yang melibatkan tiga fase berurutan: <em>Method Selection</em> → <em>Performance Evaluation</em> → <em>Tuning</em>. Sebelum masuk ke detail tiap fase, perlu dipahami bahwa fundamentalnya ML training adalah <em>fitting a system of rules on a training dataset to reveal patterns</em>. "Fitting" di sini menggambarkan seberapa baik model bisa di-generalize ke data baru (out-of-sample).</p>
+
+    <p class="prose">Metodologi ML training untuk structured dan unstructured data pada dasarnya sama — karena unstructured data (teks, gambar, audio) sudah di-process di tahap data preparation menjadi structured matrix (ingat: DTM untuk teks di Day 13). Setelah data siap, pemilihan metode menjadi langkah kritis pertama.</p>
+
+    <div class="sub-header">1.1 Faktor Pertama: Supervised vs Unsupervised</div>
+    <p class="prose"><strong>Supervised ML</strong> — data training memiliki <em>ground truth</em> (target variable Y yang diketahui). Model belajar memetakan X → Y. Contoh: prediksi default obligasi high-yield dari data issuer. Metode tipikal: regression, ensemble trees, SVMs, neural networks.</p>
+    <p class="prose"><strong>Unsupervised ML</strong> — tidak ada target variable. Model menemukan struktur sendiri dari data. Lebih menantang karena tidak ada "jawaban benar" untuk di-cocokkan. Contoh: clustering lembaga keuangan berdasarkan atribut finansial. Metode tipikal: dimensionality reduction (PCA), clustering (k-means, hierarchical), anomaly detection.</p>
+
+    <div class="sub-header">1.2 Faktor Kedua: Type of Data</div>
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 1.1 — Metode yang Cocok Berdasarkan Tipe Data</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Tipe Data</th><th>Contoh Aplikasi</th><th>Metode yang Disarankan</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Numerical</td><td>Prediksi harga saham dari historical data</td><td>CART, linear/logistic regression, ensemble methods</td></tr>
+            <tr><td>Text</td><td>Prediksi topik artikel berita dari headline</td><td>Generalized Linear Models (GLMs), SVMs, Naive Bayes</td></tr>
+            <tr><td>Image</td><td>Identifikasi tanker ship di citra satelit pelabuhan</td><td>Neural Networks, deep learning (CNN)</td></tr>
+            <tr><td>Speech</td><td>Sentiment dari rekaman quarterly earnings calls</td><td>Deep learning (RNN, LSTM)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">1.3 Faktor Ketiga: Size of Data</div>
+    <p class="prose">Ada dua dimensi ukuran dataset yang berinteraksi menentukan metode optimal:</p>
+    <ul class="bullet-list">
+      <li><strong>Number of instances</strong> (observations) — jumlah baris</li>
+      <li><strong>Number of features</strong> — jumlah kolom (variabel independen)</li>
+    </ul>
+    <p class="prose">SVM bekerja baik pada <em>wide datasets</em> (10.000–100.000 features, instances lebih sedikit) — misal text classification dengan BOW yang memiliki puluhan ribu token. NN bekerja baik pada <em>long datasets</em> (instances ≫ features) — misal image recognition pada jutaan foto dengan ratusan ribu pixel. Di praktik, dataset sering campuran numeric + text, sehingga hasil beberapa metode dikombinasikan (stacking): misalnya, prediksi sentiment dari logistic regression dipakai sebagai feature tambahan di CART yang juga pakai data finansial structured.</p>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 1.1</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Anda punya dataset 200 perusahaan IDX (instances) dengan 35.000 features (tokens dari pidato CEO di laporan tahunan + rasio finansial). Target: prediksi return 12-bulan ke depan (binary: beat market Y/N). Metode mana yang paling cocok?</div>
+        <button class="kc-toggle" onclick="toggleKc('kc1')">Tampilkan jawaban</button>
+        <div class="kc-answer" id="kc1">
+          <strong>SVM adalah pilihan paling cocok.</strong> Dataset ini "wide" — 35.000 features jauh melebihi 200 instances. SVM bekerja sangat baik pada wide datasets karena margin maximization mampu menangani dimensi tinggi tanpa overfitting berlebihan (asal di-regularize). Neural networks akan overfit dengan data se-"longaran" ini; CART juga rentan overfit. Alternatif: penalized regression (LASSO) untuk automatic feature selection.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="chapter" id="s2">
+    <div class="chapter-header">
+      <div class="chapter-num">2</div>
+      <div class="chapter-title">Dataset Partitioning: Train/Validation/Test (60:20:20) & Class Imbalance</div>
+    </div>
+
+    <p class="prose">Sebelum training dimulai, master dataset untuk supervised learning wajib dipecah menjadi tiga subset yang <strong>non-overlapping</strong>. Ini adalah salah satu aturan paling fundamental di ML — dan salah satu sumber kesalahan paling umum di praktik.</p>
+
+    <div class="sub-header">2.1 Tiga Subset dan Fungsinya</div>
+    <div class="formula-block">
+      <span class="label">Recommended Split — CFA Curriculum</span>
+      Master dataset = 100%
+      <br><br>
+      ├── <b>Training sample</b>   ≈ 60%  → fit model PARAMETERS (coefficients, weights)
+      <br>├── <b>Validation / CV sample</b> ≈ 20%  → tune HYPERPARAMETERS; pilih model terbaik
+      <br>└── <b>Test sample</b>       ≈ 20%  → final OUT-OF-SAMPLE evaluation (touched once)
+      <span class="note">Split ratio 60:20:20 adalah default CFA; bisa juga 70:15:15 untuk dataset kecil. Unsupervised learning tidak butuh split karena tidak ada target variable.</span>
+    </div>
+
+    <p class="prose"><strong>Training</strong> dan <strong>validation</strong> dianggap "in-sample" karena keduanya dipakai dalam proses modeling. <strong>Test</strong> adalah "out-of-sample" — bertindak sebagai proxy data baru yang belum pernah dilihat model.</p>
+
+    <div class="callout red">
+      <div class="callout-title">Golden Rule — Jangan Bocor Test Set</div>
+      <p>Test set hanya boleh "di-touch" sekali — pada evaluasi final. Kalau lo tune hyperparameter berdasarkan performa test set, test set secara efektif menjadi validation set kedua, dan reported test error under-estimates true out-of-sample error. Ini kesalahan yang sering ditanyakan di exam CFA L2.</p>
+    </div>
+
+    <div class="sub-header">2.2 Teknik Random Sampling</div>
+    <p class="prose">Pembagian biasanya dilakukan via random sampling (mis. k-fold method) untuk memastikan ketiga subset representatif dari distribusi populasi. Di beberapa kasus (mis. data dengan struktur kelas tidak seimbang), <em>stratified sampling</em> digunakan: setiap subset mempertahankan proporsi kelas yang sama dengan master dataset.</p>
+
+    <div class="sub-header">2.3 Class Imbalance Problem</div>
+    <p class="prose"><strong>Class imbalance</strong> terjadi ketika jumlah instance di satu kelas jauh lebih besar dari kelas lain. Contoh klasik di finance: default prediction — issuer obligasi BB+/Ba1 hingga B+/B1 memiliki tingkat default historis hanya ~3–5%. Jadi, dari 1.000 bond, mungkin hanya 40 yang default (Class 1), sisanya 960 tidak (Class 0).</p>
+    <p class="prose">Model ML yang naif dengan mengoptimalkan accuracy akan memprediksi "tidak default" untuk semua observasi → accuracy 96%, tapi <strong>recall = 0%</strong>. Model ini useless: 100% kasus default lolos (Type II error sempurna).</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 2.1 — Teknik Balancing untuk Imbalanced Data</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Teknik</th><th>Bagaimana</th><th>Kapan Dipakai</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Undersampling majority</td><td>Buang random sebagian Class 0 sampai rasio seimbang</td><td>Dataset besar; buang data masih acceptable</td></tr>
+            <tr><td>Oversampling minority</td><td>Replicate random Class 1 (dengan atau tanpa replacement)</td><td>Dataset kecil; tidak mau buang data</td></tr>
+            <tr><td>Synthetic generation (SMOTE)</td><td>Generate observasi baru minoritas dengan interpolasi antar-observasi</td><td>Advanced; saat oversampling biasa overfit</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout amber">
+      <div class="callout-title">Implikasi ke Metric Pilihan</div>
+      <p>Ketika data imbalanced, <strong>accuracy menyesatkan</strong>. Metric yang lebih tepat: <em>F1 score</em> (harmonic mean precision & recall), <em>AUC</em> (threshold-independent), atau <em>Matthews Correlation Coefficient (MCC)</em>. F1 khususnya penting karena ia memberikan bobot sama pada precision dan recall — dan akan langsung hancur kalau salah satunya buruk.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 2.1</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Tim fraud detection mempunyai 1.000.000 transaksi kartu kredit dengan hanya 2.000 (0.2%) yang fraudulent. Model mereka mencapai accuracy 99.8%. Apakah model ini baik? Bagaimana cara mengevaluasinya lebih baik?</div>
+        <button class="kc-toggle" onclick="toggleKc('kc2')">Tampilkan jawaban</button>
+        <div class="kc-answer" id="kc2">
+          <strong>Accuracy 99.8% tidak informatif.</strong> Model yang memprediksi "non-fraud" untuk semua transaksi otomatis dapat accuracy 99.8% (= 1 − 0.002). Evaluasi yang lebih baik: (1) Hitung <em>precision dan recall</em> — khususnya recall karena cost of FN (fraud yang lolos) sangat tinggi. (2) Hitung <em>F1</em>. (3) Plot <em>ROC curve dan AUC</em>. (4) Pertimbangkan <em>undersampling</em> Class 0 atau <em>SMOTE</em> Class 1 sebelum training supaya model belajar pola fraud, bukan hanya prediksi mayoritas.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="chapter" id="s3">
+    <div class="chapter-header">
+      <div class="chapter-num">3</div>
+      <div class="chapter-title">Bias–Variance Tradeoff & Model Fitting Scenarios</div>
+    </div>
+
+    <p class="prose">Dalam CFA L2 curriculum, model fitting diilustrasikan melalui <em>Exhibit 21</em> — tiga skenario pada classification task dengan dua kelas (circles dan triangles):</p>
+    <ul class="bullet-list">
+      <li><strong>Underfit</strong> (kiri): decision boundary terlalu sederhana (mis. garis lurus), 4 misclassifications pada training data. Model tidak menangkap pattern.</li>
+      <li><strong>Overfit</strong> (tengah): decision boundary "S-shaped" sempurna di training (0 error), tetapi tidak akan generalize — bentuknya menghafal noise.</li>
+      <li><strong>Good fit</strong> (kanan): decision boundary smooth dengan 1 misclassification; generalize dengan baik ke data baru.</li>
+    </ul>
+
+    <div class="sub-header">3.1 Dekomposisi Error</div>
+    <div class="formula-block">
+      <span class="label">Total Error Decomposition</span>
+      Total Error = Bias² + Variance + Irreducible Noise
+      <br><br>
+      <b>Bias</b>     — kesalahan dari asumsi model yang terlalu simplistik
+      <br><b>Variance</b> — kesalahan dari model terlalu sensitif terhadap fluktuasi training data
+      <br><b>Noise</b>    — error tak tereduksi (inherent randomness di data)
+      <span class="note">Bias–variance tradeoff: kita tidak bisa menghilangkan keduanya sekaligus, tapi bisa minimalisasi total error.</span>
+    </div>
+
+    <div class="sub-header">3.2 Gejala Underfit vs Overfit (Exam-Critical)</div>
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 3.1 — Mendiagnosis Bias vs Variance</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th></th><th>Training Error</th><th>CV Error</th><th>Gap</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Underfitting (high bias)</td><td>Tinggi</td><td>Tinggi</td><td>Keduanya tinggi; gap kecil</td></tr>
+            <tr><td>Overfitting (high variance)</td><td>Rendah</td><td>Tinggi</td><td>Gap besar: CV ≫ train</td></tr>
+            <tr><td>Good fit</td><td>Rendah</td><td>Rendah</td><td>Keduanya rendah; gap kecil</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">3.3 Penyebab Utama Model Fitting Errors</div>
+    <p class="prose"><strong>Dataset size:</strong> dataset kecil sering menyebabkan underfit karena tidak cukup untuk mengekspos pattern. Menambah data training membantu mengurangi variance error, tapi tidak bisa mengatasi bias error (model tetap terlalu simple).</p>
+    <p class="prose"><strong>Number of features:</strong> terlalu sedikit features → underfit (informasi kurang). Terlalu banyak features → overfit (low degrees of freedom, model "menghafal" noise). Feature selection (chi-square, mutual information) adalah kunci mitigasi overfitting pada high-dimensional data.</p>
+    <p class="prose"><strong>Feature engineering</strong> cenderung mengatasi underfitting — membuat features yang lebih informatif (mis. ratios, interaction terms, log transforms) mengelevasi pattern yang tersembunyi di raw data.</p>
+
+    <div class="callout blue">
+      <div class="callout-title">Occam's Razor dalam ML</div>
+      <p>Prinsip Occam's razor — solusi paling sederhana biasanya paling benar — diterapkan di ML sebagai <em>overfitting penalty</em>. Model dengan kompleksitas berlebih (koefisien banyak, tree sangat dalam, NN banyak layer) di-penalize agar lebih sederhana. Teknik: L1/L2 regularization, tree pruning, early stopping, dropout di NN.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="chapter" id="s4">
+    <div class="chapter-header">
+      <div class="chapter-num">4</div>
+      <div class="chapter-title">Cross-Validation: k-Fold, LOOCV, dan Walk-Forward untuk Time Series</div>
+    </div>
+
+    <p class="prose">Seperti dijelaskan di kurikulum, ada <strong>dua strategi utama untuk mitigasi overfitting</strong>:</p>
+    <ol class="num-list">
+      <li><strong>Complexity reduction (regularization)</strong> — penalti pada kompleksitas model (L1/L2, pruning, dropout).</li>
+      <li><strong>Proper data sampling via cross-validation</strong> — estimate out-of-sample error langsung dari data.</li>
+    </ol>
+
+    <div class="sub-header">4.1 k-Fold Cross-Validation</div>
+    <p class="prose">Teknik CV paling umum. Algoritma:</p>
+    <ol class="num-list">
+      <li>Shuffle data (kecuali test sample dan fresh data yang tidak boleh digunakan).</li>
+      <li>Bagi data menjadi k equal sub-samples (folds). Biasanya k = 5 atau 10.</li>
+      <li>Untuk tiap iterasi i = 1 ... k: gunakan (k-1) folds sebagai training, 1 fold sebagai validation. Catat validation error E_i.</li>
+      <li>E_CV (mean E_val) = rata-rata k validation errors ≈ estimate of E_out (out-of-sample error).</li>
+    </ol>
+
+    <div class="formula-block">
+      <span class="label">k-Fold Cross-Validation Error</span>
+      E_CV = (1/k) · Σ E_val,i  for i = 1, 2, ..., k
+      <span class="note">Tiap observasi dipakai (k-1) kali di training set, 1 kali di validation set. Mengurangi sampling bias tanpa mengorbankan ukuran training set.</span>
+    </div>
+
+    <p class="prose">Keuntungan: (1) pemanfaatan data maksimal, tiap observasi berkontribusi ke baik training maupun validation, (2) estimasi E_out lebih stabil dari single-split, (3) cocok untuk dataset kecil/sedang. Kerugian: (1) k kali lebih mahal computationally, (2) <strong>tidak cocok untuk time series</strong>.</p>
+
+    <div class="sub-header">4.2 Varian Lain: LOOCV dan Stratified</div>
+    <p class="prose"><strong>Leave-One-Out CV (LOOCV)</strong>: k = n (jumlah observasi). Tiap iterasi, 1 observasi untuk validation, n-1 untuk training. Sangat mahal tapi minim bias. Jarang dipakai untuk big data.</p>
+    <p class="prose"><strong>Stratified k-Fold</strong>: setiap fold mempertahankan proporsi kelas yang sama dengan dataset asli. Penting untuk imbalanced data — mencegah fold yang kebetulan tidak memuat kelas minoritas.</p>
+
+    <div class="sub-header">4.3 Mengapa k-Fold Gagal untuk Time Series</div>
+    <p class="prose">Kurikulum CFA secara eksplisit mengingatkan: <em>"k-fold cross-validation cannot be used with time-series data, where only the most recent data can reasonably be used for model validation."</em></p>
+    <p class="prose">Alasan: random shuffling memecah urutan waktu. Model bisa dapat akses ke data "masa depan" saat training, lalu di-validate dengan data "masa lalu" — ini adalah <strong>look-ahead bias</strong>. Dalam konteks trading/forecasting, model akan tampak lebih akurat dari kenyataannya.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 4.1 — Walk-Forward / Expanding Window Validation</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Iterasi</th><th>Training Window</th><th>Validation Window</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>2019-Q1 — 2020-Q4</td><td>2021-Q1</td></tr>
+            <tr><td>2</td><td>2019-Q1 — 2021-Q1</td><td>2021-Q2</td></tr>
+            <tr><td>3</td><td>2019-Q1 — 2021-Q2</td><td>2021-Q3</td></tr>
+            <tr><td>...</td><td>...</td><td>...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Training window bisa <em>expanding</em> (grows) atau <em>rolling</em> (fixed length, sliding). Validation selalu setelah training window — menghormati panah waktu. Teknik ini juga dipakai luas di quantitative strategy backtesting.</p>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 4.1</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Tim Anda mengklasifikasi 10.000 earnings call transcripts (2015–2025) menjadi bullish/bearish sentiment. Anda berencana k-fold dengan k=10 random shuffle. Apakah ini tepat? Jelaskan.</div>
+        <button class="kc-toggle" onclick="toggleKc('kc3')">Tampilkan jawaban</button>
+        <div class="kc-answer" id="kc3">
+          <strong>Tepat — tapi hati-hati.</strong> Kalau tujuan hanya <em>mengklasifikasi sentiment</em> (cross-sectional task: "apakah kalimat ini positif?"), maka k-fold dengan random shuffle OK — karena sentiment adalah properti intrinsik teks, bukan time-dependent. Tetapi kalau tujuan adalah <em>menggunakan sentiment untuk memprediksi return saham ke depan</em> (time-series task), maka k-fold random shuffle akan menciptakan look-ahead bias. Pakailah walk-forward validation: train model di 2015–2020, test di 2021, roll ke 2021 training, test 2022, dst.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5 -->
+  <div class="chapter" id="s5">
+    <div class="chapter-header">
+      <div class="chapter-num">5</div>
+      <div class="chapter-title">Performance Evaluation: Confusion Matrix, Precision, Recall, F1, ROC/AUC, RMSE</div>
+    </div>
+
+    <p class="prose">Setelah model di-train, langkah kritis berikutnya adalah mengukur performa (goodness of fit). Metrik yang dipakai berbeda untuk classification vs regression.</p>
+
+    <div class="sub-header">5.1 Confusion Matrix & Error Analysis</div>
+    <p class="prose">Untuk binary classification, confusion matrix merupakan grid 2×2 yang merangkum empat metrik dasar. Misalkan Class "1" = "defective" dan Class "0" = "not defective":</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 5.1 — Confusion Matrix</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th></th><th>Actual = 1</th><th>Actual = 0</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Predicted = 1</td><td>TP (True Positive)</td><td>FP (False Positive) — <em>Type I Error</em></td></tr>
+            <tr><td>Predicted = 0</td><td>FN (False Negative) — <em>Type II Error</em></td><td>TN (True Negative)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="formula-block">
+      <span class="label">Performance Metrics — Formulae (CFA L2 Wajib Hafal)</span>
+      Precision (P)  = TP / (TP + FP)                   <span class="note"></span>
+      <br>Recall (R)     = TP / (TP + FN)  = True Positive Rate (TPR)
+      <br>Accuracy       = (TP + TN) / (TP + FP + TN + FN)
+      <br>F1 Score       = 2 · P · R / (P + R)
+      <br>False Positive Rate (FPR) = FP / (TN + FP)
+      <span class="note">Precision = dari yang diprediksi positif, % yang benar. Recall = dari yang aktual positif, % yang berhasil ditangkap model.</span>
+    </div>
+
+    <div class="sub-header">5.2 Worked Example (dari Exhibit 24 Kurikulum)</div>
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 5.2 — Klasifikasi 10 Observasi</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Obs</th><th>Actual</th><th>Predicted</th><th>Classification</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>1</td><td>1</td><td>TP</td></tr>
+            <tr><td>2</td><td>0</td><td>0</td><td>TN</td></tr>
+            <tr><td>3</td><td>1</td><td>1</td><td>TP</td></tr>
+            <tr><td>4</td><td>1</td><td>0</td><td>FN</td></tr>
+            <tr><td>5</td><td>1</td><td>1</td><td>TP</td></tr>
+            <tr><td>6</td><td>1</td><td>0</td><td>FN</td></tr>
+            <tr><td>7</td><td>0</td><td>0</td><td>TN</td></tr>
+            <tr><td>8</td><td>0</td><td>0</td><td>TN</td></tr>
+            <tr><td>9</td><td>0</td><td>0</td><td>TN</td></tr>
+            <tr><td>10</td><td>0</td><td>1</td><td>FP</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="formula-block">
+      <span class="label">Perhitungan Metrics dari Exhibit 5.2</span>
+      TP = 3, FP = 1, FN = 2, TN = 4
+      <br><br>Precision = 3 / (3 + 1) = 0.75
+      <br>Recall    = 3 / (3 + 2) = 0.60
+      <br>F1 Score  = (2 × 0.75 × 0.60) / (0.75 + 0.60) = 0.90 / 1.35 = 0.67
+      <br>Accuracy  = (3 + 4) / (3 + 1 + 4 + 2) = 7/10 = 0.70
+      <span class="note">F1 = 0.67 mendekati nilai yang lebih kecil (0.60) — ini karakteristik harmonic mean. F1 "menghukum" model saat P atau R rendah.</span>
+    </div>
+
+    <div class="sub-header">5.3 Kapan Precision vs Recall Lebih Penting?</div>
+    <div class="callout blue">
+      <div class="callout-title">Trade-off Precision vs Recall</div>
+      <p><strong>Precision penting</strong> ketika cost of FP tinggi. Contoh: produk mahal (mis. microchip) yang predicted defective → di-scrap, padahal sebenarnya OK. FP bikin rugi finansial. Atau: sistem spam filter — FP artinya email penting masuk spam folder.</p>
+      <p><strong>Recall penting</strong> ketika cost of FN tinggi. Contoh: medical test kanker — FN artinya pasien sakit tapi didiagnosis sehat (bisa fatal). Atau: fraud detection — FN artinya transaksi fraudulent lolos. Di credit default prediction bank, FN (approve kredit ke nasabah yang akan default) = kerugian besar → bank prioritaskan recall.</p>
+    </div>
+
+    <div class="sub-header">5.4 ROC Curve & AUC</div>
+    <p class="prose"><strong>Receiver Operating Characteristic (ROC)</strong> curve = plot <em>True Positive Rate (y-axis)</em> vs <em>False Positive Rate (x-axis)</em> untuk berbagai classification thresholds (mis. p-threshold di logistic regression: 0.3, 0.4, 0.5, 0.6, ...).</p>
+    <p class="prose">Untuk setiap threshold, hitung TP, FP, TN, FN, lalu plot titik (FPR, TPR). Menghubungkan titik-titik menghasilkan kurva ROC. <strong>Area Under the Curve (AUC)</strong> adalah metrik tunggal yang merangkum ROC:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 5.3 — Interpretasi AUC</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>AUC</th><th>Interpretasi</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1.0</td><td>Perfect classifier</td></tr>
+            <tr><td>0.9–0.99</td><td>Excellent — kurva sangat konveks</td></tr>
+            <tr><td>0.7–0.9</td><td>Good</td></tr>
+            <tr><td>0.5–0.7</td><td>Poor — mendekati random</td></tr>
+            <tr><td>0.5</td><td>Random guessing — garis diagonal</td></tr>
+            <tr><td>&lt; 0.5</td><td>Lebih buruk dari random (flip prediksi supaya > 0.5)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Keunggulan AUC: <em>threshold-independent</em>. Model dengan AUC tinggi akan memiliki decision ranking yang baik — memberi probabilitas tinggi untuk true positives dan rendah untuk true negatives, tanpa bergantung pada cutoff.</p>
+
+    <div class="sub-header">5.5 RMSE untuk Regression</div>
+    <p class="prose">Untuk prediksi continuous (regression), metrik standarnya adalah <strong>Root Mean Squared Error</strong>:</p>
+    <div class="formula-block">
+      <span class="label">Root Mean Squared Error</span>
+      RMSE = √[ Σ(Predicted_i − Actual_i)² / n ]  for i = 1, 2, ..., n
+      <span class="note">RMSE kecil = model lebih akurat. Karena squaring, RMSE sensitif terhadap outlier. Alternatif: MAE (Mean Absolute Error), MAPE (Mean Absolute Percentage Error).</span>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 5.1</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Model prediksi default KPR menghasilkan confusion matrix: TP=25, FP=40, FN=10, TN=925 (total 1000 observasi). Hitung precision, recall, F1, dan accuracy. Apa komentar Anda?</div>
+        <button class="kc-toggle" onclick="toggleKc('kc4')">Tampilkan jawaban</button>
+        <div class="kc-answer" id="kc4">
+          <strong>Precision = 25/65 = 0.385</strong>; <strong>Recall = 25/35 = 0.714</strong>; <strong>F1 = 2·0.385·0.714/(0.385+0.714) = 0.500</strong>; <strong>Accuracy = 950/1000 = 0.95</strong>. Komentar: accuracy 95% terdengar bagus tapi menyesatkan — dataset sangat imbalanced (3.5% default). F1 = 0.50 lebih jujur menunjukkan model biasa saja. Model punya recall relatif baik (menangkap 71% defaulters) tapi precision rendah (dari yang diprediksi akan default, hanya 38.5% benar). Untuk bank, trade-off ini mungkin masih acceptable karena mereka lebih takut FN daripada FP — lebih baik over-reject kredit (FP) daripada approve yang akan default (FN).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6 -->
+  <div class="chapter" id="s6">
+    <div class="chapter-header">
+      <div class="chapter-num">6</div>
+      <div class="chapter-title">Hyperparameter Tuning: Grid Search, Fitting Curves, Ceiling Analysis</div>
+    </div>
+
+    <div class="sub-header">6.1 Parameters vs Hyperparameters</div>
+    <p class="prose">Kurikulum CFA L2 membedakan secara tegas antara dua konsep yang sering tertukar:</p>
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 6.1 — Parameters vs Hyperparameters</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th></th><th>Parameters</th><th>Hyperparameters</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Asal</td><td>Dipelajari dari training data (optimization)</td><td>Di-set manual oleh researcher sebelum training</td></tr>
+            <tr><td>Ketergantungan pada data</td><td>Ya</td><td>Tidak langsung</td></tr>
+            <tr><td>Contoh Linear/Logistic Reg</td><td>Koefisien β</td><td>Regularization term λ; p-threshold</td></tr>
+            <tr><td>Contoh Neural Network</td><td>Weights</td><td>Activation function, # hidden layers, # neurons, learning rate</td></tr>
+            <tr><td>Contoh Ensemble (RF, GB)</td><td>Split points, leaf values</td><td>Number of trees, max depth, min samples per leaf</td></tr>
+            <tr><td>Contoh SVM</td><td>Support vectors</td><td>Cost parameter C, kernel type, gamma</td></tr>
+            <tr><td>Contoh KNN / k-means</td><td>— (lazy learner)</td><td>Number of neighbors / clusters k</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">6.2 Grid Search</div>
+    <p class="prose">Karena tidak ada rumus umum untuk mengestimasi hyperparameter yang optimal, dipakai teknik heuristik. <strong>Grid search</strong> adalah metode paling populer: spesifikasikan sebuah "grid" nilai calon untuk setiap hyperparameter, lalu train model pada tiap kombinasi menggunakan cross-validation, dan pilih kombinasi yang meminimumkan CV error <em>dengan syarat training error dan CV error relatif sama</em> (bukan overfit).</p>
+
+    <div class="formula-block">
+      <span class="label">Grid Search — Contoh untuk Random Forest</span>
+      Grid:
+      <br>  n_trees       ∈ {100, 200, 500}
+      <br>  max_depth     ∈ {5, 10, 20}
+      <br>  min_samples   ∈ {5, 10, 20}
+      <br>
+      <br>Total: 3 × 3 × 3 = 27 kombinasi
+      <br>Untuk tiap kombinasi: run 10-fold CV → catat E_CV
+      <br>Pilih kombinasi dengan E_CV terkecil dan |E_train − E_CV| kecil
+      <span class="note">Alternatif modern: randomized search (sample random subset grid) dan Bayesian optimization (lebih efisien untuk high-dim hyperparameter space).</span>
+    </div>
+
+    <div class="sub-header">6.3 Fitting Curve (Exhibit 26 Kurikulum)</div>
+    <p class="prose">Fitting curve adalah plot <strong>error (y-axis)</strong> vs <strong>hyperparameter value (x-axis)</strong>. Untuk regularization λ di LASSO/Ridge:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 6.2 — Tiga Zona pada Fitting Curve</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Zone</th><th>λ</th><th>E_train</th><th>E_CV</th><th>Diagnosis</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Left (slight reg.)</td><td>Kecil</td><td>Sangat kecil</td><td>Besar (divergen)</td><td>High variance → OVERFIT</td></tr>
+            <tr><td>Center (optimum)</td><td>Optimal</td><td>Kecil</td><td>Kecil (convergen)</td><td>Good fit</td></tr>
+            <tr><td>Right (large reg.)</td><td>Besar</td><td>Besar</td><td>Besar</td><td>High bias → UNDERFIT</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Di zone kiri, model memiliki semua fitur aktif tanpa penalty — menghafal data training (low bias, high variance). Di zone kanan, regularization terlalu keras memaksa sebagian besar koefisien ke nol — model terlalu simplistik (high bias, low variance). Di tengah, trade-off optimal: cukup regularization untuk eliminasi features yang tidak relevan, tetapi tidak begitu keras sehingga kehilangan informasi.</p>
+
+    <div class="sub-header">6.4 Tuning Decisions Based on Diagnosis</div>
+    <div class="callout gold">
+      <div class="callout-title">Tindakan untuk Each Diagnosis</div>
+      <p><strong>High bias (underfit):</strong> tambahkan lebih banyak features, tambah feature engineering, reduce regularization, tingkatkan complexity model (mis. NN lebih dalam, tree lebih dalam). Menambah data training <em>tidak akan membantu</em> underfit.</p>
+      <p><strong>High variance (overfit):</strong> kumpulkan lebih banyak training data, reduce number of features, tingkatkan regularization, simplify model. Data augmentation juga bisa membantu.</p>
+    </div>
+
+    <div class="sub-header">6.5 Ceiling Analysis</div>
+    <p class="prose"><strong>Ceiling analysis</strong> adalah teknik untuk complex models yang terdiri dari beberapa sub-models/komponen dalam pipeline. Tujuan: mengidentifikasi sub-model mana yang paling membatasi overall performance sehingga prioritas tuning dialokasikan di tempat yang tepat.</p>
+    <p class="prose">Contoh dari kurikulum: stock market prediction model yang membutuhkan (a) historical stock data, dan (b) news articles. Sub-model di pipeline: <em>sentiment classifier</em> → feeds into <em>return forecasting model</em>.</p>
+
+    <div class="formula-block">
+      <span class="label">Ceiling Analysis — Prosedur</span>
+      Baseline: End-to-end pipeline accuracy = 72%
+      <br><br>
+      Step 1: Ganti output sentiment classifier dengan GROUND TRUTH
+      <br>        — Run pipeline → new accuracy = ?
+      <br>        Kasus A: naik ke 88% (+16 pp) → sentiment classifier adalah bottleneck, tune dulu
+      <br>        Kasus B: naik ke 73% (+1 pp)  → sentiment bukan bottleneck; tune forecasting model
+      <br><br>
+      Step 2: Ganti output forecasting model dengan GROUND TRUTH
+      <br>        — Lihat lift untuk konfirmasi
+      <span class="note">Prinsip: alokasikan effort tuning ke komponen yang menunjukkan lift terbesar saat disubstitusi oracle.</span>
+    </div>
+  </div>
+
+  <!-- SECTION 7 -->
+  <div class="chapter" id="s7">
+    <div class="chapter-header">
+      <div class="chapter-num">7</div>
+      <div class="chapter-title">Model Interpretability & Backtesting ML Signals</div>
+    </div>
+
+    <div class="sub-header">7.1 Interpretability: Black Box vs White Box</div>
+    <p class="prose">Model ML berbeda-beda dalam tingkat interpretability:</p>
+    <ul class="bullet-list">
+      <li><strong>White box (highly interpretable):</strong> linear/logistic regression, decision trees (single). Setiap koefisien/split node dapat dijelaskan.</li>
+      <li><strong>Gray box:</strong> random forest, gradient boosting. Feature importance scores bisa dihitung, tetapi cara interaksi features antar-tree sulit dilihat.</li>
+      <li><strong>Black box (low interpretability):</strong> deep neural networks, SVMs dengan kernel non-linear. Akurasi tinggi tapi "mengapa" model memutuskan X tidak jelas.</li>
+    </ul>
+    <p class="prose">Dalam praktik finance, interpretability penting karena:</p>
+    <ol class="num-list">
+      <li>Regulator (OJK, SEC) menuntut transparansi model (mis. model risk management).</li>
+      <li>Klien institusi menuntut penjelasan keputusan investasi.</li>
+      <li>Portfolio manager perlu understand model untuk percaya ke signalnya.</li>
+    </ol>
+    <p class="prose">Teknik untuk improve interpretability di black-box models: <strong>SHAP values</strong>, <strong>LIME</strong>, <strong>partial dependence plots</strong>, <strong>feature importance rankings</strong>. Tidak wajib hafal detail teknisnya untuk CFA L2, tapi perlu paham konsepnya.</p>
+
+    <div class="sub-header">7.2 Backtesting ML Trading Signals</div>
+    <p class="prose">Ketika ML model dipakai untuk generate trading signals, backtesting menjadi critical step sebelum live deployment. Best practices:</p>
+
+    <div class="callout amber">
+      <div class="callout-title">Lima Prinsip Backtesting ML Signals</div>
+      <p><strong>1. Walk-forward validation</strong> — jangan k-fold random shuffle di time series. Train di data historis, test di periode setelahnya.</p>
+      <p><strong>2. Out-of-sample period cukup panjang</strong> — minimum 1 cycle market yang complete (mis. bull-bear-bull) untuk test robustness di regime yang berbeda.</p>
+      <p><strong>3. Transaction costs, slippage, market impact</strong> — masukkan ke simulasi PnL. Signal yang tampak profitabel di gross return sering jadi loss-making net of costs.</p>
+      <p><strong>4. Hati-hati dengan data snooping bias</strong> — kalau lo coba 100 strategy variations, beberapa akan tampak significant hanya karena kebetulan. Pakai Bonferroni correction atau out-of-sample test yang benar-benar baru.</p>
+      <p><strong>5. Survivorship bias</strong> — pastikan data training tidak hanya berisi saham yang "survive" hingga hari ini (universe harus include delistings, bankruptcies).</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 7.1</div></div>
+      <div class="kc-body">
+        <div class="kc-q">ML strategy Anda menunjukkan Sharpe ratio 2.5 di backtest tahun 2018–2024. Live deployment di 2025 menghasilkan Sharpe 0.3. Apa kemungkinan penyebab divergence?</div>
+        <button class="kc-toggle" onclick="toggleKc('kc5')">Tampilkan jawaban</button>
+        <div class="kc-answer" id="kc5">
+          <strong>Beberapa kemungkinan:</strong> (1) <em>Overfitting</em> — model memorized pattern periode 2018–2024 yang tidak berulang. (2) <em>Look-ahead bias</em> di backtest (mis. pakai data yang tidak tersedia real-time). (3) <em>Transaction costs/slippage</em> yang tidak dimodelkan dengan akurat — strategi dengan turnover tinggi sering kolaps post-cost. (4) <em>Regime change</em> — karakteristik pasar 2025 berbeda fundamental (mis. rezim suku bunga, volatility). (5) <em>Capacity/market impact</em> — saat scale up dana, eksekusi menggerakkan harga. (6) <em>Survivorship bias</em> di training universe. Solusi: re-train pada data yang mencakup 2025, tambah walk-forward validation, masukkan realistic trading costs, dan monitor rolling Sharpe untuk deteksi dini.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 8 -->
+  <div class="chapter" id="s8">
+    <div class="practice-header">
+      <div>
+        <div class="practice-header-title">Latihan Soal — Item Set Vignette</div>
+        <div class="practice-header-sub">6 soal · CFA exam-level difficulty · Pilih jawaban terbaik</div>
+      </div>
+    </div>
+
+    <div class="practice-body">
+
+      <div class="vignette">
+        <div class="vignette-label">Vignette — Quantum Asset Management</div>
+        Arif Rahman, CFA, adalah Head of Quantitative Research di Quantum Asset Management (QAM), sebuah hedge fund berbasis Jakarta. Tim Arif sedang mengembangkan model ML untuk memprediksi arah pergerakan 1-bulan ke depan dari saham-saham LQ45 (binary classification: naik/turun).<br><br>
+        Dataset master berisi 8.500 observasi bulanan sepanjang 2015-01 hingga 2025-03 (45 saham × ~190 bulan), dengan 48% label "naik" dan 52% "turun" (relatif balanced). Features mencakup 15 rasio finansial, 8 technical indicators, sentiment score dari headline berita (sub-model terpisah dengan accuracy 68%), dan 3 macro variables. Total 27 features per observasi.<br><br>
+        Arif memilih gradient boosting classifier dengan hyperparameter utama: n_trees, max_depth, learning_rate, dan min_samples_leaf. Dia membagi data sebagai berikut: 5.100 observasi training (60%), 1.700 validation (20%), 1.700 test (20%) — dengan random shuffle.<br><br>
+        Hasil initial training menunjukkan: training accuracy = 0.88, CV accuracy = 0.60, test accuracy = 0.59. Confusion matrix pada test set: TP = 380 (actual naik, predicted naik), FP = 320, FN = 440, TN = 560.<br><br>
+        Analis junior Siti Nurhaliza memproposalkan dua perbaikan: (1) gunakan k-fold CV dengan k=10 pada training+validation set combined untuk estimasi lebih stabil, dan (2) lakukan ceiling analysis dengan mengganti output sentiment classifier dengan ground truth untuk melihat apakah sentiment adalah bottleneck. Hasil ceiling analysis: saat sentiment diganti oracle, test accuracy naik dari 0.59 ke 0.62.
+      </div>
+
+      <div class="question-block" id="qb0">
+        <div class="q-num">Soal 1 / 6</div>
+        <div class="q-text">Kritik paling signifikan terhadap metodologi split dataset Arif adalah:</div>
+        <button class="option" onclick="answer(0,'A','B')">A. Proporsi 60:20:20 terlalu banyak memakai data untuk training; sebaiknya 40:30:30</button>
+        <button class="option" onclick="answer(0,'B','B')">B. Random shuffle memecah urutan waktu, menimbulkan look-ahead bias karena data 2024 bisa masuk training set sementara data 2016 masuk test set. Untuk time-series, gunakan walk-forward validation</button>
+        <button class="option" onclick="answer(0,'C','B')">C. Dataset 8.500 observasi terlalu kecil untuk gradient boosting; minimum harus 50.000 observasi</button>
+        <div class="explanation" id="exp0">
+          <strong>B adalah jawaban yang benar.</strong> Ini adalah forecasting problem yang time-dependent (memprediksi 1-month forward return). Random shuffle merusak urutan waktu — data 2024 bisa masuk training, data 2016 ke test → <em>look-ahead bias</em>. Solusi: walk-forward validation (train up to month T, test month T+1, roll forward). A salah karena 60:20:20 adalah rekomendasi CFA standard dan bukan faktor utama di sini. C salah karena 8.500 observasi cukup untuk gradient boosting dengan 27 features; tidak ada rule "50.000 minimum".
+        </div>
+      </div>
+
+      <div class="question-block" id="qb1">
+        <div class="q-num">Soal 2 / 6</div>
+        <div class="q-text">Berdasarkan gap training accuracy (0.88) vs CV accuracy (0.60), model menunjukkan:</div>
+        <button class="option" onclick="answer(1,'A','B')">A. Underfitting (high bias) — solusi: tambahkan lebih banyak fitur atau kurangi regularization</button>
+        <button class="option" onclick="answer(1,'B','B')">B. Overfitting (high variance) — solusi: kumpulkan lebih banyak training data, reduce fitur, tingkatkan regularization (max_depth lebih kecil, min_samples_leaf lebih besar)</button>
+        <button class="option" onclick="answer(1,'C','B')">C. Good fit — gap 28% adalah tipikal dan acceptable untuk financial data</button>
+        <div class="explanation" id="exp1">
+          <strong>B adalah jawaban yang benar.</strong> Classical overfitting symptom: training error kecil (accuracy 88%) sementara CV error jauh lebih besar (accuracy 60% → error 40%). Gap 28 percentage points terlalu lebar. Tindakan mitigasi overfit: (1) data augmentation / kumpulkan lebih banyak training data, (2) feature selection untuk reduce number of features, (3) tingkatkan regularization — untuk gradient boosting berarti kurangi max_depth, naikkan min_samples_leaf, atau turunkan n_trees/learning_rate. A salah (underfit justru training error tinggi juga). C salah (gap 28% menunjukkan masalah, bukan good fit).
+        </div>
+      </div>
+
+      <div class="question-block" id="qb2">
+        <div class="q-num">Soal 3 / 6</div>
+        <div class="q-text">Hitung precision, recall, F1, dan accuracy dari confusion matrix test set. Pilihan mana yang benar?</div>
+        <button class="option" onclick="answer(2,'A','C')">A. Precision = 0.54, Recall = 0.56, F1 = 0.55, Accuracy = 0.55</button>
+        <button class="option" onclick="answer(2,'B','C')">B. Precision = 0.46, Recall = 0.46, F1 = 0.46, Accuracy = 0.55</button>
+        <button class="option" onclick="answer(2,'C','C')">C. Precision = 0.543, Recall = 0.463, F1 = 0.500, Accuracy = 0.553</button>
+        <div class="explanation" id="exp2">
+          <strong>C adalah jawaban yang benar.</strong> Dari matrix: TP=380, FP=320, FN=440, TN=560, Total=1700.<br>
+          <b>Precision</b> = TP/(TP+FP) = 380/700 = 0.5429<br>
+          <b>Recall</b> = TP/(TP+FN) = 380/820 = 0.4634<br>
+          <b>F1</b> = 2·P·R/(P+R) = 2·0.5429·0.4634/(0.5429+0.4634) = 0.5031/1.006 = 0.500<br>
+          <b>Accuracy</b> = (TP+TN)/Total = (380+560)/1700 = 940/1700 = 0.553<br>
+          A salah (Precision hitung keliru). B salah (keduanya keliru). Observasi tambahan: accuracy 55% hanya sedikit di atas coin flip (52% "turun" baseline), dan F1 0.50 menunjukkan model marginal.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb3">
+        <div class="q-num">Soal 4 / 6</div>
+        <div class="q-text">QAM ingin memakai signal ini untuk strategi long-short. Manajer portfolio lebih khawatir "membeli saham yang justru turun" (false buy signal) daripada "melewatkan saham yang naik". Metric mana yang paling penting untuk dimonitor?</div>
+        <button class="option" onclick="answer(3,'A','A')">A. Precision dari Class "naik" — karena ini mengukur % signal "buy" yang benar-benar diikuti kenaikan</button>
+        <button class="option" onclick="answer(3,'B','A')">B. Recall dari Class "naik" — karena ini mengukur % saham naik yang berhasil diidentifikasi</button>
+        <button class="option" onclick="answer(3,'C','A')">C. Accuracy — karena ini metric overall yang paling komprehensif</button>
+        <div class="explanation" id="exp3">
+          <strong>A adalah jawaban yang benar.</strong> "Membeli saham yang turun" = <em>false positive</em> (predicted naik = buy signal, actual turun). Cost of FP tinggi → <strong>precision penting</strong>. Precision = TP/(TP+FP) mengukur, dari semua saham yang kita beli berdasarkan signal, berapa % yang benar-benar naik. Dengan precision 0.543, hampir 46% signal buy QAM akan rugi — mungkin tidak acceptable. B salah karena recall peduli tentang missed opportunities (saham naik yang tidak dibeli), yang bukan concern manajer di sini. C salah karena accuracy imbalanced-aware saat class distribution tidak seimbang, dan di sini bukan metric terbaik untuk asymmetric cost.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb4">
+        <div class="q-num">Soal 5 / 6</div>
+        <div class="q-text">Komentari proposal Siti tentang k-fold CV dengan k=10:</div>
+        <button class="option" onclick="answer(4,'A','C')">A. Proposal sangat baik — k=10 adalah standard industry dan akan menstabilkan estimasi out-of-sample error</button>
+        <button class="option" onclick="answer(4,'B','C')">B. Proposal salah karena k-fold tidak bisa dipakai untuk classification problem</button>
+        <button class="option" onclick="answer(4,'C','C')">C. Proposal menggunakan k=10 sendiri wajar, tetapi random k-fold tidak cocok untuk time-series forecasting data karena menimbulkan look-ahead bias. Yang tepat adalah time-series CV (blocked k-fold) atau walk-forward validation</button>
+        <div class="explanation" id="exp4">
+          <strong>C adalah jawaban yang benar.</strong> Sama seperti Soal 1, data QAM adalah time-series forecasting (memprediksi return 1-bulan ke depan). Random k-fold shuffle membuat fold bisa berisi campuran periode 2016, 2020, dan 2024 — jadi model melihat "masa depan" saat training. Yang benar untuk data time-dependent: (i) <em>time-series k-fold</em> (tiap fold adalah block periode berurutan, tanpa shuffle), atau (ii) <em>walk-forward validation</em>. A salah karena mengabaikan time structure. B salah karena k-fold bisa dipakai untuk classification (bukan hanya regression); yang membuatnya tidak cocok di sini adalah time-series nature, bukan classification vs regression.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb5">
+        <div class="q-num">Soal 6 / 6</div>
+        <div class="q-text">Berdasarkan ceiling analysis (accuracy naik dari 0.59 ke 0.62 saat sentiment classifier diganti oracle), kesimpulan paling tepat tentang prioritas tuning adalah:</div>
+        <button class="option" onclick="answer(5,'A','B')">A. Sentiment classifier adalah bottleneck utama; prioritaskan tuning sentiment classifier karena memberi lift 3 percentage points</button>
+        <button class="option" onclick="answer(5,'B','B')">B. Sentiment classifier BUKAN bottleneck utama — lift hanya 3 pp (59% → 62%). Bottleneck sebenarnya ada di main gradient boosting classifier atau feature set lain. Prioritaskan tuning main model, feature engineering, atau reduce overfitting</button>
+        <button class="option" onclick="answer(5,'C','B')">C. Model sudah tidak bisa ditingkatkan karena ceiling (atas batas) sudah dekat; hentikan development</button>
+        <div class="explanation" id="exp5">
+          <strong>B adalah jawaban yang benar.</strong> Interpretasi ceiling analysis: kalau mengganti sub-komponen dengan ground truth hanya memberi lift kecil (3 pp), maka sub-komponen itu BUKAN bottleneck — bahkan dengan sentiment sempurna, overall accuracy masih di 62%. Artinya 38% error lainnya berasal dari bagian lain pipeline: mungkin main model overfit (gap training 0.88 vs CV 0.60 sudah memberi petunjuk), feature set tidak cukup discriminative, atau target problem secara intrinsik sulit (pasar memang sulit diprediksi). Prioritas tuning: main gradient boosting classifier (reduce overfitting), feature engineering baru, atau consider model architecture lain. A salah karena menafsirkan ceiling analysis terbalik. C salah — ceiling analysis mengidentifikasi bottleneck, bukan memberitahu lo untuk berhenti.
+        </div>
+      </div>
+
+      <div class="score-panel" id="score-panel">
+        <div class="score-num" id="score-num">0/6</div>
+        <div class="score-msg" id="score-msg">—</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a class="nav-btn" href="CFA_L2_Day13_Full.html">← Day 13 Full</a>
+    <div class="nav-day">Day 14 of 90<br><span style="font-size:11px;color:var(--text3);">Full Version · Quantitative Methods LM7</span></div>
+    <a class="nav-btn primary" href="CFA_L2_Day15_Full.html">Day 15 →</a>
+  </div>
+
+</div>
+
+<script>
+function toggleKc(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('show');
+  const btn = el.previousElementSibling;
+  btn.textContent = el.classList.contains('show') ? 'Sembunyikan jawaban' : 'Tampilkan jawaban';
+}
+
+const answers = {};
+const correct = {0:'B', 1:'B', 2:'C', 3:'A', 4:'C', 5:'B'};
+const total = 6;
+
+function answer(qIdx, chosen, correctAns) {
+  if (answers[qIdx]) return;
+  answers[qIdx] = chosen;
+
+  const block = document.getElementById('qb' + qIdx);
+  const exp   = document.getElementById('exp' + qIdx);
+
+  block.querySelectorAll('.option').forEach(btn => {
+    btn.disabled = true;
+    const letter = btn.textContent.trim()[0];
+    if (letter === correctAns) btn.classList.add('correct');
+    else if (letter === chosen && chosen !== correctAns) btn.classList.add('wrong');
+  });
+
+  exp.classList.add('show');
+  if (Object.keys(answers).length === total) showScore();
+}
+
+function showScore() {
+  const score = Object.keys(correct).filter(k => answers[k] === correct[k]).length;
+  const panel = document.getElementById('score-panel');
+  const num   = document.getElementById('score-num');
+  const msg   = document.getElementById('score-msg');
+
+  num.textContent = score + '/' + total;
+  num.style.color = score >= 5 ? 'var(--green)' : score >= 4 ? 'var(--amber)' : 'var(--red)';
+
+  const msgs = {
+    6: '🎯 Perfect! Master di Model Training & Validation — LM7 Big Data Projects selesai!',
+    5: '✅ Excellent. Review soal yang salah dan siap ke Economics.',
+    4: '✅ Good. Review theory dan coba lagi soal yang salah.',
+    3: '⚠️ Perlu review — baca ulang chapter yang terkait.',
+    2: '🔁 Ulangi theory chapter sebelum lanjut ke Day 15.',
+    1: '🔁 Ulangi theory chapter sebelum lanjut ke Day 15.',
+    0: '🔁 Ulangi theory chapter sebelum lanjut ke Day 15.'
+  };
+  msg.textContent = msgs[score] || msgs[0];
+  panel.style.display = 'block';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 12 · Full · Unsupervised & Deep Learning</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #fafaf8;
+  --bg2:     #f4f3ef;
+  --bg3:     #eeece7;
+  --border:  rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text:    #1a1a2e;
+  --text2:   #4a4a6a;
+  --text3:   #8a8aaa;
+  --gold:    #9a6e1a;
+  --gold2:   #7a5010;
+  --gold-bg: rgba(154,110,26,0.08);
+  --blue:    #1a5fa8;
+  --blue-bg: rgba(26,95,168,0.08);
+  --green:   #1a7a4a;
+  --green-bg:rgba(26,122,74,0.08);
+  --red:     #b83232;
+  --red-bg:  rgba(184,50,50,0.08);
+  --amber:   #a06010;
+  --amber-bg:rgba(160,96,16,0.08);
+  --r:10px; --r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.8;}
+.page{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;border:1px solid rgba(26,95,168,0.2);}
+.hero{margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--border);}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:36px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:15px;color:var(--text2);}
+.meta-row{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:36px;}
+.toc-title{font-size:12px;color:var(--text3);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:12px;font-weight:500;}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.toc-list li a{font-size:13px;color:var(--blue);text-decoration:none;display:flex;align-items:center;gap:8px;}
+.toc-list li a:hover{text-decoration:underline;}
+.toc-num{font-size:11px;color:var(--text3);min-width:20px;}
+.chapter{margin-bottom:40px;}
+.chapter-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--gold-bg);}
+.chapter-num{font-family:'DM Serif Display',serif;font-size:28px;color:var(--gold);line-height:1;}
+.chapter-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);line-height:1.2;}
+.sub-header{font-size:17px;font-weight:500;color:var(--text);margin:24px 0 12px;padding-left:12px;border-left:3px solid var(--gold);}
+.prose{font-size:14px;color:var(--text2);line-height:1.85;margin-bottom:14px;}
+.prose strong{color:var(--text);font-weight:500;}
+.prose em{font-style:italic;}
+.formula-block{background:var(--bg2);border:1px solid var(--border2);border-left:4px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:16px 20px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold2);line-height:2;}
+.formula-block .label{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:8px;}
+.formula-block .note{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text3);font-style:italic;display:block;margin-top:8px;}
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:20px 0;}
+.exhibit-title{background:var(--bg3);padding:10px 16px;font-size:12px;font-weight:500;color:var(--text2);border-bottom:1px solid var(--border);letter-spacing:0.03em;}
+.exhibit-body{padding:16px;}
+.reg-table{width:100%;border-collapse:collapse;font-size:13px;}
+.reg-table th{text-align:right;padding:8px 12px;background:var(--bg3);color:var(--text3);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border2);}
+.reg-table th:first-child{text-align:left;}
+.reg-table td{padding:8px 12px;border-bottom:1px solid var(--border);text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text2);}
+.reg-table td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);font-weight:500;}
+.reg-table tr:last-child td{border-bottom:none;}
+.reg-table .sig{color:var(--green);font-weight:500;}
+.callout{border-radius:var(--r);padding:16px 18px;margin:16px 0;}
+.callout-title{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;}
+.callout p{font-size:13px;color:var(--text2);line-height:1.75;}
+.callout p + p{margin-top:8px;}
+.callout.blue{background:var(--blue-bg);border:1px solid rgba(26,95,168,0.15);}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.amber{background:var(--amber-bg);border:1px solid rgba(160,96,16,0.15);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.red{background:var(--red-bg);border:1px solid rgba(184,50,50,0.15);}
+.callout.red .callout-title{color:var(--red);}
+.callout.gold{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);}
+.callout.gold .callout-title{color:var(--gold);}
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:24px 0;overflow:hidden;}
+.kc-header{background:var(--gold-bg);padding:12px 18px;border-bottom:1px solid rgba(154,110,26,0.15);}
+.kc-header-title{font-size:12px;font-weight:500;color:var(--gold);letter-spacing:0.06em;text-transform:uppercase;}
+.kc-body{padding:18px;}
+.kc-q{font-size:13px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.6;}
+.kc-answer{background:var(--bg3);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);line-height:1.75;display:none;}
+.kc-answer.show{display:block;}
+.kc-answer strong{color:var(--green);}
+.kc-toggle{background:none;border:1px solid var(--border2);border-radius:var(--r-sm);padding:6px 14px;font-size:12px;color:var(--text3);cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px;transition:all 0.15s;}
+.kc-toggle:hover{border-color:var(--gold);color:var(--gold);}
+.num-list{list-style:none;counter-reset:num;display:flex;flex-direction:column;gap:8px;margin:10px 0;}
+.num-list li{counter-increment:num;display:flex;gap:12px;font-size:13px;color:var(--text2);line-height:1.7;}
+.num-list li::before{content:counter(num)".";color:var(--gold);font-weight:500;min-width:20px;flex-shrink:0;}
+.bullet-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin:10px 0;}
+.bullet-list li{display:flex;gap:10px;font-size:13px;color:var(--text2);line-height:1.7;}
+.bullet-list li::before{content:'■';color:var(--gold);font-size:9px;margin-top:5px;flex-shrink:0;}
+code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--bg3);padding:2px 6px;border-radius:4px;color:var(--gold2);}
+.divider{height:1px;background:var(--border);margin:36px 0;}
+.practice-header{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);border-radius:var(--r) var(--r) 0 0;padding:16px 20px;display:flex;align-items:center;gap:12px;}
+.practice-header-title{font-size:16px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);margin-top:2px;}
+.practice-body{background:var(--bg2);border:1px solid rgba(154,110,26,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:24px;}
+.vignette{background:var(--bg3);border-left:4px solid var(--gold);padding:18px 20px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:28px;font-size:13px;color:var(--text2);line-height:1.85;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;font-weight:500;}
+.question-block{margin-bottom:24px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:6px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:12px;line-height:1.65;}
+.option{display:block;width:100%;text-align:left;padding:11px 16px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:8px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.6;}
+.option:hover:not(:disabled){border-color:var(--border2);background:var(--bg2);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:14px 16px;font-size:13px;color:var(--text2);margin-top:10px;line-height:1.8;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:28px;margin-top:20px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:52px;margin-bottom:8px;}
+.score-msg{font-size:14px;color:var(--text2);}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+.nav-day{font-size:12px;color:var(--text3);text-align:center;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II · <span>Quantitative Methods</span> · LM6</div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <div class="version-badge">Versi Full</div>
+      <div class="day-badge">Day 12 of 90</div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Jumat, 24 April 2026</div>
+    <h1 class="hero-title">Unsupervised Learning, Deep Learning & Natural Language Processing</h1>
+    <p class="hero-sub">Learning Module 6 — Machine Learning · Subtopic 2 of 2 · CFA Level II 2026</p>
+    <div class="meta-row">
+      <div class="meta-pill">📖 Materi lengkap</div>
+      <div class="meta-pill">🇮🇩 Bahasa Indonesia</div>
+      <div class="meta-pill">⚖️ Exam weight <b>~6%</b></div>
+      <div class="meta-pill">⏱ Est. baca <b>45-60 menit</b></div>
+    </div>
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ul class="toc-list">
+      <li><a href="#s0"><span class="toc-num">0</span> Learning Outcomes</a></li>
+      <li><a href="#s1"><span class="toc-num">1</span> Unsupervised Learning: Dimension Reduction & Clustering</a></li>
+      <li><a href="#s2"><span class="toc-num">2</span> Principal Components Analysis (PCA)</a></li>
+      <li><a href="#s3"><span class="toc-num">3</span> K-Means Clustering</a></li>
+      <li><a href="#s4"><span class="toc-num">4</span> Hierarchical Clustering & Dendrogram</a></li>
+      <li><a href="#s5"><span class="toc-num">5</span> Neural Networks & Deep Neural Networks</a></li>
+      <li><a href="#s6"><span class="toc-num">6</span> Natural Language Processing (NLP): Text Processing & Sentiment</a></li>
+      <li><a href="#s7"><span class="toc-num">7</span> Latihan Soal — Item Set Vignette</a></li>
+    </ul>
+  </div>
+
+  <!-- SECTION 0: LEARNING OUTCOMES -->
+  <div class="chapter" id="s0">
+    <div class="chapter-header">
+      <div class="chapter-num">0</div>
+      <div class="chapter-title">Learning Outcomes</div>
+    </div>
+    <p class="prose">Setelah menyelesaikan modul ini, kandidat diharapkan mampu:</p>
+    <ul class="num-list">
+      <li>Mendeskripsikan algoritma unsupervised machine learning — termasuk principal components analysis (PCA), k-means clustering, dan hierarchical clustering — serta menentukan jenis masalah yang paling cocok untuk masing-masing.</li>
+      <li>Mendeskripsikan neural networks, deep learning networks, dan reinforcement learning serta mengidentifikasi aplikasinya dalam investasi dan keuangan.</li>
+      <li>Mendeskripsikan proses persiapan, wrangling, dan eksplorasi data berbasis teks untuk analisis machine learning, termasuk tokenization, normalization, bag-of-words, dan document term matrix.</li>
+    </ul>
+  </div>
+
+  <!-- SECTION 1: UNSUPERVISED LEARNING OVERVIEW -->
+  <div class="chapter" id="s1">
+    <div class="chapter-header">
+      <div class="chapter-num">1</div>
+      <div class="chapter-title">Unsupervised Learning: Dimension Reduction & Clustering</div>
+    </div>
+
+    <div class="sub-header">Apa Itu Unsupervised Learning?</div>
+    <p class="prose">Unsupervised learning adalah machine learning yang <strong>tidak menggunakan data berlabel</strong>. Secara formal, kita hanya memiliki inputs (X's) yang dianalisis tanpa target variable (Y). Karena algoritma tidak diberikan labeled training data, algoritma berusaha menemukan <strong>struktur tersembunyi di dalam data itu sendiri</strong>. Hal ini menjadikan unsupervised learning sangat berguna untuk eksplorasi dataset baru karena dapat memberikan insights tentang dataset yang terlalu besar atau kompleks untuk divisualisasi oleh manusia.</p>
+
+    <p class="prose">Dua jenis masalah utama yang cocok untuk unsupervised ML:</p>
+    <ul class="num-list">
+      <li><strong>Dimension reduction</strong> — mengurangi jumlah features sambil mempertahankan variasi antar observasi untuk melestarikan informasi yang terkandung dalam variasi tersebut. Digunakan dalam manajemen investasi dan risiko untuk mengidentifikasi faktor-faktor prediktif yang mendasari pergerakan harga aset.</li>
+      <li><strong>Clustering</strong> — mengelompokkan observasi ke dalam kelompok (cluster) sehingga observasi dalam cluster yang sama lebih mirip satu sama lain daripada observasi di cluster lain. Digunakan oleh asset managers untuk mengelompokkan perusahaan berdasarkan data, bukan berdasarkan klasifikasi konvensional (sektor/negara).</li>
+    </ul>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit — Panduan Algoritma ML: Supervised vs Unsupervised</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th style="text-align:left;">Tipe Variabel</th><th style="text-align:left;">Supervised (ada Target Y)</th><th style="text-align:left;">Unsupervised (tanpa Target Y)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Continuous</td><td style="text-align:left;">Penalized Regression/LASSO, CART, Random Forest</td><td style="text-align:left;">PCA (Dimension Reduction), K-Means, Hierarchical (Clustering)</td></tr>
+            <tr><td>Categorical</td><td style="text-align:left;">Logistic, SVM, KNN, CART</td><td style="text-align:left;">PCA, K-Means, Hierarchical</td></tr>
+            <tr><td>Cont. or Cat.</td><td style="text-align:left;">Neural Networks, Deep Learning</td><td style="text-align:left;">Neural Networks, Deep Learning</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout blue">
+      <div class="callout-title">Catatan Penting</div>
+      <p>Perhatikan bahwa neural networks dan deep learning bisa digunakan baik untuk supervised maupun unsupervised tasks. Reinforcement learning, di mana komputer belajar dari interaksi dengan dirinya sendiri atau data yang dihasilkan oleh algoritma yang sama, merupakan kategori ketiga yang berbeda.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Apa perbedaan mendasar antara unsupervised learning dan supervised learning dalam hal data yang digunakan?</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show')">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          <strong>Supervised learning menggunakan labeled data</strong> (memiliki target variable Y dan features X), sehingga algoritma dilatih untuk memprediksi Y berdasarkan X. <strong>Unsupervised learning hanya memiliki inputs X tanpa target Y</strong>, sehingga algoritma harus menemukan struktur atau pola tersembunyi dalam data itu sendiri — misalnya melalui clustering (pengelompokan) atau dimension reduction (pengurangan dimensi).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: PCA -->
+  <div class="chapter" id="s2">
+    <div class="chapter-header">
+      <div class="chapter-num">2</div>
+      <div class="chapter-title">Principal Components Analysis (PCA)</div>
+    </div>
+
+    <div class="sub-header">Konsep Dasar PCA</div>
+    <p class="prose">Principal Components Analysis (PCA) adalah metode statistik yang sudah mapan untuk <strong>dimension reduction</strong>. PCA digunakan untuk meringkas atau mentransformasi features yang saling berkorelasi tinggi menjadi beberapa variabel komposit utama yang <strong>tidak berkorelasi (uncorrelated)</strong>. Variabel komposit adalah variabel yang menggabungkan dua atau lebih variabel yang secara statistik berkorelasi kuat satu sama lain.</p>
+
+    <p class="prose">PCA melibatkan transformasi matriks kovarians dari features dan dua konsep kunci:</p>
+    <ul class="bullet-list">
+      <li><strong>Eigenvectors</strong> — mendefinisikan variabel komposit baru yang saling uncorrelated dan merupakan kombinasi linear dari features asli. Setiap eigenvector juga merepresentasikan sebuah <em>arah</em> dalam ruang data.</li>
+      <li><strong>Eigenvalues</strong> — memberikan proporsi total variance dalam data awal yang dijelaskan oleh setiap eigenvector. Semakin besar eigenvalue, semakin banyak variance yang dijelaskan.</li>
+    </ul>
+
+    <div class="formula-block">
+      <span class="label">Konsep Utama PCA</span>
+      PC1 = w₁₁X₁ + w₁₂X₂ + ... + w₁ₙXₙ  (eigenvalue terbesar)
+      <br>PC2 = w₂₁X₁ + w₂₂X₂ + ... + w₂ₙXₙ  (eigenvalue kedua terbesar)
+      <br>...
+      <br>PC1 ⊥ PC2 ⊥ PC3 ...  (saling orthogonal/uncorrelated)
+      <span class="note">Algoritma PCA mengurutkan eigenvectors dari eigenvalue tertinggi ke terendah — yaitu berdasarkan kegunaannya dalam menjelaskan total variance data awal.</span>
+    </div>
+
+    <div class="sub-header">Bagaimana PCA Bekerja</div>
+    <p class="prose">Bayangkan dataset dengan tiga features (x, y, z) yang diplot dalam tiga dimensi. Setiap data point memiliki pengukuran (x, y, z), dan data harus distandardisasi (mean = 0, std = 1 untuk setiap series). PCA menemukan <strong>PC1</strong> dengan memilih garis di mana: (1) jumlah projection error (jarak tegak lurus data point ke PC1) <em>diminimalkan</em>, dan (2) jumlah spread (jarak data point sepanjang arah PC1) <em>dimaksimalkan</em>. Hasilnya: PC1 adalah vektor unik yang menjelaskan proporsi terbesar dari variance data awal. PC2 tegak lurus terhadap PC1 dan menjelaskan porsi terbesar dari variance yang tersisa.</p>
+
+    <div class="sub-header">Scree Plot: Berapa PC yang Harus Dipertahankan?</div>
+    <p class="prose">Ada trade-off antara representasi berdimensi rendah yang lebih mudah dikelola (ketika sedikit PC dipilih) dan hilangnya sebagian informasi. <strong>Scree plot</strong> menunjukkan proporsi total variance yang dijelaskan oleh setiap PC. Dalam praktik, jumlah PC minimum yang harus dipertahankan adalah yang menjelaskan proporsi total variance yang diinginkan — biasanya <strong>85% hingga 95%</strong>.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit — Contoh Scree Plot: DLC 500 Index</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th style="text-align:left;">Principal Component</th><th>% Variance Explained</th><th>Cumulative %</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>PC1</td><td>43%</td><td>43%</td></tr>
+            <tr><td>PC2</td><td>26%</td><td>69%</td></tr>
+            <tr><td>PC3</td><td>21%</td><td class="sig">90%</td></tr>
+            <tr><td>PC4</td><td>4%</td><td>94%</td></tr>
+            <tr><td>PC5+</td><td>&lt;3% each</td><td>→ 100%</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:12px;color:var(--text3);margin-top:8px;">Dengan 3 PC, sudah menjelaskan ~90% variance → cukup untuk sebagian besar aplikasi.</p>
+      </div>
+    </div>
+
+    <div class="sub-header">Kelebihan dan Kelemahan PCA</div>
+    <p class="prose"><strong>Kelebihan:</strong> PCA sangat efektif dalam (1) mengurangi dimensi dataset yang kompleks, (2) mengatasi multicollinearity, (3) mempercepat training model ML lain, dan (4) mengurangi risiko overfitting (menghindari "curse of dimensionality"). Dimension reduction biasanya dilakukan sebagai bagian dari <strong>exploratory data analysis</strong>, sebelum training model supervised atau unsupervised lainnya.</p>
+
+    <p class="prose"><strong>Kelemahan utama:</strong> Karena principal components adalah <em>kombinasi</em> dari features awal, mereka biasanya tidak bisa diberi label atau diinterpretasi secara langsung oleh analis. Dibandingkan modeling data dengan variabel yang merepresentasikan konsep yang jelas, pengguna akhir PCA mungkin menganggap PCA sebagai sesuatu yang bersifat <strong>"black box"</strong>.</p>
+
+    <div class="callout amber">
+      <div class="callout-title">Peringatan Exam</div>
+      <p>PCA menghasilkan variabel komposit (principal components) yang TIDAK BISA langsung diinterpretasi — ini kelemahan utamanya. Jangan bingung antara PCA (unsupervised, dimension reduction) dengan penalized regression (supervised, feature selection). LASSO melakukan feature selection dengan membuat koefisien = 0, sedangkan PCA menciptakan variabel baru yang merupakan kombinasi dari semua features.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Seorang analis menerapkan PCA pada dataset return 200 saham dengan 50 features fundamental. 5 principal components pertama menjelaskan 92% total variance. Berapa banyak PC yang sebaiknya dipertahankan, dan mengapa?</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show')">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          <strong>5 principal components sudah cukup</strong> karena menjelaskan 92% total variance, yang berada dalam rentang yang direkomendasikan (85-95%). Mempertahankan lebih banyak PC akan menambah sedikit informasi tetapi meningkatkan kompleksitas model. Analis dapat memverifikasi keputusan ini dengan melihat scree plot — jika kontribusi inkremental PC keenam dan seterusnya sangat kecil, maka 5 PC sudah memadai.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: K-MEANS CLUSTERING -->
+  <div class="chapter" id="s3">
+    <div class="chapter-header">
+      <div class="chapter-num">3</div>
+      <div class="chapter-title">K-Means Clustering</div>
+    </div>
+
+    <div class="sub-header">Prinsip Dasar K-Means</div>
+    <p class="prose">K-means adalah algoritma yang secara berulang (iteratif) mempartisi observasi ke dalam jumlah cluster tetap, k, yang <strong>non-overlapping</strong>. Angka k adalah <strong>hyperparameter</strong> yang harus ditentukan sebelum menjalankan algoritma. Setiap cluster dikarakterisasi oleh <strong>centroid</strong> (pusat), dan setiap observasi ditugaskan ke cluster dengan centroid terdekat.</p>
+
+    <div class="sub-header">Langkah-Langkah Algoritma K-Means</div>
+    <ul class="num-list">
+      <li><strong>Inisialisasi:</strong> Tentukan posisi k centroid awal secara random.</li>
+      <li><strong>Assignment:</strong> Analisis features setiap observasi. Berdasarkan distance measure yang digunakan, tugaskan setiap observasi ke centroid terdekatnya — ini mendefinisikan cluster.</li>
+      <li><strong>Update:</strong> Hitung centroid baru untuk setiap cluster, di mana centroid adalah rata-rata dari semua observasi yang ditugaskan ke cluster tersebut.</li>
+      <li><strong>Reassignment:</strong> Tugaskan ulang observasi ke centroid baru, mendefinisikan ulang cluster.</li>
+      <li><strong>Iterasi:</strong> Ulangi proses update dan reassignment sampai tidak ada observasi yang berpindah cluster (konvergensi). Algoritma telah meminimalkan intra-cluster distance (memaksimalkan cohesion) dan memaksimalkan inter-cluster distance (memaksimalkan separation).</li>
+    </ul>
+
+    <div class="sub-header">Kelebihan dan Keterbatasan</div>
+    <p class="prose"><strong>Kelebihan:</strong> K-means cepat dan bekerja baik pada dataset sangat besar (ratusan juta observasi). Ini menjadikannya salah satu algoritma yang paling banyak digunakan dalam praktik investasi, terutama untuk data exploration dan sebagai alternatif dari klasifikasi industri statis.</p>
+
+    <p class="prose"><strong>Keterbatasan:</strong></p>
+    <ul class="bullet-list">
+      <li><strong>Sensitivitas terhadap centroid awal:</strong> Assignment akhir bisa bergantung pada posisi centroid awal yang random. Solusi: jalankan algoritma beberapa kali dengan centroid awal berbeda, pilih clustering yang paling berguna.</li>
+      <li><strong>k harus ditentukan di awal:</strong> Analis harus memiliki sense tentang berapa banyak cluster yang reasonable. Alternatif: jalankan algoritma dengan berbagai nilai k, pilih k yang optimal berdasarkan cohesion dan separation.</li>
+      <li><strong>Tidak ada hubungan antar cluster:</strong> Setelah cluster terbentuk, tidak ada defined relationship di antara mereka — berbeda dengan hierarchical clustering.</li>
+    </ul>
+
+    <div class="callout blue">
+      <div class="callout-title">Aplikasi Investasi</div>
+      <p>K-means dapat digunakan untuk mengelompokkan 3.000 saham Russell 3000 berdasarkan karakteristik finansial (total assets, revenue, profitabilitas, leverage) dan operasional (headcount, R&D intensity). Karena perusahaan dalam klasifikasi industri yang sama bisa sangat berbeda, k-means dapat mengungkap "peer group" yang lebih bermakna.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Seorang portfolio manager menjalankan k-means clustering (k=5) pada 500 saham dua kali dan mendapatkan hasil cluster yang berbeda setiap kali. Apa penyebab paling mungkin dan bagaimana mengatasinya?</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show')">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          <strong>Penyebab:</strong> K-means memulai dengan centroid awal yang random. Posisi awal yang berbeda bisa menyebabkan konvergensi ke local optima yang berbeda, menghasilkan cluster assignment yang berbeda. <strong>Solusi:</strong> Jalankan algoritma beberapa kali (misalnya 50-100 kali) dengan centroid awal yang berbeda, kemudian pilih clustering yang paling berguna berdasarkan business purpose (face validity) — apakah cluster-nya masuk akal dan interpretable.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: HIERARCHICAL CLUSTERING -->
+  <div class="chapter" id="s4">
+    <div class="chapter-header">
+      <div class="chapter-num">4</div>
+      <div class="chapter-title">Hierarchical Clustering & Dendrogram</div>
+    </div>
+
+    <div class="sub-header">Agglomerative vs Divisive</div>
+    <p class="prose">Hierarchical clustering adalah prosedur iteratif yang membangun <strong>hierarki</strong> cluster. Berbeda dengan k-means yang mengharuskan k ditentukan sebelumnya, hierarchical clustering menciptakan seluruh hierarki mulai dari individual clusters hingga satu cluster besar (atau sebaliknya), sehingga analis bisa memeriksa berbagai tingkat granularitas sebelum memutuskan segmentasi mana yang digunakan.</p>
+
+    <p class="prose">Ada dua pendekatan:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit — Perbandingan Agglomerative vs Divisive Clustering</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th style="text-align:left;">Aspek</th><th style="text-align:left;">Agglomerative (Bottom-Up)</th><th style="text-align:left;">Divisive (Top-Down)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Titik Awal</td><td style="text-align:left;">Setiap observasi = cluster sendiri</td><td style="text-align:left;">Semua observasi = satu cluster besar</td></tr>
+            <tr><td>Proses</td><td style="text-align:left;">Gabungkan 2 cluster terdekat, ulangi sampai 1 cluster</td><td style="text-align:left;">Bagi cluster terbesar, ulangi sampai tiap observasi = 1 cluster</td></tr>
+            <tr><td>Kecepatan</td><td style="text-align:left;">Lebih cepat — cocok untuk large datasets</td><td style="text-align:left;">Lebih lambat</td></tr>
+            <tr><td>Keunggulan</td><td style="text-align:left;">Baik untuk menemukan cluster <em>kecil</em> (keputusan berbasis pola lokal)</td><td style="text-align:left;">Baik untuk menemukan cluster <em>besar</em> (mempertimbangkan global structure)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">Dendrogram: Visualisasi Hierarki</div>
+    <p class="prose"><strong>Dendrogram</strong> adalah diagram pohon yang memvisualisasikan hasil hierarchical clustering. Sumbu x menunjukkan cluster, dan sumbu y menunjukkan distance measure. Cluster direpresentasikan oleh garis horizontal yang disebut <strong>arch</strong>, yang menghubungkan dua garis vertikal yang disebut <strong>dendrites</strong>. Tinggi setiap arch merepresentasikan jarak antara dua cluster yang digabungkan — semakin pendek dendrite, semakin mirip cluster-nya.</p>
+
+    <p class="prose">Garis horizontal putus-putus yang memotong dendrites menunjukkan jumlah cluster yang dihasilkan pada setiap tahap. Analis dapat "memotong" dendrogram pada level yang diinginkan untuk memilih jumlah cluster yang optimal — dari segmentasi sangat granular (banyak cluster kecil) hingga segmentasi kasar (sedikit cluster besar).</p>
+
+    <div class="callout blue">
+      <div class="callout-title">Aplikasi: Diversifikasi Portofolio</div>
+      <p>Clustering dapat digunakan untuk mendekati masalah diversifikasi portofolio. Tujuannya adalah mendiversifikasi risiko secara optimal dengan berinvestasi pada aset dari <strong>berbagai cluster yang berbeda</strong>. Karena cluster-cluster memiliki inter-cluster separation maksimal, diversifikasi di antara mereka membantu memastikan portofolio mencerminkan karakteristik yang beragam dengan risiko yang terdiversifikasi baik. Sebaliknya, konsentrasi investasi dalam satu cluster mengindikasikan probabilitas tinggi adanya concentrated risk.</p>
+    </div>
+
+    <div class="sub-header">K-Means vs Hierarchical: Kapan Memilih yang Mana?</div>
+    <p class="prose">Gunakan <strong>k-means</strong> jika: dataset sangat besar, kecepatan penting, dan analis sudah memiliki perkiraan berapa jumlah cluster yang reasonable. Gunakan <strong>hierarchical clustering</strong> jika: jumlah cluster optimal tidak diketahui dan analis ingin memeriksa berbagai level granularitas melalui dendrogram sebelum memutuskan. Dalam praktik, kedua metode sering digunakan bersama — hierarchical untuk eksplorasi awal, kemudian k-means untuk partisi final pada dataset besar.</p>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Chief risk officer ingin mengelompokkan 600 saham STOXX Europe berdasarkan 8 karakteristik operasional dan finansial, tetapi tidak tahu berapa kelompok yang optimal. Analyst menyarankan hierarchical clustering. Apa justifikasi terbaik untuk pilihan ini?</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show')">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          <strong>Justifikasi utama:</strong> Hierarchical clustering tidak memerlukan penentuan jumlah cluster (k) di awal — ini berbeda dengan k-means yang memerlukan k sebagai hyperparameter. Dengan hierarchical clustering, analis dapat memeriksa dendrogram dan memilih jumlah cluster yang paling masuk akal secara bisnis, tanpa harus menebak k terlebih dahulu. Ini sangat penting ketika jumlah kelompok yang optimal tidak diketahui.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: NEURAL NETWORKS & DNN -->
+  <div class="chapter" id="s5">
+    <div class="chapter-header">
+      <div class="chapter-num">5</div>
+      <div class="chapter-title">Neural Networks & Deep Neural Networks</div>
+    </div>
+
+    <div class="sub-header">Arsitektur Neural Network</div>
+    <p class="prose">Neural networks (juga disebut artificial neural networks/ANNs) adalah jenis algoritma ML yang sangat fleksibel, berhasil diterapkan pada berbagai task yang ditandai oleh <strong>non-linearities dan interaksi kompleks antar features</strong>. NN umumnya digunakan untuk classification dan regression dalam supervised learning tetapi juga penting dalam reinforcement learning.</p>
+
+    <p class="prose">Arsitektur NN terdiri dari tiga jenis layer:</p>
+    <ul class="num-list">
+      <li><strong>Input Layer:</strong> Menerima inputs (features), memiliki node sebanyak dimensi feature set.</li>
+      <li><strong>Hidden Layer(s):</strong> Tempat "learning" terjadi selama training. Setiap node (kadang disebut "neuron") terdiri dari dua bagian fungsional: <em>summation operator</em> dan <em>activation function</em>.</li>
+      <li><strong>Output Layer:</strong> Menghasilkan prediksi — bisa berupa nilai continuous (regresi) atau probabilitas kelas (klasifikasi).</li>
+    </ul>
+
+    <div class="sub-header">Summation Operator & Activation Function</div>
+    <p class="prose">Setiap node menerima input dari node-node sebelumnya melalui <strong>links</strong> (koneksi), masing-masing dengan <strong>weight</strong> yang merepresentasikan kepentingannya. <strong>Summation operator</strong> mengalikan setiap input dengan weight-nya dan menjumlahkan hasilnya menjadi <em>total net input</em>. Total net input ini kemudian diproses oleh <strong>activation function</strong>, yang mentransformasi input secara non-linear menjadi output node.</p>
+
+    <div class="formula-block">
+      <span class="label">Activation Functions yang Umum</span>
+      ReLU: f(x) = max(0, x)
+      <br>  → Input negatif → output 0 (node tidak trigger)
+      <br>  → Input positif → output = input
+      <br>
+      <br>Sigmoid: f(x) = 1/(1 + e⁻ˣ)
+      <br>  → Output range (0, 1)
+      <br>  → Cocok untuk classification (probabilitas)
+      <span class="note">Activation function bersifat non-linear — ini yang memungkinkan NN menangkap hubungan non-linear yang tidak bisa ditangkap regresi linear.</span>
+    </div>
+
+    <div class="sub-header">Training: Forward & Backward Propagation</div>
+    <p class="prose">Training NN dalam konteks supervised learning adalah proses iteratif:</p>
+    <ul class="num-list">
+      <li><strong>Forward propagation:</strong> Input diproses melalui hidden layers ke output layer, menghasilkan prediksi.</li>
+      <li><strong>Error evaluation:</strong> Prediksi dibandingkan dengan nilai aktual menggunakan performance measure (misalnya mean squared error).</li>
+      <li><strong>Backward propagation:</strong> Network weights disesuaikan untuk mengurangi total error, bekerja mundur melalui layers.</li>
+      <li><strong>Iterasi:</strong> Proses diulang sampai total error diminimalkan.</li>
+    </ul>
+
+    <div class="formula-block">
+      <span class="label">Update Rule untuk Network Weights</span>
+      New weight = Old weight − (Learning rate) × ∂(Total error) / ∂(Old weight)
+      <span class="note">Learning rate adalah hyperparameter yang mengontrol besarnya penyesuaian. Terlalu besar → gagal konvergen. Terlalu kecil → training sangat lambat.</span>
+    </div>
+
+    <div class="sub-header">Deep Neural Networks (DNNs)</div>
+    <p class="prose">"Shallow" neural networks hanya memiliki satu hidden layer. <strong>Deep neural networks (DNNs)</strong> memiliki banyak hidden layers — minimal 2 tetapi bisa lebih dari 20. DNN adalah fondasi <strong>deep learning</strong> dan telah terbukti berhasil di berbagai aplikasi AI yang kompleks: image/pattern/speech recognition, NLP, machine translation, credit card fraud detection, autonomous vehicles, dan option pricing.</p>
+
+    <p class="prose">Keberhasilan DNN didorong oleh tiga perkembangan: (1) ketersediaan data dalam jumlah besar, (2) kemajuan metode analitis, dan (3) komputer cepat (terutama GPU). Dalam keuangan, DNN telah digunakan untuk memodelkan harga opsi (meniru BSM), mendeteksi style drift dalam fund management, dan membangun equity factor models.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit — Hyperparameters Neural Network</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th style="text-align:left;">Hyperparameter</th><th style="text-align:left;">Deskripsi</th><th style="text-align:left;">Dampak</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Jumlah hidden layers</td><td style="text-align:left;">Menentukan "kedalaman" network</td><td style="text-align:left;">Lebih banyak → lebih mampu handle complexity, tapi risiko overfitting naik</td></tr>
+            <tr><td>Nodes per hidden layer</td><td style="text-align:left;">Menentukan "lebar" setiap layer</td><td style="text-align:left;">Lebih banyak → lebih ekspresif, tapi komputasi lebih berat</td></tr>
+            <tr><td>Activation function</td><td style="text-align:left;">Jenis transformasi non-linear</td><td style="text-align:left;">ReLU (paling umum), Sigmoid, Tanh</td></tr>
+            <tr><td>Learning rate</td><td style="text-align:left;">Besarnya penyesuaian weight per iterasi</td><td style="text-align:left;">Terlalu besar → diverge. Terlalu kecil → sangat lambat.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">Reinforcement Learning (RL)</div>
+    <p class="prose">Reinforcement learning melibatkan <strong>agent</strong> yang dirancang untuk melakukan actions yang memaksimalkan rewards-nya dari waktu ke waktu, dengan mempertimbangkan constraints dari environment-nya. Berbeda dengan supervised learning, RL tidak memiliki labeled data langsung atau feedback instan — algoritma harus mengamati environment, belajar dengan menguji actions baru, dan menggunakan kembali pengalaman sebelumnya. Learning terjadi melalui jutaan trials and errors. Dalam investasi, RL diaplikasikan di mana agent = virtual trader, actions = trading rules, environment = pasar, reward = profit.</p>
+
+    <div class="callout amber">
+      <div class="callout-title">Peringatan Exam</div>
+      <p>Trade-off utama NN/DNN: (1) <strong>Black box</strong> — sulit diinterpretasi. (2) <strong>Data-hungry</strong> — butuh dataset sangat besar. (3) <strong>Computationally intensive</strong> — training mahal. Jadi NN bukan selalu pilihan terbaik — untuk dataset kecil atau ketika interpretability penting (misalnya presentasi ke board), CART atau LASSO bisa lebih cocok. Jangan sampai memilih NN hanya karena "lebih canggih" tanpa mempertimbangkan trade-off ini.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Apa tiga fungsi utama dari tiga jenis layer dalam deep neural network?</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show')">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          <strong>(1) Input layer</strong> menerima inputs (features) dan memiliki node sebanyak dimensi feature set. <strong>(2) Hidden layers</strong> terdiri dari nodes yang menjalankan summation operator dan activation function — di sinilah model dipelajari. <strong>(3) Output layer</strong> menghasilkan probabilitas observasi berada di setiap kategori target (masing-masing direpresentasikan oleh node). DNN menugaskan observasi ke kategori dengan probabilitas tertinggi. Misalnya, jika ada 3 kategori target, output bisa berupa (0.7, 0.2, 0.1), dan observasi ditugaskan ke kategori pertama.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: NLP -->
+  <div class="chapter" id="s6">
+    <div class="chapter-header">
+      <div class="chapter-num">6</div>
+      <div class="chapter-title">Natural Language Processing (NLP): Text Processing & Sentiment</div>
+    </div>
+
+    <div class="sub-header">Mengapa NLP Penting dalam Finance?</div>
+    <p class="prose">Data berbasis teks — earnings calls transcripts, press releases, financial filings, berita — mengandung informasi yang sangat berharga untuk analisis investasi. Masalahnya, data teks bersifat <strong>unstructured</strong> dan tidak bisa langsung diproses oleh algoritma ML. <strong>Natural Language Processing (NLP)</strong> menjembatani gap ini dengan mengubah data teks menjadi format terstruktur yang bisa dianalisis. Kemajuan signifikan dalam NLP telah memungkinkan aplikasi seperti sentiment classification pada financial texts — misalnya, mengklasifikasikan press releases sebagai positif (sinyal "good news") atau negatif menggunakan logistic regression.</p>
+
+    <div class="sub-header">Text Preparation (Cleansing)</div>
+    <p class="prose">Raw text data adalah serangkaian karakter yang mengandung elemen tidak berguna: HTML tags, punctuation, dan white spaces (termasuk tabs, line breaks). Langkah-langkah cleansing:</p>
+    <ul class="num-list">
+      <li><strong>Remove HTML tags:</strong> Sebagian besar data teks diambil dari web dan mewarisi HTML markup tags. Gunakan regular expressions (regex) untuk mengidentifikasi dan menghapus tags. Contoh: regex <code>&lt;.*?&gt;</code> untuk menemukan semua HTML tags.</li>
+      <li><strong>Remove punctuation:</strong> Sebagian besar punctuation tidak diperlukan untuk text analysis. Namun, beberapa simbol penting (%, $, ?) sebaiknya disubstitusi dengan annotations (misalnya /percentSign/, /dollarSign/) untuk mempertahankan makna semantik.</li>
+      <li><strong>Remove numbers:</strong> Angka diganti dengan annotation /number/ kecuali jika tujuannya adalah information extraction di mana nilai numerik aktual dibutuhkan.</li>
+      <li><strong>Remove white spaces:</strong> Identifikasi dan hapus extra white spaces, tab spaces, dan leading/ending spaces.</li>
+    </ul>
+
+    <div class="sub-header">Text Wrangling (Preprocessing): Tokenization & Normalization</div>
+    <p class="prose"><strong>Token</strong> setara dengan kata, dan <strong>tokenization</strong> adalah proses memecah teks menjadi token-token terpisah. Tokenization biasanya dilakukan pada level kata. Setelah tokenization, teks dinormalisasi melalui langkah-langkah berikut:</p>
+    <ul class="num-list">
+      <li><strong>Lowercasing:</strong> Menghilangkan perbedaan antara huruf besar/kecil ("The" dan "the" jadi sama).</li>
+      <li><strong>Stop word removal:</strong> Menghapus kata-kata umum ("the", "is", "a") yang tidak membawa makna semantik. Daftar stop words tersedia di bahasa pemrograman dan bisa ditambah sesuai konteks (misalnya "exhibit" dalam financial filings).</li>
+      <li><strong>Stemming:</strong> Mengubah kata berfleksi ke bentuk dasar (stem) menggunakan rule-based approach. Contoh: "analyzed" → "analyz", "analyzing" → "analyz". Metode paling populer: Porter's algorithm. Hasilnya belum tentu linguistically correct.</li>
+      <li><strong>Lemmatization:</strong> Mengubah kata berfleksi ke morphological root (lemma) menggunakan algorithmic approach. Contoh: "analyzed" → "analyze", "analyzing" → "analyze". Lebih akurat dari stemming tetapi computationally lebih mahal.</li>
+    </ul>
+
+    <div class="callout blue">
+      <div class="callout-title">Stemming vs Lemmatization</div>
+      <p>Keduanya mengurangi repetisi kata dalam berbagai bentuk dan mempertahankan struktur semantik teks. Stemming lebih umum dalam bahasa Inggris karena lebih sederhana. Kedua teknik mengurangi <strong>data sparseness</strong> — yaitu kondisi di mana banyak kata unik muncul sangat jarang — dengan mengagregasi banyak kata sparse menjadi stems atau lemmas yang kurang sparse, sehingga membantu training model ML yang kurang kompleks.</p>
+    </div>
+
+    <div class="sub-header">Bag-of-Words (BOW) & Document Term Matrix (DTM)</div>
+    <p class="prose">Setelah normalisasi, <strong>bag-of-words (BOW)</strong> dibuat. BOW adalah kumpulan token unik dari semua teks dalam sample dataset. BOW <strong>tidak menangkap posisi atau urutan kata</strong> dalam teks — ini kelemahan utamanya. Namun, BOW efisien dalam penggunaan memori dan mudah dikelola.</p>
+
+    <p class="prose">Langkah terakhir preprocessing adalah membangun <strong>document term matrix (DTM)</strong> dari BOW. DTM adalah matriks di mana setiap <strong>baris</strong> = dokumen (teks file), setiap <strong>kolom</strong> = token, dan setiap <strong>sel</strong> = jumlah kemunculan token dalam dokumen tersebut. DTM mengubah data teks unstructured menjadi data terstruktur yang siap diproses dan digunakan untuk training model ML.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit — Contoh Proses BOW & DTM</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th style="text-align:left;">Tahap</th><th style="text-align:left;">Contoh BOW</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Sebelum normalisasi</td><td style="text-align:left;">"The", "man", "the", "market", "Market", "values", "Increased", "marketing", ...</td></tr>
+            <tr><td>Setelah lowercasing</td><td style="text-align:left;">"the", "man", "market", "values", "increased", "marketing", ...</td></tr>
+            <tr><td>Setelah remove stop words</td><td style="text-align:left;">"man", "market", "values", "increased", "marketing", "needed", "product"</td></tr>
+            <tr><td>Setelah stemming</td><td style="text-align:left;">"man", "went", "market", "today", "valu", "increas", "need", "product"</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:12px;color:var(--text3);margin-top:8px;">Perhatikan bagaimana jumlah token berkurang setiap tahap → BOW lebih kecil dan sederhana → DTM berdimensi lebih rendah → ML training lebih efisien.</p>
+      </div>
+    </div>
+
+    <div class="callout amber">
+      <div class="callout-title">Peringatan Exam</div>
+      <p>BOW tidak menangkap urutan kata — hanya frekuensi. Urutan cleansing penting: jika punctuation dihapus sebelum numbers, "1.2 million" menjadi "12 million" (angka desimal hilang). Selalu perhatikan urutan operasi cleansing untuk menghindari perubahan makna yang tidak diinginkan.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Jelaskan perbedaan antara stemming dan lemmatization. Dalam konteks apa stemming lebih dipilih?</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show')">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          <strong>Stemming</strong> menggunakan rule-based approach untuk mengubah kata ke bentuk dasar (stem). Hasilnya belum tentu linguistically correct — misalnya "analyzed" → "analyz" (bukan kata asli). <strong>Lemmatization</strong> menggunakan algorithmic approach berbasis pengetahuan bahasa untuk menghasilkan morphological root — misalnya "analyzed" → "analyze" (kata asli). Stemming lebih dipilih ketika: (1) kecepatan penting karena stemming computationally lebih murah, (2) akurasi linguistik tidak kritis, dan (3) bekerja dengan bahasa Inggris di mana stemming sudah cukup efektif. Lemmatization lebih baik ketika akurasi linguistik penting atau untuk aplikasi NLP yang lebih advanced.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 7: PRACTICE VIGNETTE -->
+  <div class="chapter" id="s7">
+    <div class="practice-header">
+      <div style="flex:1;">
+        <div class="practice-header-title">Latihan Soal — Item Set Vignette</div>
+        <div class="practice-header-sub">6 soal · CFA exam difficulty · Pilih jawaban terbaik</div>
+      </div>
+    </div>
+
+    <div class="practice-body">
+
+      <div class="vignette">
+        <div class="vignette-label">Vignette — PT Bahana Sekuritas: Modernisasi Riset Kuantitatif</div>
+        Rizky Hakim, CFA, adalah head of quantitative strategies di PT Bahana Sekuritas. Timnya ditugaskan membangun platform analytics untuk 150 saham IDX30 dan LQ45 menggunakan machine learning. Mereka mengerjakan empat inisiatif:<br><br>
+        <strong>Inisiatif A — Faktor Risiko:</strong> Tim memiliki dataset return 150 saham dengan 60 features (rasio fundamental, teknikal, makroekonomi). Banyak features yang saling berkorelasi tinggi. Tim menerapkan PCA dan menghasilkan scree plot berikut:<br>
+        • PC1: 38% variance, PC2: 22%, PC3: 17%, PC4: 9%, PC5: 5%, PC6-PC60: masing-masing &lt;2%.<br><br>
+        <strong>Inisiatif B — Clustering Saham:</strong> Tim ingin mengelompokkan 150 saham ke dalam peer groups berdasarkan 12 features finansial, tapi tidak tahu berapa jumlah kelompok yang optimal. Analis junior, Dina Safira, menyarankan menggunakan k-means karena lebih cepat. Analis senior, Bayu Pratama, menyarankan hierarchical clustering.<br><br>
+        <strong>Inisiatif C — Prediksi Default:</strong> Tim membangun neural network untuk memprediksi default obligasi korporasi. Arsitektur: 20 features input, 2 hidden layers (64 dan 32 nodes masing-masing), 1 output node (probabilitas default). Activation function: ReLU di hidden layers, sigmoid di output. Setelah training, model menunjukkan in-sample accuracy 96% tetapi out-of-sample hanya 72%.<br><br>
+        <strong>Inisiatif D — Sentiment Earnings Calls:</strong> Tim mengunduh 8.000 transkrip earnings calls perusahaan IDX. Pipeline NLP: text cleansing → tokenization → normalization (lowercasing, stop word removal, stemming) → bag-of-words → document term matrix. DTM digunakan sebagai input logistic regression untuk mengklasifikasikan sentiment. Hasil: 15.000 unique tokens sebelum normalization berkurang menjadi 6.200 setelah normalization.
+      </div>
+
+      <div class="question-block" id="qb0">
+        <div class="q-num">Soal 1 / 6</div>
+        <div class="q-text">Berdasarkan scree plot Inisiatif A, jumlah principal components yang paling tepat dipertahankan adalah:</div>
+        <button class="option" onclick="answer(0,'A','B')">A. 2 PC (menjelaskan 60% total variance)</button>
+        <button class="option" onclick="answer(0,'B','B')">B. 4 PC (menjelaskan 86% total variance)</button>
+        <button class="option" onclick="answer(0,'C','B')">C. 6 PC (menjelaskan 93% total variance)</button>
+        <div class="explanation" id="exp0">
+          <strong>B adalah jawaban yang benar.</strong> Standar praktik: pertahankan PC yang menjelaskan 85-95% total variance. 4 PC menjelaskan 38% + 22% + 17% + 9% = 86%, yang berada dalam rentang yang direkomendasikan. A salah karena 60% terlalu rendah — kehilangan terlalu banyak informasi. C bisa dipertimbangkan (93% lebih tinggi), tetapi PC5 hanya menambah 5% dan PC6 &lt;2% — kontribusi inkremental sudah sangat kecil setelah PC4. Jawaban B paling tepat sebagai jumlah <em>minimum</em> yang optimal mengingat trade-off antara simplicity dan information retention.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb1">
+        <div class="q-num">Soal 2 / 6</div>
+        <div class="q-text">Terkait Inisiatif B, justifikasi terbaik untuk saran Bayu (hierarchical clustering) dibandingkan saran Dina (k-means) adalah:</div>
+        <button class="option" onclick="answer(1,'A','C')">A. Hierarchical clustering lebih cepat dan lebih cocok untuk 150 saham dengan 12 features</button>
+        <button class="option" onclick="answer(1,'B','C')">B. K-means memerlukan data yang berlabel (target variable) sehingga tidak cocok untuk masalah ini</button>
+        <button class="option" onclick="answer(1,'C','C')">C. Karena jumlah cluster optimal tidak diketahui, hierarchical clustering memungkinkan pemeriksaan berbagai level granularitas via dendrogram tanpa perlu menentukan k di awal</button>
+        <div class="explanation" id="exp1">
+          <strong>C adalah jawaban yang benar.</strong> Kunci masalahnya: tim "tidak tahu berapa jumlah kelompok yang optimal." K-means mengharuskan k ditentukan sebagai hyperparameter sebelum algoritma dijalankan. Hierarchical clustering membuat seluruh hierarki, dan analis bisa memeriksa dendrogram untuk memilih segmentasi terbaik. A salah karena hierarchical clustering justru <em>lebih lambat</em>, bukan lebih cepat. B salah karena k-means adalah unsupervised — tidak memerlukan labeled data.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb2">
+        <div class="q-num">Soal 3 / 6</div>
+        <div class="q-text">Neural network pada Inisiatif C menunjukkan in-sample accuracy 96% tapi out-of-sample 72%. Tindakan yang paling tepat untuk memperbaiki performa out-of-sample adalah:</div>
+        <button class="option" onclick="answer(2,'A','A')">A. Mengurangi jumlah hidden layers dan/atau nodes per layer untuk menurunkan kompleksitas model, atau menerapkan regularization</button>
+        <button class="option" onclick="answer(2,'B','A')">B. Menambah jumlah hidden layers menjadi 4 untuk menangkap pola yang lebih kompleks</button>
+        <button class="option" onclick="answer(2,'C','A')">C. Mengganti activation function dari ReLU ke sigmoid di semua layers</button>
+        <div class="explanation" id="exp2">
+          <strong>A adalah jawaban yang benar.</strong> Gap besar antara in-sample (96%) dan out-of-sample (72%) accuracy mengindikasikan <strong>overfitting</strong> — model terlalu kompleks dan menghafal training data. Solusinya: kurangi kompleksitas (fewer layers/nodes) atau terapkan regularization (misalnya dropout). B salah karena menambah layers justru meningkatkan kompleksitas dan memperparah overfitting. C salah karena mengganti activation function tidak mengatasi masalah fundamental overfitting — masalahnya di complexity, bukan di jenis activation function.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb3">
+        <div class="q-num">Soal 4 / 6</div>
+        <div class="q-text">Dalam Inisiatif D, pengurangan dari 15.000 ke 6.200 unique tokens setelah normalization paling besar kontribusinya dari:</div>
+        <button class="option" onclick="answer(3,'A','B')">A. Tokenization, yang memecah kalimat menjadi kata-kata individual</button>
+        <button class="option" onclick="answer(3,'B','B')">B. Stop word removal dan stemming, yang menghilangkan kata umum tidak bermakna dan mengagregasi kata-kata berfleksi ke bentuk dasar</button>
+        <button class="option" onclick="answer(3,'C','B')">C. Text cleansing, yang menghapus HTML tags dan punctuation</button>
+        <div class="explanation" id="exp3">
+          <strong>B adalah jawaban yang benar.</strong> Stop word removal menghilangkan kata-kata frekuensi tinggi yang tidak bermakna ("the", "is", "a", dll.) — ini mengurangi jumlah unique tokens secara signifikan. Stemming mengubah berbagai bentuk kata ke stem yang sama (misalnya "increase", "increased", "increasing" semua menjadi "increas") — ini mengurangi repetisi dan data sparseness. Kombinasi keduanya menghasilkan pengurangan terbesar. A salah karena tokenization <em>menambah</em> jumlah tokens (dari kalimat ke kata). C salah karena text cleansing terutama menghapus elemen non-kata, bukan mengurangi unique word tokens secara signifikan.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb4">
+        <div class="q-num">Soal 5 / 6</div>
+        <div class="q-text">Jika tim di Inisiatif C menggunakan sigmoid activation function di output layer dan model menghasilkan output (0.82) untuk obligasi korporasi tertentu, interpretasi yang paling tepat adalah:</div>
+        <button class="option" onclick="answer(4,'A','A')">A. Model memperkirakan probabilitas default obligasi tersebut sebesar 82%, sehingga obligasi diklasifikasikan sebagai "kemungkinan default"</button>
+        <button class="option" onclick="answer(4,'B','A')">B. Model memperkirakan bahwa 82% dari principal obligasi akan recover jika terjadi default</button>
+        <button class="option" onclick="answer(4,'C','A')">C. Model memperkirakan credit spread obligasi tersebut sebesar 82 basis points</button>
+        <div class="explanation" id="exp4">
+          <strong>A adalah jawaban yang benar.</strong> Sigmoid activation function di output layer menghasilkan output dalam range (0, 1), yang diinterpretasikan sebagai <strong>probabilitas</strong>. Dalam konteks binary classification (default vs non-default), output 0.82 berarti model memperkirakan probabilitas default 82%. B salah karena recovery rate bukan output dari model klasifikasi default. C salah karena credit spread memerlukan model regresi, bukan classification.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb5">
+        <div class="q-num">Soal 6 / 6</div>
+        <div class="q-text">Kelemahan utama dari pendekatan bag-of-words (BOW) yang digunakan dalam pipeline NLP Inisiatif D adalah:</div>
+        <button class="option" onclick="answer(5,'A','B')">A. BOW tidak bisa memproses dokumen dalam bahasa Indonesia karena stop word lists hanya tersedia dalam bahasa Inggris</button>
+        <button class="option" onclick="answer(5,'B','B')">B. BOW tidak menangkap posisi atau urutan kata dalam teks, sehingga informasi kontekstual dan hubungan antar-kata bisa hilang</button>
+        <button class="option" onclick="answer(5,'C','B')">C. BOW memerlukan labeled data (target variable) untuk bekerja, sehingga tidak cocok untuk unsupervised analysis</button>
+        <div class="explanation" id="exp5">
+          <strong>B adalah jawaban yang benar.</strong> BOW hanya mencatat frekuensi kemunculan kata tanpa memperhatikan <strong>posisi atau urutan</strong>. Ini berarti konteks bisa hilang — misalnya "pasar naik tapi profit turun" dan "profit naik tapi pasar turun" akan memiliki BOW yang identik padahal maknanya berbeda. A salah karena stop word lists bisa dikustomisasi untuk bahasa apapun. C salah karena BOW adalah representasi data dan tidak memerlukan labeled data — BOW bisa digunakan baik untuk supervised maupun unsupervised analysis.
+        </div>
+      </div>
+
+      <div class="score-panel" id="score-panel">
+        <div class="score-num" id="score-num">0/6</div>
+        <div class="score-msg" id="score-msg">—</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a class="nav-btn" href="CFA_L2_Day11_Full.html">← Day 11</a>
+    <div class="nav-day">Day 12 of 90<br><span style="font-size:11px;color:var(--text3);">Prev: Supervised Learning · Next: Data Types & Wrangling</span></div>
+    <a class="nav-btn primary" href="CFA_L2_Day13_Full.html">Day 13 →</a>
+  </div>
+
+</div>
+
+<script>
+const answers = {};
+const correct = {0:'B', 1:'C', 2:'A', 3:'B', 4:'A', 5:'B'};
+const total = 6;
+
+function answer(qIdx, chosen, correctAns) {
+  if (answers[qIdx]) return;
+  answers[qIdx] = chosen;
+
+  const block = document.getElementById('qb' + qIdx);
+  const exp   = document.getElementById('exp' + qIdx);
+
+  block.querySelectorAll('.option').forEach(btn => {
+    btn.disabled = true;
+    const letter = btn.textContent.trim()[0];
+    if (letter === correctAns) btn.classList.add('correct');
+    else if (letter === chosen && chosen !== correctAns) btn.classList.add('wrong');
+  });
+
+  exp.classList.add('show');
+  if (Object.keys(answers).length === total) showScore();
+}
+
+function showScore() {
+  const score = Object.keys(correct).filter(k => answers[k] === correct[k]).length;
+  const panel = document.getElementById('score-panel');
+  const num   = document.getElementById('score-num');
+  const msg   = document.getElementById('score-msg');
+
+  num.textContent = score + '/' + total;
+  num.style.color = score >= 5 ? 'var(--green)' : score >= 4 ? 'var(--amber)' : 'var(--red)';
+
+  const msgs = {
+    6: '🎯 Perfect! Unsupervised & Deep Learning sudah dikuasai dengan sangat baik.',
+    5: '✅ Excellent. Review satu soal yang missed.',
+    4: '✅ Good. Review soal yang salah dan baca ulang bagian terkait.',
+    3: '⚠️ Cukup. Perlu review theory lebih mendalam.',
+    2: '🔁 Perlu belajar ulang — fokus pada perbedaan PCA, clustering, dan NN.',
+    1: '🔁 Ulangi seluruh modul sebelum lanjut ke Day 13.',
+    0: '🔁 Ulangi seluruh modul sebelum lanjut ke Day 13.'
+  };
+  msg.textContent = msgs[score] || msgs[0];
+  panel.style.display = 'block';
+}
+</script>
+</body>
+</html>

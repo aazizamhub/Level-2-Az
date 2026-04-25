@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA L2 Day 17 · Solow Growth Model</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    :root {
+      --bg:      #fafaf8;
+      --bg2:     #f4f3ef;
+      --bg3:     #eeece7;
+      --border:  rgba(0,0,0,0.08);
+      --border2: rgba(0,0,0,0.15);
+      --text:    #1a1a2e;
+      --text2:   #4a4a6a;
+      --text3:   #8a8aaa;
+      --gold:    #9a6e1a;
+      --gold2:   #7a5010;
+      --gold-bg: rgba(154,110,26,0.08);
+      --blue:    #1a5fa8;
+      --blue-bg: rgba(26,95,168,0.08);
+      --green:   #1a7a4a;
+      --green-bg:rgba(26,122,74,0.08);
+      --red:     #b83232;
+      --red-bg:  rgba(184,50,50,0.08);
+      --amber:   #a06010;
+      --amber-bg:rgba(160,96,16,0.08);
+      --purple:  #6a3ab0;
+      --purple-bg:rgba(106,58,176,0.08);
+      --r:10px;
+      --r-sm:6px;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      margin-top: 8px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text3);
+    }
+    .breadcrumb {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .breadcrumb span {
+      color: var(--text3);
+    }
+    .breadcrumb strong {
+      color: var(--text2);
+      font-weight: 600;
+    }
+    .day-badge {
+      background: var(--gold-bg);
+      color: var(--gold2);
+      padding: 4px 10px;
+      border-radius: var(--r-sm);
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .hero {
+      padding: 40px 0 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+    .hero-tag {
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .hero-title {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .hero-sub {
+      font-size: 16px;
+      color: var(--text2);
+      margin-bottom: 16px;
+    }
+    .meta-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+    .meta-pill {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: var(--r-sm);
+      font-size: 12px;
+      color: var(--text2);
+      font-weight: 500;
+    }
+    .section {
+      margin-bottom: 40px;
+    }
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text3);
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+    }
+    .obj-box {
+      background: var(--blue-bg);
+      border-left: 4px solid var(--blue);
+      padding: 20px;
+      border-radius: var(--r-sm);
+      margin-bottom: 16px;
+    }
+    .obj-box-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+    .obj-list {
+      list-style: none;
+    }
+    .obj-list li {
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 8px;
+      padding-left: 20px;
+      position: relative;
+    }
+    .obj-list li:before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--blue);
+      font-weight: 700;
+    }
+    .concept-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .concept-card {
+      background: white;
+      border: 1px solid var(--border2);
+      border-radius: var(--r);
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .concept-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .concept-num {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: var(--gold-bg);
+      color: var(--gold);
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .concept-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      flex: 1;
+    }
+    .concept-body {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.7;
+    }
+    .concept-body p {
+      margin-bottom: 12px;
+    }
+    .formula {
+      background: var(--bg2);
+      border-left: 3px solid var(--gold);
+      padding: 12px;
+      border-radius: var(--r-sm);
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: var(--text);
+      margin: 12px 0;
+      overflow-x: auto;
+    }
+    .insight {
+      background: var(--green-bg);
+      border-left: 3px solid var(--green);
+      padding: 12px;
+      border-radius: var(--r-sm);
+      font-size: 13px;
+      color: var(--text);
+      margin: 12px 0;
+    }
+    .trap {
+      background: var(--red-bg);
+      border-left: 3px solid var(--red);
+      padding: 12px;
+      border-radius: var(--r-sm);
+      font-size: 13px;
+      color: var(--text);
+      margin: 12px 0;
+    }
+    .trap-label {
+      font-weight: 700;
+      color: var(--red);
+      font-size: 11px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .assume-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 13px;
+    }
+    .assume-table th {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 10px;
+      text-align: left;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .assume-table td {
+      border: 1px solid var(--border);
+      padding: 10px;
+      color: var(--text2);
+    }
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 24px 0;
+    }
+    .practice-header {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text3);
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+    }
+    .practice-body {
+      background: white;
+      border: 1px solid var(--border2);
+      border-radius: var(--r);
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .vignette {
+      background: var(--bg2);
+      padding: 16px;
+      border-radius: var(--r-sm);
+      margin-bottom: 24px;
+      border-left: 3px solid var(--amber);
+    }
+    .vignette-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--amber);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .vignette-text {
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .question-block {
+      margin-bottom: 28px;
+    }
+    .q-num {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+    .q-text {
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 12px;
+      line-height: 1.6;
+      font-weight: 500;
+    }
+    .option {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: white;
+    }
+    .option:hover {
+      border-color: var(--blue);
+      background: var(--blue-bg);
+    }
+    .option-radio {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--border2);
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .option.selected .option-radio {
+      border-color: var(--blue);
+      background: var(--blue);
+    }
+    .option.selected .option-radio:after {
+      content: "✓";
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .option-text {
+      font-size: 13px;
+      color: var(--text);
+    }
+    .explanation {
+      background: var(--bg2);
+      padding: 12px;
+      border-radius: var(--r-sm);
+      font-size: 12px;
+      color: var(--text2);
+      margin-top: 8px;
+      display: none;
+    }
+    .explanation.show {
+      display: block;
+    }
+    .explanation.correct {
+      border-left: 3px solid var(--green);
+      background: var(--green-bg);
+      color: var(--text);
+    }
+    .explanation.incorrect {
+      border-left: 3px solid var(--red);
+      background: var(--red-bg);
+      color: var(--text);
+    }
+    .score-panel {
+      background: var(--gold-bg);
+      border: 1px solid var(--gold);
+      border-radius: var(--r);
+      padding: 16px;
+      margin-top: 20px;
+      text-align: center;
+      display: none;
+    }
+    .score-panel.show {
+      display: block;
+    }
+    .score-panel-text {
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .score-panel-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--gold2);
+    }
+    .cheat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .cheat-item {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      padding: 14px;
+    }
+    .cheat-key {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .cheat-val {
+      font-size: 13px;
+      color: var(--text);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+    .nav-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 0;
+      margin-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+    .nav-btn {
+      text-decoration: none;
+      padding: 10px 16px;
+      border-radius: var(--r-sm);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--blue);
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .nav-btn:hover {
+      border-color: var(--blue);
+      background: var(--blue-bg);
+    }
+    .nav-btn.disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    @media (max-width: 640px) {
+      .hero-title {
+        font-size: 28px;
+      }
+      .cheat-grid {
+        grid-template-columns: 1fr;
+      }
+      .meta-row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="breadcrumb">
+        <strong>CFA Level II</strong>
+        <span>·</span>
+        <strong>Economics</strong>
+        <span>·</span>
+        <strong>LM2</strong>
+      </div>
+      <div class="day-badge">Day 17 of 90</div>
+    </div>
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-tag">Monday, 04 May 2026</div>
+      <h1 class="hero-title">Solow Growth Model</h1>
+      <p class="hero-sub">Economic Growth — Subtopic 1 of 2</p>
+      <div class="meta-row">
+        <div class="meta-pill">60 min total</div>
+        <div class="meta-pill">30 min theory</div>
+        <div class="meta-pill">30 min practice</div>
+        <div class="meta-pill">~5% exam weight</div>
+      </div>
+    </div>
+
+    <!-- Learning Objectives -->
+    <div class="section">
+      <div class="section-label">Learning Objectives</div>
+      <div class="obj-box">
+        <div class="obj-box-title">Setelah modul ini, kamu bisa:</div>
+        <ul class="obj-list">
+          <li>Jelaskan Cobb-Douglas production function dan hubungan antara capital accumulation, TFP, dan output per worker</li>
+          <li>Hitung steady-state growth rate menggunakan formula neoclassical model: ΔY/Y = θ/(1−α) + n</li>
+          <li>Bedakan capital deepening vs technological progress dan jelaskan mengapa hanya TFP yang bisa sustain long-run per capita growth</li>
+          <li>Terapkan growth accounting equation untuk memecah sumber pertumbuhan ekonomi menjadi kontribusi capital, labor, dan TFP</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Theory Section -->
+    <div class="section">
+      <div class="section-label">Theory (30 min)</div>
+
+      <div class="concept-grid">
+        <!-- Card 1: Production Function -->
+        <div class="concept-card">
+          <div class="concept-card-header">
+            <div class="concept-num">1</div>
+            <div class="concept-title">Cobb-Douglas Production Function</div>
+          </div>
+          <div class="concept-body">
+            <p><strong>Apa itu production function?</strong> Model yang menghubungkan input (faktor produksi) dengan output. Dalam versi paling sederhana, cuma dua input: <strong>Capital (K)</strong> dan <strong>Labor (L)</strong>.</p>
+
+            <div class="formula">
+Y = A × K^α × L^(1−α)
+
+di mana:
+  Y = total output (GDP)
+  A = Total Factor Productivity (TFP)
+  K = capital stock (mesin, pabrik, equipment)
+  L = labor (jumlah pekerja / jam kerja)
+  α = share of income ke capital (biasanya ~0.3)
+  (1−α) = share of income ke labor (biasanya ~0.7)
+            </div>
+
+            <p><strong>Versi per worker</strong> (bagi semua dengan L):</p>
+
+            <div class="formula">
+y = A × k^α
+
+di mana:
+  y = Y/L = output per worker (labor productivity)
+  k = K/L = capital per worker (capital-to-labor ratio)
+            </div>
+
+            <p><strong>Dua properti penting:</strong></p>
+            <ul style="margin-left: 16px; margin-bottom: 12px;">
+              <li><strong>Constant returns to scale:</strong> Kalau K dan L naik 10%, output Y juga naik 10%</li>
+              <li><strong>Diminishing marginal productivity:</strong> Nambah capital (K naik) tapi labor tetap → setiap unit capital tambahan menghasilkan output yang MAKIN SEDIKIT</li>
+            </ul>
+
+            <div class="insight">
+              <strong>Key insight:</strong> α itu bisa diestimasi dari data national income accounts — tinggal lihat berapa share GDP yang dibayar ke capital vs labor. Di US, α ≈ 0.3 artinya kenaikan 1% capital hanya naikkan output 0.3%, sementara kenaikan 1% labor naikkan output 0.7%.
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Growth Accounting -->
+        <div class="concept-card">
+          <div class="concept-card-header">
+            <div class="concept-num">2</div>
+            <div class="concept-title">Growth Accounting Equation</div>
+          </div>
+          <div class="concept-body">
+            <p><strong>Solow's breakthrough:</strong> Pecah pertumbuhan output menjadi kontribusi dari masing-masing faktor. Ini dilakukan dengan menulis production function dalam bentuk growth rates:</p>
+
+            <div class="formula">
+ΔY/Y = ΔA/A + α(ΔK/K) + (1−α)(ΔL/L)
+
+Growth  =  TFP      + Capital    + Labor
+ GDP       growth     contribution  contribution
+            </div>
+
+            <p><strong>Contoh numerik:</strong> GDP growth = 4%, capital growth = 5%, labor growth = 2%, α = 0.3</p>
+            <ul style="margin-left: 16px; margin-bottom: 12px;">
+              <li>Capital contribution = 0.3 × 5% = 1.5%</li>
+              <li>Labor contribution = 0.7 × 2% = 1.4%</li>
+              <li>TFP (residual) = 4% − 1.5% − 1.4% = <strong>1.1%</strong></li>
+            </ul>
+
+            <p><strong>TFP sebagai residual:</strong> TFP tidak diukur langsung — ia dihitung sebagai "sisa" setelah kontribusi capital dan labor dihitung. Makanya disebut juga <strong>"Solow residual"</strong>. Solow menemukan bahwa >80% pertumbuhan per capita di US berasal dari TFP, bukan capital accumulation!</p>
+
+            <div class="trap">
+              <div class="trap-label">⚠ Exam Trap</div>
+              Jangan bingung: α dan (1−α) berfungsi ganda. Mereka adalah (1) elastisitas output terhadap masing-masing input DAN (2) income share yang dibayar ke capital dan labor. Di ujian, sering dikasih income share → gunakan langsung sebagai elastisitas.
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Capital Deepening vs TFP -->
+        <div class="concept-card">
+          <div class="concept-card-header">
+            <div class="concept-num">3</div>
+            <div class="concept-title">Capital Deepening vs Technological Progress</div>
+          </div>
+          <div class="concept-body">
+            <p>Ada dua cara naikkan output per worker. Memahami perbedaan ini adalah <strong>inti dari Solow model</strong>:</p>
+
+            <table class="assume-table">
+              <tr>
+                <th>Aspek</th>
+                <th>Capital Deepening</th>
+                <th>Technological Progress (TFP)</th>
+              </tr>
+              <tr>
+                <td><strong>Definisi</strong></td>
+                <td>Naikkan capital per worker (k = K/L)</td>
+                <td>Naikkan TFP (A) — efisiensi produksi</td>
+              </tr>
+              <tr>
+                <td><strong>Grafis</strong></td>
+                <td>Bergerak SEPANJANG production function (A→B)</td>
+                <td>Shift SELURUH production function ke ATAS (B→C)</td>
+              </tr>
+              <tr>
+                <td><strong>Sustainability</strong></td>
+                <td>TERBATAS — diminishing returns akan menghentikan growth</td>
+                <td>UNLIMITED — bisa sustain pertumbuhan tanpa batas</td>
+              </tr>
+              <tr>
+                <td><strong>Siapa yang bergantung?</strong></td>
+                <td>Developing countries (modal masih sedikit, diminishing returns kecil)</td>
+                <td>Developed countries (modal sudah banyak, harus inovasi)</td>
+              </tr>
+            </table>
+
+            <div class="insight">
+              <strong>Analogi sederhana:</strong> Capital deepening itu kayak nambah pekerja di pabrik yang sama — awalnya produktif, lama-lama sesak. Technological progress itu kayak upgrade mesin pabrik — semua pekerja jadi lebih produktif.
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: Steady State -->
+        <div class="concept-card">
+          <div class="concept-card-header">
+            <div class="concept-num">4</div>
+            <div class="concept-title">Steady State & Solow Model Equations</div>
+          </div>
+          <div class="concept-body">
+            <p><strong>Apa itu steady state?</strong> Kondisi equilibrium di mana output-to-capital ratio (Y/K) konstan. Di titik ini, capital per worker dan output per worker tumbuh pada rate yang SAMA.</p>
+
+            <div class="formula">
+STEADY-STATE GROWTH RATES (Neoclassical Model):
+
+Growth rate of output per capita = θ / (1 − α)
+Growth rate of total output       = θ / (1 − α) + n
+
+di mana:
+  θ = growth rate of TFP (ΔA/A)
+  α = capital's share of income
+  n = labor force growth rate
+            </div>
+
+            <p><strong>Implikasi KRITIS:</strong></p>
+            <ul style="margin-left: 16px; margin-bottom: 12px;">
+              <li>Steady-state growth per capita <strong>HANYA tergantung TFP</strong> — tidak tergantung saving rate atau investment!</li>
+              <li>Higher saving rate → higher LEVEL of output per capita, tapi BUKAN higher growth rate</li>
+              <li>Faster labor force growth (n) → higher total GDP growth, tapi LOWER per capita output level</li>
+            </ul>
+
+            <p><strong>Equilibrium condition:</strong></p>
+            <div class="formula">
+Y/K = (1/s) × [θ/(1−α) + δ + n] = Ψ
+
+di mana:
+  s = saving rate
+  δ = depreciation rate
+  Ψ = steady-state output-to-capital ratio
+            </div>
+
+            <p>Di steady state, saving per worker <strong>(sy)</strong> cukup untuk: (1) menyediakan capital buat pekerja baru (n), (2) mengganti depresiasi (δ), dan (3) mendalamkan capital sesuai TFP growth.</p>
+
+            <div class="trap">
+              <div class="trap-label">⚠ Exam Trap</div>
+              Saving rate TIDAK memengaruhi steady-state GROWTH RATE — hanya memengaruhi LEVEL output per capita. Ini counter-intuitive tapi adalah salah satu hasil terpenting dari Solow model. Kalau soal tanya "apa efek permanent dari kenaikan saving rate terhadap growth rate?" jawabannya: TIDAK ADA efek permanent.
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5: Labor Productivity Approach -->
+        <div class="concept-card">
+          <div class="concept-card-header">
+            <div class="concept-num">5</div>
+            <div class="concept-title">Labor Productivity Growth Accounting & TFP as Residual</div>
+          </div>
+          <div class="concept-body">
+            <p><strong>Alternatif lebih simpel</strong> untuk estimasi potential GDP tanpa harus menghitung capital stock:</p>
+
+            <div class="formula">
+Growth rate of potential GDP = Long-term growth of labor force
+                              + Long-term growth of labor productivity
+
+Contoh: Labor force growth = 1%/tahun
+        Labor productivity growth = 2%/tahun
+        → Potential GDP growth = 3%/tahun
+            </div>
+
+            <p><strong>Kenapa TFP penting banget?</strong> Solow (1957) menemukan bahwa >80% pertumbuhan per capita di US 1909-1949 berasal dari TFP, bukan dari capital accumulation. Denison (1985) menemukan angka serupa (~70%) untuk periode 1929-1982.</p>
+
+            <p><strong>Masalah:</strong> TFP adalah "residual" — ia menangkap SEMUA yang tidak bisa dijelaskan oleh pertumbuhan capital dan labor. Ini termasuk: technological innovation, better management, institutional improvements, dan bahkan measurement error.</p>
+
+            <div class="insight">
+              <strong>Untuk investor:</strong> Potential GDP growth penting karena: (1) GDP growth di atas potential → tekanan inflasi → rate hike → bond prices turun, (2) GDP growth di bawah potential → slack → rate cuts → bond prices naik, (3) Higher potential GDP growth → higher real interest rates → higher expected real asset returns secara umum.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cheat Sheet -->
+    <div class="section">
+      <div class="section-label">Quick Reference Cheat Sheet</div>
+      <div class="cheat-grid">
+        <div class="cheat-item">
+          <div class="cheat-key">Cobb-Douglas</div>
+          <div class="cheat-val">Y = AK^α L^(1−α)<br>Per worker: y = Ak^α<br>α ≈ 0.3 (US capital share)</div>
+        </div>
+        <div class="cheat-item">
+          <div class="cheat-key">Growth Accounting</div>
+          <div class="cheat-val">ΔY/Y = ΔA/A + αΔK/K + (1−α)ΔL/L<br>TFP = residual (Solow residual)</div>
+        </div>
+        <div class="cheat-item">
+          <div class="cheat-key">Steady-State Growth</div>
+          <div class="cheat-val">Per capita: θ/(1−α)<br>Total output: θ/(1−α) + n<br>Only TFP drives per capita growth!</div>
+        </div>
+        <div class="cheat-item">
+          <div class="cheat-key">Saving Rate Effect</div>
+          <div class="cheat-val">Higher s → higher LEVEL of y<br>But NO effect on steady-state GROWTH rate<br>Only temporary growth boost</div>
+        </div>
+        <div class="cheat-item">
+          <div class="cheat-key">Capital Deepening</div>
+          <div class="cheat-val">Move along production function<br>Diminishing returns limit it<br>Developing countries benefit most</div>
+        </div>
+        <div class="cheat-item">
+          <div class="cheat-key">TFP Progress</div>
+          <div class="cheat-val">Shifts entire production function UP<br>Only source of sustained per capita growth<br>>80% of US growth per Solow</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Practice Section -->
+    <div class="section">
+      <div class="practice-header">Practice (30 min)</div>
+      <div class="practice-body">
+        <div class="vignette">
+          <div class="vignette-label">Vignette</div>
+          <div class="vignette-text">
+            <strong>Situasi:</strong> Dewi Kartika, CFA, seorang macro strategist di PT Nusantara Asset Management, sedang menganalisis prospek pertumbuhan ekonomi dua negara untuk rekomendasi alokasi regional.<br><br>
+            <strong>Negara P (Emerging Market — mirip Indonesia):</strong><br>
+            • GDP growth rate: 5.2% per tahun<br>
+            • Capital stock growth: 8.0% per tahun<br>
+            • Labor force growth (n): 1.5% per tahun<br>
+            • Capital's share of income (α): 0.35<br>
+            • TFP growth (θ): 1.0% per tahun<br>
+            • Saving rate: 30% of GDP<br>
+            • Capital per worker: Rp 85 juta (relatif rendah)<br><br>
+            <strong>Negara Q (Developed Market — mirip Jepang):</strong><br>
+            • GDP growth rate: 1.1% per tahun<br>
+            • Capital stock growth: 1.5% per tahun<br>
+            • Labor force growth (n): 0.0% (stagnasi)<br>
+            • Capital's share of income (α): 0.35<br>
+            • TFP growth (θ): 0.3% per tahun<br>
+            • Saving rate: 25% of GDP<br>
+            • Capital per worker: sangat tinggi, mendekati steady state<br><br>
+            Dewi juga mencatat bahwa pemerintah Negara P berencana menaikkan saving rate dari 30% menjadi 35% melalui insentif fiskal.
+          </div>
+        </div>
+
+        <!-- Q1 -->
+        <div class="question-block">
+          <div class="q-num">Question 1</div>
+          <div class="q-text">Menggunakan growth accounting equation, berapa kontribusi TFP terhadap GDP growth di Negara P?</div>
+          <div class="option" onclick="answer(0, 'A', 'B')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>A)</strong> 0.4% — dihitung sebagai α × TFP growth = 0.35 × 1.0%</div>
+          </div>
+          <div class="option" onclick="answer(0, 'B', 'B')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>B)</strong> 1.0% — TFP growth langsung masuk ke growth accounting tanpa dikalikan faktor apapun</div>
+          </div>
+          <div class="option" onclick="answer(0, 'C', 'B')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>C)</strong> 2.4% — dihitung sebagai total GDP growth minus labor contribution</div>
+          </div>
+          <div class="explanation">
+            <strong>Explanation:</strong> Growth accounting equation: ΔY/Y = ΔA/A + α(ΔK/K) + (1−α)(ΔL/L). TFP growth (ΔA/A) masuk LANGSUNG tanpa dikalikan apapun. Jadi kontribusi TFP = 1.0%. Verifikasi: Capital contribution = 0.35 × 8.0% = 2.8%. Labor contribution = 0.65 × 1.5% = 0.975%. Total = 1.0% + 2.8% + 0.975% = 4.775% ≈ 5.2% (konsisten). Jawaban B benar. A salah karena TFP tidak dikalikan α.
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question-block">
+          <div class="q-num">Question 2</div>
+          <div class="q-text">Hitung steady-state growth rate of per capita output untuk Negara Q menggunakan neoclassical model:</div>
+          <div class="option" onclick="answer(1, 'A', 'A')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>A)</strong> 0.46% — dihitung sebagai θ/(1−α) = 0.3%/(1−0.35)</div>
+          </div>
+          <div class="option" onclick="answer(1, 'B', 'A')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>B)</strong> 0.30% — TFP growth langsung sama dengan per capita growth</div>
+          </div>
+          <div class="option" onclick="answer(1, 'C', 'A')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>C)</strong> 1.10% — sama dengan actual GDP growth rate</div>
+          </div>
+          <div class="explanation">
+            <strong>Explanation:</strong> Steady-state per capita growth = θ/(1−α) = 0.3%/(1−0.35) = 0.3%/0.65 = 0.4615% ≈ 0.46%. Total steady-state output growth = 0.46% + n = 0.46% + 0% = 0.46%. Actual GDP growth (1.1%) sedikit di atas steady state, kemungkinan ada sedikit transitional growth. Jawaban A benar. B salah karena TFP harus di-scale oleh 1/(1−α). C salah karena actual growth bisa beda dari steady state.
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question-block">
+          <div class="q-num">Question 3</div>
+          <div class="q-text">Jika pemerintah Negara P berhasil menaikkan saving rate dari 30% ke 35%, menurut neoclassical model, apa dampak JANGKA PANJANG terhadap growth rate per capita GDP?</div>
+          <div class="option" onclick="answer(2, 'A', 'C')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>A)</strong> Growth rate per capita naik secara permanent karena lebih banyak investasi</div>
+          </div>
+          <div class="option" onclick="answer(2, 'B', 'C')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>B)</strong> Growth rate per capita turun karena konsumsi berkurang</div>
+          </div>
+          <div class="option" onclick="answer(2, 'C', 'C')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>C)</strong> Growth rate per capita kembali ke steady-state rate yang SAMA — hanya level output per capita yang lebih tinggi</div>
+          </div>
+          <div class="explanation">
+            <strong>Explanation:</strong> Ini adalah salah satu hasil PALING PENTING dari Solow model: higher saving rate TIDAK mengubah steady-state GROWTH RATE. Dari formula: steady-state growth per capita = θ/(1−α) — saving rate (s) TIDAK muncul dalam formula ini! Yang berubah: (1) Ada temporary growth boost selama transisi ke steady state baru. (2) Level output per capita dan capital per worker yang LEBIH TINGGI di steady state baru. (3) Tapi setelah transisi selesai, growth rate kembali ke θ/(1−α). Jawaban C benar.
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question-block">
+          <div class="q-num">Question 4</div>
+          <div class="q-text">Negara P (low capital per worker) dan Negara Q (high capital per worker) sama-sama menambah investasi sebesar 5% dari GDP. Menurut Solow model, negara mana yang akan mendapat dampak LEBIH BESAR terhadap output per worker?</div>
+          <div class="option" onclick="answer(3, 'A', 'A')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>A)</strong> Negara P — karena diminishing marginal returns belum signifikan pada level capital rendah</div>
+          </div>
+          <div class="option" onclick="answer(3, 'B', 'A')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>B)</strong> Negara Q — karena negara maju lebih efisien dalam menggunakan capital</div>
+          </div>
+          <div class="option" onclick="answer(3, 'C', 'A')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>C)</strong> Sama — Cobb-Douglas memiliki constant returns to scale sehingga dampaknya identik</div>
+          </div>
+          <div class="explanation">
+            <strong>Explanation:</strong> Diminishing marginal productivity of capital adalah kunci. Negara P dengan capital per worker rendah berada di bagian "curam" dari production function — setiap tambahan capital menghasilkan output yang relatif besar. Negara Q dengan capital per worker tinggi berada di bagian "datar" — tambahan capital menghasilkan sangat sedikit output tambahan. Constant returns to scale berlaku ketika KEDUA input naik bersamaan, bukan ketika hanya satu input naik. Jawaban A benar.
+          </div>
+        </div>
+
+        <!-- Score Panel -->
+        <div class="score-panel" id="scorePanel">
+          <div class="score-panel-text">Quiz Score</div>
+          <div class="score-panel-value"><span id="scoreValue">0</span> / 4</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-bottom">
+      <a href="CFA_L2_Day16.html" class="nav-btn">← Day 16 · Mundell-Fleming & Currency Crisis</a>
+      <a href="CFA_L2_Day18.html" class="nav-btn">Day 18 · Endogenous Growth & Demographics →</a>
+    </div>
+
+  </div>
+
+  <script>
+    const answers = {};
+    const correct = {0:'B', 1:'A', 2:'C', 3:'A'};
+    const total = 4;
+
+    function answer(qIdx, chosen, correctAns) {
+      answers[qIdx] = chosen;
+      const options = document.querySelectorAll(`.question-block:nth-child(${qIdx + 1}) .option`);
+      options.forEach(opt => opt.classList.remove('selected'));
+      event.currentTarget.classList.add('selected');
+
+      const explanation = document.querySelectorAll(`.question-block:nth-child(${qIdx + 1}) .explanation`)[0];
+      explanation.classList.add('show');
+
+      if (chosen === correctAns) {
+        explanation.classList.add('correct');
+        explanation.innerHTML = '<strong>✓ Correct!</strong> ' + explanation.innerHTML.replace('<strong>Explanation:</strong>', '');
+      } else {
+        explanation.classList.add('incorrect');
+        explanation.innerHTML = '<strong>✗ Incorrect.</strong> ' + explanation.innerHTML.replace('<strong>Explanation:</strong>', '');
+      }
+
+      const answeredCount = Object.keys(answers).length;
+      if (answeredCount === total) {
+        showScore();
+      }
+    }
+
+    function showScore() {
+      let score = 0;
+      for (let i = 0; i < total; i++) {
+        if (answers[i] === correct[i]) score++;
+      }
+      document.getElementById('scoreValue').textContent = score;
+      document.getElementById('scorePanel').classList.add('show');
+    }
+  </script>
+</body>
+</html>

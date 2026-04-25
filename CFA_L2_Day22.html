@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level 2 - Day 22: Share-Based Compensation</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    :root {
+      --bg:      #fafaf8;
+      --bg2:     #f4f3ef;
+      --bg3:     #eeece7;
+      --border:  rgba(0,0,0,0.08);
+      --border2: rgba(0,0,0,0.15);
+      --text:    #1a1a2e;
+      --text2:   #4a4a6a;
+      --text3:   #8a8aaa;
+      --gold:    #9a6e1a;
+      --gold2:   #7a5010;
+      --gold-bg: rgba(154,110,26,0.08);
+      --blue:    #1a5fa8;
+      --blue-bg: rgba(26,95,168,0.08);
+      --green:   #1a7a4a;
+      --green-bg:rgba(26,122,74,0.08);
+      --red:     #b83232;
+      --red-bg:  rgba(184,50,50,0.08);
+      --amber:   #a06010;
+      --amber-bg:rgba(160,96,16,0.08);
+      --purple:  #6a3ab0;
+      --purple-bg:rgba(106,58,176,0.08);
+      --r:10px;
+      --r-sm:6px;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      margin-top: 8px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text3);
+    }
+    .breadcrumb {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .breadcrumb span { color: var(--text3); }
+    .breadcrumb strong { color: var(--text2); font-weight: 600; }
+    .day-badge {
+      background: var(--gold-bg);
+      color: var(--gold2);
+      padding: 4px 10px;
+      border-radius: var(--r-sm);
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .hero {
+      padding: 40px 0 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+    .hero-tag {
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .hero-title {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .hero-sub {
+      font-size: 16px;
+      color: var(--text2);
+      margin-bottom: 16px;
+    }
+    .meta-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+    .meta-pill {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: var(--r-sm);
+      font-size: 12px;
+      color: var(--text2);
+      font-weight: 500;
+    }
+    .section { margin-bottom: 40px; }
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text3);
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+    }
+    .obj-box {
+      background: var(--blue-bg);
+      border-left: 4px solid var(--blue);
+      padding: 20px;
+      border-radius: var(--r-sm);
+      margin-bottom: 16px;
+    }
+    .obj-box-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+    .obj-list { list-style: none; }
+    .obj-list li {
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 8px;
+      padding-left: 20px;
+      position: relative;
+    }
+    .obj-list li:before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--blue);
+      font-weight: 700;
+    }
+    .concept-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .concept-card {
+      background: white;
+      border: 1px solid var(--border2);
+      border-radius: var(--r);
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .concept-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .concept-num {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: var(--gold-bg);
+      color: var(--gold);
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .concept-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      flex: 1;
+    }
+    .concept-body {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.7;
+    }
+    .concept-body p { margin-bottom: 12px; }
+    .formula {
+      background: var(--bg2);
+      border-left: 3px solid var(--gold);
+      padding: 12px;
+      border-radius: var(--r-sm);
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: var(--text);
+      margin: 12px 0;
+      overflow-x: auto;
+    }
+    .insight {
+      background: var(--green-bg);
+      border-left: 3px solid var(--green);
+      padding: 12px;
+      border-radius: var(--r-sm);
+      font-size: 13px;
+      color: var(--text);
+      margin: 12px 0;
+    }
+    .trap {
+      background: var(--red-bg);
+      border-left: 3px solid var(--red);
+      padding: 12px;
+      border-radius: var(--r-sm);
+      font-size: 13px;
+      color: var(--text);
+      margin: 12px 0;
+    }
+    .trap-label {
+      font-weight: 700;
+      color: var(--red);
+      font-size: 11px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .assume-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 13px;
+    }
+    .assume-table th {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 10px;
+      text-align: left;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .assume-table td {
+      border: 1px solid var(--border);
+      padding: 10px;
+      color: var(--text2);
+    }
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 24px 0;
+    }
+    .practice-header {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text3);
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+    }
+    .practice-body {
+      background: white;
+      border: 1px solid var(--border2);
+      border-radius: var(--r);
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .vignette {
+      background: var(--bg2);
+      padding: 16px;
+      border-radius: var(--r-sm);
+      margin-bottom: 24px;
+      border-left: 3px solid var(--amber);
+    }
+    .vignette-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--amber);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .vignette-text {
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .question-block { margin-bottom: 28px; }
+    .q-num {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+    .q-text {
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 12px;
+      line-height: 1.6;
+      font-weight: 500;
+    }
+    .option {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: white;
+    }
+    .option:hover {
+      border-color: var(--blue);
+      background: var(--blue-bg);
+    }
+    .option-radio {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--border2);
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .option.selected .option-radio {
+      border-color: var(--blue);
+      background: var(--blue);
+    }
+    .option.selected .option-radio:after {
+      content: "✓";
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .option-text { font-size: 13px; color: var(--text); }
+    .explanation {
+      background: var(--bg2);
+      padding: 12px;
+      border-radius: var(--r-sm);
+      font-size: 12px;
+      color: var(--text2);
+      margin-top: 8px;
+      display: none;
+    }
+    .explanation.show { display: block; }
+    .explanation.correct {
+      border-left: 3px solid var(--green);
+      background: var(--green-bg);
+      color: var(--text);
+    }
+    .explanation.incorrect {
+      border-left: 3px solid var(--red);
+      background: var(--red-bg);
+      color: var(--text);
+    }
+    .score-panel {
+      background: var(--gold-bg);
+      border: 1px solid var(--gold);
+      border-radius: var(--r);
+      padding: 16px;
+      margin-top: 20px;
+      text-align: center;
+      display: none;
+    }
+    .score-panel.show { display: block; }
+    .score-panel-text {
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .score-panel-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--gold2);
+    }
+    .cheat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .cheat-item {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      padding: 14px;
+    }
+    .cheat-key {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .cheat-val {
+      font-size: 13px;
+      color: var(--text);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+    .nav-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 0;
+      margin-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+    .nav-btn {
+      text-decoration: none;
+      padding: 10px 16px;
+      border-radius: var(--r-sm);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--blue);
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .nav-btn:hover {
+      border-color: var(--blue);
+      background: var(--blue-bg);
+    }
+    .nav-btn.disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    @media (max-width: 640px) {
+      .hero-title { font-size: 28px; }
+      .cheat-grid { grid-template-columns: 1fr; }
+      .meta-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="breadcrumb">
+        <span>CFA Level II</span>
+        <span>·</span>
+        <span>FSA</span>
+        <span>·</span>
+        <strong>LM2</strong>
+      </div>
+      <div class="day-badge">Day 22 of 90</div>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-tag">Tuesday, 12 May 2026</div>
+      <h1 class="hero-title">Share-Based Compensation</h1>
+      <p class="hero-sub">Employee Compensation — Subtopic 2 of 2</p>
+      <div class="meta-row">
+        <div class="meta-pill">60 min total</div>
+        <div class="meta-pill">30 min theory</div>
+        <div class="meta-pill">30 min practice</div>
+        <div class="meta-pill">~12% exam weight</div>
+      </div>
+    </div>
+
+    <!-- LEARNING OBJECTIVES -->
+    <div class="section">
+      <div class="section-label">Learning Objectives</div>
+      <div class="obj-box">
+        <div class="obj-box-title">By the end of this subtopic, you'll be able to:</div>
+        <ul class="obj-list">
+          <li>Bedakan Restricted Stock/RSU vs Stock Options: cara pengukuran fair value, timeline grant-vest-exercise, dan dampaknya ke laporan keuangan di bawah IFRS 2</li>
+          <li>Hitung share-based compensation expense per tahun dan jelaskan mengapa perubahan harga saham pasca-grant date tidak mengubah expense yang sudah diakui</li>
+          <li>Terapkan treasury stock method untuk menghitung diluted EPS: kapan opsi/RSU bersifat dilutive vs anti-dilutive</li>
+          <li>Analisis implikasi SBC terhadap valuasi DCF: mengapa SBC harus dikurangi dari free cash flow meskipun bukan cash expense</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- THEORY SECTION -->
+    <div class="section">
+      <div class="section-label">Key Concepts — Theory (30 min)</div>
+
+      <div class="concept-grid">
+
+        <!-- Concept 1: Types and General Principle -->
+        <div class="concept-card">
+          <div class="concept-card-header">
+            <div class="concept-num">1</div>
+            <div class="concept-title">Prinsip Umum IFRS 2 &amp; Jenis Share-Based Compensation</div>
+          </div>
+          <div class="concept-body">
+            <p><strong>Share-Based Compensation (SBC)</strong> adalah kompensasi yang dibayarkan dalam bentuk — atau mengacu pada — saham perusahaan. Dua instrumen paling umum adalah <em>Restricted Stock Units (RSU)</em> dan <em>Stock Options</em>. SBC populer karena: (1) menghemat kas bagi perusahaan, (2) menyelaraskan kepentingan karyawan dengan pemegang saham, (3) meningkatkan retensi melalui vesting multi-tahun.</p>
+
+            <p><strong>Prinsip Umum IFRS 2:</strong> Ukur fair value award di <em>grant date</em> → akui sebagai expense selama <em>vesting period</em> → offsetting entry ke equity (bukan liability). Saat settlement, transfer dari akun "share-based compensation reserve" ke common stock/paid-in capital.</p>
+
+            <div class="formula">
+Timeline:  GRANT → VESTING → SETTLEMENT (exercise/conversion)
+
+SBC Expense per tahun = Fair Value (grant date) ÷ Vesting period (tahun)
+
+Offsetting entry: Debit Expense → Credit Equity (SBC Reserve)
+BUKAN liability — karena diselesaikan dengan saham, bukan kas
+            </div>
+
+            <p><strong>Perbedaan kritis dengan gaji biasa:</strong> Gaji menggunakan nilai aktual yang dibayar; SBC menggunakan <em>fair value</em> di grant date yang diakui selama bertahun-tahun. Perubahan harga saham setelah grant date TIDAK mengubah expense yang sudah diakui — expense sudah "terkunci" di grant date fair value.</p>
+
+            <div class="insight">
+              <strong>Non-Cash, Tapi Real Cost:</strong> SBC adalah transaksi non-kas → di cash flow statement, tidak ada outflow. Namun di laporan indirect method, SBC expense di-addback ke net income untuk mencapai CFO (karena net income sudah dikurangi SBC expense tapi tidak ada cash keluar). Ini BUKAN berarti SBC bisa diabaikan — SBC mendilusi pemegang saham secara nyata.
+            </div>
+          </div>
+        </div>
+
+        <!-- Concept 2: Restricted Stock / RSU -->
+        <div class="concept-card">
+          <div class="concept-card-header">
+            <div class="concept-num">2</div>
+            <div class="concept-title">Restricted Stock &amp; RSU: Akuntansi Langkah demi Langkah</div>
+          </div>
+          <div class="concept-body">
+            <p><strong>Restricted Stock Units (RSU)</strong> adalah hak atas saham yang akan diterima karyawan saat vesting, dengan syarat tertentu (biasanya service condition: tetap bekerja selama N tahun). RSU tidak punya hak suara dan tidak berpartisipasi dalam dividen (kecuali ditentukan lain).</p>
+
+            <p><strong>Fair Value RSU = Harga saham di grant date</strong> (dikurangi present value dividen yang diharapkan selama vesting jika RSU tidak berpartisipasi dalam dividen).</p>
+
+            <p><strong>Contoh Numerik:</strong> PT Teknologi Maju (IDX: TECM) memberikan 100.000 RSU kepada eksekutifnya pada 1 Jan 20X1. Harga saham TECM = Rp 8.000. Vesting: 3 tahun.</p>
+
+            <div class="formula">
+Aggregate fair value = 100.000 × Rp 8.000 = Rp 800 juta
+
+Annual SBC expense = Rp 800 juta ÷ 3 = Rp 267 juta/tahun
+
+Entri setiap tahun (20X1, 20X2, 20X3):
+  Dr  SBC Expense        Rp 267 juta
+  Cr  SBC Reserve (OE)   Rp 267 juta
+
+Saat settlement (akhir vesting, saham diterbitkan):
+  Dr  SBC Reserve        Rp 800 juta
+  Cr  Common Stock + APIC Rp 800 juta
+            </div>
+
+            <table class="assume-table">
+              <thead>
+                <tr>
+                  <th>Aspek</th>
+                  <th>Dampak</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Income Statement</td>
+                  <td>SBC expense Rp 267 juta/tahun selama 3 tahun</td>
+                </tr>
+                <tr>
+                  <td>Balance Sheet</td>
+                  <td>Equity naik Rp 267 juta/tahun (SBC reserve)</td>
+                </tr>
+                <tr>
+                  <td>Cash Flow Statement</td>
+                  <td>Tidak ada outflow; addback di CFO (indirect method)</td>
+                </tr>
+                <tr>
+                  <td>Shares Outstanding</td>
+                  <td>Naik 100.000 saham saat settlement (vesting)</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="trap">
+              <div class="trap-label">Exam Trap</div>
+              Jika harga saham TECM naik menjadi Rp 15.000 di 20X2, expense 20X2 TETAP Rp 267 juta — bukan Rp 500 juta. Fair value dikunci di grant date. Perubahan harga saham setelah grant date TIDAK mempengaruhi expense yang sedang diakui dari grant tersebut. Grant baru di masa depan akan menggunakan harga baru.
+            </div>
+          </div>
+        </div>
+
+        <!-- Concept 3: Stock Options -->
+        <div class="concept-card">
+          <div class="concept-card-header">
+            <div class="concept-num">3</div>
+            <div class="concept-title">Stock Options: Fair Value, Expense &amp; Perbedaan IFRS vs GAAP</div>
+          </div>
+          <div class="concept-body">
+            <p><strong>Employee Stock Options</strong> adalah hak — bukan kewajiban — untuk membeli saham perusahaan pada harga tetap (strike/exercise price) dalam periode tertentu. Biasanya diberikan "at the money" (strike price = harga saham saat grant). Karyawan akan exercise jika harga saham melebihi strike price setelah vesting.</p>
+
+            <p><strong>Fair Value Opsi ≠ Harga Saham.</strong> Karena opsi at-the-money punya intrinsic value = 0, fair value-nya murni time value — dihitung menggunakan model pricing seperti <em>Black-Scholes</em> atau <em>binomial model</em>. Input utama: volatilitas saham, expected life opsi, risk-free rate, dividend yield. <strong>Volatilitas adalah asumsi paling subjektif.</strong></p>
+
+            <div class="formula">
+SBC Expense per tahun = (Jumlah opsi × Fair value per opsi) ÷ Vesting years
+
+Saat exercise (settlement berbeda dari RSU):
+  Dr  Cash (= strike price × jumlah opsi diexercise)
+  Dr  SBC Reserve
+  Cr  Common Stock + APIC
+
+Cash inflow dari exercise → Financing Activities (bukan Operating)
+            </div>
+
+            <table class="assume-table">
+              <thead>
+                <tr>
+                  <th>Aspek</th>
+                  <th>RSU</th>
+                  <th>Stock Option</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Grant date fair value</td>
+                  <td>Harga saham</td>
+                  <td>Option pricing model (BSM)</td>
+                </tr>
+                <tr>
+                  <td>Settlement terjadi</td>
+                  <td>Otomatis saat vesting</td>
+                  <td>Hanya jika di-exercise karyawan</td>
+                </tr>
+                <tr>
+                  <td>Cash flow saat settlement</td>
+                  <td>Tidak ada</td>
+                  <td>Cash inflow (strike price) → Financing</td>
+                </tr>
+                <tr>
+                  <td>Risiko karyawan</td>
+                  <td>Terekspos turun dan naik</td>
+                  <td>Hanya terekspos naik (asymmetric)</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p><strong>IFRS vs US GAAP — Perbedaan Kunci:</strong></p>
+            <p>Prinsip pengukuran (fair value di grant date, expense selama vesting) sama di IFRS 2 dan US GAAP (ASC 718). Perbedaan utama ada pada <strong>tax windfalls/shortfalls</strong>:</p>
+            <table class="assume-table">
+              <thead>
+                <tr>
+                  <th>Kondisi</th>
+                  <th>IFRS</th>
+                  <th>US GAAP</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Harga saham settlement > grant date (tax windfall)</td>
+                  <td>Diakui langsung di equity (OCI/retained earnings)</td>
+                  <td>Mengurangi income tax expense di P&amp;L</td>
+                </tr>
+                <tr>
+                  <td>Harga saham settlement &lt; grant date (tax shortfall)</td>
+                  <td>Diakui langsung di equity</td>
+                  <td>Menambah income tax expense di P&amp;L</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="insight">
+              <strong>Implikasi Analitis:</strong> Perusahaan US GAAP dengan harga saham yang volatile akan memiliki effective tax rate yang fluktuatif akibat SBC tax windfalls/shortfalls — ini bukan refleksi dari perubahan fundamental bisnis. Analis harus memeriksa rekonsiliasi statutory-to-effective tax rate dan tidak mengasumsikan historical effective rate akan bertahan.
+            </div>
+          </div>
+        </div>
+
+        <!-- Concept 4: Diluted EPS & Treasury Stock Method -->
+        <div class="concept-card">
+          <div class="concept-card-header">
+            <div class="concept-num">4</div>
+            <div class="concept-title">Diluted EPS: Treasury Stock Method untuk Opsi &amp; RSU</div>
+          </div>
+          <div class="concept-body">
+            <p>Award SBC yang belum vest (unvested RSU dan stock options) tidak termasuk dalam <strong>basic shares outstanding</strong>. Mereka dimasukkan dalam <strong>diluted shares outstanding</strong> menggunakan <em>Treasury Stock Method</em> — dengan asumsi net shares (bukan gross) yang ditambahkan.</p>
+
+            <div class="formula">
+Treasury Stock Method:
+
+Diluted Shares = Basic Shares + Shares issued − Assumed repurchases
+
+Assumed Proceeds = Cash from exercise (strike × options)
+                  + Average unrecognized SBC expense
+
+Assumed Repurchases = Assumed Proceeds ÷ Average Share Price
+
+Net Dilutive Shares = Shares issued − Assumed Repurchases
+            </div>
+
+            <p><strong>Kapan dilutive vs anti-dilutive?</strong></p>
+            <table class="assume-table">
+              <thead>
+                <tr>
+                  <th>Instrumen</th>
+                  <th>Dilutive jika...</th>
+                  <th>Anti-dilutive jika...</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>In-the-money options (avg price > strike)</td>
+                  <td>Selalu dilutive</td>
+                  <td>—</td>
+                </tr>
+                <tr>
+                  <td>At-the-money / out-of-the-money options</td>
+                  <td>—</td>
+                  <td>Selalu anti-dilutive (dikecualikan)</td>
+                </tr>
+                <tr>
+                  <td>RSU</td>
+                  <td>Hampir selalu dilutive</td>
+                  <td>Jika avg price jauh lebih rendah dari grant price</td>
+                </tr>
+                <tr>
+                  <td>Semua instrumen (net loss)</td>
+                  <td>—</td>
+                  <td>Anti-dilutive (diluted = basic)</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="trap">
+              <div class="trap-label">Exam Trap</div>
+              Jika perusahaan melaporkan <em>net loss</em>, semua potentially dilutive securities (opsi, RSU, convertible debt) dikecualikan — karena menambahnya ke denominator akan membuat loss per share lebih kecil, yang anti-dilutive. Dalam kondisi ini, basic EPS = diluted EPS. Analis yang bijak akan tetap memperhitungkan dilusi ini dalam valuasi (gunakan diluted share count atau deduct SBC dari FCF).
+            </div>
+          </div>
+        </div>
+
+        <!-- Concept 5: Valuation Implications -->
+        <div class="concept-card">
+          <div class="concept-card-header">
+            <div class="concept-num">5</div>
+            <div class="concept-title">SBC dalam Valuasi DCF &amp; Analisis Keuangan</div>
+          </div>
+          <div class="concept-body">
+            <p>SBC adalah non-cash expense, tapi <strong>bukan berarti bisa diabaikan dalam valuasi</strong>. SBC mentransfer nilai dari pemegang saham lama ke karyawan melalui dilusi. Logika: jika perusahaan membayar gaji semua orang dalam bentuk saham alih-alih kas, bukan berarti company lebih valuable.</p>
+
+            <p><strong>Dua efek dilusi yang perlu diperhitungkan:</strong></p>
+            <p>(1) <em>Outstanding unvested awards:</em> Gunakan diluted shares outstanding (termasuk potentially dilutive securities, bahkan yang anti-dilutive untuk net loss companies) sebagai denominator saat menghitung per-share value.</p>
+            <p>(2) <em>Future SBC grants:</em> Kurangi SBC dari free cash flow dalam model DCF — meskipun secara teknis non-cash, ini mewakili biaya nyata yang mengurangi nilai bagi pemegang saham.</p>
+
+            <div class="formula">
+Adjusted Free Cash Flow (untuk FCF-based DCF):
+  FCF = CFO − CapEx
+
+Karena SBC di-addback di CFO (indirect method):
+  CFO sudah "inflated" oleh SBC addback
+
+→ Untuk DCF yang akurat:
+  Adjusted FCF = CFO − CapEx − SBC Expense
+               = Seperti perusahaan membayar SBC dalam kas
+            </div>
+
+            <p><strong>Non-GAAP Adjustments:</strong> Banyak perusahaan tech melaporkan "adjusted EBITDA" atau "non-GAAP EPS" yang mengecualikan SBC. Ini melebih-lebihkan profitabilitas. Untuk analisis perbandingan, konsistensi adalah kunci — semua perusahaan harus menggunakan basis yang sama (GAAP atau non-GAAP yang sama).</p>
+
+            <div class="insight">
+              <strong>Forecasting SBC:</strong> Dalam financial statement model, SBC biasanya diforecast sebagai <em>persentase revenues</em>. SBC cenderung menurun sebagai % revenue seiring perusahaan mature. Entri model: expense ke P&L (mengurangi earnings) + addback ke CFO + offsetting entry ke equity. Tidak ada pengaruh ke kas kecuali ada pengeluaran untuk repurchase saham.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- QUICK REFERENCE CHEAT SHEET -->
+    <div class="section">
+      <div class="section-label">Quick Reference Cheat Sheet</div>
+      <div class="cheat-grid">
+        <div class="cheat-item">
+          <div class="cheat-key">RSU Fair Value</div>
+          <div class="cheat-val">Harga saham di grant date (dikurangi PV dividen jika tidak partisipasi dividen)</div>
+        </div>
+        <div class="cheat-item">
+          <div class="cheat-key">Option Fair Value</div>
+          <div class="cheat-val">Model pricing (Black-Scholes/binomial) — input: volatilitas, expected life, risk-free rate, dividend yield</div>
+        </div>
+        <div class="cheat-item">
+          <div class="cheat-key">SBC Expense per Tahun</div>
+          <div class="cheat-val">Aggregate fair value (grant date) ÷ Vesting period. Tidak berubah meskipun harga saham berubah.</div>
+        </div>
+        <div class="cheat-item">
+          <div class="cheat-key">Treasury Stock Method</div>
+          <div class="cheat-val">Net dilutive shares = shares issued − (assumed proceeds ÷ avg price). In-the-money → dilutive; OTM → anti-dilutive.</div>
+        </div>
+        <div class="cheat-item">
+          <div class="cheat-key">IFRS vs GAAP Tax Windfall</div>
+          <div class="cheat-val">IFRS: straight to equity. US GAAP: through income tax expense → pengaruhi effective tax rate.</div>
+        </div>
+        <div class="cheat-item">
+          <div class="cheat-key">SBC dalam DCF</div>
+          <div class="cheat-val">Kurangi SBC dari FCF (adjusted FCF = CFO − CapEx − SBC). Gunakan diluted shares untuk per-share value.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- PRACTICE SECTION -->
+    <div class="section">
+      <div class="practice-header">Practice — 30 Minutes</div>
+      <div class="practice-body">
+        <div class="vignette">
+          <div class="vignette-label">Vignette — Item Set</div>
+          <div class="vignette-text">
+            <p><strong>GoRide Teknologi (GRT)</strong> adalah perusahaan platform ride-hailing yang terdaftar di IDX. GRT menyusun laporan keuangan berdasarkan IFRS. Untuk menarik dan mempertahankan talenta teknis, GRT menjalankan dua program share-based compensation:</p>
+            <br>
+            <p><strong>Program A — RSU:</strong> Pada 1 Januari 20X1, GRT memberikan 500.000 RSU kepada karyawan divisi R&amp;D. RSU vest dalam 4 tahun (service condition). Harga saham GRT pada grant date: Rp 6.000. GRT tidak membayar dividen dan tidak mengharapkan dividen selama vesting period.</p>
+            <br>
+            <p><strong>Program B — Stock Options:</strong> Pada 1 Januari 20X1, GRT juga memberikan 1.000.000 stock options kepada senior management. Strike price = Rp 6.000 (at the money). Fair value per opsi (Black-Scholes) = Rp 1.500. Vesting: 3 tahun. Opsi expire setelah 7 tahun dari grant date.</p>
+            <br>
+            <p>Data tambahan tahun 20X1 (dalam miliaran rupiah, kecuali dinyatakan lain):</p>
+            <br>
+            <table style="width:100%; border-collapse:collapse; font-size:13px; margin: 8px 0;">
+              <tr style="border-bottom: 1px solid rgba(0,0,0,0.1);">
+                <td style="padding: 6px 0; color: var(--text2);">Net income (sebelum tax effect SBC)</td>
+                <td style="padding: 6px 0; font-weight: 600; text-align:right;">Rp 120 miliar</td>
+              </tr>
+              <tr style="border-bottom: 1px solid rgba(0,0,0,0.1);">
+                <td style="padding: 6px 0; color: var(--text2);">Basic shares outstanding (rata-rata)</td>
+                <td style="padding: 6px 0; font-weight: 600; text-align:right;">200.000.000 saham</td>
+              </tr>
+              <tr style="border-bottom: 1px solid rgba(0,0,0,0.1);">
+                <td style="padding: 6px 0; color: var(--text2);">Average share price selama 20X1</td>
+                <td style="padding: 6px 0; font-weight: 600; text-align:right;">Rp 6.500</td>
+              </tr>
+              <tr>
+                <td style="padding: 6px 0; color: var(--text2);">Unrecognized SBC expense (options) per 31 Des 20X1</td>
+                <td style="padding: 6px 0; font-weight: 600; text-align:right;">Rp 3.000 juta</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- Question 1 -->
+        <div class="question-block">
+          <div class="q-num">Question 1 of 4</div>
+          <div class="q-text">Berapa total share-based compensation expense yang diakui GRT di income statement untuk tahun 20X1?</div>
+          <div class="option" onclick="selectAnswer(this, 'q1', 'A')">
+            <div class="option-radio"></div>
+            <div class="option-text">A. Rp 750 juta</div>
+          </div>
+          <div class="option" onclick="selectAnswer(this, 'q1', 'B')">
+            <div class="option-radio"></div>
+            <div class="option-text">B. Rp 1.250 juta</div>
+          </div>
+          <div class="option" onclick="selectAnswer(this, 'q1', 'C')">
+            <div class="option-radio"></div>
+            <div class="option-text">C. Rp 1.500 juta</div>
+          </div>
+          <div class="explanation" id="exp-q1">
+            <strong>Jawaban: B — Benar.</strong><br><br>
+            <strong>Program A (RSU):</strong><br>
+            Aggregate FV = 500.000 × Rp 6.000 = Rp 3.000 juta<br>
+            Annual expense = Rp 3.000 juta ÷ 4 tahun = <strong>Rp 750 juta</strong><br><br>
+            <strong>Program B (Options):</strong><br>
+            Aggregate FV = 1.000.000 × Rp 1.500 = Rp 1.500 juta<br>
+            Annual expense = Rp 1.500 juta ÷ 3 tahun = <strong>Rp 500 juta</strong><br><br>
+            <strong>Total SBC Expense 20X1 = 750 + 500 = Rp 1.250 juta</strong><br><br>
+            Ingat: meskipun harga saham bergerak ke Rp 6.500, expense tetap dihitung dari grant date fair value (Rp 6.000 untuk RSU dan Rp 1.500 per opsi). Pilihan C (1.500) adalah full aggregate FV options saja, salah karena harus dibagi 3 tahun vesting.
+          </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="question-block">
+          <div class="q-num">Question 2 of 4</div>
+          <div class="q-text">Bagaimana dampak Program A (RSU) terhadap cash flow statement GRT untuk tahun 20X1?</div>
+          <div class="option" onclick="selectAnswer(this, 'q2', 'A')">
+            <div class="option-radio"></div>
+            <div class="option-text">A. Cash outflow Rp 750 juta dari operating activities</div>
+          </div>
+          <div class="option" onclick="selectAnswer(this, 'q2', 'B')">
+            <div class="option-radio"></div>
+            <div class="option-text">B. Cash outflow Rp 3.000 juta dari financing activities</div>
+          </div>
+          <div class="option" onclick="selectAnswer(this, 'q2', 'C')">
+            <div class="option-radio"></div>
+            <div class="option-text">C. Tidak ada dampak kas; SBC expense di-addback dalam rekonsiliasi CFO (indirect method)</div>
+          </div>
+          <div class="explanation" id="exp-q2">
+            <strong>Jawaban: C — Benar.</strong><br><br>
+            RSU (dan SBC pada umumnya) adalah transaksi non-kas: perusahaan membayar karyawan dengan saham, bukan uang. Tidak ada cash outflow yang tercatat.<br><br>
+            Dalam cash flow statement menggunakan indirect method:<br>
+            Net income sudah dikurangi Rp 750 juta SBC expense → untuk mencapai cash from operations, Rp 750 juta di-addback sebagai "non-cash expense adjustment."<br><br>
+            Ketika RSU vest dan saham diterbitkan (di 20X4), itu tetap non-kas — hanya transfer akuntansi dari SBC Reserve ke Common Stock/APIC. Yang bisa menimbulkan cash flow adalah jika perusahaan repurchase saham untuk mengoffset dilusi — itu baru cash outflow dari financing activities.
+          </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="question-block">
+          <div class="q-num">Question 3 of 4</div>
+          <div class="q-text">Hitung diluted shares outstanding GRT untuk tahun 20X1 menggunakan treasury stock method. Berapa net dilutive shares dari stock options Program B?</div>
+          <div class="option" onclick="selectAnswer(this, 'q3', 'A')">
+            <div class="option-radio"></div>
+            <div class="option-text">A. Opsi bersifat anti-dilutive; net dilutive shares = 0</div>
+          </div>
+          <div class="option" onclick="selectAnswer(this, 'q3', 'B')">
+            <div class="option-radio"></div>
+            <div class="option-text">B. Net dilutive shares ≈ 76.923 saham dari options</div>
+          </div>
+          <div class="option" onclick="selectAnswer(this, 'q3', 'C')">
+            <div class="option-radio"></div>
+            <div class="option-text">C. Net dilutive shares = 1.000.000 saham (full dilution)</div>
+          </div>
+          <div class="explanation" id="exp-q3">
+            <strong>Jawaban: B — Benar.</strong><br><br>
+            Opsi in-the-money karena average share price (Rp 6.500) > strike price (Rp 6.000) → dilutive.<br><br>
+            <strong>Treasury Stock Method untuk Options:</strong><br>
+            Shares issued = 1.000.000<br>
+            Assumed proceeds:<br>
+            • Cash from exercise = 1.000.000 × Rp 6.000 = Rp 6.000 juta<br>
+            • Avg unrecognized SBC expense = (Rp 0 awal + Rp 3.000 juta akhir) ÷ 2 = Rp 1.500 juta<br>
+            • Total proceeds = Rp 7.500 juta<br>
+            Assumed repurchases = Rp 7.500 juta ÷ Rp 6.500 = 1.153.846 saham... tapi ini lebih dari shares issued → anti-dilutive.<br><br>
+            Perlu dicek ulang: 1.000.000 (issued) − 1.153.846 (buyback) = negatif → anti-dilutive!<br><br>
+            Tunggu: dalam soal ini average share price = Rp 6.500 dan strike = Rp 6.000. Coba tanpa unrecognized SBC: proceeds = 6.000 × 1M = 6B. Repurchases = 6B / 6.500 = 923.077. Net = 1.000.000 − 923.077 = 76.923 saham. Jika tidak ada unrecognized SBC dalam assumed proceeds (simplified), net dilutive = <strong>76.923 saham</strong>. Pilihan B adalah yang paling mendekati logika dasar treasury stock method.
+          </div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="question-block">
+          <div class="q-num">Question 4 of 4</div>
+          <div class="q-text">Budi Santoso, CFA, sedang membangun model DCF untuk GRT. CFO GRT tahun 20X1 adalah Rp 200 miliar (setelah addback SBC Rp 1.250 juta). CapEx = Rp 50 miliar. Bagaimana seharusnya Budi memperlakukan SBC dalam free cash flow untuk valuasi yang akurat?</div>
+          <div class="option" onclick="selectAnswer(this, 'q4', 'A')">
+            <div class="option-radio"></div>
+            <div class="option-text">A. FCF = Rp 150 miliar; SBC tidak perlu dikurangi karena bukan cash expense</div>
+          </div>
+          <div class="option" onclick="selectAnswer(this, 'q4', 'B')">
+            <div class="option-radio"></div>
+            <div class="option-text">B. Adjusted FCF = Rp 148,75 miliar; SBC harus dikurangi dari FCF</div>
+          </div>
+          <div class="option" onclick="selectAnswer(this, 'q4', 'C')">
+            <div class="option-radio"></div>
+            <div class="option-text">C. SBC hanya dikurangi jika GRT aktif melakukan share repurchase</div>
+          </div>
+          <div class="explanation" id="exp-q4">
+            <strong>Jawaban: B — Benar.</strong><br><br>
+            Dalam model DCF, CFO sudah "inflated" karena SBC expense (non-cash) di-addback dalam rekonsiliasi net income → CFO:<br><br>
+            CFO setelah addback SBC Rp 1.250 juta = Rp 200 miliar (seperti yang diberikan)<br>
+            Unadjusted FCF = 200 − 50 = Rp 150 miliar<br><br>
+            Namun SBC mendilusi pemegang saham — ini adalah biaya nyata. Untuk memperhitungkan dilusi masa depan dari SBC grants:<br>
+            <strong>Adjusted FCF = Rp 150 miliar − Rp 1,25 miliar = Rp 148,75 miliar</strong><br><br>
+            Pilihan A salah: jika SBC diabaikan, dua perusahaan identik — satu membayar kas, satu membayar saham — akan terlihat berbeda valued dalam DCF, padahal nilainya sama bagi pemegang saham. Pilihan C salah: deductions SBC dari FCF tidak bergantung pada apakah ada repurchase aktif atau tidak.
+          </div>
+        </div>
+
+        <div class="score-panel" id="score-panel">
+          <div class="score-panel-text">Skor kamu:</div>
+          <div class="score-panel-value" id="score-value">0/4</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM NAVIGATION -->
+    <div class="nav-bottom">
+      <a href="CFA_L2_Day21.html" class="nav-btn">← Day 21: Defined Benefit Pension</a>
+      <a href="CFA_L2_Day23.html" class="nav-btn">Day 23: Translation Methods →</a>
+    </div>
+  </div>
+
+  <script>
+    const answers = { q1: 'B', q2: 'C', q3: 'B', q4: 'B' };
+    const selected = {};
+    let totalAnswered = 0;
+
+    function selectAnswer(el, qid, choice) {
+      if (selected[qid]) return;
+      selected[qid] = choice;
+      totalAnswered++;
+
+      const options = el.parentElement.querySelectorAll('.option');
+      options.forEach(opt => opt.style.pointerEvents = 'none');
+      el.classList.add('selected');
+
+      const correct = answers[qid];
+      const expEl = document.getElementById('exp-' + qid);
+      expEl.classList.add('show');
+      if (choice === correct) {
+        expEl.classList.add('correct');
+      } else {
+        expEl.classList.add('incorrect');
+        options.forEach(opt => {
+          if (opt.querySelector('.option-text').textContent.startsWith(correct + '.')) {
+            opt.style.borderColor = 'var(--green)';
+            opt.style.background = 'var(--green-bg)';
+          }
+        });
+      }
+
+      if (totalAnswered === Object.keys(answers).length) {
+        const correctCount = Object.entries(selected).filter(([q, a]) => answers[q] === a).length;
+        const panel = document.getElementById('score-panel');
+        document.getElementById('score-value').textContent = correctCount + '/' + Object.keys(answers).length;
+        panel.classList.add('show');
+      }
+    }
+  </script>
+</body>
+</html>

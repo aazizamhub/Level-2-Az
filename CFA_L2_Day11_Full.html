@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 11 · Full · Supervised Learning</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #fafaf8;
+  --bg2:     #f4f3ef;
+  --bg3:     #eeece7;
+  --border:  rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text:    #1a1a2e;
+  --text2:   #4a4a6a;
+  --text3:   #8a8aaa;
+  --gold:    #9a6e1a;
+  --gold2:   #7a5010;
+  --gold-bg: rgba(154,110,26,0.08);
+  --blue:    #1a5fa8;
+  --blue-bg: rgba(26,95,168,0.08);
+  --green:   #1a7a4a;
+  --green-bg:rgba(26,122,74,0.08);
+  --red:     #b83232;
+  --red-bg:  rgba(184,50,50,0.08);
+  --amber:   #a06010;
+  --amber-bg:rgba(160,96,16,0.08);
+  --r:10px; --r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.8;}
+.page{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;border:1px solid rgba(26,95,168,0.2);}
+.hero{margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--border);}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:36px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:15px;color:var(--text2);}
+.meta-row{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:36px;}
+.toc-title{font-size:12px;color:var(--text3);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:12px;font-weight:500;}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.toc-list li a{font-size:13px;color:var(--blue);text-decoration:none;display:flex;align-items:center;gap:8px;}
+.toc-list li a:hover{text-decoration:underline;}
+.toc-num{font-size:11px;color:var(--text3);min-width:20px;}
+.chapter{margin-bottom:40px;}
+.chapter-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--gold-bg);}
+.chapter-num{font-family:'DM Serif Display',serif;font-size:28px;color:var(--gold);line-height:1;}
+.chapter-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);line-height:1.2;}
+.sub-header{font-size:17px;font-weight:500;color:var(--text);margin:24px 0 12px;padding-left:12px;border-left:3px solid var(--gold);}
+.prose{font-size:14px;color:var(--text2);line-height:1.85;margin-bottom:14px;}
+.prose strong{color:var(--text);font-weight:500;}
+.prose em{font-style:italic;}
+.formula-block{background:var(--bg2);border:1px solid var(--border2);border-left:4px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:16px 20px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold2);line-height:2;}
+.formula-block .label{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:8px;}
+.formula-block .note{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text3);font-style:italic;display:block;margin-top:8px;}
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:20px 0;}
+.exhibit-title{background:var(--bg3);padding:10px 16px;font-size:12px;font-weight:500;color:var(--text2);border-bottom:1px solid var(--border);letter-spacing:0.03em;}
+.exhibit-body{padding:16px;}
+.reg-table{width:100%;border-collapse:collapse;font-size:13px;}
+.reg-table th{text-align:right;padding:8px 12px;background:var(--bg3);color:var(--text3);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border2);}
+.reg-table th:first-child{text-align:left;}
+.reg-table td{padding:8px 12px;border-bottom:1px solid var(--border);text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text2);}
+.reg-table td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);font-weight:500;}
+.reg-table tr:last-child td{border-bottom:none;}
+.reg-table .sig{color:var(--green);font-weight:500;}
+.callout{border-radius:var(--r);padding:16px 18px;margin:16px 0;}
+.callout-title{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;}
+.callout p{font-size:13px;color:var(--text2);line-height:1.75;}
+.callout p + p{margin-top:8px;}
+.callout.blue{background:var(--blue-bg);border:1px solid rgba(26,95,168,0.15);}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.amber{background:var(--amber-bg);border:1px solid rgba(160,96,16,0.15);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.red{background:var(--red-bg);border:1px solid rgba(184,50,50,0.15);}
+.callout.red .callout-title{color:var(--red);}
+.callout.gold{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);}
+.callout.gold .callout-title{color:var(--gold);}
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:24px 0;overflow:hidden;}
+.kc-header{background:var(--gold-bg);padding:12px 18px;border-bottom:1px solid rgba(154,110,26,0.15);}
+.kc-header-title{font-size:12px;font-weight:500;color:var(--gold);letter-spacing:0.06em;text-transform:uppercase;}
+.kc-body{padding:18px;}
+.kc-q{font-size:13px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.6;}
+.kc-answer{background:var(--bg3);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);line-height:1.75;display:none;}
+.kc-answer.show{display:block;}
+.kc-answer strong{color:var(--green);}
+.kc-toggle{background:none;border:1px solid var(--border2);border-radius:var(--r-sm);padding:6px 14px;font-size:12px;color:var(--text3);cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px;transition:all 0.15s;}
+.kc-toggle:hover{border-color:var(--gold);color:var(--gold);}
+.num-list{list-style:none;counter-reset:num;display:flex;flex-direction:column;gap:8px;margin:10px 0;}
+.num-list li{counter-increment:num;display:flex;gap:12px;font-size:13px;color:var(--text2);line-height:1.7;}
+.num-list li::before{content:counter(num)".";color:var(--gold);font-weight:500;min-width:20px;flex-shrink:0;}
+.bullet-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin:10px 0;}
+.bullet-list li{display:flex;gap:10px;font-size:13px;color:var(--text2);line-height:1.7;}
+.bullet-list li::before{content:'■';color:var(--gold);font-size:9px;margin-top:5px;flex-shrink:0;}
+code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--bg3);padding:2px 6px;border-radius:4px;color:var(--gold2);}
+.divider{height:1px;background:var(--border);margin:36px 0;}
+.practice-header{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);border-radius:var(--r) var(--r) 0 0;padding:16px 20px;display:flex;align-items:center;gap:12px;}
+.practice-header-title{font-size:16px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);margin-top:2px;}
+.practice-body{background:var(--bg2);border:1px solid rgba(154,110,26,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:24px;}
+.vignette{background:var(--bg3);border-left:4px solid var(--gold);padding:18px 20px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:28px;font-size:13px;color:var(--text2);line-height:1.85;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;font-weight:500;}
+.question-block{margin-bottom:24px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:6px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:12px;line-height:1.65;}
+.option{display:block;width:100%;text-align:left;padding:11px 16px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:8px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.6;}
+.option:hover:not(:disabled){border-color:var(--border2);background:var(--bg2);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:14px 16px;font-size:13px;color:var(--text2);margin-top:10px;line-height:1.8;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:28px;margin-top:20px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:52px;margin-bottom:8px;}
+.score-msg{font-size:14px;color:var(--text2);}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+.nav-day{font-size:12px;color:var(--text3);text-align:center;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II · <span>Quantitative Methods</span> · LM6</div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <div class="version-badge">Versi Full</div>
+      <div class="day-badge">Day 11 of 90</div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Kamis, 23 April 2026</div>
+    <h1 class="hero-title">Supervised Learning — Algoritma Regresi, Klasifikasi & Ensemble</h1>
+    <p class="hero-sub">Learning Module 6 — Machine Learning · Subtopic 1 of 2 · CFA Level II 2026</p>
+    <div class="meta-row">
+      <div class="meta-pill">📖 Materi lengkap</div>
+      <div class="meta-pill">🇮🇩 Bahasa Indonesia</div>
+      <div class="meta-pill">⚖️ Exam weight <b>~6%</b></div>
+      <div class="meta-pill">⏱ Est. baca <b>45-60 menit</b></div>
+    </div>
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ul class="toc-list">
+      <li><a href="#s0"><span class="toc-num">0</span> Learning Outcomes</a></li>
+      <li><a href="#s1"><span class="toc-num">1</span> Apa Itu Machine Learning? Supervised vs Unsupervised</a></li>
+      <li><a href="#s2"><span class="toc-num">2</span> Evaluasi Performa ML: Overfitting, Bias-Variance, dan Cross-Validation</a></li>
+      <li><a href="#s3"><span class="toc-num">3</span> Penalized Regression: LASSO, Ridge & Elastic Net</a></li>
+      <li><a href="#s4"><span class="toc-num">4</span> Support Vector Machine (SVM) & K-Nearest Neighbor (KNN)</a></li>
+      <li><a href="#s5"><span class="toc-num">5</span> Classification and Regression Tree (CART)</a></li>
+      <li><a href="#s6"><span class="toc-num">6</span> Ensemble Learning: Voting, Bagging, Random Forest & Gradient Boosting</a></li>
+      <li><a href="#s7"><span class="toc-num">7</span> Latihan Soal — Item Set Vignette</a></li>
+    </ul>
+  </div>
+
+  <!-- SECTION 0: LEARNING OUTCOMES -->
+  <div class="chapter" id="s0">
+    <div class="chapter-header">
+      <div class="chapter-num">0</div>
+      <div class="chapter-title">Learning Outcomes</div>
+    </div>
+    <p class="prose">Setelah menyelesaikan modul ini, kandidat diharapkan mampu:</p>
+    <ul class="num-list">
+      <li>Mendeskripsikan supervised machine learning, unsupervised machine learning, dan deep learning serta membedakan jenis masalah yang sesuai untuk masing-masing pendekatan.</li>
+      <li>Mendeskripsikan overfitting dan mengidentifikasi metode-metode untuk mengatasinya, termasuk regularization dan cross-validation.</li>
+      <li>Mendeskripsikan algoritma supervised ML — termasuk penalized regression (LASSO), support vector machine (SVM), k-nearest neighbor (KNN), classification and regression tree (CART), ensemble learning, dan random forest — serta menentukan masalah yang paling cocok untuk masing-masing algoritma.</li>
+    </ul>
+  </div>
+
+  <!-- SECTION 1: APA ITU ML -->
+  <div class="chapter" id="s1">
+    <div class="chapter-header">
+      <div class="chapter-num">1</div>
+      <div class="chapter-title">Apa Itu Machine Learning? Supervised vs Unsupervised</div>
+    </div>
+
+    <div class="sub-header">Definisi Machine Learning</div>
+    <p class="prose">Pendekatan statistik tradisional dan teknik machine learning sama-sama menganalisis observasi untuk mengungkap proses yang mendasari data. Namun, keduanya berbeda dalam asumsi, terminologi, dan teknik. Pendekatan statistik bergantung pada asumsi fundamental dan model struktur eksplisit — misalnya, sampel dianggap berasal dari distribusi probabilitas tertentu. Asumsi <em>a priori</em> ini bisa gagal dalam kenyataan.</p>
+    <p class="prose">Sebaliknya, <strong>machine learning (ML)</strong> berusaha mengekstrak pengetahuan dari data dalam jumlah besar dengan lebih sedikit batasan. Tujuan algoritma ML adalah mengotomatisasi proses pengambilan keputusan dengan <strong>menggeneralisasi ("learning")</strong> dari contoh-contoh yang sudah diketahui untuk menemukan struktur mendasar dalam data. Cara paling sederhana untuk memahami ML: <em>"temukan polanya, terapkan polanya."</em></p>
+    <p class="prose">ML lebih unggul dibanding pendekatan statistik tradisional (seperti regresi linear) dalam menangani masalah dengan banyak variabel (<strong>high dimensionality</strong>) atau dengan tingkat non-linearitas tinggi. Algoritma ML sangat baik dalam mendeteksi perubahan, bahkan dalam sistem yang sangat non-linear, karena dapat mendeteksi prekondisi rusaknya suatu model atau mengantisipasi probabilitas regime switch.</p>
+
+    <div class="sub-header">Tiga Kategori Utama ML</div>
+    <p class="prose">Machine learning secara luas dibagi menjadi tiga kelas teknik:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit — Tiga Kategori Machine Learning</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th style="text-align:left;">Kategori</th><th style="text-align:left;">Data</th><th style="text-align:left;">Tujuan</th><th style="text-align:left;">Contoh Algoritma</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Supervised Learning</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Labeled (Y + X)</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Prediksi target (regression jika Y kontinu, classification jika Y kategori)</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">LASSO, SVM, KNN, CART, Random Forest</td></tr>
+            <tr><td>Unsupervised Learning</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Unlabeled (X saja)</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Temukan struktur tersembunyi (clustering, dimension reduction)</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">K-Means, PCA, Hierarchical Clustering</td></tr>
+            <tr><td>Deep Learning / RL</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Labeled atau unlabeled</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Tugas kompleks (image, speech, NLP)</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Neural Networks, RNN, CNN</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">Supervised Learning: Terminologi Kunci</div>
+    <p class="prose">Dalam supervised ML, variabel dependen (Y) disebut <strong>target</strong> dan variabel independen (X) disebut <strong>features</strong>. Data berlabel (training dataset) digunakan untuk melatih algoritma agar menyimpulkan <em>prediction rule</em> berbasis pola. Fit model dievaluasi menggunakan labeled test data di mana target yang diprediksi (Y<sub>predict</sub>) dibandingkan dengan target aktual (Y<sub>actual</sub>).</p>
+    <p class="prose">Supervised learning dibagi dua kategori masalah berdasarkan sifat target: jika target <strong>kontinu</strong>, maka masalahnya adalah <strong>regression</strong>; jika target <strong>kategori atau ordinal</strong>, maka masalahnya adalah <strong>classification</strong>. Contoh regression: prediksi return saham dari rasio fundamental. Contoh classification: prediksi apakah transaksi kartu kredit fraudulent atau legitimate.</p>
+
+    <div class="callout blue">
+      <div class="callout-title">Catatan Terminologi Penting</div>
+      <p>Dalam ML, istilah "regression" merujuk pada masalah dengan target kontinu — <em>meskipun</em> teknik ML yang dipakai bukan regresi dalam arti tradisional. Misalnya, CART dengan target kontinu disebut "regression tree" meski bukan regresi linear. Jangan bingung antara terminologi ML dan statistik tradisional.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 1</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Seorang analis ingin mengelompokkan 500 perusahaan ke dalam cluster berdasarkan 20 rasio fundamental tanpa menentukan berapa jumlah cluster di awal. Ini adalah contoh ML jenis apa, dan mengapa?</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show')">Tampilkan Jawaban</button>
+        <div class="kc-answer"><strong>Unsupervised learning.</strong> Tidak ada target variabel (Y) yang ingin diprediksi — analis hanya ingin menemukan struktur (cluster) dalam data. Karena tidak ada label "kelas mana tiap perusahaan seharusnya masuk," ini bukan classification (supervised). Teknik yang cocok: k-means clustering atau hierarchical clustering.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: EVALUASI PERFORMA ML -->
+  <div class="chapter" id="s2">
+    <div class="chapter-header">
+      <div class="chapter-num">2</div>
+      <div class="chapter-title">Evaluasi Performa ML: Overfitting, Bias-Variance & Cross-Validation</div>
+    </div>
+
+    <div class="sub-header">Masalah Overfitting</div>
+    <p class="prose">Fleksibilitas algoritma ML memungkinkannya menangkap hubungan kompleks dan non-linear, tetapi ada harganya. Model ML yang terlalu fit terhadap training data akan <strong>tidak bisa memprediksi dengan baik pada data baru</strong> — inilah yang disebut <strong>overfitting</strong>. Model yang overfit telah "menghafal" noise dan fluktuasi random dalam training data, bukan mempelajari pola sesungguhnya.</p>
+    <p class="prose">Evaluasi performa ML harus fokus pada <strong>prediction error pada data baru</strong>, bukan pada goodness of fit pada data training. Sebuah model yang baik harus <strong>generalize</strong> — artinya mempertahankan kekuatan prediktif saat diuji pada data out-of-sample.</p>
+
+    <div class="sub-header">Dekomposisi Error: Bias vs Variance</div>
+    <p class="prose">Dataset biasanya dibagi menjadi tiga bagian yang tidak tumpang tindih: (1) <strong>training sample</strong> untuk melatih model, (2) <strong>validation sample</strong> untuk tuning dan memilih model, (3) <strong>test sample</strong> untuk menguji kemampuan prediksi pada data baru. Training dan validation sering disebut "in-sample," test disebut "out-of-sample."</p>
+
+    <div class="formula-block">
+      <span class="label">Dekomposisi Total Out-of-Sample Error</span>
+      E<sub>out</sub> = Bias Error + Variance Error + Base Error
+      <br><br>
+      Bias error → model kurang fit (underfitting) → asumsi terlalu ketat
+      <br>Variance error → model terlalu fit (overfitting) → sensitif terhadap noise
+      <br>Base error → randomness inheren dalam data
+      <span class="note">Goal: minimize Bias + Variance secara bersamaan (bias-variance trade-off)</span>
+    </div>
+
+    <p class="prose">Fungsi linear cenderung rentan terhadap <strong>bias error</strong> dan underfitting, sementara fungsi non-linear lebih rentan terhadap <strong>variance error</strong> dan overfitting. Ada titik optimalitas kompleksitas model di mana kedua kurva error berpotongan dan total error diminimalkan — ini disebut <em>fitting curve</em>.</p>
+
+    <div class="sub-header">Metode Mengatasi Overfitting</div>
+    <p class="prose">Dua metode utama untuk mengurangi overfitting:</p>
+    <ul class="num-list">
+      <li><strong>Regularization (complexity reduction):</strong> Batasi jumlah features dan beri penalty pada algoritma yang terlalu kompleks. Prinsip Occam's razor — solusi paling sederhana cenderung yang benar. Hanya sertakan parameter yang mengurangi out-of-sample error.</li>
+      <li><strong>Cross-validation:</strong> Teknik <strong>k-fold cross-validation</strong> membagi data (selain test sample) secara random menjadi k sub-sample. Proses diulang k kali, dengan setiap sub-sample bergantian jadi validation set. Rata-rata k validation errors menjadi estimasi out-of-sample error.</li>
+    </ul>
+
+    <div class="callout amber">
+      <div class="callout-title">Batasan K-Fold Cross-Validation</div>
+      <p>K-fold CV <strong>tidak dapat digunakan untuk time-series data</strong> karena pengacakan fold melanggar urutan temporal. Untuk time series, gunakan rolling window / walk-forward validation di mana hanya data terbaru yang digunakan untuk validasi.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 2</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Model ML seorang analis menghasilkan in-sample accuracy 98% tetapi out-of-sample accuracy hanya 62%. Apa diagnosis yang paling tepat, dan apa dua strategi yang bisa digunakan untuk memperbaikinya?</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show')">Tampilkan Jawaban</button>
+        <div class="kc-answer"><strong>Diagnosis: Overfitting (high variance error).</strong> Model terlalu menyesuaikan noise training data sehingga gagal generalize. Dua strategi: (1) Regularization — kurangi kompleksitas model, misalnya memakai penalized regression atau membatasi depth decision tree. (2) Cross-validation — gunakan k-fold CV untuk mendapatkan estimasi out-of-sample error yang lebih reliable dan tuning hyperparameter berdasarkan performa validasi.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: PENALIZED REGRESSION -->
+  <div class="chapter" id="s3">
+    <div class="chapter-header">
+      <div class="chapter-num">3</div>
+      <div class="chapter-title">Penalized Regression: LASSO, Ridge & Elastic Net</div>
+    </div>
+
+    <div class="sub-header">Mengapa Penalized Regression?</div>
+    <p class="prose">Dalam konteks dataset besar dengan banyak features yang potensial berkorelasi, OLS biasa cenderung overfit. Features yang mencerminkan noise dalam training data akan masuk model dan merusak prediksi out-of-sample. <strong>Penalized regression</strong> menambahkan penalty term pada fungsi objektif sehingga feature hanya masuk model jika kontribusinya terhadap penurunan sum of squared residuals melebihi peningkatan penalty.</p>
+
+    <div class="sub-header">Formulasi LASSO (L1 Penalty)</div>
+    <p class="prose">LASSO (Least Absolute Shrinkage and Selection Operator) menambahkan penalty berupa jumlah absolute value koefisien regresi:</p>
+    <div class="formula-block">
+      <span class="label">LASSO Objective Function</span>
+      Minimize: Σᵢ(Yᵢ − Ŷᵢ)² + λ Σₖ|b̂ₖ|
+      <br><br>
+      λ &gt; 0 : hyperparameter (di-set sebelum training)
+      <br>λ = 0 : setara dengan OLS biasa
+      <br>λ ↑   : makin banyak koefisien → 0 (model lebih parsimonious)
+      <span class="note">Karena L1 penalty bisa membuat koefisien persis = 0, LASSO otomatis melakukan feature selection.</span>
+    </div>
+
+    <div class="sub-header">Ridge Regression (L2 Penalty) dan Elastic Net</div>
+    <p class="prose"><strong>Ridge regression</strong> menggunakan penalty berupa jumlah kuadrat koefisien (L2 penalty): λ Σₖ b̂ₖ². Berbeda dengan LASSO, Ridge tidak pernah membuat koefisien <em>persis nol</em> — ia hanya menyusutkan koefisien mendekati nol. Ridge cocok ketika semua features dianggap relevan dan kita hanya ingin mengurangi magnitude koefisien.</p>
+    <p class="prose"><strong>Elastic Net</strong> menggabungkan L1 dan L2 penalty, memberikan fleksibilitas untuk melakukan feature selection (seperti LASSO) sekaligus menangani multicollinearity (seperti Ridge).</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit — Perbandingan Metode Regularisasi</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th style="text-align:left;">Metode</th><th style="text-align:left;">Penalty Term</th><th style="text-align:left;">Feature Selection?</th><th style="text-align:left;">Kelebihan</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>OLS</td><td style="text-align:left;font-family:'JetBrains Mono';font-size:12px;">Tidak ada</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Tidak</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Sederhana, BLUE jika asumsi terpenuhi</td></tr>
+            <tr><td>LASSO (L1)</td><td style="text-align:left;font-family:'JetBrains Mono';font-size:12px;">λ Σ|b̂ₖ|</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Ya (koefisien → 0)</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Parsimonious, automatic feature selection</td></tr>
+            <tr><td>Ridge (L2)</td><td style="text-align:left;font-family:'JetBrains Mono';font-size:12px;">λ Σ b̂ₖ²</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Tidak (mendekati 0, tidak pernah = 0)</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Stabil saat multicollinearity tinggi</td></tr>
+            <tr><td>Elastic Net</td><td style="text-align:left;font-family:'JetBrains Mono';font-size:12px;">α λ Σ|b̂ₖ| + (1−α) λ Σ b̂ₖ²</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Ya (sebagian)</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Kombinasi kedua keunggulan</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout blue">
+      <div class="callout-title">Aplikasi Praktis di Finance</div>
+      <p>LASSO telah digunakan untuk forecasting probabilitas default di sektor industri di mana puluhan features potensial (banyak yang collinear) direduksi menjadi kurang dari 10 variabel — penting mengingat sedikitnya observasi default (~100). Regularization juga membantu mengestimasi covariance matrix yang stabil untuk portfolio optimization, di mana return aset biasanya sangat multicollinear.</p>
+    </div>
+
+    <div class="callout red">
+      <div class="callout-title">Poin Penting untuk Ujian</div>
+      <p>Lambda (λ) adalah <strong>hyperparameter</strong> — nilainya di-set <em>sebelum</em> training dimulai melalui proses tuning pada validation set. Penalty term hanya diaplikasikan saat training; saat evaluasi out-of-sample, hanya sum of squared residuals yang dihitung.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 3</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Seorang analis menjalankan LASSO dengan λ = 0.1 pada dataset 40 features. Hasilnya: 28 koefisien menjadi nol. Jika analis meningkatkan λ menjadi 0.5, apa yang paling mungkin terjadi pada jumlah features yang tersisa?</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show')">Tampilkan Jawaban</button>
+        <div class="kc-answer"><strong>Jumlah features yang tersisa kemungkinan akan berkurang (kurang dari 12).</strong> Semakin besar λ, semakin besar penalty untuk setiap koefisien yang non-zero. Hanya features dengan kontribusi prediktif sangat kuat yang akan "bertahan" dari penalty yang lebih besar. Ini membuat model lebih parsimonious — lebih sedikit fitur, lebih tahan overfitting, tapi risiko underfitting meningkat jika λ terlalu besar.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: SVM & KNN -->
+  <div class="chapter" id="s4">
+    <div class="chapter-header">
+      <div class="chapter-num">4</div>
+      <div class="chapter-title">Support Vector Machine (SVM) & K-Nearest Neighbor (KNN)</div>
+    </div>
+
+    <div class="sub-header">Support Vector Machine (SVM)</div>
+    <p class="prose">SVM adalah salah satu algoritma paling populer dalam machine learning. Ini adalah algoritma supervised yang kuat untuk classification, regression, dan deteksi outlier. Ide dasarnya relatif sederhana: diberikan dataset dua kelas, SVM mencari <strong>hyperplane</strong> (batas pemisah) yang memaksimalkan jarak (margin) antara kedua kelas.</p>
+    <p class="prose">Observasi terdekat ke boundary disebut <strong>support vectors</strong> — mereka yang menentukan posisi margin. Menambahkan data training yang jauh dari support vectors tidak akan mengubah boundary. Konsep kuncinya:</p>
+    <ul class="bullet-list">
+      <li><strong>Linear SVM:</strong> Memisahkan data dengan garis lurus (2D), plane (3D), atau hyperplane (n-D). Bekerja sempurna jika data linearly separable.</li>
+      <li><strong>Soft margin classification:</strong> Jika data tidak linearly separable, SVM menambahkan penalty untuk observasi yang misklasifikasi. Optimisasi menjadi trade-off antara margin yang lebih lebar dan total error penalty yang lebih rendah.</li>
+      <li><strong>Non-linear SVM:</strong> Memperkenalkan batas pemisah non-linear. Bisa mengurangi misklasifikasi tapi lebih kompleks dan rentan overfitting.</li>
+    </ul>
+    <p class="prose"><strong>Aplikasi di finance:</strong> SVM sangat cocok untuk dataset kecil-medium tapi high-dimensional (banyak features), seperti laporan keuangan perusahaan atau database kebangkrutan. SVM juga digunakan untuk mengklasifikasikan sentimen teks dari news articles dan laporan tahunan (positif vs negatif).</p>
+
+    <div class="sub-header">K-Nearest Neighbor (KNN)</div>
+    <p class="prose">KNN adalah teknik supervised learning yang paling sering digunakan untuk classification. Idenya: klasifikasikan observasi baru berdasarkan kesamaan ("nearness") dengan data yang sudah ada. Jika k = 1, observasi baru diklasifikasikan sama dengan tetangga terdekatnya. Jika k = 5, lihat 5 tetangga terdekat dan pilih kategori mayoritas.</p>
+    <p class="prose">KNN bersifat <strong>non-parametric</strong> — tidak membuat asumsi tentang distribusi data. Ini kekuatannya sekaligus kelemahannya. Tantangan kritis:</p>
+    <ul class="num-list">
+      <li><strong>Definisi "similar":</strong> Pemilihan distance metric sangat penting. Metric yang salah = model yang buruk. Untuk saham, korelasi historical returns bisa dipakai sebagai ukuran kesamaan.</li>
+      <li><strong>Sensitif terhadap irrelevant features:</strong> Features yang tidak relevan atau berkorelasi tinggi bisa mendistorsi distance calculation. Feature selection manual mungkin diperlukan — KNN bekerja lebih baik dengan jumlah features yang sedikit.</li>
+      <li><strong>Pemilihan k (hyperparameter):</strong> k terlalu kecil → high error rate, sensitif terhadap outlier. k terlalu besar → konsep "nearest" menjadi terdilusi. Pilih k ganjil untuk menghindari ties. Teknik-teknik tertentu bisa dipakai untuk menentukan k optimal.</li>
+    </ul>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit — Perbandingan SVM vs KNN</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th style="text-align:left;">Dimensi</th><th style="text-align:left;">SVM</th><th style="text-align:left;">KNN</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Jenis</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Primarily classification</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Classification & regression</td></tr>
+            <tr><td>Pendekatan</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Cari max-margin hyperplane</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Voting dari k tetangga terdekat</td></tr>
+            <tr><td>Parametric?</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Ya (membangun model)</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Non-parametric (instance-based)</td></tr>
+            <tr><td>Kekuatan</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Tahan outlier, bagus high-dimensional</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Simpel, multi-class langsung</td></tr>
+            <tr><td>Kelemahan</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Sulit interpretasi</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Sensitif terhadap features irrelevant, pilihan k</td></tr>
+            <tr><td>Aplikasi Finance</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Prediksi kebangkrutan, sentimen analisis</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Credit rating, bond index creation</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 4</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Seorang portfolio manager ingin menentukan implied credit rating (investment grade vs non-investment grade) untuk obligasi korporasi yang belum di-rating, menggunakan data rasio-rasio fundamental emiten. Algoritma mana yang lebih cocok: SVM atau KNN? Dan mengapa?</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show')">Tampilkan Jawaban</button>
+        <div class="kc-answer"><strong>Keduanya cocok, tetapi untuk alasan berbeda.</strong> SVM cocok karena ini binary classification problem (IG vs non-IG) dan SVM bagus untuk dataset yang high-dimensional dengan banyak rasio fundamental. SVM juga tahan terhadap outlier dan features yang berkorelasi. KNN juga cocok karena obligasi dengan karakteristik serupa cenderung mendapat rating serupa — KNN memanfaatkan kesamaan ini secara langsung. Keduanya bisa digabungkan dalam voting classifier untuk hasil yang lebih robust.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: CART -->
+  <div class="chapter" id="s5">
+    <div class="chapter-header">
+      <div class="chapter-num">5</div>
+      <div class="chapter-title">Classification and Regression Tree (CART)</div>
+    </div>
+
+    <div class="sub-header">Cara Kerja CART</div>
+    <p class="prose">CART adalah teknik supervised ML yang membangun <strong>decision tree</strong> untuk memprediksi target variabel. Jika target kategori → classification tree. Jika target kontinu → regression tree. Struktur pohon terdiri dari:</p>
+    <ul class="bullet-list">
+      <li><strong>Root node (node awal):</strong> Titik start, memilih feature dan cutoff value pertama.</li>
+      <li><strong>Decision nodes:</strong> Setiap node mempartisi data berdasarkan satu feature dan satu cutoff value yang menghasilkan pemisahan terluas (minimum classification error atau MSE).</li>
+      <li><strong>Terminal nodes (leaf):</strong> Titik akhir yang berisi prediksi — kategori mayoritas (classification) atau mean (regression).</li>
+    </ul>
+    <p class="prose">Proses ini bersifat iteratif: setelah setiap decision node, partisi feature space menjadi semakin kecil, dan observasi dalam setiap group memiliki error yang lebih rendah. Proses berhenti saat klasifikasi error tidak berkurang signifikan dari split berikutnya.</p>
+
+    <div class="sub-header">Kekuatan Unik CART: Non-linear Interactions</div>
+    <p class="prose">Feature yang sama bisa muncul berkali-kali di level berbeda dalam tree, dalam kombinasi dengan features lain. Ini memungkinkan CART menangkap <strong>complex dependencies</strong> yang regresi linear tidak bisa. Contoh: "high profitability" hanya relevan jika P/E &lt; 15x DAN leverage &gt; 50% DAN sales growth &gt; 15%. Dalam regresi linear, hubungan non-linear bersyarat seperti ini sangat sulit dimodelkan.</p>
+
+    <div class="sub-header">Menghindari Overfitting pada CART</div>
+    <p class="prose">Tanpa batasan, CART bisa <em>perfectly learn</em> training data — setiap observasi mendapat terminal node sendiri. Ini jelas overfitting. Metode regularisasi untuk CART:</p>
+    <ul class="num-list">
+      <li><strong>Maximum depth:</strong> Batasi kedalaman pohon (jumlah level dari root ke leaf).</li>
+      <li><strong>Minimum population per node:</strong> Node hanya dibagi jika jumlah observasi melebihi threshold minimum.</li>
+      <li><strong>Maximum decision nodes:</strong> Batasi total jumlah node keputusan.</li>
+      <li><strong>Pruning:</strong> Bangun pohon penuh terlebih dahulu, lalu pangkas bagian-bagian yang kontribusi klasifikasinya minimal.</li>
+    </ul>
+
+    <div class="callout gold">
+      <div class="callout-title">Keunggulan Utama CART: Interpretability</div>
+      <p>Dibanding algoritma lain yang sering dianggap "black box" (sulit memahami logika di balik prediksi), CART menghasilkan visual tree yang sangat mudah dipahami dan dikomunikasikan ke klien, investment committee, dan non-technical stakeholders. Ini menjadi keunggulan besar dalam konteks investment management di mana transparansi keputusan investasi sangat penting.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 5</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Sebuah model CART untuk deteksi fraud pada laporan keuangan menghasilkan decision tree dengan depth 25 level dan 300 terminal nodes. In-sample accuracy 99.8% tapi out-of-sample accuracy hanya 58%. Apa masalahnya dan sebutkan dua solusi spesifik.</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show')">Tampilkan Jawaban</button>
+        <div class="kc-answer"><strong>Masalah: Severe overfitting.</strong> Tree terlalu dalam (25 level) dan terlalu banyak terminal nodes (300) — model menghafal training data termasuk noise-nya. Dua solusi: (1) Regularization — batasi max depth (misalnya 5-8 level) dan/atau set minimum population per node (misalnya 50 observasi). (2) Pruning — bangun tree penuh lalu pangkas cabang-cabang yang kontribusi akurasinya minimal pada validation set. Kedua metode mengurangi kompleksitas dan meningkatkan generalization.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: ENSEMBLE LEARNING -->
+  <div class="chapter" id="s6">
+    <div class="chapter-header">
+      <div class="chapter-num">6</div>
+      <div class="chapter-title">Ensemble Learning: Voting, Bagging, Random Forest & Gradient Boosting</div>
+    </div>
+
+    <div class="sub-header">Prinsip Dasar Ensemble Learning</div>
+    <p class="prose">Mengapa mengandalkan satu model jika kita bisa menggabungkan prediksi dari <em>banyak</em> model? Setiap model individu memiliki error rate tertentu dan membuat prediksi yang noisy. Tapi dengan mengambil rata-rata (atau majority vote) dari banyak prediksi, noise cenderung saling meniadakan dan prediksi konvergen ke akurasi yang lebih tinggi. Inilah <strong>ensemble learning</strong> — teknik yang secara konsisten menghasilkan prediksi lebih akurat dan lebih stabil dibanding model tunggal terbaik.</p>
+
+    <div class="sub-header">Voting Classifiers (Heterogeneous Ensemble)</div>
+    <p class="prose">Pendekatan paling sederhana: latih beberapa algoritma berbeda (misalnya SVM, KNN, CART) pada dataset yang sama, lalu buat prediksi akhir berdasarkan <strong>majority vote</strong>. Contoh: jika SVM dan KNN memprediksi "outperformance" tapi CART memprediksi "underperformance," voting classifier memilih outperformance (2 vs 1). Kunci keberhasilan: <em>diversitas</em> dalam pilihan algoritma. Ada jumlah model optimal — terlalu banyak justru bisa overfit.</p>
+
+    <div class="sub-header">Bootstrap Aggregating (Bagging)</div>
+    <p class="prose"><strong>Bagging</strong> menggunakan algoritma yang <em>sama</em> tetapi dengan <em>data training yang berbeda</em>. Caranya: dari dataset awal, buat n dataset baru via <strong>random sampling with replacement</strong> (bootstrap). Setiap "bag" digunakan untuk melatih model terpisah. Prediksi akhir = majority vote (classification) atau average (regression). Bagging sangat efektif untuk meningkatkan stabilitas prediksi dan melindungi dari overfitting.</p>
+
+    <div class="sub-header">Random Forest</div>
+    <p class="prose"><strong>Random forest</strong> = koleksi banyak decision trees yang dilatih via bagging, dengan tambahan: di setiap node, hanya <strong>subset random m features</strong> (di mana m &lt; n total features) yang dipertimbangkan untuk splitting. Ini menambah diversitas antar-tree dan lebih jauh mengurangi variance.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit — Hyperparameter Random Forest</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th style="text-align:left;">Hyperparameter</th><th style="text-align:left;">Definisi</th><th style="text-align:left;">Pengaruh</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Jumlah trees</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Berapa banyak decision tree dalam forest</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Lebih banyak → lebih stabil, tapi diminishing returns</td></tr>
+            <tr><td>Max depth</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Kedalaman maksimum setiap tree</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Lebih dalam → lebih fit tapi risiko overfit</td></tr>
+            <tr><td>Min population</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Minimum observasi di setiap leaf node</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Lebih besar → tree lebih sederhana</td></tr>
+            <tr><td>Feature subset (m)</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Jumlah features random yang dipertimbangkan per node</td><td style="text-align:left;font-family:'DM Sans';font-size:13px;">Lebih kecil → lebih diverse, kurangi correlation antar trees</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Klasifikasi akhir dalam random forest = majority vote dari semua tree — implementasi machine learning dari <em>"wisdom of crowds."</em> Proses ini mengurangi variance dan melindungi dari overfitting karena error saling meniadakan antar tree yang sedikit berbeda. Namun, kelemahan utama random forest adalah <strong>kurangnya interpretability</strong> — sulit menjelaskan mengapa prediksi tertentu dibuat, sehingga dianggap "black box."</p>
+
+    <div class="sub-header">Gradient Boosting</div>
+    <p class="prose">Berbeda dengan bagging yang membangun tree secara <strong>paralel dan independen</strong>, gradient boosting membangun tree secara <strong>sekuensial</strong>. Setiap tree baru fokus memperbaiki error (residual) dari tree sebelumnya. Prosesnya:</p>
+    <ul class="num-list">
+      <li>Latih tree pertama pada data asli.</li>
+      <li>Hitung residual (error) dari tree pertama.</li>
+      <li>Latih tree kedua pada residual tersebut — fokus pada observasi yang salah diprediksi.</li>
+      <li>Ulangi sampai stopping criterion tercapai.</li>
+    </ul>
+    <p class="prose">Gradient boosting sering menghasilkan akurasi lebih tinggi dari random forest, tapi lebih <strong>rentan terhadap overfitting</strong> karena setiap tree baru bergantung pada tree sebelumnya. Tuning hyperparameter (learning rate, jumlah trees, max depth) sangat kritis.</p>
+
+    <div class="callout blue">
+      <div class="callout-title">Perbandingan Kritis: Bagging vs Boosting</div>
+      <p><strong>Bagging (Random Forest):</strong> Parallel training, trees independen, primarily reduce variance. Lebih robust, kurang prone overfitting.</p>
+      <p><strong>Boosting (Gradient Boosting):</strong> Sequential training, trees dependent, reduce both bias and variance. Potensial akurasi lebih tinggi tapi membutuhkan tuning lebih hati-hati.</p>
+    </div>
+
+    <div class="callout amber">
+      <div class="callout-title">Aplikasi Random Forest di Finance</div>
+      <p>Random forest telah digunakan secara luas dalam factor-based investment strategies untuk asset allocation dan investment selection, prediksi keberhasilan IPO (oversubscription, first-day return), deteksi fraud kartu kredit (mampu menemukan 82% kasus fraud di dataset dengan hanya 0.17% fraud rate), dan prediksi credit default perusahaan kecil-menengah — di mana ia jauh mengungguli model regresi linear tradisional.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 6</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Mengapa random forest cenderung lebih robust terhadap overfitting dibanding single CART? Identifikasi dua mekanisme spesifik yang berkontribusi.</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show')">Tampilkan Jawaban</button>
+        <div class="kc-answer"><strong>Dua mekanisme:</strong> (1) <strong>Bagging</strong> — setiap tree dilatih pada bootstrap sample yang berbeda dari data asli. Ini berarti setiap tree melihat variasi data yang sedikit berbeda, sehingga overfitting terhadap noise di satu subset data tertentu dikurangi ketika prediksi diagregasi. (2) <strong>Random feature subset</strong> — di setiap node, hanya sebagian features (m &lt; n) yang dipertimbangkan. Ini mengurangi korelasi antar-tree (jika satu feature dominan, tidak semua tree akan menggunakannya di root node) dan meningkatkan diversitas. Kedua mekanisme bekerja sama untuk mengurangi variance error secara signifikan.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 7: LATIHAN SOAL -->
+  <div class="chapter" id="s7">
+    <div class="chapter-header">
+      <div class="chapter-num">7</div>
+      <div class="chapter-title">Latihan Soal — Item Set Vignette</div>
+    </div>
+
+    <div class="practice-header">
+      <div class="practice-header-title">Vignette: PT Bank Rakyat Indonesia & Model Prediksi Default UMKM</div>
+      <div class="practice-header-sub">6 soal · Tingkat kesulitan CFA Exam</div>
+    </div>
+
+    <div class="practice-body">
+
+      <div class="vignette">
+        <div class="vignette-label">Vignette</div>
+        Dewi Kartika, Head of Credit Analytics di PT Bank Rakyat Indonesia Tbk (BBRI), memimpin tim yang sedang membangun model prediksi default untuk kredit UMKM. Dataset terdiri dari 120.000 debitur UMKM dengan 42 features (rasio keuangan, sektor usaha, lokasi, usia usaha, riwayat pembayaran, dll.) dan target binary: default (1) atau performing (0). Tingkat default historis adalah 4.2%.<br><br>
+        Tim Dewi menguji empat pendekatan:<br><br>
+        <strong>Model 1 — OLS Logistic Regression:</strong> Menggunakan semua 42 features. In-sample accuracy 91%, out-of-sample accuracy 72%. Banyak koefisien memiliki p-value &gt; 0.10. VIF beberapa variabel melebihi 10.<br><br>
+        <strong>Model 2 — LASSO (λ = 0.08):</strong> Mereduksi features dari 42 menjadi 15. Out-of-sample accuracy 79%. Koefisien yang tersisa memiliki tanda yang konsisten dengan teori kredit.<br><br>
+        <strong>Model 3 — CART (max depth = 15, min population = 5):</strong> In-sample accuracy 97%, out-of-sample accuracy 68%. Tree menghasilkan 892 terminal nodes.<br><br>
+        <strong>Model 4 — Random Forest (300 trees, max depth = 8, m = 7):</strong> Out-of-sample accuracy 85%. Feature importance analysis menunjukkan riwayat pembayaran, debt-service coverage ratio, dan usia usaha sebagai top-3 predictors.<br><br>
+        Dewi juga mempertimbangkan gradient boosting sebagai Model 5 dan KNN (k = 5) sebagai Model 6 untuk evaluasi lebih lanjut. Tim internal risk management BBRI meminta Dewi mempresentasikan logika model ke Dewan Komisaris yang mayoritas non-technical.
+      </div>
+
+      <div class="question-block" id="qb0">
+        <div class="q-num">Soal 1 / 6</div>
+        <div class="q-text">VIF (Variance Inflation Factor) beberapa variabel dalam Model 1 melebihi 10. Masalah ini paling tepat ditangani oleh metode mana?</div>
+        <button class="option" onclick="answer(0,'A','B')">A. Menambahkan lebih banyak features untuk meningkatkan explanatory power</button>
+        <button class="option" onclick="answer(0,'B','B')">B. Menggunakan penalized regression seperti LASSO yang secara otomatis menghilangkan features yang collinear</button>
+        <button class="option" onclick="answer(0,'C','B')">C. Meningkatkan ukuran training sample untuk mengurangi standard error</button>
+        <div class="explanation" id="exp0">
+          <strong>B adalah jawaban yang benar.</strong> VIF &gt; 10 mengindikasikan multicollinearity parah di antara features. LASSO (L1 penalty) secara otomatis melakukan feature selection — koefisien features yang kurang penting atau redundan (karena collinear) didorong ke nol. Ini mengurangi multicollinearity sambil menghasilkan model yang lebih parsimonious. A salah karena menambah features justru bisa memperburuk multicollinearity. C salah karena menambah observasi tidak menyelesaikan multicollinearity (masalah antar-variabel, bukan kurangnya data).
+        </div>
+      </div>
+
+      <div class="question-block" id="qb1">
+        <div class="q-num">Soal 2 / 6</div>
+        <div class="q-text">Dibandingkan Model 2 (LASSO), jika Dewi menggunakan Ridge regression dengan λ yang sama, perbedaan paling signifikan yang diharapkan adalah:</div>
+        <button class="option" onclick="answer(1,'A','A')">A. Ridge akan mempertahankan semua 42 features dalam model (koefisien mendekati tapi tidak pernah persis nol), sehingga tidak melakukan feature selection otomatis</button>
+        <button class="option" onclick="answer(1,'B','A')">B. Ridge akan mengeliminasi lebih banyak features dibanding LASSO karena penalty L2 lebih ketat</button>
+        <button class="option" onclick="answer(1,'C','A')">C. Ridge dan LASSO akan menghasilkan jumlah features yang sama karena keduanya adalah bentuk regularisasi</button>
+        <div class="explanation" id="exp1">
+          <strong>A adalah jawaban yang benar.</strong> Perbedaan fundamental: LASSO (L1, penalty = λΣ|b̂ₖ|) bisa membuat koefisien persis nol → feature selection otomatis. Ridge (L2, penalty = λΣb̂ₖ²) menyusutkan koefisien mendekati nol tapi <em>tidak pernah</em> persis nol → semua 42 features tetap ada. Jadi Ridge model akan kurang parsimonious. B salah karena Ridge justru mempertahankan semua features. C salah karena meskipun keduanya regularisasi, mekanismenya berbeda secara fundamental.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb2">
+        <div class="q-num">Soal 3 / 6</div>
+        <div class="q-text">Model 3 (CART) memiliki 892 terminal nodes dan in-sample accuracy 97% tapi out-of-sample hanya 68%. Tindakan yang paling tepat untuk memperbaiki Model 3 adalah:</div>
+        <button class="option" onclick="answer(2,'A','C')">A. Menambahkan lebih banyak features untuk meningkatkan akurasi</button>
+        <button class="option" onclick="answer(2,'B','C')">B. Menggunakan k-fold cross-validation tanpa mengubah parameter tree</button>
+        <button class="option" onclick="answer(2,'C','C')">C. Mengurangi max depth dan meningkatkan minimum population per node, atau menerapkan pruning untuk menyederhanakan tree</button>
+        <div class="explanation" id="exp2">
+          <strong>C adalah jawaban yang benar.</strong> Model 3 jelas overfitting — 892 terminal nodes menunjukkan tree yang sangat dalam dan kompleks, "menghafal" training data. Solusinya adalah regularisasi CART: kurangi max depth (misalnya dari 15 ke 6-8), naikkan minimum population per node (dari 5 ke misalnya 50-100), atau terapkan pruning untuk memangkas cabang yang kontribusi akurasinya minimal. A salah karena menambah features justru menambah kompleksitas. B salah karena cross-validation hanya mendiagnosis masalah, bukan langsung memperbaikinya — parameter tree harus diubah.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb3">
+        <div class="q-num">Soal 4 / 6</div>
+        <div class="q-text">Model 4 (Random Forest) menggunakan m = 7 sebagai subset features di setiap node. Jika Dewi menurunkan m dari 7 menjadi 3, efek yang paling mungkin adalah:</div>
+        <button class="option" onclick="answer(3,'A','B')">A. Korelasi antar-trees meningkat karena features yang dipertimbangkan lebih sedikit</button>
+        <button class="option" onclick="answer(3,'B','B')">B. Korelasi antar-trees menurun karena diversitas antar-trees meningkat, yang cenderung mengurangi variance</button>
+        <button class="option" onclick="answer(3,'C','B')">C. Akurasi pasti meningkat karena model menjadi lebih sederhana</button>
+        <div class="explanation" id="exp3">
+          <strong>B adalah jawaban yang benar.</strong> Dengan m lebih kecil, setiap node hanya bisa memilih dari 3 features (bukan 7). Ini berarti setiap tree akan melihat kombinasi features yang lebih beragam → tree-tree dalam forest menjadi kurang mirip satu sama lain (korelasi menurun) → ketika prediksi diagregasi, noise cancelling effect lebih kuat → variance berkurang. A salah karena korelasi justru menurun, bukan meningkat. C salah karena efeknya tidak "pasti" — m terlalu kecil bisa meningkatkan bias jika features penting jarang terpilih.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb4">
+        <div class="q-num">Soal 5 / 6</div>
+        <div class="q-text">Jika Dewi menerapkan gradient boosting (Model 5), perbedaan utama dibanding random forest (Model 4) dalam proses training adalah:</div>
+        <button class="option" onclick="answer(4,'A','A')">A. Gradient boosting membangun trees secara sekuensial — setiap tree baru fokus memperbaiki residual tree sebelumnya — sedangkan random forest membangun trees secara paralel dan independen</button>
+        <button class="option" onclick="answer(4,'B','A')">B. Gradient boosting menggunakan bagging untuk membuat bootstrap samples, sedangkan random forest menggunakan boosting</button>
+        <button class="option" onclick="answer(4,'C','A')">C. Gradient boosting selalu menghasilkan model yang lebih interpretable dibanding random forest karena tree-nya lebih sederhana</button>
+        <div class="explanation" id="exp4">
+          <strong>A adalah jawaban yang benar.</strong> Perbedaan fundamental: Random forest = bagging (trees dilatih secara paralel pada bootstrap samples yang independen). Gradient boosting = sequential training — setiap tree baru secara spesifik memperbaiki error dari tree sebelumnya. Ini membuat boosting lebih focused dalam mengurangi bias tapi juga lebih rentan overfitting. B salah karena terbalik — random forest yang menggunakan bagging. C salah karena kedua ensemble methods umumnya kurang interpretable dibanding single CART.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb5">
+        <div class="q-num">Soal 6 / 6</div>
+        <div class="q-text">Tim risk management meminta Dewi mempresentasikan logika model ke Dewan Komisaris yang non-technical. Dari semua model yang dipertimbangkan, pendekatan mana yang paling tepat untuk kebutuhan ini?</div>
+        <button class="option" onclick="answer(5,'A','C')">A. Model 4 (Random Forest) karena memiliki out-of-sample accuracy tertinggi (85%)</button>
+        <button class="option" onclick="answer(5,'B','C')">B. Model 6 (KNN, k=5) karena konsepnya intuitif — prediksi berdasarkan tetangga terdekat</button>
+        <button class="option" onclick="answer(5,'C','C')">C. Model 3 versi regularized (CART dengan depth terbatas) karena output berupa decision tree visual yang mudah dipahami dan dikomunikasikan ke audience non-technical</button>
+        <div class="explanation" id="exp5">
+          <strong>C adalah jawaban yang benar.</strong> Keunggulan terbesar CART adalah <em>interpretability</em> — hasilnya berupa visual decision tree: "jika riwayat pembayaran buruk DAN DSCR &lt; 1.2x DAN usia usaha &lt; 2 tahun → prediksi default." Ini sangat mudah dipahami oleh Dewan Komisaris. Dengan menambahkan regularisasi (batasi depth), overfitting bisa dikurangi sambil mempertahankan interpretability. A salah karena random forest adalah "black box" — sulit menjelaskan kenapa prediksi tertentu dibuat. B salah karena meskipun konsep KNN sederhana, menjelaskan "5 debitur terdekat di 42-dimensi" tidak intuitif untuk non-technical audience.
+        </div>
+      </div>
+
+      <div class="score-panel" id="score-panel">
+        <div class="score-num" id="score-num">0/6</div>
+        <div class="score-msg" id="score-msg">—</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a class="nav-btn" href="CFA_L2_Day10_Full.html">← Day 10</a>
+    <div class="nav-day">Day 11 of 90<br><span style="font-size:11px;color:var(--text3);">Prev: Cointegration & ARCH/GARCH · Next: Unsupervised & Deep Learning</span></div>
+    <a class="nav-btn primary" href="CFA_L2_Day12_Full.html">Day 12 →</a>
+  </div>
+
+</div>
+
+<script>
+const answers = {};
+const correct = {0:'B', 1:'A', 2:'C', 3:'B', 4:'A', 5:'C'};
+const total = 6;
+
+function answer(qIdx, chosen, correctAns) {
+  if (answers[qIdx]) return;
+  answers[qIdx] = chosen;
+
+  const block = document.getElementById('qb' + qIdx);
+  const exp   = document.getElementById('exp' + qIdx);
+
+  block.querySelectorAll('.option').forEach(btn => {
+    btn.disabled = true;
+    const letter = btn.textContent.trim()[0];
+    if (letter === correctAns) btn.classList.add('correct');
+    else if (letter === chosen && chosen !== correctAns) btn.classList.add('wrong');
+  });
+
+  exp.classList.add('show');
+  if (Object.keys(answers).length === total) showScore();
+}
+
+function showScore() {
+  const score = Object.keys(correct).filter(k => answers[k] === correct[k]).length;
+  const panel = document.getElementById('score-panel');
+  const num   = document.getElementById('score-num');
+  const msg   = document.getElementById('score-msg');
+
+  num.textContent = score + '/' + total;
+  num.style.color = score >= 5 ? 'var(--green)' : score >= 4 ? 'var(--amber)' : 'var(--red)';
+
+  const msgs = {
+    6: '🎯 Perfect! Supervised ML algorithms sudah dikuasai dengan sangat baik.',
+    5: '✅ Excellent. Review satu soal yang missed.',
+    4: '✅ Good. Review soal yang salah dan baca ulang bagian terkait.',
+    3: '⚠️ Cukup. Perlu review theory lebih mendalam.',
+    2: '🔁 Perlu belajar ulang — fokus pada perbedaan antar algoritma.',
+    1: '🔁 Ulangi seluruh modul sebelum lanjut ke Day 12.',
+    0: '🔁 Ulangi seluruh modul sebelum lanjut ke Day 12.'
+  };
+  msg.textContent = msgs[score] || msgs[0];
+  panel.style.display = 'block';
+}
+</script>
+</body>
+</html>

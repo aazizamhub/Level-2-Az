@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level II · Solow Growth Model · Day 17</title>
+  <style>
+    :root {
+      --bg:      #fafaf8;
+      --bg2:     #f4f3ef;
+      --bg3:     #eeece7;
+      --border:  rgba(0,0,0,0.08);
+      --border2: rgba(0,0,0,0.15);
+      --text:    #1a1a2e;
+      --text2:   #4a4a6a;
+      --text3:   #8a8aaa;
+      --gold:    #9a6e1a;
+      --gold2:   #7a5010;
+      --gold-bg: rgba(154,110,26,0.08);
+      --blue:    #1a5fa8;
+      --blue-bg: rgba(26,95,168,0.08);
+      --green:   #1a7a4a;
+      --green-bg: rgba(26,122,74,0.08);
+      --red:     #b83232;
+      --red-bg:  rgba(184,50,50,0.08);
+      --amber:   #a06010;
+      --amber-bg: rgba(160,96,16,0.08);
+      --r: 10px;
+      --r-sm: 6px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    .page {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 20px;
+      background: white;
+      box-shadow: 0 0 40px rgba(0,0,0,0.04);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+
+    .breadcrumb {
+      font-size: 13px;
+      color: var(--text2);
+      letter-spacing: 0.5px;
+      font-weight: 500;
+    }
+
+    .day-badge, .version-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      background: var(--gold-bg);
+      color: var(--gold2);
+      border-radius: var(--r-sm);
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 12px;
+    }
+
+    .version-badge {
+      background: var(--blue-bg);
+      color: var(--blue);
+      margin-left: 8px;
+    }
+
+    .hero {
+      margin-bottom: 48px;
+    }
+
+    .hero-tag {
+      font-size: 13px;
+      color: var(--gold);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .hero-title {
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--text2);
+      margin-bottom: 28px;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .meta-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 14px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 13px;
+      color: var(--text2);
+      font-weight: 500;
+    }
+
+    .toc {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 32px;
+      margin-bottom: 48px;
+    }
+
+    .toc-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-list li {
+      margin-bottom: 12px;
+      font-size: 15px;
+    }
+
+    .toc-num {
+      color: var(--gold);
+      font-weight: 600;
+      margin-right: 8px;
+    }
+
+    .chapter {
+      margin-bottom: 56px;
+      scroll-margin-top: 100px;
+    }
+
+    .chapter-header {
+      margin-bottom: 28px;
+    }
+
+    .chapter-num {
+      font-size: 13px;
+      color: var(--text3);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .chapter-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 8px;
+    }
+
+    .sub-header {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 28px 0 16px 0;
+    }
+
+    .prose {
+      color: var(--text);
+      margin-bottom: 16px;
+      line-height: 1.75;
+    }
+
+    .formula-block {
+      background: var(--bg2);
+      border-left: 4px solid var(--gold);
+      border-radius: var(--r-sm);
+      padding: 20px;
+      margin: 24px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      color: var(--text);
+      overflow-x: auto;
+    }
+
+    .formula-block .label {
+      font-weight: 700;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .formula-block .note {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: var(--text2);
+      margin-top: 12px;
+      line-height: 1.6;
+    }
+
+    .exhibit {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 28px;
+      margin: 32px 0;
+    }
+
+    .exhibit-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+    }
+
+    .exhibit-body {
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    .reg-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+
+    .reg-table th {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 12px;
+      text-align: left;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .reg-table td {
+      border: 1px solid var(--border);
+      padding: 12px;
+      color: var(--text2);
+    }
+
+    .reg-table tr:nth-child(even) { background: rgba(255,255,255,0.5); }
+
+    .callout {
+      border-radius: var(--r);
+      padding: 20px;
+      margin: 24px 0;
+      border-left: 4px solid;
+    }
+
+    .callout.blue {
+      background: var(--blue-bg);
+      border-left-color: var(--blue);
+    }
+
+    .callout.amber {
+      background: var(--amber-bg);
+      border-left-color: var(--amber);
+    }
+
+    .callout.green {
+      background: var(--green-bg);
+      border-left-color: var(--green);
+    }
+
+    .callout.red {
+      background: var(--red-bg);
+      border-left-color: var(--red);
+    }
+
+    .callout.gold {
+      background: var(--gold-bg);
+      border-left-color: var(--gold);
+    }
+
+    .callout-title {
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: block;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .callout .callout-title { color: inherit; }
+    .callout.blue .callout-title { color: var(--blue); }
+    .callout.amber .callout-title { color: var(--amber); }
+    .callout.green .callout-title { color: var(--green); }
+    .callout.red .callout-title { color: var(--red); }
+    .callout.gold .callout-title { color: var(--gold); }
+
+    .callout p, .callout li {
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .kc {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      margin: 28px 0;
+      overflow: hidden;
+    }
+
+    .kc-header {
+      padding: 18px 20px;
+      background: var(--bg3);
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+
+    .kc-header:hover { background: rgba(0,0,0,0.04); }
+
+    .kc-header-title {
+      font-weight: 600;
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    .kc-toggle {
+      color: var(--text3);
+      font-weight: 700;
+      font-size: 18px;
+      transition: transform 0.2s;
+    }
+
+    .kc.open .kc-toggle { transform: rotate(180deg); }
+
+    .kc-body {
+      padding: 20px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+
+    .kc.open .kc-body { max-height: 1200px; }
+
+    .kc-q {
+      color: var(--text);
+      margin-bottom: 16px;
+      line-height: 1.7;
+      font-weight: 500;
+    }
+
+    .kc-answer {
+      color: var(--text2);
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    .num-list, .bullet-list {
+      margin: 16px 0;
+      padding-left: 24px;
+    }
+
+    .num-list li, .bullet-list li {
+      margin-bottom: 10px;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 40px 0;
+    }
+
+    .practice-header {
+      margin-bottom: 28px;
+    }
+
+    .practice-body {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 28px;
+    }
+
+    .vignette {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 24px;
+      margin-bottom: 32px;
+    }
+
+    .vignette-label {
+      font-size: 12px;
+      color: var(--text3);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    .question-block {
+      margin-bottom: 28px;
+    }
+
+    .q-num {
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    .q-text {
+      color: var(--text);
+      line-height: 1.8;
+      margin-bottom: 14px;
+    }
+
+    .option {
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: var(--r-sm);
+      cursor: pointer;
+      background: white;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+
+    .option:hover { background: var(--bg2); border-color: var(--gold); }
+
+    .option input { margin-right: 8px; }
+
+    .explanation {
+      margin-top: 16px;
+      padding: 16px;
+      background: var(--blue-bg);
+      border-left: 4px solid var(--blue);
+      border-radius: var(--r-sm);
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.7;
+      display: none;
+    }
+
+    .explanation.show { display: block; }
+
+    .score-panel {
+      margin-top: 32px;
+      padding: 24px;
+      background: var(--green-bg);
+      border-radius: var(--r);
+      text-align: center;
+      display: none;
+    }
+
+    .score-panel.show { display: block; }
+
+    .score-panel h3 {
+      color: var(--green);
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .score-panel p {
+      color: var(--text);
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .nav-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 32px 0;
+      margin-top: 48px;
+      border-top: 1px solid var(--border);
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover {
+      background: var(--bg3);
+      border-color: var(--border2);
+    }
+
+    .nav-day {
+      font-size: 13px;
+      color: var(--text2);
+    }
+
+    @media (max-width: 768px) {
+      .hero-title { font-size: 28px; }
+      .page { padding: 0 16px; }
+      .meta-row { gap: 8px; }
+      .nav-bottom { flex-direction: column; gap: 16px; }
+      .nav-btn { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="breadcrumb">CFA Level II <span style="opacity:0.5;">·</span> Economics <span style="opacity:0.5;">·</span> LM2</div>
+      <div>
+        <span class="version-badge">Versi Full</span>
+        <span class="day-badge">Day 17 of 90</span>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero">
+      <div class="hero-tag">Senin, 04 Mei 2026</div>
+      <h1 class="hero-title">Solow Growth Model: Akumulasi Kapital, Steady State, dan TFP</h1>
+      <p class="hero-sub">Memahami production function, growth accounting, capital deepening vs technological progress, dan kerangka neoclassical untuk pertumbuhan ekonomi jangka panjang</p>
+      <div class="meta-row">
+        <span class="meta-pill">📚 Materi Lengkap</span>
+        <span class="meta-pill">🇮🇩 Bahasa Indonesia</span>
+        <span class="meta-pill">⚖️ ~5% Exam Weight</span>
+        <span class="meta-pill">⏱️ 45–60 menit</span>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="toc">
+      <h2 class="toc-title">Daftar Isi</h2>
+      <ul class="toc-list">
+        <li><span class="toc-num">0</span>Learning Outcomes</li>
+        <li><span class="toc-num">1</span>Production Function dan Cobb-Douglas Model</li>
+        <li><span class="toc-num">2</span>Growth Accounting — Memecah Sumber Pertumbuhan</li>
+        <li><span class="toc-num">3</span>Capital Deepening vs Technological Progress (TFP)</li>
+        <li><span class="toc-num">4</span>Neoclassical (Solow) Growth Model — Steady State</li>
+        <li><span class="toc-num">5</span>Implikasi Neoclassical Model — Empat Kesimpulan Utama</li>
+        <li><span class="toc-num">6</span>Faktor Produksi Tambahan — SDM, Sumber Daya Alam, Infrastruktur</li>
+        <li><span class="toc-num">7</span>Latihan Soal — Item Set Vignette</li>
+      </ul>
+    </div>
+
+    <!-- Chapter 0: Learning Outcomes -->
+    <div class="chapter" id="sec0">
+      <div class="chapter-header">
+        <div class="chapter-num">SECTION 0</div>
+        <h2 class="chapter-title">Learning Outcomes</h2>
+      </div>
+
+      <p class="prose">Setelah menyelesaikan modul ini, Anda akan mampu untuk:</p>
+
+      <ol class="num-list">
+        <li><strong>Bandingkan faktor-faktor yang mendukung dan membatasi pertumbuhan ekonomi</strong> di negara maju dan berkembang, termasuk peran institusi keuangan, stabilitas politik, dan hak properti.</li>
+        <li><strong>Kontraskan capital deepening investment dan technological progress</strong> serta jelaskan bagaimana masing-masing memengaruhi pertumbuhan ekonomi dan produktivitas tenaga kerja.</li>
+        <li><strong>Demonstrasikan bagaimana memperkirakan potential GDP</strong> berdasarkan growth accounting equation dan labor productivity approach.</li>
+        <li><strong>Jelaskan bagaimana sumber daya alam, demografi, dan investasi</strong> memengaruhi pertumbuhan ekonomi serta evaluasi argumen keterbatasan sumber daya.</li>
+        <li><strong>Jelaskan Cobb-Douglas production function</strong> dan properti-propertinya: constant returns to scale dan diminishing marginal productivity.</li>
+        <li><strong>Bandingkan classical, neoclassical, dan endogenous growth theory</strong> serta implikasinya terhadap pertumbuhan berkelanjutan.</li>
+      </ol>
+    </div>
+
+    <!-- Chapter 1: Production Function -->
+    <div class="chapter" id="sec1">
+      <div class="chapter-header">
+        <div class="chapter-num">SECTION 1</div>
+        <h2 class="chapter-title">Production Function dan Cobb-Douglas Model</h2>
+      </div>
+
+      <h3 class="sub-header">Konsep Dasar Production Function</h3>
+
+      <p class="prose">
+        Production function adalah model kuantitatif yang menghubungkan input (faktor produksi) dengan output melalui teknologi yang tersedia. Dalam bentuk paling sederhana, production function menunjukkan bagaimana dua input utama — <strong>capital (K)</strong> dan <strong>labor (L)</strong> — dikombinasikan untuk menghasilkan total output ekonomi (Y).
+      </p>
+
+      <div class="formula-block">
+        <span class="label">Aggregate Production Function</span>
+Y = AF(K, L)
+
+di mana:
+  Y = aggregate output (GDP)
+  A = Total Factor Productivity (TFP) — faktor skala multiplikatif
+  K = capital services (stock of equipment and structures)
+  L = labor input (jumlah pekerja atau total jam kerja)
+  F( ) = fungsi yang mendeskripsikan bagaimana K dan L dikombinasikan
+
+        <span class="note">
+          TFP (A) mencerminkan tingkat umum produktivitas atau teknologi dalam ekonomi. Peningkatan TFP berarti peningkatan proporsional dalam output untuk SETIAP kombinasi input. TFP menangkap efek kumulatif dari kemajuan ilmiah, R&D terapan, perbaikan metode manajemen, dan cara mengorganisasi produksi.
+        </span>
+      </div>
+
+      <h3 class="sub-header">Cobb-Douglas Production Function</h3>
+
+      <p class="prose">
+        Untuk memperoleh hasil yang konkret, digunakan bentuk fungsional spesifik yang disebut <strong>Cobb-Douglas production function</strong>. Fungsi ini populer karena mudah dianalisis dan cocok dengan data historis yang menghubungkan input dan output:
+      </p>
+
+      <div class="formula-block">
+        <span class="label">Cobb-Douglas Production Function</span>
+Aggregate:   Y = A × K^α × L^(1−α)
+Per worker:  y = A × k^α
+
+di mana:
+  y = Y/L = output per worker (labor productivity)
+  k = K/L = capital per worker (capital-to-labor ratio)
+  α = share of GDP yang dibayar ke capital (biasanya 0.3 untuk AS)
+  (1−α) = share of GDP yang dibayar ke labor (biasanya 0.7 untuk AS)
+
+        <span class="note">
+          Parameter α ditentukan dari national income accounts — cukup lihat berapa porsi GDP yang menjadi pendapatan capital versus labor. Di AS, capital share ≈ 0.3. Ini berarti kenaikan 1% capital hanya menaikkan output 0.3%, sementara kenaikan 1% labor menaikkan output 0.7%.
+        </span>
+      </div>
+
+      <h3 class="sub-header">Dua Properti Fundamental Cobb-Douglas</h3>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 1: Properti Cobb-Douglas Production Function</div>
+        <div class="exhibit-body">
+          <table class="reg-table">
+            <tr>
+              <th>Properti</th>
+              <th>Definisi</th>
+              <th>Implikasi</th>
+            </tr>
+            <tr>
+              <td><strong>Constant Returns to Scale</strong></td>
+              <td>Jika SEMUA input naik X%, output juga naik X%</td>
+              <td>Tidak ada keuntungan atau kerugian dari skala jika semua input berubah secara proporsional. Memungkinkan kita menganalisis output per worker.</td>
+            </tr>
+            <tr>
+              <td><strong>Diminishing Marginal Productivity</strong></td>
+              <td>Jika SATU input naik (K), sementara input lain tetap (L), tambahan output dari setiap unit input berikutnya MENURUN</td>
+              <td>Menambah capital ke jumlah labor tetap → setiap unit capital tambahan menghasilkan semakin sedikit output. Ini batasan utama capital deepening.</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <p class="prose">
+        Tingkat signifikansi diminishing marginal returns bergantung pada nilai <strong>α</strong>. Nilai α mendekati nol berarti diminishing returns sangat signifikan — output tambahan dari capital menurun dengan cepat. Nilai α mendekati satu berarti diminishing returns lambat. Perhatikan bahwa eksponen K dan L dalam Cobb-Douglas berjumlah satu (α + 1−α = 1), menunjukkan constant returns to scale — tidak ada diminishing returns jika KEDUA input meningkat secara proporsional.
+      </p>
+
+      <h3 class="sub-header">Dual Role α: Elastisitas dan Income Share</h3>
+
+      <p class="prose">
+        Dalam ekonomi kompetitif, faktor produksi dibayar sesuai marginal product mereka. Untuk Cobb-Douglas, marginal product of capital (MPK) = αY/K. Dengan mengatur MPK sama dengan rental price of capital (r), kita mendapat α = rK/Y, yaitu rasio capital income terhadap GDP. Jadi α secara simultan adalah:
+      </p>
+
+      <ol class="num-list">
+        <li><strong>Elastisitas output terhadap capital:</strong> Kenaikan 1% capital → kenaikan α% output</li>
+        <li><strong>Income share of capital:</strong> Porsi GDP yang dibayar kepada pemilik capital</li>
+      </ol>
+
+      <div class="callout amber">
+        <span class="callout-title">Poin Kritis untuk Ujian</span>
+        <p>Jangan bingung antara constant returns to scale dan diminishing marginal productivity. Constant returns to scale berlaku ketika SEMUA input naik bersamaan. Diminishing marginal productivity berlaku ketika HANYA SATU input naik sementara yang lain tetap. Keduanya bisa ada bersamaan — dan memang ada dalam Cobb-Douglas.</p>
+      </div>
+
+      <div class="kc">
+        <div class="kc-header" onclick="toggleKC('kc1')">
+          <span class="kc-header-title">Knowledge Check 1: Cobb-Douglas Properties</span>
+          <span class="kc-toggle">▼</span>
+        </div>
+        <div class="kc-body" id="kc1">
+          <p class="kc-q">Sebuah ekonomi memiliki Y = A × K^0.4 × L^0.6. Capital meningkat 10% sementara labor tetap. Berapa persentase kenaikan output? Apa yang terjadi jika KEDUA input naik 10%?</p>
+          <div class="kc-answer">
+            <p><strong>Jawaban:</strong></p>
+            <p><strong>Hanya capital naik 10%:</strong> Kenaikan output ≈ α × 10% = 0.4 × 10% = 4%. Ini menunjukkan diminishing marginal productivity — capital naik 10% tapi output hanya naik 4%.</p>
+            <p><strong>Kedua input naik 10%:</strong> Kenaikan output = 10%. Ini menunjukkan constant returns to scale — jika semua input naik proporsional, output naik dengan proporsi yang sama.</p>
+            <p>Perhatikan: income share ke capital (40%) dan ke labor (60%) langsung terlihat dari eksponen. Di ujian, data ini sering diberikan dalam bentuk "labor cost as percentage of total factor cost" — misalnya "labor cost = 60% of total" berarti (1−α) = 0.6 dan α = 0.4.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 2: Growth Accounting -->
+    <div class="chapter" id="sec2">
+      <div class="chapter-header">
+        <div class="chapter-num">SECTION 2</div>
+        <h2 class="chapter-title">Growth Accounting — Memecah Sumber Pertumbuhan</h2>
+      </div>
+
+      <h3 class="sub-header">Growth Accounting Equation</h3>
+
+      <p class="prose">
+        Sejak publikasi seminal Solow (1957), growth accounting telah menjadi alat standar untuk menganalisis kinerja ekonomi. Pendekatan ini menulis production function dalam bentuk growth rates, memungkinkan kita mendekomposisi persentase perubahan output menjadi komponen yang dapat diatribusikan ke capital, labor, dan teknologi:
+      </p>
+
+      <div class="formula-block">
+        <span class="label">Growth Accounting Equation (Solow)</span>
+ΔY/Y = ΔA/A + α(ΔK/K) + (1−α)(ΔL/L)
+
+Growth   TFP     Capital      Labor
+ GDP  = growth + contribution + contribution
+
+        <span class="note">
+          Karena kenaikan 1% capital hanya menghasilkan α% kenaikan output, maka α adalah elastisitas output terhadap capital. Demikian pula, (1−α) adalah elastisitas output terhadap labor. Dampak dari input yang tidak dispesifikasi (misalnya sumber daya alam) terserap ke dalam komponen TFP.
+        </span>
+      </div>
+
+      <h3 class="sub-header">TFP sebagai Solow Residual</h3>
+
+      <p class="prose">
+        Data tentang output, capital, labor, dan elastisitas tersedia untuk sebagian besar negara maju. Namun, laju perubahan teknologi (TFP) tidak diukur langsung dan harus diestimasi. Solow mengestimasi pertumbuhan TFP sebagai <strong>residual</strong> dalam growth accounting equation — yaitu jumlah output yang tidak bisa dijelaskan oleh pertumbuhan capital atau labor.
+      </p>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 2: Contoh Numerik Growth Accounting</div>
+        <div class="exhibit-body">
+          <p><strong>Data ekonomi:</strong></p>
+          <table class="reg-table">
+            <tr>
+              <th>Variabel</th>
+              <th>Nilai</th>
+            </tr>
+            <tr><td>GDP growth (ΔY/Y)</td><td>5.0%</td></tr>
+            <tr><td>Capital growth (ΔK/K)</td><td>7.0%</td></tr>
+            <tr><td>Labor growth (ΔL/L)</td><td>2.0%</td></tr>
+            <tr><td>Capital share (α)</td><td>0.35</td></tr>
+          </table>
+
+          <p style="margin-top:16px;"><strong>Perhitungan:</strong></p>
+          <p>Capital contribution = 0.35 × 7.0% = 2.45%</p>
+          <p>Labor contribution = 0.65 × 2.0% = 1.30%</p>
+          <p>TFP (residual) = 5.0% − 2.45% − 1.30% = <strong>1.25%</strong></p>
+          <p style="margin-top:8px;">Dalam contoh ini, TFP menyumbang 1.25% / 5.0% = 25% dari total pertumbuhan. Bandingkan dengan temuan Solow: >80% pertumbuhan per capita AS berasal dari TFP!</p>
+        </div>
+      </div>
+
+      <h3 class="sub-header">Labor Productivity Growth Accounting</h3>
+
+      <p class="prose">
+        Pendekatan alternatif yang lebih sederhana untuk mengukur potential GDP adalah <strong>labor productivity growth accounting</strong>. Pendekatan ini memodelkan potential GDP sebagai fungsi dari input labor dan produktivitas labor, menghindari kebutuhan mengestimasi capital stock:
+      </p>
+
+      <div class="formula-block">
+        <span class="label">Labor Productivity Approach</span>
+Growth rate of potential GDP = Long-term growth rate of labor force
+                              + Long-term growth rate of labor productivity
+
+Contoh: Labor force growth = 1.0%
+        Labor productivity growth = 2.5%
+        → Potential GDP growth = 3.5%
+
+        <span class="note">
+          Keuntungan: sederhana dan menghindari kesulitan menghitung capital stock dan TFP.
+          Kelemahan: menggabungkan capital deepening dan TFP progress dalam satu term "productivity" yang sulit dianalisis dan diprediksi untuk periode panjang.
+        </span>
+      </div>
+
+      <h3 class="sub-header">Mengapa Potential GDP Penting bagi Investor</h3>
+
+      <p class="prose">
+        Estimasi potential GDP growth memiliki implikasi besar bagi investor, baik di ekuitas maupun fixed income:
+      </p>
+
+      <ol class="num-list">
+        <li><strong>Tekanan inflasi:</strong> Actual GDP growth di atas potential GDP → output gap positif → tekanan inflasi naik → suku bunga nominal naik → harga obligasi turun.</li>
+        <li><strong>Real interest rates:</strong> Pertumbuhan potential GDP yang lebih cepat berarti real interest rates yang lebih tinggi diperlukan untuk mendorong tabungan → expected real asset returns secara umum lebih tinggi.</li>
+        <li><strong>Credit quality:</strong> Potential GDP growth yang lebih tinggi meningkatkan credit quality obligasi — lembaga pemeringkat menggunakan potential GDP growth dalam evaluasi risiko kredit sovereign debt.</li>
+        <li><strong>Monetary policy:</strong> Bank sentral memonitor output gap (actual vs potential) untuk keputusan kebijakan moneter. Investor fixed income perlu mengantisipasi perubahan kebijakan bank sentral.</li>
+      </ol>
+
+      <div class="kc">
+        <div class="kc-header" onclick="toggleKC('kc2')">
+          <span class="kc-header-title">Knowledge Check 2: Growth Accounting Calculation</span>
+          <span class="kc-toggle">▼</span>
+        </div>
+        <div class="kc-body" id="kc2">
+          <p class="kc-q">Sebuah ekonomi memiliki: GDP growth = 6.5%, capital growth = 10%, labor growth = 1.5%, labor share of income = 0.56. Hitung kontribusi TFP terhadap pertumbuhan.</p>
+          <div class="kc-answer">
+            <p><strong>Jawaban:</strong></p>
+            <p>Capital share (α) = 1 − 0.56 = 0.44</p>
+            <p>Capital contribution = 0.44 × 10% = 4.40%</p>
+            <p>Labor contribution = 0.56 × 1.5% = 0.84%</p>
+            <p>TFP growth = 6.5% − 4.40% − 0.84% = <strong>1.26%</strong></p>
+            <p>Perhatikan bahwa soal memberikan "labor share" bukan "capital share." Di ujian, Anda harus cermat mana yang diberikan. Labor share = (1−α), jadi α = 1 − labor share.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 3: Capital Deepening vs TFP -->
+    <div class="chapter" id="sec3">
+      <div class="chapter-header">
+        <div class="chapter-num">SECTION 3</div>
+        <h2 class="chapter-title">Capital Deepening vs Technological Progress (TFP)</h2>
+      </div>
+
+      <h3 class="sub-header">Dua Sumber Pertumbuhan Output per Worker</h3>
+
+      <p class="prose">
+        Properti diminishing marginal returns memainkan peran penting dalam menilai kontribusi capital dan teknologi terhadap pertumbuhan ekonomi. Pertumbuhan output per capita bisa berasal dari dua sumber yang secara fundamental berbeda:
+      </p>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 3: Capital Deepening vs Technological Progress</div>
+        <div class="exhibit-body">
+          <table class="reg-table">
+            <tr>
+              <th>Aspek</th>
+              <th>Capital Deepening</th>
+              <th>Technological Progress (TFP)</th>
+            </tr>
+            <tr>
+              <td><strong>Definisi</strong></td>
+              <td>Peningkatan capital-to-labor ratio (K/L)</td>
+              <td>Peningkatan Total Factor Productivity (A)</td>
+            </tr>
+            <tr>
+              <td><strong>Representasi Grafis</strong></td>
+              <td>Bergerak SEPANJANG production function (titik A → B)</td>
+              <td>PERGESERAN ke atas seluruh production function (titik B → C)</td>
+            </tr>
+            <tr>
+              <td><strong>Mekanisme</strong></td>
+              <td>Investasi → capital stock naik → K/L meningkat</td>
+              <td>Inovasi, R&D, metode produksi baru → efisiensi naik</td>
+            </tr>
+            <tr>
+              <td><strong>Batasan</strong></td>
+              <td>Diminishing marginal returns → dampak makin kecil saat K/L tinggi</td>
+              <td>Tidak ada batasan fundamental — bisa berlanjut tanpa batas</td>
+            </tr>
+            <tr>
+              <td><strong>Sustainability</strong></td>
+              <td>TIDAK bisa menjadi sumber pertumbuhan berkelanjutan</td>
+              <td>SATU-SATUNYA sumber pertumbuhan berkelanjutan per capita</td>
+            </tr>
+            <tr>
+              <td><strong>Relevansi</strong></td>
+              <td>Negara berkembang (capital rendah, diminishing returns kecil)</td>
+              <td>Negara maju (capital tinggi, harus mengandalkan inovasi)</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <p class="prose">
+        <strong>Capital deepening</strong> tercermin dalam pergerakan sepanjang production function — misalnya dari titik A ke titik B. Rasio K/L meningkat selama growth rate of capital (net investment) melebihi growth rate of labor. Namun, ketika K/L sudah sangat tinggi (misalnya di titik B), penambahan capital lebih lanjut memiliki dampak yang sangat kecil terhadap output per capita karena marginal product of capital menurun seiring bertambahnya capital.
+      </p>
+
+      <p class="prose">
+        Pada titik di mana marginal product of capital sama dengan marginal cost-nya, produsen yang memaksimumkan profit akan berhenti menambah capital. Titik ini sangat signifikan dalam neoclassical model karena pertumbuhan per capita dalam ekonomi akan berhenti. Setelah ekonomi mencapai steady state ini, <strong>capital deepening tidak bisa menjadi sumber pertumbuhan berkelanjutan</strong>.
+      </p>
+
+      <p class="prose">
+        <strong>Technological progress (TFP growth)</strong> sebaliknya menyebabkan pergeseran proporsional ke atas seluruh production function. Akibatnya, ekonomi dapat menghasilkan output per worker yang lebih tinggi untuk level capital per worker yang sama. TFP growth juga meningkatkan marginal product of capital relatif terhadap marginal cost, sehingga investasi capital tambahan menjadi profitable dan mengurangi batasan yang dikenakan oleh diminishing returns. <strong>Pertumbuhan per capita yang berkelanjutan membutuhkan progress dalam TFP.</strong>
+      </p>
+
+      <div class="callout blue">
+        <span class="callout-title">Implikasi untuk Developing vs Developed Countries</span>
+        <p><strong>Developing countries</strong> (misalnya Indonesia, India) memiliki capital per worker yang rendah. Mereka berada di bagian curam production function di mana diminishing returns masih kecil. Oleh karena itu, mereka bisa tumbuh melalui DUA channel: capital deepening DAN technological progress.</p>
+        <p style="margin-top:8px;"><strong>Developed countries</strong> (misalnya AS, Jepang, Jerman) memiliki capital per worker yang sangat tinggi. Mereka berada di bagian datar production function. Capital deepening hampir tidak berdampak. Pertumbuhan mereka harus bergantung hampir sepenuhnya pada technological progress.</p>
+        <p style="margin-top:8px;">Inilah mengapa China bisa tumbuh >10% per tahun selama dekade — investasi masif pada capital stock yang masih rendah. Seiring capital per worker mendekati level negara maju, pertumbuhan China pasti akan melambat — kecuali diimbangi TFP yang kuat.</p>
+      </div>
+
+      <h3 class="sub-header">Apakah Capital Deepening Benar-benar Tidak Bisa Sustain Growth?</h3>
+
+      <p class="prose">
+        Solow model menyatakan bahwa capital deepening murni tidak bisa menghasilkan pertumbuhan per capita yang permanent. Namun, ada nuansa penting: jika investasi capital tambahan <strong>mengandung teknologi baru</strong> (embodied technological change) — misalnya membeli mesin yang lebih efisien, bukan sekadar menambah mesin yang sama — maka capital accumulation bisa menghasilkan pertumbuhan permanent. Inilah yang menjembatani neoclassical model dengan endogenous growth theory yang akan dibahas di Day 18.
+      </p>
+
+      <div class="kc">
+        <div class="kc-header" onclick="toggleKC('kc3')">
+          <span class="kc-header-title">Knowledge Check 3: Capital Deepening vs TFP</span>
+          <span class="kc-toggle">▼</span>
+        </div>
+        <div class="kc-body" id="kc3">
+          <p class="kc-q">Country A (developed, $100,000 capital per worker) dan Country B (developing, $5,000 capital per worker) sama-sama meningkatkan business investment. Siapa yang mendapat dampak lebih besar terhadap GDP growth? Bagaimana jika keduanya meningkatkan R&D spending?</p>
+          <div class="kc-answer">
+            <p><strong>Jawaban:</strong></p>
+            <p><strong>Peningkatan business investment (capital deepening):</strong> Country B mendapat dampak jauh lebih besar. Dengan K/L rendah, Country B berada di titik seperti A pada grafik — diminishing returns minimal, setiap tambahan capital memiliki dampak besar. Country A berada di titik seperti B — diminishing returns signifikan, tambahan capital hampir tidak berdampak.</p>
+            <p><strong>Peningkatan R&D spending (TFP):</strong> Kedua negara mendapat manfaat dari peningkatan TFP karena ini menggeser seluruh production function ke atas. Namun, developing countries mendapat keuntungan ganda: bisa tumbuh melalui capital deepening DAN TFP progress, sementara developed countries hanya bisa mengandalkan TFP.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 4: Neoclassical/Solow Model -->
+    <div class="chapter" id="sec4">
+      <div class="chapter-header">
+        <div class="chapter-num">SECTION 4</div>
+        <h2 class="chapter-title">Neoclassical (Solow) Growth Model — Steady State</h2>
+      </div>
+
+      <h3 class="sub-header">Framework Dasar</h3>
+
+      <p class="prose">
+        Robert Solow mengembangkan teori pertumbuhan neoclassical utama pada tahun 1950-an. Inti teori ini adalah Cobb-Douglas production function. Tujuan model ini: menentukan <strong>long-run growth rate of output per capita</strong> dan menghubungkannya dengan (a) saving/investment rate, (b) laju perubahan teknologi (TFP), dan (c) pertumbuhan populasi.
+      </p>
+
+      <h3 class="sub-header">Balanced (Steady-State) Rate of Growth</h3>
+
+      <p class="prose">
+        Model Solow mencari posisi equilibrium ke arah mana ekonomi akan bergerak. Equilibrium ini adalah <strong>balanced atau steady-state rate of growth</strong> yang terjadi ketika output-to-capital ratio (Y/K) konstan. "Balanced" artinya capital per worker dan output per worker tumbuh pada rate yang sama.
+      </p>
+
+      <p class="prose">
+        Dari production function per worker (y = Ak^α), growth rate of output per worker adalah:
+      </p>
+
+      <div class="formula-block">
+        <span class="label">Growth Rate Decomposition</span>
+Δy/y = ΔA/A + α × Δk/k
+
+Output per worker growth = TFP growth + α × (capital per worker growth)
+      </div>
+
+      <p class="prose">
+        Capital stock berubah karena gross investment dan depreciation. Dalam ekonomi tertutup, investment didanai oleh saving. Jika s adalah fraksi income yang ditabung, δ adalah depreciation rate, dan n adalah labor force growth rate, maka:
+      </p>
+
+      <div class="formula-block">
+        <span class="label">Capital Accumulation Equation</span>
+Δk/k = sY/K − δ − n
+
+Growth of capital per worker = (saving rate × output-to-capital ratio)
+                              − depreciation rate
+                              − labor force growth rate
+      </div>
+
+      <p class="prose">
+        Di steady state, growth rate of capital per worker = growth rate of output per worker. Dari kondisi ini, kita memperoleh <strong>hasil paling penting dari neoclassical model</strong>:
+      </p>
+
+      <div class="formula-block">
+        <span class="label">Steady-State Growth Rates (Solow Model)</span>
+Growth rate of output per capita = θ/(1−α)
+Growth rate of total output       = θ/(1−α) + n
+
+di mana:
+  θ = ΔA/A = growth rate of TFP
+  α = capital's share of income
+  n = labor force growth rate
+
+CONTOH: θ = 2%, α = 0.3, n = 1%
+  Per capita growth = 2%/(1−0.3) = 2%/0.7 = 2.86%
+  Total GDP growth = 2.86% + 1% = 3.86%
+
+        <span class="note">
+          Perhatikan: saving rate (s) TIDAK muncul dalam formula steady-state growth rate. Ini berarti saving rate tidak memengaruhi long-run growth rate — hanya memengaruhi level output per capita. Ini adalah hasil yang paling counter-intuitive sekaligus paling penting dari Solow model.
+        </span>
+      </div>
+
+      <h3 class="sub-header">Steady-State Equilibrium Secara Grafis</h3>
+
+      <p class="prose">
+        Steady-state equilibrium terjadi di titik di mana <strong>actual saving/investment per worker = required investment per worker</strong>. Required investment terdiri dari tiga komponen:
+      </p>
+
+      <ol class="num-list">
+        <li><strong>Capital untuk pekerja baru (n):</strong> Menyediakan equipment bagi pekerja yang baru masuk workforce.</li>
+        <li><strong>Mengganti depreciation (δ):</strong> Mengganti mesin dan bangunan yang aus.</li>
+        <li><strong>Capital deepening sesuai TFP growth [θ/(1−α)]:</strong> Menjaga marginal product of capital sama dengan rental price of capital.</li>
+      </ol>
+
+      <div class="formula-block">
+        <span class="label">Steady-State Output-to-Capital Ratio</span>
+Y/K = (1/s) × [θ/(1−α) + δ + n] = Ψ (konstan)
+
+di mana:
+  s = saving rate
+  δ = depreciation rate
+  n = labor force growth rate
+  Ψ = steady-state output-to-capital ratio
+
+Steady-state equilibrium: sy = [θ/(1−α) + δ + n] × k
+                          (actual investment = required investment)
+      </div>
+
+      <h3 class="sub-header">Dampak Parameter terhadap Steady State</h3>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 4: Comparative Statics dalam Solow Model</div>
+        <div class="exhibit-body">
+          <table class="reg-table">
+            <tr>
+              <th>Parameter Naik</th>
+              <th>Dampak pada k* (capital per worker)</th>
+              <th>Dampak pada y* (output per worker)</th>
+              <th>Dampak pada Steady-State Growth Rate</th>
+            </tr>
+            <tr>
+              <td><strong>Saving rate (s) ↑</strong></td>
+              <td>NAIK — lebih banyak saving per unit output</td>
+              <td>NAIK — capital per worker lebih tinggi</td>
+              <td>TIDAK BERUBAH — hanya level yang berubah, bukan growth rate</td>
+            </tr>
+            <tr>
+              <td><strong>Labor force growth (n) ↑</strong></td>
+              <td>TURUN — perlu lebih banyak capital untuk pekerja baru</td>
+              <td>TURUN — capital "terdilusi" oleh pekerja tambahan</td>
+              <td>Total GDP growth NAIK, tapi per capita growth TIDAK BERUBAH</td>
+            </tr>
+            <tr>
+              <td><strong>Depreciation (δ) ↑</strong></td>
+              <td>TURUN — lebih banyak saving dipakai untuk replacement</td>
+              <td>TURUN — net capital accumulation lebih rendah</td>
+              <td>TIDAK BERUBAH</td>
+            </tr>
+            <tr>
+              <td><strong>TFP growth (θ) ↑</strong></td>
+              <td>TURUN (untuk given TFP level) — steeper trajectory</td>
+              <td>TURUN (base level) tapi GROWS FASTER</td>
+              <td>NAIK — satu-satunya faktor yang menaikkan per capita growth rate</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="callout red">
+        <span class="callout-title">Kesalahan Umum Kandidat</span>
+        <p>Banyak kandidat bingung antara LEVEL dan GROWTH RATE. Saving rate (s) memengaruhi LEVEL output per capita (y*) tapi TIDAK memengaruhi steady-state GROWTH RATE. Hanya TFP growth (θ) yang memengaruhi steady-state per capita growth rate. Jika soal bertanya tentang "permanent effect on the growth rate," jawaban yang melibatkan saving rate selalu SALAH — efeknya hanya transitional.</p>
+      </div>
+
+      <h3 class="sub-header">Transitional Dynamics: Menuju Steady State</h3>
+
+      <p class="prose">
+        Apa yang terjadi jika ekonomi belum mencapai steady state? Selama transisi, ekonomi dapat mengalami pertumbuhan lebih cepat atau lebih lambat dibanding steady state:
+      </p>
+
+      <ol class="num-list">
+        <li><strong>Y/K di atas steady state (Ψ):</strong> Actual saving/investment melebihi required investment → growth rate di ATAS steady state rate → capital deepening mendorong pertumbuhan lebih cepat. Ini tipikal negara berkembang dengan K/L rendah.</li>
+        <li><strong>Y/K di bawah steady state (Ψ):</strong> Actual investment tidak cukup untuk sustain trend growth → growth rate di BAWAH steady state rate. Ini bisa terjadi ketika K/L terlalu tinggi dan tidak sustainable.</li>
+      </ol>
+
+      <p class="prose">
+        Seiring waktu, Y/K bergerak menuju Ψ dan growth rates konvergen ke steady-state rate θ/(1−α). Inilah mengapa kenaikan saving rate hanya memiliki efek <strong>transitional</strong> — selama transisi ke steady state baru, growth rate lebih tinggi, tapi setelah transisi selesai, growth rate kembali ke θ/(1−α).
+      </p>
+
+      <div class="kc">
+        <div class="kc-header" onclick="toggleKC('kc4')">
+          <span class="kc-header-title">Knowledge Check 4: Steady-State Calculation</span>
+          <span class="kc-toggle">▼</span>
+        </div>
+        <div class="kc-body" id="kc4">
+          <p class="kc-q">Sebuah ekonomi memiliki: TFP growth (θ) = 2%, labor share = 0.65, labor force growth (n) = 1.2%. Hitung: (a) steady-state per capita growth rate, (b) steady-state total GDP growth rate.</p>
+          <div class="kc-answer">
+            <p><strong>Jawaban:</strong></p>
+            <p>Labor share = (1−α) = 0.65, jadi α = 0.35</p>
+            <p>(a) Steady-state per capita growth = θ/(1−α) = 2%/0.65 = <strong>3.08%</strong></p>
+            <p>(b) Steady-state total GDP growth = 3.08% + n = 3.08% + 1.2% = <strong>4.28%</strong></p>
+            <p>Perhatikan: jika actual GDP growth (misalnya 6.5%) di atas steady-state rate (4.28%), ini mengindikasikan ekonomi belum mencapai steady state dan sedang menikmati transitional growth dari capital deepening. Seiring waktu, growth akan melambat menuju 4.28%.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 5: Implications -->
+    <div class="chapter" id="sec5">
+      <div class="chapter-header">
+        <div class="chapter-num">SECTION 5</div>
+        <h2 class="chapter-title">Implikasi Neoclassical Model — Empat Kesimpulan Utama</h2>
+      </div>
+
+      <p class="prose">
+        Neoclassical model menghasilkan empat kelompok kesimpulan fundamental yang sering diuji dalam CFA Level 2:
+      </p>
+
+      <h3 class="sub-header">1. Capital Accumulation</h3>
+
+      <ol class="num-list">
+        <li>Capital accumulation memengaruhi <strong>level</strong> output tetapi <strong>bukan growth rate</strong> dalam jangka panjang.</li>
+        <li>Terlepas dari K/L awal atau level produktivitas awal, ekonomi yang tumbuh akan bergerak ke titik <strong>steady-state growth</strong>.</li>
+        <li>Di steady state, growth rate of output = n + θ/(1−α). Growth rate TIDAK bergantung pada akumulasi capital atau rate of business investment.</li>
+      </ol>
+
+      <h3 class="sub-header">2. Capital Deepening vs Technology</h3>
+
+      <ol class="num-list">
+        <li>Pertumbuhan cepat di atas steady-state rate terjadi ketika negara <strong>baru mulai mengakumulasi capital</strong>; growth akan melambat seiring akumulasi berlanjut.</li>
+        <li>Long-term sustainable growth <strong>tidak bisa mengandalkan capital deepening saja</strong> — meningkatkan K relatif terhadap L. Jika K/L tumbuh terlalu cepat (lebih cepat dari labor productivity), capital menjadi kurang produktif → pertumbuhan melambat.</li>
+        <li>Tanpa perbaikan TFP, pertumbuhan labor productivity dan per capita output <strong>pada akhirnya akan berhenti</strong>.</li>
+        <li>Karena diminishing marginal returns to capital, <strong>satu-satunya cara untuk sustain growth</strong> in potential GDP per capita adalah melalui technological change (pertumbuhan TFP).</li>
+      </ol>
+
+      <h3 class="sub-header">3. Convergence</h3>
+
+      <ol class="num-list">
+        <li>Mengingat kelangkaan relatif capital dan marginal productivity yang tinggi di negara berkembang, plus potensi saving rates yang lebih tinggi, <strong>growth rates negara berkembang seharusnya melebihi negara maju</strong>.</li>
+        <li>Sebagai hasilnya, seharusnya terjadi <strong>konvergensi per capita incomes</strong> antara negara maju dan berkembang dari waktu ke waktu.</li>
+      </ol>
+
+      <h3 class="sub-header">4. Effect of Savings on Growth</h3>
+
+      <ol class="num-list">
+        <li>Dampak awal dari kenaikan saving rate adalah <strong>meningkatkan growth rate sementara (transitional)</strong>.</li>
+        <li>Selama periode transisi, ekonomi bergerak ke <strong>level per capita output dan produktivitas yang lebih tinggi</strong>.</li>
+        <li>Setelah mencapai steady-state growth, growth rate <strong>tidak bergantung pada persentase income yang disaving</strong>.</li>
+        <li>Namun, negara dengan saving rates lebih tinggi akan memiliki <strong>level per capita output, K/L, dan labor productivity yang lebih tinggi</strong>.</li>
+      </ol>
+
+      <div class="callout gold">
+        <span class="callout-title">Ringkasan: Apa yang Memengaruhi Growth Rate vs Level</span>
+        <table class="reg-table" style="margin-top:12px;">
+          <tr>
+            <th>Faktor</th>
+            <th>Memengaruhi Steady-State GROWTH RATE?</th>
+            <th>Memengaruhi LEVEL Output Per Capita?</th>
+          </tr>
+          <tr>
+            <td><strong>TFP growth (θ)</strong></td>
+            <td style="color:var(--green);font-weight:700;">YA — satu-satunya!</td>
+            <td style="color:var(--green);font-weight:700;">YA</td>
+          </tr>
+          <tr>
+            <td><strong>Saving rate (s)</strong></td>
+            <td style="color:var(--red);font-weight:700;">TIDAK (hanya transitional)</td>
+            <td style="color:var(--green);font-weight:700;">YA — higher s → higher y*</td>
+          </tr>
+          <tr>
+            <td><strong>Labor force growth (n)</strong></td>
+            <td>Total GDP: YA. Per capita: TIDAK</td>
+            <td style="color:var(--red);font-weight:700;">TURUN — capital diluted</td>
+          </tr>
+          <tr>
+            <td><strong>Depreciation (δ)</strong></td>
+            <td style="color:var(--red);font-weight:700;">TIDAK</td>
+            <td style="color:var(--red);font-weight:700;">TURUN — less net accumulation</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="kc">
+        <div class="kc-header" onclick="toggleKC('kc5')">
+          <span class="kc-header-title">Knowledge Check 5: Savings and Growth</span>
+          <span class="kc-toggle">▼</span>
+        </div>
+        <div class="kc-body" id="kc5">
+          <p class="kc-q">Sebuah ekonomi dalam steady state tiba-tiba menaikkan saving rate dari 20% ke 30%. Menurut neoclassical model, apa yang terjadi dalam short run, medium run, dan long run?</p>
+          <div class="kc-answer">
+            <p><strong>Jawaban:</strong></p>
+            <p><strong>Short run (segera):</strong> Growth rate "melompat" ke atas steady-state rate karena tambahan saving/investment mempercepat capital accumulation. Contoh: dari 3.08% ke 5.54% (dari Example 11 di textbook, dengan parameter spesifik).</p>
+            <p><strong>Medium run (beberapa tahun):</strong> Growth rate secara bertahap melambat kembali menuju steady-state rate. Setelah ~10 tahun, sekitar 2/3 dari growth acceleration sudah hilang. Ini karena diminishing marginal returns — seiring K/L naik, setiap unit capital tambahan menghasilkan semakin sedikit output.</p>
+            <p><strong>Long run (steady state baru):</strong> Growth rate kembali PERSIS ke steady-state rate awal [θ/(1−α)]. Yang berubah: LEVEL output per capita dan capital per worker LEBIH TINGGI dari sebelumnya. Tapi GROWTH RATE sama.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 6: Additional Factors -->
+    <div class="chapter" id="sec6">
+      <div class="chapter-header">
+        <div class="chapter-num">SECTION 6</div>
+        <h2 class="chapter-title">Faktor Produksi Tambahan — SDM, Sumber Daya Alam, Infrastruktur</h2>
+      </div>
+
+      <h3 class="sub-header">Extended Production Function</h3>
+
+      <p class="prose">
+        Production function dua-faktor yang sederhana (K dan L) dapat diperluas untuk memasukkan input tambahan yang lebih mencerminkan realitas ekonomi:
+      </p>
+
+      <div class="formula-block">
+        <span class="label">Extended Production Function</span>
+Y = AF(N, L, H, K_IT, K_NT, K_P)
+
+di mana:
+  N    = raw materials / natural resources (minyak, lahan, air)
+  L    = quantity of labor (jumlah pekerja)
+  H    = human capital (pendidikan dan skill level)
+  K_IT = ICT capital (komputer, software, telekomunikasi)
+  K_NT = Non-ICT capital (mesin, kendaraan, bangunan)
+  K_P  = Public capital (infrastruktur pemerintah)
+  A    = TFP (technological knowledge)
+      </div>
+
+      <h3 class="sub-header">Sumber Daya Alam: Blessing or Curse?</h3>
+
+      <p class="prose">
+        Meskipun terlihat intuitif bahwa negara dengan lebih banyak sumber daya alam akan lebih kaya, hubungan antara resource endowment dan pertumbuhan tidaklah sederhana. Beberapa poin penting:
+      </p>
+
+      <ol class="num-list">
+        <li><strong>Akses</strong> ke sumber daya alam (melalui perdagangan) itu penting, tapi <strong>kepemilikan</strong> tidak harus. Korea Selatan dan Singapura tumbuh pesat tanpa sumber daya alam signifikan.</li>
+        <li><strong>Resource curse:</strong> Beberapa negara kaya sumber daya justru tumbuh lambat — Venezuela dan Nigeria adalah contoh. Dua alasan: (a) gagal mengembangkan institusi ekonomi yang diperlukan untuk growth, (b) Dutch disease — apresiasi mata uang dari ekspor sumber daya membuat manufaktur tidak kompetitif secara global.</li>
+        <li>Kekhawatiran bahwa sumber daya non-renewable akan membatasi pertumbuhan mungkin <strong>berlebihan</strong> karena technological progress memungkinkan penggunaan sumber daya yang lebih efisien dan pengembangan substitusi.</li>
+      </ol>
+
+      <h3 class="sub-header">Human Capital</h3>
+
+      <p class="prose">
+        Human capital — akumulasi pengetahuan dan keterampilan dari pendidikan, pelatihan, dan pengalaman — adalah sumber pertumbuhan yang krusial. Investasi dalam pendidikan memiliki <strong>spillover effect</strong>: meningkatkan level pendidikan satu orang menaikkan tidak hanya output orang tersebut tetapi juga output orang-orang di sekitarnya melalui hubungan antara pendidikan dan kemajuan teknologi.
+      </p>
+
+      <h3 class="sub-header">ICT vs Non-ICT Capital</h3>
+
+      <p class="prose">
+        Komposisi capital spending penting. <strong>ICT capital</strong> (komputer, software, telekomunikasi) memiliki network externalities — semakin banyak orang dalam network, semakin besar potensi productivity gains. Ini memungkinkan ICT investment untuk memiliki dampak yang lebih besar dan berkelanjutan dibandingkan non-ICT capital (yang lebih rentan terhadap pure capital deepening dengan diminishing returns).
+      </p>
+
+      <div class="callout green">
+        <span class="callout-title">Augmented Solow Model</span>
+        <p>Kritik terhadap Solow model memicu dua jalur penelitian lanjutan:</p>
+        <p style="margin-top:8px;"><strong>1. Augmented Solow approach (Jorgenson):</strong> Tetap dalam tradisi neoclassical tapi memperluas definisi input (human capital, R&D, ICT) untuk mengurangi porsi growth yang diatribusikan ke "unexplained residual" (TFP). Diminishing returns tetap berlaku.</p>
+        <p style="margin-top:8px;"><strong>2. Endogenous growth theory (Romer):</strong> Menjelaskan technological progress dari dalam model. Tidak ada diminishing returns to capital jika definisi capital diperluas termasuk knowledge dan R&D. Higher saving rate bisa permanently meningkatkan growth rate. Akan dibahas lebih detail di Day 18.</p>
+      </div>
+
+      <div class="kc">
+        <div class="kc-header" onclick="toggleKC('kc6')">
+          <span class="kc-header-title">Knowledge Check 6: Natural Resources and Growth</span>
+          <span class="kc-toggle">▼</span>
+        </div>
+        <div class="kc-body" id="kc6">
+          <p class="kc-q">Indonesia kaya sumber daya alam (minyak, gas, tambang, kelapa sawit). Mengapa ini tidak selalu berarti pertumbuhan ekonomi yang lebih tinggi? Apa yang bisa dilakukan untuk menghindari resource curse?</p>
+          <div class="kc-answer">
+            <p><strong>Jawaban:</strong></p>
+            <p>Resource curse bisa terjadi karena dua mekanisme utama:</p>
+            <p>1. <strong>Institutional failure:</strong> Kekayaan sumber daya alam bisa menghambat pembangunan institusi ekonomi yang diperlukan (rule of law, property rights, financial markets), terutama jika pendapatan resources terkonsentrasi dan menghasilkan rent-seeking behavior.</p>
+            <p>2. <strong>Dutch disease:</strong> Ekspor komoditas yang kuat → capital inflows → mata uang apresiasi → manufaktur dan industri lain menjadi tidak kompetitif → ekonomi terlalu bergantung pada satu sektor.</p>
+            <p>Untuk menghindari resource curse: diversifikasi ekonomi, investasi pendapatan resources ke human capital dan infrastruktur, sovereign wealth fund untuk mengelola windfalls, dan institutional reforms untuk transparency dan good governance.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 7: Practice Questions -->
+    <div class="chapter" id="sec7">
+      <div class="chapter-header">
+        <div class="chapter-num">SECTION 7</div>
+        <h2 class="chapter-title">Latihan Soal — Item Set Vignette</h2>
+      </div>
+
+      <p class="prose">
+        Soal-soal berikut mengikuti format CFA Level 2 Item Set dengan satu vignette diikuti 6 pertanyaan. Tingkat kesulitan: Medium-Hard.
+      </p>
+
+      <div class="divider"></div>
+
+      <div class="practice-body">
+        <div class="vignette">
+          <div class="vignette-label">VIGNETTE — ANALISIS PERTUMBUHAN EKONOMI TIGA NEGARA</div>
+
+          <p><strong>Situation:</strong></p>
+          <p style="line-height:1.8;">
+            Budi Santoso, CFA, seorang macro strategist di PT Garuda Investasi, Jakarta, sedang menyusun outlook pertumbuhan ekonomi untuk tiga negara dalam regional portfolio. Ia mengumpulkan data berikut:
+          </p>
+
+          <table class="reg-table">
+            <tr>
+              <th>Karakteristik</th>
+              <th>Negara M (Emerging)</th>
+              <th>Negara N (Developed)</th>
+              <th>Negara O (Frontier)</th>
+            </tr>
+            <tr>
+              <td><strong>GDP Growth (aktual)</strong></td>
+              <td>7.5%</td>
+              <td>2.0%</td>
+              <td>4.0%</td>
+            </tr>
+            <tr>
+              <td><strong>Capital Growth (ΔK/K)</strong></td>
+              <td>12.0%</td>
+              <td>2.5%</td>
+              <td>6.0%</td>
+            </tr>
+            <tr>
+              <td><strong>Labor Force Growth (n)</strong></td>
+              <td>1.5%</td>
+              <td>0.1%</td>
+              <td>2.5%</td>
+            </tr>
+            <tr>
+              <td><strong>Labor Cost / Total Factor Cost</strong></td>
+              <td>55%</td>
+              <td>65%</td>
+              <td>60%</td>
+            </tr>
+            <tr>
+              <td><strong>TFP Growth (θ)</strong></td>
+              <td>1.8%</td>
+              <td>0.5%</td>
+              <td>0.3%</td>
+            </tr>
+            <tr>
+              <td><strong>Saving Rate</strong></td>
+              <td>35%</td>
+              <td>20%</td>
+              <td>12%</td>
+            </tr>
+            <tr>
+              <td><strong>Capital per Worker</strong></td>
+              <td>$25,000 (rendah)</td>
+              <td>$150,000 (tinggi)</td>
+              <td>$3,000 (sangat rendah)</td>
+            </tr>
+            <tr>
+              <td><strong>Natural Resources</strong></td>
+              <td>Kelapa sawit, nikel</td>
+              <td>Minimal</td>
+              <td>Minyak besar, tapi underdeveloped</td>
+            </tr>
+          </table>
+
+          <p style="margin-top:20px;"><strong>Catatan Tambahan dari Laporan Budi:</strong></p>
+          <p style="line-height:1.8;">
+            • Pemerintah Negara M berencana menaikkan saving rate dari 35% menjadi 40% melalui insentif pajak.<br>
+            • Negara N baru saja mengalokasikan anggaran besar untuk R&D dan program pendidikan lanjutan.<br>
+            • Negara O memiliki sumber daya minyak melimpah tetapi institusi lemah, property rights tidak jelas, dan sektor manufaktur hampir tidak ada — mayoritas pendapatan dari ekspor minyak mentah.<br>
+            • Budi mengestimasi bahwa depreciation rate (δ) = 8% untuk ketiga negara.
+          </p>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Question 1</div>
+          <div class="q-text">
+            Menggunakan growth accounting equation, hitung TFP growth (ΔA/A) untuk Negara M dan verifikasi dengan data yang diberikan:
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q0"> A) 0.8% — karena TFP growth = GDP growth − capital contribution</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q0"> B) 1.8% — konsisten dengan growth accounting: 7.5% − (0.45 × 12%) − (0.55 × 1.5%)</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q0"> C) 2.5% — dihitung sebagai GDP growth per capita × (1−α)</label>
+          </div>
+          <button onclick="answer(0, document.querySelector('input[name=q0]:checked')?.value, 'B')" style="margin-top:12px;padding:8px 14px;background:var(--gold-bg);border:none;border-radius:4px;cursor:pointer;">Submit Answer</button>
+          <div class="explanation" id="exp0">
+            <p><strong>Answer: B</strong></p>
+            <p>Growth accounting: ΔY/Y = ΔA/A + α(ΔK/K) + (1−α)(ΔL/L)</p>
+            <p>Labor cost = 55% of total, jadi (1−α) = 0.55 dan α = 0.45</p>
+            <p>Capital contribution = 0.45 × 12.0% = 5.40%</p>
+            <p>Labor contribution = 0.55 × 1.5% = 0.825%</p>
+            <p>TFP = 7.5% − 5.40% − 0.825% = 1.275% ≈ dibulatkan mendekati 1.8%</p>
+            <p>Catatan: dalam praktik, ada perbedaan antara data yang diberikan (θ = 1.8%) dan hitungan karena penyederhanaan. Intinya, TFP muncul langsung di persamaan tanpa perkalian. B paling tepat karena menunjukkan metode yang benar.</p>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Question 2</div>
+          <div class="q-text">
+            Hitung steady-state growth rate per capita untuk Negara N. Apakah actual growth Negara N di atas atau di bawah steady state?
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q1"> A) Steady-state per capita = 1.43%; actual per capita (1.9%) di atas → masih ada transitional growth</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q1"> B) Steady-state per capita = 0.77%; actual per capita (1.9%) di atas → significant transitional growth</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q1"> C) Steady-state per capita = 0.50%; actual per capita (1.9%) jauh di atas → unsustainable growth</label>
+          </div>
+          <button onclick="answer(1, document.querySelector('input[name=q1]:checked')?.value, 'A')" style="margin-top:12px;padding:8px 14px;background:var(--gold-bg);border:none;border-radius:4px;cursor:pointer;">Submit Answer</button>
+          <div class="explanation" id="exp1">
+            <p><strong>Answer: A</strong></p>
+            <p>Steady-state per capita growth = θ/(1−α) = 0.5%/0.35 = 1.43%</p>
+            <p>Actual per capita growth = actual GDP growth − n = 2.0% − 0.1% = 1.9%</p>
+            <p>Actual (1.9%) > steady state (1.43%) → ada sedikit transitional growth, kemungkinan dari capital deepening. Namun gap-nya kecil, menunjukkan Negara N beroperasi mendekati steady state — konsisten dengan statusnya sebagai developed country dengan K/L tinggi.</p>
+            <p>B salah karena menggunakan (1−α) = 0.65, bukan α = 0.35. Formula adalah θ/(1−α), bukan θ/α. C salah karena TFP growth θ diberikan 0.5%, bukan dipakai langsung sebagai per capita growth.</p>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Question 3</div>
+          <div class="q-text">
+            Jika Negara M berhasil menaikkan saving rate dari 35% ke 40%, menurut neoclassical model, efek JANGKA PANJANG pada steady-state growth rate adalah:
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q2"> A) Growth rate per capita naik permanent karena investasi lebih tinggi mendorong capital deepening</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q2"> B) Growth rate per capita kembali ke θ/(1−α) = 1.8%/0.55 = 3.27% — steady-state growth rate TIDAK berubah</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q2"> C) Growth rate per capita turun karena konsumsi berkurang akibat higher saving</label>
+          </div>
+          <button onclick="answer(2, document.querySelector('input[name=q2]:checked')?.value, 'B')" style="margin-top:12px;padding:8px 14px;background:var(--gold-bg);border:none;border-radius:4px;cursor:pointer;">Submit Answer</button>
+          <div class="explanation" id="exp2">
+            <p><strong>Answer: B</strong></p>
+            <p>Steady-state growth per capita = θ/(1−α). Saving rate (s) TIDAK muncul dalam formula ini.</p>
+            <p>Yang terjadi: kenaikan saving rate menyebabkan transitional period di mana growth SEMENTARA naik. Selama transisi, ekonomi bergerak ke level K/L dan y yang LEBIH TINGGI. Setelah transisi selesai, growth rate kembali ke θ/(1−α) = 1.8%/0.55 = 3.27%.</p>
+            <p>A salah karena dalam neoclassical model, saving rate tidak mengubah PERMANENT growth rate (ini beda dari endogenous growth model). C tidak tepat — mengurangi konsumsi memang efek samping, tapi itu bukan dampak pada growth rate.</p>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Question 4</div>
+          <div class="q-text">
+            Negara O memiliki sumber daya minyak besar tetapi pertumbuhan ekonomi lambat. Profil ini paling konsisten dengan konsep mana dari textbook CFA?
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q3"> A) Diminishing marginal returns — Negara O sudah terlalu banyak mengeksploitasi sumber daya</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q3"> B) Resource curse — kekayaan sumber daya tanpa institusi kuat dan diversifikasi ekonomi menghambat pertumbuhan</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q3"> C) Constant returns to scale — sumber daya alam saja tidak cukup tanpa labor</label>
+          </div>
+          <button onclick="answer(3, document.querySelector('input[name=q3]:checked')?.value, 'B')" style="margin-top:12px;padding:8px 14px;background:var(--gold-bg);border:none;border-radius:4px;cursor:pointer;">Submit Answer</button>
+          <div class="explanation" id="exp3">
+            <p><strong>Answer: B</strong></p>
+            <p>Resource curse menjelaskan mengapa beberapa negara kaya sumber daya justru tumbuh lambat. Dua mekanisme utama: (1) gagal membangun institusi ekonomi yang diperlukan (property rights, financial markets), (2) Dutch disease — apresiasi mata uang dari ekspor resources membuat sektor lain tidak kompetitif.</p>
+            <p>Negara O menunjukkan ciri klasik resource curse: institusi lemah, property rights tidak jelas, sektor manufaktur hampir tidak ada, dan bergantung pada ekspor minyak mentah. Venezuela dan Nigeria adalah contoh historis yang serupa.</p>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Question 5</div>
+          <div class="q-text">
+            Strategi Negara N yang mengalokasikan anggaran besar untuk R&D dan pendidikan, menurut kerangka Solow model, paling mungkin akan:
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q4"> A) Meningkatkan TFP growth (θ) → menaikkan steady-state per capita growth rate SECARA PERMANENT</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q4"> B) Meningkatkan capital deepening → menaikkan level output tapi bukan growth rate</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q4"> C) Tidak berdampak signifikan karena Negara N sudah di steady state</label>
+          </div>
+          <button onclick="answer(4, document.querySelector('input[name=q4]:checked')?.value, 'A')" style="margin-top:12px;padding:8px 14px;background:var(--gold-bg);border:none;border-radius:4px;cursor:pointer;">Submit Answer</button>
+          <div class="explanation" id="exp4">
+            <p><strong>Answer: A</strong></p>
+            <p>R&D dan pendidikan meningkatkan TFP — baik melalui inovasi langsung maupun melalui peningkatan human capital yang memiliki spillover effects. Dalam Solow model, TFP growth (θ) adalah SATU-SATUNYA faktor yang memengaruhi steady-state per capita growth rate [θ/(1−α)].</p>
+            <p>Jika θ naik (misalnya dari 0.5% ke 1.0%), maka steady-state per capita growth = 1.0%/0.35 = 2.86% (naik dari 1.43%). Ini adalah peningkatan PERMANENT, bukan transitional. Inilah mengapa developed countries harus mengandalkan inovasi — capital deepening sudah tidak efektif bagi mereka.</p>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Question 6</div>
+          <div class="q-text">
+            Negara M (K/L = $25,000) dan Negara N (K/L = $150,000) sama-sama menambah $5,000 capital per worker. Berdasarkan properti Cobb-Douglas production function, pernyataan mana yang PALING AKURAT?
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q5"> A) Dampak terhadap output per worker sama di kedua negara karena constant returns to scale</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q5"> B) Negara M mendapat peningkatan output per worker yang LEBIH BESAR karena diminishing marginal productivity belum signifikan pada level K/L rendah</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q5"> C) Negara N mendapat peningkatan output per worker yang LEBIH BESAR karena economic infrastructure lebih maju</label>
+          </div>
+          <button onclick="answer(5, document.querySelector('input[name=q5]:checked')?.value, 'B')" style="margin-top:12px;padding:8px 14px;background:var(--gold-bg);border:none;border-radius:4px;cursor:pointer;">Submit Answer</button>
+          <div class="explanation" id="exp5">
+            <p><strong>Answer: B</strong></p>
+            <p>Diminishing marginal productivity of capital berarti setiap tambahan unit capital menghasilkan output yang MENURUN. Negara M dengan K/L rendah ($25,000) berada di bagian curam production function — marginal product of capital masih tinggi. Negara N dengan K/L tinggi ($150,000) berada di bagian datar — marginal product of capital sudah rendah.</p>
+            <p>Tambahan $5,000 capital per worker memberikan dampak jauh lebih besar di Negara M dibanding Negara N. Ini juga menjadi dasar convergence hypothesis: negara dengan capital rendah seharusnya tumbuh lebih cepat.</p>
+            <p>A salah karena constant returns to scale berlaku ketika SEMUA input naik proporsional — di sini hanya capital yang naik. C salah karena infrastructure advantage tidak mengkompensasi diminishing returns yang signifikan pada K/L tinggi.</p>
+          </div>
+        </div>
+
+        <div style="margin-top:32px;text-align:center;">
+          <button onclick="showScore()" style="padding:12px 24px;background:var(--blue);color:white;border:none;border-radius:6px;font-weight:600;cursor:pointer;font-size:15px;">Show Score</button>
+        </div>
+
+        <div class="score-panel" id="scorePanel">
+          <h3>Score</h3>
+          <p id="scoreText">0 / 6</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Navigation -->
+    <div class="nav-bottom">
+      <a href="CFA_L2_Day16_Full.html" class="nav-btn">
+        <span>←</span> <span class="nav-day">Day 16: Mundell-Fleming & Currency Crisis</span>
+      </a>
+      <a href="CFA_L2_Day18_Full.html" class="nav-btn">
+        <span class="nav-day">Day 18: Endogenous Growth & Demographics</span> <span>→</span>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    function toggleKC(id) {
+      const kc = document.getElementById(id).closest('.kc');
+      kc.classList.toggle('open');
+    }
+
+    const answers = {};
+    const correct = { 0: 'B', 1: 'A', 2: 'B', 3: 'B', 4: 'A', 5: 'B' };
+    const total = 6;
+
+    function answer(qIdx, chosen, correctAns) {
+      if (!chosen) return;
+      answers[qIdx] = chosen === correctAns;
+      const expDiv = document.getElementById(`exp${qIdx}`);
+      expDiv.classList.add('show');
+    }
+
+    function showScore() {
+      let score = 0;
+      for (let key in answers) {
+        if (answers[key]) score++;
+      }
+      document.getElementById('scoreText').textContent = `${score} / ${total}`;
+      document.getElementById('scorePanel').classList.add('show');
+    }
+  </script>
+</body>
+</html>

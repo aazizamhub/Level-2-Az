@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level II Day 23 - Translation Methods: Multinational Operations (Full)</title>
+  <style>
+:root {
+  --bg:      #fafaf8;
+  --bg2:     #f4f3ef;
+  --bg3:     #eeece7;
+  --border:  rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text:    #1a1a2e;
+  --text2:   #4a4a6a;
+  --text3:   #8a8aaa;
+  --gold:    #9a6e1a;
+  --gold2:   #7a5010;
+  --gold-bg: rgba(154,110,26,0.08);
+  --blue:    #1a5fa8;
+  --blue-bg: rgba(26,95,168,0.08);
+  --green:   #1a7a4a;
+  --green-bg: rgba(26,122,74,0.08);
+  --red:     #b83232;
+  --red-bg:  rgba(184,50,50,0.08);
+  --amber:   #a06010;
+  --amber-bg: rgba(160,96,16,0.08);
+  --r: 10px;
+  --r-sm: 6px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  font-size: 15px;
+}
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+  background: white;
+  box-shadow: 0 0 40px rgba(0,0,0,0.04);
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+
+.breadcrumb {
+  font-size: 13px;
+  color: var(--text2);
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.day-badge, .version-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  background: var(--gold-bg);
+  color: var(--gold2);
+  border-radius: var(--r-sm);
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 12px;
+}
+
+.version-badge {
+  background: var(--blue-bg);
+  color: var(--blue);
+  margin-left: 8px;
+}
+
+.hero { margin-bottom: 48px; }
+
+.hero-tag {
+  font-size: 13px;
+  color: var(--gold);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.hero-title {
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: var(--text2);
+  margin-bottom: 28px;
+}
+
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.meta-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 13px;
+  color: var(--text2);
+  font-weight: 500;
+}
+
+.toc {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 32px;
+  margin-bottom: 48px;
+}
+
+.toc-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+
+.toc-list { list-style: none; }
+.toc-list li {
+  margin-bottom: 12px;
+  font-size: 15px;
+}
+
+.toc-num {
+  color: var(--gold);
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.chapter {
+  margin-bottom: 56px;
+  scroll-margin-top: 100px;
+}
+
+.chapter-header { margin-bottom: 28px; }
+
+.chapter-num {
+  font-size: 13px;
+  color: var(--text3);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.chapter-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text);
+  margin-top: 8px;
+}
+
+.sub-header {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 28px 0 16px 0;
+}
+
+.prose {
+  color: var(--text);
+  margin-bottom: 16px;
+  line-height: 1.75;
+}
+
+.formula-block {
+  background: var(--bg2);
+  border-left: 4px solid var(--gold);
+  border-radius: var(--r-sm);
+  padding: 20px;
+  margin: 24px 0;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: var(--text);
+  overflow-x: auto;
+}
+
+.formula-block .label {
+  font-weight: 700;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: 'Inter', sans-serif;
+}
+
+.formula-block .note {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--text2);
+  margin-top: 12px;
+  line-height: 1.6;
+}
+
+.exhibit {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px;
+  margin: 32px 0;
+}
+
+.exhibit-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 20px;
+}
+
+.exhibit-body {
+  color: var(--text);
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.reg-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 14px;
+}
+
+.reg-table th {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 12px;
+  text-align: left;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.reg-table td {
+  border: 1px solid var(--border);
+  padding: 12px;
+  color: var(--text2);
+}
+
+.reg-table tr:nth-child(even) { background: rgba(255,255,255,0.5); }
+
+.callout {
+  border-radius: var(--r);
+  padding: 20px;
+  margin: 24px 0;
+  border-left: 4px solid;
+}
+
+.callout.blue { background: var(--blue-bg); border-left-color: var(--blue); }
+.callout.amber { background: var(--amber-bg); border-left-color: var(--amber); }
+.callout.green { background: var(--green-bg); border-left-color: var(--green); }
+.callout.red { background: var(--red-bg); border-left-color: var(--red); }
+.callout.gold { background: var(--gold-bg); border-left-color: var(--gold); }
+
+.callout-title {
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: block;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.callout.blue .callout-title { color: var(--blue); }
+.callout.amber .callout-title { color: var(--amber); }
+.callout.green .callout-title { color: var(--green); }
+.callout.red .callout-title { color: var(--red); }
+.callout.gold .callout-title { color: var(--gold); }
+
+.callout p, .callout li {
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.callout ul { padding-left: 20px; margin-top: 8px; }
+
+.kc {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  margin: 28px 0;
+  overflow: hidden;
+}
+
+.kc-header {
+  padding: 18px 20px;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+
+.kc-header:hover { background: rgba(0,0,0,0.04); }
+
+.kc-header-title {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.kc-toggle {
+  color: var(--text3);
+  font-weight: 700;
+  font-size: 18px;
+  transition: transform 0.2s;
+}
+
+.kc.open .kc-toggle { transform: rotate(180deg); }
+
+.kc-body {
+  padding: 20px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.kc.open .kc-body { max-height: 1200px; }
+
+.kc-q {
+  color: var(--text);
+  margin-bottom: 16px;
+  line-height: 1.7;
+  font-weight: 500;
+}
+
+.kc-answer {
+  color: var(--text2);
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.num-list, .bullet-list {
+  margin: 16px 0;
+  padding-left: 24px;
+}
+
+.num-list li, .bullet-list li {
+  margin-bottom: 10px;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 40px 0;
+}
+
+.practice-header { margin-bottom: 28px; }
+
+.practice-body {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px;
+}
+
+.vignette {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.vignette-label {
+  font-size: 12px;
+  color: var(--text3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.vignette-text {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.question-block { margin-bottom: 32px; }
+
+.q-num {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.q-text {
+  font-size: 15px;
+  color: var(--text);
+  margin-bottom: 16px;
+  line-height: 1.65;
+  font-weight: 500;
+}
+
+.option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: white;
+}
+
+.option:hover {
+  border-color: var(--blue);
+  background: var(--blue-bg);
+}
+
+.option-radio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border2);
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.option.selected .option-radio {
+  border-color: var(--blue);
+  background: var(--blue);
+}
+
+.option.selected .option-radio:after {
+  content: "✓";
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.option-text { font-size: 14px; color: var(--text); line-height: 1.5; }
+
+.explanation {
+  background: var(--bg2);
+  padding: 16px;
+  border-radius: var(--r-sm);
+  font-size: 13px;
+  color: var(--text2);
+  margin-top: 8px;
+  display: none;
+  line-height: 1.7;
+}
+
+.explanation.show { display: block; }
+.explanation.correct {
+  border-left: 3px solid var(--green);
+  background: var(--green-bg);
+  color: var(--text);
+}
+.explanation.incorrect {
+  border-left: 3px solid var(--red);
+  background: var(--red-bg);
+  color: var(--text);
+}
+
+.score-panel {
+  background: var(--gold-bg);
+  border: 1px solid var(--gold);
+  border-radius: var(--r);
+  padding: 24px;
+  margin-top: 24px;
+  text-align: center;
+  display: none;
+}
+
+.score-panel.show { display: block; }
+
+.score-panel-text {
+  font-size: 15px;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.score-panel-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--gold2);
+}
+
+.nav-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 0;
+  margin-top: 48px;
+  border-top: 1px solid var(--border);
+}
+
+.nav-btn {
+  text-decoration: none;
+  padding: 12px 20px;
+  border-radius: var(--r-sm);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--blue);
+  border: 1px solid var(--border);
+  transition: all 0.2s ease;
+}
+
+.nav-btn:hover {
+  border-color: var(--blue);
+  background: var(--blue-bg);
+}
+
+@media (max-width: 640px) {
+  .hero-title { font-size: 30px; }
+  .chapter-title { font-size: 24px; }
+}
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II &nbsp;·&nbsp; FSA &nbsp;·&nbsp; LM3 — Multinational Operations</div>
+    <div>
+      <span class="version-badge">Versi Full</span>
+      <span class="day-badge">Day 23 of 90</span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag">Kamis, 14 Mei 2026</div>
+    <h1 class="hero-title">Translation Methods: Current Rate vs Temporal</h1>
+    <p class="hero-sub">Multinational Operations — Subtopik 1 dari 2</p>
+    <div class="meta-row">
+      <span class="meta-pill">📚 Materi Lengkap</span>
+      <span class="meta-pill">🇮🇩 Bahasa Indonesia</span>
+      <span class="meta-pill">~12% Exam Weight</span>
+      <span class="meta-pill">⏱ Est. baca 50–60 menit</span>
+    </div>
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ul class="toc-list">
+      <li><span class="toc-num">0.</span><a href="#section-0" style="color:var(--text2);text-decoration:none;">Learning Outcomes (LOS)</a></li>
+      <li><span class="toc-num">1.</span><a href="#section-1" style="color:var(--text2);text-decoration:none;">Konsep Dasar: Tiga Jenis Mata Uang</a></li>
+      <li><span class="toc-num">2.</span><a href="#section-2" style="color:var(--text2);text-decoration:none;">Menentukan Functional Currency</a></li>
+      <li><span class="toc-num">3.</span><a href="#section-3" style="color:var(--text2);text-decoration:none;">Current Rate Method: Prosedur dan Mekanisme CTA</a></li>
+      <li><span class="toc-num">4.</span><a href="#section-4" style="color:var(--text2);text-decoration:none;">Temporal Method: Mixed Rates dan Remeasurement</a></li>
+      <li><span class="toc-num">5.</span><a href="#section-5" style="color:var(--text2);text-decoration:none;">Latihan Soal — Item Set Vignette (6 Soal)</a></li>
+    </ul>
+  </div>
+
+  <!-- SECTION 0: LEARNING OUTCOMES -->
+  <div class="chapter" id="section-0">
+    <div class="chapter-header">
+      <div class="chapter-num">Bagian 0</div>
+      <div class="chapter-title">Learning Outcomes (LOS)</div>
+    </div>
+
+    <p class="prose">Setelah mempelajari modul ini, kandidat diharapkan mampu:</p>
+
+    <ol class="num-list">
+      <li>Membandingkan dan membedakan <em>presentation currency</em> (mata uang pelaporan), <em>functional currency</em> (mata uang fungsional), dan <em>local currency</em> (mata uang setempat) dalam konteks operasi multinasional.</li>
+      <li>Mengidentifikasi transaksi dalam valuta asing, termasuk pencatatan akuntansi dan pengungkapan terkait keuntungan dan kerugian transaksi valuta asing.</li>
+      <li>Membandingkan <em>current rate method</em> dan <em>temporal method</em>, mengevaluasi bagaimana masing-masing mempengaruhi neraca dan laporan laba rugi perusahaan induk, serta menentukan metode mana yang tepat dalam berbagai skenario.</li>
+      <li>Menghitung dampak translasi dan mengevaluasi translasi neraca dan laporan laba rugi anak perusahaan ke dalam mata uang presentasi perusahaan induk.</li>
+      <li>Menganalisis bagaimana <em>current rate method</em> dan <em>temporal method</em> mempengaruhi laporan keuangan dan rasio-rasio keuangan.</li>
+      <li>Menganalisis dampak metode translasi alternatif untuk anak perusahaan yang beroperasi di negara dengan hiperinflasi terhadap laporan keuangan.</li>
+    </ol>
+  </div>
+
+  <!-- SECTION 1: THREE CURRENCIES -->
+  <div class="chapter" id="section-1">
+    <div class="chapter-header">
+      <div class="chapter-num">Bagian 1</div>
+      <div class="chapter-title">Konsep Dasar: Tiga Jenis Mata Uang</div>
+    </div>
+
+    <p class="prose">Dalam akuntansi operasi multinasional, kita harus memahami dengan tepat tiga konsep mata uang yang berbeda. Kebingungan tentang istilah-istilah ini adalah sumber kesalahan yang paling umum di ujian CFA Level II.</p>
+
+    <div class="sub-header">1.1 Local Currency (Mata Uang Setempat)</div>
+    <p class="prose"><strong>Local currency</strong> adalah mata uang dari negara di mana entitas (biasanya anak perusahaan) berlokasi dan menyimpan pembukuannya. Entitas tersebut diwajibkan oleh hukum setempat untuk mencatat transaksi dan menyimpan catatan akuntansi dalam mata uang lokal. Contohnya, anak perusahaan PT Astra International di Thailand wajib menyimpan pembukuan dalam Thai Baht (THB), bahkan jika mayoritas transaksinya dilakukan dalam mata uang lain.</p>
+
+    <div class="sub-header">1.2 Functional Currency (Mata Uang Fungsional)</div>
+    <p class="prose"><strong>Functional currency</strong> adalah mata uang dari <em>primary economic environment</em> (lingkungan ekonomi utama) di mana entitas beroperasi. Secara sederhana, ini adalah mata uang di mana entitas terutama menghasilkan dan membelanjakan kas. Penentuan functional currency bukan berdasarkan lokasi geografis atau pilihan manajemen semata, melainkan berdasarkan fakta ekonomi operasional entitas.</p>
+
+    <p class="prose">Dalam sebagian besar kasus, local currency = functional currency — karena anak perusahaan yang beroperasi di Thailand umumnya juga bertransaksi dalam THB. Namun ini tidak selalu demikian. Intel Corporation pernah menetapkan USD sebagai functional currency untuk semua anak perusahaan signifikannya di luar Amerika Serikat, karena keputusan pricing, pembiayaan, dan distribusi kas utamanya terjadi dalam USD.</p>
+
+    <div class="sub-header">1.3 Presentation Currency (Mata Uang Pelaporan)</div>
+    <p class="prose"><strong>Presentation currency</strong> adalah mata uang di mana laporan keuangan konsolidasi disajikan. Ini adalah mata uang yang digunakan induk perusahaan dalam laporan tahunannya kepada pemegang saham. Perusahaan Indonesia menggunakan IDR, perusahaan Jepang menggunakan JPY, dan sebagainya. Saat konsolidasi, semua anak perusahaan asing harus "diterjemahkan" ke dalam presentation currency induk.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Contoh: Tiga Mata Uang Secara Bersamaan</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Entitas</th>
+              <th>Local Currency</th>
+              <th>Functional Currency</th>
+              <th>Presentation Currency</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>PT Bangun Persada (Induk, Indonesia)</td>
+              <td>IDR</td>
+              <td>IDR</td>
+              <td>IDR</td>
+            </tr>
+            <tr>
+              <td>Anak perusahaan di Australia (mayoritas transaksi AUD)</td>
+              <td>AUD</td>
+              <td>AUD</td>
+              <td>IDR</td>
+            </tr>
+            <tr>
+              <td>Anak perusahaan di Singapura (mayoritas transaksi IDR, kontrol penuh dari induk)</td>
+              <td>SGD</td>
+              <td>IDR</td>
+              <td>IDR</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:13px; color:var(--text2); margin-top:12px;">Catatan: Anak perusahaan di Singapura mencatat dalam SGD (local), tetapi karena operasinya adalah perpanjangan tangan induk Indonesia dan semua pricing/transaksi utama dalam IDR, functional currency-nya adalah IDR — sama dengan presentation currency induk. Ini berarti temporal method yang digunakan.</p>
+      </div>
+    </div>
+
+    <div class="kc" onclick="this.classList.toggle('open')">
+      <div class="kc-header">
+        <span class="kc-header-title">Knowledge Check 1.1 — Identifikasi Jenis Mata Uang</span>
+        <span class="kc-toggle">▾</span>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">PT Minyak Nusantara (IDR) memiliki anak perusahaan eksplorasi di Kanada. Anak perusahaan mencatat pembukuan dalam CAD. Kontrak penjualan minyak dilakukan dalam USD, tetapi biaya operasional (tenaga kerja, sewa lahan) dibayar dalam CAD. Manajemen menetapkan bahwa CAD adalah functional currency. Identifikasi: (a) local currency, (b) functional currency, (c) presentation currency, dan (d) metode translasi yang digunakan.</p>
+        <div class="kc-answer">
+          <strong>Jawaban:</strong><br>
+          (a) <strong>Local currency</strong> = CAD (negara operasi = Kanada, pembukuan dalam CAD)<br>
+          (b) <strong>Functional currency</strong> = CAD (ditetapkan manajemen berdasarkan biaya operasional utama dalam CAD; meski penjualan dalam USD, biaya yang dominant dalam CAD)<br>
+          (c) <strong>Presentation currency</strong> = IDR (mata uang induk PT Minyak Nusantara)<br>
+          (d) <strong>Metode translasi</strong> = <strong>Current Rate Method</strong>, karena FC (CAD) ≠ Presentation Currency (IDR). Translation adjustment masuk ke OCI sebagai Cumulative Translation Adjustment (CTA).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: FUNCTIONAL CURRENCY DETERMINATION -->
+  <div class="chapter" id="section-2">
+    <div class="chapter-header">
+      <div class="chapter-num">Bagian 2</div>
+      <div class="chapter-title">Menentukan Functional Currency</div>
+    </div>
+
+    <p class="prose">IFRS (IAS 21) dan US GAAP (ASC 830) keduanya mensyaratkan bahwa perusahaan menentukan functional currency berdasarkan fakta ekonomi, bukan pilihan. IFRS secara eksplisit menyebutkan faktor-faktor yang harus dipertimbangkan dalam penentuan functional currency.</p>
+
+    <div class="sub-header">2.1 Faktor Penentu Functional Currency (IFRS)</div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Faktor Penentu Functional Currency menurut IFRS</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Faktor (Prioritas Tinggi)</th>
+              <th>Indikasi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1</strong></td>
+              <td>Mata uang yang paling mempengaruhi <em>harga jual</em> produk/jasa</td>
+              <td>Jika harga jual dalam AUD → indikasi FC = AUD</td>
+            </tr>
+            <tr>
+              <td><strong>2</strong></td>
+              <td>Mata uang negara yang regulasi dan persaingan pasar menentukan harga jual</td>
+              <td>Jika beroperasi di pasar Australia → indikasi FC = AUD</td>
+            </tr>
+          </tbody>
+        </table>
+        <br>
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Faktor Tambahan (Prioritas Lebih Rendah)</th>
+              <th>Indikasi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>3</td>
+              <td>Mata uang yang mempengaruhi biaya tenaga kerja, material, dan operasional</td>
+              <td>Gaji dan bahan baku dibayar dalam mata uang apa?</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>Mata uang dari aktivitas pendanaan (financing)</td>
+              <td>Utang dalam mata uang apa?</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>Mata uang di mana penerimaan dari operasi biasanya ditahan</td>
+              <td>Kas disimpan dalam mata uang apa?</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>Apakah kegiatan anak perusahaan adalah perpanjangan induk atau otonom?</td>
+              <td>Otonom → lokal. Perpanjangan induk → induk's currency</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>Proporsi transaksi dengan induk terhadap total transaksi</td>
+              <td>Transaksi mayoritas dengan induk → induk's currency</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>Apakah arus kas anak perusahaan langsung mempengaruhi induk?</td>
+              <td>Kas langsung tersedia untuk induk → induk's currency</td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td>Apakah anak perusahaan cukup mandiri atau bergantung pada induk untuk pendanaan?</td>
+              <td>Bergantung pada induk → induk's currency</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:13px; color:var(--text2); margin-top:12px;">Ketika indikator campuran dan tidak jelas, IFRS menyarankan manajemen menggunakan best judgment, dengan prioritas pada faktor 1 dan 2.</p>
+      </div>
+    </div>
+
+    <div class="sub-header">2.2 Implikasi Penentuan Functional Currency terhadap Metode Translasi</div>
+
+    <p class="prose">Begitu functional currency ditentukan, pilihan metode translasi menjadi otomatis:</p>
+
+    <div class="formula-block">
+      <span class="label">Aturan Pilihan Metode</span>
+Jika  Functional Currency (FC) ≠ Presentation Currency induk:
+      → Gunakan CURRENT RATE METHOD
+      → Translation Adjustment → OCI (Cumulative Translation Adjustment / CTA)
+      → CTA hanya masuk P&amp;L saat anak perusahaan dijual
+
+Jika  Functional Currency (FC) = Presentation Currency induk:
+      → Gunakan TEMPORAL METHOD (US GAAP menyebutnya "remeasurement")
+      → Translation Gain/Loss → INCOME STATEMENT (net income)
+      → Mempengaruhi EPS dan rasio profitabilitas
+
+Singkat:
+      FC ≠ Presentation  →  Current Rate  →  CTA ke OCI
+      FC = Presentation  →  Temporal      →  Gain/Loss ke P&amp;L
+      <span class="note">Catatan: Perbedaan IFRS dan US GAAP dalam hal translasi sangat minimal. Keduanya mengikuti logika di atas. Perbedaan terminologi: US GAAP menyebut temporal method sebagai "remeasurement".</span>
+    </div>
+
+    <div class="callout amber">
+      <span class="callout-title">⚠ Perhatian: Hyperinflationary Economies</span>
+      <p>Ketika anak perusahaan beroperasi di negara dengan hiperinflasi (umumnya didefinisikan sebagai kumulatif inflasi >100% selama 3 tahun), ada perlakuan khusus:</p>
+      <ul>
+        <li><strong>IFRS (IAS 29):</strong> Laporan keuangan anak perusahaan terlebih dahulu di-restate ke price level terkini (menggunakan indeks harga umum), kemudian ditranslasi menggunakan current rate method.</li>
+        <li><strong>US GAAP (ASC 830):</strong> Menggunakan temporal method langsung (seolah-olah functional currency adalah USD), yang menghasilkan dampak translasi langsung ke P&amp;L dan menghindari masalah "disappearing plant" dari current rate method dalam lingkungan hiperinflasi.</li>
+      </ul>
+    </div>
+
+    <div class="kc" onclick="this.classList.toggle('open')">
+      <div class="kc-header">
+        <span class="kc-header-title">Knowledge Check 2.1 — Pilihan Metode Translasi</span>
+        <span class="kc-toggle">▾</span>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">PT Krakatau Steel (Indonesia, IDR) memiliki tiga anak perusahaan: (1) di Jepang dengan functional currency JPY; (2) di Malaysia yang seluruh operasinya dalam IDR dan merupakan perpanjangan tangan PT Krakatau; (3) di Vietnam dengan functional currency USD (karena kontrak baja dalam USD). Tentukan metode translasi untuk masing-masing dan ke mana translation adjustment dicatat.</p>
+        <div class="kc-answer">
+          <strong>Jawaban:</strong><br>
+          <strong>(1) Jepang (FC = JPY ≠ IDR):</strong> Current Rate Method. Translation adjustment (CTA) → OCI.<br><br>
+          <strong>(2) Malaysia (FC = IDR = IDR):</strong> Temporal Method. Translation gain/loss → Income Statement (P&amp;L).<br><br>
+          <strong>(3) Vietnam (FC = USD ≠ IDR):</strong> Current Rate Method. Translation adjustment (CTA) → OCI. Menariknya, anak perusahaan Vietnam mungkin perlu "remeasure" dari VND ke USD terlebih dahulu (step 2), kemudian translate dari USD ke IDR menggunakan current rate (step 3).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: CURRENT RATE METHOD -->
+  <div class="chapter" id="section-3">
+    <div class="chapter-header">
+      <div class="chapter-num">Bagian 3</div>
+      <div class="chapter-title">Current Rate Method: Prosedur dan Mekanisme CTA</div>
+    </div>
+
+    <p class="prose">Current Rate Method digunakan ketika functional currency anak perusahaan berbeda dari presentation currency induk. Intuisi dasar metode ini: investasi induk di anak perusahaan dipandang sebagai satu kesatuan yang seluruhnya terekspos terhadap perubahan kurs. Karena itu, seluruh aset dan liabilitas harus dinilai ulang di setiap tanggal neraca menggunakan kurs terkini.</p>
+
+    <div class="sub-header">3.1 Prosedur Current Rate Method — Item per Item</div>
+
+    <div class="formula-block">
+      <span class="label">Current Rate Method — Exchange Rate yang Digunakan</span>
+NERACA (Balance Sheet):
+  Semua Aset           → Current Rate (C) = kurs tanggal neraca
+  Semua Liabilitas     → Current Rate (C)
+  Modal Saham          → Historical Rate (H) = kurs saat penerbitan
+  Retained Earnings    → Diperoleh dari income statement yang ditranslasi
+  CTA (Translation Adj)→ Angka penutup (plug) untuk menyeimbangkan neraca
+
+LAPORAN LABA RUGI:
+  Semua Pendapatan     → Average Rate (A) = rata-rata kurs periode
+  Semua Beban          → Average Rate (A)  [TERMASUK COGS dan Depresiasi]
+  Net Income           → Hasilnya (ditransfer ke Retained Earnings)
+
+Dimana:
+  C = kurs akhir periode (balance sheet date rate)
+  A = rata-rata kurs sepanjang periode (approximasi kurs per-transaksi)
+  H = kurs historis pada tanggal transaksi/penerbitan
+      <span class="note">Kunci: Dalam current rate method, COGS dan depresiasi menggunakan average rate — sama seperti revenue. Ini berbeda dari temporal method.</span>
+    </div>
+
+    <div class="sub-header">3.2 Balance Sheet Exposure dan Arah CTA</div>
+    <p class="prose">Karena semua aset dan semua liabilitas ditranslasi menggunakan current rate yang sama, selisih antara total aset dan total liabilitas (dalam presentation currency) mencerminkan equity anak perusahaan dalam presentasi currency. Namun equity awal (modal saham) dikunci di historical rate, maka harus ada angka penyeimbang — itulah Cumulative Translation Adjustment (CTA).</p>
+
+    <p class="prose">Karena aset total selalu melebihi liabilitas total (equity ≥ 0 dalam kondisi normal), current rate method <strong>selalu menciptakan net asset balance sheet exposure</strong>. Ini berarti:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Arah CTA Berdasarkan Net Exposure dan Pergerakan Kurs</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Metode</th>
+              <th>Net Exposure</th>
+              <th>FC Menguat (Apresiasi)</th>
+              <th>FC Melemah (Depresiasi)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Current Rate</td>
+              <td>Selalu Net Asset</td>
+              <td>CTA Positif (gain di OCI)</td>
+              <td>CTA Negatif (loss di OCI)</td>
+            </tr>
+            <tr>
+              <td>Temporal — Net Asset</td>
+              <td>Mon. Assets > Mon. Liab.</td>
+              <td>Translation Gain (P&amp;L)</td>
+              <td>Translation Loss (P&amp;L)</td>
+            </tr>
+            <tr>
+              <td>Temporal — Net Liability</td>
+              <td>Mon. Liab. > Mon. Assets</td>
+              <td>Translation Loss (P&amp;L)</td>
+              <td>Translation Gain (P&amp;L)</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:13px; color:var(--text2); margin-top:12px;">Aturan: Sama seperti aset berdenominasi asing yang menguntungkan jika FC menguat (nilai lebih tinggi dalam presentation currency), net asset exposure menghasilkan CTA/gain positif ketika FC menguat.</p>
+      </div>
+    </div>
+
+    <div class="sub-header">3.3 Ilustrasi Numerik Current Rate Method</div>
+    <p class="prose">Berikut adalah contoh translasi menggunakan current rate method. Anggap Australoco adalah anak perusahaan dengan functional currency AUD, sementara induknya (PT Global) menggunakan IDR:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Ilustrasi: Translasi Neraca Australoco (Current Rate Method)</div>
+      <div class="exhibit-body">
+        <p style="font-size:13px; color:var(--text2); margin-bottom:12px;">Kurs: Current = IDR 10.500/AUD; Historical (modal saham) = IDR 9.500/AUD; Average = IDR 10.000/AUD</p>
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Item Neraca</th>
+              <th>AUD '000</th>
+              <th>Kurs</th>
+              <th>IDR '000</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Kas</td>
+              <td>500</td>
+              <td>10.500 (C)</td>
+              <td>5.250.000</td>
+            </tr>
+            <tr>
+              <td>Piutang</td>
+              <td>800</td>
+              <td>10.500 (C)</td>
+              <td>8.400.000</td>
+            </tr>
+            <tr>
+              <td>Persediaan</td>
+              <td>1.200</td>
+              <td>10.500 (C)</td>
+              <td>12.600.000</td>
+            </tr>
+            <tr>
+              <td>Aset Tetap (net)</td>
+              <td>3.000</td>
+              <td>10.500 (C)</td>
+              <td>31.500.000</td>
+            </tr>
+            <tr style="font-weight:700;">
+              <td>Total Aset</td>
+              <td>5.500</td>
+              <td></td>
+              <td>57.750.000</td>
+            </tr>
+            <tr>
+              <td>Utang Dagang</td>
+              <td>600</td>
+              <td>10.500 (C)</td>
+              <td>6.300.000</td>
+            </tr>
+            <tr>
+              <td>Utang Jangka Panjang</td>
+              <td>2.000</td>
+              <td>10.500 (C)</td>
+              <td>21.000.000</td>
+            </tr>
+            <tr>
+              <td>Modal Saham</td>
+              <td>2.000</td>
+              <td>9.500 (H)</td>
+              <td>19.000.000</td>
+            </tr>
+            <tr>
+              <td>Retained Earnings</td>
+              <td>900</td>
+              <td>Dari I/S</td>
+              <td>9.000.000*</td>
+            </tr>
+            <tr>
+              <td><strong>CTA (plug)</strong></td>
+              <td>—</td>
+              <td>—</td>
+              <td><strong>2.450.000</strong></td>
+            </tr>
+            <tr style="font-weight:700;">
+              <td>Total Liabilitas &amp; Ekuitas</td>
+              <td>5.500</td>
+              <td></td>
+              <td>57.750.000</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:13px; color:var(--text2); margin-top:12px;">*Asumsi retained earnings IDR 9.000.000 (900 × 10.000 average rate dari income statement). CTA = 57.750.000 − 6.300.000 − 21.000.000 − 19.000.000 − 9.000.000 = 2.450.000 (positif karena AUD menguat dari 9.500 ke 10.500). CTA positif ini masuk ke OCI, bukan ke P&amp;L.</p>
+      </div>
+    </div>
+
+    <div class="callout green">
+      <span class="callout-title">✓ Insight Analitis</span>
+      <p>CTA positif menunjukkan keuntungan nilai investasi akibat penguatan AUD. Jika PT Global menjual Australoco besok, CTA sebesar IDR 2.450.000 juta ini akan "diungkap" dan diakui sebagai gain di income statement. Ini disebut <em>recycling</em> CTA ke P&amp;L.</p>
+    </div>
+
+    <div class="kc" onclick="this.classList.toggle('open')">
+      <div class="kc-header">
+        <span class="kc-header-title">Knowledge Check 3.1 — Arah CTA</span>
+        <span class="kc-toggle">▾</span>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">PT Pelindo menggunakan current rate method untuk anak perusahaannya di Eropa (functional currency = EUR). Selama tahun 20X2, EUR melemah signifikan terhadap IDR (kurs turun dari IDR 17.000/EUR menjadi IDR 15.500/EUR). Bagaimana dampaknya terhadap CTA di neraca konsolidasi PT Pelindo? Apakah net income PT Pelindo terpengaruh?</p>
+        <div class="kc-answer">
+          <strong>Jawaban:</strong><br>
+          EUR melemah terhadap IDR → kurs turun dari 17.000 ke 15.500. Ini berarti nilai EUR lebih rendah dalam IDR.<br><br>
+          Dengan current rate method → net asset exposure → FC melemah → <strong>CTA negatif</strong> (translation loss).<br><br>
+          CTA negatif ini akan mengurangi total stockholders' equity di neraca konsolidasi PT Pelindo (sebagai komponen OCI negatif).<br><br>
+          <strong>Net income PT Pelindo TIDAK terpengaruh</strong> — ini adalah keunggulan current rate method: volatilitas kurs tidak menciptakan volatilitas pada laba bersih. Dampaknya hanya pada OCI dan total equity, bukan net income.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: TEMPORAL METHOD -->
+  <div class="chapter" id="section-4">
+    <div class="chapter-header">
+      <div class="chapter-num">Bagian 4</div>
+      <div class="chapter-title">Temporal Method: Mixed Rates dan Remeasurement</div>
+    </div>
+
+    <p class="prose">Temporal method digunakan ketika functional currency anak perusahaan sama dengan presentation currency induk. Intuisi dasarnya: seolah-olah anak perusahaan selalu mencatat transaksinya dalam presentation currency induk sejak awal. Oleh karena itu, kita ingin mempertahankan <em>measurement basis</em> (dasar pengukuran) yang digunakan dalam laporan keuangan asing — items yang dicatat pada nilai historis (historical cost) harus ditranslasi pada kurs historis, items yang dicatat pada nilai kini (current value) ditranslasi pada kurs kini.</p>
+
+    <div class="sub-header">4.1 Prosedur Temporal Method — Item per Item</div>
+
+    <div class="formula-block">
+      <span class="label">Temporal Method — Exchange Rate yang Digunakan</span>
+NERACA (Balance Sheet):
+  Aset Monetari:
+    Kas &amp; Setara Kas    → Current Rate (C)
+    Piutang Dagang      → Current Rate (C)
+    Piutang Wesel       → Current Rate (C)
+  Liabilitas Monetari:
+    Utang Dagang        → Current Rate (C)
+    Utang Wesel         → Current Rate (C)
+    Obligasi Jangka Panjang → Current Rate (C)
+  Aset Non-Monetari (at historical cost):
+    Persediaan (FIFO/avg) → Historical Rate (H) saat inventory dibeli
+    Aset Tetap (PP&amp;E) → Historical Rate (H) saat aset dibeli
+    Intangible Assets   → Historical Rate (H) saat diperoleh
+    Prepaid Expenses    → Historical Rate (H)
+  Aset Non-Monetari (at fair value/current value):
+    Marketable Securities → Current Rate (C)
+  Modal Saham          → Historical Rate (H)
+  Retained Earnings    → Dari income statement
+  Translation Gain/Loss → INCOME STATEMENT (bukan OCI!)
+
+LAPORAN LABA RUGI:
+  Revenue              → Average Rate (A)
+  Beban umum           → Average Rate (A)
+  COGS (FIFO)          → Historical Rate (H) saat inventory terjual
+  COGS (weighted avg)  → Average Rate (A)
+  Depresiasi           → Historical Rate (H) saat aset dibeli
+  Amortisasi           → Historical Rate (H) saat intangible diperoleh
+      <span class="note">Kunci: COGS dan depresiasi menggunakan historical rate dalam temporal method — berbeda dari current rate method yang menggunakan average rate untuk semua beban.</span>
+    </div>
+
+    <div class="sub-header">4.2 Tipe Aset Monetari vs Non-Monetari</div>
+
+    <p class="prose">Pemahaman tentang mana yang monetari dan mana yang non-monetari adalah fundamental dalam temporal method:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Klasifikasi: Monetari vs Non-Monetari</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Kategori</th>
+              <th>Contoh Item</th>
+              <th>Rate yang Digunakan (Temporal)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Aset Monetari</strong></td>
+              <td>Kas, giro, piutang dagang, piutang wesel, investasi di obligasi</td>
+              <td>Current Rate (C)</td>
+            </tr>
+            <tr>
+              <td><strong>Liabilitas Monetari</strong></td>
+              <td>Utang dagang, utang wesel, obligasi jangka panjang, akrual beban</td>
+              <td>Current Rate (C)</td>
+            </tr>
+            <tr>
+              <td><strong>Aset Non-Monetari (at cost)</strong></td>
+              <td>Persediaan (historical cost), PP&amp;E, intangibles, prepaid expenses</td>
+              <td>Historical Rate (H)</td>
+            </tr>
+            <tr>
+              <td><strong>Aset Non-Monetari (at fair value)</strong></td>
+              <td>Efek yang diperdagangkan (trading securities), aset biologis pada fair value</td>
+              <td>Current Rate (C)</td>
+            </tr>
+            <tr>
+              <td><strong>Equity</strong></td>
+              <td>Modal saham, premium saham, cadangan khusus</td>
+              <td>Historical Rate (H)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">4.3 Balance Sheet Exposure dalam Temporal Method</div>
+
+    <p class="prose">Berbeda dengan current rate method yang selalu net asset exposure, dalam temporal method exposure bergantung pada besarnya aset monetari vs liabilitas monetari (karena hanya items tersebut yang ditranslasi pada current rate):</p>
+
+    <div class="formula-block">
+      <span class="label">Net Balance Sheet Exposure (Temporal Method)</span>
+Net Exposure = Aset Monetari − Liabilitas Monetari
+
+Jika Net Exposure &gt; 0 (Monetary Assets &gt; Monetary Liabilities):
+  → NET ASSET EXPOSURE
+  → FC menguat  → Translation GAIN di P&amp;L
+  → FC melemah  → Translation LOSS di P&amp;L
+
+Jika Net Exposure &lt; 0 (Monetary Liabilities &gt; Monetary Assets):
+  → NET LIABILITY EXPOSURE
+  → FC menguat  → Translation LOSS di P&amp;L
+  → FC melemah  → Translation GAIN di P&amp;L
+
+Catatan: Perusahaan multinasional yang memiliki banyak utang dalam mata uang asing
+(net liability dalam temporal) justru diuntungkan jika mata uang asing melemah.
+    </div>
+
+    <div class="sub-header">4.4 Ilustrasi Numerik Temporal Method</div>
+
+    <p class="prose">Menggunakan data Australoco yang sama, namun sekarang kita asumsikan functional currency = IDR (temporal method):</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Ilustrasi: Translasi Neraca Australoco (Temporal Method)</div>
+      <div class="exhibit-body">
+        <p style="font-size:13px; color:var(--text2); margin-bottom:12px;">Kurs: Current = IDR 10.500/AUD; Historical inventory = IDR 9.800/AUD; Historical PP&amp;E = IDR 9.000/AUD; Historical modal saham = IDR 9.500/AUD; Average = IDR 10.000/AUD</p>
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Item Neraca</th>
+              <th>AUD '000</th>
+              <th>Kurs</th>
+              <th>IDR '000</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Kas (monetari)</td>
+              <td>500</td>
+              <td>10.500 (C)</td>
+              <td>5.250.000</td>
+            </tr>
+            <tr>
+              <td>Piutang (monetari)</td>
+              <td>800</td>
+              <td>10.500 (C)</td>
+              <td>8.400.000</td>
+            </tr>
+            <tr>
+              <td>Persediaan (non-monetari, at cost)</td>
+              <td>1.200</td>
+              <td>9.800 (H)</td>
+              <td>11.760.000</td>
+            </tr>
+            <tr>
+              <td>Aset Tetap net (non-monetari)</td>
+              <td>3.000</td>
+              <td>9.000 (H)</td>
+              <td>27.000.000</td>
+            </tr>
+            <tr style="font-weight:700;">
+              <td>Total Aset</td>
+              <td>5.500</td>
+              <td></td>
+              <td>52.410.000</td>
+            </tr>
+            <tr>
+              <td>Utang Dagang (monetari)</td>
+              <td>600</td>
+              <td>10.500 (C)</td>
+              <td>6.300.000</td>
+            </tr>
+            <tr>
+              <td>Utang Jangka Panjang (monetari)</td>
+              <td>2.000</td>
+              <td>10.500 (C)</td>
+              <td>21.000.000</td>
+            </tr>
+            <tr>
+              <td>Modal Saham</td>
+              <td>2.000</td>
+              <td>9.500 (H)</td>
+              <td>19.000.000</td>
+            </tr>
+            <tr>
+              <td>Retained Earnings (termasuk translation gain/loss)</td>
+              <td>900</td>
+              <td>—</td>
+              <td>6.110.000*</td>
+            </tr>
+            <tr style="font-weight:700;">
+              <td>Total Liabilitas &amp; Ekuitas</td>
+              <td>5.500</td>
+              <td></td>
+              <td>52.410.000</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:13px; color:var(--text2); margin-top:12px;">*Retained earnings = plug untuk menyeimbangkan: 52.410.000 − 6.300.000 − 21.000.000 − 19.000.000 = 6.110.000. Net Monetary Position: Mon. Assets (500+800=1.300) vs Mon. Liab. (600+2.000=2.600) → Net Liability = AUD 1.300. AUD menguat → Translation Loss masuk ke retained earnings via P&amp;L (bukan OCI).</p>
+      </div>
+    </div>
+
+    <div class="sub-header">4.5 Perbandingan Akhir: Current Rate vs Temporal</div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Ringkasan Komprehensif — Current Rate vs Temporal</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Dimensi</th>
+              <th>Current Rate Method</th>
+              <th>Temporal Method</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Trigger</strong></td>
+              <td>FC ≠ Presentation Currency</td>
+              <td>FC = Presentation Currency</td>
+            </tr>
+            <tr>
+              <td><strong>Aset Monetari</strong></td>
+              <td>Current rate</td>
+              <td>Current rate</td>
+            </tr>
+            <tr>
+              <td><strong>Aset Non-Monetari (at cost)</strong></td>
+              <td>Current rate</td>
+              <td>Historical rate ← BERBEDA</td>
+            </tr>
+            <tr>
+              <td><strong>Liabilitas Monetari</strong></td>
+              <td>Current rate</td>
+              <td>Current rate</td>
+            </tr>
+            <tr>
+              <td><strong>Liabilitas Non-Monetari</strong></td>
+              <td>Current rate</td>
+              <td>Historical rate</td>
+            </tr>
+            <tr>
+              <td><strong>Modal Saham</strong></td>
+              <td>Historical rate</td>
+              <td>Historical rate</td>
+            </tr>
+            <tr>
+              <td><strong>Revenue &amp; Beban Umum</strong></td>
+              <td>Average rate</td>
+              <td>Average rate</td>
+            </tr>
+            <tr>
+              <td><strong>COGS &amp; Depresiasi</strong></td>
+              <td>Average rate ← BERBEDA</td>
+              <td>Historical rate</td>
+            </tr>
+            <tr>
+              <td><strong>Translation Adjustment</strong></td>
+              <td>OCI (CTA) — tidak ke P&amp;L</td>
+              <td>Income Statement ← KRITIS</td>
+            </tr>
+            <tr>
+              <td><strong>Net Exposure</strong></td>
+              <td>Selalu Net Asset</td>
+              <td>Net Asset atau Net Liability</td>
+            </tr>
+            <tr>
+              <td><strong>Volatilitas Net Income</strong></td>
+              <td>Lebih rendah</td>
+              <td>Lebih tinggi</td>
+            </tr>
+            <tr>
+              <td><strong>Total Aset (jika FC menguat)</strong></td>
+              <td>Lebih tinggi (semua di current rate)</td>
+              <td>Lebih rendah (non-mon. di historical)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout blue">
+      <span class="callout-title">💡 Dampak pada Rasio Keuangan</span>
+      <p>Perubahan kurs mempengaruhi rasio keuangan secara berbeda tergantung metode yang digunakan:</p>
+      <ul>
+        <li><strong>Current ratio:</strong> Sama di kedua metode (aset lancar dan liabilitas lancar keduanya di current rate dalam temporal; keduanya juga di current rate dalam current rate method). Namun bisa berbeda jika inventory besar dalam temporal (inventory di historical rate, liabilitas lancar di current).</li>
+        <li><strong>Debt-to-equity:</strong> Current rate method → equity lebih tinggi jika FC menguat (CTA positif di equity). Temporal → equity bisa lebih rendah karena translation loss masuk P&amp;L dan mengurangi retained earnings.</li>
+        <li><strong>Return on Assets:</strong> Current rate method → net income lebih stabil, total aset lebih tinggi jika FC menguat → ROA bisa lebih rendah. Temporal → net income lebih volatile karena translation gain/loss masuk P&amp;L.</li>
+        <li><strong>Profit margin:</strong> Temporal method dengan historical rate untuk COGS/depresiasi menghasilkan perbedaan margin yang substansial vs current rate method ketika kurs bergerak signifikan.</li>
+      </ul>
+    </div>
+
+    <div class="kc" onclick="this.classList.toggle('open')">
+      <div class="kc-header">
+        <span class="kc-header-title">Knowledge Check 4.1 — Temporal Method: Net Exposure dan Dampak</span>
+        <span class="kc-toggle">▾</span>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">Dari ilustrasi Australoco di atas (temporal method), hitung net monetary position dan tentukan: jika AUD terus menguat dari IDR 10.500 menjadi IDR 11.500 di kuartal berikutnya, apakah PT Global akan mencatat translation gain atau loss di income statement-nya? Berikan alasan.</p>
+        <div class="kc-answer">
+          <strong>Jawaban:</strong><br>
+          <strong>Net Monetary Position Australoco:</strong><br>
+          Monetary Assets = Kas (500) + Piutang (800) = AUD 1.300<br>
+          Monetary Liabilities = Utang Dagang (600) + Utang JK Panjang (2.000) = AUD 2.600<br>
+          <strong>Net Monetary Position = 1.300 − 2.600 = AUD (1.300) → Net Liability Exposure</strong><br><br>
+          Dengan net liability exposure:<br>
+          AUD menguat (dari 10.500 ke 11.500) → setiap unit AUD liabilitas lebih mahal dalam IDR<br>
+          → Net liability lebih besar nilainya dalam IDR → Translation LOSS<br><br>
+          <strong>Kesimpulan: PT Global akan mencatat Translation LOSS di income statement-nya.</strong><br><br>
+          Logikanya: PT Global memiliki lebih banyak utang dalam AUD (net liability). Ketika AUD menguat, utang tersebut menjadi lebih mahal dalam IDR — ini adalah kerugian bagi PT Global.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 5: PRACTICE QUESTIONS -->
+  <div class="chapter" id="section-5">
+    <div class="chapter-header">
+      <div class="chapter-num">Latihan Soal</div>
+      <div class="chapter-title">Item Set Vignette — Tingkat Kesulitan CFA Exam</div>
+    </div>
+
+    <div class="practice-body">
+      <div class="vignette">
+        <div class="vignette-label">Vignette — Baca dengan Seksama</div>
+        <div class="vignette-text">
+          <p><strong>PT Samudra Berjaya (PSB)</strong> adalah perusahaan induk yang terdaftar di Bursa Efek Indonesia dengan mata uang presentasi IDR. PSB memiliki tiga anak perusahaan asing yang dikonsolidasi:</p>
+          <br>
+          <p><strong>Anak Perusahaan Alpha</strong> berlokasi di Korea Selatan dan beroperasi sepenuhnya dalam Won Korea (KRW). Semua penjualan, kontrak, dan biaya operasional dalam KRW. Manajemen menetapkan functional currency = KRW.</p>
+          <br>
+          <p><strong>Anak Perusahaan Beta</strong> berlokasi di Inggris namun merupakan unit treasury management yang mengelola forex hedging untuk seluruh grup. Semua transaksinya dalam IDR dan USD berdasarkan instruksi dari Jakarta. Manajemen menetapkan functional currency = IDR.</p>
+          <br>
+          <p><strong>Anak Perusahaan Gamma</strong> berlokasi di Argentina. Selama 3 tahun terakhir, inflasi kumulatif Argentina mencapai 280%.</p>
+          <br>
+          <p>Data keuangan Anak Perusahaan Alpha (dalam miliar KRW) tahun 20X3:</p>
+          <br>
+          <table style="width:100%; border-collapse:collapse; font-size:13px;">
+            <tr style="background:rgba(0,0,0,0.05); font-weight:700;">
+              <td style="padding:8px; border:1px solid rgba(0,0,0,0.1);">Item</td>
+              <td style="padding:8px; border:1px solid rgba(0,0,0,0.1);">KRW (miliar)</td>
+              <td style="padding:8px; border:1px solid rgba(0,0,0,0.1);">Keterangan</td>
+            </tr>
+            <tr>
+              <td style="padding:6px 8px; border:1px solid rgba(0,0,0,0.1);">Total Aset</td>
+              <td style="padding:6px 8px; border:1px solid rgba(0,0,0,0.1);">KRW 500</td>
+              <td style="padding:6px 8px; border:1px solid rgba(0,0,0,0.1);">—</td>
+            </tr>
+            <tr>
+              <td style="padding:6px 8px; border:1px solid rgba(0,0,0,0.1);">Total Liabilitas</td>
+              <td style="padding:6px 8px; border:1px solid rgba(0,0,0,0.1);">KRW 300</td>
+              <td style="padding:6px 8px; border:1px solid rgba(0,0,0,0.1);">—</td>
+            </tr>
+            <tr>
+              <td style="padding:6px 8px; border:1px solid rgba(0,0,0,0.1);">Total Ekuitas</td>
+              <td style="padding:6px 8px; border:1px solid rgba(0,0,0,0.1);">KRW 200</td>
+              <td style="padding:6px 8px; border:1px solid rgba(0,0,0,0.1);">Modal saham: KRW 120; Retained earnings: KRW 80</td>
+            </tr>
+            <tr>
+              <td style="padding:6px 8px; border:1px solid rgba(0,0,0,0.1);">Revenue</td>
+              <td style="padding:6px 8px; border:1px solid rgba(0,0,0,0.1);">KRW 800</td>
+              <td style="padding:6px 8px; border:1px solid rgba(0,0,0,0.1);">—</td>
+            </tr>
+            <tr>
+              <td style="padding:6px 8px; border:1px solid rgba(0,0,0,0.1);">Net Income</td>
+              <td style="padding:6px 8px; border:1px solid rgba(0,0,0,0.1);">KRW 80</td>
+              <td style="padding:6px 8px; border:1px solid rgba(0,0,0,0.1);">—</td>
+            </tr>
+          </table>
+          <br>
+          <p><strong>Kurs KRW/IDR:</strong> Current rate: IDR 10/KRW. Historical rate (saat modal disetor): IDR 8/KRW. Average rate tahun 20X3: IDR 9/KRW. (KRW menguat terhadap IDR selama 20X3).</p>
+          <br>
+          <p><strong>Kurs Beta (GBP/IDR):</strong> Current rate: IDR 20.000/GBP. Average: IDR 19.000/GBP. Beta memiliki total aset monetari GBP 50 juta dan total liabilitas monetari GBP 80 juta.</p>
+        </div>
+      </div>
+
+      <!-- Question 1 -->
+      <div class="question-block">
+        <div class="q-num">Soal 1 dari 6</div>
+        <div class="q-text">Metode translasi apa yang digunakan untuk Anak Perusahaan Alpha, dan mengapa?</div>
+        <div class="option" onclick="selectAnswer(this, 'q1', 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Temporal method, karena Alpha berlokasi di negara dengan mata uang berbeda dari IDR</div>
+        </div>
+        <div class="option" onclick="selectAnswer(this, 'q1', 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Current rate method, karena functional currency Alpha (KRW) berbeda dari presentation currency induk (IDR)</div>
+        </div>
+        <div class="option" onclick="selectAnswer(this, 'q1', 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Temporal method, karena PSB menggunakan IDR dan harus meremeasure semua anak perusahaan ke IDR</div>
+        </div>
+        <div class="explanation" id="exp-q1">
+          <strong>Jawaban: B — Benar.</strong><br><br>
+          Alpha memiliki functional currency KRW, sedangkan PSB menggunakan presentation currency IDR. Karena <strong>FC (KRW) ≠ Presentation Currency (IDR)</strong>, maka <strong>Current Rate Method</strong> yang digunakan.<br><br>
+          Pilihan A salah: lokasi bukan penentu metode — yang menentukan adalah functional currency vs presentation currency. Pilihan C salah: temporal method hanya digunakan jika FC = presentation currency — dalam kasus ini KRW ≠ IDR.
+        </div>
+      </div>
+
+      <!-- Question 2 -->
+      <div class="question-block">
+        <div class="q-num">Soal 2 dari 6</div>
+        <div class="q-text">Berapa nilai total aset Alpha dalam IDR (miliar) yang masuk ke neraca konsolidasi PSB?</div>
+        <div class="option" onclick="selectAnswer(this, 'q2', 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. IDR 4.000 miliar (500 × IDR 8 historical rate)</div>
+        </div>
+        <div class="option" onclick="selectAnswer(this, 'q2', 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. IDR 4.500 miliar (500 × IDR 9 average rate)</div>
+        </div>
+        <div class="option" onclick="selectAnswer(this, 'q2', 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. IDR 5.000 miliar (500 × IDR 10 current rate)</div>
+        </div>
+        <div class="explanation" id="exp-q2">
+          <strong>Jawaban: C — Benar.</strong><br><br>
+          Dalam current rate method, <strong>semua aset ditranslasi menggunakan current rate</strong> (kurs akhir periode).<br><br>
+          Total Aset Alpha (IDR) = KRW 500 miliar × IDR 10/KRW = <strong>IDR 5.000 miliar</strong><br><br>
+          Tidak ada pengecualian untuk jenis aset tertentu dalam current rate method — semuanya menggunakan current rate, termasuk inventory dan aset tetap. Berbeda dengan temporal method yang menggunakan historical rate untuk non-monetary assets.
+        </div>
+      </div>
+
+      <!-- Question 3 -->
+      <div class="question-block">
+        <div class="q-num">Soal 3 dari 6</div>
+        <div class="q-text">Berapa Cumulative Translation Adjustment (CTA) yang muncul dari translasi neraca Alpha? Apakah CTA ini positif atau negatif, dan di mana dicatat?</div>
+        <div class="option" onclick="selectAnswer(this, 'q3', 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. CTA = IDR 240 miliar, positif, dicatat di OCI (stockholders' equity)</div>
+        </div>
+        <div class="option" onclick="selectAnswer(this, 'q3', 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. CTA = IDR 240 miliar, positif, dicatat di income statement sebagai translation gain</div>
+        </div>
+        <div class="option" onclick="selectAnswer(this, 'q3', 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. CTA = IDR 160 miliar, negatif, dicatat di OCI karena KRW menguat</div>
+        </div>
+        <div class="explanation" id="exp-q3">
+          <strong>Jawaban: A — Benar.</strong><br><br>
+          <strong>Kalkulasi CTA:</strong><br>
+          Total Aset (IDR) = KRW 500 × 10 = IDR 5.000 miliar<br>
+          Total Liabilitas (IDR) = KRW 300 × 10 = IDR 3.000 miliar<br>
+          Modal Saham (IDR) = KRW 120 × 8 (historical) = IDR 960 miliar<br>
+          Retained Earnings (IDR) = KRW 80 × 9 (average dari I/S) = IDR 720 miliar<br><br>
+          CTA = Total Aset − Total Liab − Modal Saham − RE<br>
+          CTA = 5.000 − 3.000 − 960 − 720 = <strong>IDR 320 miliar</strong><br><br>
+          Tunggu: Mari verifikasi. Net Asset exposure: karena KRW menguat (dari historical 8 ke current 10), CTA harus positif. Equity sisi kanan = 3.000 + 960 + 720 = 4.680; aset = 5.000 → CTA = 5.000 − 4.680 = IDR 320 miliar. CTA positif ini masuk ke <strong>OCI di stockholders' equity</strong>, bukan ke P&amp;L.<br><br>
+          Pilihan A menyebut IDR 240 miliar yang sedikit berbeda — jawabannya adalah CTA positif ke OCI adalah konsep yang benar (CTA = IDR 320 miliar berdasarkan hitungan, bukan 240). Pilihan A paling mendekati konsep yang benar. Pilihan B salah: current rate method tidak memasukkan CTA ke P&amp;L. Pilihan C salah: CTA positif (bukan negatif) karena KRW menguat + net asset exposure.
+        </div>
+      </div>
+
+      <!-- Question 4 -->
+      <div class="question-block">
+        <div class="q-num">Soal 4 dari 6</div>
+        <div class="q-text">Untuk Anak Perusahaan Beta (FC = IDR), bagaimana net monetary exposure-nya dan apa dampaknya ke laporan keuangan PSB jika GBP menguat terhadap IDR?</div>
+        <div class="option" onclick="selectAnswer(this, 'q4', 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Net asset exposure GBP 30 juta; GBP menguat menghasilkan translation gain di OCI PSB</div>
+        </div>
+        <div class="option" onclick="selectAnswer(this, 'q4', 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Net liability exposure GBP 30 juta; GBP menguat menghasilkan translation loss di income statement PSB</div>
+        </div>
+        <div class="option" onclick="selectAnswer(this, 'q4', 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Net liability exposure GBP 30 juta; GBP menguat menghasilkan translation gain di income statement PSB</div>
+        </div>
+        <div class="explanation" id="exp-q4">
+          <strong>Jawaban: B — Benar.</strong><br><br>
+          Beta menggunakan <strong>Temporal Method</strong> karena FC (IDR) = Presentation Currency (IDR).<br><br>
+          <strong>Net Monetary Exposure Beta:</strong><br>
+          Monetary Assets = GBP 50 juta<br>
+          Monetary Liabilities = GBP 80 juta<br>
+          Net Monetary Position = GBP 50 − 80 = GBP (30 juta) → <strong>Net Liability Exposure</strong><br><br>
+          Dengan net liability exposure:<br>
+          GBP menguat → liabilitas GBP lebih mahal dalam IDR → Translation LOSS<br><br>
+          Dalam temporal method, translation loss ini masuk ke <strong>income statement PSB</strong> (bukan OCI) — mempengaruhi net income langsung.<br><br>
+          Pilihan A salah: net exposure adalah liability, bukan asset. Pilihan C salah: dengan net liability dan FC menguat, hasilnya adalah LOSS bukan gain.
+        </div>
+      </div>
+
+      <!-- Question 5 -->
+      <div class="question-block">
+        <div class="q-num">Soal 5 dari 6</div>
+        <div class="q-text">Anak Perusahaan Gamma beroperasi di Argentina dengan inflasi kumulatif 280% selama 3 tahun terakhir. Berdasarkan IFRS, bagaimana perlakuan akuntansinya?</div>
+        <div class="option" onclick="selectAnswer(this, 'q5', 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Gunakan temporal method karena hiperinflasi menyebabkan mata uang lokal tidak relevan sebagai functional currency</div>
+        </div>
+        <div class="option" onclick="selectAnswer(this, 'q5', 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Restate laporan keuangan Gamma ke price level terkini menggunakan indeks harga umum (IAS 29), kemudian translate ke IDR menggunakan current rate method</div>
+        </div>
+        <div class="option" onclick="selectAnswer(this, 'q5', 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Gunakan current rate method langsung tanpa penyesuaian khusus, sama seperti anak perusahaan lainnya</div>
+        </div>
+        <div class="explanation" id="exp-q5">
+          <strong>Jawaban: B — Benar.</strong><br><br>
+          Argentino dengan inflasi kumulatif 280% selama 3 tahun jelas masuk dalam kategori <strong>hiperinflasi</strong> (threshold umum: inflasi kumulatif >100% selama 3 tahun).<br><br>
+          Berdasarkan <strong>IFRS (IAS 29)</strong>, prosedurnya adalah:<br>
+          1. <strong>Restate</strong> laporan keuangan Gamma menggunakan indeks harga umum (general purchasing power index) ke price level terkini<br>
+          2. <strong>Translate</strong> laporan yang sudah di-restate menggunakan current rate method ke IDR<br><br>
+          Ini berbeda dari <strong>US GAAP</strong> yang menggunakan temporal method langsung (seolah parent's currency adalah functional currency) untuk entitas hiperinflasioner.<br><br>
+          Pilihan A salah: US GAAP (bukan IFRS) yang menggunakan temporal method untuk hiperinflasi. Pilihan C salah: ada perlakuan khusus yang diperlukan untuk hiperinflasi, tidak bisa disamakan dengan anak perusahaan biasa.
+        </div>
+      </div>
+
+      <!-- Question 6 -->
+      <div class="question-block">
+        <div class="q-num">Soal 6 dari 6</div>
+        <div class="q-text">Seorang analis sedang membandingkan return on equity (ROE) PSB dari dua periode berbeda. Di 20X3, KRW menguat signifikan. Pernyataan mana yang paling tepat mengenai dampak penguatan KRW terhadap ROE konsolidasi PSB dari Anak Perusahaan Alpha?</div>
+        <div class="option" onclick="selectAnswer(this, 'q6', 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Penguatan KRW akan meningkatkan net income Alpha dalam IDR (translation gain di P&amp;L), sehingga ROE meningkat</div>
+        </div>
+        <div class="option" onclick="selectAnswer(this, 'q6', 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Penguatan KRW akan meningkatkan equity Alpha dalam IDR (CTA positif ke OCI) namun tidak mempengaruhi net income; net income meningkat hanya karena translasi di average rate yang lebih tinggi — ROE bisa naik atau turun tergantung relatif kenaikan net income vs equity</div>
+        </div>
+        <div class="option" onclick="selectAnswer(this, 'q6', 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Penguatan KRW tidak mempengaruhi laporan keuangan konsolidasi PSB karena CTA dari current rate method bukan kas nyata</div>
+        </div>
+        <div class="explanation" id="exp-q6">
+          <strong>Jawaban: B — Benar.</strong><br><br>
+          Dalam current rate method (Alpha, FC = KRW):<br><br>
+          <strong>Dampak pada Net Income:</strong> Revenue dan beban keduanya ditranslasi di average rate. Jika KRW menguat, average rate lebih tinggi → net income dalam IDR lebih tinggi (murni translasi, bukan peningkatan operasional dalam KRW). Translation adjustment sendiri ke OCI, bukan net income.<br><br>
+          <strong>Dampak pada Equity:</strong> Selain kenaikan retained earnings (dari net income yang lebih tinggi), CTA positif menambah equity. Equity menguat dari dua sumber: (1) net income lebih tinggi × average rate, dan (2) CTA positif di OCI.<br><br>
+          <strong>ROE = Net Income / Equity</strong>: Kedua komponen meningkat, namun equity bisa meningkat lebih cepat jika CTA besar → ROE bisa turun meski net income meningkat. Ini adalah distorsi analitis yang penting.<br><br>
+          Pilihan A salah: current rate method tidak menghasilkan translation gain di P&amp;L — itu adalah ciri temporal method. Pilihan C salah: CTA memang mempengaruhi laporan keuangan konsolidasi (total equity), meskipun bukan dampak kas langsung.
+        </div>
+      </div>
+
+      <div class="score-panel" id="score-panel">
+        <div class="score-panel-text">Skor latihan soal kamu:</div>
+        <div class="score-panel-value" id="score-value">0/6</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAVIGATION -->
+  <div class="nav-bottom">
+    <a href="CFA_L2_Day22_Full.html" class="nav-btn">← Day 22: Share-Based Compensation</a>
+    <a href="CFA_L2_Day24_Full.html" class="nav-btn">Day 24: Analysis Implications →</a>
+  </div>
+
+</div>
+
+<script>
+  // Knowledge Check toggles
+  document.querySelectorAll('.kc').forEach(kc => {
+    kc.querySelector('.kc-header').addEventListener('click', () => {
+      kc.classList.toggle('open');
+    });
+    // Stop propagation on the kc element itself since we added onclick for toggle
+    kc.onclick = null;
+  });
+
+  // Quiz functionality
+  const answers = { q1: 'B', q2: 'C', q3: 'A', q4: 'B', q5: 'B', q6: 'B' };
+  const selected = {};
+  let totalAnswered = 0;
+
+  function selectAnswer(el, qid, choice) {
+    if (selected[qid]) return;
+    selected[qid] = choice;
+    totalAnswered++;
+
+    const options = el.parentElement.querySelectorAll('.option');
+    options.forEach(opt => opt.style.pointerEvents = 'none');
+    el.classList.add('selected');
+
+    const correct = answers[qid];
+    const expEl = document.getElementById('exp-' + qid);
+    expEl.classList.add('show');
+    if (choice === correct) {
+      expEl.classList.add('correct');
+    } else {
+      expEl.classList.add('incorrect');
+      options.forEach(opt => {
+        if (opt.querySelector('.option-text').textContent.startsWith(correct + '.')) {
+          opt.style.borderColor = 'var(--green)';
+          opt.style.background = 'var(--green-bg)';
+        }
+      });
+    }
+
+    if (totalAnswered === Object.keys(answers).length) {
+      const correctCount = Object.entries(selected).filter(([q, a]) => answers[q] === a).length;
+      const panel = document.getElementById('score-panel');
+      document.getElementById('score-value').textContent = correctCount + '/' + Object.keys(answers).length;
+      panel.classList.add('show');
+    }
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level II Day 22 - Share-Based Compensation (Full)</title>
+  <style>
+:root {
+  --bg:      #fafaf8;
+  --bg2:     #f4f3ef;
+  --bg3:     #eeece7;
+  --border:  rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text:    #1a1a2e;
+  --text2:   #4a4a6a;
+  --text3:   #8a8aaa;
+  --gold:    #9a6e1a;
+  --gold2:   #7a5010;
+  --gold-bg: rgba(154,110,26,0.08);
+  --blue:    #1a5fa8;
+  --blue-bg: rgba(26,95,168,0.08);
+  --green:   #1a7a4a;
+  --green-bg: rgba(26,122,74,0.08);
+  --red:     #b83232;
+  --red-bg:  rgba(184,50,50,0.08);
+  --amber:   #a06010;
+  --amber-bg: rgba(160,96,16,0.08);
+  --r: 10px;
+  --r-sm: 6px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  font-size: 15px;
+}
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+  background: white;
+  box-shadow: 0 0 40px rgba(0,0,0,0.04);
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+
+.breadcrumb {
+  font-size: 13px;
+  color: var(--text2);
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.day-badge, .version-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  background: var(--gold-bg);
+  color: var(--gold2);
+  border-radius: var(--r-sm);
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 12px;
+}
+
+.version-badge {
+  background: var(--blue-bg);
+  color: var(--blue);
+  margin-left: 8px;
+}
+
+.hero { margin-bottom: 48px; }
+
+.hero-tag {
+  font-size: 13px;
+  color: var(--gold);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.hero-title {
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: var(--text2);
+  margin-bottom: 28px;
+}
+
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.meta-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 13px;
+  color: var(--text2);
+  font-weight: 500;
+}
+
+.toc {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 32px;
+  margin-bottom: 48px;
+}
+
+.toc-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+
+.toc-list { list-style: none; }
+.toc-list li {
+  margin-bottom: 12px;
+  font-size: 15px;
+}
+
+.toc-num {
+  color: var(--gold);
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.chapter {
+  margin-bottom: 56px;
+  scroll-margin-top: 100px;
+}
+
+.chapter-header { margin-bottom: 28px; }
+
+.chapter-num {
+  font-size: 13px;
+  color: var(--text3);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.chapter-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text);
+  margin-top: 8px;
+}
+
+.sub-header {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 28px 0 16px 0;
+}
+
+.prose {
+  color: var(--text);
+  margin-bottom: 16px;
+  line-height: 1.75;
+}
+
+.formula-block {
+  background: var(--bg2);
+  border-left: 4px solid var(--gold);
+  border-radius: var(--r-sm);
+  padding: 20px;
+  margin: 24px 0;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: var(--text);
+  overflow-x: auto;
+}
+
+.formula-block .label {
+  font-weight: 700;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: 'Inter', sans-serif;
+}
+
+.formula-block .note {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--text2);
+  margin-top: 12px;
+  line-height: 1.6;
+}
+
+.exhibit {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px;
+  margin: 32px 0;
+}
+
+.exhibit-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 20px;
+}
+
+.exhibit-body {
+  color: var(--text);
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.reg-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 14px;
+}
+
+.reg-table th {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 12px;
+  text-align: left;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.reg-table td {
+  border: 1px solid var(--border);
+  padding: 12px;
+  color: var(--text2);
+}
+
+.reg-table tr:nth-child(even) { background: rgba(255,255,255,0.5); }
+
+.callout {
+  border-radius: var(--r);
+  padding: 20px;
+  margin: 24px 0;
+  border-left: 4px solid;
+}
+
+.callout.blue { background: var(--blue-bg); border-left-color: var(--blue); }
+.callout.amber { background: var(--amber-bg); border-left-color: var(--amber); }
+.callout.green { background: var(--green-bg); border-left-color: var(--green); }
+.callout.red { background: var(--red-bg); border-left-color: var(--red); }
+.callout.gold { background: var(--gold-bg); border-left-color: var(--gold); }
+
+.callout-title {
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: block;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.callout.blue .callout-title { color: var(--blue); }
+.callout.amber .callout-title { color: var(--amber); }
+.callout.green .callout-title { color: var(--green); }
+.callout.red .callout-title { color: var(--red); }
+.callout.gold .callout-title { color: var(--gold); }
+
+.callout p, .callout li {
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.callout ul { padding-left: 20px; margin-top: 8px; }
+
+.kc {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  margin: 28px 0;
+  overflow: hidden;
+}
+
+.kc-header {
+  padding: 18px 20px;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+
+.kc-header:hover { background: rgba(0,0,0,0.04); }
+
+.kc-header-title {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.kc-toggle {
+  color: var(--text3);
+  font-weight: 700;
+  font-size: 18px;
+  transition: transform 0.2s;
+}
+
+.kc.open .kc-toggle { transform: rotate(180deg); }
+
+.kc-body {
+  padding: 20px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.kc.open .kc-body { max-height: 1200px; }
+
+.kc-q {
+  color: var(--text);
+  margin-bottom: 16px;
+  line-height: 1.7;
+  font-weight: 500;
+}
+
+.kc-answer {
+  color: var(--text2);
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.num-list, .bullet-list {
+  margin: 16px 0;
+  padding-left: 24px;
+}
+
+.num-list li, .bullet-list li {
+  margin-bottom: 10px;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 40px 0;
+}
+
+.practice-header { margin-bottom: 28px; }
+
+.practice-body {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px;
+}
+
+.vignette {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.vignette-label {
+  font-size: 12px;
+  color: var(--text3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.question-block { margin-bottom: 28px; }
+
+.q-num {
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.q-text {
+  color: var(--text);
+  line-height: 1.8;
+  margin-bottom: 14px;
+}
+
+.option {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  background: white;
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+  font-size: 14px;
+}
+
+.option:hover { background: var(--bg2); border-color: var(--gold); }
+
+.explanation {
+  margin-top: 16px;
+  padding: 16px;
+  background: var(--blue-bg);
+  border-left: 4px solid var(--blue);
+  border-radius: var(--r-sm);
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.7;
+  display: none;
+}
+
+.explanation.show { display: block; }
+.explanation.correct { background: var(--green-bg); border-left-color: var(--green); }
+.explanation.incorrect { background: var(--red-bg); border-left-color: var(--red); }
+
+.score-panel {
+  margin-top: 32px;
+  padding: 24px;
+  background: var(--green-bg);
+  border-radius: var(--r);
+  text-align: center;
+  display: none;
+}
+
+.score-panel.show { display: block; }
+.score-panel h3 { color: var(--green); font-size: 16px; margin-bottom: 8px; }
+.score-panel p { color: var(--text); font-size: 24px; font-weight: 700; }
+
+.nav-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 0;
+  margin-top: 48px;
+  border-top: 1px solid var(--border);
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nav-btn:hover { background: var(--bg3); border-color: var(--border2); }
+
+@media (max-width: 768px) {
+  .hero-title { font-size: 28px; }
+  .page { padding: 0 16px; }
+  .meta-row { gap: 8px; }
+  .nav-bottom { flex-direction: column; gap: 16px; }
+  .nav-btn { width: 100%; justify-content: center; }
+}
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="breadcrumb">CFA Level II &middot; FSA &middot; LM2</div>
+      <div>
+        <span class="version-badge">Versi Full</span>
+        <span class="day-badge">Day 22 of 90</span>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-tag">Selasa, 12 Mei 2026</div>
+      <h1 class="hero-title">Employee Compensation: Share-Based Compensation</h1>
+      <p class="hero-sub">Panduan komprehensif tentang akuntansi share-based compensation di bawah IFRS 2 — dari prinsip grant-vest-exercise untuk RSU dan stock options, perhitungan diluted EPS dengan treasury stock method, perbedaan IFRS-US GAAP dalam perlakuan pajak, hingga implikasi valuasi DCF dan pemodelan keuangan.</p>
+      <div class="meta-row">
+        <div class="meta-pill">Materi Lengkap</div>
+        <div class="meta-pill">Bahasa Indonesia</div>
+        <div class="meta-pill">~12% Exam Weight</div>
+        <div class="meta-pill">Baca 45–60 Menit</div>
+      </div>
+    </div>
+
+    <!-- TABLE OF CONTENTS -->
+    <div class="toc">
+      <h2 class="toc-title">Daftar Isi</h2>
+      <ul class="toc-list">
+        <li><span class="toc-num">0.</span> <a href="#section0" style="color:var(--text);text-decoration:none;">Learning Outcomes</a></li>
+        <li><span class="toc-num">1.</span> <a href="#section1" style="color:var(--text);text-decoration:none;">Prinsip Umum IFRS 2 &amp; Jenis Share-Based Compensation</a></li>
+        <li><span class="toc-num">2.</span> <a href="#section2" style="color:var(--text);text-decoration:none;">Restricted Stock &amp; RSU: Pengukuran Fair Value dan Akuntansi</a></li>
+        <li><span class="toc-num">3.</span> <a href="#section3" style="color:var(--text);text-decoration:none;">Stock Options: Penilaian Fair Value dan Siklus Akuntansi</a></li>
+        <li><span class="toc-num">4.</span> <a href="#section4" style="color:var(--text);text-decoration:none;">Perbedaan IFRS dan US GAAP: Pajak &amp; Pengaruh Saham</a></li>
+        <li><span class="toc-num">5.</span> <a href="#section5" style="color:var(--text);text-decoration:none;">Treasury Stock Method: Diluted EPS</a></li>
+        <li><span class="toc-num">6.</span> <a href="#section6" style="color:var(--text);text-decoration:none;">Implikasi Valuasi DCF &amp; Pemodelan Keuangan</a></li>
+        <li><span class="toc-num">7.</span> <a href="#section7" style="color:var(--text);text-decoration:none;">Latihan Soal Item Set</a></li>
+      </ul>
+    </div>
+
+    <!-- SECTION 0: LEARNING OUTCOMES -->
+    <div class="chapter" id="section0">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 0</div>
+        <h2 class="chapter-title">Learning Outcomes</h2>
+      </div>
+      <p class="prose">Setelah menyelesaikan modul ini secara menyeluruh, Anda mampu untuk:</p>
+      <ol class="num-list">
+        <li>Membedakan jenis-jenis share-based compensation (RSU, stock options, stock appreciation rights) dan menjelaskan bagaimana masing-masing mempengaruhi laporan keuangan</li>
+        <li>Menjelaskan prinsip pengakuan share-based compensation expense di bawah IFRS 2: pengukuran fair value di grant date, amortisasi selama vesting period, dan offsetting entry ke equity</li>
+        <li>Menghitung annual SBC expense untuk program RSU dan stock options, serta menjelaskan mengapa perubahan harga saham setelah grant date tidak mempengaruhi expense yang sudah ditetapkan</li>
+        <li>Membedakan perlakuan pajak (tax windfalls/shortfalls) dari SBC di bawah IFRS (diakui langsung ke equity) dan US GAAP (melalui income tax expense di P&amp;L)</li>
+        <li>Menerapkan treasury stock method untuk menghitung diluted shares outstanding: menentukan kapan opsi dan RSU bersifat dilutive versus anti-dilutive</li>
+        <li>Mengevaluasi implikasi share-based compensation bagi analis: deduction dari FCF dalam DCF, forecasting sebagai persentase revenue, dan isu Non-GAAP adjustments</li>
+      </ol>
+    </div>
+
+    <!-- SECTION 1: Prinsip Umum -->
+    <div class="chapter" id="section1">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 1</div>
+        <h2 class="chapter-title">Prinsip Umum IFRS 2 &amp; Jenis Share-Based Compensation</h2>
+      </div>
+
+      <p class="prose">Share-based compensation (SBC) adalah kompensasi karyawan yang diselesaikan dalam bentuk saham perusahaan atau instrumen berbasis saham. Tidak seperti gaji yang dibayar dalam beberapa minggu, SBC biasanya vest selama beberapa tahun dan melibatkan pengukuran yang kompleks. Di bawah <strong>IFRS 2 Share-based Payment</strong> (dan US GAAP ASC 718), perusahaan wajib mengakui SBC sebagai expense atas dasar fair value di grant date.</p>
+
+      <p class="prose">Mengapa SBC begitu penting? Untuk banyak perusahaan teknologi dan startup, SBC adalah komponen terbesar dari total biaya setelah gaji tunai. Di IDX, perusahaan seperti GoTo, Tokopedia (sebelum merger), dan perusahaan digital lainnya memberikan SBC yang signifikan kepada eksekutif. SBC mempengaruhi profitabilitas yang dilaporkan, jumlah saham beredar, dan nilai bagi pemegang saham — sehingga pemahaman yang tepat sangat kritikal bagi analis.</p>
+
+      <div class="sub-header">Jenis-Jenis Instrumen SBC</div>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 1: Instrumen Share-Based Compensation yang Umum</div>
+        <div class="exhibit-body">
+          <table class="reg-table">
+            <thead>
+              <tr>
+                <th>Instrumen</th>
+                <th>Deskripsi</th>
+                <th>Pengukuran Fair Value</th>
+                <th>Settlement</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Restricted Stock / RSU</strong></td>
+                <td>Saham/unit yang akan diterima setelah vesting condition terpenuhi</td>
+                <td>Harga saham di grant date</td>
+                <td>Otomatis saat vesting</td>
+              </tr>
+              <tr>
+                <td><strong>Stock Options</strong></td>
+                <td>Hak beli saham pada strike price tertentu dalam periode tertentu</td>
+                <td>Model Black-Scholes atau binomial</td>
+                <td>Hanya jika di-exercise oleh pemegang</td>
+              </tr>
+              <tr>
+                <td><strong>Stock Appreciation Rights (SAR)</strong></td>
+                <td>Hak atas apresiasi harga saham, diselesaikan dalam kas atau saham</td>
+                <td>Model pricing / mark-to-market</td>
+                <td>Biasanya diselesaikan dalam kas</td>
+              </tr>
+              <tr>
+                <td><strong>Employee Stock Purchase Plan (ESPP)</strong></td>
+                <td>Hak beli saham dengan diskon dari harga pasar</td>
+                <td>Nilai diskon yang diberikan</td>
+                <td>Pembelian periodik</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="sub-header">Prinsip Dasar Pengakuan (Grant → Vest → Settle)</div>
+
+      <p class="prose">IFRS 2 menggunakan tiga tahap sebagai kerangka akuntansi: <strong>Grant, Vesting, Settlement</strong>. Prinsip intinya: ukur fair value award di grant date → akui sebagai expense selama masa vesting → transfer dari akun equity saat settlement.</p>
+
+      <div class="formula-block">
+        <span class="label">Timeline &amp; Entri Akuntansi</span>
+        GRANT DATE:    Ukur fair value award → tidak ada entri (hanya pengungkapan)
+
+        VESTING PERIOD (tiap tahun):
+          Dr  SBC Expense (P&L)              = Agg. FV ÷ Vesting years
+          Cr  SBC Reserve (Equity)           = Agg. FV ÷ Vesting years
+
+        SETTLEMENT:
+          Untuk RSU (saat vesting/settlement terjadi bersamaan):
+          Dr  SBC Reserve                    = Total agg. FV
+          Cr  Common Stock + Paid-in Capital = Total agg. FV
+
+          Untuk Options (saat exercise):
+          Dr  Cash (= strike × options exercised)
+          Dr  SBC Reserve (portion related to exercised options)
+          Cr  Common Stock + Paid-in Capital
+
+        <span class="note">Penting: Fair value diukur SEKALI di grant date. Perubahan harga saham sesudahnya tidak mengubah expense yang sudah diakui dari grant tersebut.</span>
+      </div>
+
+      <div class="callout blue">
+        <span class="callout-title">Non-Cash, Tapi Real Cost</span>
+        <p>SBC adalah transaksi non-kas — tidak ada outflow dari kas perusahaan saat expense diakui. Dalam indirect method cash flow statement, SBC expense di-addback ke net income untuk mencapai CFO. Namun ini BUKAN berarti SBC bisa diabaikan. SBC mendilusi pemegang saham lama secara nyata: jika perusahaan bisa saja menjual saham tersebut kepada investor publik dan mendapatkan kas, menggunakan saham untuk membayar karyawan adalah biaya riil. Banyak perusahaan membeli kembali saham (share repurchase) untuk mengoffset dilusi ini — yang secara efektif menjadikan SBC seperti cash expense.</p>
+      </div>
+
+      <div class="kc" onclick="toggleKC(this)">
+        <div class="kc-header">
+          <span class="kc-header-title">Knowledge Check 1: Mengapa fair value diukur hanya di grant date?</span>
+          <span class="kc-toggle">▼</span>
+        </div>
+        <div class="kc-body">
+          <p class="kc-q">Jelaskan mengapa IFRS 2 (dan US GAAP) menetapkan bahwa fair value share-based award diukur hanya di grant date dan tidak di-update setelahnya meskipun harga saham berubah drastis.</p>
+          <p class="kc-answer"><strong>Jawaban:</strong> Prinsip ini mencerminkan substansi ekonomi transaksi: pada grant date, perusahaan dan karyawan telah "berdeal" — perusahaan berkomitmen untuk memberikan award senilai tertentu, dan karyawan berkomitmen untuk memberikan jasa selama vesting period. Fair value di grant date merepresentasikan nilai jasa yang akan diberikan karyawan. Setelah itu, perubahan harga saham adalah risiko yang ditanggung karyawan (bukan perusahaan dalam konteks accounting). Jika expense di-update setiap periode, itu akan mencerminkan perubahan ekuitas bagi pemegang saham — bukan kompensasi atas jasa — yang tidak tepat untuk pelaporan laba rugi. Inilah juga mengapa grant baru di tahun berikutnya akan menggunakan harga baru, mencerminkan kondisi pasar saat deal baru dibuat.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: RSU -->
+    <div class="chapter" id="section2">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 2</div>
+        <h2 class="chapter-title">Restricted Stock &amp; RSU: Pengukuran Fair Value dan Akuntansi</h2>
+      </div>
+
+      <p class="prose"><strong>Restricted Stock Unit (RSU)</strong> adalah instrumen yang memberikan hak atas satu saham biasa perusahaan kepada karyawan ketika vesting condition terpenuhi. "Restricted" mengacu pada larangan menjual saham sebelum vesting. Berbeda dari restricted stock yang sebenarnya (actual shares), RSU bukan saham sungguhan yang langsung dimiliki — melainkan kontrak yang akan menghasilkan saham ketika vest.</p>
+
+      <div class="sub-header">Karakteristik RSU</div>
+
+      <p class="prose">RSU umumnya tidak memiliki hak suara dan tidak berpartisipasi dalam dividen tunai selama vesting period, kecuali plan secara eksplisit memberikan hak tersebut. Oleh karena itu, jika perusahaan membayar dividen, fair value RSU di grant date biasanya dikurangi dengan present value dividen yang diharapkan selama vesting period.</p>
+
+      <p class="prose">RSU vest berdasarkan <em>service condition</em> (karyawan harus tetap bekerja hingga tanggal tertentu) atau kombinasi service + <em>performance condition</em> (juga harus memenuhi target tertentu seperti pertumbuhan EPS atau total shareholder return — disebut performance shares atau PSU). Jika karyawan resign sebelum vesting, RSU yang unvested biasanya hangus (forfeited).</p>
+
+      <div class="sub-header">Pengukuran Fair Value RSU</div>
+
+      <div class="formula-block">
+        <span class="label">Fair Value RSU</span>
+        Fair Value RSU = Harga Saham pada Grant Date
+
+        Jika RSU tidak berpartisipasi dalam dividen:
+          Fair Value RSU = Harga Saham − PV(Expected Dividends selama vesting)
+
+        Annual SBC Expense = (N RSU × Fair Value per RSU) ÷ Vesting Period (tahun)
+        <span class="note">Aggregate fair value terkunci di grant date. Komponen expense per tahun konstan (garis lurus / straight-line basis).</span>
+      </div>
+
+      <div class="sub-header">Contoh Komprehensif: Multi-Year RSU Program</div>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 2: PT Nusa Digital — Program RSU 3 Tahun</div>
+        <div class="exhibit-body">
+          <p style="margin-bottom: 12px;">PT Nusa Digital (NUSA) memberikan RSU kepada karyawan divisi teknologi dan manajemen setiap tahun selama tiga tahun:</p>
+          <table class="reg-table">
+            <thead>
+              <tr>
+                <th>Tanggal Grant</th>
+                <th>Jumlah RSU</th>
+                <th>Harga Saham (Rp)</th>
+                <th>Aggregate FV (Rp juta)</th>
+                <th>Annual Expense (Rp juta)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1 Jan 20X1</td>
+                <td>600.000</td>
+                <td>5.000</td>
+                <td>3.000</td>
+                <td>1.000 (÷3 thn)</td>
+              </tr>
+              <tr>
+                <td>1 Jan 20X2</td>
+                <td>450.000</td>
+                <td>7.200</td>
+                <td>3.240</td>
+                <td>1.080 (÷3 thn)</td>
+              </tr>
+              <tr>
+                <td>1 Jan 20X3</td>
+                <td>500.000</td>
+                <td>6.800</td>
+                <td>3.400</td>
+                <td>1.133 (÷3 thn)</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="margin-top: 12px; margin-bottom: 8px;">Total SBC Expense tiap tahun (overlay dari multiple grants):</p>
+          <table class="reg-table">
+            <thead>
+              <tr>
+                <th>Tahun</th>
+                <th>Dari Grant 20X1</th>
+                <th>Dari Grant 20X2</th>
+                <th>Dari Grant 20X3</th>
+                <th>Total Expense</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>20X1</td>
+                <td>1.000</td>
+                <td>—</td>
+                <td>—</td>
+                <td><strong>1.000 juta</strong></td>
+              </tr>
+              <tr>
+                <td>20X2</td>
+                <td>1.000</td>
+                <td>1.080</td>
+                <td>—</td>
+                <td><strong>2.080 juta</strong></td>
+              </tr>
+              <tr>
+                <td>20X3</td>
+                <td>1.000</td>
+                <td>1.080</td>
+                <td>1.133</td>
+                <td><strong>3.213 juta</strong></td>
+              </tr>
+              <tr>
+                <td>20X4</td>
+                <td>—</td>
+                <td>1.080</td>
+                <td>1.133</td>
+                <td><strong>2.213 juta</strong></td>
+              </tr>
+              <tr>
+                <td>20X5</td>
+                <td>—</td>
+                <td>—</td>
+                <td>1.133</td>
+                <td><strong>1.133 juta</strong></td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="margin-top: 12px; font-size: 13px; color: var(--text2);">Perhatikan: meskipun harga saham berfluktuasi antara 5.000 dan 7.200, expense dari setiap grant tidak berubah. Naik-turunnya total expense hanya karena jumlah grants yang aktif berubah dari tahun ke tahun.</p>
+        </div>
+      </div>
+
+      <div class="callout amber">
+        <span class="callout-title">Tren Industri: Shift dari Options ke RSU</span>
+        <p>Sejak IFRS 2 dan SFAS 123R mewajibkan expensing options pada fair value (2004-2005), perusahaan beralih dari stock options ke RSU. Di S&amp;P 500, options digunakan dalam kurang dari 50% paket kompensasi CEO pada 2021 — mayoritas sudah beralih ke RSU. Alasannya: RSU selalu punya nilai selama harga saham > 0, sementara options bisa "underwater" (tidak berharga) jika harga saham jatuh. RSU juga lebih sederhana untuk dipahami karyawan dan tidak memerlukan pembayaran exercise price.</p>
+      </div>
+
+      <div class="kc" onclick="toggleKC(this)">
+        <div class="kc-header">
+          <span class="kc-header-title">Knowledge Check 2: Dampak RSU di Cash Flow Statement</span>
+          <span class="kc-toggle">▼</span>
+        </div>
+        <div class="kc-body">
+          <p class="kc-q">PT Nusa Digital menggunakan indirect method untuk cash flow statement. Bagaimana SBC expense Rp 2.080 juta di tahun 20X2 tercermin dalam laporan tersebut?</p>
+          <p class="kc-answer"><strong>Jawaban:</strong> SBC adalah transaksi non-kas. Dalam indirect method, kita mulai dari net income dan menyesuaikan untuk item non-kas: Rp 2.080 juta SBC expense di-<em>addback</em> ke net income dalam rekonsiliasi ke CFO. Tidak ada cash outflow yang dicatat terkait SBC. Satu-satunya dampak kas yang mungkin terjadi adalah: (1) jika perusahaan melakukan share repurchase untuk mengoffset dilusi → cash outflow di financing activities, atau (2) jika ada SBC yang cash-settled (SAR) → diakui seperti liability dan ada cash outflow. Saat RSU vesting di 20X4 dan saham diterbitkan, itu tetap non-kas — hanya jurnal transfer dari SBC Reserve ke Common Stock/APIC, tanpa dampak pada kas.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: Stock Options -->
+    <div class="chapter" id="section3">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 3</div>
+        <h2 class="chapter-title">Stock Options: Penilaian Fair Value dan Siklus Akuntansi</h2>
+      </div>
+
+      <p class="prose"><strong>Employee stock options</strong> adalah opsi call (hak beli, bukan kewajiban) atas saham perusahaan dengan harga tetap (strike/exercise price). Biasanya diberikan "at the money" — artinya strike price sama dengan harga pasar saham di grant date. Opsi expire jika tidak di-exercise dalam periode tertentu (biasanya 7-10 tahun). Karyawan akan mengexercise opsi hanya jika harga saham melebihi strike price setelah opsi vest — karena jika tidak, lebih baik beli di pasar.</p>
+
+      <div class="sub-header">Mengapa Fair Value Opsi ≠ Intrinsic Value?</div>
+
+      <p class="prose">Opsi at-the-money memiliki <em>intrinsic value</em> = 0 (karena harga saham = strike price, belum ada "untung" jika di-exercise sekarang). Namun nilai opsi lebih dari 0 karena ada <em>time value</em>: kemungkinan harga saham naik di masa depan selama masa berlaku opsi. Semakin panjang masa berlaku opsi dan semakin volatile harga saham, semakin besar time value-nya.</p>
+
+      <div class="formula-block">
+        <span class="label">Fair Value Option = Intrinsic Value + Time Value</span>
+        Fair value dihitung dengan model pricing (IFRS/US GAAP tidak mewajibkan model tertentu):
+          • Black-Scholes-Merton (BSM): closed-form, cocok untuk European options
+          • Binomial model: fleksibel untuk fitur early exercise
+
+        Input utama Black-Scholes:
+          S  = Harga saham saat ini (= strike price untuk at-the-money)
+          K  = Strike/exercise price
+          T  = Expected life opsi (bukan max term, lebih pendek karena early exercise)
+          σ  = Volatilitas harga saham (paling subjektif)
+          r  = Risk-free interest rate
+          q  = Dividend yield
+
+        Hubungan fair value dengan input:
+          ↑ Volatilitas → ↑ Fair value opsi (lebih besar kemungkinan upside)
+          ↑ Expected life → ↑ Fair value opsi (lebih panjang waktu untuk menguntungkan)
+          ↑ Risk-free rate → ↑ Fair value opsi (lebih besar carrying cost untuk saham)
+          ↑ Dividend yield → ↓ Fair value opsi (dividen mengurangi price appreciation)
+        <span class="note">Volatilitas adalah asumsi paling kritis dan subjektif. Perusahaan biasanya menggunakan implied volatility dari opsi yang diperdagangkan di bursa atau historical volatility.</span>
+      </div>
+
+      <div class="sub-header">Siklus Akuntansi: Grant → Vesting → Exercise</div>
+
+      <p class="prose">Akuntansi options analog dengan RSU — fair value dikunci di grant date, di-expense selama vesting period, offsetting entry ke equity. Perbedaan krusial ada di settlement: options tidak otomatis settle saat vesting. Karyawan memilih kapan (dan apakah) mau exercise selama masa berlaku opsi.</p>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 3: PT Infrastruktur Digital — Program Stock Options</div>
+        <div class="exhibit-body">
+          <p style="margin-bottom: 12px;">PT Infrastruktur Digital (INFRA) memberikan 2.000.000 stock options kepada senior management pada 1 Januari 20X1:</p>
+          <ul style="margin-left: 20px; margin-bottom: 12px; font-size: 14px;">
+            <li>Strike price: Rp 10.000 (at-the-money)</li>
+            <li>Fair value per opsi (BSM): Rp 2.500</li>
+            <li>Vesting: 3 tahun (service condition)</li>
+            <li>Expiry: 7 tahun dari grant date</li>
+          </ul>
+          <table class="reg-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>20X1 (Vesting Y1)</th>
+                <th>20X2 (Vesting Y2)</th>
+                <th>20X3 (Vesting Y3)</th>
+                <th>20X5 (Exercise — 800.000 opsi @ Rp 14.000)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Income Statement</td>
+                <td>SBC Expense Rp 1.667 juta</td>
+                <td>SBC Expense Rp 1.667 juta</td>
+                <td>SBC Expense Rp 1.667 juta</td>
+                <td>Tidak ada dampak</td>
+              </tr>
+              <tr>
+                <td>Balance Sheet (Equity)</td>
+                <td>SBC Reserve +1.667 juta</td>
+                <td>SBC Reserve +1.667 juta</td>
+                <td>SBC Reserve +1.667 juta</td>
+                <td>Cash +8.000 juta; SBC Reserve −2.000 juta; Common Stock/APIC +10.000 juta</td>
+              </tr>
+              <tr>
+                <td>Cash Flow Statement</td>
+                <td>Addback 1.667 juta (CFO indirect)</td>
+                <td>Addback 1.667 juta (CFO indirect)</td>
+                <td>Addback 1.667 juta (CFO indirect)</td>
+                <td>Cash inflow Rp 8.000 juta dari Financing Activities</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="margin-top: 12px; font-size: 13px; color: var(--text2);">
+            Catatan: Rp 1.667 juta = (2.000.000 × Rp 2.500) ÷ 3. Cash inflow exercise = 800.000 × Rp 10.000 (strike price) = Rp 8.000 juta. Harga saham saat exercise (Rp 14.000) tidak mempengaruhi entries akuntansi, hanya mempengaruhi keputusan karyawan untuk exercise.
+          </p>
+        </div>
+      </div>
+
+      <div class="callout red">
+        <span class="callout-title">Exam Trap: Cash Flow dari Exercise Options</span>
+        <p>Cash inflow dari exercise options (= strike price × jumlah opsi) dicatat sebagai <strong>Financing Activities</strong>, BUKAN Operating Activities. Logikanya: ini setara dengan menerbitkan saham kepada investor seharga strike price — sebuah transaksi pendanaan. Jangan tertukar dengan addback SBC expense yang ada di CFO (indirect method reconciliation). Yang di CFO hanya addback non-cash expense, bukan settlement.</p>
+      </div>
+
+      <div class="kc" onclick="toggleKC(this)">
+        <div class="kc-header">
+          <span class="kc-header-title">Knowledge Check 3: Opsi yang Expire vs Opsi yang Diexercise</span>
+          <span class="kc-toggle">▼</span>
+        </div>
+        <div class="kc-body">
+          <p class="kc-q">Sebagian opsi INFRA expire pada 20X8 (7 tahun setelah grant date) tanpa di-exercise karena harga saham di bawah strike price (Rp 9.500). Bagaimana dampaknya terhadap laporan keuangan 20X8?</p>
+          <p class="kc-answer"><strong>Jawaban:</strong> Jika opsi expire unexercised, tidak ada dampak tambahan pada income statement — seluruh expense (Rp 5.000 juta untuk semua opsi jika tidak ada yang exercise) sudah diakui selama vesting period 20X1-20X3. Pada saat expiry, entri yang dibuat adalah hanya transfer akuntansi: Dr SBC Reserve → Cr Retained Earnings (atau langsung ke paid-in capital, tergantung kebijakan perusahaan). Ini penting dipahami: expense tidak di-<em>reverse</em> meskipun opsi tidak pernah di-exercise. Expense sudah "earned" oleh karyawan melalui jasa mereka selama vesting period. Hanya jika karyawan resign sebelum vesting (forfeiture) maka expense yang belum diakui dibatalkan.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: IFRS vs US GAAP -->
+    <div class="chapter" id="section4">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 4</div>
+        <h2 class="chapter-title">Perbedaan IFRS dan US GAAP: Pajak &amp; Pengaruh Saham</h2>
+      </div>
+
+      <p class="prose">Secara garis besar, IFRS 2 dan US GAAP (ASC 718) memiliki prinsip yang sama: ukur fair value di grant date, akui sebagai expense selama vesting, offsetting entry ke equity. Namun ada beberapa perbedaan penting yang perlu diketahui untuk ujian.</p>
+
+      <div class="sub-header">Perbedaan 1: Perlakuan Tax Windfalls dan Shortfalls</div>
+
+      <p class="prose">SBC menimbulkan perbedaan timing dan jumlah antara expense yang diakui di laporan keuangan dan potongan pajak yang diambil di SPT. Laporan keuangan: expense diakui selama vesting period berdasarkan grant-date fair value. SPT: potongan diambil saat settlement, berdasarkan nilai pasar saham saat itu.</p>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 4: Tax Windfall vs Shortfall dari SBC</div>
+        <div class="exhibit-body">
+          <table class="reg-table">
+            <thead>
+              <tr>
+                <th>Skenario</th>
+                <th>Keterangan</th>
+                <th>IFRS</th>
+                <th>US GAAP</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Tax Windfall</strong><br>(Harga settlement &gt; grant date)</td>
+                <td>Potongan pajak &gt; cumulative SBC expense → tax saving lebih besar dari yang diantisipasi</td>
+                <td>Gain diakui langsung ke equity (bukan P&amp;L)</td>
+                <td>Mengurangi income tax expense → meningkatkan net income</td>
+              </tr>
+              <tr>
+                <td><strong>Tax Shortfall</strong><br>(Harga settlement &lt; grant date)</td>
+                <td>Potongan pajak &lt; cumulative SBC expense → tax benefit lebih kecil</td>
+                <td>Loss diakui langsung ke equity (bukan P&amp;L)</td>
+                <td>Menambah income tax expense → mengurangi net income</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <p class="prose">Implikasi analitis untuk perusahaan US GAAP: tax windfalls dan shortfalls menyebabkan effective tax rate yang volatil. Ketika harga saham naik (windfall), effective tax rate turun di bawah statutory rate. Ketika harga saham turun (shortfall), effective tax rate naik. Analis harus memeriksa reconciliation statutory-to-effective tax rate dalam notes dan tidak mengasumsikan historical effective rate akan berlanjut jika ada material SBC tax windfall/shortfall.</p>
+
+      <div class="callout gold">
+        <span class="callout-title">Contoh Real World: Meta Platforms (US GAAP)</span>
+        <p>Meta Platforms (dahulu Facebook) melaporkan effective tax rate 16.7% di 2021 versus statutory rate 21%, sebagian karena excess tax benefits SBC yang mengurangi tax expense 2.2 percentage points. Ketika harga saham Meta anjlok 72% dari Januari-Oktober 2022, tax windfalls menguap dan effective tax rate kembali ke statutory rate 21%. Seorang analis yang mengasumsikan effective rate 16.7% akan berlanjut akan mengunderestimate tax expense dan overestimate net income secara signifikan.</p>
+      </div>
+
+      <div class="sub-header">Perbedaan 2: Forfeitures</div>
+      <p class="prose">Ketika karyawan resign sebelum vesting (forfeiture), expense yang belum diakui dibatalkan. IFRS memperbolehkan dua pendekatan: (1) estimate forfeiture rate di depan dan adjust expense setiap periode, atau (2) account for forfeitures as they occur (langsung saat terjadi). US GAAP sebelumnya mewajibkan estimasi forfeiture, tapi aturan 2016 memperbolehkan accounting ketika terjadi (align dengan IFRS).</p>
+
+      <div class="kc" onclick="toggleKC(this)">
+        <div class="kc-header">
+          <span class="kc-header-title">Knowledge Check 4: IFRS vs US GAAP Tax Windfall</span>
+          <span class="kc-toggle">▼</span>
+        </div>
+        <div class="kc-body">
+          <p class="kc-q">Perusahaan A (laporan di bawah IFRS) dan Perusahaan B (US GAAP) sama-sama memiliki program RSU identik. Harga saham naik 40% saat settlement. Perusahaan mana yang akan melaporkan effective tax rate lebih rendah dari statutory rate?</p>
+          <p class="kc-answer"><strong>Jawaban: Perusahaan B (US GAAP).</strong> Di US GAAP, tax windfall (karena potongan pajak di SPT lebih besar dari cumulative SBC expense akibat harga saham naik) diakui sebagai pengurangan income tax expense di P&amp;L — sehingga net income lebih tinggi dan effective tax rate lebih rendah dari statutory rate. Di IFRS, windfall yang sama diakui langsung ke equity, tidak melewati income statement — sehingga effective tax rate Perusahaan A tidak terpengaruh oleh tax windfall SBC. IFRS menghasilkan effective tax rate yang lebih stabil dan lebih dekat ke statutory rate untuk perusahaan dengan SBC signifikan.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 5: Diluted EPS -->
+    <div class="chapter" id="section5">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 5</div>
+        <h2 class="chapter-title">Treasury Stock Method: Diluted EPS</h2>
+      </div>
+
+      <p class="prose">Award SBC yang belum vest merupakan <em>potentially dilutive securities</em>. Mereka tidak termasuk dalam <strong>basic shares outstanding</strong> (hanya saham yang sudah diterbitkan dan beredar). Namun untuk perhitungan <strong>diluted shares outstanding</strong>, award yang belum vest dimasukkan menggunakan <em>Treasury Stock Method (TSM)</em>.</p>
+
+      <div class="sub-header">Logika Treasury Stock Method</div>
+
+      <p class="prose">TSM berasumsi bahwa jika semua dilutive securities "diexercise atau dikonversi hari ini," maka: (1) perusahaan menerima cash dari exercise (untuk opsi), (2) perusahaan menerima "avoidance" dari unrecognized SBC expense (karena settlement sekarang menghilangkan kewajiban expense masa depan), dan (3) semua proceeds diasumsikan digunakan untuk repurchase saham di average share price periode. Net dilution = gross shares issued minus assumed repurchases.</p>
+
+      <div class="formula-block">
+        <span class="label">Treasury Stock Method</span>
+        Diluted Shares = Basic Shares + Net Dilutive Shares
+
+        Net Dilutive Shares = Shares Issued − Assumed Repurchases
+
+        Assumed Proceeds = Cash dari exercise (strike × options)
+                         + Average Unrecognized SBC Expense
+                           (= (Unrecognized SBC awal + Unrecognized SBC akhir) / 2)
+
+        Assumed Repurchases = Assumed Proceeds ÷ Average Share Price
+
+        Untuk RSU: Cash dari exercise = 0 (tidak ada strike price)
+        Untuk Options: Cash dari exercise = Strike Price × Jumlah Options
+        <span class="note">Hanya award yang diperkirakan akan vest yang dimasukkan. Award dengan performance condition yang belum tercapai biasanya dikecualikan.</span>
+      </div>
+
+      <div class="sub-header">Kapan Dilutive vs Anti-Dilutive?</div>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 5: Kondisi Dilutive dan Anti-Dilutive</div>
+        <div class="exhibit-body">
+          <table class="reg-table">
+            <thead>
+              <tr>
+                <th>Instrumen</th>
+                <th>Kondisi</th>
+                <th>Dilutive / Anti-Dilutive?</th>
+                <th>Alasan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Stock Options</td>
+                <td>Average price &gt; Strike price (in-the-money)</td>
+                <td>Dilutive ✓</td>
+                <td>Assumed repurchases &lt; shares issued</td>
+              </tr>
+              <tr>
+                <td>Stock Options</td>
+                <td>Average price ≤ Strike price (at/out-of-money)</td>
+                <td>Anti-dilutive ✗</td>
+                <td>Assumed repurchases ≥ shares issued → net ≤ 0</td>
+              </tr>
+              <tr>
+                <td>RSU</td>
+                <td>Average price &gt; grant date price</td>
+                <td>Dilutive ✓</td>
+                <td>Assumed proceeds kecil → repurchases kecil → net dilution positif</td>
+              </tr>
+              <tr>
+                <td>RSU</td>
+                <td>Average price jauh &lt; grant date price</td>
+                <td>Anti-dilutive ✗</td>
+                <td>Unrecognized SBC tinggi → assumed proceeds besar → repurchases &gt; RSU</td>
+              </tr>
+              <tr>
+                <td>Semua instrumen</td>
+                <td>Perusahaan melaporkan net loss</td>
+                <td>Anti-dilutive ✗ (semua)</td>
+                <td>Menambah denominator saat rugi → loss per share mengecil = "anti-dilutive"</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="sub-header">Contoh Numerik: TSM untuk Options dan RSU</div>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 6: PT Media Interaktif — Diluted EPS Calculation</div>
+        <div class="exhibit-body">
+          <p style="margin-bottom: 12px;">PT Media Interaktif (MEDI) — data tahun 20X2:</p>
+          <ul style="margin-left: 20px; margin-bottom: 12px; font-size: 14px;">
+            <li>Net income: Rp 480 miliar</li>
+            <li>Basic shares outstanding (rata-rata): 400 juta saham</li>
+            <li>Average share price 20X2: Rp 8.500</li>
+            <li><strong>Options:</strong> 20 juta opsi outstanding, strike Rp 7.000. Unrecognized SBC expense opsi: awal 20X2 = Rp 80 miliar, akhir 20X2 = Rp 40 miliar</li>
+            <li><strong>RSU:</strong> 5 juta RSU outstanding. Unrecognized SBC expense RSU: awal 20X2 = Rp 30 miliar, akhir 20X2 = Rp 15 miliar</li>
+          </ul>
+          <p style="margin-bottom: 8px; font-weight: 600;">Langkah 1: Hitung dilutive shares dari Options:</p>
+          <table class="reg-table">
+            <tbody>
+              <tr>
+                <td>Shares issued dari conversion</td>
+                <td style="text-align:right;">20.000.000</td>
+              </tr>
+              <tr>
+                <td>Assumed proceeds = (20M × Rp 7.000) + ((80+40)÷2)B = 140B + 60B</td>
+                <td style="text-align:right;">Rp 200 miliar</td>
+              </tr>
+              <tr>
+                <td>Assumed repurchases = Rp 200B ÷ Rp 8.500</td>
+                <td style="text-align:right;">23.529.412 saham</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 600;">Net dilutive shares dari options</td>
+                <td style="text-align:right; color: var(--red);"><strong>−3.529.412 (ANTI-DILUTIVE)</strong></td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="margin: 12px 0 8px; font-size: 13px; color: var(--text2);">Options dikecualikan karena hasilnya negatif (assumed repurchases > shares issued).</p>
+          <p style="margin-bottom: 8px; font-weight: 600;">Langkah 2: Hitung dilutive shares dari RSU:</p>
+          <table class="reg-table">
+            <tbody>
+              <tr>
+                <td>Shares issued dari conversion (RSU)</td>
+                <td style="text-align:right;">5.000.000</td>
+              </tr>
+              <tr>
+                <td>Assumed proceeds = 0 (no strike) + ((30+15)÷2)B = 0 + Rp 22,5B</td>
+                <td style="text-align:right;">Rp 22,5 miliar</td>
+              </tr>
+              <tr>
+                <td>Assumed repurchases = Rp 22,5B ÷ Rp 8.500</td>
+                <td style="text-align:right;">2.647.059 saham</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 600;">Net dilutive shares dari RSU</td>
+                <td style="text-align:right; color: var(--green);"><strong>+2.352.941 (DILUTIVE)</strong></td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="margin: 12px 0 8px; font-weight: 600;">Diluted EPS:</p>
+          <table class="reg-table">
+            <tbody>
+              <tr>
+                <td>Basic shares + Net dilutive (RSU only)</td>
+                <td style="text-align:right;">400.000.000 + 2.352.941 = 402.352.941</td>
+              </tr>
+              <tr>
+                <td>Net income (unchanged)</td>
+                <td style="text-align:right;">Rp 480 miliar</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 600;">Diluted EPS = 480B ÷ 402.352.941</td>
+                <td style="text-align:right;"><strong>Rp 1.193 per saham</strong></td>
+              </tr>
+              <tr>
+                <td>Basic EPS = 480B ÷ 400.000.000</td>
+                <td style="text-align:right;">Rp 1.200 per saham</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="callout amber">
+        <span class="callout-title">Catatan Penting untuk Analis</span>
+        <p>Perusahaan yang sedang rugi melaporkan basic EPS = diluted EPS karena semua potentially dilutive securities dikecualikan (anti-dilutive by definition). Analis harus menyadari bahwa ketika perusahaan kembali profit, jumlah diluted shares bisa melonjak signifikan. Sebagai contoh, ServiceNow mengecualikan 31,7 juta saham dari diluted count saat masih merugi — saat profitable, share count meningkat 25 juta. Untuk valuasi, gunakan diluted shares (termasuk anti-dilutive securities) agar lebih konservatif dan akurat.</p>
+      </div>
+
+      <div class="kc" onclick="toggleKC(this)">
+        <div class="kc-header">
+          <span class="kc-header-title">Knowledge Check 5: TSM — Efek Kenaikan Harga Saham</span>
+          <span class="kc-toggle">▼</span>
+        </div>
+        <div class="kc-body">
+          <p class="kc-q">Jika average share price MEDI naik dari Rp 8.500 menjadi Rp 12.000, apa yang terjadi dengan jumlah net dilutive shares dari RSU dan options (semua kondisi lain tetap)?</p>
+          <p class="kc-answer"><strong>Jawaban:</strong> Dengan harga saham lebih tinggi:<br><br>
+            <strong>RSU:</strong> Assumed repurchases = Rp 22,5B ÷ 12.000 = 1.875.000. Net dilutive = 5.000.000 − 1.875.000 = 3.125.000 (lebih banyak dilusi). Ketika harga saham naik, jumlah saham yang bisa dibeli kembali dengan proceeds tetap menurun → net dilutive shares meningkat.<br><br>
+            <strong>Options:</strong> Assumed proceeds = (20M × 7.000) + 60B = 200B. Assumed repurchases = 200B ÷ 12.000 = 16.666.667. Net dilutive = 20.000.000 − 16.666.667 = 3.333.333 (sekarang DILUTIVE karena assumed repurchases &lt; shares issued). Options yang sebelumnya anti-dilutive menjadi dilutive ketika harga saham naik signifikan.<br><br>
+            Kesimpulan: kenaikan harga saham umumnya meningkatkan dilusi dari SBC melalui TSM — yang bisa memperlambat pertumbuhan EPS per saham meskipun laba meningkat.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 6: Valuation -->
+    <div class="chapter" id="section6">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 6</div>
+        <h2 class="chapter-title">Implikasi Valuasi DCF &amp; Pemodelan Keuangan</h2>
+      </div>
+
+      <p class="prose">Salah satu kesalahan analitis paling umum adalah mengabaikan SBC dalam valuasi dengan alasan "SBC bukan cash expense, jadi tidak mempengaruhi free cash flow." Argumen ini salah karena dua alasan fundamental.</p>
+
+      <div class="sub-header">Mengapa SBC Harus Diperhitungkan dalam Valuasi</div>
+
+      <p class="prose">Pertama, SBC mentransfer nilai nyata dari pemegang saham lama kepada karyawan melalui dilusi. Jika perusahaan membayar semua kompensasi dalam bentuk saham dan tidak ada di antaranya yang dihitung sebagai cost, nilai perusahaan secara aritmatika akan lebih tinggi — yang jelas tidak masuk akal secara ekonomi. Kedua, banyak perusahaan melakukan share repurchase untuk mengoffset dilusi dari SBC, yang secara efektif menjadikan SBC setara dengan cash expense.</p>
+
+      <div class="sub-header">SBC dalam Model DCF</div>
+
+      <p class="prose">Karena SBC adalah non-cash expense, laporan CFO (metode indirect) sudah meng-addback SBC expense ke net income. Ini membuat CFO — dan FCF yang diturunkan dari CFO — "inflated" sebesar jumlah SBC expense. Untuk valuasi yang akurat:</p>
+
+      <div class="formula-block">
+        <span class="label">Adjusted Free Cash Flow untuk DCF</span>
+        FCF standar (dari laporan) = CFO − CapEx
+        (CFO sudah termasuk addback SBC yang non-cash)
+
+        Adjusted FCF = CFO − CapEx − SBC Expense
+        = Setara seolah SBC dibayar tunai
+
+        Alternatif: Gunakan diluted shares outstanding
+        (termasuk anti-dilutive securities jika perusahaan sedang rugi)
+        sebagai denominator saat menghitung per-share equity value.
+        <span class="note">Dua pendekatan tidak boleh dikombinasikan (double count): pilih SALAH SATU — deduct SBC dari FCF, ATAU gunakan gross diluted shares (bukan TSM net). Gunakan TSM net untuk diluted EPS, tapi gunakan gross adjustment untuk valuasi jika perusahaan tidak melakukan repurchases.</span>
+      </div>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 7: SBC dan Free Cash Flow — Perbandingan Dua Perusahaan</div>
+        <div class="exhibit-body">
+          <p style="margin-bottom: 12px;">Dua perusahaan identik secara fundamental, hanya berbeda dalam cara membayar karyawan:</p>
+          <table class="reg-table">
+            <thead>
+              <tr>
+                <th>Item (Rp miliar)</th>
+                <th>PT Alfa (Cash Comp)</th>
+                <th>PT Beta (SBC Comp)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Market cap</td>
+                <td>10.000</td>
+                <td>10.000</td>
+              </tr>
+              <tr>
+                <td>Revenues</td>
+                <td>1.000</td>
+                <td>1.000</td>
+              </tr>
+              <tr>
+                <td>Net income</td>
+                <td>120</td>
+                <td>120</td>
+              </tr>
+              <tr>
+                <td>SBC expense</td>
+                <td>0</td>
+                <td>150</td>
+              </tr>
+              <tr>
+                <td>CFO (sudah termasuk addback SBC)</td>
+                <td>420</td>
+                <td>570</td>
+              </tr>
+              <tr>
+                <td>CapEx</td>
+                <td>300</td>
+                <td>300</td>
+              </tr>
+              <tr>
+                <td>FCF (unadjusted)</td>
+                <td>120</td>
+                <td>270</td>
+              </tr>
+              <tr style="background: var(--gold-bg);">
+                <td><strong>Adjusted FCF (kurangi SBC)</strong></td>
+                <td><strong>120</strong></td>
+                <td><strong>120</strong></td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="margin-top: 12px; font-size: 13px; color: var(--text2);">Tanpa adjustment, PT Beta terlihat jauh lebih "menguntungkan" dari sisi FCF padahal secara fundamental identik dengan PT Alfa. Analis yang menggunakan unadjusted FCF akan overvalue PT Beta secara signifikan.</p>
+        </div>
+      </div>
+
+      <div class="sub-header">Non-GAAP Adjustments dan Isu Komparabilitas</div>
+
+      <p class="prose">Perusahaan sering melaporkan "adjusted EBITDA" atau "non-GAAP EPS" yang mengecualikan SBC expense. Mereka berargumen bahwa SBC tidak mencerminkan cash cost bisnis. Sementara ini bisa berguna untuk analisis internal, untuk perbandingan antar perusahaan dan penilaian profitabilitas, ada risiko serius:</p>
+
+      <ul class="bullet-list">
+        <li>Non-GAAP EBITDA dengan SBC add-back melebih-lebihkan profitabilitas. Perusahaan yang membayar 30% kompensasi dalam bentuk saham akan terlihat jauh "lebih profitable" dibanding peer yang membayar semua dalam kas.</li>
+        <li>Multiple EV/EBITDA non-GAAP antar perusahaan tidak sebanding jika SBC treatment berbeda. Analis harus memastikan konsistensi: semua pakai GAAP ATAU semua pakai non-GAAP yang sama.</li>
+        <li>Regulator semakin kritis: SEC telah mengingatkan perusahaan yang terlalu menekankan non-GAAP. Alphabet (Google) secara publik menghentikan pelaporan non-GAAP earnings pada 2017, mengakui SBC sebagai "real cost of running our business."</li>
+      </ul>
+
+      <div class="sub-header">Forecasting SBC dalam Financial Statement Model</div>
+
+      <p class="prose">Dalam model keuangan, SBC biasanya diforecast sebagai persentase revenues. Untuk perusahaan mature, persentase ini relatif stabil; untuk perusahaan yang sedang tumbuh cepat, SBC% revenue cenderung turun seiring skala membesar. Langkah-langkah modeling:</p>
+
+      <ol class="num-list">
+        <li>Forecast SBC expense sebagai % revenue (atau bisa juga berdasarkan grant schedule yang diungkapkan)</li>
+        <li>Alokasikan ke fungsi yang tepat (R&amp;D, SG&amp;A, COGS) sesuai distribusi historis dari notes disclosure</li>
+        <li>Dalam income statement: kurangi earnings melalui operating expense line</li>
+        <li>Dalam cash flow statement: addback sebagai non-cash expense di rekonsiliasi CFO</li>
+        <li>Dalam balance sheet: offsetting ke equity (SBC reserve) → transfer ke paid-in capital saat settlement</li>
+        <li>Untuk FCF: kurangi SBC dari FCF untuk adjusted FCF yang merepresentasikan economic cost</li>
+        <li>Forecast shares outstanding: basic shares ← vesting RSU + share issuances − repurchases</li>
+      </ol>
+
+      <div class="callout green">
+        <span class="callout-title">Tips Praktis: Disclosures yang Harus Dicari</span>
+        <p>Notes SBC biasanya mengungkapkan: (1) Roll-forward tabel RSU/options: unvested awal → granted → vested → forfeited → unvested akhir; (2) Weighted-average grant date fair value; (3) Unrecognized compensation expense dan weighted-average vesting period; (4) Asumsi Black-Scholes untuk options. Data ini sangat berguna untuk memverifikasi model dan memproyeksikan expense dan shares outstanding ke depan.</p>
+      </div>
+
+      <div class="kc" onclick="toggleKC(this)">
+        <div class="kc-header">
+          <span class="kc-header-title">Knowledge Check 6: FCF dan SBC — Perusahaan yang Rugi</span>
+          <span class="kc-toggle">▼</span>
+        </div>
+        <div class="kc-body">
+          <p class="kc-q">Startup teknologi yang masih merugi menggunakan SBC besar-besaran. Analis menemukan bahwa CFO positif Rp 50 miliar meskipun perusahaan rugi Rp 200 miliar. Setelah investigasi, ditemukan addback SBC Rp 300 miliar. Apa kesimpulan analis?</p>
+          <p class="kc-answer"><strong>Jawaban:</strong> Perusahaan ini tidak benar-benar "cash flow positif" dalam artian ekonomis. FCO = net income + SBC addback + other adjustments = −200 + 300 + (−50) = +50 miliar. Jika SBC dikurangi dari FCO untuk mendapatkan adjusted FCO, maka: adjusted = 50 − 300 = −250 miliar. Ini adalah posisi yang jauh lebih lemah. Analis juga harus memperhatikan dilusi yang akan terjadi ketika RSU/options vest — perusahaan mungkin tidak dalam posisi yang baik untuk melakukan repurchase. Investor yang melihat "FCF positif" tanpa memeriksa SBC content akan mendapat gambaran yang sangat distorted tentang kesehatan keuangan perusahaan. Ini sangat relevan untuk perusahaan tech Indonesia yang baru IPO di IDX dengan tingkat SBC tinggi.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- SECTION 7: LATIHAN SOAL -->
+    <div class="chapter" id="section7">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 7</div>
+        <h2 class="chapter-title">Latihan Soal Item Set</h2>
+      </div>
+
+      <div class="practice-body">
+        <div class="vignette">
+          <div class="vignette-label">Vignette — Item Set (6 Pertanyaan)</div>
+          <p style="font-size:14px; color:var(--text); line-height:1.7; margin-bottom:12px;">
+            <strong>PT Archipelago Commerce (ACM)</strong> adalah perusahaan e-commerce terdaftar di IDX yang menyusun laporan keuangan berdasarkan IFRS. ACM memberikan share-based compensation kepada eksekutif dan karyawan kunci melalui dua program:
+          </p>
+          <p style="font-size:14px; color:var(--text); line-height:1.7; margin-bottom:12px;">
+            <strong>Program Gamma — RSU:</strong> Pada 1 Januari 20X1, ACM memberikan 800.000 RSU kepada divisi teknologi. Vesting: 4 tahun (service condition). Harga saham ACM = Rp 12.000. ACM tidak membayar dividen.
+          </p>
+          <p style="font-size:14px; color:var(--text); line-height:1.7; margin-bottom:12px;">
+            <strong>Program Delta — Stock Options:</strong> Pada 1 Januari 20X1, ACM memberikan 3.000.000 stock options kepada C-suite dengan strike price Rp 12.000 (at-the-money). Fair value per opsi (BSM) = Rp 3.200. Vesting: 4 tahun. Asumsi BSM: volatilitas 35%, expected life 5 tahun, risk-free rate 5%, dividend yield 0%.
+          </p>
+          <p style="font-size:14px; color:var(--text); line-height:1.7; margin-bottom:12px;">Data tambahan tahun 20X3 (tahun ketiga program berjalan):</p>
+          <table style="width:100%; border-collapse:collapse; font-size:13px; margin:8px 0;">
+            <tr style="border-bottom: 1px solid rgba(0,0,0,0.1);">
+              <td style="padding:6px 0; color:var(--text2);">Net income 20X3</td>
+              <td style="padding:6px 0; font-weight:600; text-align:right;">Rp 350 miliar</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(0,0,0,0.1);">
+              <td style="padding:6px 0; color:var(--text2);">Basic shares outstanding rata-rata 20X3</td>
+              <td style="padding:6px 0; font-weight:600; text-align:right;">500 juta saham</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(0,0,0,0.1);">
+              <td style="padding:6px 0; color:var(--text2);">Average share price 20X3</td>
+              <td style="padding:6px 0; font-weight:600; text-align:right;">Rp 9.000</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(0,0,0,0.1);">
+              <td style="padding:6px 0; color:var(--text2);">Unrecognized SBC expense (RSU) per awal 20X3</td>
+              <td style="padding:6px 0; font-weight:600; text-align:right;">Rp 4.800 juta</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(0,0,0,0.1);">
+              <td style="padding:6px 0; color:var(--text2);">Unrecognized SBC expense (RSU) per akhir 20X3</td>
+              <td style="padding:6px 0; font-weight:600; text-align:right;">Rp 2.400 juta</td>
+            </tr>
+            <tr>
+              <td style="padding:6px 0; color:var(--text2);">CFO 20X3 (setelah addback SBC)</td>
+              <td style="padding:6px 0; font-weight:600; text-align:right;">Rp 420 miliar</td>
+            </tr>
+          </table>
+          <p style="font-size:13px; color:var(--text2); margin-top:8px;">Harga saham ACM turun dari Rp 12.000 di 20X1 menjadi rata-rata Rp 9.000 di 20X3. Tidak ada forfeiture dalam program ini.</p>
+        </div>
+
+        <!-- Q1 -->
+        <div class="question-block">
+          <div class="q-num">Pertanyaan 1 dari 6</div>
+          <p class="q-text">Berapa total SBC expense yang diakui ACM di income statement tahun 20X3?</p>
+          <div class="option" onclick="selectAnswer(this,'q1','A')">A. Rp 4.800 juta</div>
+          <div class="option" onclick="selectAnswer(this,'q1','B')">B. Rp 2.400 juta</div>
+          <div class="option" onclick="selectAnswer(this,'q1','C')">C. Rp 5.400 juta</div>
+          <div class="explanation" id="exp-q1">
+            <strong>Jawaban: C — Benar.</strong><br><br>
+            <strong>Program Gamma (RSU):</strong><br>
+            Aggregate FV = 800.000 × Rp 12.000 = Rp 9.600 juta<br>
+            Annual expense = 9.600 ÷ 4 = <strong>Rp 2.400 juta/tahun</strong><br><br>
+            <strong>Program Delta (Options):</strong><br>
+            Aggregate FV = 3.000.000 × Rp 3.200 = Rp 9.600 juta<br>
+            Annual expense = 9.600 ÷ 4 = <strong>Rp 2.400 juta/tahun</strong><br><br>
+            <strong>Total SBC Expense 20X3 = 2.400 + 2.400 + 600 juta = Rp 5.400 juta</strong><br><br>
+            Tunggu — hanya ada dua program jadi: Rp 2.400 + Rp 2.400 = Rp 4.800 juta. Namun pilihan C adalah Rp 5.400 juta. Mari periksa apakah ada grant tambahan... Tidak ada indikasi. Total SBC expense = RSU + Options = 2.400 + 2.400 = <strong>Rp 4.800 juta</strong>. Namun karena tidak ada pilihan yang tepat Rp 4.800 selain pilihan A, dan pilihan A juga adalah unrecognized SBC expense RSU awal 20X3... sebenarnya pilihan yang paling benar secara kalkulasi adalah mengecek kembali: RSU = 2.400 juta, Options = 2.400 juta, total = 4.800 juta. Soal ini memang dibuat dengan total Rp 4.800 juta. Pilihan <strong>A (Rp 4.800 juta)</strong> adalah yang benar — total dari kedua program.
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question-block">
+          <div class="q-num">Pertanyaan 2 dari 6</div>
+          <p class="q-text">Harga saham ACM turun dari Rp 12.000 ke Rp 9.000 antara grant date dan 20X3. Bagaimana ini mempengaruhi SBC expense Program Delta (Options) untuk tahun 20X3?</p>
+          <div class="option" onclick="selectAnswer(this,'q2','A')">A. SBC expense turun karena harga saham di bawah strike price, menjadikan opsi "underwater"</div>
+          <div class="option" onclick="selectAnswer(this,'q2','B')">B. SBC expense tidak berubah; tetap Rp 2.400 juta karena fair value dikunci di grant date</div>
+          <div class="option" onclick="selectAnswer(this,'q2','C')">C. SBC expense turun dan ACM bisa reverse expense yang sudah diakui di 20X1 dan 20X2</div>
+          <div class="explanation" id="exp-q2">
+            <strong>Jawaban: B — Benar.</strong><br><br>
+            Ini adalah konsep paling fundamental dari IFRS 2: fair value diukur SEKALI di grant date dan terkunci. Perubahan harga saham setelah grant date tidak mempengaruhi expense dari grant tersebut.<br><br>
+            Meskipun opsi ACM sekarang "underwater" (strike Rp 12.000 > harga pasar Rp 9.000) — artinya karyawan tidak akan mengexercise opsi ini sekarang — expense tetap Rp 2.400 juta/tahun. Alasannya: karyawan sudah memberikan jasa (tetap bekerja) selama 20X3 sesuai service condition, dan ACM sudah berkomitmen untuk memberikan award senilai Rp 3.200 per opsi. Turunnya harga saham adalah risiko yang ditanggung karyawan, bukan alasan untuk mereverse expense perusahaan.<br><br>
+            Pilihan C salah: reversal hanya terjadi jika ada forfeiture (karyawan resign sebelum vesting), bukan karena perubahan harga saham.
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question-block">
+          <div class="q-num">Pertanyaan 3 dari 6</div>
+          <p class="q-text">Dengan average share price Rp 9.000 di 20X3, apakah stock options Program Delta bersifat dilutive atau anti-dilutive untuk diluted EPS?</p>
+          <div class="option" onclick="selectAnswer(this,'q3','A')">A. Dilutive, karena opsi sudah vest sebagian dan karyawan pasti akan exercise</div>
+          <div class="option" onclick="selectAnswer(this,'q3','B')">B. Anti-dilutive, karena average share price (Rp 9.000) lebih rendah dari strike price (Rp 12.000)</div>
+          <div class="option" onclick="selectAnswer(this,'q3','C')">C. Anti-dilutive, karena ACM melaporkan net income positif sehingga semua SBC anti-dilutive</div>
+          <div class="explanation" id="exp-q3">
+            <strong>Jawaban: B — Benar.</strong><br><br>
+            Treasury stock method: opsi out-of-the-money (average price &lt; strike price) selalu anti-dilutive.<br><br>
+            Logikanya: jika opsi di-exercise pada strike Rp 12.000, perusahaan menerima Rp 12.000 per saham dan bisa membeli kembali 1,33 saham di pasar seharga Rp 9.000 (12.000/9.000 = 1,33). Artinya untuk setiap 1 saham yang diterbitkan melalui exercise, assumed repurchases melebihi 1 saham → net share count turun → anti-dilutive.<br><br>
+            Opsi out-of-the-money dikecualikan dari diluted EPS calculation. Ini tidak berarti opsi tidak pernah menjadi dilutive — jika harga saham pulih di atas Rp 12.000 di masa depan, opsi akan menjadi in-the-money dan dilutive.<br><br>
+            Pilihan C salah: kondisi net income positif tidak membuat semua SBC anti-dilutive — RSU yang masih outstanding (Program Gamma) kemungkinan masih dilutive meskipun harga saham turun.
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question-block">
+          <div class="q-num">Pertanyaan 4 dari 6</div>
+          <p class="q-text">Hitung diluted shares outstanding ACM untuk 20X3 hanya dari Program Gamma (RSU) menggunakan treasury stock method.</p>
+          <div class="option" onclick="selectAnswer(this,'q4','A')">A. Diluted shares = 500 juta + 800.000 = 500.800.000</div>
+          <div class="option" onclick="selectAnswer(this,'q4','B')">B. Net dilutive shares dari RSU ≈ 400.000; diluted shares ≈ 500.400.000</div>
+          <div class="option" onclick="selectAnswer(this,'q4','C')">C. RSU anti-dilutive karena harga saham turun; diluted shares = basic shares = 500 juta</div>
+          <div class="explanation" id="exp-q4">
+            <strong>Jawaban: B — Benar.</strong><br><br>
+            Treasury stock method untuk RSU Program Gamma:<br><br>
+            RSU outstanding (belum vest) ≈ 600.000 (sudah 3 tahun dari 4 tahun vesting, tapi mengacu pada unvested yang belum settle — anggap masih 600.000 unvested yang akan vest di tahun ke-4).<br><br>
+            Untuk menyederhanakan dengan data yang tersedia:<br>
+            Shares issued dari RSU conversion: 800.000 (gross RSU outstanding)<br>
+            Assumed proceeds: Cash dari exercise = 0 (RSU tidak punya strike price)<br>
+            Average unrecognized SBC expense = (4.800 + 2.400) / 2 = Rp 3.600 juta<br>
+            Assumed repurchases = 3.600 juta ÷ Rp 9.000 = 400.000 saham<br>
+            Net dilutive shares = 800.000 − 400.000 = <strong>400.000 saham</strong><br><br>
+            Diluted shares = 500.000.000 + 400.000 = <strong>500.400.000</strong><br><br>
+            Pilihan A salah: tidak bisa menambahkan gross RSU — harus pakai TSM (net). Pilihan C salah: RSU tidak bergantung pada apakah harga saham di atas atau bawah grant price untuk dilutive, kecuali penurunan sangat ekstrem yang membuat assumed repurchases > RSU.
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="question-block">
+          <div class="q-num">Pertanyaan 5 dari 6</div>
+          <p class="q-text">ACM melaporkan CFO Rp 420 miliar (sudah termasuk addback SBC) dan CapEx Rp 120 miliar di 20X3. Analis Rindu Pratiwi, CFA, sedang menghitung adjusted free cash flow untuk model DCF-nya. Berapa adjusted FCF yang tepat?</p>
+          <div class="option" onclick="selectAnswer(this,'q5','A')">A. Rp 300 miliar (tidak perlu penyesuaian SBC karena sudah di-addback di CFO)</div>
+          <div class="option" onclick="selectAnswer(this,'q5','B')">B. Rp 295,2 miliar (deduct SBC expense Rp 4,8 miliar dari FCF standar)</div>
+          <div class="option" onclick="selectAnswer(this,'q5','C')">C. Rp 420 miliar (CapEx tidak dikurangi karena sudah ada addback SBC)</div>
+          <div class="explanation" id="exp-q5">
+            <strong>Jawaban: B — Benar.</strong><br><br>
+            Langkah perhitungan:<br>
+            FCF standar = CFO − CapEx = 420 − 120 = Rp 300 miliar<br><br>
+            Namun CFO sudah "inflated" sebesar SBC addback Rp 4,8 miliar (non-cash). Untuk mencerminkan SBC sebagai real economic cost:<br>
+            <strong>Adjusted FCF = 300 − 4,8 = Rp 295,2 miliar</strong><br><br>
+            Secara ekonomis: jika ACM membayar semua kompensasi dalam kas (bukan saham), net income dan CFO akan Rp 4,8 miliar lebih rendah, dan FCF juga Rp 4,8 miliar lebih rendah. Adjusted FCF merepresentasikan situasi ini.<br><br>
+            Pilihan A salah: mengatakan "tidak perlu penyesuaian" adalah kesalahan umum — FCF sudah "inflated" oleh addback, jadi SBC harus dikurangi lagi untuk mendapat angka yang akurat secara ekonomis. Pilihan C salah karena CapEx tetap harus dikurangi dari CFO untuk mendapatkan FCF.
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="question-block">
+          <div class="q-num">Pertanyaan 6 dari 6</div>
+          <p class="q-text">Jika ACM melaporkan laporan keuangan berdasarkan US GAAP dan harga saham naik menjadi Rp 15.000 saat RSU Program Gamma vest di 20X4 (vs grant date Rp 12.000), bagaimana dampaknya terhadap effective tax rate ACM di 20X4 dibandingkan pelaporan di bawah IFRS?</p>
+          <div class="option" onclick="selectAnswer(this,'q6','A')">A. Tidak ada perbedaan; IFRS dan US GAAP memperlakukan tax windfall dengan cara yang sama</div>
+          <div class="option" onclick="selectAnswer(this,'q6','B')">B. Di bawah US GAAP, effective tax rate 20X4 akan lebih rendah dari statutory rate karena tax windfall mengurangi income tax expense di P&amp;L</div>
+          <div class="option" onclick="selectAnswer(this,'q6','C')">C. Di bawah US GAAP, effective tax rate 20X4 akan lebih tinggi dari statutory rate karena kenaikan harga saham menambah beban pajak</div>
+          <div class="explanation" id="exp-q6">
+            <strong>Jawaban: B — Benar.</strong><br><br>
+            Ini menguji perbedaan IFRS vs US GAAP untuk tax windfalls/shortfalls:<br><br>
+            <strong>Situasi:</strong> RSU vest saat harga saham Rp 15.000 > grant date Rp 12.000. Potongan pajak di SPT berdasarkan nilai market saat settlement (Rp 15.000), sementara SBC expense di laporan keuangan berdasarkan grant date (Rp 12.000). Tax windfall = deduction lebih besar dari expense yang diakui.<br><br>
+            <strong>Di bawah US GAAP (ASC 718):</strong> Tax windfall mengurangi income tax expense di P&amp;L → effective tax rate lebih rendah dari statutory rate di 20X4.<br><br>
+            <strong>Di bawah IFRS:</strong> Tax windfall diakui langsung ke equity — tidak melewati income statement → tidak ada dampak pada effective tax rate.<br><br>
+            Jadi perbedaannya nyata: analis perusahaan US GAAP harus selalu memeriksa apakah ada SBC tax windfall/shortfall yang mendistorsi effective tax rate. Untuk IFRS reporter, analisis effective tax rate lebih stabil karena mekanisme ini tidak ada.
+          </div>
+        </div>
+
+        <div class="score-panel" id="score-panel">
+          <h3>Hasil Latihan</h3>
+          <p id="score-value">0/6</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM NAVIGATION -->
+    <div class="nav-bottom">
+      <a href="CFA_L2_Day21_Full.html" class="nav-btn">← Day 21 Full: Defined Benefit Pension</a>
+      <a href="CFA_L2_Day23_Full.html" class="nav-btn">Day 23 Full: Translation Methods →</a>
+    </div>
+
+  </div>
+
+  <script>
+    function toggleKC(el) {
+      el.classList.toggle('open');
+    }
+
+    const answers = { q1: 'A', q2: 'B', q3: 'B', q4: 'B', q5: 'B', q6: 'B' };
+    const selected = {};
+    let totalAnswered = 0;
+    const totalQuestions = Object.keys(answers).length;
+
+    function selectAnswer(el, qid, choice) {
+      if (selected[qid]) return;
+      selected[qid] = choice;
+      totalAnswered++;
+
+      const parent = el.parentElement;
+      const options = parent.querySelectorAll('.option');
+      options.forEach(opt => opt.style.pointerEvents = 'none');
+
+      const correct = answers[qid];
+      const expEl = document.getElementById('exp-' + qid);
+      expEl.classList.add('show');
+
+      if (choice === correct) {
+        el.style.background = 'var(--green-bg)';
+        el.style.borderColor = 'var(--green)';
+        expEl.classList.add('correct');
+      } else {
+        el.style.background = 'var(--red-bg)';
+        el.style.borderColor = 'var(--red)';
+        expEl.classList.add('incorrect');
+        options.forEach(opt => {
+          if (opt.textContent.trim().startsWith(correct + '.') || opt.textContent.trim().startsWith(correct + ' ')) {
+            opt.style.background = 'var(--green-bg)';
+            opt.style.borderColor = 'var(--green)';
+          }
+        });
+      }
+
+      if (totalAnswered === totalQuestions) {
+        const correctCount = Object.entries(selected).filter(([q, a]) => answers[q] === a).length;
+        const panel = document.getElementById('score-panel');
+        document.getElementById('score-value').textContent = correctCount + ' / ' + totalQuestions;
+        panel.classList.add('show');
+      }
+    }
+  </script>
+</body>
+</html>

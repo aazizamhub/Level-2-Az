@@ -1,0 +1,1650 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level II · Parity Conditions & Carry Trade · Day 15</title>
+  <style>
+    :root {
+      --bg:      #fafaf8;
+      --bg2:     #f4f3ef;
+      --bg3:     #eeece7;
+      --border:  rgba(0,0,0,0.08);
+      --border2: rgba(0,0,0,0.15);
+      --text:    #1a1a2e;
+      --text2:   #4a4a6a;
+      --text3:   #8a8aaa;
+      --gold:    #9a6e1a;
+      --gold2:   #7a5010;
+      --gold-bg: rgba(154,110,26,0.08);
+      --blue:    #1a5fa8;
+      --blue-bg: rgba(26,95,168,0.08);
+      --green:   #1a7a4a;
+      --green-bg: rgba(26,122,74,0.08);
+      --red:     #b83232;
+      --red-bg:  rgba(184,50,50,0.08);
+      --amber:   #a06010;
+      --amber-bg: rgba(160,96,16,0.08);
+      --r: 10px;
+      --r-sm: 6px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    .page {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 20px;
+      background: white;
+      box-shadow: 0 0 40px rgba(0,0,0,0.04);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+
+    .breadcrumb {
+      font-size: 13px;
+      color: var(--text2);
+      letter-spacing: 0.5px;
+      font-weight: 500;
+    }
+
+    .day-badge, .version-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      background: var(--gold-bg);
+      color: var(--gold2);
+      border-radius: var(--r-sm);
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 12px;
+    }
+
+    .version-badge {
+      background: var(--blue-bg);
+      color: var(--blue);
+      margin-left: 8px;
+    }
+
+    .hero {
+      margin-bottom: 48px;
+    }
+
+    .hero-tag {
+      font-size: 13px;
+      color: var(--gold);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .hero-title {
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--text2);
+      margin-bottom: 28px;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .meta-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 14px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 13px;
+      color: var(--text2);
+      font-weight: 500;
+    }
+
+    .toc {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 32px;
+      margin-bottom: 48px;
+    }
+
+    .toc-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-list li {
+      margin-bottom: 12px;
+      font-size: 15px;
+    }
+
+    .toc-num {
+      color: var(--gold);
+      font-weight: 600;
+      margin-right: 8px;
+    }
+
+    .chapter {
+      margin-bottom: 56px;
+      scroll-margin-top: 100px;
+    }
+
+    .chapter-header {
+      margin-bottom: 28px;
+    }
+
+    .chapter-num {
+      font-size: 13px;
+      color: var(--text3);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .chapter-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 8px;
+    }
+
+    .sub-header {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 28px 0 16px 0;
+    }
+
+    .prose {
+      color: var(--text);
+      margin-bottom: 16px;
+      line-height: 1.75;
+    }
+
+    .formula-block {
+      background: var(--bg2);
+      border-left: 4px solid var(--gold);
+      border-radius: var(--r-sm);
+      padding: 20px;
+      margin: 24px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      color: var(--text);
+      overflow-x: auto;
+    }
+
+    .formula-block .label {
+      font-weight: 700;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .formula-block .note {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: var(--text2);
+      margin-top: 12px;
+      line-height: 1.6;
+    }
+
+    .exhibit {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 28px;
+      margin: 32px 0;
+    }
+
+    .exhibit-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+    }
+
+    .exhibit-body {
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    .reg-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+
+    .reg-table th {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 12px;
+      text-align: left;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .reg-table td {
+      border: 1px solid var(--border);
+      padding: 12px;
+      color: var(--text2);
+    }
+
+    .reg-table tr:nth-child(even) { background: rgba(255,255,255,0.5); }
+
+    .callout {
+      border-radius: var(--r);
+      padding: 20px;
+      margin: 24px 0;
+      border-left: 4px solid;
+    }
+
+    .callout.blue {
+      background: var(--blue-bg);
+      border-left-color: var(--blue);
+    }
+
+    .callout.amber {
+      background: var(--amber-bg);
+      border-left-color: var(--amber);
+    }
+
+    .callout.green {
+      background: var(--green-bg);
+      border-left-color: var(--green);
+    }
+
+    .callout.red {
+      background: var(--red-bg);
+      border-left-color: var(--red);
+    }
+
+    .callout.gold {
+      background: var(--gold-bg);
+      border-left-color: var(--gold);
+    }
+
+    .callout-title {
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: block;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .callout .callout-title { color: inherit; }
+    .callout.blue .callout-title { color: var(--blue); }
+    .callout.amber .callout-title { color: var(--amber); }
+    .callout.green .callout-title { color: var(--green); }
+    .callout.red .callout-title { color: var(--red); }
+    .callout.gold .callout-title { color: var(--gold); }
+
+    .callout p, .callout li {
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .kc {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      margin: 28px 0;
+      overflow: hidden;
+    }
+
+    .kc-header {
+      padding: 18px 20px;
+      background: var(--bg3);
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+
+    .kc-header:hover { background: rgba(0,0,0,0.04); }
+
+    .kc-header-title {
+      font-weight: 600;
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    .kc-toggle {
+      color: var(--text3);
+      font-weight: 700;
+      font-size: 18px;
+      transition: transform 0.2s;
+    }
+
+    .kc.open .kc-toggle { transform: rotate(180deg); }
+
+    .kc-body {
+      padding: 20px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+
+    .kc.open .kc-body { max-height: 1200px; }
+
+    .kc-q {
+      color: var(--text);
+      margin-bottom: 16px;
+      line-height: 1.7;
+      font-weight: 500;
+    }
+
+    .kc-answer {
+      color: var(--text2);
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    .assume-list {
+      list-style: none;
+      margin: 16px 0;
+    }
+
+    .assume-item {
+      display: flex;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+
+    .assume-num {
+      color: var(--gold);
+      font-weight: 700;
+      margin-right: 12px;
+      min-width: 28px;
+    }
+
+    .assume-content {
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .num-list, .bullet-list {
+      margin: 16px 0;
+      padding-left: 24px;
+    }
+
+    .num-list li, .bullet-list li {
+      margin-bottom: 10px;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 40px 0;
+    }
+
+    .practice-header {
+      margin-bottom: 28px;
+    }
+
+    .practice-body {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 28px;
+    }
+
+    .vignette {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 24px;
+      margin-bottom: 32px;
+    }
+
+    .vignette-label {
+      font-size: 12px;
+      color: var(--text3);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    .question-block {
+      margin-bottom: 28px;
+    }
+
+    .q-num {
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    .q-text {
+      color: var(--text);
+      line-height: 1.8;
+      margin-bottom: 14px;
+    }
+
+    .option {
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: var(--r-sm);
+      cursor: pointer;
+      background: white;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+
+    .option:hover { background: var(--bg2); border-color: var(--gold); }
+
+    .option input { margin-right: 8px; }
+
+    .explanation {
+      margin-top: 16px;
+      padding: 16px;
+      background: var(--blue-bg);
+      border-left: 4px solid var(--blue);
+      border-radius: var(--r-sm);
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.7;
+      display: none;
+    }
+
+    .explanation.show { display: block; }
+
+    .score-panel {
+      margin-top: 32px;
+      padding: 24px;
+      background: var(--green-bg);
+      border-radius: var(--r);
+      text-align: center;
+      display: none;
+    }
+
+    .score-panel.show { display: block; }
+
+    .score-panel h3 {
+      color: var(--green);
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .score-panel p {
+      color: var(--text);
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .nav-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 32px 0;
+      margin-top: 48px;
+      border-top: 1px solid var(--border);
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover {
+      background: var(--bg3);
+      border-color: var(--border2);
+    }
+
+    .nav-day {
+      font-size: 13px;
+      color: var(--text2);
+    }
+
+    @media (max-width: 768px) {
+      .hero-title { font-size: 28px; }
+      .page { padding: 0 16px; }
+      .meta-row { gap: 8px; }
+      .nav-bottom { flex-direction: column; gap: 16px; }
+      .nav-btn { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="breadcrumb">CFA Level II <span style="opacity:0.5;">·</span> Economics <span style="opacity:0.5;">·</span> LM1</div>
+      <div>
+        <span class="version-badge">Versi Full</span>
+        <span class="day-badge">Day 15 of 90</span>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero">
+      <div class="hero-tag">Kamis, 30 April 2026</div>
+      <h1 class="hero-title">Parity Conditions & Carry Trade: Memahami Equilibrium Nilai Tukar</h1>
+      <p class="hero-sub">Framework fundamental untuk menganalisis determinan nilai tukar valuta asing dan strategi investasi lintas negara</p>
+      <div class="meta-row">
+        <span class="meta-pill">📚 Materi Lengkap</span>
+        <span class="meta-pill">🇮🇩 Bahasa Indonesia</span>
+        <span class="meta-pill">⚖️ ~5% Exam Weight</span>
+        <span class="meta-pill">⏱️ 45–60 menit</span>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="toc">
+      <h2 class="toc-title">Daftar Isi</h2>
+      <ul class="toc-list">
+        <li><span class="toc-num">0</span>Learning Outcomes</li>
+        <li><span class="toc-num">1</span>Pendahuluan — Framework Parity Conditions</li>
+        <li><span class="toc-num">2</span>Covered Interest Rate Parity (CIP)</li>
+        <li><span class="toc-num">3</span>Uncovered Interest Rate Parity (UIP) & Forward Rate Parity</li>
+        <li><span class="toc-num">4</span>Purchasing Power Parity (PPP)</li>
+        <li><span class="toc-num">5</span>Fisher Effect & Keterkaitan Seluruh Parity Conditions</li>
+        <li><span class="toc-num">6</span>The Carry Trade — Mekanisme, Risiko, dan Unwind</li>
+        <li><span class="toc-num">7</span>Latihan Soal — Item Set Vignette</li>
+      </ul>
+    </div>
+
+    <!-- Chapter 0: Learning Outcomes -->
+    <div class="chapter">
+      <div class="chapter-header">
+        <div class="chapter-num">SECTION 0</div>
+        <h2 class="chapter-title">Learning Outcomes</h2>
+      </div>
+
+      <p class="prose">Setelah menyelesaikan modul ini, Anda akan mampu untuk:</p>
+
+      <ol class="num-list">
+        <li><strong>Jelaskan spot dan forward rates</strong> serta hitung forward premium/discount sebagai bentuk ekspektasi pasar terhadap nilai tukar masa depan.</li>
+        <li><strong>Jelaskan international parity conditions</strong> (Covered Interest Rate Parity, Uncovered Interest Rate Parity, Forward Rate Parity, Purchasing Power Parity, International Fisher Effect) dan asumsi-asumsi yang mendasarinya.</li>
+        <li><strong>Deskripsikan hubungan antar parity conditions</strong> dan bagaimana kondisi tersebut saling terkait dalam keseimbangan pasar global.</li>
+        <li><strong>Evaluasi penggunaan spot rate, forward rate, PPP, dan UIP</strong> untuk meramalkan future spot exchange rates dengan mempertimbangkan kekuatan dan keterbatasan masing-masing.</li>
+        <li><strong>Deskripsikan carry trade</strong>, hubungannya dengan Uncovered Interest Rate Parity, dan hitung profit serta risiko dari strategi ini.</li>
+      </ol>
+    </div>
+
+    <!-- Chapter 1: Pendahuluan -->
+    <div class="chapter">
+      <div class="chapter-header">
+        <div class="chapter-num">SECTION 1</div>
+        <h2 class="chapter-title">Pendahuluan — Framework Parity Conditions</h2>
+      </div>
+
+      <p class="prose">
+        Dalam ekonomi internasional, investor, perusahaan, dan bank sentral selalu menghadapi pertanyaan fundamental: <em>berapa nilai tukar yang "benar" untuk suatu pasangan valuta?</em> Apakah rupiah undervalued atau overvalued terhadap dolar? Apakah yen seharusnya lebih kuat atau lebih lemah?
+      </p>
+
+      <p class="prose">
+        Parity conditions (kondisi keseimbangan) adalah framework yang menjelaskan bagaimana berbagai pasar finansial dan barang — pasar mata uang, pasar obligasi, pasar saham, dan perdagangan barang — saling terkait. Ketika semua kondisi ini dipenuhi secara simultan, pasar dikatakan dalam <strong>equilibrium</strong>.
+      </p>
+
+      <p class="prose">
+        Ada lima parity conditions utama yang akan kita pelajari:
+      </p>
+
+      <ol class="num-list">
+        <li><strong>Covered Interest Rate Parity (CIP)</strong> — hubungan antara spot rate, forward rate, dan suku bunga domestik vs foreign.</li>
+        <li><strong>Uncovered Interest Rate Parity (UIP)</strong> — hubungan antara suku bunga, ekspektasi perubahan spot rate, dan return investasi.</li>
+        <li><strong>Forward Rate Parity</strong> — forward rate sebagai predictor tidak bias (unbiased) dari future spot rate.</li>
+        <li><strong>Purchasing Power Parity (PPP)</strong> — hubungan antara price levels dan nilai tukar.</li>
+        <li><strong>International Fisher Effect</strong> — hubungan antara nominal interest rates, real rates, dan expected inflation.</li>
+      </ol>
+
+      <p class="prose">
+        Masing-masing kondisi didasarkan pada no-arbitrage principle (tidak ada peluang untung tanpa risiko). Ketika arbitrage opportunities muncul, trader akan memanfaatkannya hingga pasar kembali ke equilibrium.
+      </p>
+
+      <div class="callout gold">
+        <span class="callout-title">Kunci Pembelajaran</span>
+        <p>Parity conditions bukanlah law of nature — tetapi konsekuensi logis dari arbitrage dan ekspektasi rasional. Ketika parity conditions meleset dalam realitas, itu memberikan peluang atau indikasi risk premium, behavioral factors, atau market inefficiencies.</p>
+      </div>
+    </div>
+
+    <!-- Chapter 2: Covered Interest Rate Parity -->
+    <div class="chapter">
+      <div class="chapter-header">
+        <div class="chapter-num">SECTION 2</div>
+        <h2 class="chapter-title">Covered Interest Rate Parity (CIP)</h2>
+      </div>
+
+      <h3 class="sub-header">Konsep Dasar dan No-Arbitrage Condition</h3>
+
+      <p class="prose">
+        Covered Interest Rate Parity (CIP) menjelaskan hubungan no-arbitrage antara spot rate, forward rate, dan perbedaan suku bunga antar negara. "Covered" berarti risiko valuta asing sudah dikurangi (hedged) melalui forward contract.
+      </p>
+
+      <p class="prose">
+        Bayangkan Anda seorang investor di Indonesia dengan dana dalam rupiah. Anda memiliki dua strategi untuk berinvestasi dalam aset berdenominasi dolar:
+      </p>
+
+      <ul class="bullet-list">
+        <li><strong>Strategi A (Domestic):</strong> Investasikan rupiah dalam obligasi Indonesia dengan suku bunga i<sub>d</sub> = 6% selama 1 tahun.</li>
+        <li><strong>Strategi B (Foreign, Hedged):</strong> Konversi rupiah ke dolar dengan spot rate S(USD/IDR), investasikan dolar dalam obligasi AS dengan suku bunga i<sub>f</sub> = 4%, dan lakukan forward contract untuk mengkonversi kembali ke rupiah.</li>
+      </ul>
+
+      <p class="prose">
+        Dalam equilibrium, return dari kedua strategi harus sama (setelah dikurangi biaya transaksi). Jika tidak, ada arbitrage opportunity.
+      </p>
+
+      <h3 class="sub-header">Formula CIP</h3>
+
+      <div class="formula-block">
+        <span class="label">CIP Equation (Exact Form)</span>
+        F<sub>f/d</sub> = S<sub>f/d</sub> × (1 + i<sub>f</sub>) / (1 + i<sub>d</sub>)
+
+        <span class="note">
+          Dimana:<br>
+          F<sub>f/d</sub> = Forward rate (foreign per domestic)<br>
+          S<sub>f/d</sub> = Spot rate (foreign per domestic)<br>
+          i<sub>f</sub> = Foreign interest rate<br>
+          i<sub>d</sub> = Domestic interest rate<br>
+          <br>
+          <strong>Atau dalam bentuk simplified:</strong><br>
+          (F<sub>f/d</sub> - S<sub>f/d</sub>) / S<sub>f/d</sub> ≈ i<sub>f</sub> - i<sub>d</sub><br>
+          <br>
+          <strong>Interpretasi:</strong> Forward premium/discount ≈ interest rate differential
+        </span>
+      </div>
+
+      <p class="prose">
+        Perhatian khusus: jika i<sub>f</sub> &gt; i<sub>d</sub>, maka F &gt; S, artinya foreign currency bersuku bunga tinggi akan terdepresiasi (forward premium). Ini masuk akal: jika AS menawarkan bunga lebih tinggi, itu karena pasar mengantisipasi dolar akan lemah di masa depan.
+      </p>
+
+      <h3 class="sub-header">Arbitrage Example: CIP Violation</h3>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 1: Covered Interest Arbitrage</div>
+        <div class="exhibit-body">
+          <p><strong>Data:</strong></p>
+          <ul class="bullet-list">
+            <li>Spot rate S($/IDR) = 0.000067 (atau IDR/$ = 15,000)</li>
+            <li>1-year Forward rate F($/IDR) = 0.000069 (atau IDR/$ = 14,500, dollar lebih kuat forward)</li>
+            <li>IDR interest rate = 6%</li>
+            <li>USD interest rate = 3%</li>
+          </ul>
+
+          <p style="margin-top:16px;"><strong>Test CIP:</strong></p>
+          <p>CIP implies: F/S ≈ (1 + 0.03) / (1 + 0.06) = 1.03 / 1.06 = 0.9717</p>
+          <p>Actual F/S = 0.000069 / 0.000067 = 1.0299</p>
+          <p style="color:var(--red); font-weight:600;">CIP VIOLATED! Forward dollar is too strong.</p>
+
+          <p style="margin-top:16px;"><strong>Arbitrage Strategy (IDR-based investor):</strong></p>
+          <ol class="num-list">
+            <li>Borrow 15,000,000 IDR @ 6% = repay 15,900,000 IDR</li>
+            <li>Convert @ spot: 15,000,000 IDR ÷ 15,000 = $1,000</li>
+            <li>Lend $ @ 3% = receive $1,030</li>
+            <li>Lock forward: convert $1,030 @ 14,500 = 14,935,000 IDR</li>
+            <li>Repay IDR loan: -15,900,000 IDR</li>
+            <li><strong>Profit: -965,000 IDR locked in (wait, recalculate...)</strong></li>
+          </ol>
+
+          <p style="margin-top:12px;color:var(--text2);">Sebenarnya, coba dari perspektif $ borrower: Pinjam $ @ 3%, convert ke IDR @ 15,000 per dollar, pinjam di Indo...ini semakin kompleks. Intuitifnya, jika forward terlalu mahal (dollar terlalu kuat), seseorang akan short dollar forward dan borrow dollar.</p>
+        </div>
+      </div>
+
+      <h3 class="sub-header">Key Assumptions of CIP</h3>
+
+      <ul class="assume-list">
+        <li class="assume-item">
+          <div class="assume-num">1</div>
+          <div class="assume-content"><strong>Zero transaction costs:</strong> Tidak ada bid-ask spread, tidak ada komisi. Dalam realitas, spread kecil membuat CIP menjadi range, bukan exact equality.</div>
+        </li>
+        <li class="assume-item">
+          <div class="assume-num">2</div>
+          <div class="assume-content"><strong>Same maturity and liquidity:</strong> Obligasi domestic dan foreign harus memiliki maturity yang sama dan risk level yang sama (default risk diasumsikan identik).</div>
+        </li>
+        <li class="assume-item">
+          <div class="assume-num">3</div>
+          <div class="assume-content"><strong>No capital controls:</strong> Dana dapat bebas bergerak antar negara. Capital controls membuat arbitrage tidak possible.</div>
+        </li>
+        <li class="assume-item">
+          <div class="assume-num">4</div>
+          <div class="assume-content"><strong>No default risk differential:</strong> Pasar mengasumsikan obligasi government AS dan Indonesia memiliki risiko default yang sama (obviously false, tapi asumsi ini untuk isolate FX effects).</div>
+        </li>
+      </ul>
+
+      <div class="callout blue">
+        <span class="callout-title">Empirical Observation</span>
+        <p>CIP adalah salah satu parity conditions yang paling kuat secara empiris dan paling sering terpenuhi di pasar finansial modern. Ini karena covered arbitrage mudah dilaksanakan oleh institutional investors dengan akses ke forward markets dan funding markets yang deep.</p>
+      </div>
+
+      <div class="kc">
+        <div class="kc-header" onclick="toggleKC('kc1')">
+          <span class="kc-header-title">Knowledge Check 1: CIP Calculation</span>
+          <span class="kc-toggle">▼</span>
+        </div>
+        <div class="kc-body" id="kc1">
+          <p class="kc-q">Diberikan: S(€/USD) = 1.10, i<sub>USD</sub> = 2%, i<sub>€</sub> = 1%, maturity 1 tahun. Berapa forward rate (€/USD) menurut CIP?</p>
+          <div class="kc-answer">
+            <p><strong>Jawaban:</strong></p>
+            <p>F = S × (1 + i<sub>€</sub>) / (1 + i<sub>USD</sub>)</p>
+            <p>F = 1.10 × (1.01) / (1.02) = 1.10 × 0.99020 = 1.0892</p>
+            <p><strong>Interpretasi:</strong> Euro mengalami forward premium (F &lt; S) karena suku bunga euro lebih rendah. Euro akan appreciate sedikit dalam forward market untuk menyeimbangkan return.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 3: UIP & Forward Rate Parity -->
+    <div class="chapter">
+      <div class="chapter-header">
+        <div class="chapter-num">SECTION 3</div>
+        <h2 class="chapter-title">Uncovered Interest Rate Parity (UIP) & Forward Rate Parity</h2>
+      </div>
+
+      <h3 class="sub-header">Uncovered Interest Rate Parity (UIP)</h3>
+
+      <p class="prose">
+        Jika CIP adalah kondisi no-arbitrage untuk investor yang hedge FX risk, maka UIP adalah kondisi yang diterapkan untuk investor yang <em>tidak</em> hedge. UIP mengatakan bahwa return dari investasi unhedged di foreign country harus sama dengan return domestic, dengan perbedaannya tercermin dalam expected appreciation/depreciation of the currency.
+      </p>
+
+      <p class="prose">
+        Dengan kata lain, jika Anda berinvestasi di negara dengan suku bunga lebih tinggi tanpa hedge, Anda mengharapkan currency appreciation (negara dengan bunga tinggi) yang akan mengkompensasi bunga rendah di negara home.
+      </p>
+
+      <div class="formula-block">
+        <span class="label">Uncovered Interest Rate Parity</span>
+        E[%ΔS<sub>f/d</sub>] = i<sub>f</sub> - i<sub>d</sub>
+
+        <span class="note">
+          Dimana:<br>
+          E[%ΔS] = Expected percentage change in spot rate = (E[S<sub>next</sub>] - S<sub>today</sub>) / S<sub>today</sub><br>
+          i<sub>f</sub> = Foreign interest rate<br>
+          i<sub>d</sub> = Domestic interest rate<br>
+          <br>
+          <strong>Atau dengan rate basis:</strong><br>
+          E[S<sup>e</sup><sub>f/d</sub>] = S<sub>f/d</sub> × (1 + i<sub>f</sub>) / (1 + i<sub>d</sub>)<br>
+          <br>
+          <strong>Intuitively:</strong> Return at home = Return abroad<br>
+          (1 + i<sub>d</sub>) = (1 + i<sub>f</sub>) × (1 + E[%ΔS<sub>f/d</sub>])
+        </span>
+      </div>
+
+      <h3 class="sub-header">Why Uncovered? Risk Neutral Expectation vs. Risk Premium</h3>
+
+      <p class="prose">
+        UIP diasumsikan berlaku ketika investors adalah risk-neutral dan memiliki expectation yang rational tentang future spot rate. Tidak ada arbitrage dalam sense ekonomi, karena Anda exposed terhadap FX risk.
+      </p>
+
+      <p class="prose">
+        Namun, dalam praktik, UIP sering <strong>tidak terpenuhi</strong> dalam jangka pendek dan menengah. Ada beberapa alasan:
+      </p>
+
+      <ul class="bullet-list">
+        <li><strong>Risk Premium:</strong> Investors menuntut additional return untuk bearing currency risk. Negara dengan volatilitas tinggi (emerging markets) menawarkan bunga tinggi, tetapi currency depreciation tidak selalu sebesar IRP memprediksi.</li>
+        <li><strong>Forward Bias:</strong> Forward rate cenderung over-predict depreciation dari currency overvalued. Disebut "forward premium puzzle."</li>
+        <li><strong>Behavioral Factors:</strong> Momentum trading, trend-chasing, dan sentiment dapat mendorong currency ke arah yang bertentangan dengan UIP.</li>
+      </ul>
+
+      <h3 class="sub-header">Forward Rate Parity (FRP)</h3>
+
+      <p class="prose">
+        Forward Rate Parity adalah proposal bahwa forward rate adalah <strong>unbiased predictor</strong> dari future spot rate:
+      </p>
+
+      <div class="formula-block">
+        <span class="label">Forward Rate Parity</span>
+        F<sub>f/d</sub> = E[S<sup>e</sup><sub>f/d</sub>]
+
+        <span class="note">
+          Forward rate hari ini = Expected spot rate di masa depan (dalam risk-neutral expectation)<br>
+          <br>
+          Jika kedua CIP dan UIP berlaku:<br>
+          F/S = (1 + i<sub>f</sub>) / (1 + i<sub>d</sub>)<br>
+          E[S<sup>e</sup>]/S = (1 + i<sub>f</sub>) / (1 + i<sub>d</sub><br>
+          <br>
+          Jadi F = E[S<sup>e</sup>]
+        </span>
+      </div>
+
+      <p class="prose">
+        FRP implikasi: forward premium/(discount) mencerminkan expected depreciation/(appreciation) dari currency.
+      </p>
+
+      <div class="callout amber">
+        <span class="callout-title">Empirical Reality: Forward Bias</span>
+        <p>Research menunjukkan forward rate adalah <strong>biased predictor</strong> dari future spot rate, khususnya untuk high-interest-rate currencies. Ini dikenal sebagai "forward premium anomaly" atau "uncovered interest rate parity puzzle." High-yield currencies tidak depreciate seperti diprediksi UIP, menciptakan profitabel trading strategies (carry trade).</p>
+      </div>
+
+      <div class="kc">
+        <div class="kc-header" onclick="toggleKC('kc2')">
+          <span class="kc-header-title">Knowledge Check 2: UIP vs. Realized Returns</span>
+          <span class="kc-toggle">▼</span>
+        </div>
+        <div class="kc-body" id="kc2">
+          <p class="kc-q">
+            Seorang investor USD-based, i<sub>USD</sub> = 2%, i<sub>JPY</sub> = 0%, spot S(¥/USD) = 110. Investor membeli 1-year JGB (Japanese Government Bond) unhedged.
+            <br><br>Menurut UIP, berapa expected spot rate di akhir tahun? Jika actual spot di akhir tahun adalah 105 ¥/USD, apakah investor mendapat keuntungan?
+          </p>
+          <div class="kc-answer">
+            <p><strong>Jawaban:</strong></p>
+            <p><strong>UIP prediction:</strong></p>
+            <p>E[%ΔS] = i<sub>JPY</sub> - i<sub>USD</sub> = 0% - 2% = -2%</p>
+            <p>E[S] = 110 × (1 - 0.02) = 107.8 ¥/USD</p>
+            <p><strong>Actual spot: 105 ¥/USD</strong> (yen lebih kuat dari UIP prediction)</p>
+            <p><strong>Return calculation:</strong></p>
+            <p>JGB return: 0% (Japan zero rates)</p>
+            <p>FX gain: (107.8 - 105) / 105 = 2.67%</p>
+            <p><strong>Total return: ~2.67%</strong> (keuntungan, karena yen appreciate lebih dari expected UIP)</p>
+            <p style="margin-top:12px;"><strong>Insight:</strong> Yen appreciated lebih dari diprediksi UIP, sehingga investor USD mendapat keuntungan tambahan dari carry trade positif.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 4: PPP -->
+    <div class="chapter">
+      <div class="chapter-header">
+        <div class="chapter-num">SECTION 4</div>
+        <h2 class="chapter-title">Purchasing Power Parity (PPP)</h2>
+      </div>
+
+      <h3 class="sub-header">Law of One Price and Absolute PPP</h3>
+
+      <p class="prose">
+        Purchasing Power Parity (PPP) adalah framework yang berpendapat bahwa nilai tukar seharusnya membuat harga barang dan jasa sama di seluruh negara (setelah adjustment untuk exchange rate). Ini berasal dari Law of One Price: barang identik di pasar yang berbeda harus mempunyai harga yang sama (dalam mata uang yang sama).
+      </p>
+
+      <p class="prose">
+        Misalnya, jika sebuah Big Mac dijual seharga $5 di Amerika Serikat dan Rp75,000 di Indonesia, maka spot rate seharusnya: 75,000 / 5 = 15,000 IDR/USD. Jika spot rate actual adalah 16,000, maka Big Mac lebih murah di Indonesia (arbitrage opportunity!).
+      </p>
+
+      <div class="formula-block">
+        <span class="label">Law of One Price (for a single good)</span>
+        P<sub>f</sub><sup>x</sup> = S<sub>f/d</sub> × P<sub>d</sub><sup>x</sup>
+
+        <span class="note">
+          P<sub>f</sub><sup>x</sup> = Price of good x in foreign country<br>
+          P<sub>d</sub><sup>x</sup> = Price of same good in domestic country<br>
+          S<sub>f/d</sub> = Spot exchange rate (foreign units per domestic unit)<br>
+          <br>
+          <strong>Rearranged:</strong> S<sub>f/d</sub> = P<sub>f</sub><sup>x</sup> / P<sub>d</sub><sup>x</sup>
+        </span>
+      </div>
+
+      <p class="prose">
+        Jika law of one price berlaku untuk <em>semua</em> barang dan jasa, maka dapat diagregasi untuk price levels keseluruhan:
+      </p>
+
+      <div class="formula-block">
+        <span class="label">Absolute PPP</span>
+        S<sub>f/d</sub> = P<sub>f</sub> / P<sub>d</sub>
+
+        <span class="note">
+          S = Spot exchange rate<br>
+          P<sub>f</sub> = Price level in foreign country<br>
+          P<sub>d</sub> = Price level in domestic country<br>
+          <br>
+          <strong>Interpretation:</strong> The exchange rate equals the ratio of price levels.
+        </span>
+      </div>
+
+      <h3 class="sub-header">Relative PPP (Ex-Post)</h3>
+
+      <p class="prose">
+        Absolute PPP jarang terpenuhi karena harga barang berbeda secara struktural antar negara (tastes, taxes, transport costs, non-tradeable goods). Namun, versi yang lebih lemah — Relative PPP — sering lebih berguna: perubahan spot rate seharusnya mencerminkan perbedaan inflasi antar negara.
+      </p>
+
+      <div class="formula-block">
+        <span class="label">Relative PPP (Ex-Post)</span>
+        %ΔS<sub>f/d</sub> = π<sub>f</sub> - π<sub>d</sub>
+
+        <span class="note">
+          %ΔS = Percentage change in spot rate over period<br>
+          π<sub>f</sub> = Inflation rate in foreign country<br>
+          π<sub>d</sub> = Inflation rate in domestic country<br>
+          <br>
+          <strong>Atau dalam level form:</strong><br>
+          S<sub>t</sub> / S<sub>t-1</sub> = (1 + π<sub>f</sub>) / (1 + π<sub>d</sub>)<br>
+          <br>
+          <strong>Logic:</strong> Jika inflation lebih tinggi di luar negeri, currency mereka akan depreciate untuk maintain purchasing power parity.
+        </span>
+      </div>
+
+      <h3 class="sub-header">Ex-Ante PPP (Expected Inflation)</h3>
+
+      <p class="prose">
+        Untuk forward-looking investors, ex-ante PPP menggunakan expected inflation:
+      </p>
+
+      <div class="formula-block">
+        <span class="label">Ex-Ante PPP</span>
+        E[%ΔS<sub>f/d</sub>] = π<sub>f</sub><sup>e</sup> - π<sub>d</sub><sup>e</sup>
+
+        <span class="note">
+          E[%ΔS] = Expected percentage change in spot<br>
+          π<sup>e</sup> = Expected inflation<br>
+          <br>
+          This links PPP to UIP: jika both PPP dan UIP berlaku, maka suku bunga diferential ≈ expected inflation differential.
+        </span>
+      </div>
+
+      <h3 class="sub-header">Why PPP Often Fails</h3>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 2: PPP Violations — Real Examples</div>
+        <div class="exhibit-body">
+          <table class="reg-table">
+            <tr>
+              <th>Reason for PPP Failure</th>
+              <th>Example</th>
+            </tr>
+            <tr>
+              <td><strong>Non-tradeable goods:</strong> Services (haircuts, rent) tidak bisa diarbitrase</td>
+              <td>Haircut 10x lebih mahal di Zurich vs. Jakarta, tapi tidak bisa dibeli di Jakarta lalu dijual di Zurich</td>
+            </tr>
+            <tr>
+              <td><strong>Trade barriers:</strong> Tariffs, quotas menghambat arbitrage</td>
+              <td>Proteksi agricultural products membuat harga berbeda secara signifikan</td>
+            </tr>
+            <tr>
+              <td><strong>Transport costs:</strong> Arbitrage tidak profitable jika shipping mahal</td>
+              <td>Barang berat dengan margin kecil (batu) tidak diarbitrase globally</td>
+            </tr>
+            <tr>
+              <td><strong>Sampling issues:</strong> Different consumption baskets</td>
+              <td>CPI Indonesia vs. CPI US mengandung barang yang berbeda dengan weights berbeda</td>
+            </tr>
+            <tr>
+              <td><strong>Real exchange rate shocks:</strong> Preference shifts, productivity changes</td>
+              <td>Appreciasi dolar akibat safe-haven demand atau high productivity growth, bukan inflation</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <p class="prose">
+        Empirical evidence menunjukkan bahwa:
+      </p>
+
+      <ul class="bullet-list">
+        <li><strong>Short-term (0-2 years):</strong> PPP works very poorly. Real exchange rates dapat berfluktuasi 20-30% tanpa revert cepat ke PPP level.</li>
+        <li><strong>Medium-term (2-5 years):</strong> PPP starts working better, dengan half-life of deviation sekitar 3-5 years.</li>
+        <li><strong>Long-term (5+ years):</strong> PPP works reasonably well untuk major currencies. Over very long horizons (20+ years), PPP holds much better.</li>
+      </ul>
+
+      <div class="callout green">
+        <span class="callout-title">Mean Reversion and the Real Exchange Rate</span>
+        <p>Meskipun PPP tidak berlaku sempurna, real exchange rate (S × P<sub>d</sub> / P<sub>f</sub>) menunjukkan mean-reversion tendency dalam jangka panjang. Ini berarti jika suatu currency overvalued (real terms), kemungkinan akan melemah di masa depan untuk mengembalikan keseimbangan.</p>
+      </div>
+
+      <div class="kc">
+        <div class="kc-header" onclick="toggleKC('kc3')">
+          <span class="kc-header-title">Knowledge Check 3: PPP Calculation</span>
+          <span class="kc-toggle">▼</span>
+        </div>
+        <div class="kc-body" id="kc3">
+          <p class="kc-q">
+            Inflasi Indonesia (π<sub>IDR</sub>) = 3.5%, Inflasi USA (π<sub>USD</sub>) = 2%. Spot rate saat ini S(IDR/USD) = 15,000. Menurut relative PPP, berapa expected spot rate tahun depan?
+          </p>
+          <div class="kc-answer">
+            <p><strong>Jawaban:</strong></p>
+            <p>Relative PPP: %ΔS = π<sub>IDR</sub> - π<sub>USD</sub> = 3.5% - 2% = 1.5%</p>
+            <p>Expected S<sub>next year</sub> = 15,000 × (1 + 0.015) = 15,225 IDR/USD</p>
+            <p><strong>Interpretasi:</strong> Rupiah diharapkan depreciate 1.5% terhadap dolar, karena inflasi Indonesia lebih tinggi dari USA. Dengan kata lain, spot rate akan bergerak dari 15,000 menjadi 15,225 (lebih banyak rupiah per dolar), mencerminkan purchasing power loss dari rupiah.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 5: Fisher Effect & Integration -->
+    <div class="chapter">
+      <div class="chapter-header">
+        <div class="chapter-num">SECTION 5</div>
+        <h2 class="chapter-title">Fisher Effect & Keterkaitan Seluruh Parity Conditions</h2>
+      </div>
+
+      <h3 class="sub-header">Domestic Fisher Effect</h3>
+
+      <p class="prose">
+        Fisher Effect mengatakan bahwa nominal interest rate adalah sum dari real interest rate dan expected inflation:
+      </p>
+
+      <div class="formula-block">
+        <span class="label">Domestic Fisher Effect (Fisher Equation)</span>
+        i = r + π<sup>e</sup>
+
+        <span class="note">
+          i = Nominal interest rate<br>
+          r = Real interest rate<br>
+          π<sup>e</sup> = Expected inflation<br>
+          <br>
+          <strong>Intuition:</strong> Jika Anda meminjam/meminjamkan uang, Anda menginginkan return real (after inflation). Nominal rate disesuaikan untuk expected inflation.
+        </span>
+      </div>
+
+      <p class="prose">
+        Contoh: Jika real rate = 2% dan expected inflation = 3%, maka nominal rate harus 5% (approximately 2% + 3%; exactly (1.02 × 1.03 - 1) = 5.06%).
+      </p>
+
+      <h3 class="sub-header">International Fisher Effect</h3>
+
+      <p class="prose">
+        Jika Fisher Effect berlaku di kedua negara, maka:
+      </p>
+
+      <div class="formula-block">
+        <span class="label">International Fisher Effect</span>
+        i<sub>f</sub> - i<sub>d</sub> = π<sub>f</sub><sup>e</sup> - π<sub>d</sub><sup>e</sup>
+
+        <span class="note">
+          Nominal interest rate differential = Expected inflation differential<br>
+          <br>
+          i<sub>d</sub> = r<sub>d</sub> + π<sub>d</sub><sup>e</sup><br>
+          i<sub>f</sub> = r<sub>f</sub> + π<sub>f</sub><sup>e</sup><br>
+          <br>
+          Jika r<sub>d</sub> = r<sub>f</sub> (real rates converge), maka:<br>
+          i<sub>f</sub> - i<sub>d</sub> = π<sub>f</sub><sup>e</sup> - π<sub>d</sub><sup>e</sup>
+        </span>
+      </div>
+
+      <h3 class="sub-header">The Complete Parity System</h3>
+
+      <p class="prose">
+        Ketika semua parity conditions berlaku secara simultan, ada elegant relationship:
+      </p>
+
+      <div class="formula-block">
+        <span class="label">Integration of All Parity Conditions</span>
+        <strong>Jika CIP, UIP, ex-ante PPP, dan International Fisher berlaku:</strong><br><br>
+        (F - S) / S = i<sub>f</sub> - i<sub>d</sub> = π<sub>f</sub><sup>e</sup> - π<sub>d</sub><sup>e</sup> = E[%ΔS]<br><br>
+        <strong>Dan:</strong><br>
+        F = E[S<sup>e</sup>]<br>
+        r<sub>d</sub> ≈ r<sub>f</sub> (real rates converge)
+
+        <span class="note">
+          This integrated view shows:<br>
+          1. Forward premium reflects expected currency depreciation (UIP)<br>
+          2. Expected depreciation reflects inflation differentials (ex-ante PPP)<br>
+          3. Interest differentials equal inflation differentials (International Fisher)<br>
+          4. Forward rate unbiased predictor of spot (FRP)<br>
+          5. Real rates equalize across countries (IRP)
+        </span>
+      </div>
+
+      <h3 class="sub-header">Illustrative Example: Complete System</h3>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 3: Parity System Integration — IDR vs USD</div>
+        <div class="exhibit-body">
+          <table class="reg-table">
+            <tr>
+              <th>Variable</th>
+              <th>IDR</th>
+              <th>USD</th>
+              <th>Differential</th>
+            </tr>
+            <tr>
+              <td><strong>Expected inflation</strong></td>
+              <td>4%</td>
+              <td>2%</td>
+              <td>2%</td>
+            </tr>
+            <tr>
+              <td><strong>Real interest rate</strong></td>
+              <td>2%</td>
+              <td>2%</td>
+              <td>0%</td>
+            </tr>
+            <tr>
+              <td><strong>Nominal interest rate (i = r + π<sup>e</sup>)</strong></td>
+              <td>6%</td>
+              <td>4%</td>
+              <td>2%</td>
+            </tr>
+            <tr>
+              <td><strong>Spot rate</strong></td>
+              <td colspan="2">15,000 IDR/USD</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><strong>Forward premium (from CIP)</strong></td>
+              <td colspan="2">(F - S)/S ≈ 6% - 4% = 2%</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><strong>Forward rate: F = S × (1.04)/(1.06)</strong></td>
+              <td colspan="2">15,000 × 0.9811 = 14,717 IDR/USD</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><strong>Expected depreciation of IDR (from UIP)</strong></td>
+              <td colspan="2">E[%ΔS] ≈ 2% (Rupiah diharapkan depreciate)</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><strong>Expected spot next year</strong></td>
+              <td colspan="2">15,000 × 1.02 = 15,300 IDR/USD</td>
+              <td>—</td>
+            </tr>
+          </table>
+
+          <p style="margin-top:16px;"><strong>Key Observations:</strong></p>
+          <ul class="bullet-list">
+            <li><strong>Interest differential (2%) = Inflation differential (2%):</strong> International Fisher Effect holds.</li>
+            <li><strong>Forward premium (2%) ≈ Expected depreciation (2%):</strong> UIP and FRP hold.</li>
+            <li><strong>Real rates are equal (2% in both countries):</strong> International Parity of real rates holds.</li>
+            <li><strong>Forward rate ≠ spot rate:</strong> Forward premium indicates rupiah akan lemah, reflecting higher expected inflation dan higher nominal rates di Indonesia.</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="prose">
+        Sistem ini elegant tetapi memiliki asumsi kuat: risk neutrality, rational expectations, perfect capital mobility, zero transaction costs. Dalam kenyataan, sistem ini sering meleset, menciptakan arbitrage opportunities dan trading strategies seperti carry trade.
+      </p>
+
+      <div class="kc">
+        <div class="kc-header" onclick="toggleKC('kc4')">
+          <span class="kc-header-title">Knowledge Check 4: Parity System Integration</span>
+          <span class="kc-toggle">▼</span>
+        </div>
+        <div class="kc-body" id="kc4">
+          <p class="kc-q">
+            Given: Real rate global = 1.5%. Forecast inflation: Brazil 6%, USA 2%. Spot S(BRL/USD) = 5.0. Berapa nominal rates dan forward rate menurut parity conditions?
+          </p>
+          <div class="kc-answer">
+            <p><strong>Jawaban:</strong></p>
+            <p><strong>Step 1: Nominal rates dari Fisher Effect</strong></p>
+            <p>i<sub>BRL</sub> = 1.5% + 6% = 7.5%</p>
+            <p>i<sub>USD</sub> = 1.5% + 2% = 3.5%</p>
+            <p><strong>Step 2: Forward rate dari CIP</strong></p>
+            <p>F = S × (1 + i<sub>USD</sub>) / (1 + i<sub>BRL</sub>) = 5.0 × 1.035 / 1.075 = 5.0 × 0.9627 = 4.814 BRL/USD</p>
+            <p><strong>Step 3: Verificasi UIP</strong></p>
+            <p>Expected depreciation = i<sub>BRL</sub> - i<sub>USD</sub> = 7.5% - 3.5% = 4%</p>
+            <p>Expected spot: 5.0 × 1.04 = 5.20 BRL/USD (matches forward per FRP)</p>
+            <p style="color:var(--text3);margin-top:12px;"><em>Catatan: Forward rate < spot karena BRL has higher nominal rate; real rate same, jadi perbedaan purely dari inflation differential.</em></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 6: Carry Trade -->
+    <div class="chapter">
+      <div class="chapter-header">
+        <div class="chapter-num">SECTION 6</div>
+        <h2 class="chapter-title">The Carry Trade — Mekanisme, Risiko, dan Unwind</h2>
+      </div>
+
+      <h3 class="sub-header">What is the Carry Trade?</h3>
+
+      <p class="prose">
+        Carry trade adalah strategi investasi yang memanfaatkan UIP violations. Investasi membeli (long) high-yield currencies dan (short) low-yield currencies, dengan target mengumpulkan interest rate differential tanpa terbuka terhadap depreciation dari high-yield currency.
+      </p>
+
+      <p class="prose">
+        Menurut UIP, Anda seharusnya indifferent antara holding low-yield dan high-yield assets (karena high-yield currency akan depreciate sebesar IRP). Tetapi dalam praktek, high-yield currencies sering tidak depreciate seperti diprediksi. Ini creates "free lunch"—earn interest differential tanpa matching depreciation.
+      </p>
+
+      <p class="prose">
+        <strong>Contoh:</strong> Pada 2005-2007, JPY yields ~0% sedangkan AUD (Australian Dollar) yields ~5-6%. Carry traders meminjam JPY, convert ke AUD, invest di Australian bonds. Mereka earn 5-6% per tahun dari interest, plus AUD appreciation (karena AUD tidak depreciate seperti UIP memprediksi). This was carry trade in full bloom, sampai 2008 financial crisis.
+      </p>
+
+      <h3 class="sub-header">Mechanics of the Carry Trade</h3>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 4: Step-by-step Carry Trade Execution</div>
+        <div class="exhibit-body">
+          <p><strong>Setup:</strong> JPY 0% funding currency, BRL 10% asset currency</p>
+
+          <ol class="num-list">
+            <li><strong>Borrow JPY:</strong> Borrow ¥1,000,000,000 @ 0% interest (overnight rates)</li>
+            <li><strong>Spot conversion:</strong> Convert ¥1B @ spot 200 ¥/BRL = BRL 5,000,000</li>
+            <li><strong>Invest in BRL:</strong> Buy Brazilian government bond yielding 10% = earn BRL 500,000 per year</li>
+            <li><strong>Roll funding:</strong> Each day/week, renew JPY borrowing @ ~0% (cost: nearly zero)</li>
+            <li><strong>Unwind (exit):</strong> Sell BRL bonds, convert proceeds back to JPY @ new spot rate, repay JPY loan</li>
+          </ol>
+
+          <p style="margin-top:16px;"><strong>Annual Return Analysis (Unhedged):</strong></p>
+          <ul class="bullet-list">
+            <li>Interest carry: +10% (BRL bond return)</li>
+            <li>FX impact: Depends on whether BRL appreciates or depreciates</li>
+            <li>UIP prediction: BRL should depreciate 10% (to offset interest differential)</li>
+            <li>Actual (if BRL flat or appreciates): Carry trader profits 10%+ FX gain</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="sub-header">Return Decomposition</h3>
+
+      <p class="prose">
+        Return dari unhedged carry trade dapat decompose:
+      </p>
+
+      <div class="formula-block">
+        <span class="label">Carry Trade Return (Unhedged, Base Currency = Low Yield)</span>
+        R<sub>carry</sub> ≈ i<sub>asset</sub> - i<sub>funding</sub> + %ΔS<sub>asset/funding</sub>
+
+        <span class="note">
+          R<sub>carry</sub> = Total return dalam funding currency<br>
+          i<sub>asset</sub> = Interest rate di asset country<br>
+          i<sub>funding</sub> = Interest rate di funding country<br>
+          %ΔS = Percentage change in asset currency (positive = appreciation)<br>
+          <br>
+          <strong>Example:</strong><br>
+          If i<sub>BRL</sub> = 10%, i<sub>JPY</sub> = 0%, %ΔBRL/JPY = +5%:<br>
+          R = 10% - 0% + 5% = 15% (excellent!)<br>
+          <br>
+          If %ΔBRL/JPY = -10% (BRL depreciates):<br>
+          R = 10% - 0% - 10% = 0% (carry trade hedged against depreciation per UIP)
+        </span>
+      </div>
+
+      <h3 class="sub-header">Risk Profile of Carry Trade</h3>
+
+      <p class="prose">
+        Meskipun carry trade terlihat seperti "free lunch," ada risiko signifikan:
+      </p>
+
+      <div class="callout amber">
+        <span class="callout-title">Key Risks in Carry Trade</span>
+        <p><strong>1. Currency Risk (Tail Risk):</strong> Ketika risk sentiment berubah, high-yield currencies dapat crash secara sudden. Ini disebut "carry trade unwind." Return distribution adalah negatively skewed—banyak kecil gains tapi occasional large losses.</p>
+        <p style="margin-top:12px;"><strong>2. Interest Rate Risk:</strong> Central bank dapat raise rates (mengganggu funding rates) atau terjadi repricing aset (bond values drop). Funding costs bisa meningkat dramatically.</p>
+        <p style="margin-top:12px;"><strong>3. Leverage Risk:</strong> Carry trades sering dijalankan dengan leverage tinggi (borrowed capital). Leverage amplify gains dan losses.</p>
+        <p style="margin-top:12px;"><strong>4. Liquidity Risk:</strong> Ketika unwind terjadi, withdrawal dari carry positions dapat menciptakan fire-sale prices dan illiquidity.</p>
+        <p style="margin-top:12px;"><strong>5. Rollover Risk:</strong> Funding rates dapat spike, atau lenders mungkin tidak roll over exposure, memaksa liquidation.</p>
+      </div>
+
+      <h3 class="sub-header">Empirical Return Distribution</h3>
+
+      <p class="prose">
+        Carry trade returns sering dideskripsikan sebagai "picking up nickels in front of steamroller" — memang earn steady small returns (nickels), tapi setiap beberapa tahun ada sudden large loss (steamroller). Distribusi return-nya:
+      </p>
+
+      <ul class="bullet-list">
+        <li><strong>Peaked:</strong> Return sering concentrate di range narrow (e.g., 5-15% per tahun)</li>
+        <li><strong>Fat Tails:</strong> Probabilitas extreme losses lebih tinggi dari normal distribution</li>
+        <li><strong>Negative Skewness:</strong> Tail risk ke bawah (crash losses) lebih severe daripada upside</li>
+        <li><strong>Low Correlation dengan Risk Assets:</strong> Carry trade returns generally uncorrelated dengan stock returns dalam normal times, tapi saat market stress keduanya crash bersamaan (correlation spike)</li>
+      </ul>
+
+      <h3 class="sub-header">Carry Trade Unwind Dynamics</h3>
+
+      <p class="prose">
+        Ketika carry trade unwind dimulai (seringkali triggered oleh risk-off event), ada cascade effects:
+      </p>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 5: Anatomy of Carry Trade Unwind</div>
+        <div class="exhibit-body">
+          <p><strong>Scenario: Risk-off Event (e.g., banking crisis, credit shock)</strong></p>
+
+          <ol class="num-list">
+            <li><strong>Trigger:</strong> Sudden risk-off sentiment atau adverse economic news. Investors start covering losses.</li>
+            <li><strong>Unwinding Begins:</strong> Carry traders forced (or voluntary) to exit positions. Sell asset currency (BRL, AUD, etc.), buy funding currency (JPY, CHF, USD).</li>
+            <li><strong>Currency Impact:</strong> Asset currency crashes (high-yielders depreciate sharply), funding currency appreciates (safe-haven bid).</li>
+            <li><strong>Margin Calls:</strong> Leverage positions see significant losses. Brokers issue margin calls. Traders forced to liquidate.</li>
+            <li><strong>Stop-Loss Triggers:</strong> Technical traders' stop-losses triggered as price falls, creating additional selling pressure.</li>
+            <li><strong>Liquidity Spiral:</strong> Excessive supply of asset currency and demand for safe-haven currency worsens depreciation.</li>
+            <li><strong>Flight to Quality:</strong> Broader risk-off drives investment flows dari emerging markets dan risky assets ke safe assets (T-bills, gold).</li>
+            <li><strong>Funding Pressure:</strong> JPY borrowing rates may spike atau become unavailable. Worse, brokers may require higher collateral.</li>
+            <li><strong>Cascade Losses:</strong> Losses compound as position liquidations continue.</li>
+          </ol>
+
+          <p style="margin-top:16px;"><strong>Historical Example: August 2015 China Devaluation</strong></p>
+          <p>PBOC surprise devaluation of CNY plus weak data triggered risk-off. Carry trades in CNY, EMs unwound. VIX spiked, JPY (safe-haven) surged ~5% in days, commodities crashed. Losses in carry positions estimated in tens of billions.</p>
+        </div>
+      </div>
+
+      <h3 class="sub-header">Profitability of Carry Trade Over Time</h3>
+
+      <p class="prose">
+        Carry trade historically has been profitable on average, tapi dengan extreme volatility dan occasional losses. Pengalaman empiris:
+      </p>
+
+      <ul class="bullet-list">
+        <li><strong>2003-2007:</strong> Highly profitable; average returns 8-12% annually. Low volatility, steady carry accumulation.</li>
+        <li><strong>2008 Financial Crisis:</strong> Devastating unwind; emerging market currencies crashed 20-40%. Carry traders suffered massive losses in single quarter.</li>
+        <li><strong>2009-2011:</strong> Profitable again; carry recovered as risk sentiment normalized.</li>
+        <li><strong>2011-2012:</strong> Another difficult period (Eurozone crisis) with volatility spikes.</li>
+        <li><strong>2013-2015:</strong> Mixed; US rates rising pressured emerging market funding.</li>
+        <li><strong>2020:</strong> COVID crash in March; recovery in subsequent quarters.</li>
+      </ul>
+
+      <div class="kc">
+        <div class="kc-header" onclick="toggleKC('kc5')">
+          <span class="kc-header-title">Knowledge Check 5: Carry Trade Profitability</span>
+          <span class="kc-toggle">▼</span>
+        </div>
+        <div class="kc-body" id="kc5">
+          <p class="kc-q">
+            Investor borrows USD @ 2% and invests in TRY (Turkish Lira) @ 12%. Spot S(TRY/USD) = 20. Next year: (a) TRY appreciates 3%, (b) TRY depreciates 8%, (c) TRY depreciates 10%.
+            <br><br>
+            Calculate carry trade return untuk setiap scenario.
+          </p>
+          <div class="kc-answer">
+            <p><strong>Jawaban:</strong></p>
+            <p><strong>Formula:</strong> R = i<sub>TRY</sub> - i<sub>USD</sub> + %ΔTRY/USD</p>
+            <p><strong>(a) TRY appreciates 3%:</strong></p>
+            <p>R = 12% - 2% + 3% = 13% (best case, earn carry + FX gain)</p>
+            <p><strong>(b) TRY depreciates 8%:</strong></p>
+            <p>R = 12% - 2% - 8% = 2% (small profit, FX loss partially offset carry)</p>
+            <p><strong>(c) TRY depreciates 10%:</strong></p>
+            <p>R = 12% - 2% - 10% = 0% (break-even, FX loss exactly equals carry; this is UIP prediction!)</p>
+            <p style="margin-top:12px;"><strong>Insight:</strong> Scenario (c) matches UIP: interest rate differential (10%) equals depreciation (10%). Scenarios (a) dan (b) show UIP violation—carry is profitable despite depreciation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 7: Practice Questions -->
+    <div class="chapter">
+      <div class="chapter-header">
+        <div class="chapter-num">SECTION 7</div>
+        <h2 class="chapter-title">Latihan Soal — Item Set Vignette</h2>
+      </div>
+
+      <p class="prose">
+        Soal-soal berikut mengikuti format CFA Level 2 Item Set dengan satu vignette diikuti 6 pertanyaan. Tingkat kesulitan: Medium-Hard.
+      </p>
+
+      <div class="divider"></div>
+
+      <div class="practice-body">
+        <div class="vignette">
+          <div class="vignette-label">VIGNETTE — SCENARIO ANALYSIS</div>
+
+          <p><strong>Situation:</strong></p>
+          <p style="line-height:1.8;">
+            Seorang portfolio manager dari Indonesia, PT Mitra Investasi, sedang menganalisis strategi investasi lintas valuta (IDR/USD/JPY) untuk tahun depan. Data pasar saat ini:
+          </p>
+
+          <table class="reg-table">
+            <tr>
+              <th>Variable</th>
+              <th>Indonesia (IDR)</th>
+              <th>USA (USD)</th>
+              <th>Japan (JPY)</th>
+            </tr>
+            <tr>
+              <td><strong>Spot Rate</strong></td>
+              <td>—</td>
+              <td>IDR/USD = 15,000</td>
+              <td>JPY/USD = 110</td>
+            </tr>
+            <tr>
+              <td><strong>1Y Nominal Interest Rate</strong></td>
+              <td>6.5%</td>
+              <td>4.5%</td>
+              <td>0.5%</td>
+            </tr>
+            <tr>
+              <td><strong>Expected Inflation (1Y)</strong></td>
+              <td>4.0%</td>
+              <td>2.5%</td>
+              <td>0.8%</td>
+            </tr>
+            <tr>
+              <td><strong>Expected Real Rate</strong></td>
+              <td>2.5%</td>
+              <td>2.0%</td>
+              <td>~0%</td>
+            </tr>
+            <tr>
+              <td><strong>1Y Forward Rate</strong></td>
+              <td>—</td>
+              <td>F(IDR/USD) = 15,500</td>
+              <td>F(JPY/USD) = 109.5</td>
+            </tr>
+          </table>
+
+          <p style="margin-top:20px;"><strong>Additional Context:</strong></p>
+          <p style="line-height:1.8;">
+            • PT Mitra currently holds significant IDR assets and is considering unhedged investments abroad.<br>
+            • Bank Indonesia recently signaled 1-2 rate hikes over next 12 months to combat inflation.<br>
+            • Analyst forecasts that global risk sentiment may deteriorate if Fed signals earlier rate peak, potentially triggering emerging market currency weakness.<br>
+            • The manager is specifically considering: (1) Covered investment in USD bonds, (2) Uncovered investment in USD bonds, (3) Carry trade exposure via JPY funding.
+          </p>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Question 1</div>
+          <div class="q-text">
+            Based on CIP, the forward rate premium/discount for IDR/USD should most likely be:
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q0"> A) A forward premium of 2.0% to 3.5%, with IDR trading stronger forward</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q0"> B) A forward discount of 2.0% to 3.5%, with IDR trading weaker forward</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q0"> C) No forward premium/discount; forward rate should equal spot rate</label>
+          </div>
+          <button onclick="answer(0, document.querySelector('input[name=q0]:checked').value, 'B')" style="margin-top:12px;padding:8px 14px;background:var(--gold-bg);border:none;border-radius:4px;cursor:pointer;">Submit Answer</button>
+          <div class="explanation" id="exp0">
+            <p><strong>Answer: B</strong></p>
+            <p>CIP states: (F - S) / S ≈ i<sub>IDR</sub> - i<sub>USD</sub> = 6.5% - 4.5% = 2%</p>
+            <p>Forward discount = 2%, meaning F < S. IDR should trade weaker (more IDR per USD) in forward market.</p>
+            <p>Calculated forward: F = 15,000 × (1.045) / (1.065) = 15,000 × 0.9812 = 14,718 IDR/USD</p>
+            <p>But given F(IDR/USD) = 15,500, forward is stronger than CIP predicts! This suggests CIP is violated, possibly due to risk premium or expectations of further BI tightening supporting IDR.</p>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Question 2</div>
+          <div class="q-text">
+            According to UIP, if the manager invests in USD bonds unhedged, the expected return in IDR terms should approximately equal the IDR bond return (6.5%) if:
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q1"> A) IDR depreciates by approximately 2.0%</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q1"> B) IDR appreciates by approximately 2.0%</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q1"> C) USD depreciates relative to IDR by approximately 4.5%</label>
+          </div>
+          <button onclick="answer(1, document.querySelector('input[name=q1]:checked').value, 'A')" style="margin-top:12px;padding:8px 14px;background:var(--gold-bg);border:none;border-radius:4px;cursor:pointer;">Submit Answer</button>
+          <div class="explanation" id="exp1">
+            <p><strong>Answer: A</strong></p>
+            <p>UIP: Expected return from unhedged USD bond = i<sub>USD</sub> + E[%ΔS(USD/IDR)]</p>
+            <p>For returns to be equal: 6.5% = 4.5% + E[%ΔS(USD/IDR)]</p>
+            <p>E[%ΔS(USD/IDR)] = 2% (USD depreciates or IDR depreciates by 2%)</p>
+            <p>From the investor's IDR perspective, if IDR depreciates 2% against USD, USD investment returns are offset, equaling the 6.5% IDR bond return.</p>
+            <p>This matches the interest rate differential (2%) per UIP principle.</p>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Question 3</div>
+          <div class="q-text">
+            Relative PPP suggests that the expected spot rate IDR/USD in one year should be approximately:
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q2"> A) 15,000 × (1.040) / (1.025) = 15,219</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q2"> B) 15,000 × (1.025) / (1.040) = 14,423</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q2"> C) 15,000 × (1.04 - 0.025) = 15,225</label>
+          </div>
+          <button onclick="answer(2, document.querySelector('input[name=q2]:checked').value, 'A')" style="margin-top:12px;padding:8px 14px;background:var(--gold-bg);border:none;border-radius:4px;cursor:pointer;">Submit Answer</button>
+          <div class="explanation" id="exp2">
+            <p><strong>Answer: A</strong></p>
+            <p>Relative PPP: S<sub>next</sub> = S<sub>today</sub> × (1 + π<sub>IDR</sub>) / (1 + π<sub>USD</sub>)</p>
+            <p>S<sub>next</sub> = 15,000 × (1.040) / (1.025) = 15,000 × 1.01463 = 15,219 IDR/USD</p>
+            <p>Interpretation: IDR expected to depreciate ~1.46% due to higher inflation (4.0% vs 2.5%), reflecting purchasing power loss.</p>
+            <p><strong>Note:</strong> This PPP forecast (1.5% depreciation) is less than the interest rate differential (2%), suggesting potential UIP violation and carry trade opportunity in favor of USD.</p>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Question 4</div>
+          <div class="q-text">
+            The manager observes that the forward rate F(IDR/USD) = 15,500 is stronger (lower IDR per USD) than both the CIP-implied rate and the PPP-implied rate. This is most likely due to:
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q3"> A) Forward rate premium reflecting expected IDR appreciation due to BI rate hikes and capital inflows</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q3"> B) CIP and PPP are irrelevant for forward pricing; forward is solely determined by supply and demand</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q3"> C) Carry traders are positioning long USD forward, pushing forward dollar stronger</label>
+          </div>
+          <button onclick="answer(3, document.querySelector('input[name=q3]:checked').value, 'A')" style="margin-top:12px;padding:8px 14px;background:var(--gold-bg);border:none;border-radius:4px;cursor:pointer;">Submit Answer</button>
+          <div class="explanation" id="exp3">
+            <p><strong>Answer: A</strong></p>
+            <p>Forward rate (15,500) < CIP-implied (14,718) means IDR is stronger in forward. This contradicts CIP's prediction of IDR depreciation.</p>
+            <p>Given vignette context (BI signals rate hikes, stronger growth expectations), market is pricing in IDR strength due to positive policy action and capital flows. The forward premium reflects risk premium and expectation of IDR strength.</p>
+            <p>Option B is wrong because CIP/PPP always set bounds (with spreads). Option C is backwards (if long USD forward, would push dollar weaker, not stronger).</p>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Question 5</div>
+          <div class="q-text">
+            If the manager enters a carry trade (short JPY at 0.5% borrowing, long IDR at 6.5%), the annualized return (in JPY terms) will be approximately:
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q4"> A) 6.0% if JPY/IDR remains constant</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q4"> B) 6.0% plus appreciation of IDR relative to JPY</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q4"> C) 6.0% minus expected depreciation of IDR relative to JPY per PPP (approx 3.2%)</label>
+          </div>
+          <button onclick="answer(4, document.querySelector('input[name=q4]:checked').value, 'B')" style="margin-top:12px;padding:8px 14px;background:var(--gold-bg);border:none;border-radius:4px;cursor:pointer;">Submit Answer</button>
+          <div class="explanation" id="exp4">
+            <p><strong>Answer: B</strong></p>
+            <p>Carry trade return: R = i<sub>IDR</sub> - i<sub>JPY</sub> + %ΔIDRvs JPY</p>
+            <p>Base carry = 6.5% - 0.5% = 6.0%</p>
+            <p>Total return = 6.0% + %ΔIDR/JPY</p>
+            <p>If IDR appreciates vs JPY, return > 6%; if depreciates, return < 6%. But base carry is guaranteed if position maintained (assuming rates don't change dramatically).</p>
+            <p>Option C incorrectly assumes PPP depreciation; while PPP suggests IDR depreciates vs USD by ~1.5%, the relationship between IDR/JPY is different.</p>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Question 6</div>
+          <div class="q-text">
+            The analyst warns that if global risk sentiment deteriorates (e.g., Fed policy shock), the carry trade position (short JPY, long IDR) would most likely experience:
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q5"> A) Gains, as IDR strengthens as investors flee risk and repatriate capital to Asia</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q5"> B) Losses, as JPY appreciates (safe-haven) and IDR depreciates (emerging market sell-off), compounding losses in the position</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q5"> C) No significant impact, as interest rate differentials protect the position from FX shocks</label>
+          </div>
+          <button onclick="answer(5, document.querySelector('input[name=q5]:checked').value, 'B')" style="margin-top:12px;padding:8px 14px;background:var(--gold-bg);border:none;border-radius:4px;cursor:pointer;">Submit Answer</button>
+          <div class="explanation" id="exp5">
+            <p><strong>Answer: B</strong></p>
+            <p>Risk-off environment triggers carry trade unwind. Typical dynamics:</p>
+            <p>1. JPY (funding currency, safe-haven) appreciates → short JPY position loses</p>
+            <p>2. IDR (emerging market, risky asset) depreciates → long IDR position loses</p>
+            <p>3. Losses compound because both positions move against the trader simultaneously</p>
+            <p><strong>Key insight:</strong> Carry trades have negative skewness—small gains accumulated over time wiped out by occasional large losses during risk-off periods. This is the "steamroller" effect.</p>
+            <p>Option A is backwards (IDR depreciates in risk-off). Option C is false (interest rate differential doesn't protect against tail FX risk).</p>
+          </div>
+        </div>
+
+        <div style="margin-top:32px;text-align:center;">
+          <button onclick="showScore()" style="padding:12px 24px;background:var(--blue);color:white;border:none;border-radius:6px;font-weight:600;cursor:pointer;font-size:15px;">Show Score</button>
+        </div>
+
+        <div class="score-panel" id="scorePanel">
+          <h3>Score</h3>
+          <p id="scoreText">0 / 6</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Navigation -->
+    <div class="nav-bottom">
+      <a href="#" class="nav-btn" onclick="alert('Navigasi ke Day 14'); return false;">
+        <span>←</span> <span class="nav-day">Day 14: Model Training & Validation</span>
+      </a>
+      <a href="#" class="nav-btn" onclick="alert('Navigasi ke Day 16'); return false;">
+        <span class="nav-day">Day 16: Mundell-Fleming & Currency Crisis</span> <span>→</span>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    function toggleKC(id) {
+      const kc = document.getElementById(id).closest('.kc');
+      kc.classList.toggle('open');
+    }
+
+    const answers = {};
+    const correct = { 0: 'B', 1: 'A', 2: 'A', 3: 'A', 4: 'B', 5: 'B' };
+    const total = 6;
+
+    function answer(qIdx, chosen, correctAns) {
+      answers[qIdx] = chosen === correctAns;
+      const expDiv = document.getElementById(`exp${qIdx}`);
+      expDiv.classList.add('show');
+    }
+
+    function showScore() {
+      let score = 0;
+      for (let key in answers) {
+        if (answers[key]) score++;
+      }
+      document.getElementById('scoreText').textContent = `${score} / ${total}`;
+      document.getElementById('scorePanel').classList.add('show');
+    }
+  </script>
+</body>
+</html>

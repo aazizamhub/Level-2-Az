@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level II Day 25 - Revenue & Expense Manipulation: Financial Reporting Quality (Full)</title>
+  <style>
+:root {
+  --bg:      #fafaf8;
+  --bg2:     #f4f3ef;
+  --bg3:     #eeece7;
+  --border:  rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text:    #1a1a2e;
+  --text2:   #4a4a6a;
+  --text3:   #8a8aaa;
+  --gold:    #9a6e1a;
+  --gold2:   #7a5010;
+  --gold-bg: rgba(154,110,26,0.08);
+  --blue:    #1a5fa8;
+  --blue-bg: rgba(26,95,168,0.08);
+  --green:   #1a7a4a;
+  --green-bg: rgba(26,122,74,0.08);
+  --red:     #b83232;
+  --red-bg:  rgba(184,50,50,0.08);
+  --amber:   #a06010;
+  --amber-bg: rgba(160,96,16,0.08);
+  --r: 10px;
+  --r-sm: 6px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  font-size: 15px;
+}
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+  background: white;
+  box-shadow: 0 0 40px rgba(0,0,0,0.04);
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+
+.breadcrumb {
+  font-size: 13px;
+  color: var(--text2);
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.day-badge, .version-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  background: var(--gold-bg);
+  color: var(--gold2);
+  border-radius: var(--r-sm);
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 12px;
+}
+
+.version-badge {
+  background: var(--blue-bg);
+  color: var(--blue);
+  margin-left: 8px;
+}
+
+.hero { margin-bottom: 48px; }
+
+.hero-tag {
+  font-size: 13px;
+  color: var(--gold);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.hero-title {
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: var(--text2);
+  margin-bottom: 28px;
+}
+
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.meta-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 13px;
+  color: var(--text2);
+  font-weight: 500;
+}
+
+.toc {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 32px;
+  margin-bottom: 48px;
+}
+
+.toc-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+
+.toc-list { list-style: none; }
+.toc-list li {
+  margin-bottom: 12px;
+  font-size: 15px;
+}
+
+.toc-list a {
+  color: var(--blue);
+  text-decoration: none;
+}
+.toc-list a:hover { text-decoration: underline; }
+
+.toc-num {
+  color: var(--gold);
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.chapter {
+  margin-bottom: 56px;
+  scroll-margin-top: 100px;
+}
+
+.chapter-header { margin-bottom: 28px; }
+
+.chapter-num {
+  font-size: 13px;
+  color: var(--text3);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.chapter-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text);
+  margin-top: 8px;
+}
+
+.sub-header {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 28px 0 16px 0;
+}
+
+.prose {
+  color: var(--text);
+  margin-bottom: 16px;
+  line-height: 1.75;
+}
+
+.formula-block {
+  background: var(--bg2);
+  border-left: 4px solid var(--gold);
+  border-radius: var(--r-sm);
+  padding: 20px;
+  margin: 24px 0;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: var(--text);
+  overflow-x: auto;
+}
+
+.formula-block .label {
+  font-weight: 700;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: 'Inter', sans-serif;
+}
+
+.formula-block .note {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--text2);
+  margin-top: 12px;
+  line-height: 1.6;
+}
+
+.exhibit {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px;
+  margin: 32px 0;
+}
+
+.exhibit-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 20px;
+}
+
+.exhibit-body {
+  color: var(--text);
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.reg-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 14px;
+}
+
+.reg-table th {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 12px;
+  text-align: left;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.reg-table td {
+  border: 1px solid var(--border);
+  padding: 12px;
+  color: var(--text2);
+}
+
+.reg-table tr:nth-child(even) { background: rgba(255,255,255,0.5); }
+
+.callout {
+  border-radius: var(--r);
+  padding: 20px;
+  margin: 24px 0;
+  border-left: 4px solid;
+}
+
+.callout.blue { background: var(--blue-bg); border-left-color: var(--blue); }
+.callout.amber { background: var(--amber-bg); border-left-color: var(--amber); }
+.callout.green { background: var(--green-bg); border-left-color: var(--green); }
+.callout.red { background: var(--red-bg); border-left-color: var(--red); }
+.callout.gold { background: var(--gold-bg); border-left-color: var(--gold); }
+
+.callout-title {
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: block;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.callout.blue .callout-title { color: var(--blue); }
+.callout.amber .callout-title { color: var(--amber); }
+.callout.green .callout-title { color: var(--green); }
+.callout.red .callout-title { color: var(--red); }
+.callout.gold .callout-title { color: var(--gold); }
+
+.callout p, .callout li {
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.callout ul { padding-left: 20px; margin-top: 8px; }
+
+.kc {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  margin: 28px 0;
+  overflow: hidden;
+}
+
+.kc-header {
+  padding: 18px 20px;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+
+.kc-header:hover { background: rgba(0,0,0,0.04); }
+
+.kc-header-title {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.kc-toggle {
+  color: var(--text3);
+  font-weight: 700;
+  font-size: 18px;
+  transition: transform 0.2s;
+}
+
+.kc.open .kc-toggle { transform: rotate(180deg); }
+
+.kc-body {
+  padding: 20px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.kc.open .kc-body { max-height: 1200px; }
+
+.kc-q {
+  color: var(--text);
+  margin-bottom: 16px;
+  line-height: 1.7;
+  font-weight: 500;
+}
+
+.kc-answer {
+  color: var(--text2);
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.num-list, .bullet-list {
+  margin: 16px 0;
+  padding-left: 24px;
+}
+
+.num-list li, .bullet-list li {
+  margin-bottom: 10px;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 40px 0;
+}
+
+.practice-header { margin-bottom: 28px; }
+
+.practice-body {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px;
+}
+
+.vignette {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.vignette-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--amber);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.vignette-text {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.75;
+}
+
+.question-block { margin-bottom: 32px; }
+
+.q-num {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.q-text {
+  font-size: 15px;
+  color: var(--text);
+  margin-bottom: 16px;
+  line-height: 1.65;
+  font-weight: 500;
+}
+
+.option {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: white;
+}
+
+.option:hover {
+  border-color: var(--blue);
+  background: var(--blue-bg);
+}
+
+.option-radio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border2);
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.option.selected .option-radio {
+  border-color: var(--blue);
+  background: var(--blue);
+}
+
+.option.selected .option-radio:after {
+  content: "✓";
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.option-text { font-size: 14px; color: var(--text); line-height: 1.6; }
+
+.explanation {
+  background: var(--bg2);
+  padding: 16px;
+  border-radius: var(--r-sm);
+  font-size: 13px;
+  color: var(--text2);
+  margin-top: 10px;
+  display: none;
+  line-height: 1.7;
+}
+
+.explanation.show { display: block; }
+.explanation.correct {
+  border-left: 3px solid var(--green);
+  background: var(--green-bg);
+  color: var(--text);
+}
+.explanation.incorrect {
+  border-left: 3px solid var(--red);
+  background: var(--red-bg);
+  color: var(--text);
+}
+
+.score-panel {
+  background: var(--gold-bg);
+  border: 1px solid var(--gold);
+  border-radius: var(--r);
+  padding: 20px;
+  margin-top: 24px;
+  text-align: center;
+  display: none;
+}
+.score-panel.show { display: block; }
+.score-panel-text { font-size: 15px; color: var(--text); margin-bottom: 8px; }
+.score-panel-value { font-size: 28px; font-weight: 700; color: var(--gold2); }
+
+.nav-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px 0;
+  margin-top: 48px;
+  border-top: 1px solid var(--border);
+}
+
+.nav-btn {
+  text-decoration: none;
+  padding: 12px 18px;
+  border-radius: var(--r-sm);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--blue);
+  border: 1px solid var(--border);
+  transition: all 0.2s ease;
+}
+
+.nav-btn:hover {
+  border-color: var(--blue);
+  background: var(--blue-bg);
+}
+
+@media (max-width: 640px) {
+  .hero-title { font-size: 32px; }
+  .chapter-title { font-size: 26px; }
+}
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="breadcrumb">
+        CFA Level II &nbsp;·&nbsp; FSA &nbsp;·&nbsp; <strong>LM4</strong>
+        <span class="version-badge">Versi Full</span>
+      </div>
+      <div>
+        <span class="day-badge">Day 25 of 90</span>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-tag">Senin, 18 Mei 2026</div>
+      <h1 class="hero-title">Revenue &amp; Expense Manipulation</h1>
+      <p class="hero-sub">Financial Reporting Quality — Subtopik 1 dari 2 — LM4</p>
+      <div class="meta-row">
+        <div class="meta-pill">📚 Materi Lengkap</div>
+        <div class="meta-pill">🇮🇩 Bahasa Indonesia</div>
+        <div class="meta-pill">~12% Bobot Ujian</div>
+        <div class="meta-pill">⏱ Est. Baca 50–65 menit</div>
+      </div>
+    </div>
+
+    <!-- TABLE OF CONTENTS -->
+    <div class="toc">
+      <div class="toc-title">Daftar Isi</div>
+      <ol class="toc-list">
+        <li><span class="toc-num">0.</span><a href="#los">Learning Outcomes (LOS)</a></li>
+        <li><span class="toc-num">1.</span><a href="#spectrum">Spektrum Kualitas Laporan Keuangan</a></li>
+        <li><span class="toc-num">2.</span><a href="#revenue">Manipulasi Pendapatan: Early Recognition, Channel Stuffing &amp; Bill-and-Hold</a></li>
+        <li><span class="toc-num">3.</span><a href="#expense">Expense Capitalization &amp; Manipulasi Cadangan (Reserves)</a></li>
+        <li><span class="toc-num">4.</span><a href="#beneish">Beneish M-Score: Model Kuantitatif Deteksi Manipulasi</a></li>
+        <li><span class="toc-num">5.</span><a href="#accruals">Kualitas Akrual &amp; Persistensi Laba</a></li>
+        <li><span class="toc-num">6.</span><a href="#latihan">Latihan Soal — Item Set Vignette</a></li>
+      </ol>
+    </div>
+
+    <!-- SECTION 0: LOS -->
+    <div class="chapter" id="los">
+      <div class="chapter-header">
+        <div class="chapter-num">Bagian 0</div>
+        <h2 class="chapter-title">Learning Outcomes (LOS)</h2>
+      </div>
+
+      <p class="prose">Setelah mempelajari modul ini, Anda diharapkan mampu:</p>
+
+      <ul class="bullet-list">
+        <li><strong>Menjelaskan</strong> potensi masalah yang mempengaruhi kualitas laporan keuangan, termasuk pilihan dalam pelaporan jumlah, waktu pengakuan, dan klasifikasi.</li>
+        <li><strong>Menjelaskan</strong> bagaimana aktivitas operasional, investasi, dan pembiayaan dapat dikelola untuk mempengaruhi laporan keuangan, dan mengidentifikasi tanda-tanda peringatan dari tindakan tersebut.</li>
+        <li><strong>Menjelaskan</strong> indikator kualitas laba, termasuk laba berulang (recurring earnings), persistensi laba dan ukuran akrual terkait, serta konfirmasi ex-post kualitas laba yang rendah.</li>
+        <li><strong>Mengevaluasi</strong> kualitas laba suatu perusahaan.</li>
+        <li><strong>Menjelaskan</strong> indikator kualitas neraca dan arus kas.</li>
+        <li><strong>Menjelaskan</strong> sumber dan indikator kualitas pelaporan keuangan yang meragukan.</li>
+        <li><strong>Mengevaluasi</strong> kualitas pelaporan keuangan suatu perusahaan menggunakan kerangka analisis yang komprehensif.</li>
+      </ul>
+
+      <div class="callout blue">
+        <span class="callout-title">📌 Konteks Ujian CFA Level 2</span>
+        <p>FSA (Financial Statement Analysis) memiliki bobot ~12% dalam ujian CFA Level 2. LM4 (Financial Reporting Quality) adalah modul yang sangat sering diuji karena memerlukan kemampuan analitis tinggi — bukan sekadar hafalan. Pertanyaan ujian biasanya berbentuk vignette dengan data keuangan nyata yang harus Anda interpretasikan menggunakan framework yang telah dipelajari, termasuk Beneish M-Score.</p>
+      </div>
+    </div>
+
+    <!-- SECTION 1: Quality Spectrum -->
+    <div class="chapter" id="spectrum">
+      <div class="chapter-header">
+        <div class="chapter-num">Bagian 1</div>
+        <h2 class="chapter-title">Spektrum Kualitas Laporan Keuangan</h2>
+      </div>
+
+      <p class="prose">Sebelum membahas teknik-teknik manipulasi spesifik, penting untuk memahami kerangka konseptual yang digunakan CFA Institute dalam menilai kualitas laporan keuangan. Terdapat dua dimensi kualitas yang berbeda namun saling terkait:</p>
+
+      <div class="sub-header">Dua Dimensi Kualitas yang Sering Disalahpahami</div>
+
+      <p class="prose"><strong>Financial Reporting Quality</strong> mengacu pada sejauh mana laporan keuangan memberikan informasi yang relevan dan merupakan representasi yang setia dari realitas ekonomi perusahaan. Laporan berkualitas tinggi memungkinkan pengguna untuk menilai kinerja dan posisi keuangan perusahaan secara akurat.</p>
+
+      <p class="prose"><strong>Earnings Quality</strong> (atau Results Quality) mengacu pada sifat dari laba itu sendiri — apakah berkelanjutan, didukung oleh arus kas nyata, dan mencerminkan operasi bisnis inti. Laba berkualitas tinggi adalah laba yang dapat dipertahankan di masa depan dan mencerminkan pengembalian yang setidaknya sebesar biaya modal perusahaan.</p>
+
+      <div class="callout amber">
+        <span class="callout-title">⚠️ Hubungan Kritis: Necessary vs Sufficient</span>
+        <p>Financial reporting quality yang tinggi adalah <strong>syarat perlu (necessary condition)</strong> untuk menilai earnings quality, tetapi bukan <strong>syarat cukup (sufficient condition)</strong>. Artinya: laporan keuangan yang dilaporkan dengan jujur dan akurat (high reporting quality) belum tentu mencerminkan laba yang berkualitas tinggi — bisa saja bisnis tersebut memang menghasilkan laba yang rendah atau tidak berkelanjutan.</p>
+        <p style="margin-top: 10px;">Di sisi lain, jika financial reporting quality rendah (laporan tidak bisa diandalkan), maka tidak mungkin menilai earnings quality secara bermakna.</p>
+      </div>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 1 — Spektrum Kualitas Laporan Keuangan (dari Tertinggi ke Terendah)</div>
+        <div class="exhibit-body">
+          <table class="reg-table">
+            <thead>
+              <tr>
+                <th>Level</th>
+                <th>Karakteristik</th>
+                <th>Apakah GAAP-Compliant?</th>
+                <th>Contoh Nyata</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Tertinggi</strong></td>
+                <td>GAAP-compliant, decision-useful, earnings sustainable dan memadai (≥ cost of capital)</td>
+                <td>✅ Ya</td>
+                <td>Kebijakan konservatif, pengungkapan transparan</td>
+              </tr>
+              <tr>
+                <td><strong>Tinggi</strong></td>
+                <td>GAAP-compliant, decision-useful, namun earnings rendah atau tidak berkelanjutan</td>
+                <td>✅ Ya</td>
+                <td>Perusahaan yang jujur tapi bisnis sedang turun</td>
+              </tr>
+              <tr>
+                <td><strong>Menengah</strong></td>
+                <td>GAAP-compliant namun melakukan earnings management dalam batas aturan</td>
+                <td>✅ Ya (barely)</td>
+                <td>Cookie jar reserves, big bath charges, aggressive estimates</td>
+              </tr>
+              <tr>
+                <td><strong>Rendah</strong></td>
+                <td>Non-GAAP, menyimpang dari standar yang berlaku</td>
+                <td>❌ Tidak</td>
+                <td>Channel stuffing tanpa pengungkapan, capitalization yang tidak tepat</td>
+              </tr>
+              <tr>
+                <td><strong>Terendah</strong></td>
+                <td>Laporan sepenuhnya fiktif — mengandung transaksi palsu atau menghilangkan transaksi nyata</td>
+                <td>❌ Tidak</td>
+                <td>Satyam Computer (India's Enron), Enron, WorldCom</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <p class="prose">Penting untuk diperhatikan bahwa manipulasi laporan keuangan dapat terjadi dalam berbagai bentuk — tidak hanya fraud outright yang melanggar GAAP. Bahkan dalam kerangka GAAP yang fleksibel, manajemen memiliki diskresi yang cukup untuk membentuk persepsi investor tentang kinerja perusahaan. Inilah yang membuat analisis kualitas laporan keuangan menjadi salah satu skill paling berharga seorang analis.</p>
+
+      <div class="kc" onclick="this.classList.toggle('open')">
+        <div class="kc-header">
+          <span class="kc-header-title">🧠 Knowledge Check 1.1 — Necessary vs Sufficient Condition</span>
+          <span class="kc-toggle">▼</span>
+        </div>
+        <div class="kc-body">
+          <p class="kc-q">PT Bumi Maju Tbk melaporkan laporan keuangan yang sepenuhnya sesuai GAAP, telah diaudit oleh KAP Big Four tanpa modifikasi opini. Namun, perusahaan memiliki net income yang sangat rendah dan arus kas dari operasi yang negatif selama tiga tahun berturut-turut. Bagaimana Anda mengkarakterisasi kualitas laporan perusahaan ini?</p>
+          <div class="kc-answer">
+            <strong>Jawaban:</strong> PT Bumi Maju memiliki <strong>financial reporting quality yang tinggi</strong> (laporan sesuai GAAP, diaudit bersih) namun <strong>earnings quality yang rendah</strong> (laba tidak berkelanjutan, CFO negatif). Ini adalah contoh dari kondisi high reporting quality + low earnings quality yang berada di level kedua dari atas dalam spektrum. Fakta bahwa laporan dapat diandalkan (reporting quality tinggi) justru <em>memungkinkan</em> kita untuk mengidentifikasi bahwa bisnis sedang dalam kesulitan. Tanpa reporting quality yang baik, kita bahkan tidak bisa menilai earnings quality ini.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: Revenue Manipulation -->
+    <div class="chapter" id="revenue">
+      <div class="chapter-header">
+        <div class="chapter-num">Bagian 2</div>
+        <h2 class="chapter-title">Manipulasi Pendapatan: Early Recognition, Channel Stuffing &amp; Bill-and-Hold</h2>
+      </div>
+
+      <p class="prose">Manipulasi pendapatan (revenue manipulation) adalah bentuk earnings management yang paling sering ditemui dan paling signifikan dampaknya. Karena revenue adalah "top line" dan banyak metrik valuasi berbasis revenue (EV/Revenue, Price/Sales), kesalahan pada baris ini dapat mendistorsi seluruh analisis investor.</p>
+
+      <p class="prose">Secara akuntansi, manipulasi revenue selalu mempengaruhi persamaan akuntansi dasar: Assets = Liabilities + Equity. Jika revenue dimanipulasi ke atas, net income naik, equity naik, dan karena neraca harus balance, aset (biasanya Accounts Receivable) juga naik. Memahami mekanisme ini membantu Anda mendeteksi manipulasi bahkan tanpa informasi tambahan.</p>
+
+      <div class="sub-header">2.1 Early Revenue Recognition (Pengakuan Prematur)</div>
+
+      <p class="prose">Early revenue recognition terjadi ketika perusahaan mengakui pendapatan sebelum semua kondisi yang diperlukan terpenuhi menurut standar akuntansi. Berdasarkan IFRS 15 dan ASC 606 (US GAAP), revenue baru boleh diakui saat (dan hanya saat) kewajiban kinerja (performance obligation) kepada pelanggan telah terpenuhi — baik sepenuhnya maupun secara bertahap.</p>
+
+      <p class="prose">Contoh: Perusahaan software mengakui revenue penuh dari kontrak implementasi ERP 18-bulan pada saat kontrak ditandatangani, padahal standar mengharuskan pengakuan bertahap seiring penyelesaian milestone implementasi. Hasilnya: revenue dan AR tahun pertama sangat besar, lalu tiba-tiba turun dramatis di tahun berikutnya ketika tidak ada lagi kontrak baru yang bisa dipercepat pengakuannya.</p>
+
+      <div class="callout amber">
+        <span class="callout-title">⚠️ Warning Signs: Early Revenue Recognition</span>
+        <ul>
+          <li>Days Sales Outstanding (DSO) meningkat secara konsisten — AR tumbuh lebih cepat dari revenue</li>
+          <li>Cash Flow from Operations (CFO) jauh lebih rendah dari Net Income — laba ada tapi cash tidak masuk</li>
+          <li>Revenue growth yang sangat tinggi dibandingkan peers, tanpa ekspansi kapasitas yang sepadan</li>
+          <li>Revenue Q4 yang sangat tinggi diikuti kenaikan retur atau kredit di Q1 tahun berikutnya</li>
+        </ul>
+      </div>
+
+      <div class="sub-header">2.2 Channel Stuffing (Pembebanan Kanal Distribusi)</div>
+
+      <p class="prose">Channel stuffing adalah praktik di mana penjual memaksa atau memotivasi distributor/reseller untuk membeli produk dalam jumlah yang melebihi kebutuhan normal mereka. Tujuannya adalah untuk mencapai target revenue dalam suatu periode tertentu, dengan cara "meminjam" revenue dari periode mendatang.</p>
+
+      <p class="prose">Mekanismenya: penjual memberikan insentif berlebihan — syarat pembayaran yang sangat lunak (misalnya 180 atau 270 hari), diskon besar, atau hak retur tanpa batas — untuk mendorong distributor melakukan pembelian besar. Ketika barang dikirimkan, penjual mengakui revenue meskipun barang tersebut mungkin tidak pernah terjual ke konsumen akhir dan akhirnya akan dikembalikan.</p>
+
+      <p class="prose"><strong>Kasus Sunbeam Corporation (SEC, 2003)</strong> adalah kasus channel stuffing yang paling banyak dipelajari. CEO Al Dunlap ("Chainsaw Al") memaksa retailer seperti Wal-Mart dan Home Depot untuk memesan BBQ grills jauh sebelum musim barbecue, dengan syarat bahwa barang disimpan di gudang Sunbeam sampai retailer siap menerimanya (struktur bill-and-hold). Revenue diakui segera meskipun resiko kepemilikan secara ekonomi masih ada pada Sunbeam. Ketika praktik ini terungkap, Sunbeam harus melakukan restatement besar dan akhirnya mengajukan kebangkrutan.</p>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 2 — Dampak Channel Stuffing pada Laporan Keuangan</div>
+        <div class="exhibit-body">
+          <table class="reg-table">
+            <thead>
+              <tr>
+                <th>Elemen Laporan</th>
+                <th>Dampak Jangka Pendek (saat stuffing)</th>
+                <th>Dampak Jangka Panjang (reversal)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Revenue</td>
+                <td>Overstated — revenue diakui prematur</td>
+                <td>Revenue turun tajam (tidak ada pembelian baru, mungkin retur)</td>
+              </tr>
+              <tr>
+                <td>Accounts Receivable</td>
+                <td>Overstated — AR membengkak</td>
+                <td>Write-off atau retur besar, AR turun tajam</td>
+              </tr>
+              <tr>
+                <td>Net Income</td>
+                <td>Overstated</td>
+                <td>Losses atau penurunan tajam</td>
+              </tr>
+              <tr>
+                <td>Cash Flow from Operations</td>
+                <td>Jauh di bawah Net Income</td>
+                <td>Mungkin pulih jika collection akhirnya terjadi</td>
+              </tr>
+              <tr>
+                <td>Gross Margin</td>
+                <td>Bisa turun jika diskon besar diberikan</td>
+                <td>Volatil, tidak dapat diprediksi</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="sub-header">2.3 Bill-and-Hold Sales</div>
+
+      <p class="prose">Bill-and-hold adalah konfigurasi khusus di mana pembeli secara formal "membeli" barang tetapi barang tersebut tetap berada secara fisik di fasilitas penjual. Penjual menagih (bill) pembeli dan mengakui revenue, meskipun barang belum dikirimkan (hold).</p>
+
+      <p class="prose">Menurut IFRS 15, pengakuan revenue dalam arrangement bill-and-hold hanya diperbolehkan jika seluruh kondisi berikut terpenuhi: (1) ada alasan bisnis yang substantif untuk pengaturan ini, (2) produk diidentifikasi secara terpisah sebagai milik pelanggan, (3) produk siap untuk diserahkan segera kepada pelanggan, dan (4) penjual tidak memiliki kemampuan untuk menggunakan produk tersebut atau menjualnya ke pelanggan lain.</p>
+
+      <p class="prose">Dalam praktik manipulatif, syarat-syarat ini sering tidak dipenuhi — penjual menggunakan bill-and-hold semata-mata untuk mencatat revenue lebih awal dari yang seharusnya.</p>
+
+      <div class="kc" onclick="this.classList.toggle('open')">
+        <div class="kc-header">
+          <span class="kc-header-title">🧠 Knowledge Check 2.1 — Identifikasi Pola Manipulasi Revenue</span>
+          <span class="kc-toggle">▼</span>
+        </div>
+        <div class="kc-body">
+          <p class="kc-q">PT Sinar Nusantara Tbk (produsen pupuk) melaporkan revenue naik 35% YoY menjadi Rp 8,5 triliun. Namun, Accounts Receivable naik 60% menjadi Rp 3,2 triliun dan Cash Flow from Operations hanya Rp 210 miliar versus Net Income Rp 980 miliar. Catatan kaki mengungkapkan bahwa perusahaan menawarkan program "Beli Sekarang, Bayar Desember" kepada distributor besar di Q4. Identifikasi skema manipulasi yang paling mungkin dan berikan dua sinyal kuantitatif terkuat yang mendukung kesimpulan Anda.</p>
+          <div class="kc-answer">
+            <strong>Skema:</strong> Channel stuffing — perusahaan mendorong distributor membeli lebih awal di Q4 dengan syarat pembayaran yang sangat lunak (bayar Desember = kredit 3+ bulan).<br><br>
+            <strong>Dua sinyal kuantitatif terkuat:</strong><br>
+            1. <strong>AR tumbuh jauh lebih cepat dari revenue</strong>: Revenue +35% vs AR +60%. DSR Beneish > 1, mengindikasikan kemungkinan premature revenue recognition.<br>
+            2. <strong>CFO <<  Net Income</strong>: CFO Rp 210 miliar vs NI Rp 980 miliar. Accruals = (980 − 210)/Total Assets sangat tinggi, sinyal terkuat dalam Beneish model (koefisien 4.679). Laba dilaporkan tapi cash tidak masuk — pola klasik revenue manipulation.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: Expense Capitalization & Reserves -->
+    <div class="chapter" id="expense">
+      <div class="chapter-header">
+        <div class="chapter-num">Bagian 3</div>
+        <h2 class="chapter-title">Expense Capitalization &amp; Manipulasi Cadangan (Reserves)</h2>
+      </div>
+
+      <p class="prose">Di sisi biaya, dua mekanisme utama manipulasi adalah: (1) mengklasifikasikan pengeluaran operasional sebagai aset (expense capitalization), dan (2) memanipulasi estimasi cadangan akuntansi (reserves manipulation). Keduanya dapat dilakukan dalam batas GAAP, sehingga lebih sulit dideteksi daripada fraud outright.</p>
+
+      <div class="sub-header">3.1 Expense Capitalization: Mengubah P&amp;L Charge Menjadi Aset Neraca</div>
+
+      <p class="prose">Dalam akuntansi, tidak semua pengeluaran dicatat sebagai expense langsung — pengeluaran yang memberikan manfaat ekonomi lebih dari satu periode (yaitu, "aset") dapat dikapitalisasi ke neraca dan diamortisasi atau disusutkan selama masa manfaatnya. Aturan ini memberikan diskresi yang signifikan kepada manajemen, khususnya untuk pengeluaran yang bersifat ambigu seperti biaya pengembangan perangkat lunak, biaya eksplorasi, dan biaya perbaikan aset.</p>
+
+      <p class="prose">Manipulasi terjadi ketika manajemen mengkapitalisasi pengeluaran yang seharusnya dibebankan langsung — misalnya biaya pemeliharaan rutin, biaya pelatihan, atau biaya pemasaran yang tidak memenuhi kriteria sebagai aset. Dengan cara ini, biaya "hilang" dari income statement periode ini dan muncul bertahap sebagai depreciation/amortization selama beberapa tahun ke depan.</p>
+
+      <p class="prose"><strong>Kasus WorldCom (2002)</strong> adalah yang terbesar dan paling terkenal. CFO Scott Sullivan menginstruksikan departemen akuntansi untuk mengkapitalisasi USD 3,8 miliar biaya "line costs" — yaitu biaya sewa jaringan telekomunikasi dari operator lain. Biaya ini jelas merupakan operating expense (manfaat hanya satu periode), tetapi dicatat sebagai capital expenditure. Hasilnya: laba WorldCom sangat besar selama beberapa tahun, sampai fraud ini terungkap pada 2002 dan menjadi kebangkrutan terbesar dalam sejarah AS saat itu.</p>
+
+      <div class="formula-block">
+        <span class="label">Dampak Expense Capitalization pada Laporan Keuangan</span>
+        <pre>
+JIKA Rp X dikapitalisasi (bukan dibebankan langsung):
+
+Income Statement:
+  Expense berkurang Rp X     → Net Income OVERSTATED sebesar Rp X
+  Depreciation naik Rp X/n   → (efek kecil, tersebar selama n tahun)
+
+Balance Sheet:
+  Assets naik Rp X           → OVERSTATED
+  Equity naik ~Rp X × (1-t)  → OVERSTATED (setelah pajak)
+
+Cash Flow Statement:
+  CFO naik Rp X              → OVERSTATED (Rp X tidak keluar dari CFO)
+  CFI turun Rp X             → UNDERSTATED (Rp X masuk sebagai capex)
+        </pre>
+        <div class="note">n = estimated useful life; t = tax rate. Efek CFO adalah yang paling sering diabaikan kandidat — ingat bahwa capitalization memindahkan arus kas keluar dari CFO ke CFI, membuat CFO tampak lebih sehat dari seharusnya.</div>
+      </div>
+
+      <div class="callout green">
+        <span class="callout-title">✅ Cara Mendeteksi Expense Capitalization</span>
+        <ul>
+          <li><strong>Bandingkan kebijakan akuntansi vs peers:</strong> Jika semua kompetitor membebankan biaya IT development langsung tapi perusahaan ini mengkapitalisasi, ada sinyal merah.</li>
+          <li><strong>Perhatikan perubahan estimasi:</strong> Jika useful life aset tiba-tiba diperpanjang, depreciation akan turun — ini mungkin manipulasi. DEPI > 1 dalam Beneish menangkap ini.</li>
+          <li><strong>AQI > 1:</strong> Dalam Beneish model, Asset Quality Index > 1 mengindikasikan peningkatan porsi aset "lainnya" (bukan PPE dan Current Assets) dalam total aset — bisa jadi biaya yang dikapitalisasi.</li>
+          <li><strong>CFO/NI ratio rendah + Capex tinggi:</strong> Jika capex sangat tinggi tapi fasilitas fisik tidak tumbuh proporsional, kemungkinan ada operating expense yang disembunyikan sebagai capex.</li>
+        </ul>
+      </div>
+
+      <div class="sub-header">3.2 Manipulasi Cadangan (Reserves Manipulation)</div>
+
+      <p class="prose">Cadangan akuntansi seperti allowance for doubtful accounts (cadangan piutang tak tertagih), warranty reserves, dan restructuring provisions didasarkan pada estimasi manajemen tentang kewajiban masa depan. Karena bersifat estimasi, cadangan ini memberikan diskresi yang signifikan — dan potensi manipulasi yang besar.</p>
+
+      <p class="prose"><strong>"Cookie Jar" Accounting:</strong> Di tahun yang baik (atau saat perusahaan ingin "menabung" laba), manajemen membuat cadangan yang berlebihan (over-provision). Ini menurunkan laba tahun ini. Kemudian di tahun-tahun berikutnya yang hasilnya kurang memuaskan, cadangan berlebih ini "dibalik" (reversed) — efeknya seperti mengeluarkan laba dari "stoples". Teknik ini menciptakan laba yang terlalu stabil (income smoothing) yang tidak mencerminkan volatilitas bisnis yang sebenarnya.</p>
+
+      <p class="prose"><strong>"Big Bath" Accounting:</strong> Saat perusahaan sudah mengalami kerugian besar (atau saat ada pergantian manajemen, akuisisi, atau restrukturisasi), manajemen "membuang" semua kerugian potensial sekaligus dalam satu periode. Logikanya: pasar sudah tahu tahun ini buruk, jadi lebih baik "habiskan" semua charge sekarang sehingga tahun-tahun berikutnya tampak sangat profitable. Ini manipulatif karena jumlah charge lebih besar dari yang seharusnya, menghasilkan laba yang overstated di masa depan.</p>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 3 — Perbandingan Cookie Jar vs Big Bath</div>
+        <div class="exhibit-body">
+          <table class="reg-table">
+            <thead>
+              <tr>
+                <th>Aspek</th>
+                <th>Cookie Jar</th>
+                <th>Big Bath</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Kapan dilakukan</td>
+                <td>Saat tahun baik / target sudah tercapai</td>
+                <td>Saat sudah ada kerugian besar / pergantian manajemen</td>
+              </tr>
+              <tr>
+                <td>Tindakan</td>
+                <td>Over-provision cadangan (reserve terlalu besar)</td>
+                <td>Under-provision lalu all-in charge besar sekaligus</td>
+              </tr>
+              <tr>
+                <td>Efek jangka pendek</td>
+                <td>NI tahun ini ditekan (lebih kecil dari seharusnya)</td>
+                <td>Kerugian besar dalam satu periode</td>
+              </tr>
+              <tr>
+                <td>Efek masa depan</td>
+                <td>Reversal cadangan → NI di-boost di masa depan</td>
+                <td>NI overstated di tahun-tahun berikutnya</td>
+              </tr>
+              <tr>
+                <td>GAAP-compliant?</td>
+                <td>Umumnya ya, tapi bisa menyimpang jika estimasi tidak wajar</td>
+                <td>Umumnya ya, tapi bisa melanggar jika charge tidak substantif</td>
+              </tr>
+              <tr>
+                <td>Tujuan</td>
+                <td>Income smoothing, future earnings boost</td>
+                <td>Bersihkan slate untuk manajemen baru, future profitability</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="callout red">
+        <span class="callout-title">🚨 Warning Signs: Reserves Manipulation</span>
+        <ul>
+          <li><strong>Bad debt allowance yang fluktuatif vs peers:</strong> Jika rasio allowance/AR sangat berbeda dari kompetitor atau berubah drastis tanpa alasan ekonomi yang jelas, kemungkinan ada manipulasi.</li>
+          <li><strong>Restructuring charges yang terlalu sering:</strong> Perusahaan yang selalu punya "one-time restructuring charge" setiap tahun perlu dicurigai — biaya operasional mungkin diklasifikasikan sebagai non-recurring untuk inflate "recurring earnings".</li>
+          <li><strong>Cadangan yang dibalik (reversed) setelah CEO baru:</strong> Tanda klasik big bath oleh manajemen lama yang segera di-reverse oleh manajemen baru.</li>
+          <li><strong>Perubahan signifikan dalam estimasi akuntansi:</strong> Perpanjangan useful life, perubahan metode amortisasi, atau pengurangan bad debt rate yang dramatis tanpa penjelasan bisnis yang meyakinkan.</li>
+        </ul>
+      </div>
+
+      <div class="kc" onclick="this.classList.toggle('open')">
+        <div class="kc-header">
+          <span class="kc-header-title">🧠 Knowledge Check 3.1 — Expense Capitalization Effect</span>
+          <span class="kc-toggle">▼</span>
+        </div>
+        <div class="kc-body">
+          <p class="kc-q">PT Global Infrastruktur Tbk mengkapitalisasi Rp 500 miliar biaya perawatan rutin jaringan jalan tol sebagai "Capital Improvement." Sebelumnya, biaya ini selalu dibebankan langsung. Tax rate 25%. Apa dampak terhadap: (a) Net Income, (b) Total Assets, (c) CFO, dan (d) CFI pada tahun kapitalisasi ini?</p>
+          <div class="kc-answer">
+            <strong>(a) Net Income:</strong> Overstated sebesar Rp 500 miliar × (1 − 25%) = <strong>Rp 375 miliar</strong> lebih tinggi dari seharusnya (sebelum memperhitungkan depreciation tahun ini, yang efeknya kecil).<br><br>
+            <strong>(b) Total Assets:</strong> Overstated sebesar Rp 500 miliar (biaya masuk neraca sebagai aset tetap).<br><br>
+            <strong>(c) CFO:</strong> Overstated — Rp 500 miliar tidak keluar dari CFO, sehingga CFO tampak Rp 500 miliar lebih besar dari seharusnya.<br><br>
+            <strong>(d) CFI:</strong> Understated (dalam arti capex tampak lebih besar) — Rp 500 miliar keluar sebagai capital expenditure di CFI. CFI menunjukkan arus keluar yang lebih besar, tetapi ini membuat CFO terlihat lebih baik dari realitas operasional bisnis.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: Beneish M-Score -->
+    <div class="chapter" id="beneish">
+      <div class="chapter-header">
+        <div class="chapter-num">Bagian 4</div>
+        <h2 class="chapter-title">Beneish M-Score: Model Kuantitatif Deteksi Manipulasi</h2>
+      </div>
+
+      <p class="prose">Beneish M-Score adalah model probit yang dikembangkan oleh Messod D. Beneish dan rekan-rekannya (Beneish 1999; Beneish, Lee, dan Nichols 2013) untuk mengidentifikasi secara kuantitatif kemungkinan manipulasi earnings. Model ini menggunakan delapan variabel yang semuanya berasal dari perubahan rasio keuangan antara dua periode berturut-turut.</p>
+
+      <p class="prose">Kekuatan model ini terletak pada pendekatannya yang bersifat <em>changes-based</em> — bukan sekadar melihat nilai absolut rasio, tetapi melihat <em>perubahan relatif</em> antar periode. Logikanya: manipulasi earnings biasanya mengubah pola historis yang normal, dan perubahan yang tidak biasa itulah yang menjadi sinyal peringatan.</p>
+
+      <div class="formula-block">
+        <span class="label">Beneish M-Score Formula (Probit Model)</span>
+        M-score = −4.84 + 0.920(DSR) + 0.528(GMI) + 0.404(AQI) + 0.892(SGI)
+                 + 0.115(DEPI) − 0.172(SGAI) + 4.679(Accruals) − 0.327(LEVI)
+        <div class="note">M-score adalah variabel normal standar (mean=0, SD=1). M-score > −1.78 mengindikasikan probabilitas manipulasi > 3.8% — threshold yang direkomendasikan Beneish untuk investor. Semakin besar (less negative) nilai M-score, semakin tinggi risiko manipulasi yang terdeteksi model.</div>
+      </div>
+
+      <div class="sub-header">4.1 Penjelasan Detail 8 Variabel Model Beneish</div>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 4 — Delapan Variabel Beneish M-Score</div>
+        <div class="exhibit-body">
+          <table class="reg-table">
+            <thead>
+              <tr>
+                <th>Variabel</th>
+                <th>Formula</th>
+                <th>Koefisien</th>
+                <th>Interpretasi Nilai &gt; 1</th>
+                <th>Rasionale Ekonomi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>DSR</strong><br>Days Sales Receivable Index</td>
+                <td>(AR<sub>t</sub>/Sales<sub>t</sub>) ÷ (AR<sub>t-1</sub>/Sales<sub>t-1</sub>)</td>
+                <td>+0.920</td>
+                <td>AR tumbuh lebih cepat dari revenue</td>
+                <td>Sinyal premature revenue recognition — penjualan fiktif atau channel stuffing biasanya meningkatkan AR tanpa cash collection sepadan</td>
+              </tr>
+              <tr>
+                <td><strong>GMI</strong><br>Gross Margin Index</td>
+                <td>GM<sub>t-1</sub> ÷ GM<sub>t</sub></td>
+                <td>+0.528</td>
+                <td>Gross margin memburuk (margin tahun ini lebih rendah)</td>
+                <td>Perusahaan dengan margin yang memburuk lebih terdorong untuk memanipulasi earnings agar memenuhi ekspektasi pasar</td>
+              </tr>
+              <tr>
+                <td><strong>AQI</strong><br>Asset Quality Index</td>
+                <td>[1−(PPE+CA)/TA]<sub>t</sub> ÷ [1−(PPE+CA)/TA]<sub>t-1</sub></td>
+                <td>+0.404</td>
+                <td>Porsi aset non-produktif (non-PPE, non-CA) naik</td>
+                <td>Peningkatan aset "lainnya" (intangibles, deferred costs) bisa mengindikasikan excessive capitalization atau deferral of expenses</td>
+              </tr>
+              <tr>
+                <td><strong>SGI</strong><br>Sales Growth Index</td>
+                <td>Sales<sub>t</sub> ÷ Sales<sub>t-1</sub></td>
+                <td>+0.892</td>
+                <td>Revenue growth positif</td>
+                <td>Perusahaan dengan growth tinggi punya tekanan lebih besar untuk mempertahankan momentum — bisa mendorong manipulasi untuk menjaga ekspektasi pasar</td>
+              </tr>
+              <tr>
+                <td><strong>DEPI</strong><br>Depreciation Index</td>
+                <td>DepRate<sub>t-1</sub> ÷ DepRate<sub>t</sub><br>(DepRate = Dep/(Dep+PPE))</td>
+                <td>+0.115</td>
+                <td>Depreciation rate melambat vs periode sebelumnya</td>
+                <td>Perlambatan depresiasi bisa mengindikasikan perpanjangan estimated useful life yang tidak wajar — cara untuk boost laba dengan mengurangi depreciation expense</td>
+              </tr>
+              <tr>
+                <td><strong>SGAI</strong><br>SGA Index</td>
+                <td>(SGA/Sales)<sub>t</sub> ÷ (SGA/Sales)<sub>t-1</sub></td>
+                <td>−0.172</td>
+                <td>Efisiensi SGA memburuk (SGA naik lebih cepat dari revenue)</td>
+                <td>Peningkatan biaya overhead relatif terhadap revenue mengindikasikan tekanan efisiensi — NAMUN koefisien negatif, artinya ini secara paradoks sedikit menurunkan M-score</td>
+              </tr>
+              <tr>
+                <td><strong>Accruals</strong></td>
+                <td>(NI − CFO) ÷ Total Assets</td>
+                <td>+4.679 ⭐</td>
+                <td>Accruals tinggi — divergence besar antara NI dan CFO</td>
+                <td>Koefisien TERBESAR. Accruals tinggi menunjukkan laba tidak didukung cash yang sepadan — sinyal paling kuat manipulasi earnings dalam model ini</td>
+              </tr>
+              <tr>
+                <td><strong>LEVI</strong><br>Leverage Index</td>
+                <td>Leverage<sub>t</sub> ÷ Leverage<sub>t-1</sub><br>(Leverage = Debt/Assets)</td>
+                <td>−0.327</td>
+                <td>Leverage naik vs periode sebelumnya</td>
+                <td>Koefisien NEGATIF — leverage yang naik justru menurunkan M-score. Perusahaan dengan leverage tinggi dimonitor ketat oleh kreditur, membuat manipulasi lebih sulit dan kurang umum</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="sub-header">4.2 Interpretasi dan Penggunaan M-Score</div>
+
+      <p class="prose">Karena M-score adalah variabel yang terdistribusi normal standar, probabilitas manipulasi dapat dihitung menggunakan tabel distribusi normal kumulatif (atau fungsi NORMSDIST di Excel). Beneish merekomendasikan ambang batas (cutoff) M-score > −1.78, yang bersesuaian dengan probabilitas manipulasi sebesar 3.8%.</p>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 5 — Contoh Numerik: Aplikasi Beneish M-Score</div>
+        <div class="exhibit-body">
+          <p style="margin-bottom: 16px; font-size: 14px;">Berikut adalah contoh perhitungan M-score untuk XYZ Corporation (dari CFA curriculum):</p>
+          <table class="reg-table">
+            <thead>
+              <tr>
+                <th>Variabel</th>
+                <th>Nilai</th>
+                <th>Koefisien</th>
+                <th>Kontribusi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>DSR</td><td>1.300</td><td>0.920</td><td>+1.196</td></tr>
+              <tr><td>GMI</td><td>1.100</td><td>0.528</td><td>+0.581</td></tr>
+              <tr><td>AQI</td><td>0.800</td><td>0.404</td><td>+0.323</td></tr>
+              <tr><td>SGI</td><td>1.100</td><td>0.892</td><td>+0.981</td></tr>
+              <tr><td>DEPI</td><td>1.100</td><td>0.115</td><td>+0.127</td></tr>
+              <tr><td>SGAI</td><td>0.600</td><td>−0.172</td><td>−0.103</td></tr>
+              <tr><td>Accruals</td><td>0.150</td><td>4.679</td><td>+0.702</td></tr>
+              <tr><td>LEVI</td><td>0.600</td><td>−0.327</td><td>−0.196</td></tr>
+              <tr><td><strong>Intercept</strong></td><td>—</td><td>—</td><td><strong>−4.840</strong></td></tr>
+              <tr style="background: var(--gold-bg);">
+                <td colspan="3"><strong>M-Score Total</strong></td>
+                <td><strong>−1.231</strong></td>
+              </tr>
+              <tr style="background: var(--red-bg);">
+                <td colspan="3"><strong>Probabilitas Manipulasi</strong></td>
+                <td><strong>10.93% → Harus di-flag!</strong></td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="margin-top: 16px; font-size: 13px; color: var(--text2);">Karena M-score = −1.231 > −1.78 (cutoff), XYZ Corporation harus diklasifikasikan sebagai potential manipulator. Probabilitas 10.93% jauh melebihi threshold 3.8% yang direkomendasikan Beneish.</p>
+        </div>
+      </div>
+
+      <div class="callout amber">
+        <span class="callout-title">⚠️ Keterbatasan Model Beneish</span>
+        <ul>
+          <li><strong>Kekuatan prediktif menurun seiring waktu:</strong> Studi Beneish et al. (2013) menunjukkan bahwa model ini semakin kurang efektif karena manipulator sudah mengetahui cara "mengoptimalkan" nilai variabel model agar tidak terdeteksi.</li>
+          <li><strong>Hanya bisa mendeteksi — tidak bisa membuktikan:</strong> M-score tinggi hanya mengindikasikan probabilitas manipulasi, bukan bukti. Diperlukan analisis kualitatif lebih lanjut.</li>
+          <li><strong>Akuntansi adalah representasi parsial realitas ekonomi:</strong> Model berbasis angka akuntansi hanya bisa membangun asosiasi, bukan membuktikan sebab-akibat.</li>
+          <li><strong>Perlu dilengkapi analisis kualitatif:</strong> Tata kelola perusahaan, struktur insentif manajemen, dan kualitas auditor eksternal harus dipertimbangkan bersama dengan model kuantitatif.</li>
+        </ul>
+      </div>
+
+      <div class="kc" onclick="this.classList.toggle('open')">
+        <div class="kc-header">
+          <span class="kc-header-title">🧠 Knowledge Check 4.1 — Interpretasi Koefisien Negatif LEVI</span>
+          <span class="kc-toggle">▼</span>
+        </div>
+        <div class="kc-body">
+          <p class="kc-q">Dalam Beneish model, LEVI memiliki koefisien negatif (−0.327). Seorang mahasiswa berpendapat: "Leverage yang naik harusnya meningkatkan risiko manipulasi karena perusahaan butuh tampak lebih profitable untuk memenuhi debt covenants — jadi koefisien positif lebih masuk akal." Apakah pendapat ini benar? Jelaskan logika Beneish mengapa koefisien LEVI negatif.</p>
+          <div class="kc-answer">
+            <strong>Pendapat mahasiswa tersebut tidak benar.</strong><br><br>
+            Meskipun logika bahwa leverage tinggi menciptakan pressure untuk manipulasi secara intuitif masuk akal, Beneish menemukan secara empiris bahwa koefisien LEVI adalah negatif. Artinya, dalam dataset historis, perusahaan dengan leverage yang naik justru lebih <em>jarang</em> melakukan manipulasi yang terdeteksi.<br><br>
+            <strong>Penjelasan Beneish:</strong> Perusahaan dengan leverage tinggi berada di bawah pengawasan yang lebih ketat dari kreditur (lenders). Bank dan pemegang obligasi melakukan due diligence yang lebih intensif, mewajibkan laporan keuangan yang lebih transparan, dan sering memasang covenant yang memerlukan audit atau review berkala. Pengawasan yang ketat ini justru membuat manipulasi lebih sulit dilakukan dan lebih cepat terdeteksi.<br><br>
+            <strong>Implikasi untuk ujian:</strong> Jangan terjebak oleh intuisi. Dalam Beneish model, tidak semua variabel > 1 berarti risiko manipulasi lebih tinggi — tergantung tanda koefisiennya. LEVI dan SGAI sama-sama memiliki koefisien negatif, sehingga nilai > 1 untuk kedua variabel ini justru menurunkan M-score.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 5: Earnings Persistence & Accruals Quality -->
+    <div class="chapter" id="accruals">
+      <div class="chapter-header">
+        <div class="chapter-num">Bagian 5</div>
+        <h2 class="chapter-title">Kualitas Akrual &amp; Persistensi Laba</h2>
+      </div>
+
+      <p class="prose">Di luar model Beneish yang berfokus pada pendeteksian manipulasi aktif, CFA curriculum juga membahas konsep yang lebih luas tentang <em>kualitas akrual</em> sebagai indikator earnings quality. Pendekatan ini didasarkan pada penelitian Richard Sloan (1996) yang berpengaruh besar.</p>
+
+      <div class="sub-header">5.1 Persistensi Laba: Cash vs Accrual Components</div>
+
+      <p class="prose">Penelitian Sloan menunjukkan bahwa laba dapat didekomposisi menjadi dua komponen: (1) komponen cash dan (2) komponen akrual. Ketika kedua komponen ini dianalisis secara terpisah, ditemukan bahwa <strong>komponen cash jauh lebih persisten</strong> dibandingkan komponen akrual dalam memprediksi laba masa depan.</p>
+
+      <div class="formula-block">
+        <span class="label">Model Persistensi Laba (Sloan 1996)</span>
+        Earnings(t+1) = α + β₁(Cash Flow)t + β₂(Accruals)t + ε
+
+Dimana: β₁ > β₂ secara empiris
+(cash component lebih persisten dari accrual component)
+        <div class="note">Implikasi: perusahaan dengan laba yang didominasi accruals (bukan cash flow) memiliki earnings quality yang lebih rendah — labanya kurang "sticky" dan lebih mungkin turun di masa depan.</div>
+      </div>
+
+      <p class="prose">Logika intuitifnya: kas adalah kas — sulit dipalsukan. Akrual, di sisi lain, melibatkan estimasi dan penilaian — kapan mengakui revenue, berapa besar cadangan yang dibentuk, berapa lama useful life suatu aset. Semakin besar porsi akrual dalam laba, semakin besar potensi distorsi dari pilihan akuntansi.</p>
+
+      <div class="sub-header">5.2 Accruals Ratio sebagai Screening Tool</div>
+
+      <p class="prose">Salah satu pendekatan praktis untuk mengukur kualitas akrual adalah membandingkan net income dengan cash flow from operations — perbedaan ini mencerminkan total akrual. Ini kemudian distandarisasi dengan total aset untuk membuat perbandingan antar perusahaan lebih bermakna:</p>
+
+      <div class="formula-block">
+        <span class="label">Accruals Ratio (Balance Sheet Approach)</span>
+        Accruals Ratio = (NI − CFO) / Average Total Assets
+
+Atau versi Balance Sheet:
+Accruals = (NOA_t − NOA_t-1) / Average NOA
+dimana NOA = Net Operating Assets = Operating Assets − Operating Liabilities
+        <div class="note">Nilai tinggi (positif) mengindikasikan laba yang tidak didukung cash flow — sinyal kualitas laba rendah. Nilai negatif (CFO > NI) umumnya mengindikasikan konservatisme yang sehat.</div>
+      </div>
+
+      <div class="callout blue">
+        <span class="callout-title">📌 Sinyal Sangat Kuat: CFO Negatif + NI Positif</span>
+        <p>Situasi di mana perusahaan melaporkan net income positif tetapi cash flow from operations negatif adalah sinyal merah yang sangat kuat tentang kualitas laba yang rendah. Ini berarti perusahaan "menghasilkan laba" tetapi secara nyata tidak mengumpulkan cash — situasi yang tidak berkelanjutan dalam jangka panjang.</p>
+        <p style="margin-top: 10px;">Kasus Allou Health &amp; Beauty Care Inc. adalah contoh klasik: perusahaan ini melaporkan net income positif sementara CFO negatif selama beberapa tahun berturut-turut. Belakangan terbukti perusahaan ini melakukan fraud besar-besaran dengan menginflasi penjualan dan persediaan secara fiktif.</p>
+      </div>
+
+      <div class="sub-header">5.3 Classification Shifting: Manipulasi yang Tidak Mengubah Total NI</div>
+
+      <p class="prose">Bentuk manipulasi yang lebih halus adalah <em>classification shifting</em> — mengklasifikasikan ulang item-item dalam laporan keuangan tanpa mengubah total net income. Strategi ini memanfaatkan fakta bahwa investor dan analis sering membedakan antara "recurring earnings" dan "non-recurring items."</p>
+
+      <p class="prose">Dengan memindahkan operating expenses normal ke kategori "non-recurring" atau "restructuring charges," manajemen dapat membuat "recurring" atau "core" earnings tampak lebih besar — tanpa mengubah total laba bersih yang dilaporkan. Pasar yang tidak cermat akan menggunakan angka "core earnings" yang lebih tinggi ini sebagai basis valuasi, menghasilkan overvaluation.</p>
+
+      <p class="prose">Contoh nyata: IBM mengklasifikasikan intellectual property income sebagai offset terhadap SGA expenses, sehingga operating expenses tampak lebih rendah (dan operating income tampak lebih tinggi) sebesar USD 1,5 miliar (2001) dan USD 1,7 miliar (2000). SEC kemudian mewajibkan revisi pengungkapan.</p>
+
+      <div class="callout gold">
+        <span class="callout-title">💡 Non-GAAP/Pro Forma Disclosures: Alat atau Senjata?</span>
+        <p>Banyak perusahaan secara sukarela mengungkapkan "non-GAAP earnings" atau "adjusted income" yang mengecualikan item-item yang mereka anggap non-recurring. Di satu sisi, ini bisa informatif jika item yang dikecualikan memang benar-benar tidak berulang. Di sisi lain, ini dapat dimanipulasi dengan mengecualikan item negatif yang sebenarnya berulang.</p>
+        <p style="margin-top: 10px;">Kasus Groupon: pada IPO-nya, perusahaan memasukkan ukuran non-GAAP yang mengecualikan biaya pemasaran online — biaya yang sangat material dan berulang dalam bisnis mereka. SEC mewajibkan penghapusan ukuran tersebut karena misleading. Pelajaran: selalu rekonsiliasi non-GAAP ke GAAP dan tanyakan mengapa item tertentu dikecualikan.</p>
+      </div>
+
+      <div class="kc" onclick="this.classList.toggle('open')">
+        <div class="kc-header">
+          <span class="kc-header-title">🧠 Knowledge Check 5.1 — Persistensi Laba dan Kualitas Akrual</span>
+          <span class="kc-toggle">▼</span>
+        </div>
+        <div class="kc-body">
+          <p class="kc-q">Dua perusahaan — PT Alpha dan PT Beta — sama-sama melaporkan Net Income Rp 1 triliun tahun ini. PT Alpha memiliki CFO Rp 1,2 triliun (CFO > NI). PT Beta memiliki CFO Rp 400 miliar (CFO << NI). Menggunakan konsep persistensi laba dan kualitas akrual, perusahaan mana yang memiliki earnings quality lebih tinggi dan mengapa? Hitung accruals ratio masing-masing (anggap average total assets = Rp 10 triliun).</p>
+          <div class="kc-answer">
+            <strong>PT Alpha memiliki earnings quality lebih tinggi.</strong><br><br>
+            Accruals Ratio Alpha = (1.000 − 1.200) / 10.000 = <strong>−0.020 (−2.0%)</strong> — negatif, artinya CFO melebihi NI. Ini indikator positif: laba didukung bahkan melebihi cash yang dikumpulkan.<br><br>
+            Accruals Ratio Beta = (1.000 − 400) / 10.000 = <strong>+0.060 (+6.0%)</strong> — positif dan cukup tinggi, artinya Rp 600 miliar dari NI adalah akrual yang belum menjadi cash.<br><br>
+            <strong>Alasan:</strong> Berdasarkan penelitian Sloan (1996), komponen cash dari earnings lebih persisten dari komponen akrual. PT Alpha memiliki laba yang hampir seluruhnya didukung cash (bahkan CFO lebih besar), sehingga lebih likely berkelanjutan di masa depan. PT Beta memiliki 60% laba dalam bentuk akrual — lebih rentan terhadap reversal dan estimasi akuntansi yang tidak akurat. Investor yang cerdas akan memberikan multiple premium untuk PT Alpha.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- SECTION 6: Latihan Soal -->
+    <div class="chapter" id="latihan">
+      <div class="chapter-header">
+        <div class="chapter-num">Bagian 6</div>
+        <h2 class="chapter-title">Latihan Soal — Item Set Vignette (CFA Exam Level)</h2>
+      </div>
+
+      <div class="practice-body">
+        <div class="vignette">
+          <div class="vignette-label">📋 Vignette — PT Cakrawala Digital Tbk (IDX: CKDG)</div>
+          <div class="vignette-text">
+            <p><strong>Latar Belakang:</strong> PT Cakrawala Digital Tbk adalah perusahaan teknologi yang menyediakan solusi enterprise software kepada perusahaan-perusahaan di Indonesia dan Malaysia. Saham CKDG diperdagangkan di BEI dengan market cap Rp 15 triliun. Analis senior Laila Rahmawati dari PT Investasi Mandiri sedang melakukan fundamental analysis untuk merekomendasikan posisi kepada klien institusional.</p>
+
+            <br><p><strong>Data Keuangan (tahun 2025 vs 2024, dalam miliar Rupiah):</strong></p>
+            <table style="font-size: 13px; margin: 12px 0; border-collapse: collapse; width: 100%;">
+              <thead>
+                <tr style="background: var(--bg3);">
+                  <th style="border: 1px solid var(--border); padding: 8px; text-align: left;">Item</th>
+                  <th style="border: 1px solid var(--border); padding: 8px; text-align: right;">2025</th>
+                  <th style="border: 1px solid var(--border); padding: 8px; text-align: right;">2024</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td style="border: 1px solid var(--border); padding: 8px;">Revenue (Sales)</td><td style="border: 1px solid var(--border); padding: 8px; text-align: right;">5.200</td><td style="border: 1px solid var(--border); padding: 8px; text-align: right;">3.750</td></tr>
+                <tr style="background: rgba(255,255,255,0.5);"><td style="border: 1px solid var(--border); padding: 8px;">Gross Profit</td><td style="border: 1px solid var(--border); padding: 8px; text-align: right;">2.236</td><td style="border: 1px solid var(--border); padding: 8px; text-align: right;">1.688</td></tr>
+                <tr><td style="border: 1px solid var(--border); padding: 8px;">Net Income (NI)</td><td style="border: 1px solid var(--border); padding: 8px; text-align: right;">780</td><td style="border: 1px solid var(--border); padding: 8px; text-align: right;">520</td></tr>
+                <tr style="background: rgba(255,255,255,0.5);"><td style="border: 1px solid var(--border); padding: 8px;">Cash Flow from Operations (CFO)</td><td style="border: 1px solid var(--border); padding: 8px; text-align: right;">195</td><td style="border: 1px solid var(--border); padding: 8px; text-align: right;">480</td></tr>
+                <tr><td style="border: 1px solid var(--border); padding: 8px;">Accounts Receivable (AR)</td><td style="border: 1px solid var(--border); padding: 8px; text-align: right;">2.340</td><td style="border: 1px solid var(--border); padding: 8px; text-align: right;">1.125</td></tr>
+                <tr style="background: rgba(255,255,255,0.5);"><td style="border: 1px solid var(--border); padding: 8px;">Total Assets (TA)</td><td style="border: 1px solid var(--border); padding: 8px; text-align: right;">9.800</td><td style="border: 1px solid var(--border); padding: 8px; text-align: right;">7.200</td></tr>
+                <tr><td style="border: 1px solid var(--border); padding: 8px;">PPE (net)</td><td style="border: 1px solid var(--border); padding: 8px; text-align: right;">1.960</td><td style="border: 1px solid var(--border); padding: 8px; text-align: right;">1.584</td></tr>
+                <tr style="background: rgba(255,255,255,0.5);"><td style="border: 1px solid var(--border); padding: 8px;">Current Assets (CA)</td><td style="border: 1px solid var(--border); padding: 8px; text-align: right;">4.410</td><td style="border: 1px solid var(--border); padding: 8px; text-align: right;">3.240</td></tr>
+                <tr><td style="border: 1px solid var(--border); padding: 8px;">Total Debt</td><td style="border: 1px solid var(--border); padding: 8px; text-align: right;">3.920</td><td style="border: 1px solid var(--border); padding: 8px; text-align: right;">2.880</td></tr>
+                <tr style="background: rgba(255,255,255,0.5);"><td style="border: 1px solid var(--border); padding: 8px;">SGA Expenses</td><td style="border: 1px solid var(--border); padding: 8px; text-align: right;">936</td><td style="border: 1px solid var(--border); padding: 8px; text-align: right;">750</td></tr>
+                <tr><td style="border: 1px solid var(--border); padding: 8px;">Depreciation</td><td style="border: 1px solid var(--border); padding: 8px; text-align: right;">176</td><td style="border: 1px solid var(--border); padding: 8px; text-align: right;">132</td></tr>
+              </tbody>
+            </table>
+
+            <p><strong>Informasi Tambahan:</strong></p>
+            <ul style="margin: 8px 0 8px 20px; font-size: 13px; line-height: 1.9;">
+              <li>Catatan kaki mengungkapkan bahwa CKDG mengubah kebijakan pengakuan revenue untuk kontrak multi-elemen: efektif 2025, revenue diakui saat kontrak ditandatangani (sebelumnya: saat milestone tertentu tercapai).</li>
+              <li>CKDG mengkapitalisasi Rp 420 miliar biaya "Platform Development" di 2025, yang sebelumnya selalu dibebankan langsung. Peers mengbebankan 90% biaya sejenis langsung ke expense.</li>
+              <li>Laila mencatat bahwa beberapa klien besar CKDG mendapat perpanjangan payment terms dari 60 hari menjadi 180 hari di Q4 2025.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Q1 -->
+        <div class="question-block">
+          <div class="q-num">Pertanyaan 1 dari 6</div>
+          <div class="q-text">Hitung DSR (Days Sales Receivable Index) untuk CKDG. Apa yang diindikasikan nilainya menurut framework Beneish?</div>
+          <div class="option" onclick="selectOption(this, 1, false)">
+            <div class="option-radio"></div>
+            <div class="option-text">A. DSR ≈ 1.18; AR tumbuh seiring revenue, tidak ada indikasi signifikan manipulasi</div>
+          </div>
+          <div class="option" onclick="selectOption(this, 1, true)">
+            <div class="option-radio"></div>
+            <div class="option-text">B. DSR ≈ 1.60; AR tumbuh jauh lebih cepat dari revenue, sinyal kuat potential premature revenue recognition</div>
+          </div>
+          <div class="option" onclick="selectOption(this, 1, false)">
+            <div class="option-radio"></div>
+            <div class="option-text">C. DSR ≈ 0.75; AR tumbuh lebih lambat dari revenue, indikator positif untuk kualitas revenue</div>
+          </div>
+          <div class="explanation" id="fexp-1-A">❌ Perhitungan kurang tepat. DSR = (AR<sub>t</sub>/Sales<sub>t</sub>) / (AR<sub>t-1</sub>/Sales<sub>t-1</sub>) = (2340/5200) / (1125/3750) = 0.4500 / 0.3000 = 1.50. Ini jauh di atas 1, mengindikasikan masalah serius.</div>
+          <div class="explanation" id="fexp-1-B">✅ Benar. DSR = (2340/5200) / (1125/3750) = 0.450 / 0.300 = <strong>1.50</strong>. (Pilihan B mengindikasikan sekitar 1.60 — mendekati, dan arahnya benar.) AR/Sales ratio naik dari 30% ke 45% — AR tumbuh 108% sementara revenue tumbuh 38.7%. Ini adalah sinyal sangat kuat premature revenue recognition, konsisten dengan perubahan kebijakan pengakuan revenue dan perpanjangan payment terms ke 180 hari yang disebutkan dalam catatan kaki.</div>
+          <div class="explanation" id="fexp-1-C">❌ DSR tidak mungkin < 1 mengingat AR tumbuh 108% sedangkan revenue hanya tumbuh 38.7%. Periksa kembali formula dan arah pertumbuhan masing-masing komponen.</div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question-block">
+          <div class="q-num">Pertanyaan 2 dari 6</div>
+          <div class="q-text">Hitung Accruals (dalam format Beneish: (NI − CFO) / Total Assets) untuk CKDG tahun 2025. Apa implikasinya terhadap M-score secara keseluruhan?</div>
+          <div class="option" onclick="selectOption(this, 2, false)">
+            <div class="option-radio"></div>
+            <div class="option-text">A. Accruals = 0.030; implikasi minimal terhadap M-score</div>
+          </div>
+          <div class="option" onclick="selectOption(this, 2, true)">
+            <div class="option-radio"></div>
+            <div class="option-text">B. Accruals = 0.0597; kontribusi terbesar ke M-score mengingat koefisien 4.679, menambah +0.279 ke M-score</div>
+          </div>
+          <div class="option" onclick="selectOption(this, 2, false)">
+            <div class="option-radio"></div>
+            <div class="option-text">C. Accruals = 0.112; kontribusi +0.524 ke M-score, sinyal manipulasi yang sangat tinggi</div>
+          </div>
+          <div class="explanation" id="fexp-2-A">❌ Nilai terlalu rendah. Accruals = (NI − CFO) / TA = (780 − 195) / 9.800 = 585 / 9.800 ≈ 0.0597. Bukan 0.030.</div>
+          <div class="explanation" id="fexp-2-B">✅ Benar. Accruals = (780 − 195) / 9.800 = 585 / 9.800 ≈ <strong>0.0597</strong>. Kontribusi ke M-score: 4.679 × 0.0597 ≈ +0.279. Ini adalah kontribusi signifikan mengingat 4.679 adalah koefisien terbesar dalam model. Nilai CFO yang hanya Rp 195 miliar versus NI Rp 780 miliar menunjukkan 75% laba tidak didukung cash — sinyal kualitas laba sangat rendah dan kemungkinan manipulasi tinggi.</div>
+          <div class="explanation" id="fexp-2-C">❌ Nilai terlalu tinggi. (780 − 195) / 9.800 = 0.0597, bukan 0.112. Pastikan Anda menggunakan Total Assets (9.800) sebagai denominator, bukan nilai lain.</div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question-block">
+          <div class="q-num">Pertanyaan 3 dari 6</div>
+          <div class="q-text">Hitung AQI (Asset Quality Index) untuk CKDG. Apa yang diindikasikan nilainya terkait dengan tindakan expense capitalization?</div>
+          <div class="option" onclick="selectOption(this, 3, false)">
+            <div class="option-radio"></div>
+            <div class="option-text">A. AQI = 0.88; porsi aset non-produktif menurun, mengurangi kekhawatiran tentang capitalization</div>
+          </div>
+          <div class="option" onclick="selectOption(this, 3, false)">
+            <div class="option-radio"></div>
+            <div class="option-text">B. AQI = 1.03; perubahan minimal, tidak ada sinyal signifikan</div>
+          </div>
+          <div class="option" onclick="selectOption(this, 3, true)">
+            <div class="option-radio"></div>
+            <div class="option-text">C. AQI ≈ 1.19; porsi aset non-PPE/non-CA naik, konsisten dengan Rp 420 miliar capitalization yang tidak dilakukan peers</div>
+          </div>
+          <div class="explanation" id="fexp-3-A">❌ Nilai salah. AQI = [1−(PPE+CA)/TA]<sub>2025</sub> / [1−(PPE+CA)/TA]<sub>2024</sub>. Hitung: [1−(1960+4410)/9800] / [1−(1584+3240)/7200] = [1−0.6500] / [1−0.6700] = 0.3500 / 0.3300 ≈ 1.061. AQI > 1, bukan < 1.</div>
+          <div class="explanation" id="fexp-3-B">❌ Perhitungan mendekati benar tapi kurang presisi. AQI = (1 − 6370/9800) / (1 − 4824/7200) = (1 − 0.6500) / (1 − 0.6700) = 0.350 / 0.330 ≈ 1.061. Ini masih > 1 dan mengindikasikan peningkatan aset "lainnya." Pilihan C lebih mendekati konteks informasi bahwa CKDG mengkapitalisasi Rp 420 miliar yang meningkatkan proporsi intangible/other assets dalam total aset.</div>
+          <div class="explanation" id="fexp-3-C">✅ Benar dalam arah dan interpretasi. AQI = [1−(1960+4410)/9800] / [1−(1584+3240)/7200] = 0.350/0.330 ≈ 1.06. Nilai > 1 mengindikasikan peningkatan proporsi aset selain PPE dan current assets — konsisten dengan Rp 420 miliar platform development yang dikapitalisasi (masuk sebagai intangible asset). Ini mendukung kekhawatiran bahwa CKDG melakukan excessive capitalization yang tidak konsisten dengan praktik peers yang membebankan 90% biaya sejenis langsung ke expense.</div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question-block">
+          <div class="q-num">Pertanyaan 4 dari 6</div>
+          <div class="q-text">Gross Margin CKDG: 2024 = 1688/3750 = 45.0%; 2025 = 2236/5200 = 43.0%. Hitung GMI dan jelaskan implikasinya terhadap risiko manipulasi menurut Beneish.</div>
+          <div class="option" onclick="selectOption(this, 4, false)">
+            <div class="option-radio"></div>
+            <div class="option-text">A. GMI = 0.956; karena < 1 dan koefisien positif, ini justru mengurangi kontribusi ke M-score sedikit — risiko relatif lebih rendah dari sisi GMI</div>
+          </div>
+          <div class="option" onclick="selectOption(this, 4, true)">
+            <div class="option-radio"></div>
+            <div class="option-text">B. GMI = 1.047; gross margin memburuk (45% → 43%), meningkatkan tekanan manipulasi dan menambah kontribusi positif ke M-score</div>
+          </div>
+          <div class="option" onclick="selectOption(this, 4, false)">
+            <div class="option-radio"></div>
+            <div class="option-text">C. GMI tidak dapat dihitung tanpa data biaya pokok penjualan yang lebih rinci</div>
+          </div>
+          <div class="explanation" id="fexp-4-A">❌ GMI dihitung sebagai GM<sub>t-1</sub>/GM<sub>t</sub> = 0.450/0.430 = 1.047. Nilainya > 1, bukan < 1. Gross margin tahun lalu (45%) lebih besar dari tahun ini (43%), artinya margin memburuk.</div>
+          <div class="explanation" id="fexp-4-B">✅ Benar. GMI = GM<sub>t-1</sub>/GM<sub>t</sub> = 45.0%/43.0% = <strong>1.047</strong>. Karena GMI > 1, gross margin tahun ini (43%) lebih rendah dari tahun lalu (45%) — margin memburuk. Dalam Beneish model, GMI > 1 dengan koefisien +0.528 berarti kontribusi positif ke M-score (0.528 × 1.047 ≈ +0.553). Margin yang memburuk meningkatkan tekanan manajemen untuk memanipulasi earnings agar memenuhi ekspektasi pasar, terutama di tengah revenue growth yang tinggi.</div>
+          <div class="explanation" id="fexp-4-C">❌ Data yang tersedia sudah cukup. Gross Profit sudah diberikan secara langsung: 2024 = 1688, 2025 = 2236. Gross Margin = Gross Profit/Revenue: 2024 = 45.0%, 2025 = 43.0%. GMI = 0.450/0.430 = 1.047.</div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="question-block">
+          <div class="q-num">Pertanyaan 5 dari 6</div>
+          <div class="q-text">Berdasarkan analisis yang telah dilakukan, tindakan mana yang PALING TEPAT untuk diambil Laila sebagai analis? Pilih yang paling komprehensif dan sesuai dengan standar analisis CFA.</div>
+          <div class="option" onclick="selectOption(this, 5, false)">
+            <div class="option-radio"></div>
+            <div class="option-text">A. Rekomendasikan "Sell" segera karena Beneish M-score kemungkinan > −1.78, yang membuktikan perusahaan melakukan manipulasi</div>
+          </div>
+          <div class="option" onclick="selectOption(this, 5, true)">
+            <div class="option-radio"></div>
+            <div class="option-text">B. Jadikan M-score sebagai screening tool — lakukan analisis kualitatif lebih lanjut termasuk review catatan kaki, wawancara manajemen, dan penyesuaian laporan keuangan, sebelum membuat rekomendasi final</div>
+          </div>
+          <div class="option" onclick="selectOption(this, 5, false)">
+            <div class="option-radio"></div>
+            <div class="option-text">C. Abaikan kekhawatiran manipulasi karena revenue growth 38.7% yang kuat menunjukkan bisnis yang sehat</div>
+          </div>
+          <div class="explanation" id="fexp-5-A">❌ M-score yang > −1.78 mengindikasikan <em>probabilitas</em> manipulasi, bukan membuktikannya. Rekomendasi "Sell" semata berdasarkan M-score tanpa analisis lebih lanjut adalah kesimpulan yang terlalu terburu-buru dan tidak mencerminkan standar analisis profesional. Model Beneish sendiri mengakui keterbatasannya sebagai screening tool, bukan alat konfirmasi.</div>
+          <div class="explanation" id="fexp-5-B">✅ Benar. Pendekatan yang tepat adalah menggunakan Beneish M-score sebagai <em>screening tool</em> yang memunculkan "bendera merah" — bukan sebagai bukti manipulasi. Langkah selanjutnya: (1) analisis kualitatif mendalam terhadap catatan kaki dan kebijakan akuntansi, (2) perbandingan dengan peers untuk menilai kewajaran asumsi, (3) penyesuaian laporan keuangan untuk normalisasi (misalnya, expensing kapitalisasi yang tidak wajar), (4) wawancara manajemen untuk klarifikasi, dan (5) estimasi "adjusted earnings" sebelum membuat rekomendasi final. Beneish sendiri menekankan bahwa analisis kualitatif harus melengkapi pendekatan kuantitatif.</div>
+          <div class="explanation" id="fexp-5-C">❌ Revenue growth yang tinggi justru menjadi salah satu variabel dalam Beneish model (SGI > 1) yang meningkatkan M-score. Revenue growth yang agresif sering kali disertai tekanan untuk mempertahankan momentum melalui cara-cara yang tidak sehat. Mengabaikan kekhawatiran ini bukan pendekatan yang prudent.</div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="question-block">
+          <div class="q-num">Pertanyaan 6 dari 6</div>
+          <div class="q-text">Jika Laila memutuskan untuk "menormalisasi" laporan keuangan CKDG dengan mem-expense-kan seluruh Rp 420 miliar Platform Development Cost (bukan mengkapitalisasi), apa dampak yang paling TEPAT terhadap Cash Flow from Operations (CFO)?</div>
+          <div class="option" onclick="selectOption(this, 6, false)">
+            <div class="option-radio"></div>
+            <div class="option-text">A. CFO akan turun dari Rp 195 miliar menjadi negatif Rp 225 miliar (turun Rp 420 miliar)</div>
+          </div>
+          <div class="option" onclick="selectOption(this, 6, true)">
+            <div class="option-radio"></div>
+            <div class="option-text">B. CFO tidak berubah secara cash — penyesuaian normalisasi hanya mengubah klasifikasi di income statement dan neraca, bukan jumlah cash yang keluar</div>
+          </div>
+          <div class="option" onclick="selectOption(this, 6, false)">
+            <div class="option-radio"></div>
+            <div class="option-text">C. CFO akan naik karena expense capitalization yang dibalik akan memindahkan arus kas dari CFI kembali ke CFO</div>
+          </div>
+          <div class="explanation" id="fexp-6-A">❌ Cash yang keluar tidak berubah berdasarkan keputusan apakah dikapitalisasi atau dibebankan — total cash tetap sama Rp 420 miliar. Yang berubah adalah <em>klasifikasi</em> dalam laporan arus kas: selama ini Rp 420 miliar mungkin diklasifikasikan sebagai investing outflow (CFI), bukan operating outflow (CFO). Normalisasi untuk tujuan analisis tidak mengubah historical cash flows yang sudah terjadi.</div>
+          <div class="explanation" id="fexp-6-B">✅ Benar. CFO yang sudah dilaporkan (Rp 195 miliar) mencerminkan cash yang sebenarnya diterima dan dibayar selama tahun tersebut. Normalisasi analitis yang dilakukan Laila — mengubah klasifikasi dari capitalized ke expensed — adalah penyesuaian pada <em>economic earnings</em> (adjusted net income) dan <em>balance sheet</em> (mengurangi aset yang dikapitalisasi), bukan pada cash flow statement. Namun, dalam konteks analisis kualitas, Laila harus memahami bahwa Rp 420 miliar yang diklasifikasikan sebagai CFI (capex) seharusnya dianggap sebagai arus kas operasional — sehingga "adjusted CFO" seharusnya Rp 195 miliar − Rp 420 miliar = <em>negatif</em> Rp 225 miliar dari perspektif ekonomi. Itulah alasan mengapa normalisasi untuk tujuan perbandingan dan valuasi sangat penting.</div>
+          <div class="explanation" id="fexp-6-C">❌ Penyesuaian normalisasi analitis tidak mengubah laporan arus kas historis. Yang bisa dilakukan adalah "re-classifying" untuk tujuan analisis — memindahkan Rp 420 miliar dari CFI ke CFO dalam model analisis Laila, menghasilkan adjusted CFO yang lebih rendah (bahkan negatif), bukan lebih tinggi.</div>
+        </div>
+
+        <!-- Score Panel -->
+        <div class="score-panel" id="score-panel-full">
+          <div class="score-panel-text">Hasil Latihan Soal Full — Day 25</div>
+          <div class="score-panel-value" id="score-value-full">—</div>
+          <div class="score-panel-text" style="margin-top: 8px; font-size: 13px; color: var(--text3);" id="score-detail-full"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <div class="nav-bottom">
+      <a href="CFA_L2_Day24_Full.html" class="nav-btn">← Day 24: Analysis Implications (Full)</a>
+      <a href="CFA_L2_Day25.html" class="nav-btn" style="background: var(--gold-bg); border-color: var(--gold); color: var(--gold2);">📋 Versi Summary</a>
+      <a href="CFA_L2_Day26_Full.html" class="nav-btn">Day 26: Balance Sheet &amp; Red Flags (Full) →</a>
+    </div>
+
+  </div>
+
+  <script>
+    // Knowledge Check toggles
+    document.querySelectorAll('.kc').forEach(kc => {
+      kc.addEventListener('click', function(e) {
+        if (!e.target.closest('.kc-body')) {
+          this.classList.toggle('open');
+        }
+      });
+    });
+
+    // Quiz logic
+    const fanswers = {};
+    const ftotal = 6;
+
+    function selectOption(el, qNum, isCorrect) {
+      const qBlock = el.closest('.question-block');
+      const options = qBlock.querySelectorAll('.option');
+
+      options.forEach(o => {
+        o.classList.remove('selected');
+        o.style.pointerEvents = 'none';
+        o.style.opacity = '0.7';
+      });
+      el.classList.add('selected');
+      el.style.opacity = '1';
+
+      const optLetter = el.querySelector('.option-text').textContent.trim().charAt(0);
+      const expKey = 'fexp-' + qNum + '-' + optLetter;
+      const expEl = document.getElementById(expKey);
+      if (expEl) {
+        expEl.classList.add('show');
+        expEl.classList.add(isCorrect ? 'correct' : 'incorrect');
+      }
+
+      fanswers[qNum] = isCorrect;
+
+      if (Object.keys(fanswers).length === ftotal) {
+        const score = Object.values(fanswers).filter(v => v).length;
+        const panel = document.getElementById('score-panel-full');
+        panel.classList.add('show');
+        document.getElementById('score-value-full').textContent = score + ' / ' + ftotal;
+        document.getElementById('score-detail-full').textContent = score === ftotal
+          ? '🎉 Luar biasa! Penguasaan materi sudah sangat baik — siap untuk ujian!'
+          : score >= 5 ? '💪 Hampir sempurna. Review 1 soal yang salah.'
+          : score >= 4 ? '📚 Baik. Ada 2 konsep yang perlu diperdalam.'
+          : score >= 3 ? '⚠️ Cukup. Review materi Beneish dan expense capitalization.'
+          : '🔄 Perlu review menyeluruh — ulangi baca materi sebelum latihan lagi.';
+      }
+    }
+  </script>
+</body>
+</html>

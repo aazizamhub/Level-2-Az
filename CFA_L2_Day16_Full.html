@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level II · Mundell-Fleming & Currency Crisis · Day 16</title>
+  <style>
+    :root {
+      --bg:      #fafaf8;
+      --bg2:     #f4f3ef;
+      --bg3:     #eeece7;
+      --border:  rgba(0,0,0,0.08);
+      --border2: rgba(0,0,0,0.15);
+      --text:    #1a1a2e;
+      --text2:   #4a4a6a;
+      --text3:   #8a8aaa;
+      --gold:    #9a6e1a;
+      --gold2:   #7a5010;
+      --gold-bg: rgba(154,110,26,0.08);
+      --blue:    #1a5fa8;
+      --blue-bg: rgba(26,95,168,0.08);
+      --green:   #1a7a4a;
+      --green-bg: rgba(26,122,74,0.08);
+      --red:     #b83232;
+      --red-bg:  rgba(184,50,50,0.08);
+      --amber:   #a06010;
+      --amber-bg: rgba(160,96,16,0.08);
+      --r: 10px;
+      --r-sm: 6px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    .page {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 20px;
+      background: white;
+      box-shadow: 0 0 40px rgba(0,0,0,0.04);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+
+    .breadcrumb {
+      font-size: 13px;
+      color: var(--text2);
+      letter-spacing: 0.5px;
+      font-weight: 500;
+    }
+
+    .day-badge, .version-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      background: var(--gold-bg);
+      color: var(--gold2);
+      border-radius: var(--r-sm);
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 12px;
+    }
+
+    .version-badge {
+      background: var(--blue-bg);
+      color: var(--blue);
+      margin-left: 8px;
+    }
+
+    .hero {
+      margin-bottom: 48px;
+    }
+
+    .hero-tag {
+      font-size: 13px;
+      color: var(--gold);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .hero-title {
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--text2);
+      margin-bottom: 28px;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .meta-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 14px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 13px;
+      color: var(--text2);
+      font-weight: 500;
+    }
+
+    .toc {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 32px;
+      margin-bottom: 48px;
+    }
+
+    .toc-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-list li {
+      margin-bottom: 12px;
+      font-size: 15px;
+    }
+
+    .toc-num {
+      color: var(--gold);
+      font-weight: 600;
+      margin-right: 8px;
+    }
+
+    .chapter {
+      margin-bottom: 56px;
+      scroll-margin-top: 100px;
+    }
+
+    .chapter-header {
+      margin-bottom: 28px;
+    }
+
+    .chapter-num {
+      font-size: 13px;
+      color: var(--text3);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .chapter-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 8px;
+    }
+
+    .sub-header {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 28px 0 16px 0;
+    }
+
+    .prose {
+      color: var(--text);
+      margin-bottom: 16px;
+      line-height: 1.75;
+    }
+
+    .formula-block {
+      background: var(--bg2);
+      border-left: 4px solid var(--gold);
+      border-radius: var(--r-sm);
+      padding: 20px;
+      margin: 24px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      color: var(--text);
+      overflow-x: auto;
+    }
+
+    .formula-block .label {
+      font-weight: 700;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .formula-block .note {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: var(--text2);
+      margin-top: 12px;
+      line-height: 1.6;
+    }
+
+    .exhibit {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 28px;
+      margin: 32px 0;
+    }
+
+    .exhibit-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+    }
+
+    .exhibit-body {
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    .reg-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+
+    .reg-table th {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 12px;
+      text-align: left;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .reg-table td {
+      border: 1px solid var(--border);
+      padding: 12px;
+      color: var(--text2);
+    }
+
+    .reg-table tr:nth-child(even) { background: rgba(255,255,255,0.5); }
+
+    .callout {
+      border-radius: var(--r);
+      padding: 20px;
+      margin: 24px 0;
+      border-left: 4px solid;
+    }
+
+    .callout.blue {
+      background: var(--blue-bg);
+      border-left-color: var(--blue);
+    }
+
+    .callout.amber {
+      background: var(--amber-bg);
+      border-left-color: var(--amber);
+    }
+
+    .callout.green {
+      background: var(--green-bg);
+      border-left-color: var(--green);
+    }
+
+    .callout.red {
+      background: var(--red-bg);
+      border-left-color: var(--red);
+    }
+
+    .callout.gold {
+      background: var(--gold-bg);
+      border-left-color: var(--gold);
+    }
+
+    .callout-title {
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: block;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .callout .callout-title { color: inherit; }
+    .callout.blue .callout-title { color: var(--blue); }
+    .callout.amber .callout-title { color: var(--amber); }
+    .callout.green .callout-title { color: var(--green); }
+    .callout.red .callout-title { color: var(--red); }
+    .callout.gold .callout-title { color: var(--gold); }
+
+    .callout p, .callout li {
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .kc {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      margin: 28px 0;
+      overflow: hidden;
+    }
+
+    .kc-header {
+      padding: 18px 20px;
+      background: var(--bg3);
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+
+    .kc-header:hover { background: rgba(0,0,0,0.04); }
+
+    .kc-header-title {
+      font-weight: 600;
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    .kc-toggle {
+      color: var(--text3);
+      font-weight: 700;
+      font-size: 18px;
+      transition: transform 0.2s;
+    }
+
+    .kc.open .kc-toggle { transform: rotate(180deg); }
+
+    .kc-body {
+      padding: 20px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+
+    .kc.open .kc-body { max-height: 1200px; }
+
+    .kc-q {
+      color: var(--text);
+      margin-bottom: 16px;
+      line-height: 1.7;
+      font-weight: 500;
+    }
+
+    .kc-answer {
+      color: var(--text2);
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    .assume-list {
+      list-style: none;
+      margin: 16px 0;
+    }
+
+    .assume-item {
+      display: flex;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+
+    .assume-num {
+      color: var(--gold);
+      font-weight: 700;
+      margin-right: 12px;
+      min-width: 28px;
+    }
+
+    .assume-content {
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .num-list, .bullet-list {
+      margin: 16px 0;
+      padding-left: 24px;
+    }
+
+    .num-list li, .bullet-list li {
+      margin-bottom: 10px;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 40px 0;
+    }
+
+    .practice-header {
+      margin-bottom: 28px;
+    }
+
+    .practice-body {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 28px;
+    }
+
+    .vignette {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 24px;
+      margin-bottom: 32px;
+    }
+
+    .vignette-label {
+      font-size: 12px;
+      color: var(--text3);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    .question-block {
+      margin-bottom: 28px;
+    }
+
+    .q-num {
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    .q-text {
+      color: var(--text);
+      line-height: 1.8;
+      margin-bottom: 14px;
+    }
+
+    .option {
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: var(--r-sm);
+      cursor: pointer;
+      background: white;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+
+    .option:hover { background: var(--bg2); border-color: var(--gold); }
+
+    .option input { margin-right: 8px; }
+
+    .explanation {
+      margin-top: 16px;
+      padding: 16px;
+      background: var(--blue-bg);
+      border-left: 4px solid var(--blue);
+      border-radius: var(--r-sm);
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.7;
+      display: none;
+    }
+
+    .explanation.show { display: block; }
+
+    .score-panel {
+      margin-top: 32px;
+      padding: 24px;
+      background: var(--green-bg);
+      border-radius: var(--r);
+      text-align: center;
+      display: none;
+    }
+
+    .score-panel.show { display: block; }
+
+    .score-panel h3 {
+      color: var(--green);
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .score-panel p {
+      color: var(--text);
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .nav-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 32px 0;
+      margin-top: 48px;
+      border-top: 1px solid var(--border);
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover {
+      background: var(--bg3);
+      border-color: var(--border2);
+    }
+
+    .nav-day {
+      font-size: 13px;
+      color: var(--text2);
+    }
+
+    @media (max-width: 768px) {
+      .hero-title { font-size: 28px; }
+      .page { padding: 0 16px; }
+      .meta-row { gap: 8px; }
+      .nav-bottom { flex-direction: column; gap: 16px; }
+      .nav-btn { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="breadcrumb">CFA Level II <span style="opacity:0.5;">·</span> Economics <span style="opacity:0.5;">·</span> LM1</div>
+      <div>
+        <span class="version-badge">Versi Full</span>
+        <span class="day-badge">Day 16 of 90</span>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero">
+      <div class="hero-tag">Jumat, 01 Mei 2026</div>
+      <h1 class="hero-title">Mundell-Fleming & Currency Crisis: Kebijakan Makro dan Krisis Nilai Tukar</h1>
+      <p class="hero-sub">Memahami interaksi kebijakan moneter-fiskal terhadap exchange rate, impossible trinity, dan model-model krisis mata uang</p>
+      <div class="meta-row">
+        <span class="meta-pill">📚 Materi Lengkap</span>
+        <span class="meta-pill">🇮🇩 Bahasa Indonesia</span>
+        <span class="meta-pill">⚖️ ~5% Exam Weight</span>
+        <span class="meta-pill">⏱️ 45–60 menit</span>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="toc">
+      <h2 class="toc-title">Daftar Isi</h2>
+      <ul class="toc-list">
+        <li><span class="toc-num">0</span>Learning Outcomes</li>
+        <li><span class="toc-num">1</span>Mundell-Fleming Model — Framework dan Transmission Channels</li>
+        <li><span class="toc-num">2</span>Policy Mix di Bawah High dan Low Capital Mobility</li>
+        <li><span class="toc-num">3</span>The Impossible Trinity (Trilemma) dan Implikasinya</li>
+        <li><span class="toc-num">4</span>Monetary Models dan Portfolio Balance Approach</li>
+        <li><span class="toc-num">5</span>Currency Crisis: Three Generations of Models</li>
+        <li><span class="toc-num">6</span>Warning Signs dan Early Warning Systems</li>
+        <li><span class="toc-num">7</span>Latihan Soal — Item Set Vignette</li>
+      </ul>
+    </div>
+
+    <!-- Chapter 0: Learning Outcomes -->
+    <div class="chapter" id="sec0">
+      <div class="chapter-header">
+        <div class="chapter-num">SECTION 0</div>
+        <h2 class="chapter-title">Learning Outcomes</h2>
+      </div>
+
+      <p class="prose">Setelah menyelesaikan modul ini, Anda akan mampu untuk:</p>
+
+      <ol class="num-list">
+        <li><strong>Jelaskan efek potensial dari kebijakan moneter dan fiskal terhadap exchange rate</strong> menggunakan kerangka Mundell-Fleming, dengan membedakan dampak di bawah kondisi high capital mobility dan low capital mobility.</li>
+        <li><strong>Deskripsikan Mundell-Fleming model</strong> dan bagaimana perubahan kebijakan moneter dan fiskal ditransmisikan ke interest rates, output, capital flows, trade balance, dan akhirnya exchange rate.</li>
+        <li><strong>Evaluasi impossible trinity (trilemma)</strong>: mengapa sebuah negara tidak dapat secara simultan mempertahankan fixed exchange rate, free capital mobility, dan independent monetary policy.</li>
+        <li><strong>Jelaskan monetary models of exchange rate determination</strong> (pure monetary model dan Dornbusch overshooting model) serta portfolio balance approach dan implikasi jangka panjang dari fiscal deficit berkelanjutan.</li>
+        <li><strong>Deskripsikan three generations of currency crisis models</strong> dan identifikasi perbedaan mekanisme pemicu masing-masing generasi.</li>
+        <li><strong>Deskripsikan warning signs of a currency crisis</strong> dan evaluasi efektivitas early warning systems serta intervensi pemerintah dan capital controls.</li>
+      </ol>
+    </div>
+
+    <!-- Chapter 1: Mundell-Fleming Framework -->
+    <div class="chapter" id="sec1">
+      <div class="chapter-header">
+        <div class="chapter-num">SECTION 1</div>
+        <h2 class="chapter-title">Mundell-Fleming Model — Framework dan Transmission Channels</h2>
+      </div>
+
+      <h3 class="sub-header">Konsep Dasar</h3>
+
+      <p class="prose">
+        Model Mundell-Fleming adalah kerangka analisis yang menjelaskan bagaimana kebijakan moneter dan fiskal dalam suatu negara memengaruhi suku bunga dan aktivitas ekonomi, yang pada gilirannya menyebabkan perubahan pada capital flows dan trade balance, serta akhirnya pada exchange rate. Model ini merupakan perluasan dari model IS-LM ke ekonomi terbuka.
+      </p>
+
+      <p class="prose">
+        Asumsi kunci dari model ini adalah bahwa terdapat <strong>sufficient slack dalam ekonomi</strong> — artinya peningkatan aggregate demand dapat meningkatkan output tanpa memicu kenaikan price level. Dengan kata lain, model ini berfokus sepenuhnya pada sisi permintaan (demand-side) dan mengabaikan efek inflasi jangka pendek.
+      </p>
+
+      <h3 class="sub-header">Dua Channel Transmisi</h3>
+
+      <p class="prose">
+        Kebijakan ekonomi ditransmisikan ke exchange rate melalui dua channel utama, dan channel mana yang dominan tergantung pada tingkat <strong>capital mobility</strong> (seberapa bebas dana bisa mengalir lintas batas):
+      </p>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 1: Dua Transmission Channel dalam Mundell-Fleming</div>
+        <div class="exhibit-body">
+          <table class="reg-table">
+            <tr>
+              <th>Channel</th>
+              <th>Mekanisme</th>
+              <th>Dominan Ketika</th>
+            </tr>
+            <tr>
+              <td><strong>Capital Flow Channel</strong></td>
+              <td>Perubahan interest rate → capital inflows/outflows → exchange rate berubah</td>
+              <td>High capital mobility (developed markets, G-10)</td>
+            </tr>
+            <tr>
+              <td><strong>Trade Balance Channel</strong></td>
+              <td>Perubahan aggregate demand → imports naik/turun → trade balance berubah → exchange rate berubah</td>
+              <td>Low capital mobility (emerging markets dengan capital controls)</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <h3 class="sub-header">Monetary Policy Transmission</h3>
+
+      <p class="prose">
+        <strong>Expansionary monetary policy</strong> (misalnya penurunan suku bunga atau quantitative easing) memengaruhi exchange rate melalui jalur berikut:
+      </p>
+
+      <ol class="num-list">
+        <li>Suku bunga domestik turun → pertumbuhan investasi dan konsumsi meningkat.</li>
+        <li>Dengan flexible exchange rate, tekanan turun pada suku bunga akan mendorong capital mengalir ke pasar yang menawarkan yield lebih tinggi (capital outflow).</li>
+        <li>Capital outflow ini memberikan tekanan depresiasi pada mata uang domestik.</li>
+        <li>Semakin responsif capital flows terhadap interest rate differential, semakin besar depresiasi mata uang.</li>
+      </ol>
+
+      <p class="prose">
+        Sebaliknya, <strong>restrictive monetary policy</strong> (kenaikan suku bunga) akan menarik capital inflows dan menyebabkan mata uang <strong>apresiasi</strong>.
+      </p>
+
+      <h3 class="sub-header">Fiscal Policy Transmission</h3>
+
+      <p class="prose">
+        <strong>Expansionary fiscal policy</strong> (peningkatan belanja pemerintah atau penurunan pajak) memiliki efek yang lebih kompleks dan bergantung pada capital mobility:
+      </p>
+
+      <p class="prose">
+        <strong>Dengan high capital mobility:</strong> Expansionary fiscal → budget deficit lebih besar → harus dibiayai → suku bunga naik (crowding out effect) → capital inflows dari luar negeri → mata uang <strong>apresiasi</strong>. Semakin sensitif capital flows terhadap interest rate differential, semakin besar apresiasi.
+      </p>
+
+      <p class="prose">
+        <strong>Dengan low capital mobility:</strong> Expansionary fiscal → aggregate demand naik → imports naik → trade balance memburuk → tekanan depresiasi pada mata uang, TANPA ada capital inflows yang signifikan untuk mengkompensasi → mata uang <strong>depresiasi</strong>.
+      </p>
+
+      <div class="callout amber">
+        <span class="callout-title">Poin Kritis untuk Ujian</span>
+        <p>Arah efek fiscal policy pada exchange rate <strong>berbalik</strong> tergantung pada capital mobility. Ini adalah salah satu insight paling penting dari Mundell-Fleming. Di developed markets (high mobility), expansionary fiscal = appreciation. Di emerging markets (low mobility), expansionary fiscal = depreciation. Jangan sampai terbalik!</p>
+      </div>
+
+      <div class="kc">
+        <div class="kc-header" onclick="toggleKC('kc1')">
+          <span class="kc-header-title">Knowledge Check 1: Transmission Channels</span>
+          <span class="kc-toggle">▼</span>
+        </div>
+        <div class="kc-body" id="kc1">
+          <p class="kc-q">Sebuah negara emerging market dengan capital controls ketat (low capital mobility) menjalankan expansionary monetary policy. Melalui channel apa kebijakan ini paling mungkin memengaruhi exchange rate?</p>
+          <div class="kc-answer">
+            <p><strong>Jawaban:</strong></p>
+            <p>Dengan low capital mobility, interest rate channel lemah karena capital tidak bisa bergerak bebas merespons interest rate differential. Sebaliknya, pengaruh utama melalui <strong>trade balance channel</strong>:</p>
+            <p>1. Expansionary monetary → suku bunga turun → aggregate demand naik</p>
+            <p>2. Demand yang lebih tinggi → imports meningkat → trade deficit memburuk</p>
+            <p>3. Trade deficit → tekanan depresiasi pada mata uang</p>
+            <p>Jadi mata uang akan <strong>depresiasi</strong>, tetapi terutama melalui jalur perdagangan, bukan jalur capital flows.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 2: Policy Mix -->
+    <div class="chapter" id="sec2">
+      <div class="chapter-header">
+        <div class="chapter-num">SECTION 2</div>
+        <h2 class="chapter-title">Policy Mix di Bawah High dan Low Capital Mobility</h2>
+      </div>
+
+      <h3 class="sub-header">High Capital Mobility: The G-10 Framework</h3>
+
+      <p class="prose">
+        Untuk negara-negara maju dengan capital mobility tinggi (Amerika Serikat, Eropa, Jepang, dll.), kombinasi spesifik dari kebijakan moneter dan fiskal menghasilkan dampak yang dapat diprediksi pada exchange rate. Kunci pemahaman: <strong>yang menentukan arah mata uang adalah arah net effect pada real interest rates</strong>.
+      </p>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 2: Policy Mix — High Capital Mobility</div>
+        <div class="exhibit-body">
+          <table class="reg-table">
+            <tr>
+              <th></th>
+              <th>Expansionary Fiscal (rates ↑)</th>
+              <th>Restrictive Fiscal (rates ↓)</th>
+            </tr>
+            <tr>
+              <td><strong>Expansionary Monetary (rates ↓)</strong></td>
+              <td style="text-align:center;"><strong>INDETERMINATE</strong><br><span style="font-size:12px;color:var(--text3)">Fiscal pushes rates up, monetary pushes down</span></td>
+              <td style="text-align:center;color:var(--red);"><strong>DEPRECIATE</strong><br><span style="font-size:12px;">Both push rates lower → capital outflows</span></td>
+            </tr>
+            <tr>
+              <td><strong>Restrictive Monetary (rates ↑)</strong></td>
+              <td style="text-align:center;color:var(--green);"><strong>APPRECIATE</strong><br><span style="font-size:12px;">Both push rates higher → capital inflows</span></td>
+              <td style="text-align:center;"><strong>INDETERMINATE</strong><br><span style="font-size:12px;color:var(--text3)">Monetary pushes rates up, fiscal pushes down</span></td>
+            </tr>
+          </table>
+
+          <p style="margin-top:16px;"><strong>Logika:</strong> Ketika kedua kebijakan mendorong real interest rates ke arah yang sama, efeknya jelas. Ketika saling bertentangan, net effect tidak pasti (indeterminate).</p>
+        </div>
+      </div>
+
+      <h3 class="sub-header">Low Capital Mobility: The Emerging Market Framework</h3>
+
+      <p class="prose">
+        Untuk negara-negara dengan capital mobility rendah (banyak emerging markets), mekanisme transmisi berbeda secara fundamental. Karena capital flows tidak responsif terhadap interest rate differential, yang menentukan adalah <strong>net effect pada trade balance</strong> melalui aggregate demand.
+      </p>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 3: Policy Mix — Low Capital Mobility</div>
+        <div class="exhibit-body">
+          <table class="reg-table">
+            <tr>
+              <th></th>
+              <th>Expansionary Fiscal (demand ↑)</th>
+              <th>Restrictive Fiscal (demand ↓)</th>
+            </tr>
+            <tr>
+              <td><strong>Expansionary Monetary (demand ↑)</strong></td>
+              <td style="text-align:center;color:var(--red);"><strong>DEPRECIATE</strong><br><span style="font-size:12px;">Both boost demand → imports up → trade deficit</span></td>
+              <td style="text-align:center;"><strong>INDETERMINATE</strong><br><span style="font-size:12px;color:var(--text3)">Offsetting demand effects</span></td>
+            </tr>
+            <tr>
+              <td><strong>Restrictive Monetary (demand ↓)</strong></td>
+              <td style="text-align:center;"><strong>INDETERMINATE</strong><br><span style="font-size:12px;color:var(--text3)">Offsetting demand effects</span></td>
+              <td style="text-align:center;color:var(--green);"><strong>APPRECIATE</strong><br><span style="font-size:12px;">Both reduce demand → imports down → trade surplus</span></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <h3 class="sub-header">Historical Case Study: German Reunification 1990-1992</h3>
+
+      <p class="prose">
+        Salah satu contoh paling dramatis dari Mundell-Fleming model dalam aksi adalah pengalaman Jerman selama reunifikasi 1990-1992. Pemerintah Jerman menjalankan kebijakan fiskal yang sangat ekspansif untuk membiayai reunifikasi Jerman Barat dan Timur. Bersamaan dengan itu, Bundesbank (bank sentral Jerman) menjalankan kebijakan moneter yang sangat restriktif untuk melawan tekanan inflasi yang timbul dari reunifikasi.
+      </p>
+
+      <p class="prose">
+        Kombinasi <strong>expansionary fiscal + restrictive monetary</strong> mendorong suku bunga Jerman naik tajam. Dengan high capital mobility di Eropa, ini menarik capital inflows masif → Deutsche Mark apresiasi sangat kuat. Ini persis sesuai prediksi tabel high capital mobility: kuadran kanan-atas (restrictive monetary + expansionary fiscal) = "extremely bullish" untuk mata uang.
+      </p>
+
+      <p class="prose">
+        Ironisnya, apresiasi DEM ini menciptakan tekanan pada negara-negara ERM (European Exchange Rate Mechanism) lainnya yang mem-peg mata uang mereka terhadap DEM, dan berkontribusi pada krisis ERM 1992 yang akan kita bahas nanti.
+      </p>
+
+      <div class="kc">
+        <div class="kc-header" onclick="toggleKC('kc2')">
+          <span class="kc-header-title">Knowledge Check 2: Policy Mix Analysis</span>
+          <span class="kc-toggle">▼</span>
+        </div>
+        <div class="kc-body" id="kc2">
+          <p class="kc-q">Sebuah negara emerging market dengan low capital mobility menjalankan kebijakan restrictive monetary sekaligus expansionary fiscal. Apa yang diprediksi Mundell-Fleming?</p>
+          <div class="kc-answer">
+            <p><strong>Jawaban:</strong> Dampaknya <strong>indeterminate</strong>.</p>
+            <p>Di bawah low capital mobility, transmisi melalui trade balance channel:</p>
+            <p>• Restrictive monetary → aggregate demand turun → imports turun → pressure apresiasi</p>
+            <p>• Expansionary fiscal → aggregate demand naik → imports naik → pressure depresiasi</p>
+            <p>Kedua efek saling bertentangan pada aggregate demand dan trade balance, sehingga net effect pada exchange rate tidak bisa dipastikan tanpa mengetahui magnitude masing-masing.</p>
+            <p><strong>Perhatikan:</strong> Di HIGH capital mobility, kombinasi yang sama (restrictive monetary + expansionary fiscal) justru menghasilkan <strong>apresiasi yang jelas</strong> karena kedua kebijakan mendorong rates naik → capital inflows. Ini menunjukkan betapa pentingnya membedakan konteks capital mobility!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 3: Impossible Trinity -->
+    <div class="chapter" id="sec3">
+      <div class="chapter-header">
+        <div class="chapter-num">SECTION 3</div>
+        <h2 class="chapter-title">The Impossible Trinity (Trilemma) dan Implikasinya</h2>
+      </div>
+
+      <h3 class="sub-header">Konsep Fundamental</h3>
+
+      <p class="prose">
+        Impossible trinity (juga disebut policy trilemma) adalah salah satu proposisi paling fundamental dalam international finance. Proposisi ini menyatakan bahwa sebuah negara <strong>tidak dapat secara simultan</strong> mempertahankan ketiga kondisi berikut:
+      </p>
+
+      <div class="formula-block">
+        <span class="label">The Impossible Trinity (Mundell-Fleming Trilemma)</span>
+        Tiga tujuan yang TIDAK BISA dicapai bersamaan:
+
+        1. Fixed exchange rate (nilai tukar tetap)
+        2. Free capital mobility (arus modal bebas lintas batas)
+        3. Independent monetary policy (kebijakan moneter independen)
+
+        → Sebuah negara hanya bisa memilih MAKSIMAL DUA dari ketiga tujuan ini.
+
+        <span class="note">
+          Proposisi ini merupakan implikasi langsung dari model Mundell-Fleming: jika exchange rate di-fix dan capital bergerak bebas, maka monetary policy kehilangan kemampuannya untuk memengaruhi domestic conditions secara independen, karena setiap perubahan suku bunga akan segera di-offset oleh capital flows dan kebutuhan untuk mempertahankan peg.
+        </span>
+      </div>
+
+      <h3 class="sub-header">Tiga Kombinasi yang Dimungkinkan</h3>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 4: Tiga Pilihan Kebijakan dalam Impossible Trinity</div>
+        <div class="exhibit-body">
+          <table class="reg-table">
+            <tr>
+              <th>Kombinasi</th>
+              <th>Apa yang Dikorbankan</th>
+              <th>Contoh Negara</th>
+            </tr>
+            <tr>
+              <td><strong>Fixed Rate + Free Capital</strong></td>
+              <td>Independent monetary policy — suku bunga harus mengikuti negara anchor</td>
+              <td>Hong Kong (currency board peg ke USD), negara-negara Eurozone (kehilangan monetary policy nasional)</td>
+            </tr>
+            <tr>
+              <td><strong>Fixed Rate + Independent Monetary</strong></td>
+              <td>Free capital mobility — harus pakai capital controls</td>
+              <td>China sebelum 2005, Malaysia 1998-2005, banyak EM dengan capital controls</td>
+            </tr>
+            <tr>
+              <td><strong>Free Capital + Independent Monetary</strong></td>
+              <td>Fixed exchange rate — harus pakai floating rate</td>
+              <td>USA, UK, Jepang, Australia, Indonesia (setelah 1997)</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <h3 class="sub-header">Mengapa Ketiga-tiganya Tidak Mungkin?</h3>
+
+      <p class="prose">
+        Bayangkan sebuah negara yang mempertahankan fixed exchange rate dan membiarkan capital bergerak bebas. Jika bank sentral ingin menurunkan suku bunga (expansionary monetary policy) untuk menstimulasi ekonomi:
+      </p>
+
+      <ol class="num-list">
+        <li>Suku bunga domestik turun di bawah suku bunga negara anchor.</li>
+        <li>Dengan capital bebas bergerak, investor akan memindahkan dana ke negara yang menawarkan yield lebih tinggi (capital outflow).</li>
+        <li>Capital outflow menciptakan tekanan depresiasi pada mata uang domestik.</li>
+        <li>Untuk mempertahankan peg, bank sentral harus <strong>membeli mata uang domestik</strong> (menjual foreign reserves).</li>
+        <li>Pembelian mata uang domestik ini efektifnya <strong>mengurangi money supply</strong> — persis kebalikan dari niat awal!</li>
+        <li>Proses ini berlanjut sampai suku bunga domestik kembali ke level yang konsisten dengan peg, atau sampai reserves habis.</li>
+      </ol>
+
+      <p class="prose">
+        Hasil akhirnya: monetary policy menjadi <strong>tidak efektif</strong>. Bank sentral kehilangan kemampuan untuk secara independen menetapkan suku bunga. Inilah mengapa ketiga tujuan tidak bisa dicapai bersamaan.
+      </p>
+
+      <div class="callout blue">
+        <span class="callout-title">Implikasi untuk Indonesia</span>
+        <p>Indonesia setelah krisis 1997 memilih kombinasi <strong>free capital + independent monetary</strong>, mengorbankan fixed rate. Bank Indonesia kini menjalankan inflation targeting framework dengan floating exchange rate. Ini memungkinkan BI untuk secara independen menentukan suku bunga sesuai kondisi domestik, tanpa harus mempertahankan peg tertentu.</p>
+        <p style="margin-top:8px;">Sebelum 1997, Indonesia menjalankan managed float yang de facto mirip fixed rate, dengan capital account yang semakin terbuka. Ketika krisis menyerang, BI tidak mampu mempertahankan rupiah — contoh klasik impossible trinity yang "dipaksakan" sampai pecah.</p>
+      </div>
+
+      <div class="kc">
+        <div class="kc-header" onclick="toggleKC('kc3')">
+          <span class="kc-header-title">Knowledge Check 3: Applying the Trilemma</span>
+          <span class="kc-toggle">▼</span>
+        </div>
+        <div class="kc-body" id="kc3">
+          <p class="kc-q">Negara Y memiliki fixed exchange rate dan free capital mobility. Bank sentral ingin menaikkan suku bunga untuk melawan inflasi. Menurut impossible trinity, apa yang akan terjadi?</p>
+          <div class="kc-answer">
+            <p><strong>Jawaban:</strong></p>
+            <p>Dengan fixed rate + free capital, kenaikan suku bunga akan:</p>
+            <p>1. Menarik capital inflows (karena yield domestik lebih menarik)</p>
+            <p>2. Capital inflows menciptakan tekanan apresiasi pada mata uang</p>
+            <p>3. Untuk mempertahankan peg, bank sentral harus MENJUAL mata uang domestik (membeli foreign reserves)</p>
+            <p>4. Penjualan mata uang domestik = MENAMBAH money supply = menurunkan suku bunga kembali</p>
+            <p>Hasilnya: bank sentral TIDAK BISA secara efektif menaikkan suku bunga. Setiap usaha kenaikan rates akan di-offset oleh capital inflows dan kebutuhan intervene untuk menjaga peg. Monetary policy menjadi subordinat terhadap exchange rate objective.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 4: Monetary Models & Portfolio Balance -->
+    <div class="chapter" id="sec4">
+      <div class="chapter-header">
+        <div class="chapter-num">SECTION 4</div>
+        <h2 class="chapter-title">Monetary Models dan Portfolio Balance Approach</h2>
+      </div>
+
+      <h3 class="sub-header">Pure Monetary Model</h3>
+
+      <p class="prose">
+        Berbeda dari Mundell-Fleming yang fokus pada output dan interest rates, monetary model fokus pada <strong>price level dan inflasi</strong>. Asumsi utama: output tetap (fixed), dan monetary policy memengaruhi exchange rate terutama melalui efeknya pada harga.
+      </p>
+
+      <p class="prose">
+        Proposisi kunci: Kenaikan X% pada money supply domestik akan menghasilkan kenaikan X% pada price level domestik. Jika purchasing power parity berlaku, kenaikan harga domestik relatif terhadap harga luar negeri akan mengakibatkan depresiasi mata uang domestik sebesar X%.
+      </p>
+
+      <div class="callout amber">
+        <span class="callout-title">Kelemahan Pure Monetary Model</span>
+        <p>Asumsi bahwa PPP berlaku baik di short run maupun long run adalah kelemahan utama. Karena PPP jarang berlaku dalam jangka pendek-menengah, model ini tidak memberikan penjelasan realistis tentang bagaimana kekuatan moneter memengaruhi exchange rate dalam horizon pendek.</p>
+      </div>
+
+      <h3 class="sub-header">Dornbusch Overshooting Model</h3>
+
+      <p class="prose">
+        Untuk mengatasi kelemahan pure monetary model, Dornbusch (1976) mengembangkan model yang mengasumsikan harga memiliki <strong>fleksibilitas terbatas di short run</strong> tetapi <strong>sepenuhnya fleksibel di long run</strong>:
+      </p>
+
+      <div class="formula-block">
+        <span class="label">Dornbusch Overshooting Model — Intuisi</span>
+        Long run: Kenaikan money supply → kenaikan price level → depresiasi mata uang
+                   (konsisten dengan pure monetary model)
+
+        Short run: Harga inflexible → kenaikan nominal money = kenaikan real money
+                   → suku bunga turun → capital outflow → currency OVERSHOOT
+                   (depresiasi LEBIH BESAR dari long-run level)
+
+        Medium run: Harga mulai menyesuaikan naik → suku bunga kembali naik
+                    → mata uang apresiasi kembali menuju long-run equilibrium
+
+        <span class="note">
+          <strong>Key insight:</strong> Exchange rate "overshoot" terjadi karena harga-harga (price level) lambat menyesuaikan sementara exchange rate bisa berubah seketika. Exchange rate harus "melakukan pekerjaan ekstra" dalam short run untuk mengkompensasi kekakuan harga.
+        </span>
+      </div>
+
+      <h3 class="sub-header">Portfolio Balance Approach</h3>
+
+      <p class="prose">
+        Model Mundell-Fleming adalah model jangka pendek yang tidak memperhitungkan efek jangka panjang dari akumulasi utang akibat defisit fiskal yang berkelanjutan. Portfolio balance approach melengkapi kerangka ini.
+      </p>
+
+      <p class="prose">
+        Dalam pendekatan ini, investor global diasumsikan memegang portofolio terdiversifikasi dari aset domestik dan asing. Ketika pemerintah menjalankan defisit fiskal yang berkelanjutan:
+      </p>
+
+      <ol class="num-list">
+        <li>Penawaran obligasi pemerintah domestik terus meningkat.</li>
+        <li>Obligasi ini hanya akan dipegang jika investor dikompensasi dengan expected return yang lebih tinggi.</li>
+        <li>Kompensasi bisa berupa: (a) suku bunga dan/atau risk premium yang lebih tinggi, (b) depresiasi mata uang segera ke level yang cukup rendah sehingga investor mengantisipasi apresiasi di masa depan, atau (c) kombinasi keduanya.</li>
+      </ol>
+
+      <div class="callout red">
+        <span class="callout-title">Insight Kritis: Short Run vs Long Run</span>
+        <p>Ketika kedua model digabungkan, kita mendapat gambaran yang sangat penting:</p>
+        <p style="margin-top:8px;"><strong>Short run:</strong> Expansionary fiscal policy dengan high capital mobility → mata uang APRESIASI (Mundell-Fleming: rates naik → capital inflows)</p>
+        <p style="margin-top:8px;"><strong>Long run:</strong> Defisit fiskal berkelanjutan → akumulasi utang → investor menuntut risk premium lebih tinggi → potensi monetisasi utang → mata uang DEPRESIASI (Portfolio Balance)</p>
+        <p style="margin-top:8px;">Ini menjelaskan mengapa suatu mata uang bisa menguat awalnya ketika pemerintah memulai stimulus fiskal besar, tetapi kemudian melemah ketika defisit menjadi tidak berkelanjutan.</p>
+      </div>
+
+      <div class="kc">
+        <div class="kc-header" onclick="toggleKC('kc4')">
+          <span class="kc-header-title">Knowledge Check 4: Overshooting vs Portfolio Balance</span>
+          <span class="kc-toggle">▼</span>
+        </div>
+        <div class="kc-body" id="kc4">
+          <p class="kc-q">Bank sentral secara unexpected menaikkan money supply sebesar 10%. Menurut Dornbusch overshooting model, mata uang akan depresiasi berapa persen dalam short run? Dan berapa persen di long-run equilibrium?</p>
+          <div class="kc-answer">
+            <p><strong>Jawaban:</strong></p>
+            <p><strong>Long run:</strong> Mata uang akan depresiasi sekitar 10% (sesuai pure monetary model — kenaikan 10% money supply = 10% kenaikan prices = 10% depresiasi jika PPP berlaku).</p>
+            <p><strong>Short run:</strong> Mata uang akan depresiasi LEBIH dari 10% — ini adalah "overshooting." Alasannya: harga domestik belum naik (sticky prices), jadi seluruh penyesuaian harus datang dari exchange rate. Ditambah, penurunan suku bunga menyebabkan capital outflow yang mendorong depresiasi tambahan.</p>
+            <p><strong>Medium run:</strong> Seiring harga domestik mulai naik dan suku bunga kembali normal, mata uang akan apresiasi kembali menuju long-run equilibrium (depresiasi 10% dari level awal).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 5: Currency Crisis Models -->
+    <div class="chapter" id="sec5">
+      <div class="chapter-header">
+        <div class="chapter-num">SECTION 5</div>
+        <h2 class="chapter-title">Currency Crisis: Three Generations of Models</h2>
+      </div>
+
+      <h3 class="sub-header">Pendahuluan: Apa itu Currency Crisis?</h3>
+
+      <p class="prose">
+        Currency crisis terjadi ketika mata uang suatu negara mengalami depresiasi tajam dan cepat, sering kali disertai dengan krisis ekonomi yang lebih luas (kontraksi ekonomi, penurunan aset, krisis perbankan). Sebagai contoh, antara Agustus 2008 dan Februari 2009, 23 mata uang turun lebih dari 25% terhadap USD — termasuk mata uang developed market seperti Australia, Swedia, dan Inggris (turun 35%+), serta emerging market seperti Brasil, Rusia, dan Korea Selatan (turun 50%+).
+      </p>
+
+      <p class="prose">
+        Literatur akademis telah mengembangkan tiga "generasi" model untuk menjelaskan mengapa dan bagaimana krisis mata uang terjadi. Setiap generasi menambah dimensi baru dalam pemahaman kita.
+      </p>
+
+      <h3 class="sub-header">First Generation: Fundamental-Driven Crisis (Krugman, 1979)</h3>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 5: First Generation Crisis Model</div>
+        <div class="exhibit-body">
+          <p><strong>Premis:</strong> Krisis terjadi karena <strong>kebijakan fiskal/moneter yang tidak konsisten</strong> dengan mempertahankan fixed exchange rate.</p>
+
+          <p style="margin-top:16px;"><strong>Mekanisme:</strong></p>
+          <ol class="num-list">
+            <li>Pemerintah menjalankan defisit fiskal yang persisten.</li>
+            <li>Defisit dibiayai (sebagian) melalui pencetakan uang (monetisasi utang) → money supply naik.</li>
+            <li>Kelebihan money supply → inflasi domestik naik, tekanan depresiasi pada mata uang.</li>
+            <li>Bank sentral mempertahankan peg dengan menjual foreign reserves (membeli mata uang domestik).</li>
+            <li>Reserves terus menurun sampai mencapai level kritis.</li>
+            <li>Spekulan yang rasional melihat trajectory ini dan ATTACK mata uang sebelum reserves habis (karena semakin lama menunggu, semakin kecil peluang untung).</li>
+            <li>Speculative attack mempercepat drain reserves → peg pecah → massive depresiasi.</li>
+          </ol>
+
+          <p style="margin-top:16px;"><strong>Karakteristik:</strong></p>
+          <ul class="bullet-list">
+            <li>Krisis <strong>dapat diprediksi</strong> — fundamental ekonomi memburuk secara bertahap dan terlihat.</li>
+            <li>Penyebab utama: <strong>inkonsistensi kebijakan</strong> — defisit fiskal + fixed rate = resep krisis.</li>
+            <li>Timing speculative attack mungkin sulit diprediksi persis, tetapi krisis itu sendiri <strong>inevitable</strong>.</li>
+          </ul>
+
+          <p style="margin-top:16px;"><strong>Contoh Historis:</strong> Krisis mata uang Latin America 1980s (Argentina, Brasil, Chili, Meksiko) — semuanya didahului oleh ekspansi kredit domestik yang tajam dan defisit fiskal yang dimonetisasi. Venezuela 2012+ dengan inflasi triple-digit diikuti depresiasi masif.</p>
+        </div>
+      </div>
+
+      <h3 class="sub-header">Second Generation: Self-Fulfilling Crisis (Obstfeld, 1994)</h3>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 6: Second Generation Crisis Model</div>
+        <div class="exhibit-body">
+          <p><strong>Premis:</strong> Krisis bisa terjadi bahkan ketika fundamental ekonomi <strong>masih relatif baik</strong>, jika ekspektasi pasar berubah secara self-fulfilling.</p>
+
+          <p style="margin-top:16px;"><strong>Mekanisme:</strong></p>
+          <ol class="num-list">
+            <li>Pemerintah mempertahankan exchange rate peg tetapi ada trade-off: mempertahankan peg mungkin membutuhkan suku bunga tinggi yang menyakiti ekonomi domestik.</li>
+            <li>Spekulan menilai: apakah pemerintah BERSEDIA membayar biaya ekonomi untuk mempertahankan peg?</li>
+            <li>Jika spekulan yakin pemerintah akan devalue → mereka attack → biaya mempertahankan peg naik (rates harus dinaikkan lebih tinggi) → pemerintah semakin mungkin menyerah → devalue terjadi.</li>
+            <li>Sebaliknya, jika spekulan yakin peg akan bertahan → mereka tidak attack → biaya mempertahankan peg rendah → peg memang bertahan.</li>
+          </ol>
+
+          <p style="margin-top:16px;"><strong>Konsep kunci: Multiple Equilibria</strong></p>
+          <ul class="bullet-list">
+            <li><strong>Good equilibrium:</strong> Tidak ada attack → peg bertahan → ekonomi stabil.</li>
+            <li><strong>Bad equilibrium:</strong> Attack terjadi → biaya defend peg terlalu tinggi → devalue → krisis.</li>
+            <li>Kedua outcome mungkin terjadi dengan fundamental yang SAMA — yang menentukan adalah <strong>ekspektasi</strong>.</li>
+          </ul>
+
+          <p style="margin-top:16px;"><strong>Contoh Historis:</strong> Krisis ERM 1992 — investor (termasuk George Soros) yakin bahwa Inggris dan Italia tidak akan bisa mempertahankan peg terhadap DEM dengan suku bunga tinggi yang diperlukan. Serangan spekulatif berhasil — Inggris dan Italia keluar dari ERM. Posisi long dalam mata uang Eropa berimbal hasil tinggi (dibiayai short mata uang berimbal hasil rendah) yang sudah sangat leveraged tiba-tiba dibongkar.</p>
+        </div>
+      </div>
+
+      <h3 class="sub-header">Third Generation: Financial Sector Vulnerability (Asian Crisis)</h3>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 7: Third Generation Crisis Model</div>
+        <div class="exhibit-body">
+          <p><strong>Premis:</strong> Krisis dipicu oleh <strong>kerentanan sektor keuangan</strong>, khususnya currency dan maturity mismatch di balance sheet perbankan.</p>
+
+          <p style="margin-top:16px;"><strong>Mekanisme:</strong></p>
+          <ol class="num-list">
+            <li>Capital account diliberalisasi → foreign capital masuk deras, terutama short-term flows.</li>
+            <li>Bank-bank domestik borrow dalam mata uang asing (USD, JPY) dengan tenor pendek.</li>
+            <li>Borrowing ini digunakan untuk membiayai kredit domestik jangka panjang (properti, infrastruktur).</li>
+            <li>Terciptalah <strong>double mismatch</strong>: (a) currency mismatch — liabilities dalam USD, assets dalam mata uang lokal; (b) maturity mismatch — borrow short-term, lend long-term.</li>
+            <li>Ketika sentimen berubah (trigger apapun), capital outflow dimulai → mata uang depresiasi.</li>
+            <li>Depresiasi membuat USD liabilities membengkak dalam terms mata uang lokal → bank-bank insolvent.</li>
+            <li>Banking crisis dan currency crisis terjadi <strong>bersamaan</strong> ("twin crisis").</li>
+            <li>Contagion: krisis menyebar ke negara-negara tetangga dengan kerentanan serupa.</li>
+          </ol>
+
+          <p style="margin-top:16px;"><strong>Contoh Historis:</strong></p>
+          <ul class="bullet-list">
+            <li><strong>Asian Crisis 1997-98:</strong> Thailand, Indonesia, Korea, Malaysia — bank dan perusahaan meminjam USD/JPY short-term secara masif. Ketika Thai baht devalue Juli 1997, contagion menyebar ke seluruh region. Rupiah Indonesia turun dari ~2,400/USD ke 17,000/USD.</li>
+            <li><strong>Iceland 2008:</strong> Tiga bank mendominasi dengan aset 14x GDP. Borrow dalam EUR/GBP short-term, lend long-term domestik. Ketika GFC melanda, depositor asing tarik dana → bank kolaps → krona turun 60%+ → bank sentral insolvent secara teknis.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout gold">
+        <span class="callout-title">Perbandingan Tiga Generasi</span>
+        <table class="reg-table" style="margin-top:12px;">
+          <tr>
+            <th>Aspek</th>
+            <th>1st Gen</th>
+            <th>2nd Gen</th>
+            <th>3rd Gen</th>
+          </tr>
+          <tr>
+            <td><strong>Penyebab Utama</strong></td>
+            <td>Inkonsistensi fiskal/moneter</td>
+            <td>Ekspektasi self-fulfilling</td>
+            <td>Balance sheet mismatch sektor keuangan</td>
+          </tr>
+          <tr>
+            <td><strong>Fundamental Sebelum Krisis</strong></td>
+            <td>Jelas memburuk</td>
+            <td>Bisa masih oke</td>
+            <td>Tampak baik di permukaan, rapuh di dalam</td>
+          </tr>
+          <tr>
+            <td><strong>Dapat Diprediksi?</strong></td>
+            <td>Ya — reserve drain terlihat</td>
+            <td>Sulit — tergantung sentimen</td>
+            <td>Sebagian — jika melihat balance sheet</td>
+          </tr>
+          <tr>
+            <td><strong>Fitur Khas</strong></td>
+            <td>Reserve depletion, monetisasi defisit</td>
+            <td>Multiple equilibria, coordination game</td>
+            <td>Twin crisis (banking + currency), contagion</td>
+          </tr>
+          <tr>
+            <td><strong>Contoh Utama</strong></td>
+            <td>LatAm 1980s, Venezuela 2012+</td>
+            <td>ERM 1992, Soros vs BoE</td>
+            <td>Asia 1997, Iceland 2008</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="kc">
+        <div class="kc-header" onclick="toggleKC('kc5')">
+          <span class="kc-header-title">Knowledge Check 5: Identifying Crisis Generation</span>
+          <span class="kc-toggle">▼</span>
+        </div>
+        <div class="kc-body" id="kc5">
+          <p class="kc-q">Negara Z memiliki defisit fiskal yang besar dan persisten, dibiayai sebagian dengan pencetakan uang. FX reserves terus menurun selama 3 tahun terakhir. Ekonomi mengalami inflasi yang meningkat. Ini paling konsisten dengan model krisis generasi berapa?</p>
+          <div class="kc-answer">
+            <p><strong>Jawaban: First Generation</strong></p>
+            <p>Semua ciri khas first generation crisis ada:</p>
+            <p>1. Defisit fiskal persisten — penyebab utama dalam 1st gen model.</p>
+            <p>2. Monetisasi utang — money supply naik → inflasi.</p>
+            <p>3. FX reserves menurun bertahap — bank sentral menggunakan reserves untuk mempertahankan peg.</p>
+            <p>4. Trajectory ini predictable — spekulan rasional bisa menghitung kapan reserves akan habis.</p>
+            <p>Ini berbeda dari 2nd gen (fundamental di sini jelas memburuk, bukan soal sentimen) dan 3rd gen (tidak ada emphasis pada banking sector balance sheet mismatch).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 6: Warning Signs -->
+    <div class="chapter" id="sec6">
+      <div class="chapter-header">
+        <div class="chapter-num">SECTION 6</div>
+        <h2 class="chapter-title">Warning Signs dan Early Warning Systems</h2>
+      </div>
+
+      <h3 class="sub-header">Sembilan Warning Signs of Currency Crisis</h3>
+
+      <p class="prose">
+        Meskipun tidak ada model tunggal yang mampu memprediksi semua episode krisis, riset empiris telah mengidentifikasi sejumlah kondisi yang biasanya muncul sebelum krisis mata uang. Kondisi-kondisi ini saling terkait dan sering saling memperkuat:
+      </p>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 8: Sembilan Warning Signs</div>
+        <div class="exhibit-body">
+          <table class="reg-table">
+            <tr>
+              <th>#</th>
+              <th>Warning Sign</th>
+              <th>Penjelasan</th>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td><strong>Capital market liberalization</strong></td>
+              <td>Pembukaan pasar modal yang memungkinkan arus modal bebas — sering mendahului krisis</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td><strong>Large foreign capital inflows</strong></td>
+              <td>Terutama short-term flows ("hot money") dalam mata uang asing — sangat problematic</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td><strong>Banking crisis concurrent</strong></td>
+              <td>Krisis perbankan sering mendahului atau terjadi bersamaan dengan krisis mata uang</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td><strong>Fixed/partially fixed exchange rate</strong></td>
+              <td>Negara dengan fixed rate lebih rentan dibanding floating rate</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td><strong>FX reserves declining</strong></td>
+              <td>Reserves menurun tajam karena bank sentral berusaha mempertahankan nilai mata uang</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td><strong>Currency substantially above historical mean</strong></td>
+              <td>Mata uang yang sudah terapresiasi jauh di atas rata-rata → overvalued → koreksi besar</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td><strong>Terms of trade deteriorating</strong></td>
+              <td>Rasio ekspor/impor memburuk — daya saing turun</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td><strong>Broad money growth & M2/reserves rising</strong></td>
+              <td>Pertumbuhan uang beredar yang berlebihan relatif terhadap reserves</td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td><strong>Inflation significantly higher than normal</strong></td>
+              <td>Inflasi jauh di atas rata-rata tranquil period</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <h3 class="sub-header">Interaksi Antar Warning Signs</h3>
+
+      <p class="prose">
+        Faktor-faktor ini tidak berdiri sendiri, melainkan membentuk spiral yang saling memperkuat. Berikut dinamika tipikalnya:
+      </p>
+
+      <ol class="num-list">
+        <li><strong>Capital liberalization → large inflows:</strong> Pasar yang baru dibuka menarik capital asing, terutama hot money yang mencari yield tinggi.</li>
+        <li><strong>Inflows → banking expansion:</strong> Bank-bank domestik borrow dalam mata uang asing untuk mendanai ekspansi kredit. Ini menciptakan maturity dan currency mismatch.</li>
+        <li><strong>Credit expansion → overvaluation:</strong> Capital inflows mendorong apresiasi mata uang. Currency overvalued menyulitkan ekspor.</li>
+        <li><strong>Overvaluation → trade deficit:</strong> Ekspor kurang kompetitif, imports lebih murah → terms of trade memburuk.</li>
+        <li><strong>Trade deficit → reserve drain:</strong> Pemerintah menggunakan reserves untuk mendukung mata uang.</li>
+        <li><strong>Reserve drain → speculative attack:</strong> Spekulan melihat reserves menurun → attack → reserves makin cepat habis.</li>
+        <li><strong>Attack → banking crisis:</strong> Depresiasi mata uang → USD liabilities membengkak → bank insolvent → twin crisis.</li>
+      </ol>
+
+      <h3 class="sub-header">Efektivitas Intervensi dan Capital Controls</h3>
+
+      <p class="prose">
+        Pemerintah memiliki dua alat utama untuk melawan capital flow surges dan potensi krisis: <strong>direct FX intervention</strong> dan <strong>capital controls</strong>.
+      </p>
+
+      <p class="prose">
+        <strong>Direct intervention</strong> di developed markets umumnya tidak efektif karena volume intervensi kecil dibandingkan daily FX turnover. Di emerging markets, efektivitas lebih baik karena rasio FX reserves terhadap daily FX turnover jauh lebih besar.
+      </p>
+
+      <p class="prose">
+        <strong>Capital controls</strong> pernah dipandang negatif karena menciptakan distorsi dan bisa dielakkan. Namun IMF kini mengakui bahwa dalam situasi tertentu, manfaat capital controls bisa melebihi biayanya — terutama untuk mencegah exchange rate overshooting, pembentukan bubble aset, dan mempertahankan kemampuan bank sentral menjalankan kebijakan moneter independen.
+      </p>
+
+      <div class="callout green">
+        <span class="callout-title">Early Warning System — Best Practices</span>
+        <p>Sistem peringatan dini yang ideal harus memenuhi kriteria:</p>
+        <p style="margin-top:8px;">1. <strong>Strong predictive record</strong> terhadap krisis aktual, dengan minimal false alarms.</p>
+        <p>2. <strong>Timely data</strong> — indikator yang datanya tersedia tanpa lag signifikan.</p>
+        <p>3. <strong>Broad-based</strong> — mencakup banyak variabel karena krisis biasanya dipicu oleh multiple problems, bukan satu.</p>
+        <p>4. <strong>Early enough</strong> — sinyal harus muncul cukup awal untuk memberikan waktu hedge/adjust portofolio.</p>
+      </div>
+
+      <div class="kc">
+        <div class="kc-header" onclick="toggleKC('kc6')">
+          <span class="kc-header-title">Knowledge Check 6: Warning Signs Application</span>
+          <span class="kc-toggle">▼</span>
+        </div>
+        <div class="kc-body" id="kc6">
+          <p class="kc-q">Seorang analis menyusun early warning system untuk currency crisis. Mana dari indikator berikut yang PALING TIDAK menunjukkan peningkatan risiko krisis: (a) FX reserves naik pesat, (b) inflasi naik signifikan, (c) terms of trade memburuk?</p>
+          <div class="kc-answer">
+            <p><strong>Jawaban: (a) FX reserves naik pesat</strong></p>
+            <p>FX reserves yang NAIK justru mengurangi kemungkinan krisis — reserves adalah "firepower" yang tersedia untuk defend mata uang. Yang merupakan warning sign adalah reserves yang TURUN.</p>
+            <p>Sebaliknya, (b) inflasi tinggi dan (c) terms of trade yang memburuk adalah warning signs yang jelas: inflasi mengindikasikan monetary imbalance, sementara terms of trade yang memburuk berarti daya saing ekspor menurun dan current account berpotensi defisit.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 7: Practice Questions -->
+    <div class="chapter" id="sec7">
+      <div class="chapter-header">
+        <div class="chapter-num">SECTION 7</div>
+        <h2 class="chapter-title">Latihan Soal — Item Set Vignette</h2>
+      </div>
+
+      <p class="prose">
+        Soal-soal berikut mengikuti format CFA Level 2 Item Set dengan satu vignette diikuti 6 pertanyaan. Tingkat kesulitan: Medium-Hard.
+      </p>
+
+      <div class="divider"></div>
+
+      <div class="practice-body">
+        <div class="vignette">
+          <div class="vignette-label">VIGNETTE — ANALISIS KEBIJAKAN DAN RISIKO KRISIS</div>
+
+          <p><strong>Situation:</strong></p>
+          <p style="line-height:1.8;">
+            Rina Wulandari, CFA, adalah currency strategist di PT Mandala Securities, Jakarta. Ia sedang menganalisis outlook untuk tiga mata uang emerging market: Negara A, Negara B, dan Negara C.
+          </p>
+
+          <table class="reg-table">
+            <tr>
+              <th>Karakteristik</th>
+              <th>Negara A</th>
+              <th>Negara B</th>
+              <th>Negara C</th>
+            </tr>
+            <tr>
+              <td><strong>Exchange Rate Regime</strong></td>
+              <td>Floating</td>
+              <td>Fixed peg ke USD</td>
+              <td>Fixed peg ke USD</td>
+            </tr>
+            <tr>
+              <td><strong>Capital Mobility</strong></td>
+              <td>High (liberalized)</td>
+              <td>High (liberalized)</td>
+              <td>Low (capital controls)</td>
+            </tr>
+            <tr>
+              <td><strong>Current Monetary Policy</strong></td>
+              <td>Restrictive (rate hikes)</td>
+              <td>Expansionary (rate cuts)</td>
+              <td>Expansionary (rate cuts)</td>
+            </tr>
+            <tr>
+              <td><strong>Current Fiscal Policy</strong></td>
+              <td>Expansionary (infrastructure stimulus)</td>
+              <td>Expansionary (election spending)</td>
+              <td>Restrictive (austerity)</td>
+            </tr>
+            <tr>
+              <td><strong>Fiscal Deficit / GDP</strong></td>
+              <td>3% (manageable)</td>
+              <td>12% (large, rising 4 years)</td>
+              <td>1% (small)</td>
+            </tr>
+            <tr>
+              <td><strong>FX Reserves Trend</strong></td>
+              <td>Stable</td>
+              <td>Declining 35% in 2 years</td>
+              <td>Stable</td>
+            </tr>
+            <tr>
+              <td><strong>Banking Sector</strong></td>
+              <td>Well-capitalized</td>
+              <td>Heavy USD borrowing, lend local currency long-term</td>
+              <td>Conservative, limited FX exposure</td>
+            </tr>
+            <tr>
+              <td><strong>Inflation</strong></td>
+              <td>4% (target: 3.5%)</td>
+              <td>15% (rising)</td>
+              <td>2.5% (stable)</td>
+            </tr>
+            <tr>
+              <td><strong>Currency Valuation</strong></td>
+              <td>Fair value</td>
+              <td>25% above 5-year REER average</td>
+              <td>Slightly undervalued</td>
+            </tr>
+          </table>
+
+          <p style="margin-top:20px;"><strong>Additional Notes from Rina's Report:</strong></p>
+          <p style="line-height:1.8;">
+            • Negara B baru-baru ini mengalami surge short-term portfolio inflows dari global yield-seekers.<br>
+            • Negara B's government telah memonetisasi sebagian defisit melalui bank sentral.<br>
+            • Rina mendengar bahwa beberapa hedge funds besar sedang membangun posisi short terhadap mata uang Negara B.<br>
+            • Negara C ingin menurunkan suku bunga untuk menstimulasi ekonomi tanpa membahayakan peg.
+          </p>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Question 1</div>
+          <div class="q-text">
+            Berdasarkan Mundell-Fleming model, efek dari policy mix Negara A (restrictive monetary + expansionary fiscal, high capital mobility) terhadap mata uangnya paling mungkin:
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q0"> A) Apresiasi, karena kedua kebijakan mendorong real interest rates naik</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q0"> B) Depresiasi, karena fiscal expansion meningkatkan imports</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q0"> C) Indeterminate, karena kedua kebijakan saling bertentangan</label>
+          </div>
+          <button onclick="answer(0, document.querySelector('input[name=q0]:checked')?.value, 'A')" style="margin-top:12px;padding:8px 14px;background:var(--gold-bg);border:none;border-radius:4px;cursor:pointer;">Submit Answer</button>
+          <div class="explanation" id="exp0">
+            <p><strong>Answer: A</strong></p>
+            <p>Mundell-Fleming dengan HIGH capital mobility: restrictive monetary policy mendorong rates naik, dan expansionary fiscal policy juga mendorong rates naik (melalui budget deficit financing). Kedua kebijakan mendorong real interest rates ke arah yang sama (naik) → capital inflows → mata uang APRESIASI.</p>
+            <p>Ini adalah kombinasi paling bullish dalam Mundell-Fleming framework untuk high capital mobility. Contoh historis: German reunification 1990-92.</p>
+            <p>B salah karena di high capital mobility, capital flow channel mendominasi trade balance channel. C salah karena kedua kebijakan mendorong rates ke arah yang SAMA (naik), bukan bertentangan.</p>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Question 2</div>
+          <div class="q-text">
+            Menurut impossible trinity, Negara B yang memiliki fixed peg ke USD dan high capital mobility, menjalankan expansionary monetary policy (rate cuts). Implikasi utamanya adalah:
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q1"> A) Rate cuts akan efektif menstimulasi ekonomi tanpa memengaruhi peg</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q1"> B) Rate cuts akan menyebabkan capital outflows yang mengancam peg, memaksa bank sentral menjual reserves</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q1"> C) Rate cuts akan menyebabkan capital inflows karena stimulus meningkatkan growth prospects</label>
+          </div>
+          <button onclick="answer(1, document.querySelector('input[name=q1]:checked')?.value, 'B')" style="margin-top:12px;padding:8px 14px;background:var(--gold-bg);border:none;border-radius:4px;cursor:pointer;">Submit Answer</button>
+          <div class="explanation" id="exp1">
+            <p><strong>Answer: B</strong></p>
+            <p>Impossible trinity: dengan fixed rate + free capital, independent monetary policy TIDAK BISA bekerja. Rate cuts → interest rate differential melebar → capital outflows (investor mencari yield lebih tinggi di luar) → tekanan depresiasi pada mata uang → bank sentral harus intervene (jual foreign reserves, beli domestic currency) untuk maintain peg → reserves drain.</p>
+            <p>Ini persis situasi yang impossible trinity peringatkan. Negara B mencoba memiliki ketiga hal sekaligus — dan reservesnya sudah turun 35% dalam 2 tahun, menunjukkan proses ini sudah berjalan.</p>
+            <p>A salah karena rate cuts tidak efektif dengan fixed rate + free capital. C salah karena growth prospects tidak mengkompensasi rate differential dalam short-term capital flows.</p>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Question 3</div>
+          <div class="q-text">
+            Profil Negara B — defisit fiskal besar yang dimonetisasi, reserves menurun, inflasi tinggi — paling konsisten dengan model crisis generasi:
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q2"> A) First generation — fundamental-driven reserve depletion</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q2"> B) Second generation — self-fulfilling speculative attack</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q2"> C) Third generation — financial sector balance sheet mismatch</label>
+          </div>
+          <button onclick="answer(2, document.querySelector('input[name=q2]:checked')?.value, 'A')" style="margin-top:12px;padding:8px 14px;background:var(--gold-bg);border:none;border-radius:4px;cursor:pointer;">Submit Answer</button>
+          <div class="explanation" id="exp2">
+            <p><strong>Answer: A</strong></p>
+            <p>Negara B menunjukkan semua ciri first generation crisis model (Krugman):</p>
+            <p>1. Defisit fiskal besar dan persisten (12% GDP, naik 4 tahun berturut)</p>
+            <p>2. Monetisasi defisit oleh bank sentral (pencetakan uang)</p>
+            <p>3. Inflasi tinggi dan meningkat (15%)</p>
+            <p>4. FX reserves menurun secara bertahap (turun 35% dalam 2 tahun)</p>
+            <p>5. Inkonsistensi kebijakan: fixed rate + expansionary fiscal/monetary</p>
+            <p>Meskipun Negara B JUGA punya elemen 2nd gen (hedge funds building short positions) dan 3rd gen (banking sector USD borrowing), profil dominannya adalah first generation karena penyebab utamanya jelas fundamental: kebijakan fiskal/moneter yang tidak konsisten dengan fixed rate.</p>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Question 4</div>
+          <div class="q-text">
+            Fakta bahwa hedge funds besar sedang membangun posisi short terhadap mata uang Negara B, meskipun menambah elemen second-generation crisis dynamics, paling mungkin akan:
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q3"> A) Tidak memengaruhi outcome karena fundamental sudah menentukan krisis inevitable</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q3"> B) Mempercepat timing krisis karena speculative attack mempercepat reserve drain</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q3"> C) Mencegah krisis karena short positions memberikan sinyal yang mendorong pemerintah memperbaiki kebijakan</label>
+          </div>
+          <button onclick="answer(3, document.querySelector('input[name=q3]:checked')?.value, 'B')" style="margin-top:12px;padding:8px 14px;background:var(--gold-bg);border:none;border-radius:4px;cursor:pointer;">Submit Answer</button>
+          <div class="explanation" id="exp3">
+            <p><strong>Answer: B</strong></p>
+            <p>Dalam first-generation framework, krisis sudah inevitable karena trajectory fundamental (defisit → monetisasi → inflasi → reserve drain). Yang speculative attack lakukan adalah MEMPERCEPAT timing-nya.</p>
+            <p>Spekulan yang rasional tidak akan menunggu sampai reserves benar-benar habis — mereka attack lebih awal karena menunggu terlalu lama berarti bersaing dengan spekulan lain dan mungkin kehilangan profit. Ini mempercepat reserve drain dan mempercepat collapse peg.</p>
+            <p>A tidak tepat karena speculative attack memang memengaruhi timing (walaupun bukan outcome akhir). C terlalu optimis — dalam praktik, pemerintah biasanya tidak merespons sinyal pasar dengan cukup cepat.</p>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Question 5</div>
+          <div class="q-text">
+            Negara C ingin menurunkan suku bunga tanpa membahayakan peg-nya ke USD. Menurut impossible trinity, cara PALING EFEKTIF untuk mencapai ini adalah:
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q4"> A) Mempertahankan capital controls yang sudah ada, yang memungkinkan rate cuts tanpa capital outflows masif</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q4"> B) Meliberalisasi capital account untuk menarik FDI yang akan mendukung peg</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q4"> C) Beralih ke floating exchange rate agar bisa menjalankan monetary policy independen</label>
+          </div>
+          <button onclick="answer(4, document.querySelector('input[name=q4]:checked')?.value, 'A')" style="margin-top:12px;padding:8px 14px;background:var(--gold-bg);border:none;border-radius:4px;cursor:pointer;">Submit Answer</button>
+          <div class="explanation" id="exp4">
+            <p><strong>Answer: A</strong></p>
+            <p>Negara C sudah memilih kombinasi "fixed rate + capital controls" dari impossible trinity, yang berarti mengorbankan free capital mobility. Ini MEMUNGKINKAN mereka menjalankan independent monetary policy (termasuk rate cuts) tanpa mengancam peg.</p>
+            <p>Dengan capital controls, rate cuts tidak akan menyebabkan capital outflows masif karena flows dibatasi. Ini persis tujuan dari pilihan policy framework ini.</p>
+            <p>B kontraproduktif — liberalisasi capital account akan membuat rate cuts mengancam peg (kembali ke impossible trinity). C bisa bekerja tapi tidak menjawab keinginan mempertahankan peg — Negara C spesifik ingin KEEP the peg.</p>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Question 6</div>
+          <div class="q-text">
+            Berapa banyak dari 9 standard warning signs of currency crisis yang dapat diidentifikasi di Negara B berdasarkan data dalam vignette?
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q5"> A) 4-5 warning signs</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q5"> B) 6-7 warning signs</label>
+          </div>
+          <div class="option">
+            <label><input type="radio" name="q5"> C) 8-9 warning signs</label>
+          </div>
+          <button onclick="answer(5, document.querySelector('input[name=q5]:checked')?.value, 'C')" style="margin-top:12px;padding:8px 14px;background:var(--gold-bg);border:none;border-radius:4px;cursor:pointer;">Submit Answer</button>
+          <div class="explanation" id="exp5">
+            <p><strong>Answer: C</strong></p>
+            <p>Warning signs teridentifikasi di Negara B:</p>
+            <p>1. ✅ Capital market liberalization — high capital mobility (liberalized)</p>
+            <p>2. ✅ Large foreign capital inflows — surge short-term portfolio inflows</p>
+            <p>3. ✅ Banking crisis risk — heavy USD borrowing, lend local long-term (maturity + currency mismatch)</p>
+            <p>4. ✅ Fixed exchange rate — peg ke USD</p>
+            <p>5. ✅ FX reserves declining — turun 35% dalam 2 tahun</p>
+            <p>6. ✅ Currency above historical mean — 25% above 5-year REER average</p>
+            <p>7. ✅ (Implied) Terms of trade likely deteriorating — overvalued currency → exports less competitive</p>
+            <p>8. ✅ Broad money growth rising — monetisasi defisit = money supply expansion</p>
+            <p>9. ✅ Inflation significantly higher — 15% dan rising</p>
+            <p>Hampir SEMUA 9 warning signs hadir! Negara B berada dalam zona bahaya ekstrem. Ini menunjukkan mengapa multiple warning signs yang muncul bersamaan sangat berbahaya.</p>
+          </div>
+        </div>
+
+        <div style="margin-top:32px;text-align:center;">
+          <button onclick="showScore()" style="padding:12px 24px;background:var(--blue);color:white;border:none;border-radius:6px;font-weight:600;cursor:pointer;font-size:15px;">Show Score</button>
+        </div>
+
+        <div class="score-panel" id="scorePanel">
+          <h3>Score</h3>
+          <p id="scoreText">0 / 6</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Navigation -->
+    <div class="nav-bottom">
+      <a href="CFA_L2_Day15_Full.html" class="nav-btn">
+        <span>←</span> <span class="nav-day">Day 15: Parity Conditions & Carry Trade</span>
+      </a>
+      <a href="CFA_L2_Day17_Full.html" class="nav-btn">
+        <span class="nav-day">Day 17: Solow Growth Model</span> <span>→</span>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    function toggleKC(id) {
+      const kc = document.getElementById(id).closest('.kc');
+      kc.classList.toggle('open');
+    }
+
+    const answers = {};
+    const correct = { 0: 'A', 1: 'B', 2: 'A', 3: 'B', 4: 'A', 5: 'C' };
+    const total = 6;
+
+    function answer(qIdx, chosen, correctAns) {
+      if (!chosen) return;
+      answers[qIdx] = chosen === correctAns;
+      const expDiv = document.getElementById(`exp${qIdx}`);
+      expDiv.classList.add('show');
+    }
+
+    function showScore() {
+      let score = 0;
+      for (let key in answers) {
+        if (answers[key]) score++;
+      }
+      document.getElementById('scoreText').textContent = `${score} / ${total}`;
+      document.getElementById('scorePanel').classList.add('show');
+    }
+  </script>
+</body>
+</html>

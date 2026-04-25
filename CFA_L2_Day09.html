@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 9 · AR Models & Stationarity</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #fafaf8;
+  --bg2:     #f4f3ef;
+  --bg3:     #eeece7;
+  --border:  rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text:    #1a1a2e;
+  --text2:   #4a4a6a;
+  --text3:   #8a8aaa;
+  --gold:    #9a6e1a;
+  --gold2:   #7a5010;
+  --gold-bg: rgba(154,110,26,0.08);
+  --blue:    #1a5fa8;
+  --blue-bg: rgba(26,95,168,0.08);
+  --green:   #1a7a4a;
+  --green-bg:rgba(26,122,74,0.08);
+  --red:     #b83232;
+  --red-bg:  rgba(184,50,50,0.08);
+  --amber:   #a06010;
+  --amber-bg:rgba(160,96,16,0.08);
+  --purple:  #6a3ab0;
+  --purple-bg:rgba(106,58,176,0.08);
+  --r:10px;--r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.7;min-height:100vh;}
+
+/* ── Layout ── */
+.page{max-width:820px;margin:0 auto;padding:40px 24px 80px;}
+
+/* ── Top bar ── */
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+
+/* ── Hero ── */
+.hero{margin-bottom:32px;}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:32px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:14px;color:var(--text2);}
+.meta-row{display:flex;gap:16px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+
+/* ── Section headers ── */
+.section{margin-bottom:28px;}
+.section-label{font-size:10px;color:var(--text3);letter-spacing:0.09em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* ── Objective box ── */
+.obj-box{background:var(--gold-bg);border:1px solid rgba(201,168,76,0.25);border-radius:var(--r);padding:16px 18px;margin-bottom:24px;}
+.obj-box-title{font-size:11px;color:var(--gold);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;font-weight:500;}
+.obj-list{list-style:none;}
+.obj-list li{font-size:13px;color:var(--text2);padding:3px 0 3px 16px;position:relative;}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--gold);font-size:11px;top:5px;}
+
+/* ── Concept cards ── */
+.concept-grid{display:flex;flex-direction:column;gap:14px;}
+.concept-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+.concept-card-header{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);}
+.concept-num{width:26px;height:26px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--gold);flex-shrink:0;}
+.concept-title{font-size:14px;font-weight:500;color:var(--text);}
+.concept-body{padding:14px 16px;font-size:13px;color:var(--text2);line-height:1.75;}
+.concept-body p{margin-bottom:10px;}
+.concept-body p:last-child{margin-bottom:0;}
+
+/* ── Formula box ── */
+.formula{background:var(--bg3);border:1px solid var(--border2);border-left:3px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:12px 16px;margin:10px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);line-height:1.6;}
+.formula .comment{color:var(--text3);font-style:italic;}
+
+/* ── Assumption table ── */
+.assume-table{width:100%;border-collapse:collapse;font-size:13px;}
+.assume-table th{text-align:left;padding:9px 12px;background:var(--bg3);color:var(--text2);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid var(--border2);}
+.assume-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+.assume-table tr:last-child td{border-bottom:none;}
+.assume-table .name{font-weight:500;color:var(--text);}
+.assume-table .violation{color:var(--amber);font-size:12px;}
+.badge{display:inline-flex;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;}
+.badge-blue{background:var(--blue-bg);color:var(--blue);}
+.badge-amber{background:var(--amber-bg);color:var(--amber);}
+.badge-green{background:var(--green-bg);color:var(--green);}
+.badge-red{background:var(--red-bg);color:var(--red);}
+
+/* ── Key insight ── */
+.insight{background:var(--blue-bg);border:1px solid rgba(91,156,246,0.2);border-radius:var(--r);padding:14px 16px;margin:12px 0;font-size:13px;color:var(--text2);}
+.insight strong{color:var(--blue);}
+
+/* ── Exam trap ── */
+.trap{background:var(--red-bg);border:1px solid rgba(240,108,108,0.2);border-radius:var(--r);padding:14px 16px;margin:12px 0;}
+.trap-label{font-size:10px;color:var(--red);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:6px;font-weight:500;}
+.trap p{font-size:13px;color:var(--text2);}
+
+/* ── Divider ── */
+.divider{height:1px;background:var(--border);margin:28px 0;}
+
+/* ── Practice section ── */
+.practice-header{background:var(--gold-bg);border:1px solid rgba(201,168,76,0.2);border-radius:var(--r) var(--r) 0 0;padding:14px 18px;display:flex;align-items:center;gap:12px;}
+.practice-icon{font-size:18px;}
+.practice-header-text{flex:1;}
+.practice-header-title{font-size:15px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);}
+.practice-body{background:var(--bg2);border:1px solid rgba(201,168,76,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:20px;}
+
+/* ── Vignette ── */
+.vignette{background:var(--bg3);border-left:3px solid var(--gold);padding:16px 18px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:24px;font-size:13px;color:var(--text2);line-height:1.8;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;font-weight:500;}
+
+/* ── Questions ── */
+.question-block{margin-bottom:22px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:5px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:11px;line-height:1.6;}
+.option{display:block;width:100%;text-align:left;padding:10px 14px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:7px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.5;}
+.option:hover:not(:disabled){border-color:var(--border2);color:var(--text);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);margin-top:8px;line-height:1.7;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+
+/* ── Score ── */
+.score-panel{text-align:center;padding:24px;margin-top:16px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:48px;margin-bottom:6px;}
+.score-msg{font-size:13px;color:var(--text2);}
+
+/* ── Cheat sheet ── */
+.cheat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:540px){.cheat-grid{grid-template-columns:1fr;}}
+.cheat-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;}
+.cheat-key{font-size:11px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em;}
+.cheat-val{font-size:13px;color:var(--text);font-family:'JetBrains Mono',monospace;}
+
+/* ── Nav bottom ── */
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+.nav-day{font-size:12px;color:var(--text3);text-align:center;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II · <span>Quantitative Methods</span> · LM5</div>
+    <div class="day-badge">Day 9 of 90</div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-tag">Monday, 20 April 2026</div>
+    <h1 class="hero-title">AR Models & Stationarity</h1>
+    <p class="hero-sub">Time-Series Analysis — Subtopic 1 of 2</p>
+    <div class="meta-row">
+      <div class="meta-pill">⏱ <b>60 min</b> total</div>
+      <div class="meta-pill">📖 <b>30 min</b> theory</div>
+      <div class="meta-pill">📝 <b>30 min</b> practice</div>
+      <div class="meta-pill">⚖️ Exam weight <b>~6%</b></div>
+    </div>
+  </div>
+
+  <!-- Objectives -->
+  <div class="obj-box">
+    <div class="obj-box-title">Learning Objectives — Hari ini lo harus bisa:</div>
+    <ul class="obj-list">
+      <li>Jelaskan struktur model AR(1) dan AR(p), serta buat forecast satu dan dua periode ke depan</li>
+      <li>Bedakan time series yang covariance stationary vs non-stationary, dan jelaskan tiga syarat stationarity</li>
+      <li>Terapkan unit root test (Dickey-Fuller) untuk mendeteksi nonstationarity dan transformasi data via first differencing</li>
+      <li>Hitung mean-reverting level dan interpretasikan implikasinya untuk forecasting</li>
+    </ul>
+  </div>
+
+  <!-- Theory -->
+  <div class="section">
+    <div class="section-label">Theory · 30 min</div>
+
+    <div class="concept-grid">
+
+      <!-- Concept 1 -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">1</div>
+          <div class="concept-title">Model Autoregressive: AR(1) dan AR(p)</div>
+        </div>
+        <div class="concept-body">
+          <p>Time-series analysis berbeda dari cross-sectional regression karena <strong style="color:var(--text);">observasi punya urutan waktu</strong> — data hari ini tergantung data kemarin. Model autoregressive (AR) memanfaatkan hubungan ini: variabel diregresikan terhadap <em>nilainya sendiri di masa lalu</em>.</p>
+          <div class="formula">
+            AR(1): x<sub>t</sub> = b₀ + b₁x<sub>t−1</sub> + ε<sub>t</sub>
+            <br><span class="comment">// Nilai sekarang = intercept + slope × nilai kemarin + error</span>
+          </div>
+          <div class="formula">
+            AR(p): x<sub>t</sub> = b₀ + b₁x<sub>t−1</sub> + b₂x<sub>t−2</sub> + ... + b<sub>p</sub>x<sub>t−p</sub> + ε<sub>t</sub>
+            <br><span class="comment">// p lag dipakai sebagai prediktor</span>
+          </div>
+          <p><strong style="color:var(--gold2);">Cara pilih order p:</strong> Mulai dari AR(1), cek autocorrelation residual. Kalau masih signifikan di lag tertentu, tambah lag → AR(2), dst. Pakai t-test pada residual autocorrelation: standard error = 1/√T. Kalau semua autocorrelation residual nggak signifikan, model sudah correctly specified.</p>
+          <div class="insight">
+            <strong>Key Insight:</strong> Durbin-Watson statistic <em>nggak valid</em> untuk menguji serial correlation di AR model karena independent variable-nya adalah lagged dependent variable. Gunakan residual autocorrelation test saja.
+          </div>
+        </div>
+      </div>
+
+      <!-- Concept 2 -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">2</div>
+          <div class="concept-title">Covariance Stationarity — Syarat Utama AR Model</div>
+        </div>
+        <div class="concept-body">
+          <p>Supaya AR model valid dan bisa diestimasi pakai OLS, time series <strong style="color:var(--text);">harus covariance stationary</strong>. Kalau nggak? Hasil regresi jadi <em>spurious</em> — estimasi b₁ bias dan semua hypothesis test invalid.</p>
+          <table class="assume-table">
+            <thead>
+              <tr><th>Syarat</th><th>Penjelasan</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="name">Mean konstan & finite</span></td>
+                <td>E(x<sub>t</sub>) = μ untuk semua t, dan |μ| &lt; ∞</td>
+              </tr>
+              <tr>
+                <td><span class="name">Variance konstan & finite</span></td>
+                <td>Var(x<sub>t</sub>) = σ² untuk semua t, dan σ² &lt; ∞</td>
+              </tr>
+              <tr>
+                <td><span class="name">Covariance konstan & finite</span></td>
+                <td>Cov(x<sub>t</sub>, x<sub>t−s</sub>) = λ<sub>s</sub> — hanya tergantung lag s, bukan waktu t</td>
+              </tr>
+            </tbody>
+          </table>
+          <p><strong style="color:var(--gold2);">Contoh non-stationary:</strong> Data sales yang trending naik (mean nggak konstan), data dengan seasonality kuat, dan <em>random walks</em> (variance tak terbatas seiring waktu).</p>
+          <div class="trap">
+            <div class="trap-label">⚠ Exam Trap</div>
+            <p>Stationarity di masa lalu <strong>bukan jaminan</strong> stationarity di masa depan. Perubahan regime (misalnya krisis finansial, perubahan kebijakan moneter) bisa mengubah sifat time series secara fundamental — ini penting buat jawab soal tentang limitasi time-series forecasting.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Concept 3 -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">3</div>
+          <div class="concept-title">Mean Reversion & Multiperiod Forecasting</div>
+        </div>
+        <div class="concept-body">
+          <p>Time series yang covariance stationary punya sifat <strong style="color:var(--text);">mean reversion</strong> — kalau nilainya di atas rata-rata, model prediksi nilainya akan turun; kalau di bawah, model prediksi akan naik. Seperti termostat yang menjaga suhu ruangan.</p>
+          <div class="formula">
+            Mean-reverting level: x̄ = b₀ / (1 − b₁)
+            <br><span class="comment">// Hanya valid kalau |b₁| &lt; 1 (covariance stationary)</span>
+          </div>
+          <p><strong style="color:var(--gold2);">Multiperiod forecast (chain rule):</strong> Untuk forecast 2 periode ke depan, substitusi forecast periode 1 ke dalam model:</p>
+          <div class="formula">
+            x̂<sub>t+1</sub> = b̂₀ + b̂₁x<sub>t</sub>
+            <br>x̂<sub>t+2</sub> = b̂₀ + b̂₁x̂<sub>t+1</sub>
+            <br><span class="comment">// Semakin jauh forecast, semakin besar uncertainty</span>
+          </div>
+          <div class="insight">
+            <strong>Key Insight:</strong> Semua multiperiod forecast dari AR model covariance stationary akan <em>converge ke mean-reverting level</em> seiring horizon makin panjang. Ini karena setiap iterasi menarik forecast lebih dekat ke b₀/(1 − b₁).
+          </div>
+        </div>
+      </div>
+
+      <!-- Concept 4 -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">4</div>
+          <div class="concept-title">Random Walk & Unit Root Test (Dickey-Fuller)</div>
+        </div>
+        <div class="concept-body">
+          <p><strong style="color:var(--text);">Random walk</strong> adalah AR(1) dengan b₀ = 0 dan b₁ = 1 — artinya nilai terbaik untuk memprediksi x besok adalah x hari ini. Ini <em>bukan</em> covariance stationary karena variance-nya tumbuh tanpa batas seiring waktu.</p>
+          <div class="formula">
+            Random walk: x<sub>t</sub> = x<sub>t−1</sub> + ε<sub>t</sub>
+            <br>Random walk with drift: x<sub>t</sub> = b₀ + x<sub>t−1</sub> + ε<sub>t</sub>   (b₀ ≠ 0)
+            <br><span class="comment">// Mean-reverting level = b₀/(1−1) = undefined!</span>
+          </div>
+          <p><strong style="color:var(--gold2);">Dickey-Fuller (DF) test:</strong> Kita nggak bisa langsung test b₁ = 1 pakai t-test biasa (distribusinya invalid). DF test mentransformasi model:</p>
+          <div class="formula">
+            x<sub>t</sub> − x<sub>t−1</sub> = b₀ + g₁x<sub>t−1</sub> + ε<sub>t</sub>
+            <br><span class="comment">// g₁ = (b₁ − 1). H₀: g₁ = 0 (unit root). Hₐ: g₁ &lt; 0 (stationary)</span>
+            <br><span class="comment">// Pakai DF critical values, BUKAN t-table biasa!</span>
+          </div>
+          <p><strong style="color:var(--gold2);">First differencing:</strong> Kalau time series punya unit root, transformasi jadi y<sub>t</sub> = x<sub>t</sub> − x<sub>t−1</sub>. Series baru ini covariance stationary dan bisa dimodelkan pakai AR.</p>
+          <div class="trap">
+            <div class="trap-label">⚠ Exam Trap</div>
+            <p>R² yang sangat tinggi (misal 0.99) di AR(1) model <em>bukan</em> indikator model yang bagus — justru bisa jadi tanda random walk! Kalau lo first-difference dan R² jadi ~0, itu konfirmasi bahwa perubahan-perubahannya unpredictable (random walk).</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Concept 5 -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">5</div>
+          <div class="concept-title">Seasonality dalam Time-Series Models</div>
+        </div>
+        <div class="concept-body">
+          <p>Banyak data ekonomi/keuangan punya pola musiman (seasonal pattern). Misalnya, retail sales selalu tinggi di bulan Desember. Kalau nggak diatasi, <strong style="color:var(--text);">seasonality bikin model misspecified</strong> — autocorrelation residual di lag musiman akan signifikan.</p>
+          <p><strong style="color:var(--gold2);">Deteksi:</strong> Cek autocorrelation residual di lag musiman (lag 4 untuk quarterly data, lag 12 untuk monthly). Kalau t-stat &gt; critical value → ada seasonality.</p>
+          <p><strong style="color:var(--gold2);">Solusi:</strong> Tambahkan seasonal lag ke model. Contoh untuk monthly data:</p>
+          <div class="formula">
+            x<sub>t</sub> = b₀ + b₁x<sub>t−1</sub> + b₂x<sub>t−12</sub> + ε<sub>t</sub>
+            <br><span class="comment">// Lag 12 menangkap pola tahunan di data bulanan</span>
+          </div>
+          <div class="insight">
+            <strong>Key Insight:</strong> Menambahkan seasonal lag bisa secara dramatis meningkatkan R² dan menghilangkan serial correlation. Dalam contoh CFA curriculum, R² melonjak dari 0.05 ke 0.67 setelah menambahkan lag 12 pada data retail sales bulanan Kanada.
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /concept-grid -->
+  </div>
+
+  <!-- Cheat Sheet -->
+  <div class="section">
+    <div class="section-label">Quick Reference Cheat Sheet</div>
+    <div class="cheat-grid">
+      <div class="cheat-item">
+        <div class="cheat-key">AR(1) Model</div>
+        <div class="cheat-val">x<sub>t</sub> = b₀ + b₁x<sub>t−1</sub> + ε<sub>t</sub></div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Mean-Reverting Level</div>
+        <div class="cheat-val">x̄ = b₀ / (1 − b₁)</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Stationarity Condition</div>
+        <div class="cheat-val">|b₁| &lt; 1</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Random Walk</div>
+        <div class="cheat-val">x<sub>t</sub> = x<sub>t−1</sub> + ε<sub>t</sub> (b₁ = 1)</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">DF Test Hypothesis</div>
+        <div class="cheat-val">H₀: g₁=0 (unit root) vs Hₐ: g₁&lt;0</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Residual Autocorr. SE</div>
+        <div class="cheat-val">SE = 1 / √T</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Practice -->
+  <div class="section">
+    <div class="section-label">Practice · 30 min</div>
+
+    <div class="practice-header">
+      <div class="practice-icon">📝</div>
+      <div class="practice-header-text">
+        <div class="practice-header-title">Mini Vignette — PT Nusantara Semen Tbk</div>
+        <div class="practice-header-sub">4 soal · AR modeling & stationarity</div>
+      </div>
+    </div>
+
+    <div class="practice-body">
+
+      <div class="vignette">
+        <div class="vignette-label">Vignette</div>
+        Analis Dewi Puspita sedang membangun model time-series untuk memprediksi quarterly revenue growth PT Nusantara Semen Tbk, produsen semen terbesar di Indonesia. Data yang digunakan adalah 80 observasi kuartalan (Q1 2006 – Q4 2025). Dewi mengestimasi AR(1) model berikut:<br><br>
+        Revenue growth<sub>t</sub> = 0.0248 + 0.6510 × Revenue growth<sub>t−1</sub> + ε<sub>t</sub><br><br>
+        <strong>Hasil statistik:</strong><br>
+        • R² = 0.4236, Standard error = 0.0312, Observations = 80<br>
+        • t-stat intercept = 2.85 (p &lt; 0.01), t-stat b₁ = 7.62 (p &lt; 0.01)<br>
+        • Residual autocorrelations: Lag 1 = 0.032 (t = 0.29), Lag 2 = −0.108 (t = −0.96), Lag 3 = 0.045 (t = 0.40), Lag 4 = 0.285 (t = 2.54)<br><br>
+        Dewi juga mengestimasi AR(1) model untuk harga saham (level) PT Nusantara Semen dengan hasil: b̂₀ = 85.20, b̂₁ = 0.9945, R² = 0.9891. Dickey-Fuller test menghasilkan g₁ = −0.0055 dengan t-stat = −1.42 (DF critical value pada 5% = −2.88).
+      </div>
+
+      <!-- Q1 -->
+      <div class="question-block" id="qb0">
+        <div class="q-num">Soal 1 / 4</div>
+        <div class="q-text">Berdasarkan residual autocorrelations dari AR(1) model revenue growth, model Dewi paling likely:</div>
+        <button class="option" onclick="answer(0,'A','B')">A. Correctly specified — semua autocorrelation tidak signifikan</button>
+        <button class="option" onclick="answer(0,'B','B')">B. Misspecified — terdapat seasonality yang belum ditangkap, perlu ditambahkan lag 4</button>
+        <button class="option" onclick="answer(0,'C','B')">C. Misspecified — perlu diganti menjadi random walk model</button>
+        <div class="explanation" id="exp0">
+          <strong>B adalah jawaban yang benar.</strong> Dengan T = 80 observasi, SE = 1/√80 = 0.1118. Critical value pada 5% ≈ 1.97. Lag 4 autocorrelation = 0.285 dengan t-stat = 2.54 > 1.97, sehingga signifikan. Ini menunjukkan seasonality (quarterly pattern) yang belum ditangkap. Solusinya bukan random walk (C salah karena model revenue growth punya b₁ = 0.651 < 1, bukan unit root), melainkan menambahkan seasonal lag (x<sub>t−4</sub>) ke model.
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="question-block" id="qb1">
+        <div class="q-num">Soal 2 / 4</div>
+        <div class="q-text">Mean-reverting level revenue growth kuartalan PT Nusantara Semen berdasarkan AR(1) model adalah paling mendekati:</div>
+        <button class="option" onclick="answer(1,'A','A')">A. 7.11%</button>
+        <button class="option" onclick="answer(1,'B','A')">B. 2.48%</button>
+        <button class="option" onclick="answer(1,'C','A')">C. 3.81%</button>
+        <div class="explanation" id="exp1">
+          <strong>A adalah jawaban yang benar.</strong> Mean-reverting level = b₀ / (1 − b₁) = 0.0248 / (1 − 0.6510) = 0.0248 / 0.3490 = 0.0711 atau 7.11%. Opsi B (2.48%) hanya intercept tanpa dibagi. Opsi C salah perhitungan. Jika revenue growth saat ini di bawah 7.11%, model memprediksi growth akan naik; jika di atas, akan turun.
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="question-block" id="qb2">
+        <div class="q-num">Soal 3 / 4</div>
+        <div class="q-text">Berdasarkan Dickey-Fuller test pada harga saham PT Nusantara Semen, kesimpulan yang paling tepat adalah:</div>
+        <button class="option" onclick="answer(2,'A','C')">A. Tolak H₀ — harga saham stationary, AR(1) model valid</button>
+        <button class="option" onclick="answer(2,'B','C')">B. Gagal tolak H₀ — harga saham stationary karena R² sangat tinggi (0.9891)</button>
+        <button class="option" onclick="answer(2,'C','C')">C. Gagal tolak H₀ — harga saham kemungkinan random walk, perlu first-differencing sebelum dimodelkan</button>
+        <div class="explanation" id="exp2">
+          <strong>C adalah jawaban yang benar.</strong> DF test: t-stat g₁ = −1.42. DF critical value pada 5% = −2.88. Karena −1.42 > −2.88 (tidak cukup negatif), kita gagal tolak H₀: g₁ = 0 (unit root ada). Ini berarti harga saham kemungkinan random walk dan harus di-first-difference sebelum bisa dimodelkan pakai AR. R² tinggi (0.9891) justru merupakan tanda random walk — bukan bukti model bagus (B salah). A salah karena kita gagal (bukan berhasil) menolak H₀.
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="question-block" id="qb3">
+        <div class="q-num">Soal 4 / 4</div>
+        <div class="q-text">Jika revenue growth kuartal ini (Q4 2025) adalah 5.50%, forecast revenue growth untuk Q2 2026 (dua periode ke depan) menggunakan chain rule of forecasting paling mendekati:</div>
+        <button class="option" onclick="answer(3,'A','B')">A. 5.94%</button>
+        <button class="option" onclick="answer(3,'B','B')">B. 6.35%</button>
+        <button class="option" onclick="answer(3,'C','B')">C. 7.11%</button>
+        <div class="explanation" id="exp3">
+          <strong>B adalah jawaban yang benar.</strong> Step 1 — Forecast Q1 2026: x̂<sub>t+1</sub> = 0.0248 + 0.6510(0.0550) = 0.0248 + 0.0358 = 0.0606 (6.06%). Step 2 — Forecast Q2 2026: x̂<sub>t+2</sub> = 0.0248 + 0.6510(0.0606) = 0.0248 + 0.0395 = 0.0643 ≈ 6.43%. Paling mendekati jawaban B (6.35%). Catatan: forecast bergerak menuju mean-reverting level 7.11% (C) tapi belum sampai di horizon 2 periode. A (5.94%) hanya satu periode ke depan yang dibulatkan salah.
+        </div>
+      </div>
+
+      <!-- Score -->
+      <div class="score-panel" id="score-panel">
+        <div class="score-num" id="score-num">0/4</div>
+        <div class="score-msg" id="score-msg">—</div>
+      </div>
+
+    </div><!-- /practice body -->
+  </div>
+
+  <!-- Bottom nav -->
+  <div class="nav-bottom">
+    <a class="nav-btn" href="CFA_L2_Day08.html">← Day 8</a>
+    <div class="nav-day">Day 9 of 90<br><span style="font-size:11px;color:var(--text3);">Prev: Logistic Regression · Next: Cointegration & ARCH/GARCH</span></div>
+    <a class="nav-btn primary" href="CFA_L2_Day10.html">Day 10 →</a>
+  </div>
+
+</div><!-- /page -->
+
+<script>
+const answers = {};
+const correct = {0:'B', 1:'A', 2:'C', 3:'B'};
+const total = 4;
+
+function answer(qIdx, chosen, correctAns) {
+  if (answers[qIdx]) return;
+  answers[qIdx] = chosen;
+
+  const block = document.getElementById('qb' + qIdx);
+  const exp   = document.getElementById('exp' + qIdx);
+
+  block.querySelectorAll('.option').forEach(btn => {
+    btn.disabled = true;
+    const letter = btn.textContent.trim()[0];
+    if (letter === correctAns) btn.classList.add('correct');
+    else if (letter === chosen && chosen !== correctAns) btn.classList.add('wrong');
+  });
+
+  exp.classList.add('show');
+
+  if (Object.keys(answers).length === total) showScore();
+}
+
+function showScore() {
+  const score = Object.keys(correct).filter(k => answers[k] === correct[k]).length;
+  const panel = document.getElementById('score-panel');
+  const num   = document.getElementById('score-num');
+  const msg   = document.getElementById('score-msg');
+
+  num.textContent = score + '/' + total;
+  num.style.color = score === 4 ? 'var(--green)' : score >= 3 ? 'var(--amber)' : 'var(--red)';
+
+  const msgs = {
+    4: '🎯 Perfect! AR models & stationarity sudah dikuasai.',
+    3: '✅ Good. Review soal yang salah sekali lagi.',
+    2: '⚠️ Perlu review — baca ulang bagian yang missed.',
+    1: '🔁 Ulangi theory section sebelum lanjut ke Day 10.',
+    0: '🔁 Ulangi theory section sebelum lanjut ke Day 10.'
+  };
+  msg.textContent = msgs[score] || msgs[0];
+  panel.style.display = 'block';
+}
+</script>
+</body>
+</html>

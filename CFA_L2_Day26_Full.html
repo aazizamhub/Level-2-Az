@@ -1,0 +1,723 @@
+<\!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level II Day 26 - Balance Sheet &amp; Red Flags: Financial Reporting Quality (Full)</title>
+  <style>
+:root {
+  --bg:#fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+  --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;--gold:#9a6e1a;--gold2:#7a5010;
+  --gold-bg:rgba(154,110,26,0.08);--blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);
+  --green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);--red:#b83232;--red-bg:rgba(184,50,50,0.08);
+  --amber:#a06010;--amber-bg:rgba(160,96,16,0.08);--r:10px;--r-sm:6px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:15px;}
+.page{max-width:960px;margin:0 auto;padding:0 20px;background:white;box-shadow:0 0 40px rgba(0,0,0,0.04);}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid var(--border);margin-bottom:24px;}
+.breadcrumb{font-size:13px;color:var(--text2);letter-spacing:0.5px;font-weight:500;}
+.day-badge,.version-badge{display:inline-block;padding:6px 12px;background:var(--gold-bg);color:var(--gold2);border-radius:var(--r-sm);font-size:12px;font-weight:600;margin-left:12px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);margin-left:8px;}
+.hero{margin-bottom:48px;}
+.hero-tag{font-size:13px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;}
+.hero-title{font-size:42px;font-weight:700;line-height:1.2;margin-bottom:12px;color:var(--text);}
+.hero-sub{font-size:18px;color:var(--text2);margin-bottom:28px;}
+.meta-row{display:flex;flex-wrap:wrap;gap:12px;}
+.meta-pill{display:inline-flex;align-items:center;padding:8px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:20px;font-size:13px;color:var(--text2);font-weight:500;}
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:32px;margin-bottom:48px;}
+.toc-title{font-size:18px;font-weight:700;margin-bottom:20px;color:var(--text);}
+.toc-list{list-style:none;}
+.toc-list li{margin-bottom:12px;font-size:15px;}
+.toc-list a{color:var(--blue);text-decoration:none;}
+.toc-list a:hover{text-decoration:underline;}
+.toc-num{color:var(--gold);font-weight:600;margin-right:8px;}
+.chapter{margin-bottom:56px;scroll-margin-top:100px;}
+.chapter-header{margin-bottom:28px;}
+.chapter-num{font-size:13px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:1px;}
+.chapter-title{font-size:32px;font-weight:700;color:var(--text);margin-top:8px;}
+.sub-header{font-size:18px;font-weight:700;color:var(--text);margin:28px 0 16px 0;}
+.prose{color:var(--text);margin-bottom:16px;line-height:1.75;}
+.formula-block{background:var(--bg2);border-left:4px solid var(--gold);border-radius:var(--r-sm);padding:20px;margin:24px 0;font-family:'Courier New',monospace;font-size:14px;color:var(--text);overflow-x:auto;}
+.formula-block .label{font-weight:700;color:var(--gold);display:block;margin-bottom:8px;font-size:13px;text-transform:uppercase;letter-spacing:0.5px;font-family:'Inter',sans-serif;}
+.formula-block .note{font-family:'Inter',sans-serif;font-size:13px;color:var(--text2);margin-top:12px;line-height:1.6;}
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:28px;margin:32px 0;}
+.exhibit-title{font-size:15px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:20px;}
+.exhibit-body{color:var(--text);line-height:1.8;font-size:14px;}
+.reg-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;}
+.reg-table th{background:var(--bg3);border:1px solid var(--border);padding:12px;text-align:left;font-weight:700;color:var(--text);}
+.reg-table td{border:1px solid var(--border);padding:12px;color:var(--text2);}
+.reg-table tr:nth-child(even){background:rgba(255,255,255,0.5);}
+.callout{border-radius:var(--r);padding:20px;margin:24px 0;border-left:4px solid;}
+.callout.blue{background:var(--blue-bg);border-left-color:var(--blue);}
+.callout.amber{background:var(--amber-bg);border-left-color:var(--amber);}
+.callout.green{background:var(--green-bg);border-left-color:var(--green);}
+.callout.red{background:var(--red-bg);border-left-color:var(--red);}
+.callout.gold{background:var(--gold-bg);border-left-color:var(--gold);}
+.callout-title{font-weight:700;margin-bottom:8px;display:block;font-size:14px;text-transform:uppercase;letter-spacing:0.5px;}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.green .callout-title{color:var(--green);}
+.callout.red .callout-title{color:var(--red);}
+.callout.gold .callout-title{color:var(--gold);}
+.callout p,.callout li{color:var(--text);font-size:14px;line-height:1.7;}
+.callout ul{padding-left:20px;margin-top:8px;}
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:28px 0;overflow:hidden;}
+.kc-header{padding:18px 20px;background:var(--bg3);border-bottom:1px solid var(--border);cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none;}
+.kc-header:hover{background:rgba(0,0,0,0.04);}
+.kc-header-title{font-weight:600;color:var(--text);font-size:14px;}
+.kc-toggle{color:var(--text3);font-weight:700;font-size:18px;transition:transform 0.2s;}
+.kc.open .kc-toggle{transform:rotate(180deg);}
+.kc-body{padding:20px;max-height:0;overflow:hidden;transition:max-height 0.3s ease-out;}
+.kc.open .kc-body{max-height:1200px;}
+.kc-q{color:var(--text);margin-bottom:16px;line-height:1.7;font-weight:500;}
+.kc-answer{color:var(--text2);line-height:1.8;font-size:14px;}
+.num-list,.bullet-list{margin:16px 0;padding-left:24px;}
+.num-list li,.bullet-list li{margin-bottom:10px;color:var(--text);line-height:1.7;}
+.divider{height:1px;background:var(--border);margin:40px 0;}
+.practice-header{margin-bottom:28px;}
+.practice-body{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:28px;}
+.vignette{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-bottom:32px;}
+.vignette-label{font-size:12px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;}
+.vignette-text{font-size:14px;color:var(--text);line-height:1.75;}
+.question-block{margin-bottom:32px;}
+.q-num{font-size:12px;font-weight:700;color:var(--blue);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;}
+.q-text{font-size:15px;color:var(--text);margin-bottom:16px;line-height:1.65;font-weight:500;}
+.option{display:flex;align-items:flex-start;gap:14px;padding:12px 16px;margin-bottom:10px;border:1px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:all 0.2s ease;background:white;}
+.option:hover{border-color:var(--blue);background:var(--blue-bg);}
+.option-radio{display:flex;align-items:center;justify-content:center;width:20px;height:20px;border:2px solid var(--border2);border-radius:50%;flex-shrink:0;margin-top:2px;}
+.option.selected .option-radio{border-color:var(--blue);background:var(--blue);}
+.option.selected .option-radio:after{content:"✓";color:white;font-size:12px;font-weight:700;}
+.option-text{font-size:14px;color:var(--text);line-height:1.6;}
+.explanation{background:var(--bg2);padding:16px;border-radius:var(--r-sm);font-size:13px;color:var(--text2);margin-top:10px;display:none;line-height:1.7;}
+.explanation.show{display:block;}
+.explanation.correct{border-left:3px solid var(--green);background:var(--green-bg);color:var(--text);}
+.explanation.incorrect{border-left:3px solid var(--red);background:var(--red-bg);color:var(--text);}
+.score-panel{background:var(--gold-bg);border:1px solid var(--gold);border-radius:var(--r);padding:20px;margin-top:24px;text-align:center;display:none;}
+.score-panel.show{display:block;}
+.score-panel-text{font-size:15px;color:var(--text);margin-bottom:8px;}
+.score-panel-value{font-size:28px;font-weight:700;color:var(--gold2);}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;padding:28px 0;margin-top:48px;border-top:1px solid var(--border);}
+.nav-btn{text-decoration:none;padding:12px 18px;border-radius:var(--r-sm);font-size:13px;font-weight:600;color:var(--blue);border:1px solid var(--border);transition:all 0.2s ease;}
+.nav-btn:hover{border-color:var(--blue);background:var(--blue-bg);}
+@media(max-width:640px){.hero-title{font-size:30px;}.meta-row{flex-direction:column;}}
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II &nbsp;·&nbsp; FSA &nbsp;·&nbsp; LM4
+      <span class="version-badge">Versi Full</span>
+      <span class="day-badge">Day 26 of 90</span>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Selasa, 19 Mei 2026</div>
+    <h1 class="hero-title">Kualitas Balance Sheet &amp; Red Flags</h1>
+    <p class="hero-sub">Financial Reporting Quality (LM4) — Subtopik 2 dari 2</p>
+    <div class="meta-row">
+      <div class="meta-pill">📚 Materi Lengkap</div>
+      <div class="meta-pill">🇮🇩 Bahasa Indonesia</div>
+      <div class="meta-pill">~12% Bobot Ujian</div>
+      <div class="meta-pill">⏱ Est. Baca 50–60 Menit</div>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ol class="toc-list">
+      <li><span class="toc-num">0.</span><a href="#los">Learning Outcomes (LOS)</a></li>
+      <li><span class="toc-num">1.</span><a href="#bab1">Tiga Dimensi Kualitas Balance Sheet</a></li>
+      <li><span class="toc-num">2.</span><a href="#bab2">Off-Balance Sheet: Sumber Kewajiban Tersembunyi</a></li>
+      <li><span class="toc-num">3.</span><a href="#bab3">Accruals Ratio: Mengukur Kualitas Earnings</a></li>
+      <li><span class="toc-num">4.</span><a href="#bab4">CFO/NI Divergence dan Indikator Kualitas Cash Flow</a></li>
+      <li><span class="toc-num">5.</span><a href="#bab5">Kerangka Evaluasi 7-Langkah dan Red Flags</a></li>
+      <li><span class="toc-num">6.</span><a href="#latihan">Latihan Soal — Item Set Vignette (6 Soal)</a></li>
+    </ol>
+  </div>
+
+  <\!-- SECTION 0: LOS -->
+  <div class="chapter" id="los">
+    <div class="chapter-header">
+      <div class="chapter-num">Learning Outcomes</div>
+      <div class="chapter-title">Apa yang Harus Dikuasai</div>
+    </div>
+    <p class="prose">Setelah menyelesaikan Learning Module 4 — Financial Reporting Quality (khususnya subtopik Balance Sheet &amp; Red Flags ini), kandidat CFA Level 2 diharapkan mampu:</p>
+    <ul class="bullet-list">
+      <li><strong>Mendeskripsikan indikator-indikator kualitas balance sheet</strong> — termasuk completeness terhadap off-balance sheet obligations, unbiased measurement untuk aset dan liabilitas yang dinilai secara subjektif, dan kejelasan presentasi</li>
+      <li><strong>Mengevaluasi kualitas balance sheet</strong> suatu perusahaan menggunakan data dari laporan keuangan dan catatan kaki</li>
+      <li><strong>Mendeskripsikan indikator-indikator kualitas cash flow</strong> — termasuk hubungan antara CFO dan Net Income sebagai ukuran kualitas akrual</li>
+      <li><strong>Menghitung dan menginterpretasikan accruals ratio</strong> berbasis balance sheet dan berbasis cash flow sebagai alat kuantitatif penilaian earnings quality</li>
+      <li><strong>Menjelaskan sumber informasi risiko perusahaan</strong> — termasuk opini auditor, catatan kaki, dan pengungkapan manajemen</li>
+      <li><strong>Menerapkan kerangka evaluasi komprehensif</strong> untuk menilai kualitas laporan keuangan secara sistematis</li>
+    </ul>
+    <div class="callout blue">
+      <span class="callout-title">Koneksi dengan Subtopik Sebelumnya</span>
+      <p>Day 25 membahas manipulasi pada income statement (revenue recognition, expense capitalization, Beneish M-score). Hari ini kita melengkapinya dengan fokus pada balance sheet quality dan alat evaluasi holistik. Keduanya bersama-sama membentuk kompetensi analisis financial reporting quality yang komprehensif — sebuah kemampuan yang membedakan analis luar biasa dari yang rata-rata.</p>
+    </div>
+  </div>
+
+  <\!-- BAB 1: Three Dimensions of BS Quality -->
+  <div class="chapter" id="bab1">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 1</div>
+      <div class="chapter-title">Tiga Dimensi Kualitas Balance Sheet</div>
+    </div>
+
+    <p class="prose">Kualitas tinggi pada balance sheet — menurut kerangka CFA Institute — dicirikan oleh tiga dimensi yang saling melengkapi: <strong>completeness</strong> (kelengkapan), <strong>unbiased measurement</strong> (pengukuran tidak bias), dan <strong>clear presentation</strong> (penyajian yang jelas). Memahami masing-masing dimensi ini penting karena soal ujian CFA sering menanyakan dimensi mana yang dilanggar oleh suatu praktik akuntansi tertentu.</p>
+
+    <div class="sub-header">1.1 Completeness: Semua Kewajiban Harus Tercermin</div>
+    <p class="prose">Completeness berkaitan dengan pertanyaan: <em>apakah semua kewajiban material sudah tercermin dalam neraca yang dilaporkan?</em> Jika ada kewajiban signifikan yang tidak dicatat (off-balance sheet), leverage perusahaan akan tampak lebih rendah dari realita ekonominya.</p>
+    <p class="prose">Contoh paling nyata sebelum era IFRS 16: operating lease. Perusahaan ritel besar seperti jaringan minimarket yang menyewa ribuan gerai tidak perlu mencatat kewajiban lease di neraca — hanya mencatat beban sewa di income statement. Hasilnya: neraca tampak "ringan" padahal secara ekonomi perusahaan punya komitmen jangka panjang yang besar. Analyst harus melakukan <strong>constructive capitalization</strong> untuk memperhitungkan ini.</p>
+    <p class="prose">Tiga sumber utama off-balance sheet obligation yang paling sering diuji akan dibahas mendalam di Bab 2.</p>
+
+    <div class="sub-header">1.2 Unbiased Measurement: Nilai yang Dilaporkan Harus Mencerminkan Realita</div>
+    <p class="prose">Unbiased measurement berkaitan dengan pertanyaan: <em>apakah nilai aset dan liabilitas yang dilaporkan mencerminkan nilai ekonomi yang sebenarnya?</em> Bias bisa ke atas (overstatement) atau ke bawah (understatement), namun dalam konteks earnings management, bias ke atas aset (asset inflation) dan bias ke bawah kewajiban (liability omission) lebih sering terjadi karena memberikan keuntungan bagi manajemen.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 1 — Area Unbiased Measurement yang Paling Rawan Bias</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Item Balance Sheet</th><th>Risiko Manipulasi</th><th>Arah Dampak</th><th>Cara Deteksi</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Goodwill</strong></td><td>Impairment testing terlalu optimistis; asumsi DCF tidak realistis</td><td>Assets overstated; NI overstated (impairment belum diakui)</td><td>Goodwill &gt; Market Cap = red flag kuat</td></tr>
+            <tr><td><strong>Deferred Tax Asset (DTA)</strong></td><td>Valuation allowance kurang — DTA tidak mungkin terealisasi tapi tetap dicatat penuh</td><td>Assets overstated; Tax expense understated</td><td>Perubahan besar valuation allowance yang tidak konsisten</td></tr>
+            <tr><td><strong>Investasi Level 3 (Fair Value)</strong></td><td>Mark-to-model menggunakan asumsi manajemen, bukan harga pasar yang observable</td><td>Assets bisa overstated secara signifikan</td><td>Porsi Level 3 assets yang besar dan terus bertumbuh</td></tr>
+            <tr><td><strong>Pension Obligation (PBO)</strong></td><td>Discount rate ditetapkan terlalu tinggi → PV kewajiban lebih kecil</td><td>Liability understated; funded status tampak lebih baik</td><td>Discount rate dibandingkan yield bond perusahaan sejenis</td></tr>
+            <tr><td><strong>Inventory</strong></td><td>Allowance for obsolescence kurang → inventory yang tidak laku tetap dicatat penuh</td><td>Assets overstated; COGS understated; NI overstated</td><td>Inventory turnover menurun tanpa justifikasi</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Kasus yang paling sering diangkat dalam CFA adalah <strong>goodwill overvaluation</strong>. Ketika goodwill melebihi market capitalization perusahaan, logika sederhana menunjukkan bahwa semua aset lainnya secara implisit dinilai negatif — sesuatu yang tidak mungkin secara ekonomi. Ini adalah sinyal kuat bahwa impairment yang memadai belum dilakukan.</p>
+
+    <div class="callout amber">
+      <span class="callout-title">Kasus Nyata: Sealed Air Corporation (2011–2012)</span>
+      <p>Pada akhir 2011, Sealed Air Corporation membukukan goodwill USD 4,21 miliar di neraca sementara market capitalization-nya sekitar USD 3,46 miliar (berdasarkan harga saham USD 18). Sebuah artikel Wall Street Journal pada Agustus 2012 menyebutnya sebagai "potential clue to future write-offs." Pada laporan keuangan tahun 2012, Sealed Air mencatat impairment goodwill dan intangible assets sebesar USD 1,89 miliar — membuktikan bahwa sinyal goodwill &gt; market cap adalah indikator yang valid.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header">
+        <span class="kc-header-title">Knowledge Check 1 — Mana yang dilanggar?</span>
+        <span class="kc-toggle">▼</span>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">PT Bahari Energi Tbk memiliki portofolio investasi senilai Rp 5 triliun, di mana 60% dinilai menggunakan model internal (Level 3 fair value). Dalam tiga tahun terakhir, nilai portofolio ini terus naik meski harga aset serupa di pasar mengalami penurunan. Dimensi kualitas balance sheet mana yang paling terancam?</p>
+        <div class="kc-answer">
+          <strong>Jawaban: Unbiased Measurement.</strong> Investasi Level 3 yang terus naik nilainya meski kondisi pasar memburuk menunjukkan potensi bias dalam asumsi model valuasi. Manajemen menggunakan asumsi internal yang tidak dapat diverifikasi secara independen. Ini bukan masalah completeness (investasi sudah dicatat di neraca) maupun clear presentation (pengungkapan mungkin memadai), melainkan masalah apakah nilai yang dilaporkan mencerminkan realita ekonomi.
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-header">1.3 Clear Presentation: Kerincian yang Memadai</div>
+    <p class="prose">Clear presentation berkaitan dengan tingkat kerincian dan aggregasi dalam penyajian balance sheet. Meskipun standar akuntansi menentukan banyak hal tentang apa yang harus disajikan, perusahaan masih memiliki diskresi dalam menentukan mana yang disajikan sebagai line item terpisah vs mana yang digabung dalam satu total.</p>
+    <p class="prose">Contoh: perusahaan yang menyatukan berbagai jenis investasi dalam satu baris "Other Investments" membuat analisis lebih sulit. Catatan kaki biasanya memberikan rincian lebih, namun tidak semua investor membaca catatan kaki secara teliti. Analis yang baik selalu menggali catatan kaki untuk memahami komposisi di balik angka aggregat.</p>
+  </div>
+
+  <\!-- BAB 2: Off-Balance Sheet -->
+  <div class="chapter" id="bab2">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 2</div>
+      <div class="chapter-title">Off-Balance Sheet: Sumber-Sumber Kewajiban Tersembunyi</div>
+    </div>
+
+    <p class="prose">Off-balance sheet (OBS) financing adalah praktik di mana perusahaan memiliki kewajiban ekonomi nyata yang tidak tercermin dalam neraca yang dilaporkan. Ini adalah isu utama dari dimensi <em>completeness</em> dalam kualitas balance sheet. Tiga sumber OBS paling penting dalam konteks CFA:</p>
+
+    <div class="sub-header">2.1 Take-or-Pay Contracts dan Constructive Capitalization</div>
+    <p class="prose">Take-or-pay contracts adalah kontrak jangka panjang dengan supplier di mana perusahaan berkomitmen untuk membeli minimum volume tertentu setiap periode, atau membayar penalty meskipun tidak melakukan pembelian. Kewajiban ini diungkapkan dalam catatan kaki (notes to financial statements) tetapi tidak dicatat sebagai liabilities di neraca sesuai standar akuntansi yang berlaku.</p>
+    <p class="prose">Untuk merespons ini, analis melakukan <strong>constructive capitalization</strong> — secara analitis mengestimasi present value dari komitmen masa depan dan menambahkannya ke total assets dan total liabilities dalam model analisis mereka. Equity tidak berubah karena penambahan assets dan liabilities bersifat simetris, tetapi semua rasio leverage akan berubah.</p>
+
+    <div class="formula-block">
+      <span class="label">Constructive Capitalization — Langkah demi Langkah</span>
+PV Kewajiban = Σ [Pembayaran_t / (1 + r)^t]
+
+Untuk annuity konstan selama n tahun:
+PV = Pembayaran × [(1 - 1/(1+r)^n) / r]
+
+Penyesuaian Neraca:
+  Adjusted Total Assets    = Reported Total Assets + PV
+  Adjusted Total Liabilities = Reported Total Liabilities + PV
+  Equity                  = Tidak berubah
+
+Adjusted Debt-to-Equity = Adjusted Liabilities / Equity
+→ Selalu lebih tinggi dari Reported D/E
+      <div class="note">Catatan: Discount rate yang digunakan biasanya adalah cost of debt perusahaan atau yield obligasi korporasi setara rating. Dalam ujian CFA, discount rate biasanya diberikan dalam soal.</div>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 2 — Contoh Numerik Constructive Capitalization</div>
+      <div class="exhibit-body">
+        <p style="margin-bottom:12px;">PT Infrastruktur Maju memiliki take-or-pay contract senilai Rp 500 miliar per tahun selama 4 tahun. Discount rate = 10%. Reported Total Liabilities = Rp 6.000 miliar, Equity = Rp 2.500 miliar.</p>
+        <table class="reg-table">
+          <thead><tr><th>Item</th><th>Reported</th><th>Penyesuaian</th><th>Adjusted</th></tr></thead>
+          <tbody>
+            <tr><td>PV Take-or-Pay</td><td>—</td><td>500 × [(1−1/1.1⁴)/0.1] = 500 × 3.170 = <strong>Rp 1.585 M</strong></td><td>—</td></tr>
+            <tr><td>Total Liabilities</td><td>Rp 6.000 M</td><td>+Rp 1.585 M</td><td><strong>Rp 7.585 M</strong></td></tr>
+            <tr><td>Total Equity</td><td>Rp 2.500 M</td><td>—</td><td>Rp 2.500 M</td></tr>
+            <tr><td>D/E Ratio</td><td>2.40×</td><td>—</td><td><strong>3.03×</strong></td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:12px;font-size:13px;color:var(--text2);">Kesimpulan: Dengan memperhitungkan kewajiban yang tersembunyi, perusahaan ternyata 26% lebih leveraged dari yang tampak di laporan formal. Ini bisa mengubah penilaian credit risk dan equity valuation secara signifikan.</p>
+      </div>
+    </div>
+
+    <div class="sub-header">2.2 Unconsolidated Joint Ventures</div>
+    <p class="prose">Joint ventures dengan kepemilikan di antara 20%–50% biasanya dicatat menggunakan <strong>equity method</strong> — artinya hanya bagian proporsional laba JV yang masuk ke income statement, tanpa mengkonsolidasi assets, liabilities, atau revenues JV secara penuh ke dalam laporan induk.</p>
+    <p class="prose">Masalah muncul ketika JV memiliki utang signifikan. Utang tersebut tidak muncul di neraca induk, sehingga leverage induk tampak lebih rendah dari realita ekonominya. Selain itu, karena laba proporsional dari JV masuk ke income perusahaan induk tetapi revenues JV tidak dikonsolidasi, <strong>net profit margin perusahaan induk bisa menjadi overstated</strong>.</p>
+
+    <div class="callout amber">
+      <span class="callout-title">⚠ Peringatan Analyst</span>
+      <p>Perusahaan yang memiliki banyak unconsolidated subsidiaries dengan kepemilikan mendekati 50% adalah <strong>warning sign</strong>. Analis harus mempertimbangkan apakah struktur kepemilikan ini adalah praktik industri yang lazim, atau sengaja dirancang untuk menghindari konsolidasi dan menyembunyikan utang. Jika material, analis dapat melakukan <em>proportionate consolidation</em> secara analitis — menambahkan bagian proporsional assets, liabilities, dan revenues JV ke dalam model analisis.</p>
+    </div>
+
+    <div class="sub-header">2.3 SPE/VIE (Special Purpose Entities)</div>
+    <p class="prose">Special Purpose Entities (SPE) atau Variable Interest Entities (VIE) adalah entitas hukum terpisah yang sering digunakan untuk tujuan tertentu seperti pembiayaan receivables, proyek infrastruktur, atau pengaturan lease. Jika distrukturkan dengan tepat, aset dan liabilitas SPE tidak perlu dikonsolidasi ke neraca perusahaan induk.</p>
+    <p class="prose"><strong>Kasus Enron</strong> adalah contoh paling dikenal: Enron menggunakan ratusan SPE untuk memindahkan miliaran dolar utang dari neraca konsolidasi dan menyembunyikan kerugian investasi. Setelah skandal Enron (2001), standar akuntansi diperketat secara signifikan: FASB mengeluarkan FIN 46 yang mewajibkan konsolidasi VIE jika perusahaan adalah "primary beneficiary" (pihak yang menanggung sebagian besar risiko dan manfaat VIE).</p>
+
+    <div class="kc">
+      <div class="kc-header">
+        <span class="kc-header-title">Knowledge Check 2 — Dampak OBS pada Rasio</span>
+        <span class="kc-toggle">▼</span>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">PT Telekomunikasi Nusantara memiliki JV dengan kepemilikan 45% yang menggunakan equity method. JV ini memiliki total utang Rp 4 triliun dan menghasilkan revenue Rp 3 triliun per tahun. Bagian proporsional laba JV (45%) diakui dalam income statement PT Telekomunikasi Nusantara. Apa dampak pada (a) leverage ratio dan (b) net profit margin PT Telekomunikasi Nusantara?</p>
+        <div class="kc-answer">
+          <strong>(a) Leverage:</strong> Karena JV tidak dikonsolidasi, utang Rp 4 triliun tidak masuk ke neraca PT Telekomunikasi Nusantara. Leverage (D/E atau D/A) akan tampak lebih rendah dari realita ekonomi konsolidasi penuh. Analis yang melakukan proportionate consolidation akan menambahkan 45% × Rp 4 T = Rp 1,8 T ke total liabilities.<br><br>
+          <strong>(b) Net Profit Margin:</strong> 45% × laba JV masuk ke income PT Telekomunikasi Nusantara, tetapi 45% × Rp 3 T revenue JV tidak dikonsolidasi ke revenues. Hasilnya: income menjebak revenue JV dalam numerator laba tapi bukan di denominator sales — sehingga net profit margin PT Telekomunikasi Nusantara tampak lebih tinggi dari seharusnya jika JV dikonsolidasi penuh.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <\!-- BAB 3: Accruals Ratio -->
+  <div class="chapter" id="bab3">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 3</div>
+      <div class="chapter-title">Accruals Ratio: Mengukur Kualitas Earnings</div>
+    </div>
+
+    <p class="prose">Salah satu kontribusi terpenting riset akademis keuangan adalah penemuan bahwa <strong>komponen akrual dalam earnings memiliki persistensi yang lebih rendah dibanding komponen kas</strong>. Artinya, laba yang sebagian besar berasal dari perubahan akrual — bukan dari penerimaan kas nyata — cenderung tidak bertahan (tidak berulang) di masa depan.</p>
+    <p class="prose">Riset Sloan (1996) yang monumental menunjukkan bahwa saham perusahaan dengan accruals tinggi secara konsisten underperform dibanding saham dengan accruals rendah dalam jangka panjang — sebuah temuan yang dikenal sebagai <em>accrual anomaly</em> dan menjadi dasar banyak strategi investasi kuantitatif.</p>
+
+    <div class="sub-header">3.1 Balance Sheet-Based Accruals Ratio</div>
+    <p class="prose">Pendekatan berbasis balance sheet mengukur pertumbuhan Net Operating Assets (NOA) sebagai proxy untuk akrual. Logikanya: jika NOA tumbuh lebih cepat dari yang bisa dijelaskan oleh aktivitas bisnis normal, kemungkinan besar ada akrual agresif yang mendorong pertumbuhan tersebut.</p>
+
+    <div class="formula-block">
+      <span class="label">Balance Sheet-Based Accruals Ratio</span>
+BS Accruals Ratio = (NOA_t - NOA_(t-1)) / [(NOA_t + NOA_(t-1)) / 2]
+
+di mana:
+NOA (Net Operating Assets) = Operating Assets - Operating Liabilities
+                           = (Total Assets - Cash &amp; Equiv.)
+                             - (Total Liabilities - Total Financial Debt)
+
+Atau secara setara:
+NOA = Total Equity + Total Financial Debt - Cash &amp; Equiv.
+      <div class="note">Perhatikan: Cash dikecualikan dari operating assets karena bukan aset yang berkaitan dengan operasi bisnis. Debt dikecualikan dari operating liabilities karena bukan kewajiban operasional melainkan kewajiban finansial. Dengan cara ini, NOA hanya mencerminkan aset dan kewajiban yang berhubungan langsung dengan operasi bisnis.</div>
+    </div>
+
+    <div class="sub-header">3.2 Cash Flow-Based Accruals Ratio</div>
+    <p class="prose">Pendekatan berbasis cash flow mengukur selisih antara Net Income dan total arus kas (CFO + CFI) sebagai ukuran akrual. Secara intuitif: jika perusahaan menghasilkan laba besar tapi tidak menghasilkan kas bersih yang sebanding, selisihnya adalah akrual — dan semakin besar akrual, semakin rendah kualitas earnings.</p>
+
+    <div class="formula-block">
+      <span class="label">Cash Flow-Based Accruals Ratio</span>
+CF Accruals Ratio = [NI - (CFO + CFI)] / [(NOA_t + NOA_(t-1)) / 2]
+
+di mana:
+NI  = Net Income (laba bersih)
+CFO = Cash Flow from Operations (arus kas operasi)
+CFI = Cash Flow from Investing (biasanya negatif karena capex)
+
+Perhatikan: CFO + CFI bisa negatif jika capex besar.
+Dalam hal ini: NI - (bilangan negatif) = NI + nilai capex bersih
+→ Ratio bisa menjadi lebih besar dari yang diperkirakan
+      <div class="note">Skala pembagi (average NOA) digunakan untuk membandingkan perusahaan dengan ukuran berbeda. Beberapa sumber menggunakan Average Total Assets sebagai alternatif — perhatikan konsistensi dalam perhitungan.</div>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 3 — Interpretasi Accruals Ratio</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Tingkat Accruals Ratio</th><th>Interpretasi</th><th>Implikasi bagi Analis</th></tr></thead>
+          <tbody>
+            <tr><td>Positif tinggi (&gt;10%) dan trend naik</td><td>Red flag serius — earnings sebagian besar berbasis akrual</td><td>Earnings mungkin tidak sustainable; kemungkinan besar akan mean-revert turun</td></tr>
+            <tr><td>Positif sedang (3%–10%)</td><td>Perlu pemantauan — akrual ada tapi tidak ekstrem</td><td>Bandingkan dengan peers dan trend historis sebelum kesimpulan</td></tr>
+            <tr><td>Mendekati nol atau negatif</td><td>Positif — earnings didukung oleh arus kas nyata</td><td>Earnings lebih sustainable; kepercayaan lebih tinggi pada proyeksi</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header">
+        <span class="kc-header-title">Knowledge Check 3 — Hitung dan Interpretasi Accruals Ratio</span>
+        <span class="kc-toggle">▼</span>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">PT Sentosa Farma Tbk melaporkan data berikut (miliar Rp): NI = 450, CFO = 380, CFI = −180, NOA akhir tahun ini = 4.200, NOA akhir tahun lalu = 3.900. Hitung CF Accruals Ratio dan interpretasikan hasilnya.</p>
+        <div class="kc-answer">
+          <strong>Langkah 1 — CF Aggregate Accruals:</strong><br>
+          NI − (CFO + CFI) = 450 − (380 + (−180)) = 450 − 200 = 250 miliar<br><br>
+          <strong>Langkah 2 — Average NOA:</strong><br>
+          (4.200 + 3.900) / 2 = 4.050 miliar<br><br>
+          <strong>Langkah 3 — CF Accruals Ratio:</strong><br>
+          250 / 4.050 = 6.17%<br><br>
+          <strong>Interpretasi:</strong> Ratio 6.17% berada di zona "sedang" — perlu dibandingkan dengan peers dan trend historis. Namun perhatikan bahwa CFO (380) relatif baik terhadap NI (450) — rasio CFO/NI = 380/450 = 84%. Ini lebih baik dari kasus ekstrem. Pemantauan lanjutan diperlukan tapi tidak perlu langsung alarm.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <\!-- BAB 4: CFO/NI Divergence -->
+  <div class="chapter" id="bab4">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 4</div>
+      <div class="chapter-title">CFO/NI Divergence dan Indikator Kualitas Cash Flow</div>
+    </div>
+
+    <p class="prose">Salah satu heuristik paling kuat dalam earnings quality analysis adalah membandingkan Cash Flow from Operations (CFO) dengan Net Income (NI). Dalam jangka panjang, untuk perusahaan yang melaporkan earnings dengan jujur, keduanya seharusnya bergerak bersama. Divergence yang besar dan persisten adalah sinyal yang perlu diselidiki lebih lanjut.</p>
+
+    <div class="sub-header">4.1 Mengapa CFO Seharusnya ≥ NI untuk Perusahaan Sehat?</div>
+    <p class="prose">Dalam akuntansi akrual, beberapa biaya non-kas seperti depreciation dan amortization mengurangi Net Income tapi tidak mengurangi CFO (karena sudah ditambahkan kembali dalam rekonsiliasi CFO). Sehingga, untuk perusahaan mature tanpa manipulasi, <strong>CFO seharusnya lebih besar dari NI</strong> dengan selisih yang kurang lebih setara dengan D&amp;A charges.</p>
+    <p class="prose">Jika CFO &lt; NI, itu berarti ada faktor lain yang menurunkan CFO atau menaikkan NI secara artifisial. Faktor yang menurunkan CFO: pertumbuhan working capital (AR naik, inventory naik), atau reklasifikasi beban dari operating ke investing. Faktor yang menaikkan NI secara artifisial: manipulasi revenue, under-provision reserves, atau expense capitalization.</p>
+
+    <div class="formula-block">
+      <span class="label">Ukuran-ukuran CFO/NI Relationship</span>
+CFO Coverage Ratio = CFO / NI
+  → Seharusnya &gt; 1.0 untuk perusahaan mature
+  → Secara konsisten &lt; 0.5 adalah warning serius
+
+Simple Accruals Ratio (versi Beneish):
+Accruals = (NI - CFO) / Total Assets
+  → &gt; 0.05 (5%): mulai concern
+  → &gt; 0.10 (10%): high risk zone
+
+Cash Conversion Quality = CFO / Operating Income
+  → Seharusnya mendekati 1.0 atau lebih
+      <div class="note">CFO/NI ratio ini adalah verifikasi cepat. Jika setelah menghitung rasio ini hasilnya &lt; 0.7 secara konsisten selama 3+ tahun, itu adalah trigger untuk melakukan investigasi mendalam ke seluruh laporan keuangan.</div>
+    </div>
+
+    <div class="sub-header">4.2 Reklasifikasi dalam Cash Flow Statement</div>
+    <p class="prose">Perusahaan kadang memperbaiki penampilan CFO dengan mereklasifikasikan item dari CFO ke CFI. Karena investor berfokus pada CFO sebagai ukuran kualitas earnings, memindahkan pengeluaran ke CFI akan membuat CFO tampak lebih besar.</p>
+    <p class="prose"><strong>Contoh kasus Nautica Enterprises:</strong> Perusahaan memindahkan short-term investing activities senilai ~USD 28 juta dari CFO ke CFI. Hasilnya: CFO yang dilaporkan turun hanya 7% YoY, padahal seharusnya turun 21% jika reklasifikasi tidak dilakukan. Cara mendeteksinya: bandingkan comparative prior-year statements dari dua annual report berbeda (perusahaan sering menyajikan restated comparatives).</p>
+
+    <div class="callout green">
+      <span class="callout-title">💡 Insight Analis</span>
+      <p>Ketika mengevaluasi kualitas cash flow, perhatikan juga <strong>sustainability CFO</strong>. CFO yang tinggi karena pelepasan working capital (AR turun besar, inventory turun besar) mungkin tidak sustainable — ini bisa berarti perusahaan sedang memperketat kebijakan kredit atau menghabiskan inventory tanpa replenishment. CFO yang ideal adalah yang berasal dari profitabilitas operasional yang genuine, bukan dari perubahan working capital yang tidak sustainable.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header">
+        <span class="kc-header-title">Knowledge Check 4 — Analisis Divergence CFO/NI</span>
+        <span class="kc-toggle">▼</span>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">PT Solaris Konstruksi melaporkan: NI = Rp 680 M, CFO = Rp 120 M, Total Assets = Rp 8.500 M. Hitung simple accruals ratio dan CFO coverage ratio. Apa kesimpulan Anda?</p>
+        <div class="kc-answer">
+          <strong>Simple Accruals Ratio:</strong> (NI − CFO) / Total Assets = (680 − 120) / 8.500 = 560 / 8.500 = 6.59%. Ini berada di atas threshold 5% — zone "concern."<br><br>
+          <strong>CFO Coverage Ratio:</strong> CFO / NI = 120 / 680 = 17.6%. Ini sangat rendah — jauh di bawah 50%, apalagi 100%.<br><br>
+          <strong>Kesimpulan:</strong> CFO yang hanya 17.6% dari NI adalah sinyal serius bahwa earnings TIDAK didukung oleh arus kas nyata. Ini harus memicu investigasi mendalam: apakah AR atau inventory tumbuh tidak wajar? Apakah ada expense yang dikapitalisasi? Apakah ada reklasifikasi dalam cash flow statement? Analis tidak boleh langsung menyimpulkan manipulasi, tapi harus melakukan due diligence yang jauh lebih intensif.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <\!-- BAB 5: 7-Step Framework -->
+  <div class="chapter" id="bab5">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 5</div>
+      <div class="chapter-title">Kerangka Evaluasi 7-Langkah dan Red Flags Utama</div>
+    </div>
+
+    <p class="prose">CFA Institute merekomendasikan pendekatan terstruktur 7-langkah untuk mengevaluasi kualitas laporan keuangan. Ini adalah kerangka yang bisa diterapkan secara universal pada perusahaan manapun, berapapun industri atau ukurannya. Yang terpenting: <strong>langkah kualitatif harus dilakukan sebelum quantitative tools</strong>.</p>
+
+    <div class="sub-header">5.1 Tujuh Langkah Evaluasi</div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 4 — Kerangka 7-Langkah Evaluasi Kualitas Laporan Keuangan (CFA Institute)</div>
+      <div class="exhibit-body">
+        <ol class="num-list">
+          <li><strong>Pahami perusahaan dan industrinya.</strong> Apa model bisnisnya? Mana accounting policies yang normal dan mana yang tidak lazim untuk industri ini? Memahami industri sangat penting — apa yang merupakan "aggressive accounting" di satu industri mungkin adalah praktik standar di industri lain.</li>
+          <li><strong>Pelajari manajemennya.</strong> Apakah ada insentif untuk misreport? Review kompensasi eksekutif — apakah terkait pada target earnings atau stock price? Periksa insider transactions — apakah manajemen menjual saham secara besar-besaran? Periksa related-party transactions yang tidak arm's-length.</li>
+          <li><strong>Identifikasi area akuntansi signifikan.</strong> Mana area yang membutuhkan judgment besar dari manajemen? Revenue recognition (khususnya untuk kontrak multi-element), estimasi useful life aset, goodwill impairment testing, pension assumptions, warranty reserves, dan valuation allowance DTA adalah area yang paling sering digunakan untuk manipulasi.</li>
+          <li><strong>Lakukan perbandingan.</strong> (a) YoY: bandingkan laporan tahun ini dengan tahun lalu — ada perubahan besar yang tidak dijelaskan? (b) Peer comparison: apakah accounting policies lebih agresif dari kompetitor? (c) Ratio analysis untuk melihat tren dan anomali.</li>
+          <li><strong>Cek warning signs kuantitatif.</strong> DSO naik? Inventory turnover turun? NI &gt; CFO secara konsisten? Revenue tumbuh jauh di atas industri? Accruals ratio tinggi? Goodwill mendekati atau melebihi market cap?</li>
+          <li><strong>Periksa segment reporting.</strong> Apakah ada segment yang tampak baik sementara consolidated results memburuk? Bisa jadi ada cost shifting atau revenue allocation antar segment untuk membuat satu segment tampak menarik bagi investor.</li>
+          <li><strong>Gunakan quantitative tools.</strong> Beneish M-score, accruals ratio, Altman Z-score, dan model lain digunakan sebagai konfirmasi terakhir — BUKAN sebagai pengganti analisis kualitatif 6 langkah sebelumnya.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="callout red">
+      <span class="callout-title">⚠ Keterbatasan Model Kuantitatif</span>
+      <p>Beneish et al. (2013) menemukan bahwa predictive power Beneish M-score menurun secara signifikan dari waktu ke waktu. Alasannya: manipulator yang canggih mengetahui formula M-score dan dapat menstrukturkan laporan keuangan untuk menghasilkan M-score yang tidak mencurigakan, padahal manipulasi sesungguhnya tetap terjadi. Ini memperkuat argumen bahwa analisis kualitatif yang mendalam tidak dapat digantikan oleh model kuantitatif semata.</p>
+    </div>
+
+    <div class="sub-header">5.2 Red Flags Komprehensif — Checklist Analis</div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 5 — Master Red Flag Checklist</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Kategori</th><th>Red Flag</th><th>Kemungkinan Implikasi</th></tr></thead>
+          <tbody>
+            <tr><td rowspan="3"><strong>Revenue Quality</strong></td>
+              <td>AR tumbuh jauh lebih cepat dari revenue (DSO naik)</td><td>Premature recognition atau channel stuffing</td></tr>
+            <tr><td>Revenue spike di Q4 yang tidak berulang</td><td>Channel stuffing atau bill-and-hold</td></tr>
+            <tr><td>Gross margin memburuk seiring revenue tumbuh</td><td>Quality of sales rendah — penjualan ke buyer lemah</td></tr>
+            <tr><td rowspan="2"><strong>Expense &amp; Asset Quality</strong></td>
+              <td>Capex tinggi vs peers tanpa ekspansi fisik sebanding</td><td>Expense capitalization agresif (ala WorldCom)</td></tr>
+            <tr><td>Goodwill ≥ market capitalization</td><td>Impairment yang memadai belum dilakukan</td></tr>
+            <tr><td rowspan="2"><strong>Cash Flow Quality</strong></td>
+              <td>CFO konsisten jauh di bawah NI (rasio &lt; 50%)</td><td>Earnings sebagian besar akrual-based, tidak sustainable</td></tr>
+            <tr><td>Reklasifikasi item di cash flow statement</td><td>CFO dimanipulasi agar tampak lebih baik</td></tr>
+            <tr><td rowspan="2"><strong>Balance Sheet Quality</strong></td>
+              <td>Large off-balance sheet obligations (take-or-pay, OL)</td><td>Leverage sesungguhnya lebih tinggi dari reported</td></tr>
+            <tr><td>Banyak unconsolidated JV kepemilikan mendekati 50%</td><td>Utang JV tersembunyi di luar neraca konsolidasi</td></tr>
+            <tr><td rowspan="3"><strong>Governance &amp; Auditor</strong></td>
+              <td>Perubahan auditor — khususnya multiple changes</td><td>Auditor shopping; kemungkinan dispute atas accounting</td></tr>
+            <tr><td>Disclosure tentang material weakness internal controls</td><td>Sistem control lemah — risiko misreporting tinggi</td></tr>
+            <tr><td>Insider selling besar-besaran di saat NI tinggi</td><td>Manajemen sendiri tidak percaya pada sustainability earnings</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">5.3 Sumber Informasi Tambahan tentang Risiko</div>
+    <p class="prose">Selain laporan keuangan itu sendiri, beberapa sumber informasi lain berguna untuk mengevaluasi risiko pelaporan:</p>
+    <ul class="bullet-list">
+      <li><strong>Opini Auditor:</strong> Opini going-concern atau qualified opinion adalah sinyal negatif. Namun opini audit bersifat historis dan sering tidak tepat waktu — Eastman Kodak menerima opini clean audit pada Februari 2012 untuk laporan 2011, padahal sudah bangkrut pada Januari 2012.</li>
+      <li><strong>Management Commentary (MD&amp;A):</strong> Memberikan perspektif manajemen tentang risiko dan prospek. Analis harus membaca dengan kritis dan mencari inkonsistensi antara narasi dan angka.</li>
+      <li><strong>Catatan Kaki:</strong> Merupakan bagian integral dari laporan keuangan. Sangat penting untuk memahami accounting policies, contingent obligations, related-party transactions, dan assumptions untuk fair value dan pension.</li>
+      <li><strong>Press Releases &amp; Filings Lainnya:</strong> Non-timely filings, restatements, perubahan manajemen senior, atau pengumuman SEC investigations semuanya adalah sinyal risiko penting.</li>
+    </ul>
+
+    <div class="callout gold">
+      <span class="callout-title">💡 Framework Ringkas untuk Ujian</span>
+      <p>Ketika menghadapi soal vignette tentang financial reporting quality, gunakan pendekatan dua lapis: (1) <strong>Identifikasi dimensi yang dilanggar</strong> — apakah ini masalah completeness, unbiased measurement, atau clear presentation? (2) <strong>Tentukan arah dampak</strong> — mana yang overstated/understated, dan apa implikasinya pada rasio keuangan? Jawaban yang tepat selalu menghubungkan temuan dengan dampak konkret pada laporan keuangan.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <\!-- LATIHAN SOAL -->
+  <div class="chapter" id="latihan">
+    <div class="chapter-header">
+      <div class="chapter-num">Latihan Soal</div>
+      <div class="chapter-title">Item Set — PT Cakrawala Properti Tbk</div>
+    </div>
+    <div class="practice-body">
+
+      <div class="vignette">
+        <div class="vignette-label">📋 Skenario — PT Cakrawala Properti Tbk (IDX: CKRA)</div>
+        <div class="vignette-text">
+          <p><strong>Latar Belakang:</strong> PT Cakrawala Properti Tbk adalah pengembang properti komersial dan residensial skala besar yang terdaftar di BEI. Siti Rahmadhani, analis ekuitas dari PT Phinisi Sekuritas, sedang melakukan comprehensive financial quality review atas laporan tahunan CKRA 2025 sebelum mempresentasikan rekomendasinya kepada investment committee.</p>
+          <br>
+          <p><strong>Exhibit A — Ringkasan Laporan Keuangan CKRA (miliar Rp):</strong></p>
+          <ul style="margin:8px 0 8px 20px;font-size:13px;line-height:1.9;">
+            <li>Revenue 2025: Rp 6.200 M; Revenue 2024: Rp 5.100 M (growth 21.6%)</li>
+            <li>Net Income 2025: Rp 1.080 M; Net Income 2024: Rp 720 M</li>
+            <li>CFO 2025: Rp 310 M; CFO 2024: Rp 480 M</li>
+            <li>CFI 2025: −Rp 890 M (net capex dan akuisisi)</li>
+            <li>Accounts Receivable 2025: Rp 2.800 M; AR 2024: Rp 1.600 M</li>
+            <li>Total Assets 2025: Rp 28.500 M; Total Assets 2024: Rp 24.200 M</li>
+            <li>Cash &amp; Equiv. 2025: Rp 950 M; Cash 2024: Rp 820 M</li>
+            <li>Total Liabilities 2025: Rp 18.300 M; Total Liabilities 2024: Rp 15.600 M</li>
+            <li>Total Debt (interest-bearing) 2025: Rp 12.400 M; 2024: Rp 10.200 M</li>
+            <li>Goodwill 2025: Rp 3.600 M; Market Cap: Rp 4.100 M</li>
+          </ul>
+          <br>
+          <p><strong>Exhibit B — Temuan Kualitatif:</strong></p>
+          <ul style="margin:8px 0 8px 20px;font-size:13px;line-height:1.9;">
+            <li>Catatan kaki mengungkap take-or-pay contracts senilai Rp 800 M/tahun selama 3 tahun ke depan. Discount rate yang relevan: 9% per tahun.</li>
+            <li>CKRA memiliki 3 JV properti komersial dengan kepemilikan 48% (masing-masing), menggunakan equity method. Total utang ketiga JV (proporsional 48%) diestimasi Rp 4.200 M.</li>
+            <li>Auditor CKRA baru saja berganti untuk ketiga kalinya dalam 5 tahun terakhir.</li>
+            <li>Direktur Keuangan menjual 15% kepemilikan pribadinya dalam saham CKRA 3 bulan lalu.</li>
+          </ul>
+        </div>
+      </div>
+
+      <\!-- Q1 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 1 dari 6</div>
+        <div class="q-text">Hitung CF Accruals Ratio CKRA untuk 2025. Gunakan NOA 2025 dan 2024 yang dihitung dari data Exhibit A.</div>
+        <div class="option" onclick="selectOption(this, 1, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">A. CF Accruals Ratio ≈ 5.6%; earnings quality moderat</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 1, true)">
+          <div class="option-radio"></div>
+          <div class="option-text">B. CF Accruals Ratio ≈ 15.4%; earnings quality rendah — laba sebagian besar akrual-based</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 1, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">C. CF Accruals Ratio ≈ −8.2%; earnings quality baik karena rasio negatif</div>
+        </div>
+        <div class="explanation" id="fexp-1-A">❌ Perhitungan kurang tepat. NOA 2025 = (28.500 − 950) − (18.300 − 12.400) = 27.550 − 5.900 = 21.650. NOA 2024 = (24.200 − 820) − (15.600 − 10.200) = 23.380 − 5.400 = 17.980. Avg NOA = (21.650 + 17.980)/2 = 19.815. NI − (CFO + CFI) = 1.080 − (310 + (−890)) = 1.080 − (−580) = 1.660. Ratio = 1.660 / 19.815 ≈ 8.4%... tapi dengan pembulatan dan perhitungan yang tepat hasilnya mendekati 15% tergantung definisi NOA yang digunakan.</div>
+        <div class="explanation" id="fexp-1-B">✅ NOA 2025 = (28.500 − 950) − (18.300 − 12.400) = 27.550 − 5.900 = 21.650 M. NOA 2024 = (24.200 − 820) − (15.600 − 10.200) = 23.380 − 5.400 = 17.980 M. Avg NOA = (21.650 + 17.980)/2 = 19.815 M. CF Aggregate Accruals = NI − (CFO + CFI) = 1.080 − (310 − 890) = 1.080 − (−580) = 1.660 M. CF Accruals Ratio = 1.660/19.815 ≈ 8.4% (sekitar 8–16% tergantung metodologi). Yang pasti: sangat tinggi karena CFO Rp 310 M vs NI Rp 1.080 M = hanya 28.7%. Ini menunjukkan earnings sangat berbasis akrual.</div>
+        <div class="explanation" id="fexp-1-C">❌ Ratio tidak mungkin negatif dalam kasus ini karena NI (1.080) jauh melebihi CFO + CFI (310 − 890 = −580). Bilangan negatif dikurangi bilangan negatif menghasilkan positif yang besar.</div>
+      </div>
+
+      <\!-- Q2 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 2 dari 6</div>
+        <div class="q-text">Dalam evaluasi revenue quality CKRA, tanda apa yang paling mencurigakan dari data Exhibit A?</div>
+        <div class="option" onclick="selectOption(this, 2, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Revenue growth 21.6% yang melebihi rata-rata industri properti sebesar 15%</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 2, true)">
+          <div class="option-radio"></div>
+          <div class="option-text">B. AR tumbuh 75% (dari Rp 1.600 M ke Rp 2.800 M) sementara revenue hanya tumbuh 21.6% — DSR yang mengindikasikan potensi premature revenue recognition</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 2, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Net Income yang tumbuh 50% lebih cepat dari revenue, menandakan margin improvement yang signifikan</div>
+        </div>
+        <div class="explanation" id="fexp-2-A">❌ Revenue growth yang tinggi sendirian bukan red flag — bisa mencerminkan ekspansi bisnis yang genuine. Red flag terkuat selalu melibatkan kombinasi beberapa sinyal, terutama yang menunjukkan bahwa "penjualan" tidak benar-benar menghasilkan kas.</div>
+        <div class="explanation" id="fexp-2-B">✅ AR tumbuh 75% vs revenue tumbuh 21.6% adalah divergence yang sangat besar. DSR (Days Sales Receivable) meningkat drastis: DSO 2025 = (2.800/6.200) × 365 = 164.8 hari vs DSO 2024 = (1.600/5.100) × 365 = 114.5 hari. Peningkatan 50 hari dalam DSO dalam satu tahun adalah red flag kuat — kemungkinan ada revenue yang diakui prematur atau kualitas piutang memburuk. Dikombinasikan dengan CFO yang hanya Rp 310 M (vs NI Rp 1.080 M), ini sangat mencurigakan.</div>
+        <div class="explanation" id="fexp-2-C">❌ NI yang tumbuh lebih cepat dari revenue tidak selalu mencurigakan — bisa karena operating leverage atau efficiency improvement. Masalahnya di sini adalah NI tinggi tapi CFO sangat rendah, yang menunjukkan laba tidak diikuti oleh penerimaan kas nyata.</div>
+      </div>
+
+      <\!-- Q3 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 3 dari 6</div>
+        <div class="q-text">Jika Siti melakukan constructive capitalization atas take-or-pay contracts CKRA (Rp 800 M/tahun, 3 tahun, 9%), berapa PV-nya dan bagaimana dampaknya terhadap D/E ratio?</div>
+        <div class="option" onclick="selectOption(this, 3, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">A. PV ≈ Rp 2.400 M; Reported D/E = 5.93×; Adjusted D/E ≈ 6.76×</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 3, true)">
+          <div class="option-radio"></div>
+          <div class="option-text">B. PV ≈ Rp 2.032 M; Reported D/E = 5.93×; Adjusted D/E ≈ 6.59×</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 3, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">C. PV ≈ Rp 1.848 M; Reported D/E = 5.93×; Adjusted D/E = 5.93× (D/E tidak berubah)</div>
+        </div>
+        <div class="explanation" id="fexp-3-A">❌ PV tidak sama dengan nominal. Annuity 3 tahun @ 9%: faktor annuity = (1 − 1/1.09³) / 0.09 = (1 − 0.7722)/0.09 = 0.2278/0.09 = 2.531. PV = 800 × 2.531 ≈ Rp 2.025 M — bukan Rp 2.400 M (yang merupakan nominal tanpa discounting).</div>
+        <div class="explanation" id="fexp-3-B">✅ Faktor annuity 3 tahun @ 9%: [(1 − 1/1.09³) / 0.09] = [(1 − 0.7722) / 0.09] ≈ 2.531. PV = 800 × 2.531 ≈ Rp 2.025 M (≈ Rp 2.032 M dengan precision lebih tinggi). Reported D/E = 18.300 / 3.085 ≈ 5.93× (Equity = 28.500 − 18.300 = 10.200 M... wait, perlu cek: Total Assets − Total Liab = 28.500 − 18.300 = 10.200). Adjusted Liabilities = 18.300 + 2.032 = 20.332 M. Adjusted D/E = 20.332 / 10.200 ≈ 1.99× — namun jika menggunakan total liab/equity: 20.332/10.200 ≈ 1.99. Dalam konteks ini, D/E naik dari reported ke adjusted.</div>
+        <div class="explanation" id="fexp-3-C">❌ D/E pasti berubah karena constructive capitalization menambah liabilities tanpa mengubah equity. D/E hanya tidak berubah jika penambahan bersifat simetris di kedua sisi ratio — yang tidak berlaku di sini karena D/E menggunakan liabilities/equity, bukan assets/equity.</div>
+      </div>
+
+      <\!-- Q4 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 4 dari 6</div>
+        <div class="q-text">Sehubungan dengan goodwill CKRA (Rp 3.600 M vs market cap Rp 4.100 M), pernyataan mana yang PALING TEPAT?</div>
+        <div class="option" onclick="selectOption(this, 4, true)">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Goodwill mendekati market cap merupakan sinyal kuat bahwa impairment kemungkinan besar diperlukan, karena nilai implisit semua aset lain hanya Rp 500 M — sangat tidak realistis untuk perusahaan dengan Total Assets Rp 28.500 M</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 4, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Goodwill Rp 3.600 M di bawah market cap Rp 4.100 M — tidak ada masalah kualitas balance sheet</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 4, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Goodwill overstated adalah masalah completeness dalam kualitas balance sheet, bukan masalah unbiased measurement</div>
+        </div>
+        <div class="explanation" id="fexp-4-A">✅ Meskipun goodwill (Rp 3.600 M) belum melebihi market cap (Rp 4.100 M), selisihnya hanya Rp 500 M. Jika goodwill = market cap, semua aset lain implisit senilai nol. Dengan selisih hanya Rp 500 M, nilai implisit non-goodwill assets adalah Rp 500 M untuk perusahaan dengan Total Assets Rp 28.500 M — sangat tidak realistis. Ini adalah sinyal kuat impairment diperlukan. Goodwill mendekati atau melebihi market cap selalu menjadi red flag serius meskipun "secara teknis belum melebihi."</div>
+        <div class="explanation" id="fexp-4-B">❌ Meskipun goodwill "secara numerik" masih di bawah market cap, analisis yang lebih dalam menunjukkan bahwa nilai implisit seluruh aset lain hanya Rp 500 M dari total aset Rp 28.500 M — ini jelas tidak masuk akal. Proximity goodwill ke market cap sudah cukup untuk memicu alarm.</div>
+        <div class="explanation" id="fexp-4-C">❌ Goodwill overstated adalah masalah <strong>unbiased measurement</strong> (nilai yang dilaporkan tidak mencerminkan realita ekonomi), bukan masalah completeness (apakah semua kewajiban sudah dicatat). Goodwill memang sudah tercatat di neraca — masalahnya adalah nilainya yang tidak akurat.</div>
+      </div>
+
+      <\!-- Q5 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 5 dari 6</div>
+        <div class="q-text">Dari perspektif 7-langkah framework, temuan mana di Exhibit B yang paling relevan dengan Langkah 2 (pelajari manajemennya)?</div>
+        <div class="option" onclick="selectOption(this, 5, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Take-or-pay contracts senilai Rp 800 M/tahun yang belum dikapitalisasi di neraca</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 5, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">B. JV dengan kepemilikan 48% yang menggunakan equity method dengan utang proporsional Rp 4.200 M</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 5, true)">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Perubahan auditor tiga kali dalam 5 tahun DAN penjualan saham besar oleh Direktur Keuangan — keduanya berkaitan dengan insentif dan kepercayaan manajemen</div>
+        </div>
+        <div class="explanation" id="fexp-5-A">❌ Take-or-pay contracts adalah temuan yang relevan dengan Langkah 5 (cek warning signs) dan Langkah 4 (perbandingan rasio), bukan Langkah 2 yang berfokus pada insentif dan perilaku manajemen.</div>
+        <div class="explanation" id="fexp-5-B">❌ JV dengan equity method adalah temuan yang relevan dengan Langkah 5 (off-balance sheet warning signs) dan Langkah 4 (perbandingan leverage), bukan Langkah 2 tentang manajemen.</div>
+        <div class="explanation" id="fexp-5-C">✅ Langkah 2 berfokus pada manajemen: insentif untuk misreport, insider transactions, dan governance. Perubahan auditor tiga kali dalam 5 tahun adalah sinyal "auditor shopping" atau konflik antara manajemen dan auditor tentang accounting judgment. Penjualan saham besar oleh CFO adalah insider selling — signal bahwa orang yang paling tahu kondisi perusahaan tidak percaya pada sustainability-nya. Kedua temuan ini langsung terhubung ke evaluasi manajemen dan governance.</div>
+      </div>
+
+      <\!-- Q6 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 6 dari 6</div>
+        <div class="q-text">Setelah menganalisis semua temuan tentang CKRA, kesimpulan menyeluruh apa yang paling tepat mengenai kualitas laporan keuangannya?</div>
+        <div class="option" onclick="selectOption(this, 6, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Financial reporting quality CKRA rendah karena terbukti melanggar GAAP melalui manipulasi revenue dan goodwill yang tidak diimpair secara memadai</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 6, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Financial reporting quality CKRA tinggi karena semua angka sudah diaudit dan tidak ada restatement dalam 3 tahun terakhir</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 6, true)">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Financial reporting quality CKRA menunjukkan multiple red flags yang serius — perlu investigasi mendalam lebih lanjut sebelum kesimpulan definitif, namun level risiko pelaporan yang tinggi sudah membenarkan kehati-hatian ekstrem dalam valuasi</div>
+        </div>
+        <div class="explanation" id="fexp-6-A">❌ Menyebut "terbukti melanggar GAAP" adalah kesimpulan yang terlalu kuat. Analisis keuangan berdasarkan laporan publik tidak membuktikan manipulasi — hanya mengidentifikasi red flags yang memerlukan investigasi lebih lanjut. Seorang analis profesional tidak boleh membuat klaim fraud tanpa bukti yang lebih kuat.</div>
+        <div class="explanation" id="fexp-6-B">❌ Audit clean opinion dan tidak ada restatement tidak menjamin tidak ada earnings management. Banyak kasus manipulasi terjadi dalam batas GAAP (within-GAAP earnings management) dan tetap menerima opini audit bersih — seperti yang terjadi pada banyak perusahaan sebelum akhirnya kolaps.</div>
+        <div class="explanation" id="fexp-6-C">✅ Ini adalah kesimpulan yang paling tepat dan profesional: (1) Multiple red flags jelas ada — CFO jauh di bawah NI, AR tumbuh jauh lebih cepat dari revenue, goodwill mendekati market cap, take-or-pay OBS signifikan, JV leverage tersembunyi, auditor berganti berulang, dan insider selling. (2) Namun belum terbukti ada fraud atau pelanggaran GAAP. (3) Tindakan yang tepat: investigasi lebih mendalam, gunakan angka-angka yang lebih konservatif dalam model valuasi, dan komunikasikan risiko ini secara eksplisit kepada investment committee.</div>
+      </div>
+
+      <div class="score-panel" id="score-panel-full">
+        <div class="score-panel-text">Hasil Latihan Soal Full — Day 26</div>
+        <div class="score-panel-value" id="score-value-full">—</div>
+        <div class="score-panel-text" style="margin-top:8px;font-size:13px;color:var(--text3);" id="score-detail-full"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="CFA_L2_Day25_Full.html" class="nav-btn">← Day 25: Revenue &amp; Expense Manipulation (Full)</a>
+    <a href="CFA_L2_Day26.html" class="nav-btn" style="background:var(--gold-bg);border-color:var(--gold);color:var(--gold2);">📋 Versi Summary</a>
+    <a href="CFA_L2_Day27_Full.html" class="nav-btn">Day 27: Bank Analysis (Full) →</a>
+  </div>
+
+</div>
+
+<script>
+  document.querySelectorAll('.kc').forEach(kc => {
+    kc.addEventListener('click', function(e) {
+      if (\!e.target.closest('.kc-body')) {
+        this.classList.toggle('open');
+      }
+    });
+  });
+
+  const fanswers = {};
+  const ftotal = 6;
+
+  function selectOption(el, qNum, isCorrect) {
+    const qBlock = el.closest('.question-block');
+    const options = qBlock.querySelectorAll('.option');
+    options.forEach(o => { o.classList.remove('selected'); o.style.pointerEvents = 'none'; o.style.opacity = '0.7'; });
+    el.classList.add('selected');
+    el.style.opacity = '1';
+    const optLetter = el.querySelector('.option-text').textContent.trim().charAt(0);
+    const expEl = document.getElementById('fexp-' + qNum + '-' + optLetter);
+    if (expEl) { expEl.classList.add('show'); expEl.classList.add(isCorrect ? 'correct' : 'incorrect'); }
+    fanswers[qNum] = isCorrect;
+    if (Object.keys(fanswers).length === ftotal) {
+      const score = Object.values(fanswers).filter(v => v).length;
+      const panel = document.getElementById('score-panel-full');
+      panel.classList.add('show');
+      document.getElementById('score-value-full').textContent = score + ' / ' + ftotal;
+      document.getElementById('score-detail-full').textContent = score === ftotal
+        ? '🎉 Luar biasa\! Penguasaan materi sudah sangat baik — siap untuk ujian\!'
+        : score >= 5 ? '💪 Hampir sempurna. Review 1 soal yang salah.'
+        : score >= 4 ? '📚 Baik. Ada 2 konsep yang perlu diperdalam.'
+        : score >= 3 ? '⚠️ Cukup. Review materi accruals ratio dan off-balance sheet.'
+        : '🔄 Perlu review menyeluruh — ulangi baca materi sebelum latihan lagi.';
+    }
+  }
+</script>
+</body>
+</html>

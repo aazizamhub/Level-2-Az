@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level II Day 20 - Intercorporate Investments: VIE/SPE &amp; Minority Interest (Full)</title>
+  <style>
+:root {
+  --bg:      #fafaf8;
+  --bg2:     #f4f3ef;
+  --bg3:     #eeece7;
+  --border:  rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text:    #1a1a2e;
+  --text2:   #4a4a6a;
+  --text3:   #8a8aaa;
+  --gold:    #9a6e1a;
+  --gold2:   #7a5010;
+  --gold-bg: rgba(154,110,26,0.08);
+  --blue:    #1a5fa8;
+  --blue-bg: rgba(26,95,168,0.08);
+  --green:   #1a7a4a;
+  --green-bg: rgba(26,122,74,0.08);
+  --red:     #b83232;
+  --red-bg:  rgba(184,50,50,0.08);
+  --amber:   #a06010;
+  --amber-bg: rgba(160,96,16,0.08);
+  --r: 10px;
+  --r-sm: 6px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  font-size: 15px;
+}
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+  background: white;
+  box-shadow: 0 0 40px rgba(0,0,0,0.04);
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+
+.breadcrumb {
+  font-size: 13px;
+  color: var(--text2);
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.day-badge, .version-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  background: var(--gold-bg);
+  color: var(--gold2);
+  border-radius: var(--r-sm);
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 12px;
+}
+
+.version-badge {
+  background: var(--blue-bg);
+  color: var(--blue);
+  margin-left: 8px;
+}
+
+.hero {
+  margin-bottom: 48px;
+}
+
+.hero-tag {
+  font-size: 13px;
+  color: var(--gold);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.hero-title {
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: var(--text2);
+  margin-bottom: 28px;
+}
+
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.meta-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 13px;
+  color: var(--text2);
+  font-weight: 500;
+}
+
+.toc {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 32px;
+  margin-bottom: 48px;
+}
+
+.toc-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+
+.toc-list {
+  list-style: none;
+}
+
+.toc-list li {
+  margin-bottom: 12px;
+  font-size: 15px;
+}
+
+.toc-num {
+  color: var(--gold);
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.chapter {
+  margin-bottom: 56px;
+  scroll-margin-top: 100px;
+}
+
+.chapter-header {
+  margin-bottom: 28px;
+}
+
+.chapter-num {
+  font-size: 13px;
+  color: var(--text3);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.chapter-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text);
+  margin-top: 8px;
+}
+
+.sub-header {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 28px 0 16px 0;
+}
+
+.prose {
+  color: var(--text);
+  margin-bottom: 16px;
+  line-height: 1.75;
+}
+
+.formula-block {
+  background: var(--bg2);
+  border-left: 4px solid var(--gold);
+  border-radius: var(--r-sm);
+  padding: 20px;
+  margin: 24px 0;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: var(--text);
+  overflow-x: auto;
+}
+
+.formula-block .label {
+  font-weight: 700;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: 'Inter', sans-serif;
+}
+
+.formula-block .note {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--text2);
+  margin-top: 12px;
+  line-height: 1.6;
+}
+
+.exhibit {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px;
+  margin: 32px 0;
+}
+
+.exhibit-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 20px;
+}
+
+.exhibit-body {
+  color: var(--text);
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.reg-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 14px;
+}
+
+.reg-table th {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 12px;
+  text-align: left;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.reg-table td {
+  border: 1px solid var(--border);
+  padding: 12px;
+  color: var(--text2);
+}
+
+.reg-table tr:nth-child(even) { background: rgba(255,255,255,0.5); }
+
+.callout {
+  border-radius: var(--r);
+  padding: 20px;
+  margin: 24px 0;
+  border-left: 4px solid;
+}
+
+.callout.blue {
+  background: var(--blue-bg);
+  border-left-color: var(--blue);
+}
+
+.callout.amber {
+  background: var(--amber-bg);
+  border-left-color: var(--amber);
+}
+
+.callout.green {
+  background: var(--green-bg);
+  border-left-color: var(--green);
+}
+
+.callout.red {
+  background: var(--red-bg);
+  border-left-color: var(--red);
+}
+
+.callout.gold {
+  background: var(--gold-bg);
+  border-left-color: var(--gold);
+}
+
+.callout-title {
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: block;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.callout .callout-title { color: inherit; }
+.callout.blue .callout-title { color: var(--blue); }
+.callout.amber .callout-title { color: var(--amber); }
+.callout.green .callout-title { color: var(--green); }
+.callout.red .callout-title { color: var(--red); }
+.callout.gold .callout-title { color: var(--gold); }
+
+.callout p, .callout li {
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.callout ul { padding-left: 20px; margin-top: 8px; }
+
+.kc {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  margin: 28px 0;
+  overflow: hidden;
+}
+
+.kc-header {
+  padding: 18px 20px;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+
+.kc-header:hover { background: rgba(0,0,0,0.04); }
+
+.kc-header-title {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.kc-toggle {
+  color: var(--text3);
+  font-weight: 700;
+  font-size: 18px;
+  transition: transform 0.2s;
+}
+
+.kc.open .kc-toggle { transform: rotate(180deg); }
+
+.kc-body {
+  padding: 20px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.kc.open .kc-body { max-height: 1200px; }
+
+.kc-q {
+  color: var(--text);
+  margin-bottom: 16px;
+  line-height: 1.7;
+  font-weight: 500;
+}
+
+.kc-answer {
+  color: var(--text2);
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.num-list, .bullet-list {
+  margin: 16px 0;
+  padding-left: 24px;
+}
+
+.num-list li, .bullet-list li {
+  margin-bottom: 10px;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 40px 0;
+}
+
+.practice-header {
+  margin-bottom: 28px;
+}
+
+.practice-body {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px;
+}
+
+.vignette {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.vignette-label {
+  font-size: 12px;
+  color: var(--text3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.question-block {
+  margin-bottom: 28px;
+}
+
+.q-num {
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.q-text {
+  color: var(--text);
+  line-height: 1.8;
+  margin-bottom: 14px;
+}
+
+.option {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  background: white;
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+  font-size: 14px;
+}
+
+.option:hover { background: var(--bg2); border-color: var(--gold); }
+
+.explanation {
+  margin-top: 16px;
+  padding: 16px;
+  background: var(--blue-bg);
+  border-left: 4px solid var(--blue);
+  border-radius: var(--r-sm);
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.7;
+  display: none;
+}
+
+.explanation.show { display: block; }
+.explanation.correct { background: var(--green-bg); border-left-color: var(--green); }
+.explanation.incorrect { background: var(--red-bg); border-left-color: var(--red); }
+
+.score-panel {
+  margin-top: 32px;
+  padding: 24px;
+  background: var(--green-bg);
+  border-radius: var(--r);
+  text-align: center;
+  display: none;
+}
+
+.score-panel.show { display: block; }
+
+.score-panel h3 {
+  color: var(--green);
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.score-panel p {
+  color: var(--text);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.nav-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 0;
+  margin-top: 48px;
+  border-top: 1px solid var(--border);
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nav-btn:hover {
+  background: var(--bg3);
+  border-color: var(--border2);
+}
+
+@media (max-width: 768px) {
+  .hero-title { font-size: 28px; }
+  .page { padding: 0 16px; }
+  .meta-row { gap: 8px; }
+  .nav-bottom { flex-direction: column; gap: 16px; }
+  .nav-btn { width: 100%; justify-content: center; }
+}
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="breadcrumb">CFA Level II &middot; FSA &middot; LM1</div>
+      <div>
+        <span class="version-badge">Versi Full</span>
+        <span class="day-badge">Day 20 of 90</span>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-tag">Jumat, 08 Mei 2026</div>
+      <h1 class="hero-title">Intercorporate Investments: VIE/SPE, Non-Controlling Interest, dan Goodwill Impairment</h1>
+      <p class="hero-sub">Pemahaman mendalam tentang variable interest entities, konsolidasi SPE, pengukuran dan penyajian non-controlling interest di balance sheet dan income statement, serta pengujian impairment goodwill di bawah IFRS dan US GAAP.</p>
+      <div class="meta-row">
+        <div class="meta-pill">Materi Lengkap</div>
+        <div class="meta-pill">Bahasa Indonesia</div>
+        <div class="meta-pill">~12% Exam Weight</div>
+        <div class="meta-pill">45-60 Menit</div>
+      </div>
+    </div>
+
+    <!-- TABLE OF CONTENTS -->
+    <div class="toc">
+      <h2 class="toc-title">Daftar Isi</h2>
+      <ul class="toc-list">
+        <li><span class="toc-num">0.</span> <a href="#section0" style="color:var(--text);text-decoration:none;">Learning Outcomes</a></li>
+        <li><span class="toc-num">1.</span> <a href="#section1" style="color:var(--text);text-decoration:none;">Variable Interest Entities (VIE) &amp; Special Purpose Entities</a></li>
+        <li><span class="toc-num">2.</span> <a href="#section2" style="color:var(--text);text-decoration:none;">Business Combinations: Acquisition Method Lanjutan</a></li>
+        <li><span class="toc-num">3.</span> <a href="#section3" style="color:var(--text);text-decoration:none;">Non-Controlling Interest: Balance Sheet &amp; Income Statement</a></li>
+        <li><span class="toc-num">4.</span> <a href="#section4" style="color:var(--text);text-decoration:none;">Goodwill Impairment Testing: IFRS vs US GAAP</a></li>
+        <li><span class="toc-num">5.</span> <a href="#section5" style="color:var(--text);text-decoration:none;">Dampak terhadap Analisis Laporan Keuangan</a></li>
+        <li><span class="toc-num">6.</span> <a href="#section6" style="color:var(--text);text-decoration:none;">Latihan Soal Item Set</a></li>
+      </ul>
+    </div>
+
+    <!-- SECTION 0: LEARNING OUTCOMES -->
+    <div class="chapter" id="section0">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 0</div>
+        <h2 class="chapter-title">Learning Outcomes</h2>
+      </div>
+      <p class="prose">Setelah menyelesaikan sesi pembelajaran hari ini, Anda akan mampu untuk:</p>
+      <ul class="num-list">
+        <li>Menjelaskan karakteristik variable interest entities (VIE) dan special purpose entities (SPE), serta kapan konsolidasi diperlukan berdasarkan IFRS (IFRS 10) dan US GAAP (ASC 810)</li>
+        <li>Mengidentifikasi "primary beneficiary" di bawah US GAAP dan konsep "control" di bawah IFRS sebagai dasar konsolidasi VIE/SPE</li>
+        <li>Menghitung goodwill dan nilai non-controlling interest (NCI) menggunakan full goodwill method dan partial goodwill method</li>
+        <li>Menjelaskan penyajian NCI di balance sheet konsolidasi (sebagai komponen equity) dan di income statement konsolidasi (sebagai deduction)</li>
+        <li>Menganalisis dampak full goodwill vs partial goodwill terhadap rasio keuangan utama</li>
+        <li>Menerapkan goodwill impairment testing: one-step approach (IFRS) menggunakan cash-generating units vs two-step approach (US GAAP) menggunakan reporting units</li>
+        <li>Membandingkan dampak equity method vs acquisition method terhadap laporan keuangan dari perspektif analis</li>
+      </ul>
+    </div>
+
+    <!-- SECTION 1: VIE/SPE -->
+    <div class="chapter" id="section1">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 1</div>
+        <h2 class="chapter-title">Variable Interest Entities (VIE) &amp; Special Purpose Entities</h2>
+      </div>
+
+      <h3 class="sub-header">Mengapa VIE/SPE Ada?</h3>
+      <p class="prose">Variable Interest Entity (VIE) atau Special Purpose Entity (SPE) adalah entitas yang dibentuk untuk tujuan yang sangat spesifik dan terbatas. Biasanya, perusahaan sponsor membentuk VIE untuk tujuan-tujuan seperti: memisahkan aset tertentu dari neraca sponsor, memfasilitasi pembiayaan off-balance-sheet, melakukan sekuritisasi piutang atau aset lain, atau mengisolasi risiko dari proyek tertentu.</p>
+
+      <p class="prose">Karakteristik khas VIE adalah bahwa kontrol atasnya TIDAK didasarkan pada kepemilikan voting shares. Equity investors VIE umumnya tidak memiliki "sufficient amount at risk" — artinya, mereka tidak menanggung risiko yang cukup untuk mendorong aktivitas VIE tanpa dukungan finansial subordinated dari pihak lain (biasanya perusahaan sponsor). Akibatnya, equity investors mungkin juga tidak memiliki controlling financial interest berdasarkan definisi konvensional.</p>
+
+      <div class="callout amber">
+        <span class="callout-title">Konteks Historis: Skandal Enron</span>
+        <p>Penggunaan SPE secara masif menjadi terkenal setelah skandal Enron pada tahun 2001. Enron menggunakan ratusan SPE untuk menyembunyikan utang dan kerugian dari neraca konsolidasinya, sehingga laporan keuangan yang disajikan kepada publik tampak jauh lebih baik daripada kondisi yang sesungguhnya. Pasca-Enron, standar akuntansi diperketat secara dramatis, memaksa konsolidasi entitas-entitas yang sebelumnya bisa tetap off-balance-sheet. FASB menerbitkan FIN 46 (yang kemudian menjadi ASC 810), dan IASB merevisi standar konsolidasinya.</p>
+      </div>
+
+      <h3 class="sub-header">Pendekatan IFRS: Control Concept (IFRS 10)</h3>
+      <p class="prose">Di bawah IFRS 10, Consolidated Financial Statements, definisi control bersifat luas dan berbasis prinsip (principles-based). Control ada ketika investor memenuhi KETIGA elemen berikut secara bersamaan:</p>
+
+      <ul class="num-list">
+        <li><strong>Power over the investee:</strong> Investor memiliki hak (rights) yang memberikan kemampuan aktual untuk mengarahkan aktivitas relevan investee — yaitu aktivitas yang secara signifikan mempengaruhi return investee. Ini bisa berupa hak voting, hak kontraktual, atau kombinasi keduanya.</li>
+        <li><strong>Exposure to variable returns:</strong> Investor terekspos, atau memiliki hak atas, returns yang bervariasi dari keterlibatannya dengan investee. Returns dapat bersifat positif (dividen, keuntungan) atau negatif (kerugian, kewajiban).</li>
+        <li><strong>Ability to use power to affect returns:</strong> Investor memiliki kemampuan untuk menggunakan kekuasaannya atas investee untuk mempengaruhi jumlah return yang diterimanya.</li>
+      </ul>
+
+      <p class="prose">Pendekatan ini bersifat substance over form — artinya, walaupun secara legal sponsor tidak memiliki saham VIE, jika substansi hubungannya menunjukkan control berdasarkan ketiga kriteria di atas, maka konsolidasi diperlukan. IFRS 10 mencakup semua entitas yang memenuhi definisi control, tanpa pengecualian berdasarkan jenis entitas.</p>
+
+      <h3 class="sub-header">Pendekatan US GAAP: Primary Beneficiary (ASC 810)</h3>
+      <p class="prose">US GAAP (FASB ASC Topic 810, Consolidation) menggunakan model dua-komponen. Pertama, sistem menentukan apakah suatu entitas adalah VIE. Jika ya, maka primary beneficiary-nya harus mengkonsolidasi VIE tersebut, terlepas dari berapa persen voting interest yang dimilikinya (bahkan jika nol persen).</p>
+
+      <div class="formula-block">
+        <span class="label">US GAAP: Siapa yang Harus Mengkonsolidasi VIE?</span>
+Primary Beneficiary = Pihak yang memenuhi KEDUA kondisi:
+  1. Memiliki kekuasaan untuk mengarahkan aktivitas VIE
+     yang paling signifikan mempengaruhi economic performance VIE
+  2. SALAH SATU dari:
+     a. Hak untuk menerima majority of VIE's expected residual returns, ATAU
+     b. Kewajiban untuk menyerap majority of VIE's expected losses
+        <span class="note">Catatan: "majority" di sini berarti lebih dari 50% dari total expected losses/returns VIE.</span>
+      </div>
+
+      <p class="prose">Jika tidak ada satupun pihak yang memenuhi kriteria primary beneficiary, maka VIE tidak dikonsolidasi oleh siapapun. Sebaliknya, jika dua atau lebih pihak masing-masing memenuhi salah satu kondisi tapi bukan keduanya, maka digunakan judgment lebih lanjut untuk mengidentifikasi primary beneficiary.</p>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Perbandingan Komprehensif: Konsolidasi VIE/SPE</div>
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Aspek</th>
+              <th>IFRS (IFRS 10)</th>
+              <th>US GAAP (ASC 810)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Dasar konsolidasi</strong></td>
+              <td>Control concept — 3 elemen (power, variable returns, ability to use power)</td>
+              <td>Primary beneficiary test (2 kondisi harus dipenuhi)</td>
+            </tr>
+            <tr>
+              <td><strong>Voting shares diperlukan?</strong></td>
+              <td>Tidak — bisa berdasarkan kontrak atau faktual</td>
+              <td>Tidak — VIE justru entitas yang kontrolnya BUKAN via voting</td>
+            </tr>
+            <tr>
+              <td><strong>Pendekatan</strong></td>
+              <td>Principles-based (judgment ekstensif)</td>
+              <td>Rules-based (kriteria lebih spesifik)</td>
+            </tr>
+            <tr>
+              <td><strong>Cakupan</strong></td>
+              <td>Semua entitas di mana control ada</td>
+              <td>Terpisah: VIE model + Voting interest model</td>
+            </tr>
+            <tr>
+              <td><strong>Tujuan</strong></td>
+              <td>Substance over form — representasi yang akurat</td>
+              <td>Mencegah off-balance-sheet financing abuse</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="kc" id="kc1-1">
+        <div class="kc-header" onclick="toggleKC('kc1-1')">
+          <div class="kc-header-title">Knowledge Check 1.1: VIE Consolidation Trigger</div>
+          <div class="kc-toggle">ⓘ</div>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">PT Anugerah Raya (AR) membentuk PT Dana Khusus Infrastruktur (DKI) sebagai SPE untuk membiayai proyek jalan tol. DKI mendapatkan 5% modal dari investor lain dan 95% dari obligasi yang dijamin AR. AR tidak memiliki saham DKI, tetapi berhak mendapatkan 80% dari keuntungan DKI dan wajib menanggung kerugian sampai Rp 300 milyar. Apakah AR harus mengkonsolidasi DKI berdasarkan US GAAP?</div>
+          <div class="kc-answer">
+            <strong>Jawaban:</strong> Ya, AR harus mengkonsolidasi DKI. DKI adalah VIE karena equity investors-nya (5%) tidak menanggung risiko yang cukup untuk mendanai operasi DKI tanpa subordinated support dari AR. AR adalah primary beneficiary karena: (1) AR kemungkinan memiliki kekuasaan untuk mengarahkan aktivitas DKI yang paling signifikan (melalui peran sponsor dan jaminan), DAN (2) AR berhak menerima 80% expected residual returns (mayoritas) dan berkewajiban menyerap kerugian (majority of expected losses). Kedua kondisi primary beneficiary terpenuhi. Kepemilikan 0% voting shares tidak menghalangi kewajiban konsolidasi.
+          </div>
+        </div>
+      </div>
+
+      <div class="kc" id="kc1-2">
+        <div class="kc-header" onclick="toggleKC('kc1-2')">
+          <div class="kc-header-title">Knowledge Check 1.2: IFRS vs US GAAP SPE Approach</div>
+          <div class="kc-toggle">ⓘ</div>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">Jelaskan perbedaan utama antara pendekatan IFRS dan US GAAP dalam menentukan apakah sponsor harus mengkonsolidasi SPE/VIE.</div>
+          <div class="kc-answer">
+            <strong>Jawaban:</strong> IFRS menggunakan pendekatan principles-based (IFRS 10) yang mengevaluasi apakah investor memiliki control berdasarkan tiga elemen: (1) power atas investee, (2) exposure to variable returns, dan (3) kemampuan menggunakan power tersebut untuk mempengaruhi returns. Ini berlaku secara luas ke semua entitas dan membutuhkan significant judgment. US GAAP menggunakan pendekatan rules-based (ASC 810) dengan two-component model: pertama menentukan apakah entitas adalah VIE (equity at risk tidak cukup), kemudian mengidentifikasi primary beneficiary (yang harus menyerap majority losses ATAU menerima majority residual returns, DAN memiliki power). US GAAP lebih spesifik dalam kriterianya, sementara IFRS lebih fleksibel namun memerlukan lebih banyak judgment.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: ACQUISITION METHOD LANJUTAN -->
+    <div class="chapter" id="section2">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 2</div>
+        <h2 class="chapter-title">Business Combinations: Acquisition Method Lanjutan</h2>
+      </div>
+
+      <h3 class="sub-header">Akuisisi Kurang dari 100% — Munculnya NCI</h3>
+      <p class="prose">Dalam sebuah business combination, acquirer tidak selalu mengakuisisi 100% saham target. Jika acquirer memperoleh misalnya 75% saham, maka 25% sisanya tetap dimiliki oleh pemegang saham minoritas yang disebut <strong>non-controlling interests (NCI)</strong> atau minority interests. Baik IFRS maupun US GAAP mewajibkan konsolidasi penuh (100%) dari aset dan liabilitas subsidiary ke dalam laporan keuangan konsolidasi parent — meskipun parent hanya memiliki 75%.</p>
+
+      <p class="prose">Prinsip di balik ini adalah bahwa parent mengendalikan 100% aset subsidiary, sehingga semua aset dan liabilitas harus tercermin di consolidated statements. Namun, porsi equity yang dimiliki pihak lain (NCI) juga harus diakui secara eksplisit, baik di balance sheet maupun income statement.</p>
+
+      <h3 class="sub-header">Full Goodwill Method vs Partial Goodwill Method</h3>
+      <p class="prose">Perbedaan kunci antara IFRS dan US GAAP terletak pada <strong>pengukuran goodwill dan NCI pada tanggal akuisisi</strong>:</p>
+
+      <div class="formula-block">
+        <span class="label">Full Goodwill Method (US GAAP — Wajib; IFRS — Opsional)</span>
+Goodwill = Fair Value (FV) Entitas Keseluruhan
+          − Fair Value Net Identifiable Assets
+
+NCI = NCI% × FV Entitas Keseluruhan
+
+  Catatan: "Entitas keseluruhan" berarti 100% FV entity,
+  termasuk bagian NCI — bukan hanya harga yang dibayar parent.
+        <span class="note">
+          Goodwill yang dihasilkan lebih besar (mencerminkan seluruh goodwill entitas).<br>
+          NCI lebih besar karena dinilai pada FV penuh, bukan hanya proportionate share net assets.
+        </span>
+      </div>
+
+      <div class="formula-block">
+        <span class="label">Partial Goodwill Method (IFRS Saja — Opsional)</span>
+Goodwill = Purchase Price (harga yang dibayar Parent)
+          − (Parent% × FV Net Identifiable Assets)
+
+NCI = NCI% × FV Net Identifiable Assets
+
+  Catatan: Goodwill hanya mengakui bagian parent's goodwill,
+  bukan goodwill yang dapat diatribusikan ke NCI.
+        <span class="note">
+          Goodwill yang dihasilkan lebih kecil (hanya goodwill milik parent).<br>
+          NCI lebih kecil karena hanya mengakui proportionate share net assets.
+        </span>
+      </div>
+
+      <h3 class="sub-header">Contoh Komprehensif: Full Goodwill vs Partial Goodwill</h3>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Contoh dari Kurikulum CFA: Akuisisi 90% Subsidiary</div>
+        <div class="exhibit-body">
+          <strong>Asumsi:</strong><br>
+          Parent Co. mengakuisisi 90% saham Subsidiary Co. dengan memberikan saham Parent Co. senilai (fair value) €180,000.<br>
+          Fair value Subsidiary Co. secara keseluruhan (100%): €200,000<br>
+          Fair value net identifiable assets Subsidiary Co.: €160,000<br><br>
+
+          <strong>Kalkulasi Full Goodwill Method:</strong><br>
+          Goodwill = €200,000 − €160,000 = <strong>€40,000</strong><br>
+          NCI (10%) = 10% × €200,000 = <strong>€20,000</strong><br><br>
+
+          <strong>Kalkulasi Partial Goodwill Method (IFRS only):</strong><br>
+          Goodwill = €180,000 − (90% × €160,000) = €180,000 − €144,000 = <strong>€36,000</strong><br>
+          NCI (10%) = 10% × €160,000 = <strong>€16,000</strong><br><br>
+
+          <strong>Consolidated Balance Sheet Comparison:</strong>
+          <table class="reg-table" style="margin-top: 12px;">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Full Goodwill</th>
+                <th>Partial Goodwill</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Aset identifiable (FV)</td>
+                <td>Parent + 100% Sub FV</td>
+                <td>Parent + 100% Sub FV</td>
+              </tr>
+              <tr>
+                <td>Goodwill</td>
+                <td>€40,000</td>
+                <td>€36,000</td>
+              </tr>
+              <tr>
+                <td>Total Assets</td>
+                <td><strong>Lebih besar €4,000</strong></td>
+                <td>Lebih kecil</td>
+              </tr>
+              <tr>
+                <td>Liabilitas</td>
+                <td>Sama (100% Sub)</td>
+                <td>Sama (100% Sub)</td>
+              </tr>
+              <tr>
+                <td>NCI (dalam Equity)</td>
+                <td>€20,000</td>
+                <td>€16,000</td>
+              </tr>
+              <tr>
+                <td>Total Equity</td>
+                <td><strong>Lebih besar €4,000</strong></td>
+                <td>Lebih kecil</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <br><strong>Catatan penting:</strong> Perbedaan sebesar €4,000 antara kedua metode PERSIS SAMA dengan perbedaan goodwill (€40,000 − €36,000 = €4,000), yang juga sama dengan perbedaan NCI (€20,000 − €16,000 = €4,000). Total assets di bawah full goodwill lebih besar €4,000, dan total equity juga lebih besar €4,000 — sehingga balance sheet tetap seimbang.
+        </div>
+      </div>
+
+      <div class="callout blue">
+        <span class="callout-title">Mengapa 100% Aset Sub Dikonsolidasi Meski Parent Hanya 90%?</span>
+        <p>Prinsip konsolidasi bukan tentang kepemilikan proporsional — melainkan tentang kontrol. Parent yang memiliki 90% saham berarti memiliki control atas seluruh subsidiary. Oleh karena itu, 100% aset dan liabilitas subsidiary dimasukkan ke consolidated balance sheet. NCI kemudian diakui sebagai "klaim" pihak ketiga atas portion ekuitas subsidiary yang tidak dimiliki parent. Jika hanya 90% yang dikonsolidasi, laporan keuangan akan understate total resources yang dikendalikan parent.</p>
+      </div>
+
+      <h3 class="sub-header">Contingent Consideration dan Bargain Purchase</h3>
+      <p class="prose">Dalam akuisisi, consideration yang diberikan acquirer mungkin mencakup contingent consideration — yaitu nilai tambahan yang hanya dibayarkan jika kondisi tertentu terpenuhi di masa depan (misalnya, target kinerja). Baik IFRS maupun US GAAP mensyaratkan contingent consideration diukur dan diakui pada fair value pada tanggal akuisisi. Perubahan nilai contingent consideration setelah tanggal akuisisi diakui di profit or loss.</p>
+
+      <p class="prose">Jika purchase price lebih rendah dari fair value net identifiable assets yang diakuisisi (kondisi yang disebut <strong>bargain purchase</strong>), perbedaannya langsung diakui sebagai keuntungan (gain) di profit or loss pada tanggal akuisisi. Ini bisa terjadi karena forced sale, seller dalam kondisi financial distress, atau kesalahan penilaian pasar.</p>
+
+      <div class="kc" id="kc2-1">
+        <div class="kc-header" onclick="toggleKC('kc2-1')">
+          <div class="kc-header-title">Knowledge Check 2.1: Partial vs Full Goodwill Computation</div>
+          <div class="kc-toggle">ⓘ</div>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">PT Mega Korporasi (MK) mengakuisisi 75% saham PT Sentosa Abadi (SA) seharga Rp 600 milyar. Fair value SA secara keseluruhan diestimasi Rp 800 milyar. Fair value net identifiable assets SA = Rp 700 milyar. Hitung goodwill dan NCI di bawah (a) full goodwill method dan (b) partial goodwill method.</div>
+          <div class="kc-answer">
+            <strong>Jawaban:</strong>
+            <br><br>(a) Full Goodwill Method (US GAAP — wajib; IFRS — opsional):
+            <br>Goodwill = FV Entity − FV Net Identifiable Assets = Rp 800M − Rp 700M = <strong>Rp 100 milyar</strong>
+            <br>NCI = NCI% × FV Entity = 25% × Rp 800M = <strong>Rp 200 milyar</strong>
+            <br><br>(b) Partial Goodwill Method (IFRS only):
+            <br>Goodwill = Purchase price − (Parent% × FV Net Assets) = Rp 600M − (75% × Rp 700M) = Rp 600M − Rp 525M = <strong>Rp 75 milyar</strong>
+            <br>NCI = NCI% × FV Net Identifiable Assets = 25% × Rp 700M = <strong>Rp 175 milyar</strong>
+            <br><br>Perbedaan goodwill: Rp 100M − Rp 75M = Rp 25M = Perbedaan NCI: Rp 200M − Rp 175M = Rp 25M. Selisih ini selalu konsisten.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: NON-CONTROLLING INTEREST -->
+    <div class="chapter" id="section3">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 3</div>
+        <h2 class="chapter-title">Non-Controlling Interest: Balance Sheet &amp; Income Statement</h2>
+      </div>
+
+      <h3 class="sub-header">NCI di Balance Sheet Konsolidasi</h3>
+      <p class="prose">Berdasarkan baik IFRS maupun US GAAP, <strong>non-controlling interest disajikan sebagai komponen terpisah dari stockholders' equity di consolidated balance sheet</strong> — BUKAN sebagai liabilitas. Ini mencerminkan realitas ekonomi bahwa NCI merupakan klaim pemegang saham minoritas atas ekuitas subsidiary, bukan kewajiban yang harus dibayar.</p>
+
+      <p class="prose">Nilai NCI di balance sheet berubah seiring waktu sesuai dengan kinerja subsidiary. Nilai NCI akan meningkat jika subsidiary melaporkan laba (NCI mendapat proportionate share of income), dan berkurang jika subsidiary membayar dividen (NCI menerima proportionate share of dividends).</p>
+
+      <div class="formula-block">
+        <span class="label">Perubahan Nilai NCI dari Waktu ke Waktu</span>
+NCI (awal) = [Nilai yang diakui pada tanggal akuisisi]
+
+NCI (akhir periode) = NCI (awal)
+  + NCI's share of Subsidiary Net Income (NCI% × Sub NI)
+  − NCI's share of Dividends (NCI% × Sub Dividends)
+  ± NCI's share of OCI items
+        <span class="note">
+          Intercompany transactions harus dieliminasi secara penuh sebelum menghitung NCI share of income.
+        </span>
+      </div>
+
+      <h3 class="sub-header">NCI di Income Statement Konsolidasi</h3>
+      <p class="prose">Dalam consolidated income statement, 100% revenue dan expenses subsidiary disatukan dengan parent. Setelah menghitung "income from continuing operations" yang mencerminkan kinerja gabungan, terdapat baris deduction yang mengalokasikan porsi income yang menjadi hak NCI:</p>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Struktur Consolidated Income Statement dengan NCI</div>
+        <div class="exhibit-body">
+          <strong>Contoh dari Kurikulum CFA (menggunakan data Example 8):</strong><br>
+          Asumsi: Parent memiliki 90% Subsidiary (NCI = 10%). Excess PP&E = €60,000 (sisa umur tertentu).
+          <table class="reg-table" style="margin-top: 12px;">
+            <thead>
+              <tr>
+                <th>Item Income Statement</th>
+                <th>Full Goodwill</th>
+                <th>Partial Goodwill</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Sales (100% Parent + 100% Sub)</td>
+                <td>€250,000</td>
+                <td>€250,000</td>
+              </tr>
+              <tr>
+                <td>Cost of Goods Sold</td>
+                <td>(€137,500)</td>
+                <td>(€137,500)</td>
+              </tr>
+              <tr>
+                <td>Interest Expense</td>
+                <td>(€10,000)</td>
+                <td>(€10,000)</td>
+              </tr>
+              <tr>
+                <td>Depreciation (termasuk excess FV adj.)</td>
+                <td>(€39,000)</td>
+                <td>(€39,000)</td>
+              </tr>
+              <tr>
+                <td><strong>Income from Continuing Operations</strong></td>
+                <td><strong>€63,500</strong></td>
+                <td><strong>€63,500</strong></td>
+              </tr>
+              <tr>
+                <td>Non-Controlling Interest (10% × Sub NI)</td>
+                <td>(€6,350)</td>
+                <td>(€6,350)</td>
+              </tr>
+              <tr>
+                <td><strong>Consolidated Net Income (Parent's Share)</strong></td>
+                <td><strong>€57,150</strong></td>
+                <td><strong>€57,150</strong></td>
+              </tr>
+            </tbody>
+          </table>
+          <br>
+          <strong>Kunci:</strong> Net income attributable to parent SAMA di bawah kedua metode (€57,150). Ini karena excess depreciation dari FV adjustment PP&E dibagi proportionally antara parent dan NCI, sehingga total depreciation sama di kedua metode.
+        </div>
+      </div>
+
+      <h3 class="sub-header">Dampak terhadap Rasio Keuangan</h3>
+      <p class="prose">Meskipun net income ke parent shareholders sama, penggunaan full goodwill vs partial goodwill menghasilkan total assets dan total equity yang berbeda, sehingga rasio berbasis balance sheet akan berbeda:</p>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Dampak Metode Goodwill terhadap Rasio</div>
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Rasio</th>
+              <th>Full Goodwill</th>
+              <th>Partial Goodwill</th>
+              <th>Alasan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Return on Assets (ROA)</td>
+              <td>Lebih rendah</td>
+              <td>Lebih tinggi</td>
+              <td>Full goodwill → total assets lebih besar, denominator lebih besar</td>
+            </tr>
+            <tr>
+              <td>Return on Equity (ROE)</td>
+              <td>Lebih rendah</td>
+              <td>Lebih tinggi</td>
+              <td>Full goodwill → total equity lebih besar (NCI lebih besar)</td>
+            </tr>
+            <tr>
+              <td>Debt-to-Equity</td>
+              <td>Lebih rendah</td>
+              <td>Lebih tinggi</td>
+              <td>Full goodwill → equity (denominator) lebih besar</td>
+            </tr>
+            <tr>
+              <td>Net Profit Margin</td>
+              <td>Sama</td>
+              <td>Sama</td>
+              <td>Revenue dan net income to parent sama</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout red">
+        <span class="callout-title">Exam Trap: Net Income Parent = Sama, Tapi Rasio Bisa Berbeda</span>
+        <p>Ingat: net income yang dapat diatribusikan ke parent shareholders adalah IDENTIK di bawah full dan partial goodwill method. Yang berbeda adalah total assets dan total equity (karena NCI dan goodwill berbeda). Jadi soal exam yang menanyakan "mana yang menghasilkan ROA lebih tinggi" tidak tergantung pada net income, tapi pada total assets.</p>
+      </div>
+
+      <div class="kc" id="kc3-1">
+        <div class="kc-header" onclick="toggleKC('kc3-1')">
+          <div class="kc-header-title">Knowledge Check 3.1: NCI Income Statement Presentation</div>
+          <div class="kc-toggle">ⓘ</div>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">PT Indah Makmur (IM) memiliki 80% PT Bunga Harum (BH). BH melaporkan net income Rp 200 milyar. Intercompany eliminations mengakibatkan penyesuaian negatif Rp 20 milyar. Berapa NCI yang dilaporkan di income statement konsolidasi IM?</div>
+          <div class="kc-answer">
+            <strong>Jawaban:</strong> Langkah 1: Hitung adjusted subsidiary NI = Rp 200M − Rp 20M (intercompany elimination) = Rp 180M. Langkah 2: NCI share = 20% × Rp 180M = Rp 36 milyar. Ini yang dikurangi dari "income from continuing operations" di consolidated income statement untuk mendapatkan "net income attributable to IM's shareholders." Penting: intercompany eliminations dilakukan SEBELUM menghitung NCI share — NCI tidak ikut menanggung double-counted intercompany profits.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: GOODWILL IMPAIRMENT -->
+    <div class="chapter" id="section4">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 4</div>
+        <h2 class="chapter-title">Goodwill Impairment Testing: IFRS vs US GAAP</h2>
+      </div>
+
+      <h3 class="sub-header">Mengapa Goodwill Tidak Diamortisasi?</h3>
+      <p class="prose">Goodwill merepresentasikan nilai dari "faktor yang tidak dapat diidentifikasi secara terpisah" seperti brand reputation, kualitas manajemen, customer relationships, dan sinergi yang diharapkan dari akuisisi. Karena manfaat goodwill tidak terbatas dalam waktu (atau paling tidak, tidak dapat diestimasi dengan andal), baik IFRS maupun US GAAP melarang amortisasi goodwill dan menggantinya dengan pengujian impairment secara periodik.</p>
+
+      <p class="prose">Goodwill harus diuji untuk impairment <strong>setidaknya setiap tahun</strong>, atau lebih sering jika terdapat indikasi bahwa goodwill mungkin terganggu (misalnya, penurunan signifikan dalam kinerja unit bisnis yang menggunakan goodwill tersebut, perubahan regulasi, atau penurunan harga pasar entitas).</p>
+
+      <h3 class="sub-header">IFRS: One-Step Approach (Cash-Generating Units)</h3>
+      <p class="prose">Di bawah IFRS, goodwill yang diakui pada tanggal akuisisi dialokasikan ke masing-masing <strong>cash-generating units (CGU)</strong> — yaitu kelompok aset terkecil yang dapat diidentifikasi yang menghasilkan arus kas masuk yang sebagian besar independent dari aset atau kelompok aset lain. Alokasi ini dilakukan berdasarkan CGU mana yang akan mendapatkan manfaat dari sinergi akuisisi.</p>
+
+      <div class="formula-block">
+        <span class="label">IFRS Goodwill Impairment: One-Step</span>
+1. Hitung Recoverable Amount CGU:
+   Recoverable Amount = MAX(Value in Use, Fair Value − Costs to Sell)
+   dimana: Value in Use = PV of future cash flows dari CGU
+
+2. Bandingkan dengan Carrying Amount CGU
+   (termasuk goodwill yang dialokasikan)
+
+3. Jika Recoverable Amount &lt; Carrying Amount:
+   Impairment Loss = Carrying Amount − Recoverable Amount
+
+4. Alokasi impairment loss:
+   PERTAMA: Kurangi goodwill yang dialokasikan ke CGU (sampai nol)
+   KEMUDIAN: Sisa impairment dialokasikan pro-rata ke aset non-cash lain
+              dalam CGU berdasarkan carrying value-nya
+        <span class="note">
+          Impairment loss diakui di income statement sebagai baris terpisah.
+          Setelah goodwill di-write down, TIDAK BISA di-reverse di kemudian hari.
+        </span>
+      </div>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Contoh Goodwill Impairment: IFRS (dari Kurikulum CFA)</div>
+        <div class="exhibit-body">
+          <strong>Data:</strong><br>
+          Carrying value CGU (termasuk goodwill €300,000): €1,400,000<br>
+          Recoverable amount CGU: €1,300,000<br>
+          FV identifiable net assets CGU: €1,200,000<br><br>
+
+          <strong>Kalkulasi:</strong><br>
+          Impairment loss = €1,400,000 − €1,300,000 = <strong>€100,000</strong><br>
+          Goodwill sebelumnya: €300,000<br>
+          Goodwill setelah impairment: €300,000 − €100,000 = <strong>€200,000</strong><br>
+          (Impairment diserap penuh oleh goodwill — tidak perlu alokasi ke aset lain)<br><br>
+
+          <strong>Skenario Alternatif (Recoverable amount = €800,000):</strong><br>
+          Impairment loss = €1,400,000 − €800,000 = €600,000<br>
+          Goodwill diserap: −€300,000 (goodwill menjadi nol)<br>
+          Sisa impairment: €300,000 → dialokasikan pro-rata ke aset non-cash lain dalam CGU
+        </div>
+      </div>
+
+      <h3 class="sub-header">US GAAP: Two-Step Approach (Reporting Units)</h3>
+      <p class="prose">Di bawah US GAAP, goodwill dialokasikan ke <strong>reporting units</strong> — yaitu operating segment atau komponen satu level di bawah operating segment. Berbeda dari IFRS yang menggunakan one-step, US GAAP menggunakan pendekatan dua-tahap:</p>
+
+      <div class="formula-block">
+        <span class="label">US GAAP Goodwill Impairment: Two-Step</span>
+STEP 1 — Identification (Apakah ada potensi impairment?):
+  Hitung FV Reporting Unit
+  Bandingkan dengan Carrying Value Reporting Unit (incl. goodwill)
+  Jika FV Reporting Unit &lt; Carrying Value → lanjut Step 2
+  Jika FV Reporting Unit ≥ Carrying Value → STOP, tidak ada impairment
+
+STEP 2 — Measurement (Berapa besar impairment?):
+  Hitung "Implied Goodwill":
+    Implied Goodwill = FV Reporting Unit − FV Net Identifiable Assets Reporting Unit
+  Hitung Impairment Loss:
+    Impairment Loss = Carrying Value Goodwill − Implied Goodwill
+
+  Catatan: Jika Implied Goodwill negatif, impairment loss maksimum = Carrying Value Goodwill
+        <span class="note">
+          Impairment loss diakui di income statement. Goodwill tidak dapat di-restore setelah diturunkan.
+          Aset lain di reporting unit TIDAK otomatis disesuaikan (meski mungkin perlu pengujian terpisah).
+        </span>
+      </div>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Contoh Goodwill Impairment: US GAAP (dari Kurikulum CFA)</div>
+        <div class="exhibit-body">
+          <strong>Data:</strong><br>
+          FV Reporting Unit: $1,300,000<br>
+          Carrying Value Reporting Unit (termasuk goodwill $300,000): $1,400,000<br>
+          FV Net Identifiable Assets Reporting Unit: $1,200,000<br><br>
+
+          <strong>Step 1 (Identification):</strong><br>
+          $1,300,000 &lt; $1,400,000 → Potensi impairment teridentifikasi. Lanjut ke Step 2.<br><br>
+
+          <strong>Step 2 (Measurement):</strong><br>
+          Implied Goodwill = $1,300,000 − $1,200,000 = <strong>$100,000</strong><br>
+          Impairment Loss = $300,000 − $100,000 = <strong>$200,000</strong><br>
+          Goodwill setelah impairment = $300,000 − $200,000 = <strong>$100,000</strong><br><br>
+
+          <strong>Skenario Alternatif (FV Reporting Unit = $800,000):</strong><br>
+          Step 1: $800,000 &lt; $1,400,000 → Impairment teridentifikasi<br>
+          Step 2: Implied Goodwill = $800,000 − $1,200,000 = <strong>−$400,000 (negatif!)</strong><br>
+          Impairment Loss = $300,000 (maksimum = carrying value of goodwill, tidak bisa lebih)<br>
+          Goodwill setelah impairment = $0
+        </div>
+      </div>
+
+      <div class="callout amber">
+        <span class="callout-title">IFRS vs US GAAP: Perbedaan Kritis Goodwill Impairment</span>
+        <ul>
+          <li><strong>IFRS:</strong> One-step approach menggunakan CGU. Impairment loss pertama diserap goodwill, sisanya ke aset non-cash lain secara pro-rata.</li>
+          <li><strong>US GAAP:</strong> Two-step approach menggunakan reporting units. Hanya goodwill yang terkena impairment (aset lain tidak otomatis disesuaikan).</li>
+          <li><strong>Kesamaan:</strong> Keduanya tidak memperbolehkan reversal goodwill impairment, minimal annual testing, dan mencatat di income statement sebagai baris terpisah.</li>
+          <li><strong>Terminologi:</strong> IFRS menyebut recoverable amount, US GAAP menyebut implied goodwill.</li>
+        </ul>
+      </div>
+
+      <div class="kc" id="kc4-1">
+        <div class="kc-header" onclick="toggleKC('kc4-1')">
+          <div class="kc-header-title">Knowledge Check 4.1: Goodwill Impairment Calculation</div>
+          <div class="kc-toggle">ⓘ</div>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">Sebuah reporting unit US GAAP memiliki carrying value Rp 500 milyar (termasuk goodwill Rp 150 milyar). Fair value reporting unit = Rp 420 milyar. Fair value net identifiable assets = Rp 340 milyar. Hitung impairment loss goodwill.</div>
+          <div class="kc-answer">
+            <strong>Jawaban:</strong>
+            <br>Step 1: FV Reporting Unit (Rp 420M) &lt; Carrying Value (Rp 500M) → impairment teridentifikasi.
+            <br>Step 2: Implied Goodwill = FV Reporting Unit − FV Net Assets = Rp 420M − Rp 340M = Rp 80 milyar.
+            <br>Impairment Loss = Carrying GW − Implied GW = Rp 150M − Rp 80M = <strong>Rp 70 milyar</strong>.
+            <br>Goodwill setelah impairment = Rp 80 milyar.
+            <br><br>Catatan: Jika FV reporting unit = Rp 300M, maka implied GW = Rp 300M − Rp 340M = −Rp 40M (negatif). Dalam kasus ini, impairment loss = seluruh carrying value goodwill = Rp 150M. Goodwill tidak bisa menjadi negatif.
+          </div>
+        </div>
+      </div>
+
+      <div class="kc" id="kc4-2">
+        <div class="kc-header" onclick="toggleKC('kc4-2')">
+          <div class="kc-header-title">Knowledge Check 4.2: IFRS Goodwill Impairment Allocation</div>
+          <div class="kc-toggle">ⓘ</div>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">Sebuah CGU IFRS memiliki carrying value Rp 900 milyar (termasuk goodwill Rp 200 milyar dan PP&E Rp 700 milyar). Recoverable amount CGU = Rp 550 milyar. Bagaimana impairment loss dialokasikan?</div>
+          <div class="kc-answer">
+            <strong>Jawaban:</strong>
+            <br>Total impairment loss = Carrying Value − Recoverable Amount = Rp 900M − Rp 550M = Rp 350M.
+            <br>Langkah 1: Serap dengan goodwill terlebih dahulu → Goodwill Rp 200M (goodwill menjadi nol).
+            <br>Langkah 2: Sisa impairment = Rp 350M − Rp 200M = Rp 150M → Dialokasikan pro-rata ke aset non-cash lain.
+            <br>PP&E = satu-satunya aset non-cash → PP&E berkurang Rp 150M.
+            <br><br>Goodwill setelah impairment = Rp 0. PP&E setelah impairment = Rp 700M − Rp 150M = Rp 550M. Total CGU carrying value = Rp 0 + Rp 550M = Rp 550M = Recoverable amount ✓
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 5: ANALISIS LAPORAN KEUANGAN -->
+    <div class="chapter" id="section5">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 5</div>
+        <h2 class="chapter-title">Dampak terhadap Analisis Laporan Keuangan</h2>
+      </div>
+
+      <h3 class="sub-header">Proportionate Consolidation (Sejarah)</h3>
+      <p class="prose">Sebelum IFRS 11 berlaku efektif (2013), IFRS memperbolehkan dua metode untuk joint ventures: equity method atau proportionate consolidation. Di bawah proportionate consolidation, investor memasukkan proportionate share-nya dari masing-masing line item aset, liabilitas, revenue, dan expenses joint venture ke laporan keuangannya sendiri. Ini berbeda dari equity method yang hanya melaporkan satu baris neto.</p>
+
+      <p class="prose">IFRS 11 menghapus opsi proportionate consolidation — sekarang joint ventures WAJIB menggunakan equity method. US GAAP tidak pernah memperbolehkan proportionate consolidation untuk joint ventures. Implikasinya: laporan keuangan perusahaan yang sebelumnya menggunakan proportionate consolidation harus di-recast menggunakan equity method untuk perbandingan historis.</p>
+
+      <h3 class="sub-header">Perbandingan Dampak Metode Berbeda</h3>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Dampak Metode Akuntansi pada Laporan Keuangan</div>
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Equity Method (20-50%)</th>
+              <th>Proportionate Consolidation (historis)</th>
+              <th>Acquisition Method (&gt;50%)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Total Assets</td>
+              <td>Paling kecil (satu baris)</td>
+              <td>Menengah (proportionate share)</td>
+              <td>Paling besar (100% subsidiary)</td>
+            </tr>
+            <tr>
+              <td>Total Liabilities</td>
+              <td>Paling kecil</td>
+              <td>Menengah</td>
+              <td>Paling besar</td>
+            </tr>
+            <tr>
+              <td>Revenue</td>
+              <td>Tidak termasuk investee revenue</td>
+              <td>Proportionate share</td>
+              <td>100% subsidiary revenue</td>
+            </tr>
+            <tr>
+              <td>Net Income (to parent)</td>
+              <td>Sama secara ekonomi</td>
+              <td>Sama secara ekonomi</td>
+              <td>Sama secara ekonomi</td>
+            </tr>
+            <tr>
+              <td>Net Profit Margin</td>
+              <td>Paling tinggi</td>
+              <td>Menengah</td>
+              <td>Paling rendah</td>
+            </tr>
+            <tr>
+              <td>ROA</td>
+              <td>Paling tinggi</td>
+              <td>Menengah</td>
+              <td>Paling rendah</td>
+            </tr>
+            <tr>
+              <td>D/E Ratio</td>
+              <td>Paling rendah</td>
+              <td>Menengah</td>
+              <td>Paling tinggi</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub-header">Implikasi untuk Analis</h3>
+      <p class="prose">Sebagai analis, penting untuk memahami bahwa pemilihan metode akuntansi dapat secara signifikan mempengaruhi comparability laporan keuangan antar perusahaan. Perusahaan yang menggunakan acquisition method akan terlihat lebih "leveraged" dan memiliki margin yang lebih rendah daripada perusahaan serupa yang menggunakan equity method — meskipun secara ekonomi keduanya mungkin setara.</p>
+
+      <p class="prose">Selain itu, analyst notes bahwa konsolidasi VIE/SPE bisa sangat material. Setelah peraturan post-Enron, banyak perusahaan (terutama perbankan dan perusahaan keuangan) terpaksa mengkonsolidasi SPE yang sebelumnya off-balance-sheet, yang secara dramatis meningkatkan total aset dan liabilitas yang dilaporkan. Ini mempengaruhi interpretasi capital adequacy ratios perbankan dan rasio leverage lainnya.</p>
+
+      <div class="callout green">
+        <span class="callout-title">Tips Analisis: Menyesuaikan untuk Comparability</span>
+        <p>Jika membandingkan perusahaan yang menggunakan metode berbeda, analis bisa melakukan penyesuaian:</p>
+        <ul>
+          <li>Untuk konversi dari acquisition ke equity method: keluarkan 100% subsidiary assets/liabilities dan ganti dengan satu baris "Investment in Subsidiary"</li>
+          <li>Untuk konversi dari equity ke acquisition method: tambahkan proportionate share subsidiary assets/liabilities secara line-by-line</li>
+          <li>Informasi untuk penyesuaian ini biasanya tersedia di catatan laporan keuangan (footnotes)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- DIVIDER -->
+    <div class="divider"></div>
+
+    <!-- SECTION 6: PRACTICE -->
+    <div class="chapter" id="section6">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 6</div>
+        <h2 class="chapter-title">Latihan Soal — Item Set Vignette</h2>
+      </div>
+
+      <div class="practice-body">
+        <div class="vignette">
+          <div class="vignette-label">Vignette — Item Set (6 Pertanyaan)</div>
+          <p style="font-size: 14px; color: var(--text); line-height: 1.7;">
+            <strong>Sari Widyaningrum, CFA</strong> adalah senior analyst di Bahana Securities Jakarta. Dia sedang mengevaluasi laporan keuangan konsolidasi PT Archipelago Holdings Tbk (AH), sebuah konglomerat diversifikasi yang listed di IDX, untuk keperluan penilaian dan rekomendasi investasi.
+
+            <br><br><strong>Informasi Perusahaan:</strong>
+            <br>AH melaporkan laporan keuangan konsolidasi yang mencakup beberapa entitas. Investasi utama AH adalah:
+            <br><br>
+            <strong>Investasi 1 — PT Nusantara Logistik (NL):</strong> AH mendirikan NL sebagai special purpose vehicle untuk mengoperasikan armada kapal kargo. NL dibiayai 8% oleh equity investor independen dan 92% oleh pinjaman yang dijamin penuh oleh AH. AH tidak memiliki saham NL, tetapi berhak atas 85% keuntungan NL dan berkewajiban menanggung kerugian NL pertama sebesar Rp 400 milyar (dari total expected losses NL Rp 500 milyar). Total aset NL = Rp 2.000 milyar.
+
+            <br><br><strong>Investasi 2 — PT Kalimantan Coal Resources (KCR):</strong> AH mengakuisisi 70% saham KCR pada 1 Januari 2025. Harga akuisisi = Rp 840 milyar. Fair value KCR secara keseluruhan (100%) = Rp 1.200 milyar. Fair value net identifiable assets KCR = Rp 1.000 milyar. AH menggunakan full goodwill method di bawah IFRS (opsional).
+
+            <br><br><strong>Data Operasional KCR Tahun 2025:</strong>
+            <br>KCR net income = Rp 240 milyar. Tidak ada dividen dibayarkan. Tidak ada intercompany transactions. Biaya penyusutan tambahan (excess FV pada PP&E, sisa umur 5 tahun) = 30% × (FV PP&E − BV PP&E). Diketahui: FV PP&E KCR melebihi BV-nya sebesar Rp 100 milyar (satu-satunya perbedaan FV vs BV).
+
+            <br><br><strong>Impairment Testing (31 Des 2025):</strong>
+            <br>Karena penurunan harga batu bara global, AH melakukan goodwill impairment test. Fair value KCR turun menjadi Rp 1.050 milyar. Carrying value reporting unit KCR saat ini (setelah satu tahun operasional, termasuk goodwill) = Rp 1.280 milyar. Fair value net identifiable assets KCR saat ini = Rp 940 milyar.
+          </p>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Pertanyaan 1</div>
+          <div class="q-text">Berdasarkan US GAAP (ASC 810), mengapa AH harus mengkonsolidasi NL meskipun AH tidak memiliki saham NL?</div>
+          <div class="option" onclick="answerFull(0, 'A', 'B')">
+            A) AH mengkonsolidasi NL karena AH mendirikan NL, sehingga otomatis dianggap memiliki kontrol berdasarkan US GAAP
+          </div>
+          <div class="option" onclick="answerFull(0, 'B', 'B')">
+            B) AH adalah primary beneficiary NL karena memiliki power mengarahkan aktivitas NL DAN berhak menerima 85% expected residual returns (mayoritas)
+          </div>
+          <div class="option" onclick="answerFull(0, 'C', 'B')">
+            C) AH tidak perlu mengkonsolidasi NL karena kepemilikan 0% voting shares berarti tidak ada kontrol berdasarkan US GAAP
+          </div>
+          <div class="explanation"><strong>Penjelasan:</strong> VIE di bawah US GAAP (ASC 810) dikonsolidasi oleh primary beneficiary — bukan berdasarkan voting shares. Primary beneficiary harus memenuhi dua kondisi: (1) power mengarahkan aktivitas VIE yang paling signifikan, dan (2) menerima majority expected residual returns ATAU menyerap majority expected losses. AH berhak atas 85% keuntungan NL (= majority residual returns) DAN menanggung Rp 400M dari Rp 500M expected losses (= 80%, juga majority expected losses). AH juga kemungkinan memiliki power sebagai founder/guarantor. Jawaban A salah — mendirikan saja tidak otomatis menghasilkan kewajiban konsolidasi. Jawaban C salah — VIE model secara eksplisit dirancang untuk situasi di mana kontrol BUKAN via voting.</div>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Pertanyaan 2</div>
+          <div class="q-text">Berapa nilai goodwill yang diakui AH dari akuisisi KCR menggunakan full goodwill method?</div>
+          <div class="option" onclick="answerFull(1, 'A', 'A')">
+            A) Rp 200 milyar
+          </div>
+          <div class="option" onclick="answerFull(1, 'B', 'A')">
+            B) Rp 140 milyar
+          </div>
+          <div class="option" onclick="answerFull(1, 'C', 'A')">
+            C) Rp 240 milyar
+          </div>
+          <div class="explanation"><strong>Penjelasan:</strong> Full goodwill method: Goodwill = FV Entity keseluruhan − FV Net Identifiable Assets = Rp 1.200M − Rp 1.000M = <strong>Rp 200 milyar</strong>. Jawaban B (Rp 140M) adalah partial goodwill = Rp 840M − (70% × Rp 1.000M) = Rp 840M − Rp 700M = Rp 140M. Karena AH menggunakan full goodwill method, jawabannya adalah Rp 200M. Jawaban C salah.</div>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Pertanyaan 3</div>
+          <div class="q-text">Berapa Non-Controlling Interest (NCI) yang diakui di consolidated balance sheet AH pada tanggal akuisisi KCR (1 Jan 2025) menggunakan full goodwill method?</div>
+          <div class="option" onclick="answerFull(2, 'A', 'C')">
+            A) Rp 252 milyar
+          </div>
+          <div class="option" onclick="answerFull(2, 'B', 'C')">
+            B) Rp 300 milyar
+          </div>
+          <div class="option" onclick="answerFull(2, 'C', 'C')">
+            C) Rp 360 milyar
+          </div>
+          <div class="explanation"><strong>Penjelasan:</strong> Full goodwill method: NCI = NCI% × FV Entity keseluruhan = 30% × Rp 1.200M = <strong>Rp 360 milyar</strong>. Jawaban A (Rp 252M) tidak tepat. Jawaban B (Rp 300M) adalah 30% × Rp 1.000M (FV net assets) = partial goodwill NCI. Full goodwill NCI menggunakan FV entitas keseluruhan, bukan hanya FV net identifiable assets. Perbedaan antara full dan partial goodwill NCI = Rp 360M − Rp 300M = Rp 60M = perbedaan goodwill (Rp 200M − Rp 140M = Rp 60M) ✓</div>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Pertanyaan 4</div>
+          <div class="q-text">Berapa NCI yang dilaporkan di consolidated income statement AH untuk tahun 2025?</div>
+          <div class="option" onclick="answerFull(3, 'A', 'B')">
+            A) Rp 66 milyar
+          </div>
+          <div class="option" onclick="answerFull(3, 'B', 'B')">
+            B) Rp 66 milyar (setelah excess depreciation)
+          </div>
+          <div class="option" onclick="answerFull(3, 'C', 'B')">
+            C) Rp 72 milyar
+          </div>
+          <div class="explanation"><strong>Penjelasan:</strong> Excess FV pada PP&E = Rp 100M. AH memiliki 70%, sehingga excess yang dialokasikan ke PP&E dalam akuisisi = 30% × Rp 100M... Tunggu, dalam acquisition method semua 100% FV dikonsolidasi. Tambahan depreciation tahunan = Rp 100M ÷ 5 tahun = Rp 20M per tahun. KCR NI setelah excess depreciation = Rp 240M − Rp 20M = Rp 220M. NCI (30%) share = 30% × Rp 220M = <strong>Rp 66 milyar</strong>. Jawaban C (Rp 72M) = 30% × Rp 240M = tanpa memperhitungkan excess depreciation — salah. Jawaban A dan B keduanya Rp 66M, tetapi B lebih tepat karena eksplisit menyebutkan "setelah excess depreciation."</div>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Pertanyaan 5</div>
+          <div class="q-text">Berdasarkan US GAAP two-step approach, berapa goodwill impairment loss yang harus diakui AH pada 31 Desember 2025?</div>
+          <div class="option" onclick="answerFull(4, 'A', 'C')">
+            A) Rp 230 milyar
+          </div>
+          <div class="option" onclick="answerFull(4, 'B', 'C')">
+            B) Rp 200 milyar
+          </div>
+          <div class="option" onclick="answerFull(4, 'C', 'C')">
+            C) Rp 90 milyar
+          </div>
+          <div class="explanation"><strong>Penjelasan:</strong> Step 1: FV Reporting Unit KCR (Rp 1.050M) &lt; Carrying Value (Rp 1.280M) → impairment teridentifikasi. Step 2: Implied Goodwill = FV Reporting Unit − FV Net Assets = Rp 1.050M − Rp 940M = Rp 110M. Goodwill carrying value = Rp 200M (full goodwill dari akuisisi, belum ada perubahan tahun 2025). Impairment Loss = Rp 200M − Rp 110M = <strong>Rp 90 milyar</strong>. Goodwill setelah impairment = Rp 110M. Jawaban A (Rp 230M) = Carrying Value − FV Reporting Unit = Rp 1.280M − Rp 1.050M = penurunan total unit, bukan goodwill impairment. Jawaban B (Rp 200M) = seluruh goodwill dihapus — salah karena masih ada implied goodwill Rp 110M.</div>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Pertanyaan 6</div>
+          <div class="q-text">Sari sedang membandingkan AH dengan PT Borneo Resources (BR), yang memiliki investment serupa di perusahaan batubara tetapi menggunakan equity method (25% kepemilikan). Sari mencatat bahwa AH terlihat memiliki net profit margin yang lebih rendah dan debt-to-equity ratio yang lebih tinggi dari BR. Apa penjelasan yang paling tepat?</div>
+          <div class="option" onclick="answerFull(5, 'A', 'B')">
+            A) AH adalah perusahaan yang lebih buruk secara fundamental dibanding BR, terbukti dari margin yang lebih rendah
+          </div>
+          <div class="option" onclick="answerFull(5, 'B', 'B')">
+            B) Perbedaan metode akuntansi (acquisition vs equity method) menyebabkan perbedaan rasio meskipun secara ekonomi posisinya mungkin comparable
+          </div>
+          <div class="option" onclick="answerFull(5, 'C', 'B')">
+            C) AH memiliki lebih banyak utang actual dibanding BR karena consolidation-nya membutuhkan lebih banyak pembiayaan
+          </div>
+          <div class="explanation"><strong>Penjelasan:</strong> Ini adalah klasik comparability issue akibat metode akuntansi berbeda. AH menggunakan acquisition method (konsolidasi 100% KCR), sehingga: total revenue AH lebih besar (100% revenue KCR masuk), total aset lebih besar (100% aset KCR), total liabilitas lebih besar (100% utang KCR). Net income to parent mungkin serupa secara ekonomi, TAPI karena revenue lebih besar, net profit margin = NI/Revenue menjadi lebih rendah untuk AH. Debt-to-equity lebih tinggi karena 100% utang KCR dikonsolidasi. BR menggunakan equity method: tidak ada subsidiary revenue/liabilities yang masuk, hanya satu baris "equity income" yang relatif kecil dibanding total revenue BR. Jawaban A salah karena tidak mempertimbangkan perbedaan metode. Jawaban C salah karena tidak semua utang yang terkonsolidasi adalah utang AH sendiri — ini adalah utang KCR.</div>
+        </div>
+
+        <div id="scorePanelFull" class="score-panel">
+          <h3>Skor Anda</h3>
+          <p><span id="scoreValueFull">0</span>/6</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <div class="nav-bottom">
+      <a href="CFA_L2_Day19.html" class="nav-btn">&larr; Day 19 &middot; Equity Method &amp; Consolidation</a>
+      <a href="CFA_L2_Day21.html" class="nav-btn">Day 21 &middot; Defined Benefit Pension &rarr;</a>
+    </div>
+  </div>
+
+  <script>
+    function toggleKC(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle('open');
+    }
+
+    const answersMap = {};
+    const correctMap = {0:'B', 1:'A', 2:'C', 3:'B', 4:'C', 5:'B'};
+    const totalQ = 6;
+
+    function answerFull(qIdx, chosen, correctAns) {
+      answersMap[qIdx] = chosen;
+      const blocks = document.querySelectorAll('.question-block');
+      const opts = blocks[qIdx].querySelectorAll('.option');
+      opts.forEach((o, i) => {
+        o.style.background = '';
+        o.style.borderColor = '';
+      });
+      event.currentTarget.style.background = 'var(--blue-bg)';
+      event.currentTarget.style.borderColor = 'var(--blue)';
+
+      const exp = blocks[qIdx].querySelector('.explanation');
+      exp.classList.add('show');
+      if (chosen === correctAns) {
+        exp.classList.add('correct');
+        exp.classList.remove('incorrect');
+      } else {
+        exp.classList.add('incorrect');
+        exp.classList.remove('correct');
+      }
+
+      if (Object.keys(answersMap).length === totalQ) {
+        let score = 0;
+        for (let i = 0; i < totalQ; i++) {
+          if (answersMap[i] === correctMap[i]) score++;
+        }
+        document.getElementById('scoreValueFull').textContent = score;
+        document.getElementById('scorePanelFull').classList.add('show');
+      }
+    }
+  </script>
+</body>
+</html>

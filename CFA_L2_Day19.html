@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level 2 - Day 19: Equity Method & Consolidation</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    :root {
+      --bg:      #fafaf8;
+      --bg2:     #f4f3ef;
+      --bg3:     #eeece7;
+      --border:  rgba(0,0,0,0.08);
+      --border2: rgba(0,0,0,0.15);
+      --text:    #1a1a2e;
+      --text2:   #4a4a6a;
+      --text3:   #8a8aaa;
+      --gold:    #9a6e1a;
+      --gold2:   #7a5010;
+      --gold-bg: rgba(154,110,26,0.08);
+      --blue:    #1a5fa8;
+      --blue-bg: rgba(26,95,168,0.08);
+      --green:   #1a7a4a;
+      --green-bg:rgba(26,122,74,0.08);
+      --red:     #b83232;
+      --red-bg:  rgba(184,50,50,0.08);
+      --amber:   #a06010;
+      --amber-bg:rgba(160,96,16,0.08);
+      --purple:  #6a3ab0;
+      --purple-bg:rgba(106,58,176,0.08);
+      --r:10px;
+      --r-sm:6px;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      margin-top: 8px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text3);
+    }
+    .breadcrumb {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .breadcrumb span {
+      color: var(--text3);
+    }
+    .breadcrumb strong {
+      color: var(--text2);
+      font-weight: 600;
+    }
+    .day-badge {
+      background: var(--gold-bg);
+      color: var(--gold2);
+      padding: 4px 10px;
+      border-radius: var(--r-sm);
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .hero {
+      padding: 40px 0 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+    .hero-tag {
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .hero-title {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .hero-sub {
+      font-size: 16px;
+      color: var(--text2);
+      margin-bottom: 16px;
+    }
+    .meta-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+    .meta-pill {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: var(--r-sm);
+      font-size: 12px;
+      color: var(--text2);
+      font-weight: 500;
+    }
+    .section {
+      margin-bottom: 40px;
+    }
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text3);
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+    }
+    .obj-box {
+      background: var(--blue-bg);
+      border-left: 4px solid var(--blue);
+      padding: 20px;
+      border-radius: var(--r-sm);
+      margin-bottom: 16px;
+    }
+    .obj-box-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+    .obj-list {
+      list-style: none;
+    }
+    .obj-list li {
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 8px;
+      padding-left: 20px;
+      position: relative;
+    }
+    .obj-list li:before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--blue);
+      font-weight: 700;
+    }
+    .concept-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .concept-card {
+      background: white;
+      border: 1px solid var(--border2);
+      border-radius: var(--r);
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .concept-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .concept-num {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: var(--gold-bg);
+      color: var(--gold);
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .concept-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      flex: 1;
+    }
+    .concept-body {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.7;
+    }
+    .concept-body p {
+      margin-bottom: 12px;
+    }
+    .formula {
+      background: var(--bg2);
+      border-left: 3px solid var(--gold);
+      padding: 12px;
+      border-radius: var(--r-sm);
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: var(--text);
+      margin: 12px 0;
+      overflow-x: auto;
+    }
+    .insight {
+      background: var(--green-bg);
+      border-left: 3px solid var(--green);
+      padding: 12px;
+      border-radius: var(--r-sm);
+      font-size: 13px;
+      color: var(--text);
+      margin: 12px 0;
+    }
+    .trap {
+      background: var(--red-bg);
+      border-left: 3px solid var(--red);
+      padding: 12px;
+      border-radius: var(--r-sm);
+      font-size: 13px;
+      color: var(--text);
+      margin: 12px 0;
+    }
+    .trap-label {
+      font-weight: 700;
+      color: var(--red);
+      font-size: 11px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .assume-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 13px;
+    }
+    .assume-table th {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 10px;
+      text-align: left;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .assume-table td {
+      border: 1px solid var(--border);
+      padding: 10px;
+      color: var(--text2);
+    }
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 24px 0;
+    }
+    .practice-header {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text3);
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+    }
+    .practice-body {
+      background: white;
+      border: 1px solid var(--border2);
+      border-radius: var(--r);
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .vignette {
+      background: var(--bg2);
+      padding: 16px;
+      border-radius: var(--r-sm);
+      margin-bottom: 24px;
+      border-left: 3px solid var(--amber);
+    }
+    .vignette-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--amber);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .vignette-text {
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .question-block {
+      margin-bottom: 28px;
+    }
+    .q-num {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+    .q-text {
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 12px;
+      line-height: 1.6;
+      font-weight: 500;
+    }
+    .option {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: white;
+    }
+    .option:hover {
+      border-color: var(--blue);
+      background: var(--blue-bg);
+    }
+    .option-radio {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--border2);
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .option.selected .option-radio {
+      border-color: var(--blue);
+      background: var(--blue);
+    }
+    .option.selected .option-radio:after {
+      content: "✓";
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .option-text {
+      font-size: 13px;
+      color: var(--text);
+    }
+    .explanation {
+      background: var(--bg2);
+      padding: 12px;
+      border-radius: var(--r-sm);
+      font-size: 12px;
+      color: var(--text2);
+      margin-top: 8px;
+      display: none;
+    }
+    .explanation.show {
+      display: block;
+    }
+    .explanation.correct {
+      border-left: 3px solid var(--green);
+      background: var(--green-bg);
+      color: var(--text);
+    }
+    .explanation.incorrect {
+      border-left: 3px solid var(--red);
+      background: var(--red-bg);
+      color: var(--text);
+    }
+    .score-panel {
+      background: var(--gold-bg);
+      border: 1px solid var(--gold);
+      border-radius: var(--r);
+      padding: 16px;
+      margin-top: 20px;
+      text-align: center;
+      display: none;
+    }
+    .score-panel.show {
+      display: block;
+    }
+    .score-panel-text {
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .score-panel-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--gold2);
+    }
+    .cheat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .cheat-item {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      padding: 14px;
+    }
+    .cheat-key {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .cheat-val {
+      font-size: 13px;
+      color: var(--text);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+    .nav-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 0;
+      margin-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+    .nav-btn {
+      text-decoration: none;
+      padding: 10px 16px;
+      border-radius: var(--r-sm);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--blue);
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .nav-btn:hover {
+      border-color: var(--blue);
+      background: var(--blue-bg);
+    }
+    .nav-btn.disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    @media (max-width: 640px) {
+      .hero-title {
+        font-size: 28px;
+      }
+      .cheat-grid {
+        grid-template-columns: 1fr;
+      }
+      .meta-row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="breadcrumb">
+        <span>CFA Level II</span>
+        <span>·</span>
+        <span>FSA</span>
+        <span>·</span>
+        <strong>LM1</strong>
+      </div>
+      <div class="day-badge">Day 19 of 90</div>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-tag">Thursday, 07 May 2026</div>
+      <h1 class="hero-title">Equity Method & Consolidation</h1>
+      <p class="hero-sub">Intercorporate Investments — Subtopic 1 of 2</p>
+      <div class="meta-row">
+        <div class="meta-pill">60 min total</div>
+        <div class="meta-pill">30 min theory</div>
+        <div class="meta-pill">30 min practice</div>
+        <div class="meta-pill">~12% exam weight</div>
+      </div>
+    </div>
+
+    <!-- LEARNING OBJECTIVES -->
+    <div class="section">
+      <div class="section-label">Learning Objectives</div>
+      <div class="obj-box">
+        <div class="obj-box-title">By the end of this subtopic, you'll be able to:</div>
+        <ul class="obj-list">
+          <li>Bedakan tiga kategori investasi (financial assets &lt;20%, associates 20-50%, business combinations &gt;50%) dan metode akuntansinya</li>
+          <li>Hitung carrying value investasi menggunakan equity method — termasuk amortisasi excess purchase price dan goodwill</li>
+          <li>Jelaskan acquisition method untuk business combinations dan dampaknya terhadap financial statements (full consolidation)</li>
+          <li>Terapkan eliminasi unrealized profit pada upstream dan downstream transactions antara investor dan associate</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- THEORY SECTION -->
+    <div class="section">
+      <div class="section-label">Key Concepts</div>
+
+      <!-- Concept 1: Investment Classification -->
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="concept-card-header">
+            <div class="concept-num">1</div>
+            <div class="concept-title">Klasifikasi Intercorporate Investments</div>
+          </div>
+          <div class="concept-body">
+            <p>Intercorporate investments diklasifikasikan berdasarkan <strong>level of influence</strong> yang dimiliki investor atas investee. Ini menentukan metode akuntansi yang dipakai.</p>
+
+            <table class="assume-table">
+              <thead>
+                <tr>
+                  <th>Ownership %</th>
+                  <th>Level of Influence</th>
+                  <th>Accounting Method</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>&lt;20%</strong></td>
+                  <td>No significant influence</td>
+                  <td>Fair value (IFRS 9): FVPL, FVOCI, or amortized cost</td>
+                </tr>
+                <tr>
+                  <td><strong>20-50%</strong></td>
+                  <td>Significant influence</td>
+                  <td>Equity method ("one-line consolidation")</td>
+                </tr>
+                <tr>
+                  <td><strong>&gt;50%</strong></td>
+                  <td>Control</td>
+                  <td>Acquisition method (full consolidation)</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p><strong>IFRS 9 Financial Assets (&lt;20%):</strong> Tiga kategori measurement — amortized cost, FVPL (fair value through profit or loss), FVOCI (fair value through OCI). Klasifikasi berdasarkan business model test + cash flow characteristics test.</p>
+
+            <div class="insight">
+              <strong>Key point:</strong> Batas 20% dan 50% itu PRESUMPTION, bukan absolute rule. Perusahaan bisa punya significant influence dengan &lt;20% (e.g., board representation, material transactions) atau nggak punya significant influence meskipun &gt;20%.
+            </div>
+
+            <div class="trap">
+              <div class="trap-label">Exam Trap</div>
+              IFRS 9: pilihan FVOCI untuk equity instruments itu IRREVOCABLE. Sekali milih, nggak bisa ganti. Dan untuk equity instruments di FVOCI, hanya dividend income yang masuk P&L — unrealized gains/losses tetap di OCI dan TIDAK di-recycled ke P&L.
+            </div>
+          </div>
+        </div>
+
+        <!-- Concept 2: Equity Method -->
+        <div class="concept-card">
+          <div class="concept-card-header">
+            <div class="concept-num">2</div>
+            <div class="concept-title">Equity Method: "One-Line Consolidation"</div>
+          </div>
+          <div class="concept-body">
+            <p>Equity method dipakai saat investor punya <strong>significant influence</strong> (biasanya 20-50%). Disebut "one-line consolidation" karena:</p>
+            <ul style="margin-left: 16px; margin-bottom: 12px;">
+              <li><strong>Balance sheet:</strong> Satu baris — "Investment in Associate"</li>
+              <li><strong>Income statement:</strong> Satu baris — "Equity in income of associate"</li>
+            </ul>
+
+            <p><strong>Mekanisme equity method:</strong></p>
+            <div class="formula">
+Investment balance = Cost
+  + Investor's share of investee's income
+  − Dividends received
+  − Amortization of excess purchase price</div>
+            <p style="font-size: 13px; color: var(--text2);">Dividends MENGURANGI carrying value (return of capital), BUKAN income!</p>
+
+            <p><strong>Contoh dari kurikulum:</strong> Parker beli 30% Prince seharga €500,000. Prince book value net assets = €1,200,000. Fair value net assets = €1,500,000. Plant & equipment undervalued €300,000 (10-year life).</p>
+            <div class="formula">
+Excess purchase price = €500,000 − (30% × €1,200,000) = €140,000
+→ Attributable to PP&E: 30% × €300,000 = €90,000
+→ Goodwill (residual): €140,000 − €90,000 = €50,000
+Annual amortization of PP&E excess: €90,000 ÷ 10 = €9,000/year</div>
+
+            <p>Setelah tahun 1 (Prince income €100K, dividends €50K):</p>
+            <div class="formula">
+Investment balance = €500,000 + (30% × €100,000) − (30% × €50,000) − €9,000 = €506,000</div>
+
+            <div class="insight">
+              <strong>Key:</strong> Goodwill TIDAK diamortisasi — indefinite life. Tapi goodwill di equity method TIDAK ditest impairment secara terpisah; yang di-test adalah entire carrying amount of investment.
+            </div>
+          </div>
+        </div>
+
+        <!-- Concept 3: Acquisition Method -->
+        <div class="concept-card">
+          <div class="concept-card-header">
+            <div class="concept-num">3</div>
+            <div class="concept-title">Acquisition Method (Full Consolidation)</div>
+          </div>
+          <div class="concept-body">
+            <p>Kalau investor punya <strong>control</strong> (&gt;50%), wajib pakai acquisition method. Semua assets dan liabilities investee di-consolidate 100% ke parent's financial statements — meskipun parent cuma punya 60%.</p>
+
+            <p><strong>Tiga jenis business combination:</strong></p>
+            <ul style="margin-left: 16px; margin-bottom: 12px;">
+              <li><strong>Merger:</strong> A + B = A (B ceases to exist)</li>
+              <li><strong>Acquisition:</strong> A + B = (A + B) sebagai parent-subsidiary, keduanya tetap exist</li>
+              <li><strong>Consolidation:</strong> A + B = C (entitas baru, A dan B cease)</li>
+            </ul>
+
+            <p><strong>Steps in acquisition method:</strong></p>
+            <ul style="margin-left: 16px; margin-bottom: 12px;">
+              <li>1. Identify the acquirer</li>
+              <li>2. Determine acquisition date</li>
+              <li>3. Measure consideration transferred (at fair value)</li>
+              <li>4. Recognize and measure identifiable assets/liabilities at <strong>FAIR VALUE</strong></li>
+              <li>5. Recognize goodwill = Purchase price − Fair value of net identifiable assets</li>
+            </ul>
+
+            <div class="trap">
+              <div class="trap-label">Exam Trap</div>
+              Perbedaan equity method vs acquisition: Equity method hanya satu baris di BS dan IS. Acquisition method → 100% assets/liabilities masuk consolidated BS (even jika cuma own 60%). Ini bikin total assets JAUH lebih besar, debt ratios lebih tinggi, tapi net income SAMA karena ada non-controlling interest deduction.
+            </div>
+          </div>
+        </div>
+
+        <!-- Concept 4: Unrealized Profit Elimination -->
+        <div class="concept-card">
+          <div class="concept-card-header">
+            <div class="concept-num">4</div>
+            <div class="concept-title">Unrealized Profit: Upstream vs Downstream</div>
+          </div>
+          <div class="concept-body">
+            <p>Kalau ada transaksi antara investor dan associate, profit yang belum "confirmed" (barang belum dijual ke pihak ketiga) harus di-eliminate dari equity income.</p>
+
+            <p><strong>Upstream sale</strong> = associate jual ke investor. Profit tercatat di IS associate → masuk equity income investor via share of income.</p>
+            <p><strong>Downstream sale</strong> = investor jual ke associate. Profit tercatat di IS investor langsung.</p>
+            <p>Keduanya: investor harus eliminate share of unrealized profit.</p>
+
+            <div class="formula">
+Equity income adjustment = Investor's % × Unrealized profit in ending inventory</div>
+
+            <p><strong>Contoh upstream:</strong> Foxworth (associate) jual inventory ke Wicker (25% owner). Ada €8,000 unrealized profit di inventory Wicker. Adjustment = 25% × €8,000 = €2,000 dikurangi dari equity income.</p>
+
+            <p><strong>Contoh downstream:</strong> Jones (investor, 25%) jual ke Jason (associate). Cost €96K dijual €160K (margin 40%). Jason masih pegang €40K di inventory. Unrealized profit = 40% × €40K = €16K. Jones's share = 25% × €16K = €4,000.</p>
+
+            <div class="insight">
+              <strong>Timing:</strong> Unrealized profit di-defer di period penjualan, lalu di-reverse (realized) di period berikutnya saat barang dijual ke third party. Zero net effect over time.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHEAT SHEET -->
+    <div class="section">
+      <div class="section-label">Quick Reference — Cheat Sheet</div>
+      <div class="cheat-grid">
+        <div class="cheat-item">
+          <div class="cheat-key">Equity Method Investment Balance</div>
+          <div class="cheat-val">Cost + Share of income − Dividends − Amortization of excess purchase price<br><span style="color: var(--text3);">Dividends = return of capital, NOT income</span></div>
+        </div>
+        <div class="cheat-item">
+          <div class="cheat-key">Goodwill (Equity Method)</div>
+          <div class="cheat-val">Goodwill = Purchase price − Investor's share of FV of net identifiable assets<br><span style="color: var(--text3);">NOT amortized, NOT separately tested for impairment</span></div>
+        </div>
+        <div class="cheat-item">
+          <div class="cheat-key">IFRS 9 Classifications</div>
+          <div class="cheat-val"><strong>Debt:</strong> Amortized cost, FVOCI, FVPL<br><strong>Equity:</strong> FVPL or FVOCI (irrevocable)<br>Business model + cash flow test</div>
+        </div>
+        <div class="cheat-item">
+          <div class="cheat-key">Acquisition Method</div>
+          <div class="cheat-val">100% of assets/liabilities consolidated at FAIR VALUE. Non-controlling interest shown separately.</div>
+        </div>
+        <div class="cheat-item">
+          <div class="cheat-key">Exam Weight</div>
+          <div class="cheat-val">FSA = ~12% of Level 2. Intercorporate investments is a HIGH-frequency topic.</div>
+        </div>
+        <div class="cheat-item">
+          <div class="cheat-key">Impairment Reversal</div>
+          <div class="cheat-val"><strong>IFRS:</strong> Allows reversal of impairment loss<br><strong>US GAAP:</strong> Prohibits reversal of impairment losses</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRACTICE SECTION -->
+    <div class="section">
+      <div class="practice-header">Practice Questions — Indonesian Vignette (30 min)</div>
+      <div class="practice-body">
+        <div class="vignette">
+          <div class="vignette-label">Vignette</div>
+          <div class="vignette-text">
+            <strong>Dewi Rahayu</strong> adalah senior analyst di PT Mandala Investama, sebuah asset management firm di Jakarta. Dia sedang menganalisis investasi baru yang dilakukan oleh PT Nusantara Jaya (NJ), perusahaan konglomerat yang listed di IDX.
+
+            <br><br><strong>Investasi 1:</strong> NJ membeli 25% saham PT Borneo Energi (BE) seharga Rp 400 milyar. Book value net assets BE = Rp 1.200 milyar, fair value net assets = Rp 1.400 milyar. Selisih fair value vs book value sepenuhnya berasal dari PP&E yang undervalued (sisa umur 8 tahun, straight-line). Di tahun pertama, BE melaporkan net income Rp 160 milyar dan membayar dividen Rp 40 milyar. Selama tahun berjalan, BE menjual inventory ke NJ senilai Rp 20 milyar dengan profit Rp 8 milyar. Inventory tersebut BELUM dijual NJ ke pihak ketiga per akhir tahun.
+
+            <br><br><strong>Investasi 2:</strong> NJ juga membeli 5% saham PT Sulawesi Mineral (SM) seharga Rp 50 milyar. NJ mengklasifikasikan investasi ini sebagai FVOCI di bawah IFRS 9. Di akhir tahun, fair value investasi SM naik menjadi Rp 62 milyar. SM membayar dividen Rp 2 milyar ke NJ.
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Question 1</div>
+          <div class="q-text">Berapa goodwill yang termasuk dalam purchase price investasi NJ di BE?</div>
+          <div class="option" onclick="answer(0, 'A', 'B')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>A)</strong> Rp 100 milyar</div>
+          </div>
+          <div class="option" onclick="answer(0, 'B', 'B')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>B)</strong> Rp 50 milyar</div>
+          </div>
+          <div class="option" onclick="answer(0, 'C', 'B')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>C)</strong> Rp 150 milyar</div>
+          </div>
+          <div class="explanation"><strong>Explanation:</strong> Excess purchase price = Rp 400M − (25% × Rp 1,200M) = Rp 400M − Rp 300M = Rp 100M. Attributable to PP&E = 25% × (Rp 1,400M − Rp 1,200M) = 25% × Rp 200M = Rp 50M. Goodwill (residual) = Rp 100M − Rp 50M = <strong>Rp 50 milyar</strong>.</div>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Question 2</div>
+          <div class="q-text">Berapa equity income yang dilaporkan NJ dari investasi BE untuk tahun pertama?</div>
+          <div class="option" onclick="answer(1, 'A', 'A')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>A)</strong> Rp 31.75 milyar</div>
+          </div>
+          <div class="option" onclick="answer(1, 'B', 'A')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>B)</strong> Rp 40 milyar</div>
+          </div>
+          <div class="option" onclick="answer(1, 'C', 'A')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>C)</strong> Rp 33.75 milyar</div>
+          </div>
+          <div class="explanation"><strong>Explanation:</strong> Share of income = 25% × Rp 160M = Rp 40M. Amortization of excess PP&E = Rp 50M ÷ 8 = Rp 6.25M. Unrealized profit (upstream) = 25% × Rp 8M = Rp 2M. Equity income = Rp 40M − Rp 6.25M − Rp 2M = <strong>Rp 31.75 milyar</strong>. Dividends do NOT affect equity income — they reduce carrying value.</div>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Question 3</div>
+          <div class="q-text">Untuk investasi SM (FVOCI equity instrument), mana yang benar mengenai pelaporan tahun pertama?</div>
+          <div class="option" onclick="answer(2, 'A', 'C')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>A)</strong> Unrealized gain Rp 12M diakui di P&L, dividen Rp 2M diakui di P&L</div>
+          </div>
+          <div class="option" onclick="answer(2, 'B', 'C')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>B)</strong> Unrealized gain Rp 12M diakui di OCI, dividen Rp 2M diakui di OCI</div>
+          </div>
+          <div class="option" onclick="answer(2, 'C', 'C')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>C)</strong> Unrealized gain Rp 12M diakui di OCI, dividen Rp 2M diakui di P&L</div>
+          </div>
+          <div class="explanation"><strong>Explanation:</strong> Untuk equity instruments classified FVOCI under IFRS 9: unrealized gains/losses go to OCI (Rp 62M − Rp 50M = Rp 12M → OCI). Hanya <strong>dividend income yang diakui di profit or loss</strong> (Rp 2M → P&L). Ini berbeda dari debt FVOCI, di mana gains/losses eventually get recycled to P&L. Equity FVOCI gains/losses NEVER get recycled.</div>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Question 4</div>
+          <div class="q-text">Berapa carrying value investasi NJ di BE pada akhir tahun pertama?</div>
+          <div class="option" onclick="answer(3, 'A', 'B')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>A)</strong> Rp 431.75 milyar</div>
+          </div>
+          <div class="option" onclick="answer(3, 'B', 'B')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>B)</strong> Rp 421.75 milyar</div>
+          </div>
+          <div class="option" onclick="answer(3, 'C', 'B')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>C)</strong> Rp 400 milyar</div>
+          </div>
+          <div class="explanation"><strong>Explanation:</strong> Carrying value = Cost + Equity income − Dividends received. = Rp 400M + Rp 31.75M − (25% × Rp 40M) = Rp 400M + Rp 31.75M − Rp 10M = <strong>Rp 421.75 milyar</strong>. Remember: equity income already includes the amortization and unrealized profit adjustments. Dividends REDUCE carrying value (return of capital).</div>
+        </div>
+
+        <div id="scorePanel" class="score-panel">
+          <div class="score-panel-text">Your Score</div>
+          <div class="score-panel-value"><span id="scoreValue">0</span>/4</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DIVIDER -->
+    <div class="divider"></div>
+
+    <!-- NAVIGATION -->
+    <div class="nav-bottom">
+      <a href="CFA_L2_Day18.html" class="nav-btn">&larr; Day 18 &middot; Endogenous Growth & Demographics</a>
+      <a href="CFA_L2_Day20.html" class="nav-btn">Day 20 &middot; VIE/SPE & Minority Interest &rarr;</a>
+    </div>
+  </div>
+
+  <script>
+    const answers = {};
+    const correct = {0:'B', 1:'A', 2:'C', 3:'B'};
+    const total = 4;
+
+    function answer(qIdx, chosen, correctAns) {
+      answers[qIdx] = chosen;
+      const questionBlocks = document.querySelectorAll('.question-block');
+      const options = questionBlocks[qIdx].querySelectorAll('.option');
+      options.forEach(opt => opt.classList.remove('selected'));
+      event.currentTarget.classList.add('selected');
+
+      const explanations = questionBlocks[qIdx].querySelectorAll('.explanation');
+      const explanation = explanations[0];
+      explanation.classList.add('show');
+
+      if (chosen === correctAns) {
+        explanation.classList.add('correct');
+        explanation.innerHTML = '<strong>✓ Correct!</strong> ' + explanation.innerHTML.replace('<strong>Explanation:</strong>', '');
+      } else {
+        explanation.classList.add('incorrect');
+        explanation.innerHTML = '<strong>✗ Incorrect.</strong> ' + explanation.innerHTML.replace('<strong>Explanation:</strong>', '');
+      }
+
+      const answeredCount = Object.keys(answers).length;
+      if (answeredCount === total) {
+        showScore();
+      }
+    }
+
+    function showScore() {
+      let score = 0;
+      for (let i = 0; i < total; i++) {
+        if (answers[i] === correct[i]) score++;
+      }
+      document.getElementById('scoreValue').textContent = score;
+      document.getElementById('scorePanel').classList.add('show');
+    }
+  </script>
+</body>
+</html>

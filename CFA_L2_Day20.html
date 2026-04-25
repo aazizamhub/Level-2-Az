@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level 2 - Day 20: VIE/SPE & Minority Interest</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    :root {
+      --bg:      #fafaf8;
+      --bg2:     #f4f3ef;
+      --bg3:     #eeece7;
+      --border:  rgba(0,0,0,0.08);
+      --border2: rgba(0,0,0,0.15);
+      --text:    #1a1a2e;
+      --text2:   #4a4a6a;
+      --text3:   #8a8aaa;
+      --gold:    #9a6e1a;
+      --gold2:   #7a5010;
+      --gold-bg: rgba(154,110,26,0.08);
+      --blue:    #1a5fa8;
+      --blue-bg: rgba(26,95,168,0.08);
+      --green:   #1a7a4a;
+      --green-bg:rgba(26,122,74,0.08);
+      --red:     #b83232;
+      --red-bg:  rgba(184,50,50,0.08);
+      --amber:   #a06010;
+      --amber-bg:rgba(160,96,16,0.08);
+      --purple:  #6a3ab0;
+      --purple-bg:rgba(106,58,176,0.08);
+      --r:10px;
+      --r-sm:6px;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      margin-top: 8px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text3);
+    }
+    .breadcrumb {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .breadcrumb span {
+      color: var(--text3);
+    }
+    .breadcrumb strong {
+      color: var(--text2);
+      font-weight: 600;
+    }
+    .day-badge {
+      background: var(--gold-bg);
+      color: var(--gold2);
+      padding: 4px 10px;
+      border-radius: var(--r-sm);
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .hero {
+      padding: 40px 0 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+    .hero-tag {
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .hero-title {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .hero-sub {
+      font-size: 16px;
+      color: var(--text2);
+      margin-bottom: 16px;
+    }
+    .meta-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+    .meta-pill {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: var(--r-sm);
+      font-size: 12px;
+      color: var(--text2);
+      font-weight: 500;
+    }
+    .section {
+      margin-bottom: 40px;
+    }
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text3);
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+    }
+    .obj-box {
+      background: var(--blue-bg);
+      border-left: 4px solid var(--blue);
+      padding: 20px;
+      border-radius: var(--r-sm);
+      margin-bottom: 16px;
+    }
+    .obj-box-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+    .obj-list {
+      list-style: none;
+    }
+    .obj-list li {
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 8px;
+      padding-left: 20px;
+      position: relative;
+    }
+    .obj-list li:before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--blue);
+      font-weight: 700;
+    }
+    .concept-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .concept-card {
+      background: white;
+      border: 1px solid var(--border2);
+      border-radius: var(--r);
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .concept-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .concept-num {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: var(--gold-bg);
+      color: var(--gold);
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .concept-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      flex: 1;
+    }
+    .concept-body {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.7;
+    }
+    .concept-body p {
+      margin-bottom: 12px;
+    }
+    .formula {
+      background: var(--bg2);
+      border-left: 3px solid var(--gold);
+      padding: 12px;
+      border-radius: var(--r-sm);
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: var(--text);
+      margin: 12px 0;
+      overflow-x: auto;
+    }
+    .insight {
+      background: var(--green-bg);
+      border-left: 3px solid var(--green);
+      padding: 12px;
+      border-radius: var(--r-sm);
+      font-size: 13px;
+      color: var(--text);
+      margin: 12px 0;
+    }
+    .trap {
+      background: var(--red-bg);
+      border-left: 3px solid var(--red);
+      padding: 12px;
+      border-radius: var(--r-sm);
+      font-size: 13px;
+      color: var(--text);
+      margin: 12px 0;
+    }
+    .trap-label {
+      font-weight: 700;
+      color: var(--red);
+      font-size: 11px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .assume-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 13px;
+    }
+    .assume-table th {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 10px;
+      text-align: left;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .assume-table td {
+      border: 1px solid var(--border);
+      padding: 10px;
+      color: var(--text2);
+    }
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 24px 0;
+    }
+    .practice-header {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text3);
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+    }
+    .practice-body {
+      background: white;
+      border: 1px solid var(--border2);
+      border-radius: var(--r);
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .vignette {
+      background: var(--bg2);
+      padding: 16px;
+      border-radius: var(--r-sm);
+      margin-bottom: 24px;
+      border-left: 3px solid var(--amber);
+    }
+    .vignette-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--amber);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .vignette-text {
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .question-block {
+      margin-bottom: 28px;
+    }
+    .q-num {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+    .q-text {
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 12px;
+      line-height: 1.6;
+      font-weight: 500;
+    }
+    .option {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: white;
+    }
+    .option:hover {
+      border-color: var(--blue);
+      background: var(--blue-bg);
+    }
+    .option-radio {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--border2);
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .option.selected .option-radio {
+      border-color: var(--blue);
+      background: var(--blue);
+    }
+    .option.selected .option-radio:after {
+      content: "✓";
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .option-text {
+      font-size: 13px;
+      color: var(--text);
+    }
+    .explanation {
+      background: var(--bg2);
+      padding: 12px;
+      border-radius: var(--r-sm);
+      font-size: 12px;
+      color: var(--text2);
+      margin-top: 8px;
+      display: none;
+    }
+    .explanation.show {
+      display: block;
+    }
+    .explanation.correct {
+      border-left: 3px solid var(--green);
+      background: var(--green-bg);
+      color: var(--text);
+    }
+    .explanation.incorrect {
+      border-left: 3px solid var(--red);
+      background: var(--red-bg);
+      color: var(--text);
+    }
+    .score-panel {
+      background: var(--gold-bg);
+      border: 1px solid var(--gold);
+      border-radius: var(--r);
+      padding: 16px;
+      margin-top: 20px;
+      text-align: center;
+      display: none;
+    }
+    .score-panel.show {
+      display: block;
+    }
+    .score-panel-text {
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .score-panel-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--gold2);
+    }
+    .cheat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .cheat-item {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      padding: 14px;
+    }
+    .cheat-key {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .cheat-val {
+      font-size: 13px;
+      color: var(--text);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+    .nav-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 0;
+      margin-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+    .nav-btn {
+      text-decoration: none;
+      padding: 10px 16px;
+      border-radius: var(--r-sm);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--blue);
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .nav-btn:hover {
+      border-color: var(--blue);
+      background: var(--blue-bg);
+    }
+    .nav-btn.disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    @media (max-width: 640px) {
+      .hero-title {
+        font-size: 28px;
+      }
+      .cheat-grid {
+        grid-template-columns: 1fr;
+      }
+      .meta-row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="breadcrumb">
+        <span>CFA Level II</span>
+        <span>·</span>
+        <span>FSA</span>
+        <span>·</span>
+        <strong>LM1</strong>
+      </div>
+      <div class="day-badge">Day 20 of 90</div>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-tag">Friday, 08 May 2026</div>
+      <h1 class="hero-title">VIE/SPE &amp; Minority Interest</h1>
+      <p class="hero-sub">Intercorporate Investments — Subtopic 2 of 2</p>
+      <div class="meta-row">
+        <div class="meta-pill">60 min total</div>
+        <div class="meta-pill">30 min theory</div>
+        <div class="meta-pill">30 min practice</div>
+        <div class="meta-pill">~12% exam weight</div>
+      </div>
+    </div>
+
+    <!-- LEARNING OBJECTIVES -->
+    <div class="section">
+      <div class="section-label">Learning Objectives</div>
+      <div class="obj-box">
+        <div class="obj-box-title">By the end of this subtopic, you'll be able to:</div>
+        <ul class="obj-list">
+          <li>Bedakan Variable Interest Entity (VIE) dari entitas biasa dan jelaskan kapan konsolidasi wajib dilakukan (primary beneficiary vs IFRS control concept)</li>
+          <li>Hitung goodwill dan nilai non-controlling interest (NCI) menggunakan full goodwill method (US GAAP) vs partial goodwill method (IFRS)</li>
+          <li>Jelaskan bagaimana NCI disajikan di balance sheet dan income statement konsolidasi, serta dampaknya terhadap rasio keuangan</li>
+          <li>Terapkan impairment testing untuk goodwill: one-step approach (IFRS) vs two-step approach (US GAAP)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- THEORY SECTION -->
+    <div class="section">
+      <div class="section-label">Key Concepts</div>
+
+      <!-- Concept 1: VIE/SPE -->
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="concept-card-header">
+            <div class="concept-num">1</div>
+            <div class="concept-title">Variable Interest Entities (VIE) &amp; Special Purpose Entities (SPE)</div>
+          </div>
+          <div class="concept-body">
+            <p>VIE/SPE adalah entitas yang <strong>tidak dikontrol melalui voting shares biasa</strong>. Ini karena equity investors VIE tidak punya sufficient amount at risk sehingga VIE butuh subordinated financial support dari pihak lain (biasanya sponsor). Contoh klasik: sekuritisasi aset, structured finance vehicles, off-balance-sheet financing.</p>
+
+            <p><strong>IFRS (IFRS 10):</strong> Konsolidasi berdasarkan <em>control concept</em> — control ada kalau investor: (1) punya kemampuan mempengaruhi financial and operating policies investee, DAN (2) terekspos atau punya hak atas variable returns dari involvement-nya. Judgment-based, berlaku luas ke semua entitas.</p>
+
+            <p><strong>US GAAP (ASC 810):</strong> Dua-komponen model — voting interest component DAN variable interest component. Primary beneficiary VIE wajib konsolidasi VIE tersebut, TERLEPAS dari voting interest-nya. Primary beneficiary = pihak yang akan menyerap majority of VIE's expected losses, menerima majority of VIE's expected residual returns, atau keduanya.</p>
+
+            <table class="assume-table">
+              <thead>
+                <tr>
+                  <th>Aspek</th>
+                  <th>IFRS</th>
+                  <th>US GAAP</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Dasar konsolidasi SPE</td>
+                  <td>Control concept (IFRS 10) — substance over form</td>
+                  <td>Primary beneficiary of VIE (ASC 810)</td>
+                </tr>
+                <tr>
+                  <td>Trigger konsolidasi</td>
+                  <td>Ability to direct activities + exposure to variable returns</td>
+                  <td>Absorb majority expected losses OR receive majority residual returns</td>
+                </tr>
+                <tr>
+                  <td>Pendekatan</td>
+                  <td>Principles-based (judgment)</td>
+                  <td>Rules-based (two-component test)</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="insight">
+              <strong>Kenapa VIE penting bagi analis?</strong> Sebelum era IFRS 10 dan ASC 810 yang ketat, perusahaan sering pakai SPE untuk menyembunyikan utang di off-balance-sheet. Enron adalah kasus paling terkenal. Sekarang, jika sponsor punya control atau adalah primary beneficiary, VIE harus dikonsolidasi — artinya utang VIE masuk ke consolidated balance sheet sponsor.
+            </div>
+
+            <div class="trap">
+              <div class="trap-label">Exam Trap</div>
+              VIE TIDAK harus memiliki voting shares yang dipegang sponsor untuk dikonsolidasi! Konsolidasi VIE berdasarkan economic exposure (absorb losses / receive returns), BUKAN kepemilikan saham. Ini berbeda fundamental dari konsolidasi subsidiary biasa.
+            </div>
+          </div>
+        </div>
+
+        <!-- Concept 2: Non-Controlling Interest Balance Sheet -->
+        <div class="concept-card">
+          <div class="concept-card-header">
+            <div class="concept-num">2</div>
+            <div class="concept-title">Non-Controlling Interest (NCI) di Balance Sheet</div>
+          </div>
+          <div class="concept-body">
+            <p>Ketika parent mengakuisisi kurang dari 100% subsidiary, minority shareholders (non-controlling interest / NCI) tetap ada. Di consolidated balance sheet, 100% aset dan liabilitas subsidiary dimasukkan — tetapi equity yang dimiliki minority harus diakui secara terpisah.</p>
+
+            <p><strong>Perbedaan IFRS vs US GAAP dalam pengukuran NCI:</strong></p>
+
+            <table class="assume-table">
+              <thead>
+                <tr>
+                  <th>Metode</th>
+                  <th>Goodwill</th>
+                  <th>NCI</th>
+                  <th>Diperbolehkan</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Full Goodwill</strong></td>
+                  <td>FV Entitas − FV Net Identifiable Assets</td>
+                  <td>NCI % × FV Entitas keseluruhan</td>
+                  <td>IFRS (opsional) &amp; US GAAP (wajib)</td>
+                </tr>
+                <tr>
+                  <td><strong>Partial Goodwill</strong></td>
+                  <td>Harga beli − Parent's % × FV Net Assets</td>
+                  <td>NCI % × FV Net Identifiable Assets</td>
+                  <td>IFRS saja</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p><strong>Contoh (dari kurikulum CFA):</strong> Parent beli 90% Sub seharga €180,000. FV Sub keseluruhan = €200,000. FV Net identifiable assets Sub = €160,000.</p>
+
+            <div class="formula">
+Full Goodwill (US GAAP dan IFRS opsional):
+  Goodwill = €200,000 − €160,000 = €40,000
+  NCI = 10% × €200,000 = €20,000
+
+Partial Goodwill (IFRS saja):
+  Goodwill = €180,000 − (90% × €160,000) = €180,000 − €144,000 = €36,000
+  NCI = 10% × €160,000 = €16,000</div>
+
+            <p style="font-size: 13px; color: var(--text2);">NCI disajikan di consolidated balance sheet sebagai komponen TERPISAH dari stockholders' equity — BUKAN sebagai liabilitas.</p>
+
+            <div class="insight">
+              <strong>Full vs Partial Goodwill:</strong> Full goodwill menghasilkan total assets dan total equity yang lebih tinggi (karena NCI lebih besar), tetapi net income attributable to parent shareholders SAMA di kedua metode, karena full goodwill method juga membebani NCI dengan share of excess depreciation.
+            </div>
+          </div>
+        </div>
+
+        <!-- Concept 3: NCI Income Statement -->
+        <div class="concept-card">
+          <div class="concept-card-header">
+            <div class="concept-num">3</div>
+            <div class="concept-title">Non-Controlling Interest di Income Statement &amp; Dampak Rasio</div>
+          </div>
+          <div class="concept-body">
+            <p>Di consolidated income statement, 100% revenue dan expenses subsidiary dimasukkan. Kemudian, di bawah "income from continuing operations", terdapat baris deduction: <strong>Non-controlling interest (NCI's share of subsidiary's net income)</strong>. Net income yang tersisa adalah milik parent shareholders.</p>
+
+            <div class="formula">
+Consolidated Net Income = 100% Parent NI + 100% Subsidiary NI
+  − Intercompany eliminations
+  − NCI's share of Subsidiary NI (e.g., 10% × Sub NI)
+= Net Income Attributable to Parent Shareholders</div>
+
+            <p><strong>Dampak terhadap rasio:</strong> Penggunaan full goodwill vs partial goodwill TIDAK mempengaruhi net income ke parent shareholders (karena NCI juga ikut menanggung excess depreciation). TAPI karena total assets dan equity berbeda, rasio seperti ROA dan ROE akan sedikit berbeda.</p>
+
+            <table class="assume-table">
+              <thead>
+                <tr>
+                  <th>Rasio</th>
+                  <th>Full Goodwill</th>
+                  <th>Partial Goodwill</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Return on Assets</td>
+                  <td>Lebih rendah (total assets lebih besar)</td>
+                  <td>Lebih tinggi</td>
+                </tr>
+                <tr>
+                  <td>Return on Equity</td>
+                  <td>Lebih rendah (total equity lebih besar)</td>
+                  <td>Lebih tinggi</td>
+                </tr>
+                <tr>
+                  <td>Net Income (Parent)</td>
+                  <td>SAMA</td>
+                  <td>SAMA</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="trap">
+              <div class="trap-label">Exam Trap</div>
+              Acquisition method (full consolidation) vs equity method: Acquisition method menyebabkan total assets jauh lebih besar dan debt-to-equity ratio lebih tinggi (semua liabilitas subsidiary masuk). Equity method hanya satu baris di BS. Jadi perbandingan perusahaan yang pakai metode berbeda bisa misleading!
+            </div>
+          </div>
+        </div>
+
+        <!-- Concept 4: Goodwill Impairment -->
+        <div class="concept-card">
+          <div class="concept-card-header">
+            <div class="concept-num">4</div>
+            <div class="concept-title">Goodwill Impairment Testing: IFRS vs US GAAP</div>
+          </div>
+          <div class="concept-body">
+            <p>Goodwill tidak diamortisasi (indefinite life), tapi WAJIB di-test untuk impairment minimal setahun sekali. Jika ada indikasi impairment, test lebih sering dilakukan.</p>
+
+            <p><strong>IFRS — One-Step Approach (Cash-Generating Unit):</strong></p>
+            <div class="formula">
+1. Alokasikan goodwill ke cash-generating units (CGU)
+   yang mendapat manfaat dari akuisisi
+2. Hitung recoverable amount CGU
+   = MAX(Fair value − costs to sell, Value in use)
+3. Jika recoverable amount &lt; carrying value CGU:
+   Impairment loss = Carrying value − Recoverable amount
+   → Pertama kurangi goodwill, sisanya pro-rata ke aset lain</div>
+
+            <p><strong>US GAAP — Two-Step Approach (Reporting Unit):</strong></p>
+            <div class="formula">
+Step 1 (Identification):
+  Jika FV Reporting Unit &lt; Carrying Value → ada potensi impairment
+
+Step 2 (Measurement):
+  Implied goodwill = FV Reporting Unit − FV Net Assets
+  Impairment loss = Carrying Value Goodwill − Implied Goodwill</div>
+
+            <p><strong>Contoh US GAAP:</strong> Reporting unit: FV = $1,300K, Carrying = $1,400K (incl. goodwill $300K). Net assets FV = $1,200K.</p>
+            <div class="formula">
+Step 1: $1,300K &lt; $1,400K → Impairment teridentifikasi
+Step 2: Implied goodwill = $1,300K − $1,200K = $100K
+        Impairment loss = $300K − $100K = $200K
+        (Goodwill jadi $100K di balance sheet)</div>
+
+            <div class="insight">
+              <strong>Kesamaan penting:</strong> Baik IFRS maupun US GAAP — goodwill yang sudah di-write down TIDAK BISA di-restore/reversed. Impairment loss adalah one-way only. Dicatat sebagai line item terpisah di consolidated income statement.
+            </div>
+
+            <div class="trap">
+              <div class="trap-label">Exam Trap</div>
+              IFRS: Impairment pertama menyerap goodwill CGU, BARU sisanya dialokasikan pro-rata ke aset lain non-cash. US GAAP: Impairment hanya mengurangi goodwill reporting unit — aset lain TIDAK otomatis disesuaikan (tapi mungkin perlu di-test secara terpisah).
+            </div>
+          </div>
+        </div>
+
+        <!-- Concept 5: Analyst Adjustments -->
+        <div class="concept-card">
+          <div class="concept-card-header">
+            <div class="concept-num">5</div>
+            <div class="concept-title">Dampak Metode Konsolidasi terhadap Analisis</div>
+          </div>
+          <div class="concept-body">
+            <p>Sebagai analis, lo perlu paham bagaimana metode akuntansi berbeda mempengaruhi comparability laporan keuangan.</p>
+
+            <table class="assume-table">
+              <thead>
+                <tr>
+                  <th>Aspek</th>
+                  <th>Equity Method</th>
+                  <th>Acquisition Method</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Total Assets</td>
+                  <td>Lebih kecil (satu baris)</td>
+                  <td>Lebih besar (100% subsidiary)</td>
+                </tr>
+                <tr>
+                  <td>Total Liabilities</td>
+                  <td>Lebih kecil</td>
+                  <td>Lebih besar</td>
+                </tr>
+                <tr>
+                  <td>Revenue</td>
+                  <td>Tidak termasuk subsidiary revenue</td>
+                  <td>100% subsidiary revenue masuk</td>
+                </tr>
+                <tr>
+                  <td>Net Income (to parent)</td>
+                  <td>Sama secara ekonomi</td>
+                  <td>Sama secara ekonomi</td>
+                </tr>
+                <tr>
+                  <td>D/E ratio</td>
+                  <td>Lebih rendah</td>
+                  <td>Lebih tinggi</td>
+                </tr>
+                <tr>
+                  <td>Net Profit Margin</td>
+                  <td>Lebih tinggi</td>
+                  <td>Lebih rendah</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="insight">
+              <strong>Proportionate Consolidation (Sejarah):</strong> IFRS dulu memperbolehkan proportionate consolidation untuk joint ventures — di mana proportionate share assets, liabilities, revenues masuk ke laporan investor. Tapi IFRS 11 (berlaku 2013) menghapus pilihan ini; sekarang wajib equity method untuk joint ventures. US GAAP tidak pernah memperbolehkan proportionate consolidation untuk joint ventures.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHEAT SHEET -->
+    <div class="section">
+      <div class="section-label">Quick Reference — Cheat Sheet</div>
+      <div class="cheat-grid">
+        <div class="cheat-item">
+          <div class="cheat-key">VIE Consolidation Trigger</div>
+          <div class="cheat-val"><strong>US GAAP:</strong> Primary beneficiary = absorb majority losses OR receive majority returns<br><strong>IFRS:</strong> Control = ability to direct activities + exposure to variable returns</div>
+        </div>
+        <div class="cheat-item">
+          <div class="cheat-key">Full vs Partial Goodwill</div>
+          <div class="cheat-val"><strong>Full (US GAAP wajib, IFRS opsional):</strong> GW = FV Entity − FV Net Assets; NCI = NCI% × FV Entity<br><strong>Partial (IFRS saja):</strong> GW = Purchase price − Parent% × FV Net Assets; NCI = NCI% × FV Net Assets</div>
+        </div>
+        <div class="cheat-item">
+          <div class="cheat-key">NCI di Balance Sheet</div>
+          <div class="cheat-val">Disajikan sebagai komponen TERPISAH dari stockholders' equity (BUKAN liabilitas) — sama di IFRS dan US GAAP.</div>
+        </div>
+        <div class="cheat-item">
+          <div class="cheat-key">Goodwill Impairment</div>
+          <div class="cheat-val"><strong>IFRS:</strong> One-step — recoverable amount CGU vs carrying value CGU<br><strong>US GAAP:</strong> Two-step — Step 1 identify, Step 2 measure implied goodwill</div>
+        </div>
+        <div class="cheat-item">
+          <div class="cheat-key">Impairment Reversal</div>
+          <div class="cheat-val">Goodwill impairment TIDAK BISA di-reverse di bawah IFRS maupun US GAAP. One-way only.</div>
+        </div>
+        <div class="cheat-item">
+          <div class="cheat-key">Exam Weight</div>
+          <div class="cheat-val">FSA = ~12% Level 2. VIE/NCI/Goodwill impairment = topik favorit exam karena banyak perbedaan IFRS vs US GAAP yang bisa diuji.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRACTICE SECTION -->
+    <div class="section">
+      <div class="practice-header">Practice Questions — Indonesian Vignette (30 min)</div>
+      <div class="practice-body">
+        <div class="vignette">
+          <div class="vignette-label">Vignette</div>
+          <div class="vignette-text">
+            <strong>Rendra Kusuma</strong> adalah analis di PT Samudera Capital, sebuah investment management firm yang berbasis di Surabaya. Dia sedang mereview laporan keuangan PT Garuda Nusantara Tbk (GN), perusahaan infrastructure yang listed di IDX.
+
+            <br><br><strong>Situasi 1 – VIE:</strong> GN adalah sponsor dari PT Pelabuhan Khusus Timur (PKT), sebuah special purpose entity yang dibentuk untuk membangun dan mengoperasikan terminal pelabuhan di Kalimantan. PKT didanai 15% oleh equity investors lain dan 85% oleh guaranteed debt yang dijamin GN. GN tidak memiliki voting shares di PKT, tetapi secara kontraktual berhak menerima 90% dari keuntungan operasional PKT dan wajib menyerap kerugian hingga Rp 500 milyar. PKT mempunyai total aset Rp 2 trilyun.
+
+            <br><br><strong>Situasi 2 – Akuisisi Subsidiary:</strong> Pada 1 Januari 2026, GN mengakuisisi 80% saham PT Kalimantan Mining Tbk (KM) seharga Rp 960 milyar. Fair value KM secara keseluruhan diestimasi sebesar Rp 1.200 milyar. Fair value net identifiable assets KM = Rp 1.000 milyar.
+
+            <br><br><strong>Situasi 3 – Impairment:</strong> Setahun kemudian (31 Des 2026), due to commodity price decline, fair value reporting unit KM turun menjadi Rp 1.050 milyar. Carrying value reporting unit KM (incl. goodwill) = Rp 1.350 milyar. Fair value net identifiable assets KM saat ini = Rp 950 milyar. GN menggunakan US GAAP untuk goodwill impairment testing.
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Question 1</div>
+          <div class="q-text">Berdasarkan US GAAP (ASC 810), apakah GN harus mengkonsolidasi PKT ke dalam laporan keuangannya?</div>
+          <div class="option" onclick="answer(0, 'A', 'A')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>A)</strong> Ya, karena GN adalah primary beneficiary PKT — menyerap majority of expected losses DAN menerima majority of expected residual returns</div>
+          </div>
+          <div class="option" onclick="answer(0, 'B', 'A')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>B)</strong> Tidak, karena GN tidak memiliki voting shares di PKT, sehingga tidak ada "control" berdasarkan voting interest model</div>
+          </div>
+          <div class="option" onclick="answer(0, 'C', 'A')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>C)</strong> Ya, tetapi hanya jika GN memiliki lebih dari 50% voting interest di PKT</div>
+          </div>
+          <div class="explanation"><strong>Explanation:</strong> Under US GAAP ASC 810, VIE konsolidasi berdasarkan siapa yang merupakan <strong>primary beneficiary</strong> — yaitu pihak yang akan menyerap majority expected losses ATAU menerima majority expected residual returns. GN berhak menerima 90% keuntungan operasional (majority residual returns) DAN menanggung kerugian besar (menyerap expected losses). Kepemilikan voting shares tidak diperlukan. Jawaban B salah karena VIE justru didefinisikan sebagai entitas yang kontrolnya BUKAN berbasis voting.</div>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Question 2</div>
+          <div class="q-text">Berapa nilai goodwill yang diakui GN dari akuisisi 80% KM menggunakan full goodwill method?</div>
+          <div class="option" onclick="answer(1, 'A', 'B')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>A)</strong> Rp 160 milyar</div>
+          </div>
+          <div class="option" onclick="answer(1, 'B', 'B')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>B)</strong> Rp 200 milyar</div>
+          </div>
+          <div class="option" onclick="answer(1, 'C', 'B')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>C)</strong> Rp 40 milyar</div>
+          </div>
+          <div class="explanation"><strong>Explanation:</strong> Full goodwill method: Goodwill = FV Entity keseluruhan − FV Net Identifiable Assets = Rp 1.200M − Rp 1.000M = <strong>Rp 200 milyar</strong>. Bandingkan dengan partial goodwill (IFRS only): Goodwill = Purchase price − (80% × FV Net Assets) = Rp 960M − (80% × Rp 1.000M) = Rp 960M − Rp 800M = Rp 160M. Jawaban A adalah partial goodwill, C salah. US GAAP wajib full goodwill = Rp 200M.</div>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Question 3</div>
+          <div class="q-text">Berapa nilai Non-Controlling Interest (NCI/20% minoritas) yang diakui di consolidated balance sheet GN pada tanggal akuisisi menggunakan full goodwill method?</div>
+          <div class="option" onclick="answer(2, 'A', 'C')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>A)</strong> Rp 192 milyar</div>
+          </div>
+          <div class="option" onclick="answer(2, 'B', 'C')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>B)</strong> Rp 200 milyar</div>
+          </div>
+          <div class="option" onclick="answer(2, 'C', 'C')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>C)</strong> Rp 240 milyar</div>
+          </div>
+          <div class="explanation"><strong>Explanation:</strong> Full goodwill method: NCI = NCI% × FV Entity keseluruhan = 20% × Rp 1.200M = <strong>Rp 240 milyar</strong>. Jawaban A adalah partial goodwill NCI = 20% × Rp 1.000M × (Rp 960M/Rp 800M) — salah. Partial goodwill NCI yang benar = 20% × Rp 1.000M = Rp 200M. Full goodwill menggunakan FV entitas keseluruhan (Rp 1.200M), bukan hanya FV net assets.</div>
+        </div>
+
+        <div class="question-block">
+          <div class="q-num">Question 4</div>
+          <div class="q-text">Berdasarkan US GAAP two-step approach, berapa goodwill impairment loss yang harus diakui GN pada 31 Des 2026?</div>
+          <div class="option" onclick="answer(3, 'A', 'B')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>A)</strong> Rp 300 milyar</div>
+          </div>
+          <div class="option" onclick="answer(3, 'B', 'B')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>B)</strong> Rp 100 milyar</div>
+          </div>
+          <div class="option" onclick="answer(3, 'C', 'B')">
+            <div class="option-radio"></div>
+            <div class="option-text"><strong>C)</strong> Rp 200 milyar</div>
+          </div>
+          <div class="explanation"><strong>Explanation:</strong> Step 1: FV Reporting Unit (Rp 1.050M) &lt; Carrying Value (Rp 1.350M) → potensi impairment teridentifikasi. Step 2: Implied goodwill = FV Reporting Unit − FV Net Assets = Rp 1.050M − Rp 950M = Rp 100M. Original goodwill (full method) = Rp 200M. Impairment loss = Rp 200M − Rp 100M = <strong>Rp 100 milyar</strong>. Goodwill setelah impairment = Rp 100M. Jawaban A (Rp 300M) adalah carrying value impairment, bukan goodwill impairment yang terukur. Jawaban C (Rp 200M) salah karena itu nilai original goodwill seluruhnya.</div>
+        </div>
+
+        <div id="scorePanel" class="score-panel">
+          <div class="score-panel-text">Your Score</div>
+          <div class="score-panel-value"><span id="scoreValue">0</span>/4</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DIVIDER -->
+    <div class="divider"></div>
+
+    <!-- NAVIGATION -->
+    <div class="nav-bottom">
+      <a href="CFA_L2_Day19.html" class="nav-btn">&larr; Day 19 &middot; Equity Method &amp; Consolidation</a>
+      <a href="CFA_L2_Day21.html" class="nav-btn">Day 21 &middot; Defined Benefit Pension &rarr;</a>
+    </div>
+  </div>
+
+  <script>
+    const answers = {};
+    const correct = {0:'A', 1:'B', 2:'C', 3:'B'};
+    const total = 4;
+
+    function answer(qIdx, chosen, correctAns) {
+      answers[qIdx] = chosen;
+      const questionBlocks = document.querySelectorAll('.question-block');
+      const options = questionBlocks[qIdx].querySelectorAll('.option');
+      options.forEach(opt => opt.classList.remove('selected'));
+      event.currentTarget.classList.add('selected');
+
+      const explanations = questionBlocks[qIdx].querySelectorAll('.explanation');
+      const explanation = explanations[0];
+      explanation.classList.add('show');
+
+      if (chosen === correctAns) {
+        explanation.classList.add('correct');
+        explanation.innerHTML = '<strong>✓ Correct!</strong> ' + explanation.innerHTML.replace('<strong>Explanation:</strong>', '');
+      } else {
+        explanation.classList.add('incorrect');
+        explanation.innerHTML = '<strong>✗ Incorrect.</strong> ' + explanation.innerHTML.replace('<strong>Explanation:</strong>', '');
+      }
+
+      const answeredCount = Object.keys(answers).length;
+      if (answeredCount === total) {
+        showScore();
+      }
+    }
+
+    function showScore() {
+      let score = 0;
+      for (let i = 0; i < total; i++) {
+        if (answers[i] === correct[i]) score++;
+      }
+      document.getElementById('scoreValue').textContent = score;
+      document.getElementById('scorePanel').classList.add('show');
+    }
+  </script>
+</body>
+</html>

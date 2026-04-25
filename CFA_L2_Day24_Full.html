@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level II Day 24 - Analysis Implications: Multinational Operations (Full)</title>
+  <style>
+:root {
+  --bg:      #fafaf8;
+  --bg2:     #f4f3ef;
+  --bg3:     #eeece7;
+  --border:  rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text:    #1a1a2e;
+  --text2:   #4a4a6a;
+  --text3:   #8a8aaa;
+  --gold:    #9a6e1a;
+  --gold2:   #7a5010;
+  --gold-bg: rgba(154,110,26,0.08);
+  --blue:    #1a5fa8;
+  --blue-bg: rgba(26,95,168,0.08);
+  --green:   #1a7a4a;
+  --green-bg: rgba(26,122,74,0.08);
+  --red:     #b83232;
+  --red-bg:  rgba(184,50,50,0.08);
+  --amber:   #a06010;
+  --amber-bg: rgba(160,96,16,0.08);
+  --r: 10px;
+  --r-sm: 6px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  font-size: 15px;
+}
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+  background: white;
+  box-shadow: 0 0 40px rgba(0,0,0,0.04);
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+
+.breadcrumb {
+  font-size: 13px;
+  color: var(--text2);
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.day-badge, .version-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  background: var(--gold-bg);
+  color: var(--gold2);
+  border-radius: var(--r-sm);
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 12px;
+}
+
+.version-badge {
+  background: var(--blue-bg);
+  color: var(--blue);
+  margin-left: 8px;
+}
+
+.hero { margin-bottom: 48px; }
+
+.hero-tag {
+  font-size: 13px;
+  color: var(--gold);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.hero-title {
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: var(--text2);
+  margin-bottom: 28px;
+}
+
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.meta-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 13px;
+  color: var(--text2);
+  font-weight: 500;
+}
+
+.toc {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 32px;
+  margin-bottom: 48px;
+}
+
+.toc-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+
+.toc-list { list-style: none; }
+.toc-list li {
+  margin-bottom: 12px;
+  font-size: 15px;
+}
+
+.toc-list a {
+  color: var(--blue);
+  text-decoration: none;
+}
+.toc-list a:hover { text-decoration: underline; }
+
+.toc-num {
+  color: var(--gold);
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.chapter {
+  margin-bottom: 56px;
+  scroll-margin-top: 100px;
+}
+
+.chapter-header { margin-bottom: 28px; }
+
+.chapter-num {
+  font-size: 13px;
+  color: var(--text3);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.chapter-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text);
+  margin-top: 8px;
+}
+
+.sub-header {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 28px 0 16px 0;
+}
+
+.prose {
+  color: var(--text);
+  margin-bottom: 16px;
+  line-height: 1.75;
+}
+
+.formula-block {
+  background: var(--bg2);
+  border-left: 4px solid var(--gold);
+  border-radius: var(--r-sm);
+  padding: 20px;
+  margin: 24px 0;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: var(--text);
+  overflow-x: auto;
+}
+
+.formula-block .label {
+  font-weight: 700;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: 'Inter', sans-serif;
+}
+
+.formula-block .note {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--text2);
+  margin-top: 12px;
+  line-height: 1.6;
+}
+
+.exhibit {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px;
+  margin: 32px 0;
+}
+
+.exhibit-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 20px;
+}
+
+.exhibit-body {
+  color: var(--text);
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.reg-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 14px;
+}
+
+.reg-table th {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 12px;
+  text-align: left;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.reg-table td {
+  border: 1px solid var(--border);
+  padding: 12px;
+  color: var(--text2);
+}
+
+.reg-table tr:nth-child(even) { background: rgba(255,255,255,0.5); }
+
+.callout {
+  border-radius: var(--r);
+  padding: 20px;
+  margin: 24px 0;
+  border-left: 4px solid;
+}
+
+.callout.blue { background: var(--blue-bg); border-left-color: var(--blue); }
+.callout.amber { background: var(--amber-bg); border-left-color: var(--amber); }
+.callout.green { background: var(--green-bg); border-left-color: var(--green); }
+.callout.red { background: var(--red-bg); border-left-color: var(--red); }
+.callout.gold { background: var(--gold-bg); border-left-color: var(--gold); }
+
+.callout-title {
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: block;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.callout.blue .callout-title { color: var(--blue); }
+.callout.amber .callout-title { color: var(--amber); }
+.callout.green .callout-title { color: var(--green); }
+.callout.red .callout-title { color: var(--red); }
+.callout.gold .callout-title { color: var(--gold); }
+
+.callout p, .callout li {
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.callout ul { padding-left: 20px; margin-top: 8px; }
+
+.kc {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  margin: 28px 0;
+  overflow: hidden;
+}
+
+.kc-header {
+  padding: 18px 20px;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+
+.kc-header:hover { background: rgba(0,0,0,0.04); }
+
+.kc-header-title {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.kc-toggle {
+  color: var(--text3);
+  font-weight: 700;
+  font-size: 18px;
+  transition: transform 0.2s;
+}
+
+.kc.open .kc-toggle { transform: rotate(180deg); }
+
+.kc-body {
+  padding: 20px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.kc.open .kc-body { max-height: 1200px; }
+
+.kc-q {
+  color: var(--text);
+  margin-bottom: 16px;
+  line-height: 1.7;
+  font-weight: 500;
+}
+
+.kc-answer {
+  color: var(--text2);
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.num-list, .bullet-list {
+  margin: 16px 0;
+  padding-left: 24px;
+}
+
+.num-list li, .bullet-list li {
+  margin-bottom: 10px;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 40px 0;
+}
+
+.practice-header { margin-bottom: 28px; }
+
+.practice-body {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px;
+}
+
+.vignette {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.vignette-label {
+  font-size: 12px;
+  color: var(--text3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.vignette-text {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.question-block { margin-bottom: 32px; }
+
+.q-num {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.q-text {
+  font-size: 15px;
+  color: var(--text);
+  margin-bottom: 16px;
+  line-height: 1.65;
+  font-weight: 500;
+}
+
+.option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: white;
+}
+
+.option:hover {
+  border-color: var(--blue);
+  background: var(--blue-bg);
+}
+
+.option-radio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border2);
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.option.selected .option-radio {
+  border-color: var(--blue);
+  background: var(--blue);
+}
+
+.option.selected .option-radio:after {
+  content: "✓";
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.option-text { font-size: 14px; color: var(--text); line-height: 1.5; }
+
+.explanation {
+  background: var(--bg2);
+  padding: 16px;
+  border-radius: var(--r-sm);
+  font-size: 13px;
+  color: var(--text2);
+  margin-top: 8px;
+  display: none;
+  line-height: 1.7;
+}
+
+.explanation.show { display: block; }
+.explanation.correct {
+  border-left: 3px solid var(--green);
+  background: var(--green-bg);
+  color: var(--text);
+}
+.explanation.incorrect {
+  border-left: 3px solid var(--red);
+  background: var(--red-bg);
+  color: var(--text);
+}
+
+.score-panel {
+  background: var(--gold-bg);
+  border: 1px solid var(--gold);
+  border-radius: var(--r);
+  padding: 24px;
+  margin-top: 24px;
+  text-align: center;
+  display: none;
+}
+
+.score-panel.show { display: block; }
+
+.score-panel-text {
+  font-size: 15px;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.score-panel-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--gold2);
+}
+
+.nav-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 0;
+  margin-top: 48px;
+  border-top: 1px solid var(--border);
+}
+
+.nav-btn {
+  text-decoration: none;
+  padding: 12px 20px;
+  border-radius: var(--r-sm);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--blue);
+  border: 1px solid var(--border);
+  transition: all 0.2s ease;
+}
+
+.nav-btn:hover {
+  border-color: var(--blue);
+  background: var(--blue-bg);
+}
+
+@media (max-width: 640px) {
+  .hero-title { font-size: 30px; }
+  .chapter-title { font-size: 24px; }
+}
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II · FSA · LM3 · Multinational Operations</div>
+    <div>
+      <span class="version-badge">Versi Full</span>
+      <span class="day-badge">Day 24 of 90</span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag">Jumat, 15 Mei 2026</div>
+    <h1 class="hero-title">Implikasi Analitis Translasi Laporan Keuangan Multinasional</h1>
+    <p class="hero-sub">Multinational Operations — Subtopik 2 dari 2: Distorsi Rasio, Ekonomi Hiperinflasi &amp; Strategi Analis</p>
+    <div class="meta-row">
+      <span class="meta-pill">📖 Materi Lengkap</span>
+      <span class="meta-pill">🇮🇩 Bahasa Indonesia</span>
+      <span class="meta-pill">📊 ~12% Bobot Ujian</span>
+      <span class="meta-pill">⏱ Est. baca 50–65 menit</span>
+    </div>
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ul class="toc-list">
+      <li><span class="toc-num">0.</span><a href="#sec0">Learning Outcomes (LOS)</a></li>
+      <li><span class="toc-num">1.</span><a href="#sec1">Mengapa Translasi Mendistorsi Rasio: Kerangka Konseptual</a></li>
+      <li><span class="toc-num">2.</span><a href="#sec2">Analisis Distorsi Rasio di Bawah Current Rate Method</a></li>
+      <li><span class="toc-num">3.</span><a href="#sec3">Analisis Distorsi Rasio di Bawah Temporal Method</a></li>
+      <li><span class="toc-num">4.</span><a href="#sec4">Dampak Arah Perubahan Kurs Terhadap Laporan Konsolidasi</a></li>
+      <li><span class="toc-num">5.</span><a href="#sec5">Ekonomi Hiperinflasi: IAS 29 vs US GAAP ASC 830</a></li>
+      <li><span class="toc-num">6.</span><a href="#sec6">Latihan Soal — Item Set Vignette (6 Soal)</a></li>
+    </ul>
+  </div>
+
+  <!-- SECTION 0: Learning Outcomes -->
+  <div class="chapter" id="sec0">
+    <div class="chapter-header">
+      <div class="chapter-num">Bagian 0</div>
+      <div class="chapter-title">Learning Outcomes (LOS)</div>
+    </div>
+    <p class="prose">Setelah mempelajari bagian ini, kandidat diharapkan mampu:</p>
+    <ul class="num-list">
+      <li>Menganalisis bagaimana Current Rate Method dan Temporal Method memengaruhi laporan keuangan dan rasio keuangan perusahaan multinasional.</li>
+      <li>Menganalisis bagaimana metode translasi alternatif untuk anak perusahaan yang beroperasi di ekonomi hiperinflasi memengaruhi laporan keuangan dan rasio.</li>
+      <li>Menganalisis bagaimana perubahan nilai tukar memengaruhi penjualan yang ditranslasi dari anak perusahaan dan perusahaan induk.</li>
+      <li>Mengevaluasi dampak operasi multinasional terhadap effective tax rate perusahaan dan melakukan pengungkapan (disclosures) terkait translasi.</li>
+    </ul>
+    <div class="callout blue">
+      <span class="callout-title">Konteks dalam Kurikulum</span>
+      <p>Subtopik ini adalah kelanjutan langsung dari Day 23 (Translation Methods) dan berfokus pada <em>implikasi analitis</em> dari pilihan metode translasi. Di CFA Level II, soal item set biasanya menyajikan laporan keuangan yang sudah ditranslasi dan meminta kandidat untuk mengidentifikasi distorsi, memprediksi arah pengaruh perubahan kurs, atau membandingkan dua metode. Sangat penting untuk hafal tabel rasio-rasio mana yang terjaga dan mana yang terdistorsi.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 1: Kerangka Konseptual -->
+  <div class="chapter" id="sec1">
+    <div class="chapter-header">
+      <div class="chapter-num">Bagian 1</div>
+      <div class="chapter-title">Mengapa Translasi Mendistorsi Rasio: Kerangka Konseptual</div>
+    </div>
+
+    <p class="prose">Ketika laporan keuangan anak perusahaan dalam mata uang asing ditranslasi ke dalam mata uang presentasi induk, masing-masing item keuangan menggunakan nilai tukar yang berbeda tergantung pada sifat item dan metode yang digunakan. Akibatnya, hubungan matematis antara item-item — yang selama ini kita sebut "rasio keuangan" — dapat berubah secara signifikan setelah proses translasi, meskipun kinerja ekonomi riil anak perusahaan sama sekali tidak berubah.</p>
+
+    <p class="prose">Kunci untuk memahami distorsi rasio adalah dengan menyadari satu prinsip sederhana: <strong>rasio hanya akan identik sebelum dan sesudah translasi jika semua komponen rasio (pembilang dan penyebut) ditranslasi menggunakan jenis nilai tukar yang SAMA.</strong> Jika pembilang menggunakan average rate dan penyebut menggunakan current rate — atau sebaliknya — maka rasionya PASTI berubah setiap kali nilai tukar bergerak dari awal ke akhir periode.</p>
+
+    <div class="sub-header">1.1 Tiga Jenis Exchange Rate dan Kapan Masing-Masing Digunakan</div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 1 — Peta Exchange Rate per Metode Translasi</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Item Laporan Keuangan</th>
+              <th>Current Rate Method</th>
+              <th>Temporal Method</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Aset &amp; Liabilitas Monetari (kas, piutang, utang)</td>
+              <td>Current Rate (C)</td>
+              <td>Current Rate (C)</td>
+            </tr>
+            <tr>
+              <td>Aset Non-Monetari diukur di current value (marketable securities)</td>
+              <td>Current Rate (C)</td>
+              <td>Current Rate (C)</td>
+            </tr>
+            <tr>
+              <td>Aset Non-Monetari diukur di historical cost (PP&amp;E, inventory FIFO)</td>
+              <td>Current Rate (C)</td>
+              <td>Historical Rate (H)</td>
+            </tr>
+            <tr>
+              <td>Modal Saham (Capital Stock)</td>
+              <td>Historical Rate (H)</td>
+              <td>Historical Rate (H)</td>
+            </tr>
+            <tr>
+              <td>Retained Earnings</td>
+              <td>Rolling (dari IS)</td>
+              <td>Rolling (dari IS)</td>
+            </tr>
+            <tr>
+              <td>Pendapatan (Revenue)</td>
+              <td>Average Rate (A)</td>
+              <td>Average Rate (A)</td>
+            </tr>
+            <tr>
+              <td>Beban Umum (SG&amp;A, bunga, pajak)</td>
+              <td>Average Rate (A)</td>
+              <td>Average Rate (A)</td>
+            </tr>
+            <tr>
+              <td>COGS (dari inventory at cost)</td>
+              <td>Average Rate (A)</td>
+              <td>Historical Rate (H) — dari saat inventory dibeli</td>
+            </tr>
+            <tr>
+              <td>Depresiasi (dari PP&amp;E at cost)</td>
+              <td>Average Rate (A)</td>
+              <td>Historical Rate (H) — dari saat aset dibeli</td>
+            </tr>
+            <tr>
+              <td>Translation Adjustment</td>
+              <td>OCI (Cumulative Translation Adjustment)</td>
+              <td>Income Statement (Translation Gain/Loss)</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:13px; color:var(--text3); margin-top:12px;">C = Current (akhir periode); A = Average (rata-rata periode); H = Historical (saat transaksi terjadi)</p>
+      </div>
+    </div>
+
+    <p class="prose">Dari tabel di atas terlihat jelas bahwa perbedaan antara kedua metode terletak HANYA pada perlakuan terhadap aset non-monetari yang diukur di historical cost (PP&amp;E dan inventory at cost) beserta beban yang terkait (depresiasi dan COGS). Current rate method menggunakan average rate untuk keduanya, sehingga konsisten di dalam laporan laba rugi. Temporal method menggunakan historical rate untuk keduanya, yang menyebabkan inkonsistensi dalam neraca (beberapa aset di current, beberapa di historical) maupun dalam laba rugi (sebagian beban di average, sebagian di historical).</p>
+
+    <div class="kc" onclick="toggleKC(this)">
+      <div class="kc-header">
+        <div class="kc-header-title">💡 Knowledge Check 1.1 — Identifikasi Exchange Rate</div>
+        <div class="kc-toggle">▼</div>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">PT Internasional menggunakan Current Rate Method untuk anak perusahaannya di Jepang (functional currency JPY). Depresiasi mesin yang dibeli dua tahun lalu seharusnya ditranslasi menggunakan exchange rate apa?</p>
+        <div class="kc-answer">
+          <strong>Jawaban: Average Rate (A) — rata-rata periode pelaporan.</strong><br><br>
+          Di bawah Current Rate Method, SEMUA item laporan laba rugi — termasuk depresiasi — ditranslasi menggunakan average rate. Ini berbeda dari Temporal Method di mana depresiasi menggunakan historical rate dari saat mesin dibeli. Perbedaan inilah yang menyebabkan profit margin berbeda antara kedua metode ketika nilai tukar bergerak.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: Distorsi Rasio Current Rate Method -->
+  <div class="chapter" id="sec2">
+    <div class="chapter-header">
+      <div class="chapter-num">Bagian 2</div>
+      <div class="chapter-title">Analisis Distorsi Rasio di Bawah Current Rate Method</div>
+    </div>
+
+    <p class="prose">Pada Current Rate Method, semua item neraca menggunakan satu tarif tunggal (current rate), dan semua item laba rugi menggunakan satu tarif tunggal lainnya (average rate). Ini menciptakan dua "dunia" yang konsisten secara internal — neraca konsisten dalam current rate, dan laba rugi konsisten dalam average rate.</p>
+
+    <div class="sub-header">2.1 Rasio yang Dipertahankan (Tidak Terdistorsi)</div>
+
+    <p class="prose">Konsekuensi dari konsistensi internal tersebut adalah: <strong>rasio yang hanya melibatkan item dari satu laporan saja</strong> (baik hanya neraca, atau hanya laba rugi) akan menghasilkan nilai yang sama persis antara versi mata uang lokal dan versi yang ditranslasi.</p>
+
+    <ul class="bullet-list">
+      <li><strong>Current Ratio</strong> = Aset Lancar / Liabilitas Lancar → kedua komponen dari neraca, keduanya di current rate → rasio identik</li>
+      <li><strong>Debt-to-Assets Ratio</strong> = Total Utang / Total Aset → neraca semua → identik</li>
+      <li><strong>Debt-to-Equity Ratio</strong> = Total Utang / Ekuitas → neraca semua → identik (meski equity memasukkan CTA)</li>
+      <li><strong>Gross Profit Margin</strong> = Laba Kotor / Penjualan → laba rugi semua → identik</li>
+      <li><strong>Operating Profit Margin</strong> = EBIT / Penjualan → laba rugi semua → identik</li>
+      <li><strong>Net Profit Margin</strong> = Laba Bersih / Penjualan → laba rugi semua (ingat: tidak ada translation gain/loss di P&amp;L pada current rate method) → identik</li>
+      <li><strong>Interest Coverage</strong> = EBIT / Beban Bunga → laba rugi semua → identik</li>
+    </ul>
+
+    <div class="callout green">
+      <span class="callout-title">Prinsip Emas — Rasio Same-Statement</span>
+      <p>Aturan mudah: "Kalau pembilang dan penyebut keduanya dari neraca, atau keduanya dari laba rugi — rasio TIDAK berubah di bawah Current Rate Method." Ingat ini dan lo bisa menjawab sebagian besar soal tanpa perlu menghitung detail.</p>
+    </div>
+
+    <div class="sub-header">2.2 Rasio yang Terdistorsi (Cross-Statement Ratios)</div>
+
+    <p class="prose">Sebaliknya, semua rasio yang mencampur item dari neraca (current rate) dan item dari laba rugi (average rate) akan terdistorsi jika nilai tukar berubah selama periode (current rate ≠ average rate). Makin besar perubahan kurs, makin besar distorsinya.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 2 — Rasio Terdistorsi di Bawah Current Rate Method</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Rasio</th>
+              <th>Pembilang (Rate)</th>
+              <th>Penyebut (Rate)</th>
+              <th>Terdistorsi?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Receivables Turnover = Sales / Piutang</td>
+              <td>Sales → Average</td>
+              <td>Piutang → Current</td>
+              <td>✓ Ya</td>
+            </tr>
+            <tr>
+              <td>Inventory Turnover = COGS / Inventory</td>
+              <td>COGS → Average</td>
+              <td>Inventory → Current</td>
+              <td>✓ Ya</td>
+            </tr>
+            <tr>
+              <td>Fixed Asset Turnover = Sales / PP&amp;E Net</td>
+              <td>Sales → Average</td>
+              <td>PP&amp;E → Current</td>
+              <td>✓ Ya</td>
+            </tr>
+            <tr>
+              <td>Return on Assets = NI / Total Aset</td>
+              <td>NI → Average</td>
+              <td>Total Aset → Current</td>
+              <td>✓ Ya</td>
+            </tr>
+            <tr>
+              <td>Return on Equity = NI / Ekuitas</td>
+              <td>NI → Average</td>
+              <td>Ekuitas → Mixed (H + rolling)</td>
+              <td>✓ Ya</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Arah distorsi bergantung pada apakah nilai tukar naik atau turun selama periode. Jika FC menguat (current rate di akhir tahun lebih tinggi dari average rate), maka penyebut berbasis neraca (current rate) lebih besar secara proporsional dari pembilang berbasis laba rugi (average rate), yang cenderung <em>menurunkan</em> rasio turnover dan return. Sebaliknya, jika FC melemah, penyebut berkontraksi lebih banyak, cenderung <em>menaikkan</em> rasio tersebut.</p>
+
+    <div class="callout amber">
+      <span class="callout-title">Implikasi Analitis Penting</span>
+      <p>Ketika membandingkan kinerja anak perusahaan asing antar tahun, perbedaan dalam rasio turnover dan return bisa disebabkan oleh: (1) perubahan kinerja operasional riil, atau (2) perubahan arah dan besarnya pergerakan nilai tukar. Seorang analis yang baik harus mengisolasi efek translasi dari efek kinerja operasional untuk mendapat gambaran yang akurat.</p>
+    </div>
+
+    <div class="kc" onclick="toggleKC(this)">
+      <div class="kc-header">
+        <div class="kc-header-title">💡 Knowledge Check 2.1 — Distorsi Current Rate</div>
+        <div class="kc-toggle">▼</div>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">Anak perusahaan BRL (mata uang Brazil) dari sebuah perusahaan Indonesia mengalami penguatan BRL terhadap IDR sepanjang tahun. Bagaimana hal ini mempengaruhi Debt-to-Assets ratio dan Return on Assets yang dilaporkan dalam IDR di bawah Current Rate Method?</p>
+        <div class="kc-answer">
+          <strong>Debt-to-Assets: Tidak berubah.</strong> Keduanya (total utang dan total aset) dari neraca, ditranslasi di current rate yang sama. Rasio identik dengan versi BRL.<br><br>
+          <strong>Return on Assets: Menurun</strong> dibandingkan versi BRL. Mengapa? Net Income (dari laba rugi) ditranslasi di average rate yang lebih rendah dari current rate (karena BRL terus menguat). Total Aset (dari neraca) ditranslasi di current rate yang lebih tinggi. Hasil: pembilang relatif lebih kecil, penyebut lebih besar → ROA lebih rendah dalam IDR dibandingkan dalam BRL.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: Distorsi Rasio Temporal Method -->
+  <div class="chapter" id="sec3">
+    <div class="chapter-header">
+      <div class="chapter-num">Bagian 3</div>
+      <div class="chapter-title">Analisis Distorsi Rasio di Bawah Temporal Method</div>
+    </div>
+
+    <p class="prose">Temporal Method jauh lebih kompleks dalam hal distorsi rasio. Berbeda dengan Current Rate Method yang konsisten di dalam setiap laporan, Temporal Method menggunakan exchange rate yang berbeda-beda bahkan untuk item-item dalam laporan yang sama. Akibatnya, hampir semua rasio terdistorsi — bahkan yang hanya melibatkan item dari satu laporan.</p>
+
+    <div class="sub-header">3.1 Mengapa Rasio Neraca Saja Pun Terdistorsi</div>
+
+    <p class="prose">Dalam neraca di bawah Temporal Method, aset monetari (kas, piutang) ditranslasi di current rate, sedangkan aset non-monetari at cost (inventory at FIFO cost, PP&amp;E) ditranslasi di historical rate. Ini berarti bahwa dua item dalam neraca yang sama dapat menggunakan tarif yang berbeda. Akibatnya, rasio seperti Current Ratio (yang melibatkan inventory) dan Debt-to-Assets (yang melibatkan total aset dengan komposisi monetari dan non-monetari) akan terdistorsi.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 3 — Mengapa Current Ratio Terdistorsi di Temporal Method</div>
+      <div class="exhibit-body">
+        <p style="margin-bottom:12px;">Asumsikan: FC menguat dari H = 0.70 ke C = 0.80. Rata-rata (A) = 0.74 untuk inventory.</p>
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Nilai FC</th>
+              <th>Temporal Rate</th>
+              <th>Nilai Translated</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Kas</td>
+              <td>FC 200</td>
+              <td>Current (0.80)</td>
+              <td>160</td>
+            </tr>
+            <tr>
+              <td>Piutang</td>
+              <td>FC 300</td>
+              <td>Current (0.80)</td>
+              <td>240</td>
+            </tr>
+            <tr>
+              <td>Inventory (at cost)</td>
+              <td>FC 500</td>
+              <td>Historical (0.74)</td>
+              <td>370</td>
+            </tr>
+            <tr style="font-weight:700;">
+              <td>Total Aset Lancar</td>
+              <td>FC 1.000</td>
+              <td>Mixed!</td>
+              <td>770</td>
+            </tr>
+            <tr>
+              <td>Liabilitas Lancar</td>
+              <td>FC 400</td>
+              <td>Current (0.80)</td>
+              <td>320</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="margin-top:12px; font-size:13px; color:var(--text2);">
+          Current Ratio dalam FC = 1.000/400 = 2.5x<br>
+          Current Ratio dalam translated = 770/320 = 2.41x<br>
+          <strong>→ Berbeda! Distorsi terjadi karena inventory menggunakan historical rate, bukan current rate.</strong>
+        </p>
+      </div>
+    </div>
+
+    <div class="sub-header">3.2 Satu-Satunya Rasio yang Identik di KEDUA Metode</div>
+
+    <p class="prose">Terdapat satu rasio yang menghasilkan angka identik di bawah Current Rate Method DAN Temporal Method — dan ini hampir selalu diuji di CFA Level II:</p>
+
+    <div class="formula-block">
+      <span class="label">Receivables Turnover — Identik di Kedua Metode</span>
+Receivables Turnover = Penjualan / Piutang Dagang
+
+Di Current Rate Method:
+  Penjualan    → Average Rate (A)
+  Piutang      → Current Rate (C)   [aset monetari]
+
+Di Temporal Method:
+  Penjualan    → Average Rate (A)
+  Piutang      → Current Rate (C)   [aset monetari, sama!]
+
+→ Kedua metode menggunakan kombinasi rate yang sama (A/C)
+→ Receivables Turnover = IDENTIK di kedua metode.
+
+⚠ INGAT: Ini SATU-SATUNYA rasio yang identik. Semua rasio lain berbeda.
+      <span class="note">Logikanya: Piutang adalah aset monetari yang selalu menggunakan current rate di KEDUA metode. Penjualan menggunakan average rate di KEDUA metode. Karena pembilang dan penyebut menggunakan kombinasi rate yang sama, hasilnya identik.</span>
+    </div>
+
+    <div class="sub-header">3.3 Mengapa Profit Margin Terdistorsi di Temporal Method</div>
+
+    <p class="prose">Salah satu dampak terbesar Temporal Method pada laba rugi adalah pada COGS dan Depresiasi yang menggunakan historical rate. Jika nilai tukar FC menguat dari H ke A (rata-rata lebih tinggi dari historis), maka:</p>
+
+    <ul class="bullet-list">
+      <li>Sales ditranslasi di average rate (lebih tinggi dari historical) → Sales dalam presentation currency lebih besar</li>
+      <li>COGS ditranslasi di historical rate (lebih rendah dari average) → COGS lebih kecil secara relatif</li>
+      <li>Hasil: <strong>Gross Profit Margin LEBIH BESAR</strong> dalam presentation currency dibandingkan dalam FC lokal</li>
+    </ul>
+
+    <p class="prose">Namun, net profit margin bisa bergerak ke arah yang berlawanan jika translation loss (dari net monetary liability exposure saat FC menguat) mengurangi net income secara signifikan. Kompleksitas ini membuat analisis temporal method jauh lebih sulit dibanding current rate method.</p>
+
+    <div class="callout red">
+      <span class="callout-title">Peringatan Ujian — Arah Distorsi Temporal Tidak Bisa Digeneralisasi</span>
+      <p>Di bawah temporal method, tidak ada aturan tunggal yang mengatakan "FC menguat → semua rasio naik" atau "FC menguat → semua rasio turun." Arah distorsi bergantung pada: komposisi aset (monetari vs non-monetari), arah perubahan kurs, dan apakah ada net monetary asset atau liability exposure. Selalu analisis case by case.</p>
+    </div>
+
+    <div class="kc" onclick="toggleKC(this)">
+      <div class="kc-header">
+        <div class="kc-header-title">💡 Knowledge Check 3.1 — Temporal Method Ratio</div>
+        <div class="kc-toggle">▼</div>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">Anak perusahaan menggunakan FIFO untuk persediaan. Functional currency = presentation currency induk, sehingga Temporal Method diterapkan. FC melemah terhadap presentation currency selama periode. Bagaimana dampaknya terhadap Inventory Turnover yang ditranslasi?</p>
+        <div class="kc-answer">
+          <strong>Analisis:</strong><br><br>
+          Dalam Temporal Method: COGS menggunakan historical rate (saat inventory dibeli), Inventory menggunakan historical rate (saat inventory yang tersisa dibeli — lebih akhir jika FIFO).<br><br>
+          Karena FC melemah, historical rate di awal periode (saat COGS terjadi) lebih tinggi dari historical rate di akhir (saat inventory tersisa dibeli). Sehingga COGS dalam presentation currency relatif lebih besar (historical H tinggi) sedangkan Inventory lebih kecil (historical H rendah) → <strong>Inventory Turnover LEBIH TINGGI</strong> dari versi lokal. Namun arah pasti bergantung pada timing pembelian dan kecepatan penurunan kurs — ini menunjukkan betapa kompleksnya distorsi temporal method.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: Arah Perubahan Kurs -->
+  <div class="chapter" id="sec4">
+    <div class="chapter-header">
+      <div class="chapter-num">Bagian 4</div>
+      <div class="chapter-title">Dampak Arah Perubahan Kurs Terhadap Laporan Konsolidasi</div>
+    </div>
+
+    <p class="prose">Pemahaman tentang bagaimana pergerakan nilai tukar memengaruhi angka-angka yang dilaporkan dalam laporan konsolidasi adalah salah satu keterampilan analitis yang paling sering diuji di CFA Level II. Pola dasar ini berlaku untuk both metode, namun dengan nuansa yang berbeda.</p>
+
+    <div class="sub-header">4.1 Current Rate Method: Pengaruh Langsung dan Simetris</div>
+
+    <p class="prose">Karena semua aset dan liabilitas ditranslasi di current rate, dan semua pendapatan/beban di average rate, dampak pergerakan kurs sangat langsung dan relatif mudah diprediksi:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 4 — Dampak Arah Kurs pada Current Rate Method</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>FC Menguat (C &gt; A &gt; H)</th>
+              <th>FC Melemah (C &lt; A &lt; H)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Total Aset (dalam presentation currency)</td>
+              <td>Naik relatif terhadap FC lokal</td>
+              <td>Turun relatif terhadap FC lokal</td>
+            </tr>
+            <tr>
+              <td>Total Liabilitas</td>
+              <td>Naik (sebanding dengan aset)</td>
+              <td>Turun (sebanding)</td>
+            </tr>
+            <tr>
+              <td>Revenue &amp; Net Income</td>
+              <td>Naik (moderat — di average rate)</td>
+              <td>Turun (moderat)</td>
+            </tr>
+            <tr>
+              <td>CTA (OCI)</td>
+              <td>Positif — net asset exposure + FC menguat</td>
+              <td>Negatif — net asset exposure + FC melemah</td>
+            </tr>
+            <tr>
+              <td>Net Income (P&amp;L langsung)</td>
+              <td>Tidak terpengaruh langsung (CTA ke OCI)</td>
+              <td>Tidak terpengaruh langsung</td>
+            </tr>
+            <tr>
+              <td>Total Ekuitas</td>
+              <td>Naik (karena CTA positif di OCI menambah equity)</td>
+              <td>Turun (CTA negatif mengurangi equity)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">4.2 Temporal Method: Pengaruh Lebih Kompleks dan Tidak Simetris</div>
+
+    <p class="prose">Pada Temporal Method, dampak pergerakan kurs lebih kompleks karena bergantung pada komposisi neraca — khususnya apakah anak perusahaan memiliki net monetary asset atau net monetary liability exposure.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 5 — Dampak Arah Kurs pada Temporal Method</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Kondisi</th>
+              <th>FC Menguat</th>
+              <th>FC Melemah</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Net Monetary Liability (typical — anak perusahaan yang memiliki utang besar)</td>
+              <td>Translation LOSS → mengurangi net income</td>
+              <td>Translation GAIN → menambah net income</td>
+            </tr>
+            <tr>
+              <td>Net Monetary Asset (anak perusahaan dengan kas/piutang besar)</td>
+              <td>Translation GAIN → menambah net income</td>
+              <td>Translation LOSS → mengurangi net income</td>
+            </tr>
+            <tr>
+              <td>Total Aset vs Current Rate Method</td>
+              <td>Current Rate &gt; Temporal (karena PP&amp;E di historical rate lebih rendah)</td>
+              <td>Current Rate &lt; Temporal (karena PP&amp;E di historical yang lebih tinggi)</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="margin-top:12px; font-size:13px; color:var(--text2);">Catatan: Anak perusahaan umumnya memiliki utang bank jangka panjang sebagai liabilitas monetari utama, sehingga net monetary liability adalah kasus yang lebih umum dalam praktik.</p>
+      </div>
+    </div>
+
+    <div class="callout gold">
+      <span class="callout-title">Rumus Besarnya Translation Gain/Loss (Temporal Method)</span>
+      <p>Besar translation gain/loss dapat diestimasikan dengan:</p>
+      <br>
+      <p><strong>Translation Loss/Gain ≈ Net Monetary Liability/Asset × Perubahan Exchange Rate</strong></p>
+      <br>
+      <p>Contoh: Net monetary liability = FC 3.000. Exchange rate bergerak dari 0.70 ke 0.80 per unit FC. Translation Loss = 3.000 × (0.80 − 0.70) = 300 dalam presentation currency. Loss karena FC menguat dan posisi net liability — equivalent to saying the cost of paying back that liability in presentation currency has increased.</p>
+    </div>
+
+    <div class="sub-header">4.3 Perbandingan Total Aset Antara Dua Metode Berdasarkan Arah Kurs</div>
+
+    <p class="prose">Pertanyaan yang sangat sering muncul di ujian CFA Level II: "Jika FC menguat, metode mana yang menghasilkan total aset lebih besar?" Jawabannya tidak bergantung pada judgment — ini adalah hasil mekanis dari aturan translasi:</p>
+
+    <div class="formula-block">
+      <span class="label">Perbandingan Total Aset — FC Menguat</span>
+FC Menguat → Current Rate (C) &gt; Historical Rate (H) &gt; Average Rate (A)
+  [ini asumsi umum jika FC terus menguat sepanjang tahun]
+
+Current Rate Method:
+  PP&amp;E, Inventory → ditranslasi di CURRENT RATE (C) yang tinggi
+  Total Aset lebih BESAR
+
+Temporal Method:
+  PP&amp;E, Inventory → ditranslasi di HISTORICAL RATE (H) yang lebih rendah
+  Total Aset lebih KECIL
+
+Kesimpulan: Current Rate Method → Total Aset LEBIH BESAR dari Temporal Method
+            saat FC menguat. Situasi berbalik saat FC melemah.
+
+FC Melemah → Current Rate Method → Total Aset LEBIH KECIL dari Temporal Method
+      <span class="note">Ini berarti juga bahwa leverage ratios (Debt-to-Assets) akan terlihat lebih rendah di bawah Current Rate Method saat FC menguat — bukan karena perbaikan fundamental, tetapi efek translasi semata.</span>
+    </div>
+
+    <div class="kc" onclick="toggleKC(this)">
+      <div class="kc-header">
+        <div class="kc-header-title">💡 Knowledge Check 4.1 — Perbandingan Dua Metode</div>
+        <div class="kc-toggle">▼</div>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">Anak perusahaan beroperasi dengan net monetary liability position yang signifikan. FC melemah signifikan terhadap presentation currency induk. Bandingkan net income dan total aset yang dilaporkan di bawah Current Rate Method vs Temporal Method.</p>
+        <div class="kc-answer">
+          <strong>Net Income:</strong><br>
+          Current Rate Method: Tidak ada translation gain/loss di P&amp;L. Net income ditranslasi di average rate. Karena FC melemah, net income dalam presentation currency lebih rendah dari versi FC.<br><br>
+          Temporal Method: Karena FC melemah + net monetary liability → Translation GAIN masuk P&amp;L. Ini menambah net income. Jadi net income lebih tinggi di Temporal Method (translation gain) vs Current Rate Method (tidak ada P&amp;L effect).<br><br>
+          <strong>Total Aset:</strong><br>
+          FC melemah → Current Rate Method menghasilkan total aset LEBIH KECIL (PP&amp;E di current rate yang lebih rendah dari historical). Temporal Method menghasilkan total aset LEBIH BESAR (PP&amp;E tetap di historical rate yang lebih tinggi dari current rate baru). Situasi terbalik dari FC menguat.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: Hyperinflationary Economies -->
+  <div class="chapter" id="sec5">
+    <div class="chapter-header">
+      <div class="chapter-num">Bagian 5</div>
+      <div class="chapter-title">Ekonomi Hiperinflasi: IAS 29 vs US GAAP ASC 830</div>
+    </div>
+
+    <p class="prose">Aturan translasi normal mengasumsikan bahwa perubahan nilai tukar mencerminkan perbedaan dalam daya beli mata uang. Namun di negara dengan hiperinflasi yang ekstrem, mata uang lokal kehilangan nilai sangat cepat, sehingga penerapan current rate method (tanpa penyesuaian inflasi) dapat menghasilkan angka yang sangat menyesatkan. Masalah utama yang timbul dikenal sebagai "disappearing plant problem."</p>
+
+    <div class="sub-header">5.1 Disappearing Plant Problem: Apa dan Mengapa</div>
+
+    <p class="prose">Bayangkan sebuah anak perusahaan di negara hiperinflasi membeli gedung seharga 1 miliar mata uang lokal (LC) saat kurs adalah LC 1 miliar = USD 1 juta. Tiga tahun kemudian, inflasi kumulatif mencapai 300% dan mata uang lokal melemah drastis ke LC 4 miliar = USD 1 juta. Jika Current Rate Method diterapkan tanpa penyesuaian:</p>
+
+    <ul class="bullet-list">
+      <li>Gedung dalam LC: tetap LC 1 miliar (historical cost, belum didepresiasi penuh)</li>
+      <li>Kurs current sekarang: 1 USD = LC 4 miliar → LC 1 miliar = USD 0,25 juta</li>
+      <li>Gedung dalam laporan konsolidasi USD: USD 0,25 juta — turun dari USD 1 juta!</li>
+    </ul>
+
+    <p class="prose">Aset fisik yang sama (gedung) tampak "menghilang" dari laporan konsolidasi karena hanya efek melemahnya mata uang, bukan karena gedung itu rusak atau dijual. Inilah "disappearing plant problem" — dan itulah mengapa aturan khusus diperlukan untuk hiperinflasi.</p>
+
+    <div class="sub-header">5.2 Definisi Hiperinflasi</div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 6 — Definisi Highly Inflationary Economy</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Aspek</th>
+              <th>US GAAP (ASC 830)</th>
+              <th>IFRS (IAS 21 + IAS 29)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Definisi Numerik</td>
+              <td>Inflasi kumulatif 3 tahun &gt; 100% (≈ avg ~26%/tahun)</td>
+              <td>IAS 29 menyebut "mendekati atau melebihi 100% selama 3 tahun" sebagai indikator, bukan definisi mutlak</td>
+            </tr>
+            <tr>
+              <td>Pendekatan</td>
+              <td>Rule-based (threshold spesifik)</td>
+              <td>Principle-based (requires judgment)</td>
+            </tr>
+            <tr>
+              <td>Indikator Tambahan (IFRS)</td>
+              <td>N/A</td>
+              <td>Populasi menyimpan kekayaan dalam aset non-moneter; harga barang dikutip dalam mata uang asing yang stabil; suku bunga mencerminkan kehilangan daya beli</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">5.3 Perlakuan Translasi untuk Hiperinflasi</div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 7 — Pendekatan IFRS vs US GAAP untuk Hiperinflasi</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Aspek</th>
+              <th>IFRS (IAS 21 + IAS 29)</th>
+              <th>US GAAP (ASC 830)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Langkah 1</strong></td>
+              <td>Restate laporan keuangan untuk inflasi menggunakan indeks harga umum (IAS 29)</td>
+              <td>Tidak ada restatement inflasi yang diizinkan</td>
+            </tr>
+            <tr>
+              <td><strong>Langkah 2</strong></td>
+              <td>Translate laporan yang sudah direstated menggunakan current exchange rate</td>
+              <td>Gunakan Temporal Method (seolah functional currency = presentation currency)</td>
+            </tr>
+            <tr>
+              <td><strong>Efek pada PP&amp;E</strong></td>
+              <td>PP&amp;E direstated ke harga terkini, lalu di-translate ke current rate → nilai relatif terjaga</td>
+              <td>PP&amp;E tetap di historical cost dalam presentation currency → disappearing plant dihindari melalui penggunaan historical rate</td>
+            </tr>
+            <tr>
+              <td><strong>Translation Adjustment</strong></td>
+              <td>Gain/loss dari restatement bisa ke P&amp;L atau ekuitas tergantung item</td>
+              <td>Masuk P&amp;L (karena temporal method)</td>
+            </tr>
+            <tr>
+              <td><strong>Representasi Ekonomi</strong></td>
+              <td>Lebih mencerminkan realitas ekonomi jika indeks inflasi akurat</td>
+              <td>Konservatif — menghindari subjektivitas indeks inflasi lokal</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">5.4 Ilustrasi Numerik — Tiga Pendekatan untuk Hiperinflasi</div>
+
+    <p class="prose">Berikut adalah ilustrasi sederhana yang menunjukkan perbedaan ketiga pendekatan (current rate tanpa penyesuaian, temporal/US GAAP, dan IFRS IAS 29), menggunakan aset tanah yang dibeli di awal dan dipegang tiga tahun dalam lingkungan hiperinflasi:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 8 — Tiga Pendekatan Translasi di Lingkungan Hiperinflasi</div>
+      <div class="exhibit-body">
+        <p style="margin-bottom:12px; font-size:13px;">Asumsi: Tanah dibeli dengan LC 1.000. Inflasi kumulatif 3 tahun = 150%. Exchange rates: Tahun 0 = LC/USD 100; Tahun 3 = LC/USD 400.</p>
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Pendekatan</th>
+              <th>Nilai LC</th>
+              <th>Rate yang Digunakan</th>
+              <th>Nilai USD</th>
+              <th>Komentar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Current Rate tanpa penyesuaian (tidak diizinkan)</td>
+              <td>LC 1.000</td>
+              <td>Current: LC 400/USD</td>
+              <td>USD 2,50</td>
+              <td>Disappearing plant! Turun dari USD 10 ke USD 2,50</td>
+            </tr>
+            <tr>
+              <td>Temporal Method (US GAAP)</td>
+              <td>LC 1.000</td>
+              <td>Historical: LC 100/USD</td>
+              <td>USD 10,00</td>
+              <td>Nilai terjaga di historical cost dalam USD</td>
+            </tr>
+            <tr>
+              <td>IAS 29 Restate + Current Rate (IFRS)</td>
+              <td>LC 2.500 (restated: 1.000 × 2,5 inflasi)</td>
+              <td>Current: LC 400/USD</td>
+              <td>USD 6,25</td>
+              <td>Mencerminkan nilai riil yang disesuaikan inflasi</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Contoh di atas menunjukkan bahwa semua pendekatan kecuali current rate murni menghindari disappearing plant. IFRS menghasilkan nilai yang paling mencerminkan daya beli riil, sementara US GAAP lebih sederhana dan menghindari subjektivitas indeks inflasi lokal yang mungkin tidak dapat dipercaya di negara hiperinflasi.</p>
+
+    <div class="callout amber">
+      <span class="callout-title">Jika Negara Tidak Lagi Hiperinflasi</span>
+      <p>Jika suatu negara tidak lagi diklasifikasikan sebagai highly inflationary, perusahaan harus mengidentifikasi ulang functional currency anak perusahaan tersebut. Di US GAAP, jika functional currency tidak lagi sama dengan presentation currency, maka metode yang digunakan berubah dari Temporal ke Current Rate Method. Aset dan liabilitas yang sebelumnya pada historical rate akan beralih ke current rate — ini bisa menyebabkan "pop" dalam jumlah yang ditranslasi.</p>
+    </div>
+
+    <div class="kc" onclick="toggleKC(this)">
+      <div class="kc-header">
+        <div class="kc-header-title">💡 Knowledge Check 5.1 — Hiperinflasi IFRS vs US GAAP</div>
+        <div class="kc-toggle">▼</div>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">Sebuah perusahaan UK (menyusun laporan di bawah IFRS) memiliki anak perusahaan di negara yang mengalami inflasi kumulatif 3 tahun sebesar 110%. Jelaskan langkah-langkah translasi yang diperlukan untuk anak perusahaan ini dalam laporan konsolidasi GBP.</p>
+        <div class="kc-answer">
+          <strong>Langkah 1 — Klasifikasi:</strong> Negara tersebut memenuhi indikator hiperinflasi (inflasi kumulatif mendekati/melebihi 100%) sesuai IAS 29. IFRS tidak memberikan threshold eksak, tetapi 110% adalah jelas di atas 100% sehingga dapat diklasifikasikan sebagai hiperinflasi.<br><br>
+          <strong>Langkah 2 — Restatement IAS 29:</strong> Laporan keuangan anak perusahaan dalam mata uang lokal direstated terlebih dahulu untuk mencerminkan perubahan daya beli (menggunakan indeks harga umum yang berlaku). Semua item non-monetari (PP&amp;E, inventory, ekuitas) direstated, sementara item monetari (kas, piutang, utang) tidak direstated karena sudah dalam nilai sekarang.<br><br>
+          <strong>Langkah 3 — Translate ke GBP:</strong> Seluruh laporan yang sudah direstated kemudian ditranslasi ke GBP menggunakan current exchange rate pada tanggal neraca.<br><br>
+          <strong>Hasil:</strong> PP&amp;E tidak "menghilang" karena sudah direstated untuk inflasi sebelum ditranslasi. Bandingkan dengan US GAAP yang langsung menggunakan Temporal Method tanpa restatement.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 6: PRACTICE -->
+  <div class="chapter" id="sec6">
+    <div class="chapter-header">
+      <div class="chapter-num">Bagian 6 — Latihan Soal</div>
+      <div class="chapter-title">Item Set Vignette — Tingkat Kesulitan CFA Level II</div>
+    </div>
+
+    <div class="practice-body">
+      <div class="vignette">
+        <div class="vignette-label">Vignette — PT Mitra Global Internasional (MGI)</div>
+        <div class="vignette-text">
+          <p><strong>Latar Belakang:</strong> PT Mitra Global Internasional (MGI) adalah perusahaan induk yang terdaftar di Bursa Efek Indonesia (BEI) dengan presentation currency IDR dan menyusun laporan berdasarkan <strong>IFRS</strong>. MGI memiliki dua anak perusahaan asing yang material:</p>
+          <br>
+          <p><strong>Anak A — Eurocorp (Eropa):</strong> Functional currency EUR. Beroperasi sangat mandiri, semua kontrak dan transaksi dalam EUR. Metode: <strong>Current Rate Method</strong>. Sepanjang tahun 20X1, EUR menguat dari IDR 16.500 (awal) menjadi IDR 17.500 (akhir). Rata-rata tahun: IDR 17.000.</p>
+          <br>
+          <p><strong>Anak B — Argentco (Argentina):</strong> Beroperasi di Argentina yang telah mengalami inflasi kumulatif 3 tahun sebesar 145%. MGI (IFRS) menerapkan prosedur IAS 29 untuk Argentco sebelum translasi ke IDR.</p>
+          <br>
+          <p><strong>Data Keuangan Eurocorp untuk tahun 20X1 (dalam EUR juta):</strong></p>
+          <table style="width:100%; border-collapse:collapse; font-size:13px; margin:12px 0;">
+            <tr style="background:rgba(0,0,0,0.06); font-weight:700;">
+              <td style="padding:8px 10px; border:1px solid rgba(0,0,0,0.1);">Item</td>
+              <td style="padding:8px 10px; border:1px solid rgba(0,0,0,0.1);">EUR (juta)</td>
+              <td style="padding:8px 10px; border:1px solid rgba(0,0,0,0.1);">Keterangan</td>
+            </tr>
+            <tr><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">Penjualan</td><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">500</td><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">Merata sepanjang tahun</td></tr>
+            <tr><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">COGS</td><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">300</td><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">Inventory at cost FIFO</td></tr>
+            <tr><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">Depresiasi</td><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">40</td><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">PP&amp;E dibeli di awal tahun</td></tr>
+            <tr><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">Beban lain &amp; pajak</td><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">100</td><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">Merata sepanjang tahun</td></tr>
+            <tr style="font-weight:700;"><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">Laba Bersih</td><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">60</td><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);"></td></tr>
+            <tr><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">Total Aset</td><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">800</td><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">Termasuk PP&amp;E EUR 400 juta dan Inventory EUR 150 juta</td></tr>
+            <tr><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">Piutang Dagang</td><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">100</td><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">Aset monetari</td></tr>
+            <tr><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">Aset Lancar</td><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">300</td><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">Termasuk kas 50, piutang 100, inventory 150</td></tr>
+            <tr><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">Total Liabilitas</td><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">500</td><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">Termasuk utang jangka panjang EUR 400 juta</td></tr>
+            <tr><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">Liabilitas Lancar</td><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">100</td><td style="padding:7px 10px; border:1px solid rgba(0,0,0,0.08);">Seluruhnya liabilitas monetari</td></tr>
+          </table>
+          <br>
+          <p><strong>Informasi kurs (IDR per EUR):</strong> 1 Jan 20X1: 16.500 | Rata-rata 20X1: 17.000 | 31 Des 20X1: 17.500</p>
+        </div>
+      </div>
+
+      <!-- Question 1 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 1 dari 6</div>
+        <div class="q-text">Berapa <strong>Net Profit Margin</strong> Eurocorp yang akan dilaporkan dalam laporan konsolidasi MGI (dalam IDR)?</div>
+        <div class="option" onclick="selectOption(this, 1, true)">
+          <div class="option-radio"></div>
+          <div class="option-text">A. 12% — sama dengan net profit margin dalam EUR (60/500 = 12%)</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 1, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Lebih dari 12% karena EUR menguat sehingga laba bersih dalam IDR lebih besar secara proporsional</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 1, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Tidak bisa ditentukan tanpa mengetahui apakah ada translation gain/loss yang masuk P&amp;L</div>
+        </div>
+        <div class="explanation" id="expF1">
+          <strong>✓ Jawaban A benar.</strong> Di bawah Current Rate Method, SEMUA item laba rugi (Penjualan = EUR 500 juta dan Laba Bersih = EUR 60 juta) ditranslasi menggunakan average rate yang sama (IDR 17.000). Laba Bersih dalam IDR = 60 × 17.000 = IDR 1.020 miliar. Penjualan dalam IDR = 500 × 17.000 = IDR 8.500 miliar. Net Profit Margin = 1.020/8.500 = 12% — identik dengan versi EUR. Translation adjustment dari Current Rate Method masuk ke OCI (CTA), TIDAK ke P&amp;L, sehingga tidak mempengaruhi net profit margin yang dilaporkan. Opsi C relevan untuk Temporal Method tetapi tidak untuk Current Rate Method.
+        </div>
+      </div>
+
+      <!-- Question 2 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 2 dari 6</div>
+        <div class="q-text">Dibandingkan dengan versi EUR, <strong>Return on Assets (ROA)</strong> Eurocorp dalam laporan konsolidasi IDR akan:</div>
+        <div class="option" onclick="selectOption(this, 2, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Lebih tinggi, karena EUR menguat sehingga semua angka yang ditranslasi menjadi lebih besar</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 2, true)">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Lebih rendah, karena Total Aset ditranslasi di current rate (17.500) yang lebih tinggi dari average rate (17.000) yang digunakan untuk Laba Bersih</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 2, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Sama persis, karena Current Rate Method mempertahankan semua rasio keuangan</div>
+        </div>
+        <div class="explanation" id="expF2">
+          <strong>✓ Jawaban B benar.</strong> ROA = Laba Bersih / Total Aset adalah cross-statement ratio yang terdistorsi di bawah Current Rate Method. Laba Bersih (IDR) = 60 × 17.000 (avg) = IDR 1.020 miliar. Total Aset (IDR) = 800 × 17.500 (current) = IDR 14.000 miliar. ROA dalam IDR = 1.020/14.000 = 7,29%. Dalam EUR: ROA = 60/800 = 7,5%. Karena current rate (17.500) &gt; average rate (17.000), penyebut (Total Aset) mengalami "markup" lebih banyak secara proporsional dari pembilang (Laba Bersih), sehingga ROA lebih rendah dalam IDR. Opsi C keliru — Current Rate Method hanya mempertahankan same-statement ratios, bukan semua rasio.
+        </div>
+      </div>
+
+      <!-- Question 3 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 3 dari 6</div>
+        <div class="q-text"><strong>Current Ratio</strong> Eurocorp yang dilaporkan dalam IDR adalah:</div>
+        <div class="option" onclick="selectOption(this, 3, true)">
+          <div class="option-radio"></div>
+          <div class="option-text">A. 3,0x — sama persis dengan Current Ratio dalam EUR (300/100 = 3,0x)</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 3, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Lebih tinggi karena Inventory (non-monetary) mendapat markup lebih dari Liabilitas Lancar di bawah Current Rate Method</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 3, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Tidak bisa ditentukan tanpa tahu proporsi inventory vs kas dalam Aset Lancar</div>
+        </div>
+        <div class="explanation" id="expF3">
+          <strong>✓ Jawaban A benar.</strong> Current Ratio = Aset Lancar / Liabilitas Lancar. Kedua item ini berasal dari neraca. Di bawah Current Rate Method, semua aset dan liabilitas (baik monetari maupun non-monetari) ditranslasi dengan current rate yang sama (IDR 17.500). Aset Lancar dalam IDR = 300 × 17.500 = IDR 5.250 miliar. Liabilitas Lancar dalam IDR = 100 × 17.500 = IDR 1.750 miliar. Current Ratio = 5.250/1.750 = 3,0x — identik dengan versi EUR. Ini berlaku karena SEMUA item neraca menggunakan current rate yang sama. Opsi C akan benar jika soalnya tentang Temporal Method, bukan Current Rate Method.
+        </div>
+      </div>
+
+      <!-- Question 4 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 4 dari 6</div>
+        <div class="q-text">Dalam laporan konsolidasi MGI, Cumulative Translation Adjustment (CTA) dari Eurocorp untuk tahun 20X1 akan bersifat <strong>positif atau negatif</strong>? Jelaskan mekanismenya.</div>
+        <div class="option" onclick="selectOption(this, 4, true)">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Positif — karena Eurocorp memiliki net asset exposure (total aset > total liabilitas) dan EUR menguat terhadap IDR sepanjang tahun</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 4, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Negatif — karena liabilitas Eurocorp yang besar (EUR 500 dari EUR 800 total aset) menyebabkan net liability exposure</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 4, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Nol — karena Current Rate Method tidak menghasilkan translation adjustment</div>
+        </div>
+        <div class="explanation" id="expF4">
+          <strong>✓ Jawaban A benar.</strong> Di bawah Current Rate Method, exposure SELALU berupa net asset exposure karena semua aset ditranslasi di current rate, sementara ekuitas dikunci sebagian di historical rate. Total aset Eurocorp EUR 800 &gt; Total liabilitas EUR 500 → net asset position. EUR menguat (IDR/EUR naik dari 16.500 ke 17.500) → net asset position + appreciating currency = <strong>translation gain (CTA positif)</strong>. Gain ini masuk ke OCI sebagai bagian Cumulative Translation Adjustment dalam ekuitas — bukan ke P&amp;L. Opsi B mengacaukan konsep "net liability" versi Temporal Method dengan Current Rate Method. Opsi C keliru — Current Rate Method selalu menghasilkan CTA.
+        </div>
+      </div>
+
+      <!-- Question 5 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 5 dari 6</div>
+        <div class="q-text">Terkait Argentco (anak perusahaan di Argentina dengan inflasi kumulatif 145%), MGI menggunakan IFRS. Manakah pernyataan yang paling tepat mengenai perlakuan translasi Argentco?</div>
+        <div class="option" onclick="selectOption(this, 5, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">A. MGI harus menggunakan Temporal Method untuk Argentco karena inflasi melebihi 100%, sama seperti US GAAP</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 5, true)">
+          <div class="option-radio"></div>
+          <div class="option-text">B. MGI harus me-restate laporan Argentco untuk inflasi (IAS 29) terlebih dahulu, baru mentranslasi ke IDR menggunakan current rate</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 5, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">C. MGI boleh memilih antara Temporal Method atau IAS 29 restatement sesuai kebijakan akuntansi yang paling mencerminkan kenyataan ekonomi</div>
+        </div>
+        <div class="explanation" id="expF5">
+          <strong>✓ Jawaban B benar.</strong> Karena MGI menyusun laporan berdasarkan IFRS dan Argentina memiliki inflasi kumulatif 145% (memenuhi indikator IAS 29 untuk hiperinflasi), MGI <em>wajib</em> menerapkan IAS 29. Langkah-langkah: (1) Restating laporan Argentco dalam peso Argentina menggunakan indeks harga umum setempat untuk mencerminkan daya beli terkini; (2) Setelah direstated, semua item ditranslasi ke IDR menggunakan current rate pada tanggal neraca. Ini berbeda dari US GAAP yang langsung menggunakan Temporal Method tanpa restatement. Opsi C keliru — IFRS tidak memberikan pilihan bebas; jika negara diklasifikasikan hiperinflasi, IAS 29 adalah mandatory.
+        </div>
+      </div>
+
+      <!-- Question 6 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 6 dari 6</div>
+        <div class="q-text">Asumsikan bahwa, hipotesis, Eurocorp menggunakan <strong>Temporal Method</strong> (bukan Current Rate Method). Dengan data yang sama dan EUR menguat, manakah pernyataan yang PALING AKURAT mengenai perbedaan antara Temporal dan Current Rate Method untuk Eurocorp?</div>
+        <div class="option" onclick="selectOption(this, 6, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Total Aset yang dilaporkan akan lebih besar di bawah Temporal Method karena translation gain masuk ke neraca</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 6, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Gross Profit Margin akan sama di bawah kedua metode karena COGS selalu ditranslasi di average rate</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 6, true)">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Total Aset yang dilaporkan akan lebih kecil di bawah Temporal Method karena PP&amp;E (EUR 400 juta) ditranslasi di historical rate (16.500) yang lebih rendah dari current rate (17.500) yang digunakan Current Rate Method</div>
+        </div>
+        <div class="explanation" id="expF6">
+          <strong>✓ Jawaban C benar.</strong> PP&amp;E = EUR 400 juta adalah komponen terbesar non-monetary assets. Di bawah Temporal Method, PP&amp;E ditranslasi di historical rate (IDR 16.500 di awal tahun saat dibeli). Di bawah Current Rate Method, PP&amp;E ditranslasi di current rate (IDR 17.500 di akhir tahun). Karena EUR menguat (current &gt; historical), Current Rate Method menghasilkan PP&amp;E yang lebih besar → Total Aset lebih besar. Temporal menghasilkan PP&amp;E lebih kecil → Total Aset lebih kecil. Opsi A keliru — pada Temporal, translation gain masuk ke P&amp;L, bukan menambah neraca secara langsung. Opsi B keliru — di Temporal Method, COGS menggunakan historical rate (saat inventory dibeli), bukan average rate, sehingga Gross Profit Margin AKAN berbeda antara kedua metode.
+        </div>
+      </div>
+
+      <!-- Score Panel -->
+      <div class="score-panel" id="scorePanel">
+        <div class="score-panel-text">Skor Akhir Sesi</div>
+        <div class="score-panel-value" id="scoreValue">0/6</div>
+        <div style="font-size:13px; color:var(--text2); margin-top:12px;" id="scoreMsg"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAVIGATION -->
+  <div class="nav-bottom">
+    <a class="nav-btn" href="CFA_L2_Day23_Full.html">← Day 23: Translation Methods (Full)</a>
+    <a class="nav-btn" href="CFA_L2_Day25_Full.html">Day 25: Revenue &amp; Expense Manipulation (Full) →</a>
+  </div>
+
+</div>
+
+<script>
+  function toggleKC(el) {
+    el.classList.toggle('open');
+  }
+
+  const answers = {};
+  const totalQ = 6;
+
+  function selectOption(el, qNum, isCorrect) {
+    const block = el.closest('.question-block');
+    const options = block.querySelectorAll('.option');
+    options.forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+
+    answers[qNum] = isCorrect;
+
+    const expId = 'expF' + qNum;
+    const exp = document.getElementById(expId);
+    exp.classList.remove('show', 'correct', 'incorrect');
+    exp.classList.add('show');
+    exp.classList.add(isCorrect ? 'correct' : 'incorrect');
+
+    if (Object.keys(answers).length === totalQ) {
+      showScore();
+    }
+  }
+
+  function showScore() {
+    const score = Object.values(answers).filter(v => v).length;
+    const panel = document.getElementById('scorePanel');
+    panel.classList.add('show');
+    document.getElementById('scoreValue').textContent = score + '/' + totalQ;
+    const msgs = [
+      'Perlu banyak review — ulangi dari Bagian 1 ya!',
+      'Ada beberapa konsep yang masih perlu diperkuat.',
+      'Lumayan! Review lagi bagian yang keliru.',
+      'Bagus! Lo sudah paham sebagian besar konsep.',
+      'Hampir sempurna! Sedikit lagi ke level CFA-ready.',
+      'Sempurna! Masterclass distorsi rasio translasi! 🎯',
+    ];
+    document.getElementById('scoreMsg').textContent = msgs[score] || msgs[5];
+  }
+</script>
+</body>
+</html>

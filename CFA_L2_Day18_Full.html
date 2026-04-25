@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level II Day 18 - Endogenous Growth, Convergence, Resources, Demographics</title>
+  <style>
+:root {
+  --bg:      #fafaf8;
+  --bg2:     #f4f3ef;
+  --bg3:     #eeece7;
+  --border:  rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text:    #1a1a2e;
+  --text2:   #4a4a6a;
+  --text3:   #8a8aaa;
+  --gold:    #9a6e1a;
+  --gold2:   #7a5010;
+  --gold-bg: rgba(154,110,26,0.08);
+  --blue:    #1a5fa8;
+  --blue-bg: rgba(26,95,168,0.08);
+  --green:   #1a7a4a;
+  --green-bg: rgba(26,122,74,0.08);
+  --red:     #b83232;
+  --red-bg:  rgba(184,50,50,0.08);
+  --amber:   #a06010;
+  --amber-bg: rgba(160,96,16,0.08);
+  --r: 10px;
+  --r-sm: 6px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  font-size: 15px;
+}
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+  background: white;
+  box-shadow: 0 0 40px rgba(0,0,0,0.04);
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+
+.breadcrumb {
+  font-size: 13px;
+  color: var(--text2);
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.day-badge, .version-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  background: var(--gold-bg);
+  color: var(--gold2);
+  border-radius: var(--r-sm);
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 12px;
+}
+
+.version-badge {
+  background: var(--blue-bg);
+  color: var(--blue);
+  margin-left: 8px;
+}
+
+.hero {
+  margin-bottom: 48px;
+}
+
+.hero-tag {
+  font-size: 13px;
+  color: var(--gold);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.hero-title {
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: var(--text2);
+  margin-bottom: 28px;
+}
+
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.meta-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 13px;
+  color: var(--text2);
+  font-weight: 500;
+}
+
+.toc {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 32px;
+  margin-bottom: 48px;
+}
+
+.toc-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+
+.toc-list {
+  list-style: none;
+}
+
+.toc-list li {
+  margin-bottom: 12px;
+  font-size: 15px;
+}
+
+.toc-num {
+  color: var(--gold);
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.chapter {
+  margin-bottom: 56px;
+  scroll-margin-top: 100px;
+}
+
+.chapter-header {
+  margin-bottom: 28px;
+}
+
+.chapter-num {
+  font-size: 13px;
+  color: var(--text3);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.chapter-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text);
+  margin-top: 8px;
+}
+
+.sub-header {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 28px 0 16px 0;
+}
+
+.prose {
+  color: var(--text);
+  margin-bottom: 16px;
+  line-height: 1.75;
+}
+
+.formula-block {
+  background: var(--bg2);
+  border-left: 4px solid var(--gold);
+  border-radius: var(--r-sm);
+  padding: 20px;
+  margin: 24px 0;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: var(--text);
+  overflow-x: auto;
+}
+
+.formula-block .label {
+  font-weight: 700;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.formula-block .note {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--text2);
+  margin-top: 12px;
+  line-height: 1.6;
+}
+
+.exhibit {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px;
+  margin: 32px 0;
+}
+
+.exhibit-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 20px;
+}
+
+.exhibit-body {
+  color: var(--text);
+  line-height: 1.8;
+}
+
+.reg-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 14px;
+}
+
+.reg-table th {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 12px;
+  text-align: left;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.reg-table td {
+  border: 1px solid var(--border);
+  padding: 12px;
+  color: var(--text2);
+}
+
+.reg-table tr:nth-child(even) { background: rgba(255,255,255,0.5); }
+
+.callout {
+  border-radius: var(--r);
+  padding: 20px;
+  margin: 24px 0;
+  border-left: 4px solid;
+}
+
+.callout.blue {
+  background: var(--blue-bg);
+  border-left-color: var(--blue);
+}
+
+.callout.amber {
+  background: var(--amber-bg);
+  border-left-color: var(--amber);
+}
+
+.callout.green {
+  background: var(--green-bg);
+  border-left-color: var(--green);
+}
+
+.callout.red {
+  background: var(--red-bg);
+  border-left-color: var(--red);
+}
+
+.callout.gold {
+  background: var(--gold-bg);
+  border-left-color: var(--gold);
+}
+
+.callout-title {
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: block;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.callout .callout-title { color: inherit; }
+.callout.blue .callout-title { color: var(--blue); }
+.callout.amber .callout-title { color: var(--amber); }
+.callout.green .callout-title { color: var(--green); }
+.callout.red .callout-title { color: var(--red); }
+.callout.gold .callout-title { color: var(--gold); }
+
+.callout p, .callout li {
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.kc {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  margin: 28px 0;
+  overflow: hidden;
+}
+
+.kc-header {
+  padding: 18px 20px;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+
+.kc-header:hover { background: rgba(0,0,0,0.04); }
+
+.kc-header-title {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.kc-toggle {
+  color: var(--text3);
+  font-weight: 700;
+  font-size: 18px;
+  transition: transform 0.2s;
+}
+
+.kc.open .kc-toggle { transform: rotate(180deg); }
+
+.kc-body {
+  padding: 20px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.kc.open .kc-body { max-height: 1200px; }
+
+.kc-q {
+  color: var(--text);
+  margin-bottom: 16px;
+  line-height: 1.7;
+  font-weight: 500;
+}
+
+.kc-answer {
+  color: var(--text2);
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.num-list, .bullet-list {
+  margin: 16px 0;
+  padding-left: 24px;
+}
+
+.num-list li, .bullet-list li {
+  margin-bottom: 10px;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 40px 0;
+}
+
+.practice-header {
+  margin-bottom: 28px;
+}
+
+.practice-body {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px;
+}
+
+.vignette {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.vignette-label {
+  font-size: 12px;
+  color: var(--text3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.question-block {
+  margin-bottom: 28px;
+}
+
+.q-num {
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.q-text {
+  color: var(--text);
+  line-height: 1.8;
+  margin-bottom: 14px;
+}
+
+.option {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  background: white;
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+}
+
+.option:hover { background: var(--bg2); border-color: var(--gold); }
+
+.option input { margin-right: 8px; }
+
+.explanation {
+  margin-top: 16px;
+  padding: 16px;
+  background: var(--blue-bg);
+  border-left: 4px solid var(--blue);
+  border-radius: var(--r-sm);
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.7;
+  display: none;
+}
+
+.explanation.show { display: block; }
+
+.score-panel {
+  margin-top: 32px;
+  padding: 24px;
+  background: var(--green-bg);
+  border-radius: var(--r);
+  text-align: center;
+  display: none;
+}
+
+.score-panel.show { display: block; }
+
+.score-panel h3 {
+  color: var(--green);
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.score-panel p {
+  color: var(--text);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.nav-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 0;
+  margin-top: 48px;
+  border-top: 1px solid var(--border);
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nav-btn:hover {
+  background: var(--bg3);
+  border-color: var(--border2);
+}
+
+.nav-day {
+  font-size: 13px;
+  color: var(--text2);
+}
+
+@media (max-width: 768px) {
+  .hero-title { font-size: 28px; }
+  .page { padding: 0 16px; }
+  .meta-row { gap: 8px; }
+  .nav-bottom { flex-direction: column; gap: 16px; }
+  .nav-btn { width: 100%; justify-content: center; }
+}
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="breadcrumb">CFA Level II · Economics · LM2</div>
+      <div>
+        <span class="version-badge">Versi Full</span>
+        <span class="day-badge">Day 18 of 90</span>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-tag">Selasa, 05 Mei 2026</div>
+      <h1 class="hero-title">Endogenous Growth, Hipotesis Konvergensi, Sumber Daya Alam, dan Demografi</h1>
+      <p class="hero-sub">Pemahaman mendalam tentang pertumbuhan ekonomi endogen, mekanisme konvergensi antar negara, dampak sumber daya alam terhadap pertumbuhan, dan pengaruh demografi terhadap supply tenaga kerja.</p>
+      <div class="meta-row">
+        <div class="meta-pill">Materi Lengkap</div>
+        <div class="meta-pill">Bahasa Indonesia</div>
+        <div class="meta-pill">~5% Exam Weight</div>
+        <div class="meta-pill">45-60 Menit</div>
+      </div>
+    </div>
+
+    <!-- TABLE OF CONTENTS -->
+    <div class="toc">
+      <h2 class="toc-title">Daftar Isi</h2>
+      <ul class="toc-list">
+        <li><span class="toc-num">0.</span>Learning Outcomes</li>
+        <li><span class="toc-num">1.</span>Model Pertumbuhan Endogen</li>
+        <li><span class="toc-num">2.</span>Hipotesis Konvergensi</li>
+        <li><span class="toc-num">3.</span>Sumber Daya Alam</li>
+        <li><span class="toc-num">4.</span>Demografi & Supply Tenaga Kerja</li>
+        <li><span class="toc-num">5.</span>Latihan Soal</li>
+      </ul>
+    </div>
+
+    <!-- SECTION 0: LEARNING OUTCOMES -->
+    <div class="chapter" id="section0">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 0</div>
+        <h2 class="chapter-title">Learning Outcomes</h2>
+      </div>
+      <p class="prose">Setelah menyelesaikan sesi pembelajaran hari ini, Anda akan mampu untuk:</p>
+      <ul class="num-list">
+        <li>Membandingkan model pertumbuhan endogen (Romer) dengan model neoklasik Solow dalam hal dampak saving rate dan pertumbuhan jangka panjang</li>
+        <li>Menjelaskan peran R&D, human capital, dan spillover effects dalam teori pertumbuhan endogen</li>
+        <li>Membedakan antara absolute convergence, conditional convergence, dan club convergence dengan implikasi investasinya</li>
+        <li>Menganalisis bagaimana natural resource curse mempengaruhi pertumbuhan ekonomi dan mekanisme Dutch disease</li>
+        <li>Mengevaluasi dampak faktor demografis (population growth, participation, migration, hours worked) terhadap pertumbuhan labor supply dan GDP</li>
+        <li>Menerapkan konsep-konsep ini dalam konteks analisis ekonomi negara emerging markets dan developed markets</li>
+      </ul>
+    </div>
+
+    <!-- SECTION 1: MODEL PERTUMBUHAN ENDOGEN -->
+    <div class="chapter" id="section1">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 1</div>
+        <h2 class="chapter-title">Model Pertumbuhan Endogen</h2>
+      </div>
+
+      <h3 class="sub-header">Kontras dengan Model Neoklasik Solow</h3>
+      <p class="prose">Model pertumbuhan endogen (Romer, 1986) merupakan alternatif fundamental terhadap model neoklasik Solow yang telah kita pelajari di hari sebelumnya. Perbedaan kunci terletak pada bagaimana model ini memperlakukan kemajuan teknologi dan returns to capital untuk ekonomi secara keseluruhan.</p>
+
+      <p class="prose">Dalam model Solow, ada asumsi diminishing marginal returns to capital — saat capital per worker meningkat, produktivitas tambahan setiap unit kapital berkurang. Akibatnya, perekonomian konvergen ke steady-state growth rate yang ditentukan oleh pertumbuhan teknologi eksogen. Saving rate yang lebih tinggi meningkatkan capital accumulation jangka pendek, tetapi tidak mengubah long-run growth rate.</p>
+
+      <p class="prose">Sebaliknya, model endogen membenarkan bahwa ada cara teknologi dapat berkembang dari dalam sistem ekonomi itu sendiri — melalui R&D, investasi dalam human capital, dan akumulasi pengetahuan. Model ini memungkinkan constant atau increasing returns to capital untuk ekonomi secara keseluruhan, meski dari perspektif firm individual mungkin ada diminishing returns.</p>
+
+      <div class="callout gold">
+        <span class="callout-title">Implikasi Kritis</span>
+        <p>Dalam model endogen, kenaikan saving rate menghasilkan PERMANENT increase dalam growth rate — bukan hanya level of output. Ini berbeda fundamental dengan Solow. Pemerintah dapat mempengaruhi long-run growth melalui kebijakan yang mendorong R&D dan human capital.</p>
+      </div>
+
+      <h3 class="sub-header">Mekanisme Pertumbuhan Endogen: R&D dan Human Capital</h3>
+      <p class="prose">Inti model Romer adalah bahwa capital dalam ekonomi modern bukan hanya physical capital (mesin, bangunan), tetapi juga human capital dan knowledge capital. Ketika perusahaan menginvestasikan dalam R&D untuk mengembangkan produk atau proses baru, hasilnya adalah peningkatan dalam teknologi atau produktivitas yang membermanfaat seluruh ekonomi — bukan hanya perusahaan yang melakukan R&D.</p>
+
+      <p class="prose">Phenomenon ini disebut "spillover effects" atau "positive externalities". Sebuah perusahaan farmasi yang mengembangkan obat baru tidak hanya mendapat manfaat dari inovasi tersebut, tetapi industri lain juga belajar dari metodologi, bahan baku yang diperbaiki, atau teknik manufacturing yang digunakan. University yang melakukan penelitian dasar menciptakan knowledge yang kemudian digunakan ratusan aplikasi komersial.</p>
+
+      <p class="prose">Ada gap antara private returns (keuntungan yang diterima firm yang melakukan R&D) dan social returns (keuntungan total bagi masyarakat termasuk spillovers). Karena perusahaan individual hanya mempertimbangkan private returns, mereka akan under-invest dalam R&D dari perspektif sosial optimal. Ini memberikan justifikasi ekonomis untuk subsidi pemerintah terhadap R&D atau pendidikan — investasi ini menghasilkan social returns jauh lebih besar dari private returns.</p>
+
+      <h3 class="sub-header">Struktur Matematis Model Endogen</h3>
+      <p class="prose">Model endogen paling sederhana (Romer AK model) menggunakan production function yang linear dalam capital:</p>
+
+      <div class="formula-block">
+        <span class="label">Production Function</span>
+        ye = f(ke) = c·ke
+        <span class="note">
+          Dimana: ye = output per effective worker, ke = capital per effective worker, c = constant marginal product of capital.
+          <br>Catatan: Linear, bukan diminishing returns (seperti Cobb-Douglas)
+        </span>
+      </div>
+
+      <p class="prose">Dari production function ini, kita dapat menurunkan growth rate output per effective worker:</p>
+
+      <div class="formula-block">
+        <span class="label">Growth Rate Formula</span>
+        Δye/ye = Δke/ke = s·c − δ − n
+        <span class="note">
+          Dimana:
+          <br>s = saving rate (investment as % of output)
+          <br>c = constant marginal product of capital
+          <br>δ = depreciation rate
+          <br>n = labor force growth rate
+          <br>
+          <br>Interpretasi: Growth rate positif jika s·c > δ + n
+        </span>
+      </div>
+
+      <p class="prose">Intuisi di balik formula ini: Output meningkat sebanding dengan saving rate (lebih banyak yang disimpan, lebih banyak yang diinvestasikan), constant marginal product dari capital, dikurangi capital yang hilang karena depreciation dan dilusi dari labor force growth.</p>
+
+      <h3 class="sub-header">Numerical Example dari Kurikulum CFA</h3>
+      <p class="prose">Mari kita aplikasikan formula dengan angka spesifik:</p>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Contoh Perhitungan: Endogenous Growth</div>
+        <div class="exhibit-body">
+          <strong>Scenario 1: Baseline</strong><br>
+          s = 20%, c = 0.7040, δ = 10%, n = 1%<br>
+          Growth rate = 0.20 × 0.7040 − 0.10 − 0.01 = 0.1408 − 0.11 = 3.08%
+          <br><br>
+          <strong>Scenario 2: Increased Saving Rate</strong><br>
+          s = 23.5%, c = 0.7040, δ = 10%, n = 1%<br>
+          Growth rate = 0.235 × 0.7040 − 0.10 − 0.01 = 0.1654 − 0.11 = 5.54%
+          <br><br>
+          <strong>Kesimpulan:</strong> Dengan menaikkan saving rate dari 20% menjadi 23.5% (peningkatan 3.5 percentage points), growth rate meningkat permanent dari 3.08% menjadi 5.54%. Ini adalah peningkatan ~2.5 percentage points dalam long-run growth — efek yang jauh lebih besar dibanding model Solow.
+        </div>
+      </div>
+
+      <p class="prose">Ini mendemonstrasikan perbedaan fundamental: dalam Solow model, efek kenaikan saving rate bersifat temporary dan hanya menggeser level capital; dalam endogenous model, efeknya permanent pada growth rate itu sendiri.</p>
+
+      <h3 class="sub-header">Private vs Social Returns dan Peran Pemerintah</h3>
+      <p class="prose">Model endogen menyelesaikan puzzle penting dalam ekonomi pertumbuhan: jika ada increasing returns to capital (constant atau increasing marginal product), bagaimana pasar kompetitif dapat bertahan? Jawabannya adalah monopolistic competition.</p>
+
+      <p class="prose">Setiap firm individual yang melakukan R&D mendapat patent atau intellectual property yang memberikan market power — ini adalah constant returns to capital dari perspektif firm. Namun, dari perspektif ekonomi keseluruhan, ada spillover effects yang menghasilkan increasing returns — karena knowledge yang dihasilkan difusi ke seluruh ekonomi dan menciptakan produktivitas yang lebih tinggi di banyak sektor.</p>
+
+      <p class="prose">Implikasi untuk policy: Karena social returns dari R&D jauh lebih besar daripada private returns yang dinikmati firm individual, pemerintah dapat meningkatkan kesejahteraan sosial dengan memberikan subsidi untuk R&D, tax incentives untuk innovation, atau investasi publik dalam basic research dan education. Return sosial dari subsidi ini seringkali sangat tinggi.</p>
+
+      <div class="kc" id="kc1-1">
+        <div class="kc-header" onclick="toggleKC('kc1-1')">
+          <div class="kc-header-title">Knowledge Check 1.1: Perbedaan Endogenous vs Exogenous Growth</div>
+          <div class="kc-toggle">ⓘ</div>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">Dalam model pertumbuhan endogen Romer, bagaimana peningkatan saving rate dari 15% menjadi 25% mempengaruhi long-run growth rate?</div>
+          <div class="kc-answer">
+            <strong>Jawaban:</strong> Dalam model endogen, peningkatan saving rate menghasilkan PERMANENT increase dalam long-run growth rate. Menggunakan formula Δye/ye = s·c − δ − n, kenaikan saving rate (s) langsung meningkatkan sebelah kiri persamaan, sehingga growth rate naik secara permanen. Ini kontras dengan model Solow di mana higher saving rate hanya meningkatkan level output tetapi tidak mengubah steady-state growth rate (yang ditentukan oleh technological progress eksogen).<br><br>
+            Secara konkret, jika c = 0.70, δ = 0.10, n = 0.02: dengan s = 15%, growth = 0.105 − 0.12 = −1.5% (tidak sustainable); dengan s = 25%, growth = 0.175 − 0.12 = 5.5%. Peningkatan saving rate berakibat kenaikan growth rate sebesar 7 percentage points secara permanent.
+          </div>
+        </div>
+      </div>
+
+      <div class="kc" id="kc1-2">
+        <div class="kc-header" onclick="toggleKC('kc1-2')">
+          <div class="kc-header-title">Knowledge Check 1.2: Spillover Effects dan Pemerintah</div>
+          <div class="kc-toggle">ⓘ</div>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">Jelaskan mengapa social returns dari R&D lebih besar dari private returns, dan bagaimana ini membenarkan subsidi pemerintah?</div>
+          <div class="kc-answer">
+            <strong>Jawaban:</strong> Private returns adalah keuntungan yang diterima firm yang melakukan R&D — misalnya, through patent atau first-mover advantage. Social returns mencakup private returns PLUS spillover effects ke seluruh ekonomi. Ketika Microsoft mengembangkan software baru, ia hanya menerima revenue dari penjualan produk tersebut (private). Namun, teknologi yang dikembangkan membuat developer lain belajar dari open-source components, metodologi engineering yang dipublikasikan, atau infrastruktur yang diciptakan — ini adalah spillover effects.<br><br>
+            Karena firm individual hanya mempertimbangkan private returns saat membuat keputusan investasi R&D, tingkat R&D investment akan lebih rendah dari optimal sosial. Pemerintah dapat meningkatkan efisiensi dengan subsidi R&D, tax credits untuk innovation, atau grant untuk penelitian dasar. Return sosial dari investasi ini sangat tinggi dan menguntungkan masyarakat luas.
+          </div>
+        </div>
+      </div>
+
+      <div class="kc" id="kc1-3">
+        <div class="kc-header" onclick="toggleKC('kc1-3')">
+          <div class="kc-header-title">Knowledge Check 1.3: Constant vs Diminishing Returns</div>
+          <div class="kc-toggle">ⓘ</div>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">Mengapa production function ye = c·ke (linear) dapat menghasilkan increasing returns to scale untuk ekonomi keseluruhan, padahal dari firm perspective mungkin ada constant returns?</div>
+          <div class="kc-answer">
+            <strong>Jawaban:</strong> Linear production function ye = c·ke berarti marginal product of capital adalah constant (c) — untuk setiap unit tambahan capital, output meningkat sebesar c. Ini menciptakan constant returns to capital untuk firm individual: jika firm menggandakan capital, output juga menggandakan (doubling inputs doubles output).<br><br>
+            Namun, di level ekonomi keseluruhan, ada increasing returns karena spillover effects. Ketika satu firm berinvestasi dalam human capital dan R&D, ini menciptakan knowledge yang membuat firma lain lebih produktif. Dengan monopolistic competition (each firm has market power dari patent), firm individual tidak sepenuhnya menginternalisasi benefit dari spillovers yang diciptakannya — mereka hanya menerima private returns. Akibatnya, dari perspektif sosial, ada increasing returns di level ekonomi agregat, meski dari perspektif individual firm mungkin constant returns.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: HIPOTESIS KONVERGENSI -->
+    <div class="chapter" id="section2">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 2</div>
+        <h2 class="chapter-title">Hipotesis Konvergensi</h2>
+      </div>
+
+      <h3 class="sub-header">Absolute Convergence</h3>
+      <p class="prose">Absolute convergence hypothesis menyatakan bahwa negara-negara berkembang akan akhirnya mencapai level income per capita yang sama dengan negara-negara maju, TERLEPAS dari perbedaan karakteristik mereka seperti saving rate, population growth, atau institusi. Hipotesis ini cukup optimistis dan menyarankan bahwa setiap negara akan mencapai kesejahteraan yang sama dalam jangka panjang.</p>
+
+      <p class="prose">Dalam konteks neoclassical growth model, absolute convergence berasal dari asumsi diminishing marginal returns to capital. Negara yang memiliki capital-to-labor ratio rendah (seperti negara berkembang) memiliki marginal product of capital yang sangat tinggi, sehingga investasi capital akan menghasilkan return yang besar. Akibatnya, capital accumulation terjadi cepat, dan growth rate tinggi sampai negara mencapai steady-state capital-to-labor ratio yang sama dengan negara maju.</p>
+
+      <p class="prose">Namun, bukti empiris menunjukkan bahwa absolute convergence tidak terjadi di dunia nyata. Negara-negara berkembang tidak otomatis mencapai income per capita negara maju. Banyak negara "tertinggal" dengan income yang jauh lebih rendah.</p>
+
+      <h3 class="sub-header">Conditional Convergence</h3>
+      <p class="prose">Conditional convergence hypothesis adalah versi yang lebih nuansa: negara-negara akan konvergen KE STEADY-STATE MEREKA SENDIRI jika mereka memiliki saving rate, population growth, dan production function yang sama. Atau, lebih umum, negara akan konvergen kondisional pada karakteristik fundamentalnya seperti institusi kualitas, human capital, dan policy framework.</p>
+
+      <p class="prose">Jika dua negara memiliki saving rate yang sama, depreciation rate yang sama, labor force growth yang sama, dan mengakses teknologi yang sama, maka mereka akan konvergen ke capital-to-labor ratio yang sama dan akhirnya income per capita yang sama. Namun, jika mereka memiliki saving rate berbeda, maka steady-state mereka akan berbeda, dan mereka akan konvergen ke level income per capita yang berbeda.</p>
+
+      <p class="prose">Conditional convergence lebih konsisten dengan data. Kita observasi bahwa kelompok negara-negara dengan institusi dan policy yang serupa (misalnya, OECD countries) memang konvergen satu sama lain. Namun, negara-negara di Africa yang memiliki institusi weak, corruption tinggi, dan policy framework yang tidak stabil tidak konvergen dengan negara maju — mereka malah stagnate.</p>
+
+      <div class="callout amber">
+        <span class="callout-title">Perbedaan Penting</span>
+        <p><strong>Absolute Convergence:</strong> Semua negara konvergen ke level income yang sama, regardless of characteristics.<br><br>
+        <strong>Conditional Convergence:</strong> Negara konvergen ke steady-state mereka sendiri, conditional on saving rate, population growth, institusi, human capital, dll. Negara dengan karakteristik yang berbeda akan punya steady-state income per capita yang berbeda.
+        </p>
+      </div>
+
+      <h3 class="sub-header">Club Convergence</h3>
+      <p class="prose">Club convergence hypothesis menyatakan bahwa negara-negara membentuk "clubs" berdasarkan level development mereka dan institusi. Hanya negara dalam club yang sama yang konvergen satu sama lain. Negara dalam club "kaya" (developed countries) konvergen menuju income per capita yang tinggi. Negara dalam club "menengah" konvergen menuju income per capita yang lebih rendah. Dan negara-negara yang gagal mencapai institusi tertentu atau threshold penting jatuh dalam "low-development trap" dan tidak konvergen.</p>
+
+      <p class="prose">Aspek kritis dari club convergence adalah bahwa negara dapat PINDAH antar clubs melalui institutional reform. Negara yang melakukan improving institutional quality, menurunkan corruption, menjalankan sound fiscal policy, dan investing dalam human capital dapat naik ke club yang lebih tinggi dan mencapai growth rate yang lebih tinggi jangka panjang. Sebaliknya, negara yang institution-nya memburuk dapat turun ke club yang lebih rendah.</p>
+
+      <p class="prose">Contoh historis: Korea Selatan pada tahun 1960 adalah negara miskin dengan institusi lemah dan GDP per capita sama dengan banyak negara Africa. Melalui aggressive human capital investment, sound fiscal policy, dan institutional development, Korea naik ke developed country club pada 2000-an, dan sekarang income per capitanya sama dengan Western Europe. Sebaliknya, Venezuela memiliki resource wealth tetapi policy yang salah dan institutional decline mengakibatkan negara jatuh dari middle-income menjadi low-income.</p>
+
+      <h3 class="sub-header">Non-Convergence Traps</h3>
+      <p class="prose">Beberapa negara terjebak dalam low-level equilibrium dan sulit escape. Contoh klasik adalah "import substitution trap" di Latin America pada 1960-1980s. Negara-negara di region ini menggunakan high tariffs dan restrictions untuk melindungi industri domestik dari kompetisi import, dengan tujuan mengembangkan manufacturing sector yang independent.</p>
+
+      <p class="prose">Namun, strategi ini menciptakan perverse incentives: perusahaan domestik, terlindungi dari kompetisi, tidak memiliki motivasi untuk innovate atau menjadi efficient. Mereka memproduksi dengan cost tinggi dan quality rendah karena tidak ada competitive pressure. Human capital investment rendah karena negara kaya dari protected industries yang tidak memerlukan skilled workers. Corruption meningkat karena ada rents dari protection yang besar. Akhirnya, negara-negara ini terjebak dalam low-productivity equilibrium dan stagnate.</p>
+
+      <p class="prose">Escape dari trap ini memerlukan fundamental institutional dan policy reform — bukan hanya investasi capital fisik. Negara perlu membuka ekonomi mereka terhadap kompetisi, improving institutional quality, mengurangi corruption, dan investing dalam education.</p>
+
+      <h3 class="sub-header">Dua Sumber Konvergensi</h3>
+      <p class="prose">Ketika negara berkembang konvergen menuju negara maju, ada dua mekanisme yang bekerja:</p>
+
+      <ol class="num-list">
+        <li><strong>Capital Deepening:</strong> Negara berkembang yang memiliki low capital-to-labor ratio memiliki high marginal product of capital, sehingga investment cepat meningkatkan stock capital. Ini mengakibatkan capital-to-labor ratio meningkat cepat dan growth rate tinggi sampai capital-to-labor ratio matches level maju.</li>
+        <li><strong>Technology Adoption:</strong> Negara berkembang dapat mengadopsi teknologi yang sudah dikembangkan oleh negara maju. Ini tidak memerlukan investasi R&D yang besar — cukup imitasi, adoption, dan adaptation. Technology adoption adalah cara cepat untuk meningkatkan productivity tanpa perlu dari scratch innovation.</li>
+      </ol>
+
+      <p class="prose">Technology adoption adalah mengapa catching-up possible: negara tidak perlu reinvent the wheel. Mereka bisa adopsi best-practice technologies dari negara maju dan immediately mendapat productivity boost. China dan India pada tahun 2000s menggunakan mechanism ini heavily — mereka adopsi manufacturing technologies dari developed countries dan scaling up rapidly.</p>
+
+      <h3 class="sub-header">Endogenous Growth Model dan Prediksi Konvergensi</h3>
+      <p class="prose">Model pertumbuhan endogen (Romer) memiliki prediksi berbeda dari neoclassical model dalam hal konvergensi. Dalam endogenous model, TIDAK ada prediksi konvergensi. Developed countries yang memiliki human capital tinggi, R&D intensity tinggi, dan institutional quality tinggi dapat grow SEEPAT ATAU LEBIH CEPAT dibanding developing countries, BAHKAN JIKA developing countries memulai dari capital-to-labor ratio yang lebih rendah.</p>
+
+      <p class="prose">Mengapa? Karena dalam endogenous model, growth rate ditentukan oleh saving rate, productivity of capital, dan labor force growth — bukan oleh capital-to-labor ratio. Jika developed country memiliki high saving rate dan high R&D productivity, growth rate bisa tetap tinggi indefinitely. Developed country tidak "hit" diminishing returns karena ada constant or increasing returns to capital melalui R&D dan human capital accumulation.</p>
+
+      <p class="prose">Implikasi: dalam endogenous world, gap antara developed dan developing countries BISA MEMBESAR jika developed countries memiliki lebih baik saving rate, human capital, dan R&D productivity. Ini adalah prediksi darker dari endogenous model dan lebih konsisten dengan observasi empiris: gap antar negara memang cenderung membesar atau stagnate, bukan memperkecil.</p>
+
+      <h3 class="sub-header">Implikasi untuk Investor</h3>
+      <p class="prose">Dari perspektif investor, implikasi dari club convergence dan endogenous growth model adalah:</p>
+
+      <ul class="bullet-list">
+        <li><strong>Middle-income countries dengan institutional improvement:</strong> Highest potential returns karena mereka dapat jump dari middle-income club menuju high-income club. Contoh: Vietnam, Indonesia, Philippines jika institusi mereka improve. Expected long-run growth bisa accelerate significantly.</li>
+        <li><strong>Developed countries:</strong> Lower growth rate tetapi more stable. Di endogenous model, developed countries bisa maintain high growth jika mereka invest dalam innovation dan human capital.</li>
+        <li><strong>Low-income countries tanpa institutional reform:</strong> Lowest returns karena mereka terjebak dalam low-development trap. Growth rate cenderung stagnate atau decline tanpa fundamental policy dan institutional change.</li>
+      </ul>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Perbandingan Tiga Hipotesis Konvergensi</div>
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Aspek</th>
+              <th>Absolute Convergence</th>
+              <th>Conditional Convergence</th>
+              <th>Club Convergence</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Prediksi Jangka Panjang</strong></td>
+              <td>Semua negara mencapai income per capita sama</td>
+              <td>Negara konvergen ke steady-state sendiri (berbeda)</td>
+              <td>Negara dalam clubs berbeda, clubs terpisah</td>
+            </tr>
+            <tr>
+              <td><strong>Tergantung pada</strong></td>
+              <td>Tidak ada—hanya capital deepening</td>
+              <td>Saving rate, population growth, institusi</td>
+              <td>Institutional quality, threshold tertentu</td>
+            </tr>
+            <tr>
+              <td><strong>Perubahan Antar Clubs</strong></td>
+              <td>N/A</td>
+              <td>N/A</td>
+              <td>Possible melalui institutional reform</td>
+            </tr>
+            <tr>
+              <td><strong>Bukti Empiris</strong></td>
+              <td>Lemah — tidak terjadi di dunia nyata</td>
+              <td>Kuat — OECD countries konvergen</td>
+              <td>Kuat — pattern global terlihat</td>
+            </tr>
+            <tr>
+              <td><strong>Implikasi Investasi</strong></td>
+              <td>Semua emerging markets akan catch-up (terlalu optimis)</td>
+              <td>Returns tergantung kondisi fundamental negara</td>
+              <td>Middle-income improvers punya highest upside</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="kc" id="kc2-1">
+        <div class="kc-header" onclick="toggleKC('kc2-1')">
+          <div class="kc-header-title">Knowledge Check 2.1: Absolute vs Conditional Convergence</div>
+          <div class="kc-toggle">ⓘ</div>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">Negara A dan B memiliki saving rate sama (20%), population growth sama (2%), dan akses teknologi sama. Negara A memiliki initial capital-to-labor ratio 1.0, Negara B memiliki 0.5. Apakah mereka akan konvergen, dan dalam konteks apa?</div>
+          <div class="kc-answer">
+            <strong>Jawaban:</strong> Mereka akan konverge dalam conditional convergence framework. Karena mereka memiliki saving rate, population growth, dan production function yang sama, mereka akan konverge ke STEADY-STATE CAPITAL-TO-LABOR RATIO yang SAMA. <br><br>
+            Mekanisme: Negara B dengan lower capital-to-labor ratio memiliki higher marginal product of capital, sehingga investasi (20% dari output) menghasilkan capital accumulation yang cepat. Capital-to-labor ratio meningkat pesat dari 0.5 menuju steady-state. Negara A, dengan capital-to-labor ratio sudah 1.0, memiliki lower marginal product of capital, sehingga capital accumulation lebih lambat. Akhirnya, kedua negara reach same steady-state capital-to-labor ratio (dan same income per capita).<br><br>
+            Namun, mereka tidak akan absolutely converge ke income per capita yang ditentukan oleh initial endowment — mereka akan converge kondisional pada saving rate, population growth, dan teknologi mereka.
+          </div>
+        </div>
+      </div>
+
+      <div class="kc" id="kc2-2">
+        <div class="kc-header" onclick="toggleKC('kc2-2')">
+          <div class="kc-header-title">Knowledge Check 2.2: Club Convergence dan Institutional Reform</div>
+          <div class="kc-toggle">ⓘ</div>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">Negara X adalah middle-income country dengan corruption tinggi dan institusi lemah. Negara melakukan major institutional reform (mengurangi corruption, improving rule of law, meningkatkan education). Bagaimana hal ini dapat mempengaruhi long-run growth outlook menurut club convergence?</div>
+          <div class="kc-answer">
+            <strong>Jawaban:</strong> Club convergence menyatakan bahwa institusi adalah determinant utama dari club membership (low-income, middle-income, high-income). Dengan institutional reform, Negara X dapat pindah dari low-institutional-quality club menuju higher-quality club.<br><br>
+            Dalam low-quality club, growth rate long-run cenderung rendah atau stagnate karena corruption, weak institutions, dan low human capital discourages investment dan innovation. Dengan reform, negara dapat join club dengan higher-quality institutions, yang memiliki higher long-run growth rate. Contoh: Korea Selatan pada 1960s adalah low-income dengan weak institusi; melalui aggressive reform dan human capital investment, Korea join high-income club dan mencapai high growth rates.<br><br>
+            Key point: Long-run growth outlook berubah secara signifikan bukan karena capital accumulation, tetapi karena institutional improvement yang membuka peluang untuk higher investment, innovation, dan human capital development.
+          </div>
+        </div>
+      </div>
+
+      <div class="kc" id="kc2-3">
+        <div class="kc-header" onclick="toggleKC('kc2-3')">
+          <div class="kc-header-title">Knowledge Check 2.3: Endogenous Growth dan Konvergensi</div>
+          <div class="kc-toggle">ⓘ</div>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">Dalam endogenous growth model, apakah gap antara developed dan developing countries akan memperkecil atau membesar jika developed countries memiliki lebih tinggi R&D intensity dan human capital?</div>
+          <div class="kc-answer">
+            <strong>Jawaban:</strong> Gap akan MEMBESAR. Dalam endogenous model, growth rate ditentukan oleh Δy/y = s·c − δ − n, dimana c adalah productivity of capital. Jika developed country memiliki higher R&D intensity dan better human capital, c mereka (productivity) lebih tinggi. Dengan higher saving rate dan higher productivity, growth rate developed country lebih tinggi permanent.<br><br>
+            Sebaliknya, developing country dengan lower R&D intensity dan lower human capital punya lower c, sehingga growth rate lebih rendah. Karena developed countries grow lebih cepat, gap antar income per capita membesar over time — opposite dari neoclassical prediction.<br><br>
+            Ini disebut "divergence" dalam endogenous model dan lebih konsisten dengan observation: gap antara developed dan developing countries memang cenderung membesar atau stagnate, bukan konverge.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: SUMBER DAYA ALAM -->
+    <div class="chapter" id="section3">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 3</div>
+        <h2 class="chapter-title">Sumber Daya Alam dan Pertumbuhan Ekonomi</h2>
+      </div>
+
+      <h3 class="sub-header">Renewable vs Non-Renewable Resources</h3>
+      <p class="prose">Sumber daya alam dapat dikategorikan menjadi dua jenis: renewable dan non-renewable. Renewable resources (seperti hutan, fishery, agricultural land) dapat diregenerasi secara alami dalam timeframe yang reasonable, asalkan tingkat eksploitasi tidak melebihi regeneration rate. Non-renewable resources (seperti minyak, gas, coal, mineral) memiliki stock terbatas dan sekali diekstrak, tidak dapat diganti.</p>
+
+      <p class="prose">Dari perspektif pertumbuhan ekonomi jangka panjang, terdapat teori klasik yang khawatir bahwa dependence pada non-renewable resources akan menjadi limiting factor untuk pertumbuhan. Akibat depletion, suatu negara akan kehabisan resources dan harus transition ke ekonomi yang less dependent pada extraction. Namun, realita menunjukkan bahwa concern ini terlalu pessimistic.</p>
+
+      <h3 class="sub-header">Resource Curse: Venezuela dan Nigeria</h3>
+      <p class="prose">Paradoksal, negara-negara dengan abundant natural resources sering TIDAK memiliki economic growth setinggi yang diharapkan. Phenomenon ini disebut "resource curse" atau "paradox of plenty". Contoh paling sering dikutip adalah Venezuela dan Nigeria — dua negara dengan kaya oil resources tetapi memiliki economic growth yang sluggish dan income per capita yang tidak meningkat seperti predicted.</p>
+
+      <p class="prose">Mengapa hal ini terjadi? Ada dua mekanisme utama:</p>
+
+      <p class="prose"><strong>Pertama: Failure to Develop Institutions.</strong> Ketika country memiliki valuable resources (minyak), opportunity cost dari institutional development rendah — pemerintah bisa simply extract resources dan collect revenues tanpa perlu develop modern institutions, rule of law, atau public administration yang efisien. Sebaliknya, negara tanpa resources terpaksa develop institusi yang kuat untuk dapat grow (karena tidak ada resources untuk rely on).</p>
+
+      <p class="prose">Akibatnya, resource-rich countries sering develop weak institutions: corruption tinggi (officers bisa rent-seek dari resource extraction), rule of law lemah (tidak ada incentive untuk develop legal framework untuk commerce), dan public administration inefficient. Ini jangka panjang merugikan karena growth ekonomi modern memerlukan strong institutions.</p>
+
+      <p class="prose"><strong>Kedua: Dutch Disease.</strong> Ketika resource extraction menghasilkan foreign exchange earnings besar, currency of country apprecates significantly. Ini membuat manufactured goods dan other tradeable goods dari negara tersebut menjadi expensive di international markets. Manufactur menjadi uncompetitive, dan firms dalam manufacturing sector decline atau close. Scarce labor dan capital mengalihkan ke resource extraction sector (dimana wages tinggi karena resource rents).</p>
+
+      <p class="prose">Jangka panjang, ini sangat merugikan karena manufacturing adalah sektor yang memiliki higher skill requirements, learning-by-doing, dan technology spillovers. Dengan deindustrialization, negara loses opportunities untuk human capital development dan technological upgrading. Ketika resources eventually deplete atau harganya jatuh, negara kekurangan manufacturing sector yang dapat provide employment dan growth.</p>
+
+      <div class="callout red">
+        <span class="callout-title">Dutch Disease Mechanism</span>
+        <p>
+          1. Resource discovery → high export revenues<br>
+          2. Currency appreciation → manufactured exports expensive<br>
+          3. Manufacturing becomes uncompetitive<br>
+          4. Labor & capital shift to resource extraction<br>
+          5. Deindustrialization<br>
+          6. When resources deplete, economy lacks manufacturing base<br>
+          7. Vulnerable to external shocks<br><br>
+          Named after Netherlands mengalami hal ini setelah natural gas discovery di North Sea (1950s-1960s).
+        </p>
+      </div>
+
+      <h3 class="sub-header">Mengapa Resource Depletion Concerns Overstated</h3>
+      <p class="prose">Meskipun ada concern tentang resource depletion, bukti menunjukkan bahwa concerns ini largely overstated karena beberapa faktor:</p>
+
+      <ol class="num-list">
+        <li><strong>Technological Progress:</strong> Seiring teknologi berkembang, diperlukan lebih sedikit natural resources per unit output. Contoh: dengan LED technology, energy consumption untuk lighting turun dramatically. Dengan precision agriculture, fertilizer requirement per ton yield menurun. Dengan recycling technology, demand untuk virgin materials berkurang. Technological progress memungkinkan ekonomi grow meski total resource consumption tetap flat atau decline.</li>
+
+        <li><strong>Price Mechanism dan Substitution:</strong> Ketika harga resource naik (karena supply berkurang relatif demand), incentive untuk substitute ke resources lain atau alternatif meningkat. Contoh: harga oil naik → electric vehicles menjadi attractive alternative. Harga timber naik → preference untuk bamboo atau manufactured alternatives meningkat. Price mechanism naturally mendorong substitution.</li>
+
+        <li><strong>Shift towards Services:</strong> Seiring negara berkembang, share dari services (financial services, healthcare, education, entertainment) dalam ekonomi meningkat, sementara share dari resource-intensive manufacturing menurun. Services tidak memerlukan intensive natural resources, sehingga ekonomi dapat grow dengan resources lebih sedikit.</li>
+      </ol>
+
+      <p class="prose">Akibatnya, historical data menunjukkan bahwa total resource consumption tidak tumbuh secara linear dengan GDP. Banyak developed countries memiliki GDP yang meningkat tetapi resource consumption flat atau bahkan turun — disebut "decoupling" antara growth dan resource consumption.</p>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Resource Abundance dan Economic Growth: Tidak Ada Korelasi Positif</div>
+        <div class="exhibit-body">
+          Studi empiris menunjukkan bahwa tidak ada correlation positif antara oil reserves (sebagai % of GDP atau per capita) dan long-run GDP growth:
+          <br><br>
+          <strong>High oil reserves, sluggish growth:</strong> Venezuela, Nigeria, Iraq<br>
+          <strong>Low/no oil reserves, high growth:</strong> South Korea, Singapore, Switzerland
+          <br><br>
+          Hal ini menunjukkan bahwa resources bukan determinant utama dari growth. Institusi, human capital, dan policy jauh lebih penting. Negara tanpa resources yang develop baik institutions dapat grow cepat. Negara dengan resources melimpah tetapi institutions lemah akan stagnate.
+        </div>
+      </exhibit>
+
+      <div class="kc" id="kc3-1">
+        <div class="kc-header" onclick="toggleKC('kc3-1')">
+          <div class="kc-header-title">Knowledge Check 3.1: Resource Curse Mechanisms</div>
+          <div class="kc-toggle">ⓘ</div>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">Jelaskan mengapa Venezuela dengan abundant oil reserves memiliki sluggish economic growth sementara Singapore dengan minimal natural resources memiliki high growth rate?</div>
+          <div class="kc-answer">
+            <strong>Jawaban:</strong> Resource curse di Venezuela: Dengan abundant oil resources, pemerintah dapat extract dan collect revenues tanpa perlu develop strong institutions atau diversify ekonomi. Akibatnya, institusi lemah, corruption tinggi, dan rule of law tidak develop. Selain itu, oil revenues tinggi mengappreciate currency, membuat non-oil tradeable (manufacturing, agriculture) uncompetitive. Labor dan capital shift ke oil extraction, deindustrializing ekonomi. Ketika oil prices jatuh, ekonomi collapse karena manufacturing sector tidak ada.<br><br>
+            Singapore: Tanpa natural resources, Singapore dipaksa develop strong institutions, excellent education system, dan stable political environment untuk dapat attract investment dan grow. Pemerintah focused pada human capital dan innovation, bukan resource extraction. Akibatnya, ekonomi diverse dan resilient.<br><br>
+            Key point: Institutions, human capital, dan policy framework lebih important untuk growth daripada natural resources.
+          </div>
+        </div>
+      </div>
+
+      <div class="kc" id="kc3-2">
+        <div class="kc-header" onclick="toggleKC('kc3-2')">
+          <div class="kc-header-title">Knowledge Check 3.2: Dutch Disease</div>
+          <div class="kc-toggle">ⓘ</div>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">Resource-rich country mengalami discovery besar dari natural gas. Bagaimana ini dapat merugikan manufacturing sector dalam short-term dan long-term?</div>
+          <div class="kc-answer">
+            <strong>Jawaban:</strong> <strong>Short-term:</strong> Natural gas exports menghasilkan foreign exchange earnings besar, yang mengappreciate currency. Dengan stronger currency, manufactured exports menjadi expensive di international markets, dan imports manufactured goods menjadi cheap. Profitability dari manufacturing firms menurun, dan some firms may close. Labor dan capital dalam manufacturing sector turun.<br><br>
+            <strong>Long-term:</strong> Dengan labor dan capital shift ke natural gas extraction (wages lebih tinggi karena resource rents), manufacturing sector deindustrializes. Deindustrialization merugikan jangka panjang karena: (1) manufacturing memiliki higher skill requirements dan learning-by-doing, (2) technology spillovers dari manufacturing ke other sectors berkurang, (3) human capital development melambat, (4) ketika natural gas depletes atau harganya jatuh, ekonomi kekurangan manufacturing base untuk provide employment dan growth.<br><br>
+            Named Dutch disease karena Netherlands mengalami ini setelah natural gas discovery.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: DEMOGRAFI & LABOR SUPPLY -->
+    <div class="chapter" id="section4">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 4</div>
+        <h2 class="chapter-title">Demografi dan Supply Tenaga Kerja</h2>
+      </div>
+
+      <h3 class="sub-header">Empat Faktor dalam Labor Input</h3>
+      <p class="prose">Labor input dalam production function dideterminasi oleh empat faktor utama:</p>
+
+      <ol class="num-list">
+        <li><strong>Population Growth (n):</strong> Tingkat pertumbuhan total populasi. Developing countries sering memiliki population growth tinggi (2-3% per tahun), sementara developed countries memiliki growth rendah (0-1%).</li>
+
+        <li><strong>Labor Force Participation Rate (LFPR):</strong> Persentase dari working-age population (biasanya 16-64 tahun) yang actively employed atau actively seeking employment. LFPR dipengaruhi oleh age structure, gender norms, dan economic incentives.</li>
+
+        <li><strong>Net Migration:</strong> Net flow dari workers masuk atau keluar negara. Immigration menambah labor force (dan seringkali skilled workers), sementara emigration mengurangi labor force (dan seringkali mengurangi human capital karena brain drain).</li>
+
+        <li><strong>Average Hours Worked:</strong> Rata-rata jam kerja per worker per tahun. Ini dipengaruhi oleh labor regulations (maksimal hours per week), vacation policies, dan work culture. Developed countries biasanya memiliki lebih sedikit working hours dibanding developing countries.</li>
+      </ol>
+
+      <p class="prose">Kombinasi dari empat faktor ini menentukan total labor input: L = Population × LFPR × (1 + net migration rate) × average hours worked. Growth dalam labor input adalah driver penting dari ekonomi growth, terutama dalam labor-intensive industries atau developing countries.</p>
+
+      <h3 class="sub-header">Population Growth dan GDP Per Capita</h3>
+      <p class="prose">Ada perbedaan penting antara total GDP growth dan GDP per capita growth:</p>
+
+      <p class="prose"><strong>Total GDP growth</strong> = labor input growth + capital deepening + technological progress. Dalam endogenous growth model, total GDP dapat grow cepat dari labor input growth yang tinggi.</p>
+
+      <p class="prose"><strong>GDP per capita growth</strong> = capital deepening + technological progress (roughly). Labor input growth, terutama dari population growth, TIDAK menambah GDP per capita — mereka menambah total GDP tetapi tersebar di lebih banyak people.</p>
+
+      <p class="prose">Oleh karena itu, developing countries dengan population growth tinggi (misalnya, 2.5% per tahun) akan memiliki total GDP growth tinggi tetapi GDP per capita growth lebih rendah. Contoh: Indonesia memiliki GDP growth ~5% per tahun tetapi population growth ~1%, sehingga GDP per capita growth hanya ~4%. Negara dengan population growth yang direncanakan lebih rendah (seperti China dengan one-child policy dulu) akan memiliki lebih banyak GDP per capita growth relatif terhadap total GDP growth.</p>
+
+      <h3 class="sub-header">Age Structure dan Demographic Burden vs Dividend</h3>
+      <p class="prose">Age structure dari populasi sangat penting untuk labor force growth dan economic growth. Ada dua phenomenon:</p>
+
+      <p class="prose"><strong>Demographic Dividend:</strong> Terjadi ketika ada large bulge dari working-age population (15-64) relatif terhadap dependent population (very young dan very old). Ini common di developing countries yang memiliki falling birth rates tetapi belum aging population. Contoh: Mexico, Indonesia, Philippines di 2000s-2010s memiliki demografic dividend — large percentage dari populasi adalah working-age, sedikit dependents, sehingga banyak potential workers dan sedikit yang perlu di-support. Ini boost labor force growth dan potentially GDP growth.</p>
+
+      <p class="prose"><strong>Demographic Burden:</strong> Terjadi ketika ada large percentage dari population yang very young (belum working) atau elderly (sudah retired). Ini common di developed countries dan aging developing countries. Contoh: Germany, Japan, dan increasingly China memiliki demographic burden — banyak elderly yang perlu healthcare dan pension support, sedikit young workers untuk support mereka. Ini reduce labor force growth dan potentially reduce GDP growth (need more resources untuk support dependents).</p>
+
+      <p class="prose">Mari lihat contoh spesifik dari Mexico vs Germany:</p>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Mexico (Demographic Dividend) vs Germany (Demographic Burden)</div>
+        <div class="exhibit-body">
+          <strong>Mexico (2015):</strong><br>
+          - 26.5% dari populasi berusia di bawah 15 (young, future workers)<br>
+          - 65.8% dari populasi berusia 15-64 (working-age)<br>
+          - 7.7% dari populasi berusia di atas 65 (elderly, pensioners)<br>
+          → Large working-age population relative to dependents = demographic dividend
+          <br><br>
+          <strong>Germany (2015):</strong><br>
+          - 13.5% dari populasi berusia di bawah 15<br>
+          - 65.0% dari populasi berusia 15-64<br>
+          - 21.5% dari populasi berusia di atas 65<br>
+          → Small working-age population relative to dependents = demographic burden
+          <br><br>
+          <strong>Implikasi:</strong> Mexico memiliki larger pool dari potential workers (demographic dividend dapat boost labor force growth) tetapi also larger pool dari young dependents yang perlu education. Germany memiliki shrinking labor force tetapi need large resources untuk support elderly population.
+        </div>
+      </exhibit>
+
+      <h3 class="sub-header">Female Labor Force Participation</h3>
+      <p class="prose">Peningkatan dalam female labor force participation (LFPR) adalah significant driver dari ekonomi growth di banyak negara. Ketika lebih banyak women masuk workforce, labor force dan output meningkat. Contoh dramatis adalah Spain:</p>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Spain: Female Labor Force Participation Growth (2000-2018)</div>
+        <div class="exhibit-body">
+          - 2000: Female LFPR = 52%<br>
+          - 2018: Female LFPR = 67.9%<br>
+          - Peningkatan 15.9 percentage points
+          <br><br>
+          Ini represent substantial increase dalam effective labor force, yang berkontribusi pada ekonomi growth. Peningkatan female LFPR driven by:
+          - Improved access ke education<br>
+          - Cultural change mengenai women's role di society<br>
+          - Better childcare services dan parental leave policies<br>
+          - Economic necessity dalam household
+        </div>
+      </exhibit>
+
+      <p class="prose">Female LFPR bervariasi dramatically across countries, sering reflecting cultural norms, institutional factors, dan level of development. Negara dengan higher female LFPR sering memiliki higher labor force growth dan potentially higher economic growth, asalkan capital dan technology tersedia untuk complement labor input.</p>
+
+      <h3 class="sub-header">Immigration dan Labor Supply</h3>
+      <p class="prose">Net immigration (immigrants minus emigrants) adalah faktor keempat dalam labor force growth. Countries yang attract immigrants increase total labor force dan potentially human capital (jika immigrants skilled). Contoh: United States, Canada, Australia, dan Gulf states (UAE, Qatar) all rely heavily pada immigration untuk labor force growth.</p>
+
+      <p class="prose">Namun, dalam Solow dan endogenous models, labor force growth dari immigration tidak improve per capita GDP dalam long-run — total GDP meningkat tetapi dibagi di antara lebih banyak people. Implikasi: immigration boost total GDP tetapi tidak boost per capita GDP (dalam model-model simple). Jika immigrants adalah skilled dan bring human capital, maka impact terhadap per capita GDP bisa positive karena human capital contribute ke technological progress.</p>
+
+      <p class="prose">Sebaliknya, emigration dari developing countries (brain drain) dapat merugikan karena skilled workers keluar dan membawa human capital, reducing potential growth dari origin country. Contoh: banyak doctors dan engineers dari India dan Philippines bermigrasi ke US atau Gulf states, reducing human capital dalam origin countries.</p>
+
+      <div class="kc" id="kc4-1">
+        <div class="kc-header" onclick="toggleKC('kc4-1')">
+          <div class="kc-header-title">Knowledge Check 4.1: Population Growth dan GDP Per Capita</div>
+          <div class="kc-toggle">ⓘ</div>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">Negara A memiliki total GDP growth 6% tetapi population growth 3%. Negara B memiliki total GDP growth 3% tetapi population growth 0.5%. Mana yang memiliki higher GDP per capita growth, dan mengapa?</div>
+          <div class="kc-answer">
+            <strong>Jawaban:</strong> Negara B memiliki higher GDP per capita growth. <br><br>
+            GDP per capita growth ≈ total GDP growth − population growth<br><br>
+            Negara A: 6% − 3% = 3% GDP per capita growth<br>
+            Negara B: 3% − 0.5% = 2.5% GDP per capita growth<br><br>
+            Meskipun Negara A memiliki faster total GDP growth, lebih banyak pertumbuhan itu dilusi oleh high population growth. Negara B, meskipun total GDP growth lebih rendah, translates lebih banyak dari itu ke per capita growth karena population growth sangat rendah.<br><br>
+            Insight: Developing countries dengan high population growth perlu very high total GDP growth untuk achieve high per capita growth. Negara dengan aging population dan low population growth dapat achieve meaningful per capita growth dengan lebih rendah total GDP growth.
+          </div>
+        </div>
+      </div>
+
+      <div class="kc" id="kc4-2">
+        <div class="kc-header" onclick="toggleKC('kc4-2')">
+          <div class="kc-header-title">Knowledge Check 4.2: Demographic Dividend vs Burden</div>
+          <div class="kc-toggle">ⓘ</div>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">Negara emerging market mengalami demographic dividend dengan 60% dari populasi dalam working-age bracket (15-64) dan hanya 5% over 65. Bagaimana ini mempengaruhi potential untuk economic growth?</div>
+          <div class="kc-answer">
+            <strong>Jawaban:</strong> Demographic dividend create favorable conditions untuk economic growth:
+            <br><br>
+            1. <strong>Labor Force Growth:</strong> Large working-age population means large potential labor force. Jika lebih banyak dari mereka participate dalam labor force, total labor input grows faster, boosting total GDP growth.<br><br>
+            2. <strong>Savings Potential:</strong> Working-age population yang large relative to dependents dapat have higher savings rate — less resources needed untuk support young dan old. Higher savings → higher investment → capital deepening dan growth.<br><br>
+            3. <strong>Window of Opportunity:</strong> Demographic dividend adalah temporary — jika negara tidak capitalize selama this window dengan investing dalam education, job creation, dan productivity improvement, opportunity hilang ketika populasi ages dan dividend becomes burden.<br><br>
+            Contoh: Indonesia, Vietnam, Philippines semua have demographic dividend saat ini dan dapat leverage untuk accelerate growth. Jika mereka invest dalam education dan job creation, potential untuk high growth decades terbuka. Jika tidak, akan transition menuju demographic burden dan growth melambat.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 5: LATIHAN SOAL -->
+    <div class="chapter" id="section5">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 5</div>
+        <h2 class="chapter-title">Latihan Soal: Item Set Vignette</h2>
+      </div>
+
+      <p class="prose" style="margin-bottom: 32px;">Bacalah vignette berikut dan jawab enam pertanyaan dengan memilih opsi A, B, atau C. Setiap pertanyaan worth satu poin. Setelah menyelesaikan semua pertanyaan, klik tombol "Lihat Skor" untuk melihat hasil Anda.</p>
+
+      <div class="vignette">
+        <div class="vignette-label">Vignette: Indonesia Economic Growth Strategy</div>
+        <p style="margin-bottom: 16px;">
+          <strong>Skenario:</strong> PT Maju Indonesia adalah asset management firm yang mengelola portfolio investasi di Southeast Asia. Firm ini sedang develop investment thesis untuk emerging economies di region tersebut. Economist firm, Budi Santoso, telah menganalisis prospek economic growth Indonesia, Philippines, dan Vietnam menggunakan framework endogenous growth model dan convergence hypothesis.
+        </p>
+
+        <p style="margin-bottom: 16px;">
+          <strong>Key Findings:</strong><br>
+          Indonesia: GDP per capita $3,600 (2024 estimate). Population 275 juta dengan population growth 1.1% per tahun. Female LFPR meningkat dari 48% (2010) menjadi 54% (2024). Government telah increase R&D spending sebagai % dari GDP dari 0.15% (2015) menjadi 0.35% (2024), targeting 1.0% pada 2030. Human capital (tertiary education completion) meningkat dari 12% (2010) menjadi 18% (2024). Institusi governance lemah (corruption index dalam bottom 50% globally), tetapi improving gradually.
+        </p>
+
+        <p style="margin-bottom: 16px;">
+          Philippines: GDP per capita $3,100 (2024 estimate). Population 120 juta dengan population growth 1.8% per tahun (higher dari Indonesia). Female LFPR stable pada 45% (little improvement dari decade prior). Government R&D spending hanya 0.12% dari GDP dan stagnant. Human capital similar ke Indonesia tetapi immigration besar (Filipinos working abroad), resulting dalam brain drain. Institusi governance juga lemah.
+        </p>
+
+        <p style="margin-bottom: 16px;">
+          Vietnam: GDP per capita $3,400 (2024 estimate). Population 98 juta dengan population growth 0.5% per tahun (lowest di region). Telah leverage manufacturing advantages dan technology transfer dari foreign companies. Human capital improving tetapi dari low base. Government institusi relatively stronger dan more stable dibanding neighbors. Trade openness tinggi.
+        </p>
+
+        <p style="margin-bottom: 0;">
+          <strong>Investment Question:</strong> Budi needs recommend negara mana untuk focus capital allocation dalam next 5-10 years untuk maximize long-run risk-adjusted returns, menggunakan growth models dan convergence framework.
+        </p>
+      </div>
+
+      <!-- QUESTION 1 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 1</div>
+        <div class="q-text">Berdasarkan endogenous growth model, jika Indonesia dapat increase R&D spending dari 0.35% menuju target 1.0% dari GDP dan maintain higher female LFPR, dampak yang paling likely pada long-run economic growth rate adalah:</div>
+
+        <div class="option" onclick="answer(0, 'X', 'X')">
+          <input type="radio" name="q0" value="X" id="q0a">
+          <label for="q0a"><strong>A)</strong> Permanent increase dalam long-run growth rate, karena higher R&D dan human capital accumulation increases productivity of capital (c dalam formula)</label>
+        </div>
+
+        <div class="option" onclick="answer(0, 'Y', 'X')">
+          <input type="radio" name="q0" value="Y" id="q0b">
+          <label for="q0b"><strong>B)</strong> Temporary increase dalam growth rate sampai Indonesia mencapai steady-state, kemudian growth rate kembali ke baseline neoclassical level</label>
+        </div>
+
+        <div class="option" onclick="answer(0, 'Z', 'X')">
+          <input type="radio" name="q0" value="Z" id="q0c">
+          <label for="q0c"><strong>C)</strong> Increase dalam total GDP tetapi tidak dalam GDP per capita growth, karena population growth offset gains dari R&D</label>
+        </div>
+
+        <div class="explanation" id="exp0">
+          <strong>Jawaban: A (BENAR)</strong><br>
+          Dalam endogenous growth model, R&D spending meningkatkan produktivitas capital (c dalam formula Δy/y = s·c − δ − n). Higher R&D intensity dan better human capital increase productivity of capital secara permanen. Juga, female LFPR yang lebih tinggi menambah effective labor force. Kombinasi ini results dalam permanent increase dalam long-run growth rate, bukan hanya temporary level shift seperti Solow model.<br><br>
+          Mengapa B salah: B describe Solow model behavior (temporary effect then return to baseline), bukan endogenous model. Dalam endogenous model, improvement dalam productivity factors (c) causes permanent shift dalam growth rate.<br><br>
+          Mengapa C salah: C confuses GDP dengan GDP per capita. Meskipun population growth (1.1%) offset beberapa dari GDP growth, formula endogenous Δy/y = s·c − δ − n sudah account untuk population growth. Peningkatan dalam R&D dan human capital still hasil permanent increase dalam per capita growth rate.
+        </div>
+      </div>
+
+      <!-- QUESTION 2 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 2</div>
+        <div class="q-text">Indonesia memiliki institutional governance yang lemah tetapi gradually improving. Dalam framework club convergence, ini dapat memungkinkan Indonesia untuk:</div>
+
+        <div class="option" onclick="answer(1, 'X', 'X')">
+          <input type="radio" name="q1" value="X" id="q1a">
+          <label for="q1a"><strong>A)</strong> Pindah dari low-income club menuju middle-income club melalui institutional reform, dengan long-run growth rate yang higher</label>
+        </div>
+
+        <div class="option" onclick="answer(1, 'Y', 'X')">
+          <input type="radio" name="q1" value="Y" id="q1b">
+          <label for="q1b"><strong>B)</strong> Absolutely converge dengan developed countries terlepas dari institusi karena capital deepening terjadi otomatis</label>
+        </div>
+
+        <div class="option" onclick="answer(1, 'Z', 'X')">
+          <input type="radio" name="q1" value="Z" id="q1c">
+          <label for="q1c"><strong>C)</strong> Stuck dalam low-development trap dimana institutional improvement impossible tanpa external aid</label>
+        </div>
+
+        <div class="explanation" id="exp1">
+          <strong>Jawaban: A (BENAR)</strong><br>
+          Club convergence framework menyatakan bahwa institusi adalah determinant utama dari club membership dan long-run growth rate. Dengan gradual institutional improvement, Indonesia dapat transition dari low-institutional-quality club (dengan low long-run growth) ke middle-quality club (dengan higher long-run growth). Ini adalah mekanisme yang explained Korea Selatan's transformation dari low-income menjadi high-income country.<br><br>
+          Mengapa B salah: B refer absolute convergence hypothesis, yang tidak supported oleh data empiris. Institusi matter greatly, bukan hanya capital deepening otomatis.<br><br>
+          Mengapa C salah: C terlalu pessimistic dan tidak supported oleh evidence. Banyak negara escape dari low-development trap melalui institutional reform (Korea, Botswana). Memang sulit tetapi tidak impossible.
+        </div>
+      </div>
+
+      <!-- QUESTION 3 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 3</div>
+        <div class="q-text">Dibandingkan Indonesia, Philippines memiliki higher population growth (1.8% vs 1.1%), lower female LFPR (45% vs 54%), lower R&D spending, dan significant brain drain. Implikasi PALING LIKELY untuk GDP per capita growth adalah:</div>
+
+        <div class="option" onclick="answer(2, 'X', 'X')">
+          <input type="radio" name="q2" value="X" id="q2a">
+          <label for="q2a"><strong>A)</strong> Philippines akan memiliki lower long-run GDP per capita growth, karena higher population growth dilutes per capita income dan lower R&D/LFPR reduces productivity growth</label>
+        </div>
+
+        <div class="option" onclick="answer(2, 'Y', 'X')">
+          <input type="radio" name="q2" value="Y" id="q2b">
+          <label for="q2b"><strong>B)</strong> Philippines akan memiliki higher GDP per capita growth karena demographic dividend dari young population</label>
+        </div>
+
+        <div class="option" onclick="answer(2, 'Z', 'X')">
+          <input type="radio" name="q2" value="Z" id="q2c">
+          <label for="q2c"><strong>C)</strong> GDP per capita growth akan sama untuk kedua negara karena convergence hypothesis predicts countries akan catch-up</label>
+        </div>
+
+        <div class="explanation" id="exp2">
+          <strong>Jawaban: A (BENAR)</strong><br>
+          Menggunakan formula endogenous growth: Δy per capita ≈ s·c − δ − n (dimana lebih tinggi n = population growth). Philippines memiliki:<br>
+          - Higher population growth → dilutes per capita income<br>
+          - Lower R&D spending dan slower human capital → lower productivity of capital (c)<br>
+          - Brain drain → loss dari skilled workers dan human capital<br>
+          - Lower female LFPR → underutilization dari labor resources<br><br>
+          Kombinasi factors ini result dalam lower long-run GDP per capita growth untuk Philippines.<br><br>
+          Mengapa B salah: B confuses demographic dividend (large working-age population) dengan GDP per capita growth. Demographic dividend bisa boost total GDP tetapi tidak GDP per capita jika tidak coupled dengan higher R&D dan productivity improvement.<br><br>
+          Mengapa C salah: C ignore perbedaan dalam R&D, human capital, dan institusi yang affect long-run growth rate. Conditional convergence tidak predict same growth rate; conditional pada karakteristik country.
+        </div>
+      </div>
+
+      <!-- QUESTION 4 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 4</div>
+        <div class="q-text">Vietnam memiliki low population growth (0.5%), relatively stronger institutions, dan leveraging manufacturing/technology transfer dari FDI. Dalam conditional convergence framework, ini mengimplikasikan bahwa Vietnam:</div>
+
+        <div class="option" onclick="answer(3, 'X', 'X')">
+          <input type="radio" name="q3" value="X" id="q3a">
+          <label for="q3a"><strong>A)</strong> Dapat converge dengan higher income club lebih cepat dari Indonesia/Philippines karena kombinasi dari low population growth, stronger institutions, dan capital deepening dari technology adoption</label>
+        </div>
+
+        <div class="option" onclick="answer(3, 'Y', 'X')">
+          <input type="radio" name="q3" value="Y" id="q3b">
+          <label for="q3b"><strong>B)</strong> Akan experience slower economic growth karena low population growth mengurangi total labor force</label>
+        </div>
+
+        <div class="option" onclick="answer(3, 'Z', 'X')">
+          <input type="radio" name="q3" value="Z" id="q3c">
+          <label for="q3c"><strong>C)</strong> Akan diverge dari neighbors karena endogenous growth model predicts divergence, bukan convergence</label>
+        </div>
+
+        <div class="explanation" id="exp3">
+          <strong>Jawaban: A (BENAR)</strong><br>
+          Vietnam memiliki beberapa kondisi positif:<br>
+          - Low population growth (0.5%) means more dari GDP growth translates ke per capita growth<br>
+          - Stronger institutions → dapat attract investment dan FDI<br>
+          - Technology adoption dari manufacturing FDI → capital deepening dengan relative cepat<br>
+          - Trade openness → akses ke global markets dan technology<br><br>
+          Dalam conditional convergence, Vietnam dengan characteristics ini dapat converge ke higher-income steady-state lebih cepat dari countries dengan weaker institutions dan higher population growth. Vietnam leverage "two sources of convergence": capital deepening (dari FDI technology transfer) dan technology adoption (dari manufacturing sector).<br><br>
+          Mengapa B salah: B memang true bahwa total GDP growth lebih rendah dari neighbors dengan higher population growth, tetapi GDP PER CAPITA growth adalah relevant metric. Dengan low population growth, per capita growth bisa tinggi even dengan moderate total GDP growth.<br><br>
+          Mengapa C salah: C refer endogenous divergence prediction, tetapi Vietnam institutional improvement dan technology adoption leverage conditional convergence mechanism lebih strong.
+        </div>
+      </div>
+
+      <!-- QUESTION 5 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 5</div>
+        <div class="q-text">PT Maju Indonesia sedang consider allocation untuk 10-year horizon. Jika private returns dari R&D investment di Indonesia lebih rendah dari social returns (karena spillover effects), hal ini suggests:</div>
+
+        <div class="option" onclick="answer(4, 'X', 'X')">
+          <input type="radio" name="q4" value="X" id="q4a">
+          <label for="q4a"><strong>A)</strong> Government subsidy untuk R&D justified karena menghasilkan social returns jauh lebih tinggi dari private returns yang diterima firm individual</label>
+        </div>
+
+        <div class="option" onclick="answer(4, 'Y', 'X')">
+          <input type="radio" name="q4" value="Y" id="q4b">
+          <label for="q4b"><strong>B)</strong> Private firms tidak should invest dalam R&D karena returns insufficient untuk justify investment</label>
+        </div>
+
+        <div class="option" onclick="answer(4, 'Z', 'X')">
+          <input type="radio" name="q4" value="Z" id="q4c">
+          <label for="q4c"><strong>C)</strong> Spillover effects reduce total returns untuk ekonomi karena knowledge difusi membuat proprietary technology tidak valuable</label>
+        </div>
+
+        <div class="explanation" id="exp4">
+          <strong>Jawaban: A (BENAR)</strong><br>
+          Dalam endogenous growth model, spillover effects menghasilkan gap antara private returns (yang diterima firm investor) dan social returns (keuntungan total bagi masyarakat). Jika social returns >> private returns, maka under-investment dalam R&D terjadi dari perspektif sosial optimal. Government subsidy dapat mengatasi market failure ini dengan meningkatkan incentive untuk R&D investment, resulting dalam higher long-run growth untuk ekonomi overall.<br><br>
+          Mengapa B salah: B terlalu extreme. Private firms masih akan invest dalam R&D jika private returns cukup attractive (misalnya, through patent protection atau first-mover advantage), meskipun private returns < social returns. Masalahnya adalah under-investment, bukan zero investment.<br><br>
+          Mengapa C salah: C confuses spillover effects dengan reduction dalam total returns. Sebeliknya, spillover effects INCREASE total returns untuk ekonomi (yang adalah social returns), meskipun reduce returns yang diklaim private firm. Ini adalah alasan untuk government subsidy — untuk internaliz spillovers.
+        </div>
+      </div>
+
+      <!-- QUESTION 6 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 6</div>
+        <div class="q-text">Berdasarkan seluruh analysis menggunakan endogenous growth model dan convergence hypotheses, negara mana yang likely provide highest long-run risk-adjusted returns untuk asset allocation next 5-10 years?</div>
+
+        <div class="option" onclick="answer(5, 'X', 'X')">
+          <input type="radio" name="q5" value="X" id="q5a">
+          <label for="q5a"><strong>A)</strong> Indonesia, karena combination dari demographic dividend, improving institutional quality, increasing R&D/human capital investment, dan rising female LFPR—all aligned dengan endogenous growth drivers untuk sustained acceleration</label>
+        </div>
+
+        <div class="option" onclick="answer(5, 'Y', 'X')">
+          <input type="radio" name="q5" value="Y" id="q5b">
+          <label for="q5b"><strong>B)</strong> Philippines, karena highest population growth provides largest demographic dividend untuk total GDP growth</label>
+        </div>
+
+        <div class="option" onclick="answer(5, 'Z', 'X')">
+          <input type="radio" name="q5" value="Z" id="q5c">
+          <label for="q5c"><strong>C)</strong> Vietnam, karena sudah leverage technology transfer dan tidak memiliki demographic burden</label>
+        </div>
+
+        <div class="explanation" id="exp5">
+          <strong>Jawaban: A (BENAR)</strong><br>
+          Indonesia memiliki best combination dari favorable factors:<br><br>
+          1. <strong>R&D Investment:</strong> Aggressive increase dari 0.35% menuju 1.0% from GDP target → productivity improvement drivers dalam endogenous model<br>
+          2. <strong>Human Capital:</strong> Tertiary education completion rising (12% → 18%) → human capital accumulation boost growth<br>
+          3. <strong>Female LFPR Rising:</strong> Dari 48% → 54% → effective labor force increasing<br>
+          4. <strong>Reasonable Population Growth:</strong> 1.1% adalah manageable (not too high dilution tetapi still providing labor force growth)<br>
+          5. <strong>Institutional Improvement:</strong> Gradual improving → dapat enable transition menuju higher-income club<br><br>
+          Kombinasi ini aligned dengan endogenous growth drivers (R&D, human capital, labor force growth) untuk sustained acceleration. Indonesia dalam transition window dimana institusi improving DAN R&D/human capital increasing.<br><br>
+          Mengapa B salah: Philippines memiliki highest population growth tetapi lowest R&D, lowest female LFPR, brain drain, dan weak institution. Higher population growth tidak offset oleh lower productivity growth — result net adalah lower per capita growth, bukan higher.<br><br>
+          Mengapa C salah: Vietnam memiliki beberapa advantages (low population growth, institutions) tetapi per capita income sudah hampir sama dengan Indonesia dan upside lebih terbatas. Technology transfer advantage sudah partially captured. Indonesia has more room untuk catch-up dan acceleration jika R&D/human capital initiatives deliver.
+        </div>
+      </div>
+
+      <!-- SCORE PANEL -->
+      <div style="text-align: center; margin-top: 40px;">
+        <button onclick="showScore()" style="padding: 12px 28px; background: var(--gold); color: white; border: none; border-radius: var(--r-sm); font-weight: 600; font-size: 15px; cursor: pointer;">Lihat Skor</button>
+      </div>
+
+      <div class="score-panel" id="scorePanel">
+        <h3>Skor Anda</h3>
+        <p id="scoreText">0 / 6</p>
+      </div>
+    </div>
+
+    <!-- BOTTOM NAVIGATION -->
+    <div class="nav-bottom">
+      <a href="#" class="nav-btn">
+        ← Hari Sebelumnya
+        <span class="nav-day">Day 17 · Solow Growth Model</span>
+      </a>
+      <a href="#" class="nav-btn">
+        Hari Berikutnya →
+        <span class="nav-day">Day 19 · Intercorporate Investments</span>
+      </a>
+    </div>
+  </div>
+
+  <script>
+function toggleKC(id) {
+  const kc = document.getElementById(id).closest('.kc');
+  kc.classList.toggle('open');
+}
+
+const answers = {};
+const correct = { 0: 'X', 1: 'X', 2: 'X', 3: 'X', 4: 'X', 5: 'X' };
+const total = 6;
+
+function answer(qIdx, chosen, correctAns) {
+  if (!chosen) return;
+  answers[qIdx] = chosen === correctAns;
+  const expDiv = document.getElementById(`exp${qIdx}`);
+  expDiv.classList.add('show');
+}
+
+function showScore() {
+  let score = 0;
+  for (let key in answers) {
+    if (answers[key]) score++;
+  }
+  document.getElementById('scoreText').textContent = `${score} / ${total}`;
+  document.getElementById('scorePanel').classList.add('show');
+}
+  </script>
+</body>
+</html>

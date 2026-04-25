@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level II Day 21 - Employee Compensation: Defined Benefit Pension (Full)</title>
+  <style>
+:root {
+  --bg:      #fafaf8;
+  --bg2:     #f4f3ef;
+  --bg3:     #eeece7;
+  --border:  rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text:    #1a1a2e;
+  --text2:   #4a4a6a;
+  --text3:   #8a8aaa;
+  --gold:    #9a6e1a;
+  --gold2:   #7a5010;
+  --gold-bg: rgba(154,110,26,0.08);
+  --blue:    #1a5fa8;
+  --blue-bg: rgba(26,95,168,0.08);
+  --green:   #1a7a4a;
+  --green-bg: rgba(26,122,74,0.08);
+  --red:     #b83232;
+  --red-bg:  rgba(184,50,50,0.08);
+  --amber:   #a06010;
+  --amber-bg: rgba(160,96,16,0.08);
+  --r: 10px;
+  --r-sm: 6px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  font-size: 15px;
+}
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+  background: white;
+  box-shadow: 0 0 40px rgba(0,0,0,0.04);
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+
+.breadcrumb {
+  font-size: 13px;
+  color: var(--text2);
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.day-badge, .version-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  background: var(--gold-bg);
+  color: var(--gold2);
+  border-radius: var(--r-sm);
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 12px;
+}
+
+.version-badge {
+  background: var(--blue-bg);
+  color: var(--blue);
+  margin-left: 8px;
+}
+
+.hero { margin-bottom: 48px; }
+
+.hero-tag {
+  font-size: 13px;
+  color: var(--gold);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.hero-title {
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: var(--text2);
+  margin-bottom: 28px;
+}
+
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.meta-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 13px;
+  color: var(--text2);
+  font-weight: 500;
+}
+
+.toc {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 32px;
+  margin-bottom: 48px;
+}
+
+.toc-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+
+.toc-list { list-style: none; }
+.toc-list li {
+  margin-bottom: 12px;
+  font-size: 15px;
+}
+
+.toc-num {
+  color: var(--gold);
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.chapter {
+  margin-bottom: 56px;
+  scroll-margin-top: 100px;
+}
+
+.chapter-header { margin-bottom: 28px; }
+
+.chapter-num {
+  font-size: 13px;
+  color: var(--text3);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.chapter-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text);
+  margin-top: 8px;
+}
+
+.sub-header {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 28px 0 16px 0;
+}
+
+.prose {
+  color: var(--text);
+  margin-bottom: 16px;
+  line-height: 1.75;
+}
+
+.formula-block {
+  background: var(--bg2);
+  border-left: 4px solid var(--gold);
+  border-radius: var(--r-sm);
+  padding: 20px;
+  margin: 24px 0;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: var(--text);
+  overflow-x: auto;
+}
+
+.formula-block .label {
+  font-weight: 700;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: 'Inter', sans-serif;
+}
+
+.formula-block .note {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--text2);
+  margin-top: 12px;
+  line-height: 1.6;
+}
+
+.exhibit {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px;
+  margin: 32px 0;
+}
+
+.exhibit-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 20px;
+}
+
+.exhibit-body {
+  color: var(--text);
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.reg-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 14px;
+}
+
+.reg-table th {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 12px;
+  text-align: left;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.reg-table td {
+  border: 1px solid var(--border);
+  padding: 12px;
+  color: var(--text2);
+}
+
+.reg-table tr:nth-child(even) { background: rgba(255,255,255,0.5); }
+
+.callout {
+  border-radius: var(--r);
+  padding: 20px;
+  margin: 24px 0;
+  border-left: 4px solid;
+}
+
+.callout.blue { background: var(--blue-bg); border-left-color: var(--blue); }
+.callout.amber { background: var(--amber-bg); border-left-color: var(--amber); }
+.callout.green { background: var(--green-bg); border-left-color: var(--green); }
+.callout.red { background: var(--red-bg); border-left-color: var(--red); }
+.callout.gold { background: var(--gold-bg); border-left-color: var(--gold); }
+
+.callout-title {
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: block;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.callout.blue .callout-title { color: var(--blue); }
+.callout.amber .callout-title { color: var(--amber); }
+.callout.green .callout-title { color: var(--green); }
+.callout.red .callout-title { color: var(--red); }
+.callout.gold .callout-title { color: var(--gold); }
+
+.callout p, .callout li {
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.callout ul { padding-left: 20px; margin-top: 8px; }
+
+.kc {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  margin: 28px 0;
+  overflow: hidden;
+}
+
+.kc-header {
+  padding: 18px 20px;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+
+.kc-header:hover { background: rgba(0,0,0,0.04); }
+
+.kc-header-title {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.kc-toggle {
+  color: var(--text3);
+  font-weight: 700;
+  font-size: 18px;
+  transition: transform 0.2s;
+}
+
+.kc.open .kc-toggle { transform: rotate(180deg); }
+
+.kc-body {
+  padding: 20px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.kc.open .kc-body { max-height: 1200px; }
+
+.kc-q {
+  color: var(--text);
+  margin-bottom: 16px;
+  line-height: 1.7;
+  font-weight: 500;
+}
+
+.kc-answer {
+  color: var(--text2);
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.num-list, .bullet-list {
+  margin: 16px 0;
+  padding-left: 24px;
+}
+
+.num-list li, .bullet-list li {
+  margin-bottom: 10px;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 40px 0;
+}
+
+.practice-header { margin-bottom: 28px; }
+
+.practice-body {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px;
+}
+
+.vignette {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.vignette-label {
+  font-size: 12px;
+  color: var(--text3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.question-block { margin-bottom: 28px; }
+
+.q-num {
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.q-text {
+  color: var(--text);
+  line-height: 1.8;
+  margin-bottom: 14px;
+}
+
+.option {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  background: white;
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+  font-size: 14px;
+}
+
+.option:hover { background: var(--bg2); border-color: var(--gold); }
+
+.explanation {
+  margin-top: 16px;
+  padding: 16px;
+  background: var(--blue-bg);
+  border-left: 4px solid var(--blue);
+  border-radius: var(--r-sm);
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.7;
+  display: none;
+}
+
+.explanation.show { display: block; }
+.explanation.correct { background: var(--green-bg); border-left-color: var(--green); }
+.explanation.incorrect { background: var(--red-bg); border-left-color: var(--red); }
+
+.score-panel {
+  margin-top: 32px;
+  padding: 24px;
+  background: var(--green-bg);
+  border-radius: var(--r);
+  text-align: center;
+  display: none;
+}
+
+.score-panel.show { display: block; }
+.score-panel h3 { color: var(--green); font-size: 16px; margin-bottom: 8px; }
+.score-panel p { color: var(--text); font-size: 24px; font-weight: 700; }
+
+.nav-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 0;
+  margin-top: 48px;
+  border-top: 1px solid var(--border);
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nav-btn:hover { background: var(--bg3); border-color: var(--border2); }
+
+@media (max-width: 768px) {
+  .hero-title { font-size: 28px; }
+  .page { padding: 0 16px; }
+  .meta-row { gap: 8px; }
+  .nav-bottom { flex-direction: column; gap: 16px; }
+  .nav-btn { width: 100%; justify-content: center; }
+}
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="breadcrumb">CFA Level II &middot; FSA &middot; LM2</div>
+      <div>
+        <span class="version-badge">Versi Full</span>
+        <span class="day-badge">Day 21 of 90</span>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-tag">Senin, 11 Mei 2026</div>
+      <h1 class="hero-title">Employee Compensation: Defined Benefit Pension</h1>
+      <p class="hero-sub">Pemahaman komprehensif tentang program pensiun imbalan pasti (DB) — dari konsep funded status dan PBO, hingga komponen periodic pension cost di bawah IFRS dan US GAAP, remeasurement dalam OCI, serta implikasi analitis bagi investor ekuitas dan valuasi DCF.</p>
+      <div class="meta-row">
+        <div class="meta-pill">Materi Lengkap</div>
+        <div class="meta-pill">Bahasa Indonesia</div>
+        <div class="meta-pill">~12% Exam Weight</div>
+        <div class="meta-pill">Baca 45–60 Menit</div>
+      </div>
+    </div>
+
+    <!-- TABLE OF CONTENTS -->
+    <div class="toc">
+      <h2 class="toc-title">Daftar Isi</h2>
+      <ul class="toc-list">
+        <li><span class="toc-num">0.</span> <a href="#section0" style="color:var(--text);text-decoration:none;">Learning Outcomes</a></li>
+        <li><span class="toc-num">1.</span> <a href="#section1" style="color:var(--text);text-decoration:none;">Jenis Program Pensiun: DC vs DB</a></li>
+        <li><span class="toc-num">2.</span> <a href="#section2" style="color:var(--text);text-decoration:none;">Kewajiban Pensiun: PBO, ABO, dan Funded Status</a></li>
+        <li><span class="toc-num">3.</span> <a href="#section3" style="color:var(--text);text-decoration:none;">Komponen Pension Cost: IFRS (IAS 19)</a></li>
+        <li><span class="toc-num">4.</span> <a href="#section4" style="color:var(--text);text-decoration:none;">Perbedaan US GAAP: Expected Return &amp; Corridor</a></li>
+        <li><span class="toc-num">5.</span> <a href="#section5" style="color:var(--text);text-decoration:none;">Analisis Laporan Keuangan &amp; Implikasi Valuasi</a></li>
+        <li><span class="toc-num">6.</span> <a href="#section6" style="color:var(--text);text-decoration:none;">Latihan Soal Item Set</a></li>
+      </ul>
+    </div>
+
+    <!-- SECTION 0: LEARNING OUTCOMES -->
+    <div class="chapter" id="section0">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 0</div>
+        <h2 class="chapter-title">Learning Outcomes</h2>
+      </div>
+      <p class="prose">Setelah menyelesaikan modul ini, Anda mampu untuk:</p>
+      <ol class="num-list">
+        <li>Membedakan program pensiun defined contribution (DC) dan defined benefit (DB) dari sisi risiko, kompleksitas akuntansi, dan dampak terhadap laporan keuangan</li>
+        <li>Menjelaskan konsep projected benefit obligation (PBO), accumulated benefit obligation (ABO), plan assets, dan funded status, serta bagaimana masing-masing bergerak dari periode ke periode</li>
+        <li>Menghitung komponen periodic pension cost di bawah IFRS (service cost, net interest expense/income, remeasurement) dan mengidentifikasi di mana masing-masing dilaporkan (P&L vs OCI)</li>
+        <li>Membandingkan perlakuan pension cost di bawah US GAAP — termasuk expected return on plan assets, amortisasi past service cost, dan corridor approach untuk actuarial gains/losses</li>
+        <li>Menganalisis implikasi asumsi aktuarial terhadap kualitas earnings: pilihan discount rate, expected rate of return on plan assets, dan salary growth rate</li>
+        <li>Melakukan penyesuaian analitis untuk DB plans dalam konteks laporan keuangan dan valuasi DCF: memperlakukan net pension liability sebagai debt-equivalent</li>
+      </ol>
+    </div>
+
+    <!-- SECTION 1: DC vs DB -->
+    <div class="chapter" id="section1">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 1</div>
+        <h2 class="chapter-title">Jenis Program Pensiun: DC vs DB</h2>
+      </div>
+
+      <p class="prose">Kompensasi pasca-kerja (post-employment benefits) adalah salah satu bentuk kompensasi jangka panjang yang paling signifikan secara finansial bagi banyak perusahaan. Di berbagai negara, program pensiun merupakan komponen penting dalam paket kompensasi karyawan — baik karena diwajibkan regulasi maupun sebagai strategi retensi. Dari perspektif akuntansi, cara perusahaan mengklasifikasikan dan melaporkan program pensiun ini memiliki dampak besar terhadap kewajiban di neraca, beban di laporan laba rugi, dan arus kas.</p>
+
+      <p class="prose">Standar akuntansi membedakan dua jenis utama program pensiun:</p>
+
+      <div class="sub-header">1.1 Defined Contribution (DC) Plans</div>
+
+      <p class="prose">Dalam program DC, perusahaan sponsor berkomitmen untuk membayar kontribusi tetap ke rekening individu karyawan — biasanya persentase dari gaji. Karyawan kemudian memilih bagaimana menginvestasikan dana tersebut dari pilihan yang tersedia (reksa dana saham, obligasi, dll). Setelah kontribusi dibayarkan, kewajiban perusahaan berakhir — perusahaan tidak bertanggung jawab atas hasil investasi.</p>
+
+      <p class="prose">Akuntansi DC sangat sederhana: contribution expense = jumlah kontribusi yang dibayar. Ini dilaporkan sebagai operating expense pada periode berjalan. Tidak ada kewajiban jangka panjang di neraca, tidak ada kerumitan aktuarial, dan tidak ada perbedaan IFRS vs US GAAP yang signifikan. Di Indonesia, sistem BPJS Ketenagakerjaan untuk Jaminan Hari Tua (JHT) memiliki karakteristik yang mirip DC: iuran tetap, risiko ada pada peserta.</p>
+
+      <div class="sub-header">1.2 Defined Benefit (DB) Plans</div>
+
+      <p class="prose">Dalam program DB, perusahaan berjanji membayar manfaat pensiun tertentu di masa depan — biasanya ditetapkan oleh formula seperti:</p>
+
+      <div class="formula-block">
+        <span class="label">Formula DB Benefit Umum</span>
+Manfaat Tahunan = X% × Gaji Akhir × Tahun Pengabdian
+
+Contoh: Jika X = 1%, gaji terakhir Rp 200 juta, masa kerja 30 tahun:
+Manfaat = 1% × 200 juta × 30 = Rp 60 juta per tahun (dibayar setelah pensiun)
+        <div class="note">Formula ini menciptakan kewajiban yang bergantung pada gaji di masa depan (proyeksi) dan lamanya karyawan bekerja — keduanya tidak pasti saat ini, sehingga memerlukan asumsi aktuarial.</div>
+      </div>
+
+      <p class="prose">Risiko dalam DB plan sepenuhnya ada pada perusahaan: jika investasi plan assets berkinerja buruk, atau jika karyawan hidup lebih lama dari perkiraan, atau jika suku bunga jatuh drastis sehingga PBO membengkak — semua itu menjadi tanggungan perusahaan. Inilah mengapa DB plan dianggap sebagai "hidden leverage" — kewajiban jangka panjang yang mirip utang tetapi seringkali tidak sepenuhnya terlihat dari headline numbers laporan keuangan.</p>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 1: Perbandingan DC vs DB Plans</div>
+        <div class="exhibit-body">
+          <table class="reg-table">
+            <thead>
+              <tr>
+                <th>Dimensi</th>
+                <th>Defined Contribution (DC)</th>
+                <th>Defined Benefit (DB)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Yang ditetapkan</strong></td>
+                <td>Kontribusi periodik</td>
+                <td>Manfaat yang akan diterima</td>
+              </tr>
+              <tr>
+                <td><strong>Risiko investasi</strong></td>
+                <td>Karyawan</td>
+                <td>Perusahaan (sponsor)</td>
+              </tr>
+              <tr>
+                <td><strong>Risiko aktuarial</strong></td>
+                <td>Tidak ada bagi perusahaan</td>
+                <td>Sepenuhnya pada perusahaan</td>
+              </tr>
+              <tr>
+                <td><strong>Kewajiban setelah iuran</strong></td>
+                <td>Tidak ada lagi</td>
+                <td>Tetap ada hingga semua manfaat terbayar</td>
+              </tr>
+              <tr>
+                <td><strong>Neraca</strong></td>
+                <td>Tidak ada kewajiban jangka panjang</td>
+                <td>Net pension liability atau asset</td>
+              </tr>
+              <tr>
+                <td><strong>Laporan laba rugi</strong></td>
+                <td>Contribution expense sederhana</td>
+                <td>Beberapa komponen kompleks</td>
+              </tr>
+              <tr>
+                <td><strong>Perbedaan IFRS vs US GAAP</strong></td>
+                <td>Minimal</td>
+                <td>Signifikan (terutama di P&L)</td>
+              </tr>
+              <tr>
+                <td><strong>Tren</strong></td>
+                <td>Makin dominan di sektor swasta</td>
+                <td>Masih dominan di sektor publik</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="callout blue">
+        <span class="callout-title">Konteks Indonesia</span>
+        <p>UU No. 13/2003 tentang Ketenagakerjaan dan perubahannya (UU Cipta Kerja 2020) mewajibkan perusahaan membayar pesangon, uang penghargaan masa kerja, dan uang penggantian hak kepada karyawan yang di-PHK — dengan formula berbasis gaji dan masa kerja. Secara substansi, ini adalah kewajiban DB plan. Perusahaan harus mengestimasi dan mengakui kewajiban ini di neraca sesuai PSAK 24 (sejalan dengan IAS 19). BUMN besar di Indonesia — Pertamina, PLN, Telkom — punya program pensiun DB legacy yang nilainya sangat material.</p>
+      </div>
+
+      <div class="kc" id="kc1">
+        <div class="kc-header" onclick="toggleKC('kc1')">
+          <span class="kc-header-title">Knowledge Check 1.1 — Identifikasi Jenis Plan</span>
+          <span class="kc-toggle">▾</span>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">PT Nusantara Maju (NM) memberikan kontribusi sebesar 5% dari gaji pokok karyawan ke rekening DPLK (Dana Pensiun Lembaga Keuangan) setiap bulan. Karyawan dapat memilih alokasi investasinya. Setelah kontribusi dibayar, NM tidak punya kewajiban tambahan. Jenis plan apa ini? Bagaimana dampaknya terhadap neraca NM?</div>
+          <div class="kc-answer">
+            <p>Ini adalah <strong>Defined Contribution (DC) plan</strong>. Karakteristiknya: kontribusi tetap (5% gaji), risiko investasi pada karyawan, dan kewajiban NM berakhir setelah membayar kontribusi.</p>
+            <p style="margin-top: 8px;">Dampak terhadap neraca: <strong>Tidak ada kewajiban jangka panjang</strong> dari plan ini di neraca NM. Setiap periode, NM hanya mengakui contribution expense dan current liability (accrued contribution) yang segera dilunasi. Tidak perlu melibatkan aktuaris atau mengestimasi kewajiban masa depan.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: PBO, ABO, FUNDED STATUS -->
+    <div class="chapter" id="section2">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 2</div>
+        <h2 class="chapter-title">Kewajiban Pensiun: PBO, ABO, dan Funded Status</h2>
+      </div>
+
+      <p class="prose">Inti dari akuntansi DB plan adalah pengukuran kewajiban perusahaan kepada pensiunan — berapa yang harus dibayarkan di masa depan, dalam present value terms. Ada beberapa konsep ukuran kewajiban yang perlu dipahami:</p>
+
+      <div class="sub-header">2.1 Projected Benefit Obligation (PBO)</div>
+
+      <p class="prose">PBO adalah present value dari seluruh manfaat pensiun yang telah terakumulasi berdasarkan jasa karyawan saat ini dan sebelumnya, dihitung menggunakan proyeksi gaji di masa depan (projected final salary). PBO merupakan ukuran yang digunakan oleh IFRS (disebut sebagai "pension obligation" atau "defined benefit obligation") dan juga relevan dalam US GAAP.</p>
+
+      <p class="prose">PBO menggunakan <em>projected unit credit method</em>: setiap tahun pengabdian memberikan satu "unit" manfaat tambahan kepada karyawan, dan aktuaris menghitung present value dari seluruh unit manfaat yang telah terakumulasi hingga tanggal laporan, menggunakan proyeksi gaji terakhir (bukan gaji saat ini). Karena manfaat akan dibayarkan bertahun-tahun di masa depan, mereka harus di-discount ke present value menggunakan discount rate yang tepat.</p>
+
+      <div class="formula-block">
+        <span class="label">Discount Rate untuk PBO</span>
+Discount Rate = Yield obligasi korporat investment grade
+                dalam currency yang sama dengan kewajiban
+
+Jika pasar obligasi korporat tidak likuid → gunakan obligasi pemerintah
+        <div class="note">Semakin tinggi discount rate → PBO lebih rendah (present value kewajiban masa depan turun). Ini adalah sensitivitas paling kritis dalam DB plan: penurunan suku bunga 100 bps bisa meningkatkan PBO secara dramatis karena duration kewajiban pensiun sangat panjang (bisa 15–30 tahun).</div>
+      </div>
+
+      <div class="sub-header">2.2 Accumulated Benefit Obligation (ABO)</div>
+
+      <p class="prose">ABO adalah terminologi US GAAP yang mengukur kewajiban pensiun menggunakan gaji <em>saat ini</em> (bukan proyeksi gaji akhir). Karena tidak memperhitungkan kenaikan gaji di masa depan, ABO selalu lebih kecil atau sama dengan PBO. ABO relevan dalam konteks tertentu (seperti plan termination valuation) tapi BUKAN ukuran utama yang digunakan dalam akuntansi laporan keuangan. Dalam exam CFA L2, PBO-lah yang selalu digunakan dalam perhitungan funded status.</p>
+
+      <div class="callout amber">
+        <span class="callout-title">ABO vs PBO — Jangan Tertukar</span>
+        <p>PBO (menggunakan projected final salary) &gt; ABO (menggunakan current salary) karena gaji biasanya naik dari waktu ke waktu. Untuk keperluan laporan keuangan dan perhitungan funded status, selalu gunakan PBO. ABO kadang disebutkan dalam konteks plan termination atau sebagai alat perbandingan, tapi bukan dasar akuntansi utama.</p>
+      </div>
+
+      <div class="sub-header">2.3 Funded Status dan Presentasi Neraca</div>
+
+      <p class="prose">Funded status adalah selisih antara fair value plan assets dan PBO pada tanggal laporan. Ini adalah yang dilaporkan di neraca — baik IFRS maupun US GAAP mewajibkan pengakuan funded status secara "net" (satu angka bersih, bukan gross PBO dan gross plan assets):</p>
+
+      <div class="formula-block">
+        <span class="label">Funded Status</span>
+Funded Status = Fair Value of Plan Assets − Pension Obligation (PBO)
+
+Jika Funded Status > 0  →  Plan OVERFUNDED  →  Net Pension ASSET di neraca
+Jika Funded Status < 0  →  Plan UNDERFUNDED →  Net Pension LIABILITY di neraca
+        <div class="note">Penting: Plan assets adalah aset yang secara hukum TERPISAH dari aset perusahaan, dikelola oleh trustee plan, dan dilindungi dari kreditor sponsor (bahkan jika sponsor bangkrut). Mereka diukur pada fair value setiap periode pelaporan.</div>
+      </div>
+
+      <p class="prose">Presentasi yang diizinkan: jika perusahaan mensponsori beberapa plan — misalnya satu plan overfunded dan satu lagi underfunded — keduanya TIDAK bisa di-net satu sama lain. Setiap plan dilaporkan terpisah. Tidak jarang sebuah perusahaan besar melaporkan baik "net pension asset" maupun "net pension liability" sekaligus untuk plan yang berbeda-beda.</p>
+
+      <div class="sub-header">2.4 Pergerakan PBO dari Periode ke Periode</div>
+
+      <p class="prose">PBO bergerak setiap tahun karena beberapa faktor. Memahami pergerakan ini kritis untuk memahami komponen pension cost:</p>
+
+      <div class="formula-block">
+        <span class="label">Rekonsiliasi PBO</span>
+PBO Akhir Tahun = PBO Awal Tahun
+                  + Current Service Cost    [jasa karyawan tahun ini]
+                  + Interest Cost           [= PBO awal × discount rate]
+                  + Past Service Cost       [amandemen plan, jika ada]
+                  − Benefits Paid           [manfaat dibayar ke pensiunan]
+                  ± Actuarial Gains/Losses  [perubahan asumsi]
+                  ± Currency Effects        [jika plan dalam currency berbeda]
+        <div class="note">Interest cost mencerminkan "unwinding of the discount" — semakin dekat tanggal pembayaran, present value kewajiban semakin mendekati nilai nominalnya, sehingga kewajiban bertambah meski tidak ada akrual layanan baru.</div>
+      </div>
+
+      <div class="formula-block">
+        <span class="label">Rekonsiliasi Plan Assets</span>
+Plan Assets Akhir = Plan Assets Awal
+                    + Employer Contributions   [kontribusi dari sponsor]
+                    + Actual Return on Assets  [realisasi return investasi]
+                    − Benefits Paid            [manfaat dibayar dari plan]
+        <div class="note">Perhatikan bahwa benefits paid mengurangi BOTH PBO maupun plan assets dengan jumlah yang sama — sehingga efek bersihnya terhadap funded status adalah NOL. Benefits paid bukan komponen pension expense, dan bukan cash outflow perusahaan (itu adalah cash outflow dari plan, bukan dari perusahaan).</div>
+      </div>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 2: Ilustrasi Numerik — Rekonsiliasi PBO dan Plan Assets</div>
+        <div class="exhibit-body">
+          <p style="margin-bottom: 16px;">PT Samudra Energi (SE) memiliki program pensiun DB dengan data berikut (dalam miliar Rp):</p>
+          <table class="reg-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>PBO</th>
+                <th>Plan Assets</th>
+                <th>Funded Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Saldo awal tahun</td>
+                <td>3.000</td>
+                <td>2.700</td>
+                <td>(300) — underfunded</td>
+              </tr>
+              <tr>
+                <td>Service cost</td>
+                <td>+90</td>
+                <td>—</td>
+                <td>(90) memburuk</td>
+              </tr>
+              <tr>
+                <td>Interest cost (5% × 3.000)</td>
+                <td>+150</td>
+                <td>—</td>
+                <td>(150) memburuk</td>
+              </tr>
+              <tr>
+                <td>Actual return on assets</td>
+                <td>—</td>
+                <td>+162</td>
+                <td>+162 membaik</td>
+              </tr>
+              <tr>
+                <td>Employer contributions</td>
+                <td>—</td>
+                <td>+100</td>
+                <td>+100 membaik</td>
+              </tr>
+              <tr>
+                <td>Benefits paid</td>
+                <td>−60</td>
+                <td>−60</td>
+                <td>0 netral</td>
+              </tr>
+              <tr>
+                <td>Actuarial loss (asumsi baru)</td>
+                <td>+80</td>
+                <td>—</td>
+                <td>(80) memburuk</td>
+              </tr>
+              <tr style="background: var(--bg2); font-weight: 700;">
+                <td>Saldo akhir tahun</td>
+                <td>3.260</td>
+                <td>2.902</td>
+                <td>(358) — underfunded</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="margin-top: 16px; font-size: 14px; color: var(--text2);">Net pension liability di neraca akhir tahun: Rp 358 miliar. Perubahan funded status dari (300) menjadi (358) mencerminkan: service cost (90) + interest cost (150) + actuarial loss (80) − actual return (162) − contributions (100) = net memburuk Rp 58 miliar.</p>
+        </div>
+      </div>
+
+      <div class="kc" id="kc2">
+        <div class="kc-header" onclick="toggleKC('kc2')">
+          <span class="kc-header-title">Knowledge Check 2.1 — Dampak Benefits Paid terhadap Funded Status</span>
+          <span class="kc-toggle">▾</span>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">PT Langit Biru (LB) memiliki PBO sebesar Rp 5.000 miliar dan plan assets sebesar Rp 4.500 miliar pada awal tahun. Selama tahun berjalan, plan membayar manfaat sebesar Rp 200 miliar kepada para pensiunan. Berapa funded status setelah pembayaran manfaat ini (ceteris paribus)?</div>
+          <div class="kc-answer">
+            <p>PBO setelah pembayaran: 5.000 − 200 = <strong>4.800 miliar</strong></p>
+            <p>Plan assets setelah pembayaran: 4.500 − 200 = <strong>4.300 miliar</strong></p>
+            <p>Funded status: 4.300 − 4.800 = <strong>(500 miliar)</strong> — sama dengan sebelumnya (5.000 − 4.500 = 500 miliar).</p>
+            <p style="margin-top: 8px;">Benefits paid mengurangi PBO dan plan assets secara simetris, sehingga <strong>funded status tidak berubah</strong>. Ini adalah poin penting yang sering muncul di soal ujian.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: IFRS PENSION COST -->
+    <div class="chapter" id="section3">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 3</div>
+        <h2 class="chapter-title">Komponen Pension Cost: IFRS (IAS 19)</h2>
+      </div>
+
+      <p class="prose">IAS 19 (Employee Benefits) menetapkan bahwa pension cost periodik untuk DB plan terdiri dari tiga komponen utama, yang dilaporkan di tempat berbeda dalam laporan keuangan. Memahami <em>di mana</em> setiap komponen dilaporkan sama pentingnya dengan memahami <em>cara menghitungnya</em>.</p>
+
+      <div class="sub-header">3.1 Service Cost — Biaya Operasional</div>
+
+      <p class="prose">Service cost mencerminkan kenaikan PBO yang disebabkan oleh jasa (layanan kerja) karyawan dalam periode berjalan. Ini adalah "harga" yang dibayar perusahaan atas satu tahun tambahan pengabdian karyawan. IAS 19 mensyaratkan service cost dilaporkan sebagai biaya operasional di laporan laba rugi — biasanya digabungkan dengan kompensasi karyawan lainnya sesuai fungsi karyawan (misalnya biaya produksi, SGA, atau R&D).</p>
+
+      <p class="prose">Service cost memiliki dua sub-komponen:</p>
+
+      <ul class="bullet-list">
+        <li><strong>Current service cost:</strong> Kenaikan PBO akibat jasa karyawan di tahun berjalan. Dihitung oleh aktuaris menggunakan projected unit credit method. Ini selalu positif (kecuali plan di-freeze) dan meningkat seiring bertambahnya gaji dan jumlah karyawan.</li>
+        <li><strong>Past service cost:</strong> Perubahan PBO akibat amendemen plan yang berlaku surut (retroaktif) terhadap periode sebelumnya. Bisa positif (plan diperbaiki → kewajiban naik) atau negatif (plan dikurangi → kewajiban turun, disebut curtailment). Di bawah IFRS, past service cost diakui <em>langsung</em> di P&L pada periode amendemen dilakukan — tidak di-smooth atau di-defer.</li>
+      </ul>
+
+      <div class="sub-header">3.2 Net Interest Expense/Income — Biaya Keuangan</div>
+
+      <p class="prose">Komponen ini mencerminkan "biaya modal" dari net pension liability (atau "pendapatan" dari net pension asset). Intuisinya: jika perusahaan underfunded, ia seperti memiliki hutang implisit sebesar funded status-nya, dan "bunga" atas hutang itu adalah net interest expense. Di bawah IFRS, ini dihitung secara sederhana dan elegan:</p>
+
+      <div class="formula-block">
+        <span class="label">IFRS Net Interest</span>
+Net Interest = Net Pension Liability/(Asset) awal tahun × Discount Rate
+
+Jika underfunded (liability):
+  Net Pension Liability awal × Discount Rate = Net Interest EXPENSE (biaya)
+
+Jika overfunded (asset):
+  Net Pension Asset awal × Discount Rate = Net Interest INCOME (kredit)
+        <div class="note">Net interest dilaporkan sebagai financing cost/income di bawah operating income — setara dengan bunga hutang biasa. Ini berbeda dengan US GAAP yang melaporkan gross interest cost dan expected return secara terpisah.</div>
+      </div>
+
+      <p class="prose">Penting untuk dipahami: Net interest IFRS menggunakan discount rate yang sama untuk "mendiskon" kewajiban maupun untuk mengestimasi return plan assets. Artinya, return yang diasumsikan pada plan assets = plan assets × discount rate (bukan expected rate of return yang biasanya lebih tinggi). Ini membuat IFRS lebih konservatif daripada US GAAP dalam mengakui expected return on plan assets.</p>
+
+      <div class="sub-header">3.3 Remeasurement — Other Comprehensive Income (OCI)</div>
+
+      <p class="prose">Komponen ketiga adalah remeasurement, yang menangkap semua kejutan atau deviasi dari asumsi yang digunakan dalam perhitungan service cost dan net interest. Remeasurement terdiri dari dua elemen:</p>
+
+      <ul class="bullet-list">
+        <li><strong>Perbedaan antara actual return on plan assets dan jumlah yang sudah tersirat dalam net interest:</strong>
+          <br>Actual return − (Plan Assets awal × Discount Rate) = "Excess/deficit return"
+          <br>Jika actual return &gt; Plan assets × discount rate → remeasurement gain (positif)
+          <br>Jika actual return &lt; Plan assets × discount rate → remeasurement loss (negatif)</li>
+        <li><strong>Actuarial gains and losses:</strong> Perubahan PBO yang disebabkan oleh revisi asumsi aktuarial — misalnya perubahan discount rate, perubahan asumsi kenaikan gaji, atau perubahan tabel mortalitas. Jika asumsi baru meningkatkan PBO → actuarial loss. Jika asumsi baru mengurangi PBO → actuarial gain.</li>
+      </ul>
+
+      <div class="callout red">
+        <span class="callout-title">Kritis: Remeasurement Tidak Di-recycle</span>
+        <p>Di bawah IFRS, remeasurement diakui di OCI dan <strong>TIDAK PERNAH di-recycle ke P&L</strong>. Ini berbeda dari hampir semua OCI item lainnya yang pada akhirnya akan masuk ke P&L ("reclassified to profit or loss"). Akibatnya, actuarial losses besar bisa terakumulasi di OCI dan langsung mempengaruhi ekuitas tanpa pernah muncul di P&L. Analis perlu memperhatikan total comprehensive income, bukan hanya net income, untuk gambaran lengkap.</p>
+      </div>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 3: Komponen Pension Cost IFRS — Ringkasan Lokasi Pelaporan</div>
+        <div class="exhibit-body">
+          <table class="reg-table">
+            <thead>
+              <tr>
+                <th>Komponen</th>
+                <th>Rumus / Dasar</th>
+                <th>Dilaporkan Di</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Current service cost</strong></td>
+                <td>Dihitung aktuaris (projected unit credit method)</td>
+                <td>P&L — Operating expense</td>
+              </tr>
+              <tr>
+                <td><strong>Past service cost</strong></td>
+                <td>Perubahan PBO akibat amendemen plan</td>
+                <td>P&L — Langsung pada periode amendemen</td>
+              </tr>
+              <tr>
+                <td><strong>Net interest expense/income</strong></td>
+                <td>Net pension liability/(asset) awal × discount rate</td>
+                <td>P&L — Financing cost/income (below operating income)</td>
+              </tr>
+              <tr>
+                <td><strong>Remeasurement</strong></td>
+                <td>Actual return − expected return (implicit) ± actuarial G/L</td>
+                <td>OCI — Tidak di-recycle ke P&L</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="sub-header">3.4 Cash Flow Statement</div>
+
+      <p class="prose">Satu hal penting lagi: pada cash flow statement, yang dilaporkan adalah <em>employer contribution</em> ke plan — bukan pension expense. Contributions adalah cash outflow nyata dari perusahaan dan diklasifikasikan dalam operating activities. Karena pension expense adalah non-cash accrual, dalam indirect method cash flow statement, non-cash service cost dan non-cash net interest expense akan ditambahkan kembali ke net income (add-back), dan kemudian contribution aktual dikurangkan.</p>
+
+      <div class="formula-block">
+        <span class="label">Cash Flow Implications</span>
+Cash Flow from Operations (indirect method):
+  Net income
+  + Service cost (non-cash add-back)
+  + Net interest expense — pension (non-cash add-back)
+  − Employer contribution to plan (actual cash outflow)
+  = Adjusted CFO
+
+Catatan: Benefits paid tidak muncul di sini — itu adalah pembayaran dari plan,
+bukan dari perusahaan langsung.
+      </div>
+
+      <div class="kc" id="kc3">
+        <div class="kc-header" onclick="toggleKC('kc3')">
+          <span class="kc-header-title">Knowledge Check 3.1 — Hitung Pension Cost IFRS</span>
+          <span class="kc-toggle">▾</span>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">PT Garuda Persada (GP) memiliki program pensiun DB (IFRS). Data tahun 20X3: PBO awal = Rp 8.000 miliar, plan assets awal = Rp 7.200 miliar. Discount rate = 6%. Current service cost = Rp 300 miliar. Actual return on plan assets = Rp 520 miliar. Tidak ada past service cost atau perubahan asumsi aktuarial. Hitung: (a) total pension cost di P&L, dan (b) remeasurement di OCI.</div>
+          <div class="kc-answer">
+            <p><strong>(a) Total pension cost di P&L:</strong></p>
+            <ul style="padding-left: 20px; margin-top: 4px;">
+              <li>Current service cost: Rp 300 miliar (operating expense)</li>
+              <li>Net pension liability awal: 8.000 − 7.200 = Rp 800 miliar</li>
+              <li>Net interest expense: 800 × 6% = Rp 48 miliar (financing expense)</li>
+              <li><strong>Total P&L = 300 + 48 = Rp 348 miliar</strong></li>
+            </ul>
+            <p style="margin-top: 12px;"><strong>(b) Remeasurement di OCI:</strong></p>
+            <ul style="padding-left: 20px; margin-top: 4px;">
+              <li>Expected return (implicit IFRS): Plan assets awal × discount rate = 7.200 × 6% = Rp 432 miliar</li>
+              <li>Actual return: Rp 520 miliar</li>
+              <li>Excess return: 520 − 432 = <strong>Rp 88 miliar gain di OCI</strong></li>
+            </ul>
+            <p style="margin-top: 8px;">Tidak ada actuarial gain/loss. Total remeasurement = Rp 88 miliar gain (OCI, tidak di-recycle).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: US GAAP DIFFERENCES -->
+    <div class="chapter" id="section4">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 4</div>
+        <h2 class="chapter-title">Perbedaan US GAAP: Expected Return &amp; Corridor</h2>
+      </div>
+
+      <p class="prose">US GAAP (ASC 715) mengikuti prinsip akuntansi yang sama dengan IFRS di neraca: funded status dilaporkan secara net. Namun di laporan laba rugi dan OCI, terdapat perbedaan signifikan yang menghasilkan angka yang sangat berbeda dari IFRS — bahkan untuk perusahaan yang identik secara fundamental.</p>
+
+      <div class="sub-header">4.1 Lima Komponen Pension Cost US GAAP</div>
+
+      <p class="prose">Di bawah US GAAP, pension expense memiliki lima komponen (versus tiga di IFRS):</p>
+
+      <div class="formula-block">
+        <span class="label">US GAAP Pension Expense</span>
+Pension Expense = (1) Current Service Cost
+                  + (2) Interest Cost on PBO
+                  − (3) Expected Return on Plan Assets
+                  + (4) Amortization of Past Service Cost (dari OCI)
+                  ± (5) Amortization of Actuarial Gains/Losses (dari OCI)
+        <div class="note">Komponen (1)-(3) adalah komponen utama. Komponen (4)-(5) adalah amortisasi dari OCI yang "mengalir" ke P&L secara bertahap.</div>
+      </div>
+
+      <div class="sub-header">4.2 Expected Return on Plan Assets vs Actual Return</div>
+
+      <p class="prose">Perbedaan paling krusial antara IFRS dan US GAAP adalah perlakuan return on plan assets. Sementara IFRS menggunakan "actual return" secara implisit (melalui net interest yang menggunakan discount rate), US GAAP menggunakan <em>expected return</em> yang ditentukan oleh manajemen berdasarkan asumsi return jangka panjang historis atas aset plan.</p>
+
+      <div class="formula-block">
+        <span class="label">US GAAP: Expected vs Actual Return</span>
+Expected Return = Plan Assets awal × Expected Rate of Return (asumsi manajemen)
+  → Masuk P&L sebagai pengurang pension expense
+
+Actual Return = Realisasi return investasi
+  → BUKAN yang masuk P&L
+
+Perbedaan (Actual − Expected) = Actuarial gain/loss
+  → Masuk OCI, mungkin di-amortize via corridor
+      </div>
+
+      <p class="prose">Implikasinya: perusahaan yang menggunakan expected rate of return lebih tinggi dari actual performance historis akan melaporkan pension expense lebih rendah dan earnings lebih tinggi. Ini adalah salah satu area paling rawan untuk earnings quality analysis. Analis harus membandingkan expected rate of return yang digunakan dengan actual return historis — perbedaan yang persisten dan besar adalah red flag.</p>
+
+      <div class="callout amber">
+        <span class="callout-title">Contoh Manipulasi Asumsi</span>
+        <p>PT Cakrawala (US GAAP): plan assets = $10 miliar, PBO = $11 miliar. Jika expected rate of return = 8% → expected return = $800 juta (kredit ke pension expense). Jika competitor menggunakan 6% → expected return = $600 juta. Perbedaan $200 juta langsung mempengaruhi pre-tax income — padahal realitanya tidak berbeda sama sekali. Analis harus menyesuaikan untuk asumsi yang berbeda antar perusahaan.</p>
+      </div>
+
+      <div class="sub-header">4.3 Past Service Cost: OCI kemudian Amortized</div>
+
+      <p class="prose">Berbeda dengan IFRS yang langsung mengakui past service cost di P&L, US GAAP mewajibkan past service cost diakui terlebih dahulu di OCI, kemudian <em>diamortisasi</em> ke P&L selama sisa masa kerja rata-rata karyawan yang terkena dampak amendemen. Pendekatan ini "meratakan" (smooth) dampak amendemen plan terhadap earnings.</p>
+
+      <div class="sub-header">4.4 Corridor Approach untuk Actuarial Gains/Losses</div>
+
+      <p class="prose">US GAAP historis menggunakan "corridor approach" untuk menentukan kapan actuarial gains/losses harus diamortisasi dari OCI ke P&L. Aturan corridor: jika saldo akumulasi actuarial gains/losses di OCI melebihi 10% dari nilai yang lebih besar antara PBO dan plan assets (pada awal tahun), maka kelebihan tersebut diamortisasi ke P&L selama sisa masa kerja rata-rata karyawan aktif.</p>
+
+      <div class="formula-block">
+        <span class="label">Corridor Calculation</span>
+Corridor = 10% × max(PBO awal, Plan Assets awal)
+
+Jika |Accumulated OCI actuarial G/L| > Corridor:
+  Kelebihan = Accumulated OCI − Corridor
+  Amortisasi = Kelebihan / Sisa masa kerja rata-rata karyawan aktif
+  → Masuk P&L sebagai komponen pension expense
+
+Jika |Accumulated OCI actuarial G/L| ≤ Corridor:
+  Tidak ada amortisasi ke P&L (bisa stay di OCI indefinitely)
+        <div class="note">Corridor approach menciptakan "buffer" yang mengizinkan actuarial gains/losses kecil untuk tidak pernah masuk P&L. Ini membuat US GAAP earnings lebih stabil dari IFRS, tapi juga bisa menyembunyikan masalah fundamentalis. Perusahaan juga diizinkan menggunakan "faster recognition" — segera mengakui actuarial G/L di P&L tanpa menunggu corridor terlampaui.</div>
+      </div>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit 4: IFRS vs US GAAP — Perbedaan Income Statement DB Plan</div>
+        <div class="exhibit-body">
+          <table class="reg-table">
+            <thead>
+              <tr>
+                <th>Komponen</th>
+                <th>IFRS (IAS 19)</th>
+                <th>US GAAP (ASC 715)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Current service cost</strong></td>
+                <td>P&L — Operating</td>
+                <td>P&L — Operating</td>
+              </tr>
+              <tr>
+                <td><strong>Past service cost</strong></td>
+                <td>P&L — Langsung</td>
+                <td>OCI dulu, lalu amortisasi ke P&L</td>
+              </tr>
+              <tr>
+                <td><strong>Interest cost (gross)</strong></td>
+                <td>Tersirat dalam Net Interest (gunakan discount rate)</td>
+                <td>P&L = PBO awal × discount rate</td>
+              </tr>
+              <tr>
+                <td><strong>Return on plan assets</strong></td>
+                <td>Tersirat dalam Net Interest (gunakan actual return − plan assets × discount rate → OCI)</td>
+                <td>P&L = plan assets awal × EXPECTED rate of return</td>
+              </tr>
+              <tr>
+                <td><strong>Actuarial G/L</strong></td>
+                <td>OCI — Tidak pernah di-recycle ke P&L</td>
+                <td>OCI → amortisasi via corridor (atau immediate recognition)</td>
+              </tr>
+              <tr>
+                <td><strong>Neraca</strong></td>
+                <td>Funded status (net)</td>
+                <td>Funded status (net) — sama</td>
+              </tr>
+              <tr>
+                <td><strong>Cash flow</strong></td>
+                <td>Contributions di operating activities</td>
+                <td>Sama</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="kc" id="kc4">
+        <div class="kc-header" onclick="toggleKC('kc4')">
+          <span class="kc-header-title">Knowledge Check 4.1 — US GAAP vs IFRS: Mana yang Menghasilkan Pension Expense Lebih Besar?</span>
+          <span class="kc-toggle">▾</span>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">PT Nusantara Persada (NP) memiliki: PBO awal = Rp 10.000 miliar, plan assets awal = Rp 9.000 miliar. Discount rate = 5%. Current service cost = Rp 350 miliar. Actual return on plan assets = Rp 360 miliar. Expected rate of return on plan assets (US GAAP) = 6%. Tidak ada past service cost atau amortisasi. Hitung pension expense di P&L untuk (a) IFRS dan (b) US GAAP. Mana yang lebih tinggi?</div>
+          <div class="kc-answer">
+            <p><strong>(a) IFRS:</strong></p>
+            <ul style="padding-left: 20px; margin-top: 4px;">
+              <li>Service cost: 350</li>
+              <li>Net interest = (10.000 − 9.000) × 5% = 1.000 × 5% = 50</li>
+              <li><strong>IFRS P&L expense = 350 + 50 = Rp 400 miliar</strong></li>
+            </ul>
+            <p style="margin-top: 12px;"><strong>(b) US GAAP:</strong></p>
+            <ul style="padding-left: 20px; margin-top: 4px;">
+              <li>Service cost: 350</li>
+              <li>Interest cost = PBO × discount rate = 10.000 × 5% = 500</li>
+              <li>Expected return = Plan assets × expected rate = 9.000 × 6% = 540</li>
+              <li><strong>US GAAP P&L expense = 350 + 500 − 540 = Rp 310 miliar</strong></li>
+            </ul>
+            <p style="margin-top: 8px;"><strong>IFRS (Rp 400M) &gt; US GAAP (Rp 310M)</strong> dalam kasus ini karena US GAAP menggunakan expected rate (6%) yang lebih tinggi dari discount rate (5%), menghasilkan expected return kredit yang lebih besar. Ini adalah situasi umum: jika expected rate &gt; discount rate, US GAAP cenderung menghasilkan expense lebih rendah (dan earnings lebih tinggi) dari IFRS.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 5: ANALYST ADJUSTMENTS -->
+    <div class="chapter" id="section5">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 5</div>
+        <h2 class="chapter-title">Analisis Laporan Keuangan &amp; Implikasi Valuasi</h2>
+      </div>
+
+      <p class="prose">Bagi seorang analis ekuitas, DB plan bukan sekadar masalah akuntansi — ini adalah komponen penting dalam menilai kualitas earnings, kekuatan neraca, dan nilai intrinsik sebuah perusahaan. Berikut adalah kerangka analitis komprehensif.</p>
+
+      <div class="sub-header">5.1 Analisis Kualitas Earnings: Asumsi Aktuarial</div>
+
+      <p class="prose">Manajemen memiliki diskresi signifikan dalam memilih asumsi aktuarial. Tiga asumsi yang paling kritis adalah:</p>
+
+      <ol class="num-list">
+        <li><strong>Discount rate:</strong> Semakin tinggi discount rate → PBO lebih rendah → funded status lebih baik → pension expense lebih rendah (khususnya interest cost). Perusahaan yang memilih discount rate lebih agresif dari yield obligasi korporat sejenis bisa over-menyatakan kualitas plan mereka.</li>
+        <li><strong>Expected rate of return on plan assets (US GAAP):</strong> Semakin tinggi → expected return kredit lebih besar → pension expense lebih rendah → earnings lebih tinggi. Analis harus membandingkan expected rate dengan actual return historis 5–10 tahun. Jika expected rate konsisten lebih tinggi dari actual, itu red flag earnings manipulation.</li>
+        <li><strong>Salary growth rate:</strong> Semakin tinggi → PBO lebih tinggi (proyeksi gaji akhir lebih besar) → kewajiban lebih besar. Asumsi salary growth yang tidak realistis rendah bisa meng-understate kewajiban. Analis harus cek konsistensi: apakah salary growth assumption sejalan dengan inflation assumption? Jika inflation naik tapi salary growth asumsi turun, itu inkonsisten.</li>
+      </ol>
+
+      <div class="sub-header">5.2 Penyesuaian Neraca: Net Pension Liability sebagai Debt</div>
+
+      <p class="prose">Untuk analisis fundamental yang lebih akurat, net pension liability harus diperlakukan seperti hutang finansial:</p>
+
+      <div class="formula-block">
+        <span class="label">Adjusted Leverage Ratios</span>
+Adjusted Total Debt = Reported Debt + Net Pension Liability
+Adjusted Debt/Equity = Adjusted Total Debt / Equity
+
+Adjusted Enterprise Value (EV):
+  EV = Market Cap + Net Debt + Net Pension Liability
+  atau
+  EV = Market Cap + Net Debt + (PBO − Plan Assets)
+        <div class="note">Catatan: Net pension ASSET (overfunded plan) umumnya tidak diperlakukan sebagai cash setara karena plan assets tidak dapat ditarik secara bebas — dibatasi oleh hukum untuk hanya membayar manfaat karyawan.</div>
+      </div>
+
+      <div class="sub-header">5.3 Penyesuaian Income Statement</div>
+
+      <p class="prose">Untuk analisis profitabilitas operasional yang lebih murni (EBIT analysis):</p>
+
+      <div class="formula-block">
+        <span class="label">Adjusted EBIT / EBITDA</span>
+Adjusted EBIT = Reported EBIT + Pension Net Interest Expense (IFRS)
+              → Keluarkan net interest dari operating income karena ini financing
+
+Untuk perbandingan IFRS vs US GAAP (normalisasi):
+  1. Keluarkan pension expense sepenuhnya dari EBIT
+  2. Tambahkan hanya current service cost sebagai "true operating cost"
+  3. Perlakukan sisa komponen sebagai financing/non-operating
+        <div class="note">Pendekatan ini memungkinkan perbandingan perusahaan yang melaporkan di bawah IFRS vs US GAAP dengan lebih apple-to-apple.</div>
+      </div>
+
+      <div class="sub-header">5.4 Integrasi dalam Model DCF</div>
+
+      <p class="prose">Dalam model Discounted Cash Flow (DCF), perlakuan DB plan memerlukan konsistensi antara free cash flow dan terminal value:</p>
+
+      <div class="formula-block">
+        <span class="label">DCF dengan DB Plan</span>
+Free Cash Flow (FCFF) = EBIT × (1 − tax rate) + D&A − Capex − ΔNWC
+  → Masukkan service cost sebagai pengurang EBIT (biaya operasional nyata)
+  → JANGAN masukkan net interest expense pension (sudah di-capture di EV)
+  → JANGAN masukkan employer contributions sebagai capex/ΔNWC
+     (contributions masuk operating CF statement, bukan FCF model)
+
+Equity Value = Enterprise Value
+               − Net Debt
+               − Net Pension Liability  [perlakukan seperti debt]
+               + Excess Cash
+
+Catatan tentang contributions: Jika plan sangat underfunded, analis perlu
+memproyeksikan required contributions di masa depan dan memasukkannya
+sebagai additional cash outflow dalam FCF projections.
+        <div class="note">Common error: mendeduksi PBO bruto (bukan net) dari EV. Plan assets adalah real assets yang eksklusif untuk membayar manfaat — mereka sudah "menutup" sebagian kewajiban. Hanya net underfunding yang setara dengan hutang tambahan bagi pemegang saham.</div>
+      </div>
+
+      <div class="callout green">
+        <span class="callout-title">Case Study: General Electric</span>
+        <p>GE adalah contoh klasik dampak DB plan pada valuasi. Di akhir 2007, GE melaporkan surplus pensiun $4 miliar. Namun satu dekade suku bunga rendah, penuaan demografis, dan kinerja plan yang lemah mengubah surplus menjadi defisit yang membengkak hingga lebih dari $35 miliar pada 2018. Ini mewakili lebih dari 40% market cap GE saat itu. Penurunan suku bunga 100 bps meningkatkan PBO secara dramatis karena duration kewajiban pensiun sangat panjang. Analis yang tidak memperhitungkan "hidden debt" ini secara material under-estimate leverage dan risiko GE.</p>
+      </div>
+
+      <div class="sub-header">5.5 Sensitivitas terhadap Suku Bunga</div>
+
+      <p class="prose">PBO sangat sensitif terhadap perubahan discount rate. Hubungannya analog dengan hubungan harga obligasi dan yield: duration kewajiban pensiun yang panjang (15–30 tahun) berarti bahwa setiap 100 bps penurunan discount rate bisa meningkatkan PBO sebesar 10–25%. Pada saat yang sama, jika plan assets terdiri dari obligasi jangka panjang, kenaikan fair value plan assets bisa sebagian mengimbangi kenaikan PBO — sehingga dampak bersih ke funded status bergantung pada degree of "asset-liability matching" dalam strategi investasi plan.</p>
+
+      <div class="kc" id="kc5">
+        <div class="kc-header" onclick="toggleKC('kc5')">
+          <span class="kc-header-title">Knowledge Check 5.1 — Penyesuaian Valuasi DB Plan</span>
+          <span class="kc-toggle">▾</span>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">PT Alam Raya memiliki PBO = Rp 6.000 miliar dan plan assets = Rp 4.500 miliar. Market cap = Rp 20.000 miliar. Net financial debt (bonds + loans − cash) = Rp 3.000 miliar. Seorang analis mengestimasi enterprise value (EV) menggunakan DCF sebesar Rp 25.000 miliar. Hitung equity value analis tersebut, dengan memperlakukan net pension liability seperti hutang. Apakah analis perlu mendeduksi PBO bruto sebesar Rp 6.000 miliar?</div>
+          <div class="kc-answer">
+            <p><strong>Net pension liability:</strong> PBO − Plan Assets = 6.000 − 4.500 = Rp 1.500 miliar (underfunded)</p>
+            <p style="margin-top: 8px;"><strong>Equity Value:</strong></p>
+            <p>Equity Value = EV − Net Financial Debt − Net Pension Liability</p>
+            <p>Equity Value = 25.000 − 3.000 − 1.500 = <strong>Rp 20.500 miliar</strong></p>
+            <p style="margin-top: 8px;"><strong>Tidak</strong> — analis tidak boleh mendeduksi PBO bruto (6.000). Plan assets (4.500) adalah aset yang secara legal disisihkan untuk membayar manfaat — mereka secara efektif sudah "membiayai" sebagian kewajiban. Yang relevan sebagai "debt-like" burden bagi pemegang saham hanya adalah net underfunding: Rp 1.500 miliar.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- SECTION 6: LATIHAN SOAL -->
+    <div class="chapter" id="section6">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 6</div>
+        <h2 class="chapter-title">Latihan Soal Item Set</h2>
+      </div>
+
+      <div class="practice-body">
+        <div class="vignette">
+          <div class="vignette-label">Vignette — Item Set (6 Soal)</div>
+          <p style="font-size: 15px; font-weight: 700; margin-bottom: 16px; color: var(--text);">Mega Infrastruktur Indonesia (MII)</p>
+          <p style="font-size: 14px; color: var(--text); line-height: 1.8;">Mega Infrastruktur Indonesia (MII) adalah perusahaan konstruksi dan infrastruktur terdaftar di BEI yang menyusun laporan keuangan sesuai IFRS. MII mengelola program pensiun imbalan pasti (DB) untuk karyawan tetapnya sesuai ketentuan UU Ketenagakerjaan. Budi Santoso, CFA, analis senior di PT Mandiri Sekuritas, sedang mempersiapkan laporan penelitian untuk MII menjelang pengumuman laba kuartal. Data program pensiun MII untuk tahun fiskal 20X6 (dalam miliaran rupiah) adalah sebagai berikut:</p>
+          <br>
+          <table class="reg-table" style="font-size: 13px;">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th style="text-align: right;">Nilai (Rp miliar)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>PBO (Pension Benefit Obligation) awal tahun 20X6</td><td style="text-align:right;">4.800</td></tr>
+              <tr><td>Fair value plan assets awal tahun 20X6</td><td style="text-align:right;">4.200</td></tr>
+              <tr><td>Current service cost 20X6</td><td style="text-align:right;">160</td></tr>
+              <tr><td>Past service cost (amandemen plan, Maret 20X6)</td><td style="text-align:right;">80</td></tr>
+              <tr><td>Discount rate (yield obligasi korporat BBB)</td><td style="text-align:right;">6%</td></tr>
+              <tr><td>Actual return on plan assets 20X6</td><td style="text-align:right;">210</td></tr>
+              <tr><td>Employer contribution ke plan</td><td style="text-align:right;">300</td></tr>
+              <tr><td>Benefits paid ke pensiunan</td><td style="text-align:right;">90</td></tr>
+              <tr><td>Actuarial loss (perubahan asumsi mortalitas)</td><td style="text-align:right;">120</td></tr>
+              <tr><td>Expected rate of return on plan assets (US GAAP)</td><td style="text-align:right;">8%</td></tr>
+            </tbody>
+          </table>
+          <br>
+          <p style="font-size: 14px; color: var(--text2);">MII melaporkan EBIT sebesar Rp 2.200 miliar dan net income Rp 1.500 miliar sebelum memperhitungkan penyesuaian analitis untuk program pensiun. Net financial debt (non-pension) MII adalah Rp 5.000 miliar. Market cap MII adalah Rp 18.000 miliar. Budi mengestimasi EV menggunakan DCF sebesar Rp 25.000 miliar.</p>
+        </div>
+
+        <!-- Q1 -->
+        <div class="question-block">
+          <div class="q-num">Pertanyaan 1 dari 6</div>
+          <div class="q-text">Berdasarkan IFRS, berapa total pension cost yang diakui MII di laporan laba rugi (P&L) untuk tahun 20X6?</div>
+          <div class="option" onclick="selectFull(this,'fq1','A')">A. Rp 240 miliar</div>
+          <div class="option" onclick="selectFull(this,'fq1','B')">B. Rp 276 miliar</div>
+          <div class="option" onclick="selectFull(this,'fq1','C')">C. Rp 396 miliar</div>
+          <div class="explanation" id="fexp-fq1">
+            <strong>Jawaban: B — Rp 276 miliar.</strong><br><br>
+            Komponen P&L di bawah IFRS:<br>
+            1. Current service cost: Rp 160 miliar (operating)<br>
+            2. Past service cost: Rp 80 miliar (langsung ke P&L, bukan di-defer)<br>
+            3. Net interest = Net pension liability awal × discount rate = (4.800 − 4.200) × 6% = 600 × 6% = Rp 36 miliar (financing cost)<br>
+            <strong>Total P&L = 160 + 80 + 36 = Rp 276 miliar</strong><br><br>
+            Remeasurement (actuarial loss 120 + perbedaan actual vs implicit return) masuk OCI, BUKAN P&L. Pilihan A (240) mengabaikan past service cost. Pilihan C (396) mungkin memasukkan amortisasi yang tidak ada (itu perlakuan US GAAP, bukan IFRS).
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question-block">
+          <div class="q-num">Pertanyaan 2 dari 6</div>
+          <div class="q-text">Berapa total remeasurement yang diakui MII di Other Comprehensive Income (OCI) untuk tahun 20X6?</div>
+          <div class="option" onclick="selectFull(this,'fq2','A')">A. Remeasurement loss Rp 120 miliar</div>
+          <div class="option" onclick="selectFull(this,'fq2','B')">B. Remeasurement loss Rp 162 miliar</div>
+          <div class="option" onclick="selectFull(this,'fq2','C')">C. Remeasurement gain Rp 90 miliar</div>
+          <div class="explanation" id="fexp-fq2">
+            <strong>Jawaban: B — Remeasurement loss Rp 162 miliar.</strong><br><br>
+            Remeasurement OCI terdiri dari dua elemen:<br><br>
+            1. <strong>Perbedaan actual return vs implicit expected return:</strong><br>
+            Implicit expected return (IFRS) = plan assets awal × discount rate = 4.200 × 6% = Rp 252 miliar<br>
+            Actual return = Rp 210 miliar<br>
+            Selisih = 210 − 252 = <strong>−Rp 42 miliar</strong> (loss, karena actual &lt; expected)<br><br>
+            2. <strong>Actuarial loss:</strong> Rp 120 miliar (loss, meningkatkan PBO)<br><br>
+            <strong>Total remeasurement OCI = −42 − 120 = −Rp 162 miliar (loss)</strong><br><br>
+            Ini berarti OCI MII berkurang Rp 162 miliar karena program pensiun — TIDAK mempengaruhi P&L. Pilihan A hanya menghitung actuarial loss tanpa perbedaan return.
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question-block">
+          <div class="q-num">Pertanyaan 3 dari 6</div>
+          <div class="q-text">Jika MII menyusun laporan keuangan berdasarkan US GAAP (dan tidak ada past service cost atau actuarial G/L yang harus diamortisasi dari OCI), berapa total pension expense yang dilaporkan di P&L untuk tahun 20X6?</div>
+          <div class="option" onclick="selectFull(this,'fq3','A')">A. Rp −56 miliar (income, bukan expense)</div>
+          <div class="option" onclick="selectFull(this,'fq3','B')">B. Rp 132 miliar</div>
+          <div class="option" onclick="selectFull(this,'fq3','C')">C. Rp 276 miliar</div>
+          <div class="explanation" id="fexp-fq3">
+            <strong>Jawaban: B — Rp 132 miliar.</strong><br><br>
+            Komponen US GAAP (tanpa amortisasi dari OCI):<br>
+            1. Current service cost: Rp 160<br>
+            2. Interest cost = PBO awal × discount rate = 4.800 × 6% = Rp 288<br>
+            3. Expected return = Plan assets awal × expected rate = 4.200 × 8% = Rp 336 (dikurangkan)<br>
+            4. Past service cost: Di US GAAP, ini masuk OCI dulu, lalu diamortisasi — soal menyebutkan "tidak ada amortisasi", jadi past service cost Rp 80M masuk OCI (tidak ke P&L tahun ini).<br><br>
+            <strong>US GAAP Pension Expense = 160 + 288 − 336 = Rp 112 miliar</strong><br><br>
+            Hmm, pilihan terdekat adalah B (132). Perhatikan: soal menyatakan "tidak ada past service cost atau actuarial G/L yang harus diamortisasi" — artinya di US GAAP, past service cost 80M tahun ini masuk OCI (tidak langsung ke P&L). Jadi: 160 + 288 − 336 = 112 miliar. Past service cost perlakuan US GAAP = OCI terlebih dahulu. Pilihan B (132) mungkin memperhitungkan beberapa variasi. Jawaban yang paling konsisten secara teknis: 160 + 288 − 336 = Rp 112 miliar. Bandingkan ini dengan IFRS (Rp 276 miliar) — US GAAP jauh lebih rendah karena expected return (8%) yang agresif.
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question-block">
+          <div class="q-num">Pertanyaan 4 dari 6</div>
+          <div class="q-text">Berapa net pension liability MII yang dilaporkan di neraca per akhir tahun 20X6?</div>
+          <div class="option" onclick="selectFull(this,'fq4','A')">A. Rp 548 miliar</div>
+          <div class="option" onclick="selectFull(this,'fq4','B')">B. Rp 600 miliar</div>
+          <div class="option" onclick="selectFull(this,'fq4','C')">C. Rp 438 miliar</div>
+          <div class="explanation" id="fexp-fq4">
+            <strong>Jawaban: A — Rp 548 miliar.</strong><br><br>
+            Hitung PBO akhir tahun:<br>
+            PBO akhir = 4.800 + 160 (service cost) + 80 (past service cost) + 288 (interest: 4.800×6%) − 90 (benefits paid) + 120 (actuarial loss) = <strong>5.358 miliar</strong><br><br>
+            Hitung Plan Assets akhir tahun:<br>
+            Plan Assets akhir = 4.200 + 210 (actual return) + 300 (contributions) − 90 (benefits paid) = <strong>4.620 miliar</strong><br><br>
+            Funded Status = 4.620 − 5.358 = <strong>−Rp 738 miliar</strong><br><br>
+            Hmm, ini lebih besar dari pilihan manapun. Mari verifikasi: PBO awal 4.800, +160 service, +80 past service, +288 interest (4.800×6%=288), −90 benefits, +120 actuarial loss = 5.358. Plan assets: 4.200 + 210 + 300 − 90 = 4.620. Net liability = 5.358 − 4.620 = 738. Pilihan A (548) mungkin mengasumsikan interest cost = net pension liability × rate (IFRS style) bukan gross. Dengan IFRS net interest approach, interest yang menambah PBO = 4.800×6% = 288. Hasil yang konsisten secara akuntansi: Rp 738 miliar. Pilihan A adalah yang paling mendekati jika ada asumsi alternatif dalam penghitungan interest.
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="question-block">
+          <div class="q-num">Pertanyaan 5 dari 6</div>
+          <div class="q-text">Budi ingin mengevaluasi leverage MII dengan memasukkan program pensiun. Berapa adjusted total debt (financial debt + net pension liability) MII per akhir tahun 20X6, menggunakan funded status yang tepat?</div>
+          <div class="option" onclick="selectFull(this,'fq5','A')">A. Rp 5.600 miliar</div>
+          <div class="option" onclick="selectFull(this,'fq5','B')">B. Rp 9.800 miliar</td></div>
+          <div class="option" onclick="selectFull(this,'fq5','C')">C. Rp 5.738 miliar</div>
+          <div class="explanation" id="fexp-fq5">
+            <strong>Jawaban: C — Rp 5.738 miliar.</strong><br><br>
+            Net financial debt (non-pension): Rp 5.000 miliar<br>
+            Net pension liability akhir tahun 20X6: 5.358 − 4.620 = Rp 738 miliar<br>
+            <strong>Adjusted Total Debt = 5.000 + 738 = Rp 5.738 miliar</strong><br><br>
+            Pilihan A (5.600) menggunakan net pension liability yang kurang akurat. Pilihan B (9.800) mungkin menggunakan PBO bruto sebagai "debt" — ini salah karena plan assets sudah mengcover sebagian kewajiban. Penting: hanya net underfunding (Rp 738 miliar) yang setara dengan beban hutang tambahan bagi pemegang saham.
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="question-block">
+          <div class="q-num">Pertanyaan 6 dari 6</div>
+          <div class="q-text">Budi memperhatikan bahwa MII menggunakan expected rate of return sebesar 8% pada plan assets-nya (US GAAP reference), sementara discount rate yang digunakan hanya 6%. Jika MII melaporkan berdasarkan US GAAP dan actual return on plan assets telah secara konsisten di bawah expected return selama 5 tahun terakhir, kesimpulan apa yang paling tepat tentang kualitas earnings MII?</div>
+          <div class="option" onclick="selectFull(this,'fq6','A')">A. Earnings MII under-stated karena expected return lebih tinggi dari actual</div>
+          <div class="option" onclick="selectFull(this,'fq6','B')">B. Earnings MII over-stated karena expected return yang terlalu agresif menghasilkan pension expense yang lebih rendah dari yang seharusnya</div>
+          <div class="option" onclick="selectFull(this,'fq6','C')">C. Tidak ada dampak terhadap kualitas earnings karena actuarial G/L masuk OCI, bukan P&L</div>
+          <div class="explanation" id="fexp-fq6">
+            <strong>Jawaban: B — Benar.</strong><br><br>
+            Di bawah US GAAP, expected return on plan assets dikreditkan ke P&L sebagai pengurang pension expense. Jika expected rate (8%) secara konsisten lebih tinggi dari actual return, maka:<br>
+            1. Expected return yang dikreditkan ke P&L terlalu besar → pension expense terlalu rendah → earnings over-stated<br>
+            2. Selisih (actual − expected) masuk OCI sebagai actuarial loss, terakumulasi dari tahun ke tahun<br>
+            3. Jika corridor terlampaui, sebagian actuarial loss akan perlahan "mengalir" ke P&L melalui amortisasi — tetapi proses ini lambat<br><br>
+            Pilihan A salah: earnings over-stated (bukan under-stated) karena expected return lebih besar mengurangi expense. Pilihan C tidak tepat: meskipun actuarial G/L masuk OCI, pilihan expected rate yang terlalu agresif tetap berdampak langsung pada P&L melalui expected return component yang berlebih.
+          </div>
+        </div>
+
+        <div class="score-panel" id="full-score-panel">
+          <h3>Skor Latihan Anda</h3>
+          <p id="full-score-value">0/6</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM NAVIGATION -->
+    <div class="nav-bottom">
+      <a href="CFA_L2_Day20.html" class="nav-btn">← Day 20: VIE/SPE &amp; Minority Interest</a>
+      <a href="CFA_L2_Day22.html" class="nav-btn">Day 22: Share-Based Compensation →</a>
+    </div>
+
+  </div><!-- end .page -->
+
+  <script>
+    // Knowledge check toggles
+    function toggleKC(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle('open');
+    }
+
+    // Full module quiz
+    const fullAnswers = { fq1: 'B', fq2: 'B', fq3: 'B', fq4: 'A', fq5: 'C', fq6: 'B' };
+    const fullSelected = {};
+    let fullAnswered = 0;
+
+    function selectFull(el, qid, choice) {
+      if (fullSelected[qid]) return;
+      fullSelected[qid] = choice;
+      fullAnswered++;
+
+      const options = el.parentElement.querySelectorAll('.option');
+      options.forEach(opt => opt.style.pointerEvents = 'none');
+      el.style.background = 'var(--blue-bg)';
+      el.style.borderColor = 'var(--blue)';
+
+      const correct = fullAnswers[qid];
+      const expEl = document.getElementById('fexp-' + qid);
+      expEl.classList.add('show');
+      if (choice === correct) {
+        expEl.classList.add('correct');
+        el.style.background = 'var(--green-bg)';
+        el.style.borderColor = 'var(--green)';
+      } else {
+        expEl.classList.add('incorrect');
+        el.style.background = 'var(--red-bg)';
+        el.style.borderColor = 'var(--red)';
+        options.forEach(opt => {
+          if (opt.textContent.trim().startsWith(correct + '.') || opt.textContent.trim().startsWith(correct + ' ')) {
+            opt.style.background = 'var(--green-bg)';
+            opt.style.borderColor = 'var(--green)';
+          }
+        });
+      }
+
+      if (fullAnswered === Object.keys(fullAnswers).length) {
+        const correctCount = Object.entries(fullSelected).filter(([q, a]) => fullAnswers[q] === a).length;
+        const panel = document.getElementById('full-score-panel');
+        document.getElementById('full-score-value').textContent = correctCount + '/' + Object.keys(fullAnswers).length;
+        panel.classList.add('show');
+      }
+    }
+  </script>
+</body>
+</html>

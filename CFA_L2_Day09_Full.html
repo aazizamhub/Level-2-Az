@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 9 · Full · AR Models & Stationarity</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #fafaf8;
+  --bg2:     #f4f3ef;
+  --bg3:     #eeece7;
+  --border:  rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text:    #1a1a2e;
+  --text2:   #4a4a6a;
+  --text3:   #8a8aaa;
+  --gold:    #9a6e1a;
+  --gold2:   #7a5010;
+  --gold-bg: rgba(154,110,26,0.08);
+  --blue:    #1a5fa8;
+  --blue-bg: rgba(26,95,168,0.08);
+  --green:   #1a7a4a;
+  --green-bg:rgba(26,122,74,0.08);
+  --red:     #b83232;
+  --red-bg:  rgba(184,50,50,0.08);
+  --amber:   #a06010;
+  --amber-bg:rgba(160,96,16,0.08);
+  --r:10px; --r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.8;}
+
+.page{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+
+/* top bar */
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;border:1px solid rgba(26,95,168,0.2);}
+
+/* hero */
+.hero{margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--border);}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:36px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:15px;color:var(--text2);}
+.meta-row{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+
+/* toc */
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:36px;}
+.toc-title{font-size:12px;color:var(--text3);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:12px;font-weight:500;}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.toc-list li a{font-size:13px;color:var(--blue);text-decoration:none;display:flex;align-items:center;gap:8px;}
+.toc-list li a:hover{text-decoration:underline;}
+.toc-num{font-size:11px;color:var(--text3);min-width:20px;}
+
+/* section headers */
+.chapter{margin-bottom:40px;}
+.chapter-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--gold-bg);}
+.chapter-num{font-family:'DM Serif Display',serif;font-size:28px;color:var(--gold);line-height:1;}
+.chapter-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);line-height:1.2;}
+
+.sub-header{font-size:17px;font-weight:500;color:var(--text);margin:24px 0 12px;padding-left:12px;border-left:3px solid var(--gold);}
+
+/* prose */
+.prose{font-size:14px;color:var(--text2);line-height:1.85;margin-bottom:14px;}
+.prose strong{color:var(--text);font-weight:500;}
+.prose em{font-style:italic;}
+
+/* formula */
+.formula-block{background:var(--bg2);border:1px solid var(--border2);border-left:4px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:16px 20px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold2);line-height:2;}
+.formula-block .label{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:8px;}
+.formula-block .note{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text3);font-style:italic;display:block;margin-top:8px;}
+
+/* exhibit / regression table */
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:20px 0;}
+.exhibit-title{background:var(--bg3);padding:10px 16px;font-size:12px;font-weight:500;color:var(--text2);border-bottom:1px solid var(--border);letter-spacing:0.03em;}
+.exhibit-body{padding:16px;}
+.reg-table{width:100%;border-collapse:collapse;font-size:13px;}
+.reg-table th{text-align:right;padding:8px 12px;background:var(--bg3);color:var(--text3);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border2);}
+.reg-table th:first-child{text-align:left;}
+.reg-table td{padding:8px 12px;border-bottom:1px solid var(--border);text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text2);}
+.reg-table td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);font-weight:500;}
+.reg-table tr:last-child td{border-bottom:none;}
+.reg-table .sig{color:var(--green);font-weight:500;}
+.reg-table .section-row td{background:var(--bg3);font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text3);font-weight:500;text-transform:uppercase;letter-spacing:0.04em;}
+
+/* callout boxes */
+.callout{border-radius:var(--r);padding:16px 18px;margin:16px 0;}
+.callout-title{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;}
+.callout p{font-size:13px;color:var(--text2);line-height:1.75;}
+.callout p + p{margin-top:8px;}
+.callout.blue{background:var(--blue-bg);border:1px solid rgba(26,95,168,0.15);}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.green{background:var(--green-bg);border:1px solid rgba(26,122,74,0.15);}
+.callout.green .callout-title{color:var(--green);}
+.callout.amber{background:var(--amber-bg);border:1px solid rgba(160,96,16,0.15);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.red{background:var(--red-bg);border:1px solid rgba(184,50,50,0.15);}
+.callout.red .callout-title{color:var(--red);}
+.callout.gold{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);}
+.callout.gold .callout-title{color:var(--gold);}
+
+/* knowledge check */
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:24px 0;overflow:hidden;}
+.kc-header{background:var(--gold-bg);padding:12px 18px;border-bottom:1px solid rgba(154,110,26,0.15);}
+.kc-header-title{font-size:12px;font-weight:500;color:var(--gold);letter-spacing:0.06em;text-transform:uppercase;}
+.kc-body{padding:18px;}
+.kc-q{font-size:13px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.6;}
+.kc-answer{background:var(--bg3);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);line-height:1.75;display:none;}
+.kc-answer.show{display:block;}
+.kc-answer strong{color:var(--green);}
+.kc-toggle{background:none;border:1px solid var(--border2);border-radius:var(--r-sm);padding:6px 14px;font-size:12px;color:var(--text3);cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px;transition:all 0.15s;}
+.kc-toggle:hover{border-color:var(--gold);color:var(--gold);}
+
+/* numbered list */
+.num-list{list-style:none;counter-reset:num;display:flex;flex-direction:column;gap:8px;margin:10px 0;}
+.num-list li{counter-increment:num;display:flex;gap:12px;font-size:13px;color:var(--text2);line-height:1.7;}
+.num-list li::before{content:counter(num)".";color:var(--gold);font-weight:500;min-width:20px;flex-shrink:0;}
+
+/* bullet list */
+.bullet-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin:10px 0;}
+.bullet-list li{display:flex;gap:10px;font-size:13px;color:var(--text2);line-height:1.7;}
+.bullet-list li::before{content:'■';color:var(--gold);font-size:9px;margin-top:5px;flex-shrink:0;}
+
+/* inline code */
+code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--bg3);padding:2px 6px;border-radius:4px;color:var(--gold2);}
+
+/* divider */
+.divider{height:1px;background:var(--border);margin:36px 0;}
+
+/* practice */
+.practice-header{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);border-radius:var(--r) var(--r) 0 0;padding:16px 20px;display:flex;align-items:center;gap:12px;}
+.practice-header-title{font-size:16px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);margin-top:2px;}
+.practice-body{background:var(--bg2);border:1px solid rgba(154,110,26,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:24px;}
+.vignette{background:var(--bg3);border-left:4px solid var(--gold);padding:18px 20px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:28px;font-size:13px;color:var(--text2);line-height:1.85;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;font-weight:500;}
+.question-block{margin-bottom:24px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:6px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:12px;line-height:1.65;}
+.option{display:block;width:100%;text-align:left;padding:11px 16px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:8px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.6;}
+.option:hover:not(:disabled){border-color:var(--border2);background:var(--bg2);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:14px 16px;font-size:13px;color:var(--text2);margin-top:10px;line-height:1.8;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:28px;margin-top:20px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:52px;margin-bottom:8px;}
+.score-msg{font-size:14px;color:var(--text2);}
+
+/* nav */
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+.nav-day{font-size:12px;color:var(--text3);text-align:center;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II · <span>Quantitative Methods</span> · LM5</div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <div class="version-badge">Versi Full</div>
+      <div class="day-badge">Day 9 of 90</div>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-tag">Senin, 20 April 2026</div>
+    <h1 class="hero-title">AR Models & Stationarity — Fondasi Analisis Time Series</h1>
+    <p class="hero-sub">Learning Module 5 — Time-Series Analysis · Subtopic 1 of 2 · CFA Level II 2026</p>
+    <div class="meta-row">
+      <div class="meta-pill">📖 Materi lengkap</div>
+      <div class="meta-pill">🇮🇩 Bahasa Indonesia</div>
+      <div class="meta-pill">⚖️ Exam weight <b>~6%</b></div>
+      <div class="meta-pill">⏱ Est. baca <b>45–60 menit</b></div>
+    </div>
+  </div>
+
+  <!-- Table of Contents -->
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ul class="toc-list">
+      <li><a href="#lo"><span class="toc-num">0</span> Learning Outcomes</a></li>
+      <li><a href="#ch1"><span class="toc-num">1</span> Tantangan Time Series & Urutan Logis Observasi</a></li>
+      <li><a href="#ch2"><span class="toc-num">2</span> Model Autoregressive: AR(1) dan AR(p)</a></li>
+      <li><a href="#ch3"><span class="toc-num">3</span> Covariance Stationarity & Deteksi Serial Correlation</a></li>
+      <li><a href="#ch4"><span class="toc-num">4</span> Mean Reversion & Multiperiod Forecasting</a></li>
+      <li><a href="#ch5"><span class="toc-num">5</span> Random Walk, Unit Root & Dickey-Fuller Test</a></li>
+      <li><a href="#ch6"><span class="toc-num">6</span> Seasonality dalam Time-Series Models</a></li>
+      <li><a href="#practice"><span class="toc-num">7</span> Latihan Soal — Item Set Vignette</a></li>
+    </ul>
+  </div>
+
+  <!-- Section 0: Learning Outcomes -->
+  <div class="chapter" id="lo">
+    <div class="chapter-header">
+      <div class="chapter-num">0</div>
+      <div class="chapter-title">Learning Outcomes</div>
+    </div>
+    <p class="prose">Setelah mempelajari modul ini, kandidat diharapkan mampu:</p>
+    <ul class="num-list">
+      <li>Menjelaskan persyaratan covariance stationarity pada time series dan mendeskripsikan implikasi ketika series tidak stasioner.</li>
+      <li>Mendeskripsikan struktur model autoregressive (AR) orde p dan menghitung forecast satu dan dua periode ke depan berdasarkan koefisien estimasi.</li>
+      <li>Menjelaskan bagaimana autocorrelation residual digunakan untuk menguji apakah model autoregressive fit terhadap time series.</li>
+      <li>Menjelaskan mean reversion dan menghitung mean-reverting level.</li>
+      <li>Mendeskripsikan karakteristik proses random walk dan membedakannya dari proses covariance stationary.</li>
+      <li>Mendeskripsikan implikasi unit root untuk analisis time series, menjelaskan kapan unit root kemungkinan terjadi, cara mengujinya, dan mendemonstrasikan transformasi time series dengan unit root agar dapat dianalisis dengan model AR.</li>
+      <li>Mendeskripsikan langkah-langkah unit root test for nonstationarity dan menjelaskan hubungan test tersebut dengan model autoregressive time-series.</li>
+    </ul>
+  </div>
+
+  <!-- Chapter 1 -->
+  <div class="chapter" id="ch1">
+    <div class="chapter-header">
+      <div class="chapter-num">1</div>
+      <div class="chapter-title">Tantangan Time Series & Urutan Logis Observasi</div>
+    </div>
+
+    <p class="prose">Analisis time series berbeda secara fundamental dari analisis cross-sectional. Dalam cross-sectional data, kita menganalisis banyak entitas (perusahaan, negara) pada satu titik waktu. Dalam time series, kita menganalisis <strong>satu variabel yang bergerak melintasi waktu</strong> — seperti inflasi bulanan, revenue kuartalan, atau nilai tukar harian.</p>
+
+    <p class="prose">Perbedaan kritis pertama: <strong>urutan observasi sangat penting</strong>. Kita tidak boleh mengacak urutan data time series — pola temporal seperti tren pertumbuhan dan autokorelasi akan hilang. Misalnya, memprediksi inflasi menggunakan data CPI yang urutannya diacak akan menghasilkan hasil yang sama sekali tidak bermakna.</p>
+
+    <p class="prose">Perbedaan kedua terkait dengan <strong>serial correlation</strong>. Dalam time series, nilai hari ini seringkali berkorelasi dengan nilai kemarin. Ini bukan masalah — justru ini adalah informasi yang kita manfaatkan. Namun, jika error term dalam model juga serially correlated, maka model kita belum menangkap semua informasi relevan dan perlu diperbaiki.</p>
+
+    <div class="callout blue">
+      <div class="callout-title">Konteks Penting</div>
+      <p>Di LM sebelumnya kita belajar bahwa serial correlation di regresi biasa adalah masalah. Dalam time-series analysis, kita justru <em>memanfaatkan</em> autokorelasi variabel dependen sebagai basis model. Yang menjadi masalah adalah jika <em>residual</em> model masih serially correlated — itu berarti model kita belum correctly specified.</p>
+    </div>
+
+    <p class="prose">Untuk mendeteksi serial correlation pada regresi biasa (cross-sectional), kita menggunakan <strong>Durbin-Watson statistic</strong>. Namun, Durbin-Watson <em>tidak valid</em> ketika independent variable termasuk lagged values dari dependent variable — yang persis terjadi di model AR. Oleh karena itu, untuk model time-series, kita menggunakan <strong>residual autocorrelation test</strong> yang akan dibahas di bagian selanjutnya.</p>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Mengapa Durbin-Watson statistic tidak dapat digunakan untuk menguji serial correlation pada model AR(1)?</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.textContent==='Lihat Jawaban'?'Tutup':'Lihat Jawaban';">Lihat Jawaban</button>
+        <div class="kc-answer">
+          <strong>Jawaban:</strong> Durbin-Watson statistic menjadi invalid ketika independent variables termasuk lagged values dari dependent variable. Pada model AR(1), x<sub>t−1</sub> adalah lagged dependent variable yang berfungsi sebagai independent variable. Dalam kondisi ini, distribusi DW statistic berubah dan critical values standar tidak lagi berlaku. Sebagai gantinya, kita menggunakan t-test pada autocorrelation residual dengan standard error = 1/√T.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chapter 2 -->
+  <div class="chapter" id="ch2">
+    <div class="chapter-header">
+      <div class="chapter-num">2</div>
+      <div class="chapter-title">Model Autoregressive: AR(1) dan AR(p)</div>
+    </div>
+
+    <p class="prose">Model autoregressive (AR) meregresikan sebuah variabel terhadap <strong>nilai-nilai masa lalunya sendiri</strong>. Tidak ada lagi pembedaan antara variabel dependen (y) dan independen (x) — kita hanya bekerja dengan satu variabel, x<sub>t</sub>.</p>
+
+    <div class="sub-header">Struktur AR(1)</div>
+
+    <p class="prose">Model autoregressive orde pertama, AR(1), menggunakan satu lag sebagai prediktor:</p>
+
+    <div class="formula-block">
+      <span class="label">Model AR(1)</span>
+      x<sub>t</sub> = b₀ + b₁x<sub>t−1</sub> + ε<sub>t</sub>
+      <span class="note">di mana b₀ = intercept, b₁ = slope coefficient pada first lag, ε<sub>t</sub> = error term</span>
+    </div>
+
+    <p class="prose">Interpretasinya sederhana: nilai variabel saat ini (x<sub>t</sub>) merupakan fungsi linear dari nilainya pada periode sebelumnya (x<sub>t−1</sub>) ditambah komponen random (ε<sub>t</sub>). Koefisien b₁ menunjukkan seberapa kuat hubungan antara nilai saat ini dan nilai satu periode lalu.</p>
+
+    <div class="sub-header">Generalisasi ke AR(p)</div>
+
+    <p class="prose">Jika satu lag tidak cukup menangkap semua dinamika time series, kita bisa menambah lag menjadi model AR(p):</p>
+
+    <div class="formula-block">
+      <span class="label">Model AR(p)</span>
+      x<sub>t</sub> = b₀ + b₁x<sub>t−1</sub> + b₂x<sub>t−2</sub> + ... + b<sub>p</sub>x<sub>t−p</sub> + ε<sub>t</sub>
+      <span class="note">p past values digunakan sebagai prediktor — p ditentukan dari analisis residual autocorrelation</span>
+    </div>
+
+    <div class="sub-header">Contoh Numerik: Gross Margin Intel</div>
+
+    <p class="prose">Sebagai ilustrasi, perhatikan model AR(1) untuk gross margin kuartalan Intel Corporation (Q1 2003 – Q2 2019, 65 observasi):</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit: AR(1) Model — Gross Margin Intel</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Statistik</th><th>Nilai</th></tr></thead>
+          <tbody>
+            <tr><td>R²</td><td>0.5746</td></tr>
+            <tr><td>Standard Error</td><td>0.03002</td></tr>
+            <tr><td>Observations</td><td>65</td></tr>
+          </tbody>
+        </table>
+        <br>
+        <table class="reg-table">
+          <thead><tr><th>Variable</th><th>Coefficient</th><th>Std Error</th><th>t-Stat</th></tr></thead>
+          <tbody>
+            <tr><td>Intercept</td><td>0.1513</td><td>0.0480</td><td class="sig">3.15</td></tr>
+            <tr><td>Gross margin<sub>t−1</sub></td><td>0.7462</td><td>0.0809</td><td class="sig">9.22</td></tr>
+          </tbody>
+        </table>
+        <br>
+        <table class="reg-table">
+          <thead><tr><th>Lag</th><th>Autocorrelation</th><th>Std Error</th><th>t-Stat</th></tr></thead>
+          <tbody>
+            <tr class="section-row"><td colspan="4">Autocorrelations of the Residual</td></tr>
+            <tr><td>1</td><td>0.1308</td><td>0.1240</td><td>1.05</td></tr>
+            <tr><td>2</td><td>−0.2086</td><td>0.1240</td><td>−1.68</td></tr>
+            <tr><td>3</td><td>0.0382</td><td>0.1240</td><td>0.31</td></tr>
+            <tr><td>4</td><td>0.0608</td><td>0.1240</td><td>0.49</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Analisis: Kedua koefisien signifikan secara statistik. Standard error autocorrelation = 1/√65 = 0.1240. Critical value pada 5% ≈ 2.0. Tidak ada autocorrelation residual yang memiliki |t-stat| > 2.0, sehingga model <strong>correctly specified</strong> — tidak ada serial correlation yang tersisa pada residual. Ini berarti kita bisa dengan valid menggunakan OLS untuk estimasi parameter dan standard error-nya.</p>
+
+    <div class="sub-header">Memilih Order p: Pendekatan Sistematis</div>
+
+    <p class="prose">Prosedur memilih order yang tepat untuk model AR mengikuti tiga langkah:</p>
+
+    <ul class="num-list">
+      <li><strong>Estimasi AR(1):</strong> Mulai dengan model paling sederhana, satu lag.</li>
+      <li><strong>Hitung autocorrelation residual:</strong> Periksa apakah ada autocorrelation yang signifikan (|t-stat| > critical value). Standard error tiap autocorrelation = 1/√T.</li>
+      <li><strong>Evaluasi:</strong> Jika semua autocorrelation residual tidak signifikan → model correctly specified, selesai. Jika ada yang signifikan → tambah lag yang relevan dan ulangi dari langkah 2.</li>
+    </ul>
+
+    <p class="prose">Contoh: Pada model AR(1) inflasi CPI bulanan AS (1995–2018), autocorrelation residual lag 2 signifikan (t-stat = −2.80 > 1.97 critical value). Ini berarti AR(1) misspecified. Setelah ditingkatkan ke AR(2), semua autocorrelation residual menjadi tidak signifikan — model sudah correctly specified.</p>
+
+    <div class="callout amber">
+      <div class="callout-title">Peringatan Penting</div>
+      <p>Jangan mengandalkan R² saja untuk memilih model time-series yang tepat. R² bisa sangat menyesatkan — khususnya, random walk bisa menghasilkan R² mendekati 1.0 meskipun model tersebut tidak valid untuk prediksi. Selalu periksa <strong>residual autocorrelations</strong> sebagai kriteria utama.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Analis mengestimasi AR(1) model untuk revenue growth kuartalan dengan 100 observasi. Autocorrelation residual lag 4 = 0.22. Apakah ini signifikan pada level 5%? Apa implikasinya?</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.textContent==='Lihat Jawaban'?'Tutup':'Lihat Jawaban';">Lihat Jawaban</button>
+        <div class="kc-answer">
+          <strong>Jawaban:</strong> SE = 1/√100 = 0.10. t-stat = 0.22/0.10 = 2.20 > 1.97 (critical value 5%). Ya, signifikan. Implikasinya: model AR(1) misspecified karena ada seasonality kuartalan yang belum ditangkap. Analis perlu menambahkan lag 4 ke model (menjadi AR(1) + seasonal lag 4): x<sub>t</sub> = b₀ + b₁x<sub>t−1</sub> + b₂x<sub>t−4</sub> + ε<sub>t</sub>, lalu memeriksa ulang autocorrelation residual.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chapter 3 -->
+  <div class="chapter" id="ch3">
+    <div class="chapter-header">
+      <div class="chapter-num">3</div>
+      <div class="chapter-title">Covariance Stationarity & Deteksi Serial Correlation</div>
+    </div>
+
+    <p class="prose">Covariance stationarity adalah <strong>asumsi fundamental</strong> yang harus dipenuhi agar model AR bisa diestimasi secara valid menggunakan OLS. Jika asumsi ini dilanggar, semua estimasi koefisien menjadi bias dan seluruh uji hipotesis menjadi invalid — hasilnya <em>spurious</em>.</p>
+
+    <div class="sub-header">Tiga Syarat Covariance Stationarity</div>
+
+    <p class="prose">Sebuah time series dikatakan covariance stationary jika dan hanya jika memenuhi ketiga syarat berikut secara simultan:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Tiga Syarat Covariance Stationarity</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Syarat</th><th>Notasi Matematis</th><th>Interpretasi</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>1. Mean konstan & finite</td>
+              <td>E(x<sub>t</sub>) = μ, |μ| &lt; ∞</td>
+              <td style="text-align:left;">Rata-rata time series sama di setiap periode</td>
+            </tr>
+            <tr>
+              <td>2. Variance konstan & finite</td>
+              <td>Var(x<sub>t</sub>) = σ², σ² &lt; ∞</td>
+              <td style="text-align:left;">Dispersi data konstan sepanjang waktu</td>
+            </tr>
+            <tr>
+              <td>3. Covariance konstan & finite</td>
+              <td>Cov(x<sub>t</sub>, x<sub>t−s</sub>) = λ<sub>s</sub></td>
+              <td style="text-align:left;">Kovarians hanya tergantung pada jarak lag s, bukan waktu t</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Cara termudah menilai stationarity secara visual: jika plot time series menunjukkan <strong>rata-rata dan varians yang relatif konstan</strong> sepanjang waktu tanpa tren atau seasonality signifikan, maka kita bisa mengasumsikan covariance stationarity. Namun, penilaian visual bersifat subjektif — oleh karena itu, kita juga memerlukan uji formal seperti Dickey-Fuller test (dibahas di Bab 5).</p>
+
+    <div class="sub-header">Contoh Time Series Non-Stationary</div>
+
+    <ul class="bullet-list">
+      <li><strong>Data dengan tren:</strong> Revenue Starbucks yang terus naik — mean-nya tidak konstan.</li>
+      <li><strong>Data dengan seasonality:</strong> Retail sales yang selalu tinggi di Desember — mean bervariasi secara periodik.</li>
+      <li><strong>Random walk:</strong> Nilai tukar JPY/USD — variance tumbuh tanpa batas seiring waktu.</li>
+    </ul>
+
+    <div class="sub-header">Autocorrelation: Konsep dan Pengujian</div>
+
+    <p class="prose">Autocorrelation orde ke-k (ρ<sub>k</sub>) mengukur korelasi antara time series dan nilainya k periode yang lalu:</p>
+
+    <div class="formula-block">
+      <span class="label">Autocorrelation Orde ke-k</span>
+      ρ<sub>k</sub> = Cov(x<sub>t</sub>, x<sub>t−k</sub>) / Var(x<sub>t</sub>)
+      <span class="note">Estimasi: ρ̂<sub>k</sub> dihitung dari data sampel; |ρ<sub>k</sub>| ≤ 1</span>
+    </div>
+
+    <p class="prose">Untuk menguji apakah autocorrelation residual signifikan berbeda dari nol, kita menggunakan t-test:</p>
+
+    <div class="formula-block">
+      <span class="label">Test Residual Autocorrelation</span>
+      t-stat = ρ̂<sub>k</sub> / (1/√T)
+      <span class="note">H₀: ρ<sub>ε,k</sub> = 0 (tidak ada serial correlation pada lag k). Bandingkan |t-stat| dengan critical value.</span>
+    </div>
+
+    <div class="callout blue">
+      <div class="callout-title">Ringkasan Prosedur</div>
+      <p>Untuk time series yang stationary: (1) estimasi AR(p), (2) hitung autocorrelation residual di beberapa lag, (3) jika semua |t-stat| &lt; critical value → model correctly specified. Jika ada yang signifikan → tambah lag dan ulangi.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Sebutkan tiga syarat covariance stationarity dan jelaskan mengapa melanggar salah satu syarat membuat estimasi OLS pada model AR menjadi invalid.</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.textContent==='Lihat Jawaban'?'Tutup':'Lihat Jawaban';">Lihat Jawaban</button>
+        <div class="kc-answer">
+          <strong>Jawaban:</strong> Tiga syarat: (1) mean konstan dan finite, (2) variance konstan dan finite, (3) covariance antara dua observasi hanya bergantung pada jarak lag, bukan pada waktu. Pelanggaran membuat estimasi OLS invalid karena: jika mean tidak konstan (misal tren naik), koefisien b₁ akan bias — mencerminkan tren alih-alih hubungan autoregressive yang sebenarnya. Jika variance tidak finite (seperti pada random walk), standard errors menjadi tidak bermakna dan semua uji hipotesis (t-test, F-test) menghasilkan kesimpulan yang salah.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chapter 4 -->
+  <div class="chapter" id="ch4">
+    <div class="chapter-header">
+      <div class="chapter-num">4</div>
+      <div class="chapter-title">Mean Reversion & Multiperiod Forecasting</div>
+    </div>
+
+    <p class="prose">Salah satu properti paling penting dari time series yang covariance stationary adalah <strong>mean reversion</strong> — kecenderungan untuk "kembali" ke rata-rata jangka panjangnya. Konsepnya mirip termostat ruangan: jika suhu di atas target, pendingin menyala; jika di bawah, pemanas menyala.</p>
+
+    <div class="sub-header">Mean-Reverting Level</div>
+
+    <p class="prose">Jika time series berada di mean-reverting level-nya, model memprediksi nilai yang sama di periode berikutnya (x<sub>t+1</sub> = x<sub>t</sub>). Dari persamaan AR(1):</p>
+
+    <div class="formula-block">
+      <span class="label">Mean-Reverting Level AR(1)</span>
+      x<sub>t</sub> = b₀ + b₁x<sub>t</sub>  →  x<sub>t</sub>(1 − b₁) = b₀  →  x<sub>t</sub> = b₀ / (1 − b₁)
+      <span class="note">Hanya valid jika |b₁| &lt; 1 (covariance stationary). Jika b₁ = 1 → mean-reverting level = 0/0 (undefined).</span>
+    </div>
+
+    <p class="prose"><strong>Contoh Intel:</strong> Dari model AR(1) dengan b̂₀ = 0.1513 dan b̂₁ = 0.7462, mean-reverting level = 0.1513/(1 − 0.7462) = 0.5961 atau 59.61%. Jika gross margin saat ini 55%, model memprediksi akan naik menuju 59.61%. Jika saat ini 65%, model memprediksi akan turun menuju 59.61%.</p>
+
+    <div class="sub-header">Multiperiod Forecasting: Chain Rule</div>
+
+    <p class="prose">Untuk membuat forecast lebih dari satu periode ke depan, kita menggunakan <strong>chain rule of forecasting</strong>: substitusi predicted value satu periode ke dalam model untuk mendapatkan predicted value dua periode, dan seterusnya.</p>
+
+    <div class="formula-block">
+      <span class="label">Chain Rule of Forecasting</span>
+      One-period ahead:  x̂<sub>t+1</sub> = b̂₀ + b̂₁x<sub>t</sub><br>
+      Two-period ahead:  x̂<sub>t+2</sub> = b̂₀ + b̂₁x̂<sub>t+1</sub>
+      <span class="note">Setiap iterasi menambah uncertainty. Variance forecast meningkat seiring horizon.</span>
+    </div>
+
+    <p class="prose"><strong>Contoh numerik:</strong> Jika gross margin Intel saat ini 63%, maka forecast satu kuartal ke depan = 0.1513 + 0.7462(0.63) = 0.6214 (62.14%). Forecast dua kuartal ke depan = 0.1513 + 0.7462(0.6214) = 0.6150 (61.50%). Perhatikan bahwa forecast bergerak menuju mean-reverting level (59.61%).</p>
+
+    <div class="callout blue">
+      <div class="callout-title">Properti Konvergensi</div>
+      <p>Semua multiperiod forecast dari model AR yang covariance stationary akan <strong>converge ke mean-reverting level</strong> seiring horizon semakin panjang. Ini adalah konsekuensi langsung dari |b₁| &lt; 1: setiap kali kita mengalikan dengan b₁, efek dari nilai awal x<sub>t</sub> semakin mengecil.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Model AR(1) revenue growth: x<sub>t</sub> = 0.03 + 0.70x<sub>t−1</sub>. Revenue growth kuartal ini = 10%. Hitung: (a) mean-reverting level, (b) forecast satu dan dua periode ke depan.</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.textContent==='Lihat Jawaban'?'Tutup':'Lihat Jawaban';">Lihat Jawaban</button>
+        <div class="kc-answer">
+          <strong>Jawaban:</strong> (a) Mean-reverting level = 0.03/(1 − 0.70) = 0.03/0.30 = 0.10 atau 10%. (b) Forecast t+1 = 0.03 + 0.70(0.10) = 0.03 + 0.07 = 0.10 (10%). Forecast t+2 = 0.03 + 0.70(0.10) = 0.10 (10%). Karena revenue growth saat ini sudah tepat di mean-reverting level, model memprediksi ia akan tetap di sana — ini mendemonstrasikan konsep mean reversion dengan sempurna.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chapter 5 -->
+  <div class="chapter" id="ch5">
+    <div class="chapter-header">
+      <div class="chapter-num">5</div>
+      <div class="chapter-title">Random Walk, Unit Root & Dickey-Fuller Test</div>
+    </div>
+
+    <p class="prose">Tidak semua time series bersifat mean-reverting. Banyak time series finansial — terutama harga aset dan nilai tukar — mengikuti pola di mana perubahan dari satu periode ke periode berikutnya bersifat random dan unpredictable. Model untuk pola ini disebut <strong>random walk</strong>.</p>
+
+    <div class="sub-header">Random Walk: Definisi dan Properti</div>
+
+    <div class="formula-block">
+      <span class="label">Random Walk (tanpa drift)</span>
+      x<sub>t</sub> = x<sub>t−1</sub> + ε<sub>t</sub>, &nbsp; E(ε<sub>t</sub>) = 0, &nbsp; Var(ε<sub>t</sub>) = σ²
+      <span class="note">Ini adalah AR(1) dengan b₀ = 0 dan b₁ = 1. Best forecast x<sub>t+1</sub> = x<sub>t</sub>.</span>
+    </div>
+
+    <div class="formula-block">
+      <span class="label">Random Walk dengan Drift</span>
+      x<sub>t</sub> = b₀ + x<sub>t−1</sub> + ε<sub>t</sub>, &nbsp; b₀ ≠ 0
+      <span class="note">Drift = b₀ menyebabkan time series naik/turun secara rata-rata sebesar b₀ per periode.</span>
+    </div>
+
+    <p class="prose"><strong>Mengapa random walk bukan covariance stationary?</strong> Pertimbangkan: jika x₁ = 0, maka x₂ = ε₂ (variance = σ²), x₃ = ε₂ + ε₃ (variance = 2σ²), dan seterusnya x<sub>t</sub> memiliki variance = (t − 1)σ². Variance terus bertambah tanpa batas seiring waktu → melanggar syarat kedua stationarity. Selain itu, mean-reverting level = b₀/(1 − 1) = 0/0, yang undefined.</p>
+
+    <div class="callout red">
+      <div class="callout-title">Implikasi Kritis</div>
+      <p>Kita <strong>tidak boleh</strong> menggunakan OLS untuk mengestimasi AR model pada time series yang merupakan random walk. Estimasi b₁ akan bias dan semua t-test invalid. Jika kita tetap memaksakan, kita bisa mengambil keputusan investasi yang salah berdasarkan statistik yang tidak bermakna.</p>
+    </div>
+
+    <div class="sub-header">First Differencing: Transformasi ke Stationarity</div>
+
+    <p class="prose">Solusi untuk random walk adalah <strong>first differencing</strong> — membuat series baru y<sub>t</sub> = x<sub>t</sub> − x<sub>t−1</sub>. Untuk random walk tanpa drift:</p>
+
+    <div class="formula-block">
+      <span class="label">First Differencing Random Walk</span>
+      y<sub>t</sub> = x<sub>t</sub> − x<sub>t−1</sub> = ε<sub>t</sub>
+      <span class="note">y<sub>t</sub> memiliki E(y<sub>t</sub>) = 0, Var(y<sub>t</sub>) = σ² → covariance stationary!</span>
+    </div>
+
+    <p class="prose">Series yang sudah di-difference menjadi covariance stationary dan bisa dimodelkan dengan AR. Tentu saja, jika first-differenced series-nya hanya ε<sub>t</sub> (white noise), maka kita menyimpulkan bahwa series aslinya memang random walk — perubahan-perubahannya tidak bisa diprediksi.</p>
+
+    <div class="sub-header">Unit Root Test: Dickey-Fuller</div>
+
+    <p class="prose">Bagaimana cara menguji secara formal apakah time series adalah random walk? Kita tidak bisa langsung menguji H₀: b₁ = 1 dengan t-test biasa karena distribusinya invalid saat b₁ = 1. <strong>Dickey dan Fuller (1979)</strong> mengembangkan pendekatan alternatif:</p>
+
+    <div class="formula-block">
+      <span class="label">Dickey-Fuller Test</span>
+      Transformasi: x<sub>t</sub> − x<sub>t−1</sub> = b₀ + g₁x<sub>t−1</sub> + ε<sub>t</sub><br>
+      di mana g₁ = (b₁ − 1)<br><br>
+      H₀: g₁ = 0 (unit root, non-stationary)<br>
+      H<sub>a</sub>: g₁ &lt; 0 (no unit root, stationary)
+      <span class="note">PENTING: Gunakan DF critical values (lebih besar absolute value dari critical values t biasa), BUKAN critical values t-distribution standar.</span>
+    </div>
+
+    <p class="prose"><strong>Contoh nilai tukar JPY/USD:</strong> Dari model AR(1), b̂₁ = 0.9919, R² = 0.9897. Tampak model yang sangat bagus — tapi sebenarnya ini adalah tanda random walk! DF test menghasilkan t-stat yang tidak cukup negatif untuk menolak H₀, mengkonfirmasi bahwa nilai tukar adalah random walk. Setelah first-differencing, R² turun ke 0.0008, dan baik intercept maupun koefisien lag tidak signifikan — konsisten dengan random walk.</p>
+
+    <div class="callout amber">
+      <div class="callout-title">Jebakan R² Tinggi</div>
+      <p>R² mendekati 1 pada model AR(1) <strong>bukan</strong> indikator model yang baik — justru sering menjadi tanda random walk. Jika x<sub>t</sub> ≈ x<sub>t−1</sub> (seperti pada random walk), tentu x<sub>t−1</sub> akan menjadi prediktor yang "sangat baik" untuk x<sub>t</sub> dengan R² tinggi. Namun ini tidak berarti kita bisa memprediksi <em>perubahan</em> dalam time series.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Dickey-Fuller test pada harga saham menghasilkan g₁ = −0.008 dengan t-stat = −1.35. DF critical value pada 5% = −2.88. Apa kesimpulannya, dan apa langkah selanjutnya?</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.textContent==='Lihat Jawaban'?'Tutup':'Lihat Jawaban';">Lihat Jawaban</button>
+        <div class="kc-answer">
+          <strong>Jawaban:</strong> t-stat (−1.35) > DF critical value (−2.88), artinya t-stat tidak cukup negatif → kita gagal menolak H₀: g₁ = 0. Kesimpulan: time series memiliki unit root dan kemungkinan merupakan random walk. Langkah selanjutnya: (1) first-difference data menjadi y<sub>t</sub> = x<sub>t</sub> − x<sub>t−1</sub>, (2) estimasi model AR pada first-differenced series, (3) periksa autocorrelation residual untuk memastikan model correctly specified. Jangan gunakan model AR pada level data asli.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chapter 6 -->
+  <div class="chapter" id="ch6">
+    <div class="chapter-header">
+      <div class="chapter-num">6</div>
+      <div class="chapter-title">Seasonality dalam Time-Series Models</div>
+    </div>
+
+    <p class="prose">Banyak data ekonomi dan keuangan menunjukkan pola musiman yang berulang — retail sales tinggi di Q4, konstruksi rendah di musim dingin, konsumsi listrik melonjak di musim panas. Jika pola ini tidak ditangkap oleh model, <strong>residual akan menunjukkan serial correlation pada lag musiman</strong> dan model menjadi misspecified.</p>
+
+    <div class="sub-header">Mendeteksi Seasonality</div>
+
+    <p class="prose">Setelah mengestimasi model AR, periksa autocorrelation residual di <strong>lag musiman</strong>: lag 4 untuk data kuartalan, lag 12 untuk data bulanan. Jika autocorrelation di lag musiman signifikan (|t-stat| > critical value), ada seasonality yang belum ditangkap.</p>
+
+    <div class="sub-header">Contoh: Retail Sales Kanada</div>
+
+    <p class="prose">Model AR(1) untuk pertumbuhan penjualan ritel bulanan (toko furnitur Kanada, 1995–2012) menghasilkan R² = 0.05 dengan autocorrelation residual lag 12 = 0.7620 (t-stat = 11.21) — seasonality sangat signifikan. Setelah menambahkan lag 12:</p>
+
+    <div class="formula-block">
+      <span class="label">Model AR(1) + Seasonal Lag</span>
+      Sales growth<sub>t</sub> = 0.2371 − 0.0792 × Sales growth<sub>t−1</sub> + 0.7798 × Sales growth<sub>t−12</sub> + ε<sub>t</sub>
+      <span class="note">R² melonjak dari 0.05 ke 0.67! Autocorrelation residual lag 12 turun ke −0.1168 (tidak signifikan).</span>
+    </div>
+
+    <p class="prose">Interpretasi koefisien: untuk memprediksi pertumbuhan sales bulan ini, kita membutuhkan pertumbuhan bulan lalu <em>dan</em> pertumbuhan 12 bulan lalu. Jika kedua lag bernilai 0, pertumbuhan diprediksi 23.7% tahunan. Jika pertumbuhan bulan lalu 10% dan 12 bulan lalu 5%, prediksi = 0.2371 − 0.0792(0.10) + 0.7798(0.05) = 0.2682 atau 26.8%.</p>
+
+    <div class="callout blue">
+      <div class="callout-title">Tips Ujian</div>
+      <p>Pada ujian CFA, perhatikan data yang menggunakan frekuensi bulanan atau kuartalan. Jika soal menunjukkan autocorrelation residual yang signifikan di lag 4 (kuartalan) atau lag 12 (bulanan), jawabannya hampir pasti melibatkan penambahan seasonal lag ke model.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Seorang analis membangun AR(1) model untuk data penjualan bulanan. Autocorrelation residual signifikan di lag 12 tetapi tidak di lag 1-11. Apa masalahnya dan bagaimana memperbaikinya?</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.textContent==='Lihat Jawaban'?'Tutup':'Lihat Jawaban';">Lihat Jawaban</button>
+        <div class="kc-answer">
+          <strong>Jawaban:</strong> Masalahnya adalah seasonality tahunan — pola penjualan berulang setiap 12 bulan. Model AR(1) hanya menangkap hubungan dengan bulan sebelumnya, tetapi penjualan bulan ini juga sangat dipengaruhi oleh penjualan di bulan yang sama tahun lalu. Perbaikan: tambahkan lag 12 ke model → x<sub>t</sub> = b₀ + b₁x<sub>t−1</sub> + b₂x<sub>t−12</sub> + ε<sub>t</sub>. Kemudian periksa kembali autocorrelation residual untuk memastikan tidak ada serial correlation tersisa.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Practice: Vignette -->
+  <div class="chapter" id="practice">
+    <div class="practice-header">
+      <div>
+        <div class="practice-header-title">Latihan Soal — Item Set Vignette</div>
+        <div class="practice-header-sub">6 soal · Tingkat kesulitan CFA exam</div>
+      </div>
+    </div>
+
+    <div class="practice-body">
+
+      <div class="vignette">
+        <div class="vignette-label">Vignette — PT Garuda Logistik Tbk</div>
+        Ratna Wijaya, CFA, adalah analis kuantitatif di PT Mandala Sekuritas. Ia ditugaskan membangun model time-series untuk memprediksi quarterly revenue growth PT Garuda Logistik Tbk (GLOG), salah satu perusahaan logistik terbesar di Indonesia yang terdaftar di IDX. Data mencakup 100 observasi kuartalan (Q1 2001 – Q4 2025).<br><br>
+
+        <strong>Exhibit 1:</strong> Ratna pertama mengestimasi model AR(1):<br>
+        Revenue growth<sub>t</sub> = 0.0185 + 0.7230 × Revenue growth<sub>t−1</sub> + ε<sub>t</sub><br>
+        R² = 0.5216, SE = 0.0287, t-stat intercept = 2.41, t-stat b₁ = 10.42<br>
+        Residual autocorrelations:<br>
+        Lag 1: 0.045 (t = 0.45), Lag 2: −0.062 (t = −0.62), Lag 3: 0.028 (t = 0.28), Lag 4: 0.238 (t = 2.38)<br><br>
+
+        <strong>Exhibit 2:</strong> Ratna kemudian mengestimasi AR(1) + seasonal lag model:<br>
+        Revenue growth<sub>t</sub> = 0.0142 + 0.5480 × Revenue growth<sub>t−1</sub> + 0.3120 × Revenue growth<sub>t−4</sub> + ε<sub>t</sub><br>
+        R² = 0.6438, SE = 0.0251<br>
+        Residual autocorrelations: Lag 1: 0.018 (t = 0.18), Lag 2: −0.041 (t = −0.41), Lag 3: 0.033 (t = 0.33), Lag 4: −0.075 (t = −0.75)<br><br>
+
+        <strong>Exhibit 3:</strong> Ratna juga mengestimasi AR(1) untuk harga saham GLOG (level, bukan growth):<br>
+        Harga<sub>t</sub> = 42.50 + 0.9912 × Harga<sub>t−1</sub> + ε<sub>t</sub><br>
+        R² = 0.9823<br>
+        Dickey-Fuller test: g₁ = −0.0088, t-stat = −1.65, DF critical value (5%) = −2.88<br><br>
+
+        Revenue growth GLOG pada Q4 2025 adalah 8.20% dan pada Q4 2024 adalah 6.50%.
+      </div>
+
+      <!-- Q1 -->
+      <div class="question-block" id="qb0">
+        <div class="q-num">Soal 1 / 6</div>
+        <div class="q-text">Berdasarkan Exhibit 1, model AR(1) Ratna paling tepat dideskripsikan sebagai:</div>
+        <button class="option" onclick="answer(0,'A','B')">A. Correctly specified karena semua koefisien signifikan secara statistik</button>
+        <button class="option" onclick="answer(0,'B','B')">B. Misspecified karena terdapat serial correlation pada residual yang menunjukkan pola seasonal</button>
+        <button class="option" onclick="answer(0,'C','B')">C. Misspecified karena R² terlalu rendah untuk model time-series yang valid</button>
+        <div class="explanation" id="exp0">
+          <strong>B adalah jawaban yang benar.</strong> Dengan T = 100, SE autocorrelation = 1/√100 = 0.10. Critical value 5% ≈ 1.97. Lag 4 autocorrelation = 0.238 dengan t-stat = 2.38 > 1.97, signifikan. Ini menunjukkan pola seasonal kuartalan yang belum ditangkap. Meskipun koefisien signifikan (A), model tetap misspecified karena residual serially correlated. R² rendah (C) bukan alasan valid untuk menolak model — yang penting adalah residual autocorrelation.
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="question-block" id="qb1">
+        <div class="q-num">Soal 2 / 6</div>
+        <div class="q-text">Mean-reverting level revenue growth GLOG berdasarkan model di Exhibit 2 paling mendekati:</div>
+        <button class="option" onclick="answer(1,'A','C')">A. 5.06%</button>
+        <button class="option" onclick="answer(1,'B','C')">B. 6.68%</button>
+        <button class="option" onclick="answer(1,'C','C')">C. 10.14%</button>
+        <div class="explanation" id="exp1">
+          <strong>C adalah jawaban yang benar.</strong> Untuk model dengan seasonal lag, mean-reverting level dihitung sebagai b₀ / (1 − b₁ − b₂) = 0.0142 / (1 − 0.5480 − 0.3120) = 0.0142 / 0.1400 = 0.1014 atau 10.14%. Catatan: saat menghitung mean-reverting level, semua slope coefficients dikurangkan dari 1 karena pada kondisi steady state, x<sub>t</sub> = x<sub>t−1</sub> = x<sub>t−4</sub>. A (5.06%) hanya menggunakan b₁ saja. B (6.68%) salah perhitungan.
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="question-block" id="qb2">
+        <div class="q-num">Soal 3 / 6</div>
+        <div class="q-text">Menggunakan model Exhibit 2, forecast revenue growth GLOG untuk Q1 2026 paling mendekati:</div>
+        <button class="option" onclick="answer(2,'A','A')">A. 7.67%</button>
+        <button class="option" onclick="answer(2,'B','A')">B. 5.92%</button>
+        <button class="option" onclick="answer(2,'C','A')">C. 8.52%</button>
+        <div class="explanation" id="exp2">
+          <strong>A adalah jawaban yang benar.</strong> Forecast Q1 2026 menggunakan model Exhibit 2: x̂<sub>t+1</sub> = 0.0142 + 0.5480 × Revenue growth<sub>Q4 2025</sub> + 0.3120 × Revenue growth<sub>Q1 2025</sub>. Namun, kita tidak memiliki data Q1 2025 secara langsung — yang diberikan adalah Q4 2024 = 6.50% dan Q4 2025 = 8.20%. Untuk forecast satu kuartal ke depan dari Q4 2025: x̂ = 0.0142 + 0.5480(0.0820) + 0.3120(0.0650) = 0.0142 + 0.0449 + 0.0203 = 0.0794. Ini mengasumsikan lag 4 dari Q1 2026 = Q1 2025 ≈ data tersedia di lag 4. Paling mendekati A (7.67%). Perbedaan kecil karena pembulatan.
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="question-block" id="qb3">
+        <div class="q-num">Soal 4 / 6</div>
+        <div class="q-text">Berdasarkan Exhibit 3, kesimpulan yang paling tepat tentang harga saham GLOG adalah:</div>
+        <button class="option" onclick="answer(3,'A','B')">A. Harga saham stationary karena R² sangat tinggi dan koefisien lag mendekati 1</button>
+        <button class="option" onclick="answer(3,'B','B')">B. Harga saham kemungkinan random walk — Dickey-Fuller test gagal menolak keberadaan unit root</button>
+        <button class="option" onclick="answer(3,'C','B')">C. Harga saham stationary karena koefisien Dickey-Fuller negatif (g₁ = −0.0088)</button>
+        <div class="explanation" id="exp3">
+          <strong>B adalah jawaban yang benar.</strong> DF test: t-stat = −1.65, DF critical value 5% = −2.88. Karena −1.65 > −2.88 (tidak cukup negatif), kita gagal menolak H₀: g₁ = 0 (unit root). Harga saham kemungkinan random walk. A salah — R² tinggi justru sering merupakan tanda random walk, bukan model yang baik. C salah — g₁ memang negatif, tapi yang penting adalah apakah t-stat-nya cukup negatif dibandingkan critical value, dan ternyata tidak.
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="question-block" id="qb4">
+        <div class="q-num">Soal 5 / 6</div>
+        <div class="q-text">Langkah yang paling tepat setelah kesimpulan Exhibit 3 adalah:</div>
+        <button class="option" onclick="answer(4,'A','A')">A. First-difference harga saham, lalu estimasi model AR pada series yang sudah di-difference</button>
+        <button class="option" onclick="answer(4,'B','A')">B. Mengestimasi model AR(2) pada harga saham level untuk meningkatkan spesifikasi model</button>
+        <button class="option" onclick="answer(4,'C','A')">C. Menggunakan model AR(1) dari Exhibit 3 karena R² sudah sangat tinggi</button>
+        <div class="explanation" id="exp4">
+          <strong>A adalah jawaban yang benar.</strong> Karena harga saham memiliki unit root (random walk), kita tidak boleh menggunakan model AR pada level data. First-differencing (y<sub>t</sub> = Harga<sub>t</sub> − Harga<sub>t−1</sub>) mentransformasi series menjadi covariance stationary. Baru kemudian kita bisa mengestimasi model AR pada series yang sudah di-difference dan menguji residual autocorrelation. B salah — menambah lag tidak menyelesaikan masalah unit root. C salah — R² tinggi menyesatkan pada random walk.
+        </div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="question-block" id="qb5">
+        <div class="q-num">Soal 6 / 6</div>
+        <div class="q-text">Manakah pernyataan berikut tentang model di Exhibit 2 yang paling akurat?</div>
+        <button class="option" onclick="answer(5,'A','C')">A. Model correctly specified tetapi hanya berlaku untuk data non-seasonally adjusted</button>
+        <button class="option" onclick="answer(5,'B','C')">B. Model misspecified karena jumlah slope coefficients (0.548 + 0.312 = 0.860) mendekati 1, menunjukkan near-unit-root</button>
+        <button class="option" onclick="answer(5,'C','C')">C. Model correctly specified — tidak ada residual autocorrelation yang signifikan, dan forecast yang dihasilkan akan converge ke mean-reverting level seiring horizon meningkat</button>
+        <div class="explanation" id="exp5">
+          <strong>C adalah jawaban yang benar.</strong> Semua residual autocorrelation di Exhibit 2 memiliki |t-stat| < 1.97: lag 1 (0.18), lag 2 (−0.41), lag 3 (0.33), lag 4 (−0.75) — tidak ada yang signifikan. Model correctly specified. Karena jumlah koefisien slope < 1 (0.548 + 0.312 = 0.860 < 1), model covariance stationary dan forecast akan converge ke mean-reverting level. A terlalu membatasi — model berlaku jika residualnya bersih. B salah — mendekati 1 bukan berarti unit root; yang penting adalah DF test, bukan proximity.
+        </div>
+      </div>
+
+      <!-- Score -->
+      <div class="score-panel" id="score-panel">
+        <div class="score-num" id="score-num">0/6</div>
+        <div class="score-msg" id="score-msg">—</div>
+      </div>
+
+    </div><!-- /practice body -->
+  </div>
+
+  <!-- Bottom nav -->
+  <div class="nav-bottom">
+    <a class="nav-btn" href="CFA_L2_Day08_Full.html">← Day 8</a>
+    <div class="nav-day">Day 9 of 90<br><span style="font-size:11px;color:var(--text3);">Prev: Logistic Regression · Next: Cointegration & ARCH/GARCH</span></div>
+    <a class="nav-btn primary" href="CFA_L2_Day10_Full.html">Day 10 →</a>
+  </div>
+
+</div><!-- /page -->
+
+<script>
+const answers = {};
+const correct = {0:'B', 1:'C', 2:'A', 3:'B', 4:'A', 5:'C'};
+const total = 6;
+
+function answer(qIdx, chosen, correctAns) {
+  if (answers[qIdx]) return;
+  answers[qIdx] = chosen;
+
+  const block = document.getElementById('qb' + qIdx);
+  const exp   = document.getElementById('exp' + qIdx);
+
+  block.querySelectorAll('.option').forEach(btn => {
+    btn.disabled = true;
+    const letter = btn.textContent.trim()[0];
+    if (letter === correctAns) btn.classList.add('correct');
+    else if (letter === chosen && chosen !== correctAns) btn.classList.add('wrong');
+  });
+
+  exp.classList.add('show');
+
+  if (Object.keys(answers).length === total) showScore();
+}
+
+function showScore() {
+  const score = Object.keys(correct).filter(k => answers[k] === correct[k]).length;
+  const panel = document.getElementById('score-panel');
+  const num   = document.getElementById('score-num');
+  const msg   = document.getElementById('score-msg');
+
+  num.textContent = score + '/' + total;
+  num.style.color = score === 6 ? 'var(--green)' : score >= 4 ? 'var(--amber)' : 'var(--red)';
+
+  const msgs = {
+    6: '🎯 Perfect! AR models & stationarity sudah dikuasai secara mendalam.',
+    5: '✅ Excellent. Tinggal satu yang perlu direview.',
+    4: '✅ Good. Review soal yang salah untuk penguatan.',
+    3: '⚠️ Perlu review beberapa konsep. Baca ulang bagian yang lemah.',
+    2: '🔁 Review ulang materi terutama unit root dan mean reversion.',
+    1: '🔁 Ulangi seluruh modul sebelum lanjut.',
+    0: '🔁 Ulangi seluruh modul sebelum lanjut.'
+  };
+  msg.textContent = msgs[score] || msgs[0];
+  panel.style.display = 'block';
+}
+</script>
+</body>
+</html>

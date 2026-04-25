@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 13 · Full · Data Types & Wrangling</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #fafaf8;
+  --bg2:     #f4f3ef;
+  --bg3:     #eeece7;
+  --border:  rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text:    #1a1a2e;
+  --text2:   #4a4a6a;
+  --text3:   #8a8aaa;
+  --gold:    #9a6e1a;
+  --gold2:   #7a5010;
+  --gold-bg: rgba(154,110,26,0.08);
+  --blue:    #1a5fa8;
+  --blue-bg: rgba(26,95,168,0.08);
+  --green:   #1a7a4a;
+  --green-bg:rgba(26,122,74,0.08);
+  --red:     #b83232;
+  --red-bg:  rgba(184,50,50,0.08);
+  --amber:   #a06010;
+  --amber-bg:rgba(160,96,16,0.08);
+  --r:10px; --r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.8;}
+.page{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;border:1px solid rgba(26,95,168,0.2);}
+.hero{margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--border);}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:36px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:15px;color:var(--text2);}
+.meta-row{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:36px;}
+.toc-title{font-size:12px;color:var(--text3);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:12px;font-weight:500;}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.toc-list li a{font-size:13px;color:var(--blue);text-decoration:none;display:flex;align-items:center;gap:8px;}
+.toc-list li a:hover{text-decoration:underline;}
+.toc-num{font-size:11px;color:var(--text3);min-width:20px;}
+.chapter{margin-bottom:40px;}
+.chapter-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--gold-bg);}
+.chapter-num{font-family:'DM Serif Display',serif;font-size:28px;color:var(--gold);line-height:1;}
+.chapter-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);line-height:1.2;}
+.sub-header{font-size:17px;font-weight:500;color:var(--text);margin:24px 0 12px;padding-left:12px;border-left:3px solid var(--gold);}
+.prose{font-size:14px;color:var(--text2);line-height:1.85;margin-bottom:14px;}
+.prose strong{color:var(--text);font-weight:500;}
+.prose em{font-style:italic;}
+.formula-block{background:var(--bg2);border:1px solid var(--border2);border-left:4px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:16px 20px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold2);line-height:2;}
+.formula-block .label{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:8px;}
+.formula-block .note{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text3);font-style:italic;display:block;margin-top:8px;}
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:20px 0;}
+.exhibit-title{background:var(--bg3);padding:10px 16px;font-size:12px;font-weight:500;color:var(--text2);border-bottom:1px solid var(--border);letter-spacing:0.03em;}
+.exhibit-body{padding:16px;}
+.reg-table{width:100%;border-collapse:collapse;font-size:13px;}
+.reg-table th{text-align:right;padding:8px 12px;background:var(--bg3);color:var(--text3);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border2);}
+.reg-table th:first-child{text-align:left;}
+.reg-table td{padding:8px 12px;border-bottom:1px solid var(--border);text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text2);}
+.reg-table td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);font-weight:500;}
+.reg-table tr:last-child td{border-bottom:none;}
+.reg-table .sig{color:var(--green);font-weight:500;}
+.callout{border-radius:var(--r);padding:16px 18px;margin:16px 0;}
+.callout-title{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;}
+.callout p{font-size:13px;color:var(--text2);line-height:1.75;}
+.callout p + p{margin-top:8px;}
+.callout.blue{background:var(--blue-bg);border:1px solid rgba(26,95,168,0.15);}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.amber{background:var(--amber-bg);border:1px solid rgba(160,96,16,0.15);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.red{background:var(--red-bg);border:1px solid rgba(184,50,50,0.15);}
+.callout.red .callout-title{color:var(--red);}
+.callout.gold{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);}
+.callout.gold .callout-title{color:var(--gold);}
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:24px 0;overflow:hidden;}
+.kc-header{background:var(--gold-bg);padding:12px 18px;border-bottom:1px solid rgba(154,110,26,0.15);}
+.kc-header-title{font-size:12px;font-weight:500;color:var(--gold);letter-spacing:0.06em;text-transform:uppercase;}
+.kc-body{padding:18px;}
+.kc-q{font-size:13px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.6;}
+.kc-answer{background:var(--bg3);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);line-height:1.75;display:none;}
+.kc-answer.show{display:block;}
+.kc-answer strong{color:var(--green);}
+.kc-toggle{background:none;border:1px solid var(--border2);border-radius:var(--r-sm);padding:6px 14px;font-size:12px;color:var(--text3);cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px;transition:all 0.15s;}
+.kc-toggle:hover{border-color:var(--gold);color:var(--gold);}
+.num-list{list-style:none;counter-reset:num;display:flex;flex-direction:column;gap:8px;margin:10px 0;}
+.num-list li{counter-increment:num;display:flex;gap:12px;font-size:13px;color:var(--text2);line-height:1.7;}
+.num-list li::before{content:counter(num)".";color:var(--gold);font-weight:500;min-width:20px;flex-shrink:0;}
+.bullet-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin:10px 0;}
+.bullet-list li{display:flex;gap:10px;font-size:13px;color:var(--text2);line-height:1.7;}
+.bullet-list li::before{content:'■';color:var(--gold);font-size:9px;margin-top:5px;flex-shrink:0;}
+code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--bg3);padding:2px 6px;border-radius:4px;color:var(--gold2);}
+.divider{height:1px;background:var(--border);margin:36px 0;}
+.practice-header{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);border-radius:var(--r) var(--r) 0 0;padding:16px 20px;display:flex;align-items:center;gap:12px;}
+.practice-header-title{font-size:16px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);margin-top:2px;}
+.practice-body{background:var(--bg2);border:1px solid rgba(154,110,26,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:24px;}
+.vignette{background:var(--bg3);border-left:4px solid var(--gold);padding:18px 20px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:28px;font-size:13px;color:var(--text2);line-height:1.85;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;font-weight:500;}
+.question-block{margin-bottom:24px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:6px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:12px;line-height:1.65;}
+.option{display:block;width:100%;text-align:left;padding:11px 16px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:8px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.6;}
+.option:hover:not(:disabled){border-color:var(--border2);background:var(--bg2);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:14px 16px;font-size:13px;color:var(--text2);margin-top:10px;line-height:1.8;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:28px;margin-top:20px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:52px;margin-bottom:8px;}
+.score-msg{font-size:14px;color:var(--text2);}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+.nav-day{font-size:12px;color:var(--text3);text-align:center;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II · <span>Quantitative Methods</span> · LM7</div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <div class="version-badge">Versi Full</div>
+      <div class="day-badge">Day 13 of 90</div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Senin, 27 April 2026</div>
+    <h1 class="hero-title">Big Data Projects: Data Types, Cleansing & Wrangling</h1>
+    <p class="hero-sub">Learning Module 7 — Big Data Projects · Subtopic 1 of 2 · CFA Level II 2026</p>
+    <div class="meta-row">
+      <div class="meta-pill">📖 Materi lengkap</div>
+      <div class="meta-pill">🇮🇩 Bahasa Indonesia</div>
+      <div class="meta-pill">⚖️ Exam weight <b>~6%</b></div>
+      <div class="meta-pill">⏱ Est. baca <b>45-60 menit</b></div>
+    </div>
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ul class="toc-list">
+      <li><a href="#s0"><span class="toc-num">0</span> Learning Outcomes</a></li>
+      <li><a href="#s1"><span class="toc-num">1</span> Big Data dalam Investment Management: 4 Vs</a></li>
+      <li><a href="#s2"><span class="toc-num">2</span> Lima Langkah Eksekusi Proyek ML (Structured vs Text)</a></li>
+      <li><a href="#s3"><span class="toc-num">3</span> Structured Data — Cleansing: Enam Jenis Error</a></li>
+      <li><a href="#s4"><span class="toc-num">4</span> Structured Data — Preprocessing: Transformasi & Scaling</a></li>
+      <li><a href="#s5"><span class="toc-num">5</span> Text Data — Cleansing: HTML, Punctuation, Numbers, Whitespace</a></li>
+      <li><a href="#s6"><span class="toc-num">6</span> Text Data — Wrangling: Tokenization, Normalization, BOW, DTM, N-grams</a></li>
+      <li><a href="#s7"><span class="toc-num">7</span> Latihan Soal — Item Set Vignette</a></li>
+    </ul>
+  </div>
+
+  <!-- SECTION 0 -->
+  <div class="chapter" id="s0">
+    <div class="chapter-header">
+      <div class="chapter-num">0</div>
+      <div class="chapter-title">Learning Outcomes</div>
+    </div>
+    <p class="prose">Setelah menyelesaikan modul ini, kandidat diharapkan mampu:</p>
+    <ul class="num-list">
+      <li>Mengidentifikasi dan menjelaskan langkah-langkah dalam proyek data analysis, termasuk perbedaan antara structured ML model building dan text ML model building.</li>
+      <li>Mendeskripsikan tujuan, langkah, dan contoh persiapan (cleansing) dan wrangling (preprocessing) data, baik untuk data terstruktur (rasio keuangan, harga) maupun data tidak terstruktur (teks dari earnings calls, 10-K filings, dan sosial media).</li>
+      <li>Mengidentifikasi enam jenis error dalam data cleansing dan lima jenis transformasi dalam data preprocessing.</li>
+      <li>Menjelaskan teknik penanganan outliers (trimming, winsorization) serta dua metode scaling (normalization, standardization) yang disyaratkan untuk ML methods seperti SVM dan ANN.</li>
+      <li>Menjelaskan pipeline text processing — text cleansing → tokenization → normalization → bag-of-words (BOW) → document term matrix (DTM) — serta peran n-grams dalam mengatasi limitasi BOW.</li>
+    </ul>
+  </div>
+
+  <!-- SECTION 1 -->
+  <div class="chapter" id="s1">
+    <div class="chapter-header">
+      <div class="chapter-num">1</div>
+      <div class="chapter-title">Big Data dalam Investment Management: 4 Vs</div>
+    </div>
+
+    <p class="prose"><strong>Big data</strong> — sering disebut <em>alternative data</em> — adalah data yang dihasilkan oleh financial markets (harga saham dan obligasi), bisnis (laporan keuangan, volume produksi), pemerintah (data ekonomi, perdagangan), individu (transaksi kartu kredit, posting sosial media), sensor (citra satelit, pola lalu lintas), dan Internet of Things (jaringan perangkat digital yang saling terhubung). Ledakan big data terjadi terutama pada data tidak terstruktur yang dihasilkan dari sosial media, email, web traffic, situs berita online, dan citra elektronik — dan pertumbuhannya diprediksi eksponensial ke depan.</p>
+
+    <p class="prose">Para manajer investasi semakin mengandalkan big data dalam proses investasi untuk menemukan sinyal yang bisa memberikan <em>information edge</em>. Contoh khas: fund manager menggunakan data teks dari laporan 10-K untuk memprediksi sentiment saham (positif/negatif), yang lalu dijadikan input ke model forecasting yang lebih komprehensif bersama data keuangan tradisional.</p>
+
+    <div class="sub-header">Empat Karakteristik: 3 Vs + Veracity</div>
+    <p class="prose">Big data dibedakan dari data tradisional melalui empat karakteristik utama — tiga yang "asli" (Volume, Variety, Velocity) dan yang keempat (Veracity) yang muncul ketika big data digunakan untuk inferensi atau prediksi.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 1.1 — 4 Vs of Big Data</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th style="text-align:left;">Karakteristik</th><th style="text-align:left;">Definisi</th><th style="text-align:left;">Implikasi untuk Finance</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Volume</td><td style="text-align:left;">Kuantitas data (terabytes → petabytes → exabytes)</td><td style="text-align:left;">Butuh infrastruktur komputasi dan storage modern; tantangan skalabilitas</td></tr>
+            <tr><td>Variety</td><td style="text-align:left;">Ragam sumber: structured, semi-structured, unstructured (text, image, audio, video, clickstream, spatial-temporal)</td><td style="text-align:left;">Butuh multi-format integration; muncul isu privasi dan etika</td></tr>
+            <tr><td>Velocity</td><td style="text-align:left;">Kecepatan data diciptakan (data-in-motion)</td><td style="text-align:left;">Memungkinkan real-time predictive analytics (news, sentimen harian)</td></tr>
+            <tr><td>Veracity</td><td style="text-align:left;">Kredibilitas dan reliabilitas data</td><td style="text-align:left;">Kritis untuk ML: 10–15% sosial media = konten palsu, &gt;20% web = spam</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Analogi butir pasir yang klasik membantu memahami skala volume: jika megabyte = satu sendok makan pasir, maka petabyte ≈ pantai sepanjang 1,6 km dan exabyte ≈ pantai sepanjang 1.600 km. Rata-rata perusahaan di industri AS saat ini mengumpulkan lebih banyak data daripada yang pernah diarsipkan US Library of Congress.</p>
+
+    <div class="sub-header">Structured vs Unstructured Data</div>
+    <p class="prose"><strong>Structured data</strong> tersusun dalam format sistematis yang langsung bisa dibaca dan diproses oleh komputer — biasanya data matrix di mana tiap <em>row</em> = observasi dan tiap <em>column</em> = feature. Contoh: tabel harga saham harian, rasio keuangan perusahaan, variabel demografis nasabah. <strong>Unstructured data</strong> adalah data yang disusun untuk konsumsi manusia, bukan mesin — tweets, artikel berita, email, gambar, rekaman audio, video. Diperkirakan sekitar 80% dari total data yang ada di dunia adalah unstructured. Data ini harus di-transform dulu menjadi structured format sebelum bisa dipakai untuk training ML.</p>
+
+    <div class="callout blue">
+      <div class="callout-title">Contoh dari Praktik</div>
+      <p>Textual big data memberikan dua insight utama: <strong>topics</strong> (apa yang orang bicarakan — perusahaan, industri, peristiwa) dan <strong>sentiment</strong> (bagaimana orang merasa — positif, negatif, netral). Sebuah studi menemukan bahwa positive sentiment di Twitter dapat memprediksi tren Dow Jones Industrial Average hingga tiga hari ke depan dengan akurasi sekitar 87%.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Sebutkan 4 Vs of big data dan jelaskan mengapa "Veracity" menjadi kritis ketika big data digunakan untuk inferensi atau prediksi.</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show')">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          <strong>4 Vs</strong>: (1) <strong>Volume</strong> — kuantitas data, (2) <strong>Variety</strong> — ragam sumber data, (3) <strong>Velocity</strong> — kecepatan pembuatan data, dan (4) <strong>Veracity</strong> — kredibilitas dan reliabilitas data. Veracity kritis karena big data berasal dari sumber yang sangat beragam dan sebagian besar <em>unstructured</em>. Studi menunjukkan 10-15% konten sosial media adalah palsu/fake, dan lebih dari 20% konten di web adalah spam. Tanpa veracity yang baik, ML model yang dibangun dari data tersebut akan menghasilkan "garbage in, garbage out" — prediksi yang tidak reliable. Karena itu credibility assessment menjadi bagian tak terpisahkan dari proses big data analytics.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="chapter" id="s2">
+    <div class="chapter-header">
+      <div class="chapter-num">2</div>
+      <div class="chapter-title">Lima Langkah Eksekusi Proyek ML (Structured vs Text)</div>
+    </div>
+
+    <p class="prose">Proyek analisis data yang melibatkan ML melewati lima langkah. Untuk structured data, langkah-langkahnya bersifat <em>iteratif</em>: insight dari satu iterasi menginformasikan iterasi berikutnya, dimulai dari rekonseptualisasi.</p>
+
+    <div class="sub-header">Lima Langkah untuk Structured Data</div>
+    <ul class="num-list">
+      <li><strong>Conceptualization of the modeling task</strong> — tentukan output model (misalnya: "akan naik atau turun harga saham dalam seminggu?"), siapa yang akan menggunakan model, dan bagaimana model diintegrasikan ke dalam proses bisnis yang ada.</li>
+      <li><strong>Data collection</strong> — identifikasi sumber data (internal vs external), bangun query database dengan bantuan database administrator, atau akses data pihak ketiga via API. Trade-off: data vendor bersih tapi mahal dan bisa kehilangan "alpha"; data internal butuh lebih banyak pembersihan tetapi lebih proprietary.</li>
+      <li><strong>Data preparation and wrangling</strong> — cleansing (identifikasi missing values, out-of-range, duplikasi) dan preprocessing (extraction, aggregation, filtration, selection, conversion, scaling). Ini adalah langkah yang paling menyita waktu proyek.</li>
+      <li><strong>Data exploration</strong> — exploratory data analysis (EDA), feature selection (memilih subset feature paling informatif), dan feature engineering (menciptakan feature baru dari yang ada).</li>
+      <li><strong>Model training</strong> — pilih ML method (atau methods), evaluasi performa via metrik yang sesuai, dan lakukan tuning hyperparameter.</li>
+    </ul>
+
+    <div class="sub-header">Text ML: Empat Langkah Pertama yang Berbeda</div>
+    <p class="prose">Untuk data tidak terstruktur (text), empat langkah pertama berbeda karena tujuannya adalah <em>mengubah text menjadi structured output</em> yang bisa dikonsumsi oleh model. Langkah kelima (model training) pada dasarnya sama.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 2.1 — Structured ML vs Text ML: Model Building Steps</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th style="text-align:left;">Step #</th><th style="text-align:left;">Structured Data</th><th style="text-align:left;">Text Data</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td style="text-align:left;">Conceptualization</td><td style="text-align:left;">Text Problem Formulation</td></tr>
+            <tr><td>2</td><td style="text-align:left;">Data Collection</td><td style="text-align:left;">Data (Text) Curation</td></tr>
+            <tr><td>3</td><td style="text-align:left;">Data Preparation &amp; Wrangling</td><td style="text-align:left;">Text Preparation &amp; Wrangling</td></tr>
+            <tr><td>4</td><td style="text-align:left;">Data Exploration</td><td style="text-align:left;">Text Exploration</td></tr>
+            <tr><td>5</td><td style="text-align:left;">Model Training</td><td style="text-align:left;">Model Training (sama)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose"><strong>Text Problem Formulation</strong>: tentukan input dan output model. Misalnya: apakah kita ingin menghitung sentiment score (output terstruktur) dari text (input tidak terstruktur)? Bagaimana output akan digunakan — untuk peringkat saham, early warning, atau trading signal? <strong>Data (Text) Curation</strong>: mengumpulkan text data melalui web services atau program <em>web spidering</em> (scraping atau crawling) yang mengekstrak konten dari halaman web. Anotasi data dengan target variable yang reliabel (misalnya label "bullish" vs "bearish" dari ahli) kadang dibutuhkan untuk supervised learning.</p>
+
+    <p class="prose"><strong>Text Preparation &amp; Wrangling</strong>: critical cleansing dan preprocessing untuk mengubah streams data tidak terstruktur menjadi format terstruktur yang bisa di-consume modeling methods tradisional. <strong>Text Exploration</strong>: termasuk visualisasi text (word clouds), text feature selection, dan feature engineering.</p>
+
+    <div class="callout amber">
+      <div class="callout-title">Insight Praktis</div>
+      <p>Output text ML model (misalnya sentiment prediction score) bisa dipakai dengan dua cara: (1) digabungkan dengan structured variables lain ke dalam model forecasting komprehensif, atau (2) digunakan langsung untuk forecasting/analysis. Sering kali kombinasi keduanya memberikan hasil terbaik — teks menambah dimensi real-time dan kualitatif, sementara data struktural memberikan fondasi kuantitatif.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Sebuah bank ingin memperbaiki credit scoring dengan menambahkan data teks dari formulir aplikasi pinjaman (free response fields) ke model yang saat ini hanya menggunakan rasio keuangan. Identifikasi setidaknya tiga kebutuhan tim pada tahap <em>text curation</em>.</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show')">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          Pada tahap <strong>text curation</strong>, tim perlu: (1) Memastikan field teks di formulir aplikasi pinjaman telah di-implementasi dan aktif, serta tersimpan dengan benar di database internal. (2) Menilai response rate — apakah sebagian besar nasabah benar-benar mengisi free response fields, sehingga data cukup representatif untuk analisis. Jika field tidak wajib, tim perlu memutuskan apakah akan membuatnya wajib, atau fokus hanya pada nasabah yang mengisi. (3) Melakukan anotasi data dengan label target (misalnya "high credit risk" vs "low credit risk") jika akan menggunakan supervised learning. Anotasi harus dilakukan oleh expert atau melalui proses yang reliable — karena kualitas label mempengaruhi kualitas model.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="chapter" id="s3">
+    <div class="chapter-header">
+      <div class="chapter-num">3</div>
+      <div class="chapter-title">Structured Data — Cleansing: Enam Jenis Error</div>
+    </div>
+
+    <p class="prose">Data mentah hampir tidak pernah siap digunakan langsung. <strong>Data cleansing</strong> adalah proses memeriksa, mengidentifikasi, dan memitigasi <em>errors</em> dalam raw data. Baik data yang diinput manual (yang mungkin tidak lengkap, duplikat, salah) maupun data automated (yang bisa rusak akibat server failure atau software bug) harus melewati langkah ini.</p>
+
+    <div class="sub-header">Enam Jenis Error yang Wajib Dihafal</div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 3.1 — Enam Jenis Error dalam Data Cleansing</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th style="text-align:left;">Error</th><th style="text-align:left;">Definisi</th><th style="text-align:left;">Contoh di Data Nasabah Bank</th><th style="text-align:left;">Penanganan</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Incompleteness</td><td style="text-align:left;">Data tidak tersedia (missing / NA)</td><td style="text-align:left;">Kolom "Salary" kosong</td><td style="text-align:left;">Cari sumber alternatif; atau tandai NA untuk imputasi (mean, median, modus, atau 0) di tahap exploration</td></tr>
+            <tr><td>Invalidity</td><td style="text-align:left;">Data di luar range masuk akal</td><td style="text-align:left;">Date of birth 1/1/1900; Income negatif</td><td style="text-align:left;">Verifikasi dengan data admin lain; koreksi bila memungkinkan, atau hapus</td></tr>
+            <tr><td>Inaccuracy</td><td style="text-align:left;">Bukan nilai sebenarnya (tapi dalam range)</td><td style="text-align:left;">Credit Card = "Don't Know" padahal pasti Y atau N</td><td style="text-align:left;">Koreksi via business records atau admin</td></tr>
+            <tr><td>Inconsistency</td><td style="text-align:left;">Konflik dengan data point lain</td><td style="text-align:left;">Name "Ms. XYZ" tapi Gender = M</td><td style="text-align:left;">Klarifikasi via sumber ketiga untuk menentukan nilai benar</td></tr>
+            <tr><td>Non-uniformity</td><td style="text-align:left;">Format tidak identik</td><td style="text-align:left;">Tanggal "12/5/1970" vs "15 Jan, 1975"; "$" tanpa mata uang</td><td style="text-align:left;">Konversi ke format standar tunggal (misalnya ISO 8601: YYYY-MM-DD; currency explicit: USD 50200)</td></tr>
+            <tr><td>Duplication</td><td style="text-align:left;">Observasi duplikat</td><td style="text-align:left;">Row 3 dan Row 6 identik (customer sama)</td><td style="text-align:left;">Hapus duplikat, pertahankan satu entry</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Proses cleansing menggabungkan <em>automated, rule-based tools</em> dengan <em>manual inspection</em>. Tools seperti SPSS dapat membantu memahami metadata (data yang mendeskripsikan data lain) sebagai titik awal investigasi error. Regex dan pattern recognition tools digunakan untuk menemukan anomali sistematis.</p>
+
+    <div class="callout gold">
+      <div class="callout-title">Business Value vs Resource Trade-off</div>
+      <p>Business value proyek menentukan intensitas cleansing yang dibutuhkan. Jika dataset besar (&gt;10.000 rows), menghapus ~100 baris bermasalah biasanya tidak berdampak signifikan. Jika dataset kecil (&lt;1.000 rows), tiap observasi berharga — menghapus banyak baris bisa merusak proyek. Keputusan harus dibuat antara waktu/biaya cleansing vs akurasi akhir model.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Dalam dataset aplikasi pinjaman bank, Anda menemukan row dengan Income = −63.050, Credit Score kosong, dan kolom State bertuliskan "British Columbia" (sedangkan bank hanya melayani nasabah AS). Identifikasi jenis error pada tiap field dan tindakan yang tepat.</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show')">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          (1) <strong>Income = −63.050</strong>: <em>invalidity error</em> — income tidak bisa negatif. Verifikasi sumber data; kemungkinan typo (tanda negatif keliru), atau angka harus di-absolute. (2) <strong>Credit Score kosong</strong>: <em>incompleteness error</em>. Tandai sebagai NA; di tahap data exploration, tentukan apakah akan imputasi (misalnya pakai median credit score dari loan type dan income bracket serupa) atau drop observasi. (3) <strong>State = "British Columbia"</strong>: <em>invalidity</em> atau <em>inconsistency error</em> — ini provinsi Kanada, bukan AS. Karena bank hanya melayani nasabah AS, lakukan <em>filtration</em> (hapus baris) pada tahap preprocessing, atau verifikasi apakah nasabah pindah dan apakah masih relevan untuk analisis.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="chapter" id="s4">
+    <div class="chapter-header">
+      <div class="chapter-num">4</div>
+      <div class="chapter-title">Structured Data — Preprocessing: Transformasi & Scaling</div>
+    </div>
+
+    <p class="prose">Setelah data bersih, tahap <strong>preprocessing (wrangling)</strong> melakukan transformasi dan penskalaan sehingga data siap dikonsumsi ML model. Ada lima jenis transformasi standar:</p>
+
+    <div class="sub-header">Lima Transformasi Preprocessing</div>
+    <ul class="num-list">
+      <li><strong>Extraction</strong> — buat variabel baru dari yang sudah ada. Contoh: dari kolom <em>Date of Birth</em>, ekstrak variabel <em>Age</em> = (tanggal hari ini − DoB). Kolom DoB yang berupa tanggal sering tidak langsung useful untuk ML; age jauh lebih informatif.</li>
+      <li><strong>Aggregation</strong> — gabungkan dua atau lebih variabel menjadi satu. Contoh: <em>Salary</em> + <em>Other Income</em> → <em>Total Income</em>. Agregasi membantu merangkum informasi dan mengurangi jumlah kolom.</li>
+      <li><strong>Filtration</strong> — hapus <em>rows</em> yang tidak relevan. Contoh: untuk bank AS, hapus nasabah dengan state "British Columbia" (Kanada). Filtrasi dilakukan di level observasi.</li>
+      <li><strong>Selection</strong> — hapus <em>columns</em> yang tidak dibutuhkan (berbeda dari <em>feature selection</em> formal yang didasari statistik). Contoh: jika kolom <em>ID</em> sudah cukup untuk identifikasi observasi, kolom <em>Name</em> bisa dibuang.</li>
+      <li><strong>Conversion</strong> — sesuaikan tipe variabel. Variabel bisa <em>nominal</em> (kategori tanpa urutan: Name, State), <em>ordinal</em> (kategori dengan urutan: rating A/B/C), <em>continuous</em> (numerik kontinu: Salary, Age), atau <em>categorical</em> dengan kelas tetap (Gender: M/F; Credit Card: Y/N). Sebelum conversion, strip prefix/suffix seperti simbol mata uang. Juga termasuk adjustment time value of money, time zones, dll.</li>
+    </ul>
+
+    <div class="sub-header">Outlier Detection & Handling</div>
+    <p class="prose"><strong>Outliers</strong> memerlukan <em>domain knowledge</em> untuk diputuskan apakah akan dihapus atau dipertahankan. Dua teknik deteksi standar:</p>
+    <ul class="num-list">
+      <li><strong>Standard Deviation Rule</strong> — untuk data yang normally distributed. Umumnya nilai di luar ±3 standard deviation dari mean dianggap outlier.</li>
+      <li><strong>Interquartile Range (IQR) Rule</strong> — untuk distribusi apapun. IQR = Q3 − Q1 (selisih kuartil ke-3 dan ke-1). Nilai di luar [Q1 − 1.5·IQR, Q3 + 1.5·IQR] dianggap outlier. Gunakan pengali 3.0 (bukan 1.5) untuk <em>extreme values</em>.</li>
+    </ul>
+
+    <div class="formula-block">
+      <span class="label">Deteksi Outlier — IQR Rule</span>
+      Upper Bound = Q3 + 1.5 × IQR
+      <br>Lower Bound = Q1 − 1.5 × IQR
+      <br>IQR        = Q3 − Q1
+      <span class="note">Extreme values: gunakan pengali 3.0 sebagai ganti 1.5.</span>
+    </div>
+
+    <p class="prose">Ada dua pendekatan penanganan outliers setelah teridentifikasi:</p>
+    <ul class="num-list">
+      <li><strong>Trimming (truncation)</strong> — hapus outlier dari dataset. "5% trimmed dataset" = 5% nilai tertinggi dan 5% nilai terendah sudah dihapus.</li>
+      <li><strong>Winsorization</strong> — ganti outlier dengan nilai maksimum (untuk outlier atas) atau minimum (untuk outlier bawah) dari data points yang <em>bukan</em> outlier. Outlier tidak hilang tapi "dijinakkan".</li>
+    </ul>
+
+    <div class="sub-header">Scaling: Normalization vs Standardization</div>
+    <p class="prose">Variabel seperti <em>Age</em> (range 18–85) dan <em>Total Income</em> (range jutaan sampai ratusan juta) memiliki skala yang sangat berbeda. ML methods seperti <em>Support Vector Machines (SVM)</em> dan <em>Artificial Neural Networks (ANN)</em> sensitif terhadap skala — feature dengan nilai besar akan mendominasi. Dua teknik scaling standar:</p>
+
+    <div class="formula-block">
+      <span class="label">Normalization (Min-Max Scaling) — Range [0, 1]</span>
+      X_norm = (X_i − X_min) / (X_max − X_min)
+      <span class="note">Sensitif terhadap outlier — bersihkan outlier dulu. Bisa dipakai ketika distribusi data tidak diketahui.</span>
+    </div>
+
+    <div class="formula-block">
+      <span class="label">Standardization (Z-score) — Mean = 0, Std = 1</span>
+      X_std = (X_i − μ) / σ
+      <span class="note">Kurang sensitif terhadap outlier. Asumsi: data normally distributed.</span>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 4.1 — Contoh Normalization: Kolom Age</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th style="text-align:left;">ID</th><th>Age (Raw)</th><th>(Age − 39) / (76 − 39)</th><th>Age_norm</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>48</td><td>(48 − 39) / 37</td><td>0.243</td></tr>
+            <tr><td>2</td><td>43</td><td>(43 − 39) / 37</td><td>0.108</td></tr>
+            <tr><td>3</td><td>39</td><td>(39 − 39) / 37</td><td>0.000</td></tr>
+            <tr><td>6</td><td>76</td><td>(76 − 39) / 37</td><td>1.000</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout red">
+      <div class="callout-title">Peringatan Exam</div>
+      <p>Jangan lupa: <strong>normalization sangat sensitif outlier</strong>. Jika Anda punya satu observasi extreme di Total Income (misalnya Rp 50 miliar di tengah dataset dengan median Rp 100 juta), X_max akan sangat besar — dan semua nilai lain akan <em>terkompres</em> mendekati 0. Karena itu: identifikasi dan tangani outlier <em>sebelum</em> normalization. Standardization sedikit lebih robust karena dihitung dari mean/std yang tidak seekstrem penggunaan min/max.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Sebuah dataset keuangan punya variabel <em>Market Cap</em> (range Rp 500 miliar – Rp 1.200 triliun) dan <em>P/E Ratio</em> (range 3 – 80). Anda berencana menggunakan SVM. Jelaskan langkah preprocessing yang harus dilakukan dan mengapa.</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show')">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          <strong>Langkah 1 — Outlier detection</strong>: periksa Market Cap dan P/E untuk outlier. Market Cap dengan range 500M hingga 1.200T menunjukkan distribusi yang <em>sangat skewed</em> — gunakan IQR rule (bukan standard deviation) untuk mendeteksi outlier karena asumsi normalitas tidak berlaku. Untuk P/E, nilai di atas 80 jelas ekstrem dan perlu dipertimbangkan trimming atau winsorization. <strong>Langkah 2 — Feature transformation</strong>: karena skala Market Cap sangat besar, pertimbangkan log transformation (log Market Cap) untuk mengurangi skewness sebelum scaling. <strong>Langkah 3 — Scaling</strong>: SVM sensitif terhadap skala — jika tidak di-scale, Market Cap (triliun) akan mendominasi P/E (satuan puluhan) dan model akan membuat keputusan berdasarkan Market Cap saja. Gunakan standardization (z-score) karena lebih robust terhadap outlier, atau normalization setelah outlier ditangani. Tanpa langkah ini, model SVM tidak akan performing baik.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5 -->
+  <div class="chapter" id="s5">
+    <div class="chapter-header">
+      <div class="chapter-num">5</div>
+      <div class="chapter-title">Text Data — Cleansing: HTML, Punctuation, Numbers, Whitespace</div>
+    </div>
+
+    <p class="prose">Data teks mentah adalah rangkaian karakter yang mengandung banyak elemen tidak berguna — HTML tags, punctuation, numbers, dan extra whitespace (tabs, line breaks, new lines). Text cleansing bertujuan membersihkan elemen-elemen tersebut sehingga teks siap di-preprocess lebih lanjut. Operasi cleansing sering menggunakan <strong>regular expressions (regex)</strong> — rangkaian karakter dalam urutan tertentu untuk mencari pola. <em>GREP (global regular expression print)</em> adalah utilitas umum yang tersedia di banyak bahasa pemrograman.</p>
+
+    <div class="sub-header">Empat Operasi Text Cleansing (Berurutan)</div>
+    <ul class="num-list">
+      <li><strong>Remove HTML tags</strong> — teks dari web mengandung markup HTML (misalnya <code>&lt;h1&gt;</code>, <code>&lt;/p&gt;</code>, <code>&lt;b&gt;</code>). Regex <code>"&lt;.*?&gt;"</code> menemukan semua tag berbentuk <code>&lt;...&gt;</code> dan menghapusnya. Advanced HTML parsers (BeautifulSoup di Python, rvest di R) bisa juga digunakan. Kadang beberapa generic HTML tags dipertahankan untuk menjaga makna formatting.</li>
+      <li><strong>Remove/Replace Punctuations</strong> — sebagian besar punctuation tidak berguna untuk analisis teks, tapi beberapa penting: <em>percentage signs (%)</em>, <em>currency symbols ($)</em>, dan <em>question marks (?)</em> sebaiknya diganti dengan <em>annotations</em> seperti <code>/percentSign/</code>, <code>/dollarSign/</code>, <code>/questionMark/</code> untuk mempertahankan maknanya. Titik (periods) perlu penanganan khusus: titik setelah singkatan biasanya dihapus, tapi titik pemisah kalimat diganti dengan <code>/endSentence/</code>. Hyphens dan underscores bisa dipertahankan untuk menjaga kata-kata bersambung (e-mail).</li>
+      <li><strong>Remove/Replace Numbers</strong> — angka biasanya dihapus atau diganti dengan annotation <code>/number/</code>. Ini penting karena komputer akan memperlakukan tiap angka sebagai kata unik, yang dapat menambah noise dan memperumit analisis. Pengecualian: <em>Information Extraction (IE)</em>, di mana nilai angka sendiri adalah target (misalnya ekstrak nilai monetary dari laporan keuangan).</li>
+      <li><strong>Remove Extra White Spaces</strong> — tab, spaces ganda, dan spaces di awal/akhir muncul setelah operasi sebelumnya. Fungsi seperti <code>stripWhitespace</code> di R text mining package atau <code>.strip()</code> di Python bisa digunakan.</li>
+    </ul>
+
+    <div class="sub-header">Urutan Operasi Matters</div>
+    <p class="prose">Urutan eksekusi cleansing sangat kritikal. Contohnya, jika operasi <em>remove punctuation</em> dilakukan <em>sebelum</em> <em>replace numbers</em>, maka "1.2 million" akan menjadi "12 million" — angka desimalnya hilang. Karena itu dokumentasi dan best practice menyarankan urutan: HTML tags → punctuation (dengan annotations) → numbers → whitespace.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 5.1 — Contoh Text Cleansing Step-by-Step</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th style="text-align:left;">Tahap</th><th style="text-align:left;">Hasil</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Raw (scraped)</td><td style="text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;">&lt;p&gt;CapEx $800,000 vs $1.2 million last year. Q3 5% growth.&lt;/p&gt;</td></tr>
+            <tr><td>Setelah remove HTML</td><td style="text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;">CapEx $800,000 vs $1.2 million last year. Q3 5% growth.</td></tr>
+            <tr><td>Setelah punctuation</td><td style="text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;">CapEx /dollarSign/800000 vs /dollarSign/12 million last year /endSentence/ Q3 5 /percentSign/ growth</td></tr>
+            <tr><td>Setelah replace numbers</td><td style="text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;">CapEx /dollarSign//number/ vs /dollarSign//number/ million last year /endSentence/ Q/number/ /number/ /percentSign/ growth</td></tr>
+            <tr><td>Setelah whitespace</td><td style="text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;">CapEx /dollarSign//number/vs /dollarSign//number/million last year/endSentence/Q/number//number//percentSign/growth</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout amber">
+      <div class="callout-title">Catatan Teknis</div>
+      <p>Regex <code>"&lt;.*?&gt;"</code> menggunakan <em>non-greedy matching</em> (<code>*?</code>): cocokkan karakter apapun (<code>*</code>) sedikit mungkin (<code>?</code>) antara <code>&lt;</code> dan <code>&gt;</code>. Ini penting karena regex greedy (<code>&lt;.*&gt;</code>) akan mencocokkan semua dari tag pertama ke tag terakhir dalam string — menghapus seluruh konten diantaranya. Non-greedy mencocokkan tag per tag.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Dalam text cleansing, mengapa beberapa punctuations seperti %, $, dan ? sebaiknya diganti dengan annotations (misalnya /percentSign/) alih-alih dihapus langsung?</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show')">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          Punctuations tersebut membawa <strong>makna semantik</strong> yang penting untuk ML model training dan analisis teks. <strong>Tanda persen (%)</strong> mengindikasikan rasio atau perubahan — dalam konteks earnings calls, angka seperti "revenue grew 15%" sangat berbeda dari sekadar "revenue grew 15". <strong>Simbol mata uang ($)</strong> memisahkan nilai monetary dari angka biasa. <strong>Tanda tanya (?)</strong> menandai pertanyaan, yang bisa mengindikasikan ketidakpastian atau diskursus yang relevan untuk sentiment analysis. Jika dihapus langsung, informasi ini hilang dan model kehilangan kemampuan membedakan konteks. Annotations seperti <code>/percentSign/</code>, <code>/dollarSign/</code>, <code>/questionMark/</code> mempertahankan makna ini sebagai token yang bisa dikenali model sambil mengikuti alur pemrosesan teks standar.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6 -->
+  <div class="chapter" id="s6">
+    <div class="chapter-header">
+      <div class="chapter-num">6</div>
+      <div class="chapter-title">Text Data — Wrangling: Tokenization, Normalization, BOW, DTM, N-grams</div>
+    </div>
+
+    <p class="prose">Setelah teks dibersihkan, tahap <strong>text wrangling (preprocessing)</strong> mengubah teks bersih tersebut menjadi representasi terstruktur yang dapat dikonsumsi ML model. Urutan: tokenization → normalization → bag-of-words → document term matrix.</p>
+
+    <div class="sub-header">Tokenization</div>
+    <p class="prose"><strong>Token</strong> setara dengan kata, dan <strong>tokenization</strong> adalah proses membagi teks menjadi token-token terpisah. Tokenization biasanya dilakukan pada <em>word level</em> (walau character-level juga ada dan dipakai untuk applications seperti code analysis). Contoh: teks "The man went to the market today" dipecah menjadi tokens ["The", "man", "went", "to", "the", "market", "today"].</p>
+
+    <div class="sub-header">Normalization — Empat Langkah</div>
+    <ul class="num-list">
+      <li><strong>Lowercasing</strong> — mengubah semua huruf menjadi lowercase agar "The" dan "the" diperlakukan sebagai token yang sama. Ini menghilangkan redundansi yang tidak membawa makna semantik.</li>
+      <li><strong>Stop Words Removal</strong> — hapus kata-kata umum yang tidak bermakna untuk analisis: "the", "is", "a", "and", "of", dll. Predefined stop word lists tersedia di R (<code>tm::stopwords</code>) dan Python (<code>nltk.corpus.stopwords</code>). Kadang custom stop words perlu ditambahkan berdasarkan domain (misalnya "exhibit" sering muncul di financial filings tapi tidak bermakna).</li>
+      <li><strong>Stemming</strong> — konversi kata ber-infleksi ke bentuk dasar (stem). <em>Rule-based</em>, hasilnya mungkin tidak linguistically correct. Contoh dengan Porter's algorithm: "analyzed" dan "analyzing" → "analyz". Varian British "analysing" → "analys". Cepat dan efisien.</li>
+      <li><strong>Lemmatization</strong> — konversi ke morphological root (lemma). <em>Algorithmic</em>, berbasis pengetahuan linguistik bahasa. Contoh: "analyzed" dan "analyzing" → "analyze" (kata asli). Lebih akurat tapi computationally lebih mahal.</li>
+    </ul>
+
+    <p class="prose">Stemming dan lemmatization sama-sama mengurangi <strong>data sparseness</strong> (masalah di mana teks terdiri dari banyak unique tokens yang jarang muncul) dengan mengagregasi kata-kata berfleksi. Ini membuat training ML model lebih efisien. Stemming lebih sering dipakai di bahasa Inggris karena lebih sederhana; lemmatization lebih dipilih untuk applications NLP advanced.</p>
+
+    <div class="sub-header">Bag-of-Words (BOW)</div>
+    <p class="prose">Setelah normalisasi, bangun <strong>Bag-of-Words (BOW)</strong> — himpunan distinct tokens dari seluruh corpus. BOW hanya mencatat kehadiran/frekuensi token, <strong>bukan urutan atau posisi</strong>. Ini membuat BOW <em>memory efficient</em> dan mudah ditangani, tapi juga berarti informasi kontekstual (urutan kata) hilang.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 6.1 — BOW Setelah Setiap Tahap Normalisasi</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th style="text-align:left;">Tahap</th><th style="text-align:left;">BOW (4 contoh teks)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Raw</td><td style="text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;">The, man, went, to, the, market, today, Market, values, are, increasing, Increased, marketing, is, needed, There, no, for, product</td></tr>
+            <tr><td>Setelah lowercasing</td><td style="text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;">the, man, went, to, market, today, values, are, increasing, increased, marketing, is, needed, there, no, for, product</td></tr>
+            <tr><td>Setelah stop words removal</td><td style="text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;">man, went, market, today, values, increasing, increased, marketing, needed, product</td></tr>
+            <tr><td>Setelah stemming</td><td style="text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;">man, went, market, today, valu, increas, need, product</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">Document Term Matrix (DTM)</div>
+    <p class="prose"><strong>DTM</strong> adalah matriks yang setara dengan data table untuk structured data: <em>rows</em> = dokumen, <em>columns</em> = tokens (dari BOW), <em>cells</em> = count kemunculan token di dokumen. Ini adalah representasi terstruktur final dari data teks yang siap dikonsumsi ML.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 6.2 — DTM dari 4 Teks</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th style="text-align:left;">Doc</th><th>man</th><th>went</th><th>market</th><th>today</th><th>valu</th><th>increas</th><th>need</th><th>product</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Text 1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td>Text 2</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+            <tr><td>Text 3</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+            <tr><td>Text 4</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">N-grams: Mengatasi Limitasi BOW</div>
+    <p class="prose">BOW unigram (1 kata per token) tidak menangkap urutan atau konteks. Misalnya, Text 4 ("There is no market for the product") kehilangan makna negatif setelah "no" dihapus sebagai stop word — sehingga tidak dapat dibedakan dari teks positif tentang market. Solusinya: <strong>n-grams</strong> — representasi sequences of words.</p>
+
+    <div class="formula-block">
+      <span class="label">N-grams Examples</span>
+      Unigram (n=1): "market"
+      <br>Bigram  (n=2): "went_to", "to_the", "the_market", "market_today"
+      <br>Trigram (n=3): "went_to_the", "to_the_market", "the_market_today"
+      <span class="note">N-grams membentuk BOW baru — tiap n-gram diperlakukan sebagai single token. Stop words dalam bentuk n-gram ("to_the") tidak akan terhapus oleh predefined stop word list untuk unigram.</span>
+    </div>
+
+    <p class="prose">Dalam praktik, analis sering menggabungkan unigram, bigram, dan trigram ke dalam satu BOW sehingga DTM final menangkap baik frekuensi kata individual maupun konteks pasangan/triplet. Ini sangat berguna untuk sentiment analysis — "no growth", "strong growth", "no profit", "high profit" semuanya menjadi bigram yang dapat dibedakan meski kata individualnya sama.</p>
+
+    <div class="callout red">
+      <div class="callout-title">Peringatan Exam</div>
+      <p>Limitasi BOW unigram: (1) kehilangan urutan kata dan konteks — "pasar naik tapi profit turun" dan "profit naik tapi pasar turun" punya BOW identik; (2) negasi ("no", "not") sering menjadi stop words — menghilangkan informasi kritis; (3) homonim dan polisemi (kata sama dengan arti berbeda) tidak bisa dibedakan. Solusi: n-grams, custom stop words list, dan model advanced seperti word embeddings (word2vec, GloVe) atau transformer-based models (BERT, GPT) — topik di luar cakupan L2.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Sebuah tim sentiment analysis memiliki 15.000 unique tokens pada BOW sebelum normalization. Setelah lowercasing, stop word removal, dan stemming, BOW turun menjadi 6.200 tokens. Jelaskan kontribusi masing-masing langkah dan manfaat pengurangan ini untuk ML training.</div>
+        <button class="kc-toggle" onclick="this.nextElementSibling.classList.toggle('show')">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          <strong>Kontribusi per langkah</strong>: (1) <em>Lowercasing</em> menghilangkan duplikasi akibat case ("Market" vs "market" → satu token "market") — pengurangan biasanya 5-15%. (2) <em>Stop word removal</em> menghapus kata-kata umum frekuensi tinggi yang tidak bermakna ("the", "is", "a", "of", "to", dll.) — pengurangan jumlah token bisa mencapai 30-40% dari BOW setelah lowercasing. (3) <em>Stemming</em> mengagregasi kata-kata berfleksi ke stem yang sama ("market", "marketing", "markets" → "market") — pengurangan 10-20%. <strong>Manfaat untuk ML training</strong>: (a) Dimensi DTM mengecil secara signifikan (dari 15.000 menjadi 6.200 kolom) — training jauh lebih cepat dan membutuhkan memori lebih sedikit. (b) <em>Data sparseness</em> berkurang — banyak kata jarang (rare words) diagregasi ke stem yang lebih umum, sehingga model punya lebih banyak observasi per feature dan bisa mempelajari pola lebih baik. (c) Risk overfitting turun — model tidak menghafal idiosyncrasy minor (variasi case/inflection) tapi fokus pada pola semantik utama. (d) Interpretability meningkat — BOW yang lebih kecil lebih mudah dianalisis analyst.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 7: PRACTICE VIGNETTE -->
+  <div class="chapter" id="s7">
+    <div class="practice-header">
+      <div style="flex:1;">
+        <div class="practice-header-title">Latihan Soal — Item Set Vignette</div>
+        <div class="practice-header-sub">6 soal · CFA exam difficulty · Pilih jawaban terbaik</div>
+      </div>
+    </div>
+
+    <div class="practice-body">
+
+      <div class="vignette">
+        <div class="vignette-label">Vignette — PT Trimegah Sekuritas: Alternative Data Initiative</div>
+        Dimas Harjanto, CFA, adalah head of quantitative research di PT Trimegah Sekuritas. Timnya diberi mandat untuk membangun <em>alternative data platform</em> untuk mendukung stock picking 300 saham IDX. Mereka mengkombinasikan tiga sumber data utama: (1) database internal harga dan fundamental; (2) 20.000 transkrip earnings calls perusahaan IDX (bahasa Indonesia dan Inggris) dari BEI dan vendor data komersial; dan (3) feed citra satelit dari vendor internasional untuk memantau aktivitas pelabuhan dan operasi retail.<br><br>
+        <strong>Isu A — Data Quality Bank Nasabah:</strong> Tim memperoleh data 50.000 nasabah korporat dari berbagai cabang. Review awal menemukan: 2.300 baris memiliki kolom "Pendapatan Tahunan" kosong, 180 baris memiliki umur &lt; 0 atau &gt; 120 tahun, 450 baris memiliki nama nasabah yang tercatat dua kali atau lebih, dan kolom "Provinsi" ditulis dengan format berbeda ("DKI Jakarta", "DKI", "Jakarta", "JKT") di baris yang berbeda.<br><br>
+        <strong>Isu B — Scaling untuk SVM:</strong> Tim melatih SVM untuk memprediksi default obligasi korporasi dengan dua features: <em>Total Aset</em> (range Rp 50 miliar – Rp 3.000 triliun) dan <em>Current Ratio</em> (range 0.3 – 5.8). Setelah training awal tanpa preprocessing, model hanya memprediksi berdasarkan Total Aset dan mengabaikan Current Ratio.<br><br>
+        <strong>Isu C — Outlier dalam Distribusi Skewed:</strong> Kolom <em>Market Cap</em> memiliki distribusi sangat right-skewed (kebanyakan midcap, tapi ada beberapa megacap seperti BBCA dan TLKM yang memuat miliaran triliun). Analis senior Sari Pramudita ingin identifikasi outlier dengan aturan yang appropriate.<br><br>
+        <strong>Isu D — Text Cleansing Urutan Salah:</strong> Analis junior Fariz menjalankan pipeline text cleansing dengan urutan: (1) remove white spaces → (2) remove punctuation → (3) remove numbers → (4) remove HTML tags. Hasilnya: kalimat "In Q3 2025, revenue jumped 12.5% to USD 1.2 billion" di transkrip menjadi hanya "In Q to USD billion".<br><br>
+        <strong>Isu E — BOW Limitations:</strong> Tim membangun sentiment classifier dengan BOW unigram dari 20.000 transkrip earnings calls. Model berulang kali salah mengklasifikasikan kalimat bermakna negasi — "no improvement in margins" diklasifikasikan positif karena kata "improvement" dominan.<br><br>
+        <strong>Isu F — DTM Dimensionality:</strong> Setelah seluruh pipeline NLP (cleansing → tokenization → lowercasing → stop word removal → stemming), DTM memiliki dimensi 20.000 documents × 12.000 tokens. Logistic regression menunjukkan akurasi in-sample 94% tapi out-of-sample hanya 61%.
+      </div>
+
+      <div class="question-block" id="qb0">
+        <div class="q-num">Soal 1 / 6</div>
+        <div class="q-text">Terkait Isu A, identifikasi yang paling tepat untuk data quality problem yang ditemukan tim:</div>
+        <button class="option" onclick="answer(0,'A','C')">A. Incompleteness (2.300 kosong), inaccuracy (umur &lt; 0 atau &gt; 120), dan non-uniformity (nama duplikat)</button>
+        <button class="option" onclick="answer(0,'B','C')">B. Incompleteness (nama duplikat), invalidity (provinsi berbeda format), dan inconsistency (umur ekstrem)</button>
+        <button class="option" onclick="answer(0,'C','C')">C. Incompleteness (2.300 pendapatan kosong), invalidity (umur &lt; 0 atau &gt; 120), duplication (nama tercatat ganda), dan non-uniformity (format provinsi berbeda)</button>
+        <div class="explanation" id="exp0">
+          <strong>C adalah jawaban yang benar.</strong> Pendapatan tahunan kosong = <em>incompleteness error</em> (data hilang). Umur &lt; 0 atau &gt; 120 = <em>invalidity error</em> (di luar range masuk akal). Nama nasabah tercatat dua kali = <em>duplication error</em>. Format provinsi yang berbeda ("DKI Jakarta" vs "DKI" vs "Jakarta") = <em>non-uniformity error</em> (format tidak seragam). A salah karena salah menyebut umur ekstrem sebagai "inaccuracy" (inaccuracy = dalam range tapi salah, seperti "Don't know"); juga salah menyebut nama duplikat sebagai "non-uniformity". B salah karena salah mendefinisikan tiap error.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb1">
+        <div class="q-num">Soal 2 / 6</div>
+        <div class="q-text">Solusi yang paling tepat untuk Isu B (SVM mengabaikan Current Ratio) adalah:</div>
+        <button class="option" onclick="answer(1,'A','B')">A. Menghapus feature "Total Aset" karena terlalu besar skalanya sehingga mendominasi model</button>
+        <button class="option" onclick="answer(1,'B','B')">B. Menerapkan scaling (normalization atau standardization) pada kedua features agar keduanya memberikan kontribusi setara ke model SVM</button>
+        <button class="option" onclick="answer(1,'C','B')">C. Mengganti algoritma dari SVM ke logistic regression karena SVM tidak cocok untuk prediksi default</button>
+        <div class="explanation" id="exp1">
+          <strong>B adalah jawaban yang benar.</strong> SVM sangat sensitif terhadap skala features. Total Aset (hingga Rp 3.000 triliun) memiliki magnitudo jauh lebih besar dibanding Current Ratio (0.3–5.8), sehingga jarak geometris dalam feature space didominasi Total Aset. Solusi: <strong>scaling</strong> — either normalization (min-max ke [0,1], tapi hati-hati dengan outlier) atau standardization (z-score, lebih robust). Setelah scaling, kedua features kontribusinya setara. A salah karena menghapus feature informatif tanpa justifikasi statistis adalah pemborosan. C salah karena SVM efektif untuk default prediction — masalahnya preprocessing, bukan algoritma.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb2">
+        <div class="q-num">Soal 3 / 6</div>
+        <div class="q-text">Terkait Isu C (distribusi Market Cap sangat right-skewed), metode deteksi outlier yang paling tepat adalah:</div>
+        <button class="option" onclick="answer(2,'A','B')">A. Standard Deviation Rule (±3σ) karena mudah dihitung dan cocok untuk semua distribusi</button>
+        <button class="option" onclick="answer(2,'B','B')">B. Interquartile Range (IQR) Rule dengan multiplier 1.5 (atau 3.0 untuk extreme values) karena tidak mengasumsikan distribusi normal</button>
+        <button class="option" onclick="answer(2,'C','B')">C. Visual inspection manual tanpa rule formal karena outlier di data finansial selalu merupakan observasi valid</button>
+        <div class="explanation" id="exp2">
+          <strong>B adalah jawaban yang benar.</strong> IQR rule berbasis kuartil, yang <strong>tidak mengasumsikan distribusi normal</strong> — cocok untuk distribusi skewed seperti Market Cap. Batas outlier: di luar [Q1 − 1.5·IQR, Q3 + 1.5·IQR], atau [Q1 − 3·IQR, Q3 + 3·IQR] untuk extreme values. A salah karena Standard Deviation Rule mengasumsikan normalitas — untuk distribusi skewed, mean dan std di-bias oleh ekor panjang sehingga deteksi outlier tidak akurat. C salah karena meskipun domain knowledge penting, rule formal tetap dibutuhkan untuk konsistensi dan scalability; pernyataan "outlier selalu valid" juga tidak benar — kadang outlier adalah data error.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb3">
+        <div class="q-num">Soal 4 / 6</div>
+        <div class="q-text">Terkait Isu D (urutan cleansing salah), urutan yang paling tepat seharusnya adalah:</div>
+        <button class="option" onclick="answer(3,'A','A')">A. Remove HTML tags → Remove/replace punctuations (dengan annotations) → Remove/replace numbers → Remove extra white spaces</button>
+        <button class="option" onclick="answer(3,'B','A')">B. Remove extra white spaces → Remove HTML tags → Remove numbers → Remove punctuations</button>
+        <button class="option" onclick="answer(3,'C','A')">C. Tokenization → Lowercasing → Stop words removal → Stemming</button>
+        <div class="explanation" id="exp3">
+          <strong>A adalah jawaban yang benar.</strong> Urutan standar text <em>cleansing</em>: (1) HTML tags dulu (karena tag bisa mengandung punctuation/numbers yang akan merusak operasi berikutnya); (2) punctuations dengan annotations — ini menjaga "1.2 million" tetap punya desimal bermakna via annotation <code>/dollarSign/</code> dan <code>/number/</code>; (3) numbers (dengan <code>/number/</code> annotation untuk mempertahankan informasi bahwa ada nilai numerik); (4) white spaces terakhir, karena operasi sebelumnya bisa menghasilkan spaces ganda. Kesalahan fatal Fariz: dia menghapus punctuations sebelum menangani numbers → "1.2" menjadi "12"; menghapus numbers → "12" hilang jadi kosong; menghapus HTML tags terakhir → tidak efektif. C salah karena itu adalah tahap wrangling/normalization, bukan cleansing.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb4">
+        <div class="q-num">Soal 5 / 6</div>
+        <div class="q-text">Solusi paling tepat untuk Isu E (sentiment classifier salah mengklasifikasikan "no improvement in margins") adalah:</div>
+        <button class="option" onclick="answer(4,'A','C')">A. Meningkatkan jumlah observasi dari 20.000 menjadi 50.000 transkrip</button>
+        <button class="option" onclick="answer(4,'B','C')">B. Mengganti logistic regression dengan linear regression untuk output yang lebih halus</button>
+        <button class="option" onclick="answer(4,'C','C')">C. Menggunakan n-grams (bigrams atau trigrams) untuk menangkap frasa negasi seperti "no_improvement", dan/atau menggunakan custom stop word list yang mempertahankan kata-kata negasi ("no", "not", "never") agar tidak terhapus</button>
+        <div class="explanation" id="exp4">
+          <strong>C adalah jawaban yang benar.</strong> Masalah fundamental BOW unigram: tidak menangkap urutan kata dan menghilangkan kata negasi sebagai stop words. Dua solusi komplementer: (1) <strong>N-grams</strong> — bigram "no_improvement" menjadi token tunggal yang membawa makna negasi; trigram bahkan lebih baik untuk frasa kompleks. (2) <strong>Custom stop word list</strong> — hapus "no" dan "not" dari stop words predefined agar tetap di BOW. Kombinasi keduanya paling efektif. A salah karena menambah data tidak memperbaiki limitasi struktural BOW. B salah karena linear regression tidak cocok untuk binary classification sentiment (positif/negatif); juga tidak mengatasi representasi negasi.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb5">
+        <div class="q-num">Soal 6 / 6</div>
+        <div class="q-text">Terkait Isu F (akurasi in-sample 94% vs out-of-sample 61% dengan DTM 20.000×12.000), diagnosis dan tindakan yang paling tepat adalah:</div>
+        <button class="option" onclick="answer(5,'A','B')">A. Model underfitting — tambah jumlah tokens dengan menurunkan agresivitas stemming</button>
+        <button class="option" onclick="answer(5,'B','B')">B. Model overfitting akibat high dimensionality (12.000 features relatif terhadap 20.000 dokumen) — terapkan dimension reduction (PCA atau feature selection), regularization (L1/L2), atau lebih agresif stop word removal dan stemming</button>
+        <button class="option" onclick="answer(5,'C','B')">C. Akurasi in-sample tinggi menandakan model bagus; 61% out-of-sample cukup untuk production deployment</button>
+        <div class="explanation" id="exp5">
+          <strong>B adalah jawaban yang benar.</strong> Gap besar antara in-sample (94%) dan out-of-sample (61%) adalah tanda klasik <strong>overfitting</strong> — model menghafal training data tapi gagal generalisasi. Dengan 12.000 features relatif terhadap 20.000 dokumen (rasio ~1:1.7), model punya terlalu banyak degrees of freedom untuk data yang tersedia. Solusinya adalah <strong>reduce dimensionality</strong>: (1) <em>feature selection</em> — pertahankan tokens paling informatif; (2) <em>PCA</em> — reduce dimensi via principal components; (3) <em>regularization (L1/LASSO atau L2/Ridge)</em> pada logistic regression untuk shrinkage koefisien; (4) lebih agresif stop word removal dan/atau stemming untuk mengurangi BOW. A salah — underfitting menunjukkan akurasi in-sample rendah, bukan 94%. C salah karena 61% out-of-sample terlalu rendah untuk production; gap 33% antara in-sample dan out-of-sample menandakan model tidak reliable.
+        </div>
+      </div>
+
+      <div class="score-panel" id="score-panel">
+        <div class="score-num" id="score-num">0/6</div>
+        <div class="score-msg" id="score-msg">—</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a class="nav-btn" href="CFA_L2_Day12_Full.html">← Day 12</a>
+    <div class="nav-day">Day 13 of 90<br><span style="font-size:11px;color:var(--text3);">Prev: Unsupervised &amp; Deep Learning · Next: Model Training &amp; Validation</span></div>
+    <a class="nav-btn primary" href="CFA_L2_Day14_Full.html">Day 14 →</a>
+  </div>
+
+</div>
+
+<script>
+const answers = {};
+const correct = {0:'C', 1:'B', 2:'B', 3:'A', 4:'C', 5:'B'};
+const total = 6;
+
+function answer(qIdx, chosen, correctAns) {
+  if (answers[qIdx]) return;
+  answers[qIdx] = chosen;
+
+  const block = document.getElementById('qb' + qIdx);
+  const exp   = document.getElementById('exp' + qIdx);
+
+  block.querySelectorAll('.option').forEach(btn => {
+    btn.disabled = true;
+    const letter = btn.textContent.trim()[0];
+    if (letter === correctAns) btn.classList.add('correct');
+    else if (letter === chosen && chosen !== correctAns) btn.classList.add('wrong');
+  });
+
+  exp.classList.add('show');
+  if (Object.keys(answers).length === total) showScore();
+}
+
+function showScore() {
+  const score = Object.keys(correct).filter(k => answers[k] === correct[k]).length;
+  const panel = document.getElementById('score-panel');
+  const num   = document.getElementById('score-num');
+  const msg   = document.getElementById('score-msg');
+
+  num.textContent = score + '/' + total;
+  num.style.color = score >= 5 ? 'var(--green)' : score >= 4 ? 'var(--amber)' : 'var(--red)';
+
+  const msgs = {
+    6: '🎯 Perfect! Big Data Projects: Data Types & Wrangling sudah dikuasai dengan sangat baik.',
+    5: '✅ Excellent. Review satu soal yang missed.',
+    4: '✅ Good. Review soal yang salah dan baca ulang bagian terkait.',
+    3: '⚠️ Cukup. Perlu review theory lebih mendalam.',
+    2: '🔁 Perlu belajar ulang — fokus pada 6 jenis error dan pipeline text processing.',
+    1: '🔁 Ulangi seluruh modul sebelum lanjut ke Day 14.',
+    0: '🔁 Ulangi seluruh modul sebelum lanjut ke Day 14.'
+  };
+  msg.textContent = msgs[score] || msgs[0];
+  panel.style.display = 'block';
+}
+</script>
+</body>
+</html>

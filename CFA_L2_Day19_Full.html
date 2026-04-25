@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level II Day 19 - Intercorporate Investments: Equity Method & Consolidation</title>
+  <style>
+:root {
+  --bg:      #fafaf8;
+  --bg2:     #f4f3ef;
+  --bg3:     #eeece7;
+  --border:  rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text:    #1a1a2e;
+  --text2:   #4a4a6a;
+  --text3:   #8a8aaa;
+  --gold:    #9a6e1a;
+  --gold2:   #7a5010;
+  --gold-bg: rgba(154,110,26,0.08);
+  --blue:    #1a5fa8;
+  --blue-bg: rgba(26,95,168,0.08);
+  --green:   #1a7a4a;
+  --green-bg: rgba(26,122,74,0.08);
+  --red:     #b83232;
+  --red-bg:  rgba(184,50,50,0.08);
+  --amber:   #a06010;
+  --amber-bg: rgba(160,96,16,0.08);
+  --r: 10px;
+  --r-sm: 6px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  font-size: 15px;
+}
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+  background: white;
+  box-shadow: 0 0 40px rgba(0,0,0,0.04);
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+
+.breadcrumb {
+  font-size: 13px;
+  color: var(--text2);
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.day-badge, .version-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  background: var(--gold-bg);
+  color: var(--gold2);
+  border-radius: var(--r-sm);
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 12px;
+}
+
+.version-badge {
+  background: var(--blue-bg);
+  color: var(--blue);
+  margin-left: 8px;
+}
+
+.hero {
+  margin-bottom: 48px;
+}
+
+.hero-tag {
+  font-size: 13px;
+  color: var(--gold);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.hero-title {
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: var(--text2);
+  margin-bottom: 28px;
+}
+
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.meta-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 13px;
+  color: var(--text2);
+  font-weight: 500;
+}
+
+.toc {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 32px;
+  margin-bottom: 48px;
+}
+
+.toc-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+
+.toc-list {
+  list-style: none;
+}
+
+.toc-list li {
+  margin-bottom: 12px;
+  font-size: 15px;
+}
+
+.toc-num {
+  color: var(--gold);
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.chapter {
+  margin-bottom: 56px;
+  scroll-margin-top: 100px;
+}
+
+.chapter-header {
+  margin-bottom: 28px;
+}
+
+.chapter-num {
+  font-size: 13px;
+  color: var(--text3);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.chapter-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text);
+  margin-top: 8px;
+}
+
+.sub-header {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 28px 0 16px 0;
+}
+
+.prose {
+  color: var(--text);
+  margin-bottom: 16px;
+  line-height: 1.75;
+}
+
+.formula-block {
+  background: var(--bg2);
+  border-left: 4px solid var(--gold);
+  border-radius: var(--r-sm);
+  padding: 20px;
+  margin: 24px 0;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: var(--text);
+  overflow-x: auto;
+}
+
+.formula-block .label {
+  font-weight: 700;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.formula-block .note {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--text2);
+  margin-top: 12px;
+  line-height: 1.6;
+}
+
+.exhibit {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px;
+  margin: 32px 0;
+}
+
+.exhibit-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 20px;
+}
+
+.exhibit-body {
+  color: var(--text);
+  line-height: 1.8;
+}
+
+.reg-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 14px;
+}
+
+.reg-table th {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 12px;
+  text-align: left;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.reg-table td {
+  border: 1px solid var(--border);
+  padding: 12px;
+  color: var(--text2);
+}
+
+.reg-table tr:nth-child(even) { background: rgba(255,255,255,0.5); }
+
+.callout {
+  border-radius: var(--r);
+  padding: 20px;
+  margin: 24px 0;
+  border-left: 4px solid;
+}
+
+.callout.blue {
+  background: var(--blue-bg);
+  border-left-color: var(--blue);
+}
+
+.callout.amber {
+  background: var(--amber-bg);
+  border-left-color: var(--amber);
+}
+
+.callout.green {
+  background: var(--green-bg);
+  border-left-color: var(--green);
+}
+
+.callout.red {
+  background: var(--red-bg);
+  border-left-color: var(--red);
+}
+
+.callout.gold {
+  background: var(--gold-bg);
+  border-left-color: var(--gold);
+}
+
+.callout-title {
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: block;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.callout .callout-title { color: inherit; }
+.callout.blue .callout-title { color: var(--blue); }
+.callout.amber .callout-title { color: var(--amber); }
+.callout.green .callout-title { color: var(--green); }
+.callout.red .callout-title { color: var(--red); }
+.callout.gold .callout-title { color: var(--gold); }
+
+.callout p, .callout li {
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.kc {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  margin: 28px 0;
+  overflow: hidden;
+}
+
+.kc-header {
+  padding: 18px 20px;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+
+.kc-header:hover { background: rgba(0,0,0,0.04); }
+
+.kc-header-title {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.kc-toggle {
+  color: var(--text3);
+  font-weight: 700;
+  font-size: 18px;
+  transition: transform 0.2s;
+}
+
+.kc.open .kc-toggle { transform: rotate(180deg); }
+
+.kc-body {
+  padding: 20px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.kc.open .kc-body { max-height: 1200px; }
+
+.kc-q {
+  color: var(--text);
+  margin-bottom: 16px;
+  line-height: 1.7;
+  font-weight: 500;
+}
+
+.kc-answer {
+  color: var(--text2);
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.num-list, .bullet-list {
+  margin: 16px 0;
+  padding-left: 24px;
+}
+
+.num-list li, .bullet-list li {
+  margin-bottom: 10px;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 40px 0;
+}
+
+.practice-header {
+  margin-bottom: 28px;
+}
+
+.practice-body {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px;
+}
+
+.vignette {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.vignette-label {
+  font-size: 12px;
+  color: var(--text3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.question-block {
+  margin-bottom: 28px;
+}
+
+.q-num {
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.q-text {
+  color: var(--text);
+  line-height: 1.8;
+  margin-bottom: 14px;
+}
+
+.option {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  background: white;
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+}
+
+.option:hover { background: var(--bg2); border-color: var(--gold); }
+
+.option input { margin-right: 8px; }
+
+.explanation {
+  margin-top: 16px;
+  padding: 16px;
+  background: var(--blue-bg);
+  border-left: 4px solid var(--blue);
+  border-radius: var(--r-sm);
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.7;
+  display: none;
+}
+
+.explanation.show { display: block; }
+
+.score-panel {
+  margin-top: 32px;
+  padding: 24px;
+  background: var(--green-bg);
+  border-radius: var(--r);
+  text-align: center;
+  display: none;
+}
+
+.score-panel.show { display: block; }
+
+.score-panel h3 {
+  color: var(--green);
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.score-panel p {
+  color: var(--text);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.nav-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 0;
+  margin-top: 48px;
+  border-top: 1px solid var(--border);
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nav-btn:hover {
+  background: var(--bg3);
+  border-color: var(--border2);
+}
+
+.nav-day {
+  font-size: 13px;
+  color: var(--text2);
+}
+
+@media (max-width: 768px) {
+  .hero-title { font-size: 28px; }
+  .page { padding: 0 16px; }
+  .meta-row { gap: 8px; }
+  .nav-bottom { flex-direction: column; gap: 16px; }
+  .nav-btn { width: 100%; justify-content: center; }
+}
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="breadcrumb">CFA Level II &middot; FSA &middot; LM1</div>
+      <div>
+        <span class="version-badge">Versi Full</span>
+        <span class="day-badge">Day 19 of 90</span>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-tag">Kamis, 07 Mei 2026</div>
+      <h1 class="hero-title">Intercorporate Investments: Equity Method, Acquisition Method, dan Consolidation</h1>
+      <p class="hero-sub">Pemahaman mendalam tentang klasifikasi investasi antar perusahaan, equity method accounting, amortisasi excess purchase price, goodwill, acquisition method, dan eliminasi unrealized profit.</p>
+      <div class="meta-row">
+        <div class="meta-pill">Materi Lengkap</div>
+        <div class="meta-pill">Bahasa Indonesia</div>
+        <div class="meta-pill">~12% Exam Weight</div>
+        <div class="meta-pill">45-60 Menit</div>
+      </div>
+    </div>
+
+    <!-- TABLE OF CONTENTS -->
+    <div class="toc">
+      <h2 class="toc-title">Daftar Isi</h2>
+      <ul class="toc-list">
+        <li><span class="toc-num">0.</span> <a href="#section0" style="color:var(--text);text-decoration:none;">Learning Outcomes</a></li>
+        <li><span class="toc-num">1.</span> <a href="#section1" style="color:var(--text);text-decoration:none;">Klasifikasi Investasi & IFRS 9</a></li>
+        <li><span class="toc-num">2.</span> <a href="#section2" style="color:var(--text);text-decoration:none;">Equity Method of Accounting</a></li>
+        <li><span class="toc-num">3.</span> <a href="#section3" style="color:var(--text);text-decoration:none;">Acquisition Method & Full Consolidation</a></li>
+        <li><span class="toc-num">4.</span> <a href="#section4" style="color:var(--text);text-decoration:none;">Unrealized Profit & Analyst Issues</a></li>
+        <li><span class="toc-num">5.</span> <a href="#section5" style="color:var(--text);text-decoration:none;">Latihan Soal</a></li>
+      </ul>
+    </div>
+
+    <!-- SECTION 0: LEARNING OUTCOMES -->
+    <div class="chapter" id="section0">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 0</div>
+        <h2 class="chapter-title">Learning Outcomes</h2>
+      </div>
+      <p class="prose">Setelah menyelesaikan sesi pembelajaran hari ini, Anda akan mampu untuk:</p>
+      <ul class="num-list">
+        <li>Menjelaskan klasifikasi, pengukuran, dan pengungkapan berdasarkan IFRS untuk investasi dalam financial assets, investasi dalam associates, joint ventures, business combinations, dan special purpose/variable interest entities</li>
+        <li>Membandingkan dan mengkontraskan IFRS dan US GAAP dalam klasifikasi, pengukuran, dan pengungkapan intercorporate investments</li>
+        <li>Menganalisis bagaimana metode akuntansi yang berbeda (fair value, equity method, acquisition method) mempengaruhi laporan keuangan dan rasio</li>
+        <li>Menghitung carrying value investasi menggunakan equity method termasuk amortisasi excess purchase price dan eliminasi unrealized profit</li>
+        <li>Menjelaskan proses konsolidasi dan dampak non-controlling interest pada balance sheet dan income statement</li>
+        <li>Menghitung goodwill dan memahami perlakuan impairment-nya di bawah IFRS dan US GAAP</li>
+      </ul>
+    </div>
+
+    <!-- SECTION 1: KLASIFIKASI INVESTASI & IFRS 9 -->
+    <div class="chapter" id="section1">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 1</div>
+        <h2 class="chapter-title">Klasifikasi Investasi & IFRS 9</h2>
+      </div>
+
+      <h3 class="sub-header">Framework Klasifikasi Berdasarkan Tingkat Pengaruh</h3>
+      <p class="prose">Investasi antar perusahaan (intercorporate investments) diklasifikasikan berdasarkan tingkat pengaruh (level of influence) yang dimiliki investor terhadap investee. Tingkat pengaruh ini menentukan metode akuntansi yang harus digunakan, yang pada gilirannya memiliki dampak signifikan terhadap bagaimana laporan keuangan investor disajikan.</p>
+
+      <p class="prose">Terdapat empat kategori utama berdasarkan kurikulum CFA:</p>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Exhibit: Kategori Investasi Berdasarkan Tingkat Pengaruh</div>
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Kepemilikan</th>
+              <th>Tingkat Pengaruh</th>
+              <th>Metode Akuntansi</th>
+              <th>Standar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>&lt;20%</strong></td>
+              <td>Tidak ada pengaruh signifikan</td>
+              <td>Fair value (FVPL, FVOCI, atau amortized cost)</td>
+              <td>IFRS 9 / ASC 320</td>
+            </tr>
+            <tr>
+              <td><strong>20-50%</strong></td>
+              <td>Significant influence</td>
+              <td>Equity method</td>
+              <td>IAS 28 / ASC 323</td>
+            </tr>
+            <tr>
+              <td><strong>20-50% (Joint ventures)</strong></td>
+              <td>Joint control</td>
+              <td>Equity method</td>
+              <td>IFRS 11 / ASC 323</td>
+            </tr>
+            <tr>
+              <td><strong>&gt;50%</strong></td>
+              <td>Control</td>
+              <td>Acquisition method (full consolidation)</td>
+              <td>IFRS 3, 10 / ASC 805, 810</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="prose">Penting untuk dipahami bahwa batas 20% dan 50% adalah presumption (asumsi awal), bukan aturan absolut. Seorang investor yang memiliki kurang dari 20% mungkin dianggap memiliki significant influence jika ada bukti lain seperti: representasi di board of directors, partisipasi dalam proses pembuatan kebijakan, transaksi material antara investor dan investee, pertukaran personel manajerial, atau ketergantungan teknologi. Sebaliknya, investor dengan lebih dari 20% mungkin tidak memiliki significant influence jika ada pemegang saham lain yang memiliki kontrol dominan.</p>
+
+      <h3 class="sub-header">IFRS 9: Klasifikasi Financial Assets</h3>
+      <p class="prose">IFRS 9 (yang menggantikan IAS 39) mengklasifikasikan financial assets berdasarkan dua tes: business model test (bagaimana entitas mengelola financial assets untuk menghasilkan cash flows) dan cash flow characteristics test (apakah cash flows kontraktual hanya terdiri dari pembayaran principal dan interest).</p>
+
+      <p class="prose">Terdapat tiga kategori pengukuran:</p>
+
+      <ol class="num-list">
+        <li><strong>Amortized Cost:</strong> Financial assets yang dipegang untuk mengumpulkan contractual cash flows, dan cash flows tersebut hanya terdiri dari principal dan interest. Contoh: pinjaman bank, obligasi held-to-collect.</li>
+        <li><strong>Fair Value through Other Comprehensive Income (FVOCI):</strong> Dua sub-jenis: (a) Debt instruments dengan business model "hold-to-collect and sell" — unrealized gains/losses masuk OCI dan di-recycle ke P&L saat dijual; (b) Equity instruments yang dipilih FVOCI secara irrevocable — hanya dividends masuk P&L, unrealized gains/losses di OCI TIDAK PERNAH di-recycle.</li>
+        <li><strong>Fair Value through Profit or Loss (FVPL):</strong> Default category untuk semua financial assets yang tidak memenuhi kriteria amortized cost atau FVOCI. Derivatives juga masuk kategori ini. Semua perubahan fair value langsung diakui di P&L.</li>
+      </ol>
+
+      <div class="callout amber">
+        <span class="callout-title">Perbedaan Penting: Debt FVOCI vs Equity FVOCI</span>
+        <p>Debt instruments yang diklasifikasikan FVOCI: unrealized gains/losses dicatat di OCI dan kemudian di-RECYCLE (dipindahkan) ke P&L ketika instrumen dijual atau derecognized. Interest income diakui di P&L menggunakan effective interest method.</p>
+        <p><br>Equity instruments yang dipilih FVOCI (irrevocable election): unrealized gains/losses dicatat di OCI dan TIDAK PERNAH di-recycle ke P&L, bahkan saat dijual. Hanya dividend income yang diakui di P&L. Ini adalah perbedaan kritis yang sering diuji di exam.</p>
+      </div>
+
+      <h3 class="sub-header">Reklasifikasi di Bawah IFRS 9</h3>
+      <p class="prose">Reklasifikasi equity instruments tidak diperbolehkan karena pemilihan FVPL atau FVOCI bersifat irrevocable. Untuk debt instruments, reklasifikasi hanya diperbolehkan jika terjadi perubahan business model yang secara signifikan mempengaruhi operasi — dan perubahan ini diharapkan sangat jarang terjadi.</p>
+
+      <p class="prose">Ketika reklasifikasi terjadi, tidak ada restatement periode sebelumnya. Misalnya, jika financial asset direklasifikasi dari amortized cost ke FVPL, asset diukur pada fair value dengan gain/loss langsung diakui di P&L. Jika direklasifikasi dari FVPL ke amortized cost, fair value pada tanggal reklasifikasi menjadi carrying amount baru.</p>
+
+      <h3 class="sub-header">US GAAP vs IFRS: Perbedaan Utama untuk Financial Assets</h3>
+      <p class="prose">Meskipun US GAAP (ASC 320, ASC 825) memiliki banyak konsistensi dengan IFRS 9, terdapat beberapa perbedaan penting. US GAAP masih menggunakan terminologi yang sedikit berbeda dan memiliki beberapa aturan spesifik yang berbeda, terutama terkait impairment model dan opsi fair value.</p>
+
+      <div class="kc" id="kc1-1">
+        <div class="kc-header" onclick="toggleKC('kc1-1')">
+          <div class="kc-header-title">Knowledge Check 1.1: Klasifikasi IFRS 9</div>
+          <div class="kc-toggle">ⓘ</div>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">Sebuah perusahaan membeli 8% saham biasa perusahaan lain dan memilih untuk mengklasifikasikan investasi ini sebagai FVOCI di bawah IFRS 9. Pada akhir tahun, fair value naik Rp 15 milyar dan perusahaan menerima dividen Rp 3 milyar. Bagaimana pelaporan di financial statements?</div>
+          <div class="kc-answer">
+            <strong>Jawaban:</strong> Karena ini equity instrument yang dipilih FVOCI (irrevocable election): (1) Unrealized gain Rp 15 milyar dicatat di Other Comprehensive Income (OCI), BUKAN di P&L. (2) Dividend income Rp 3 milyar dicatat di Profit or Loss (P&L). (3) Investment di balance sheet divaluasi pada fair value (naik Rp 15 milyar). Poin kritis: unrealized gain ini TIDAK PERNAH akan di-recycle ke P&L, bahkan saat investasi dijual nanti. Ini berbeda dari debt FVOCI yang gains/losses-nya di-recycle saat derecognition.
+          </div>
+        </div>
+      </div>
+
+      <div class="kc" id="kc1-2">
+        <div class="kc-header" onclick="toggleKC('kc1-2')">
+          <div class="kc-header-title">Knowledge Check 1.2: Significant Influence Indicators</div>
+          <div class="kc-toggle">ⓘ</div>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">Perusahaan A memiliki 18% saham Perusahaan B, tetapi memiliki 2 dari 7 kursi board of directors dan melakukan transaksi material senilai 30% dari revenue B. Apakah equity method harus digunakan?</div>
+          <div class="kc-answer">
+            <strong>Jawaban:</strong> Ya, equity method seharusnya digunakan. Meskipun kepemilikan di bawah 20% (yang biasanya mengindikasikan tidak ada significant influence), terdapat bukti signifikan lain: (1) Representasi di board of directors (2 dari 7 kursi = pengaruh signifikan terhadap keputusan), (2) Transaksi material yang mencapai 30% revenue menciptakan ketergantungan ekonomi. IAS 28 dan ASC 323 secara eksplisit menyebutkan bahwa kedua faktor ini merupakan indikator significant influence. Oleh karena itu, equity method harus diterapkan.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: EQUITY METHOD -->
+    <div class="chapter" id="section2">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 2</div>
+        <h2 class="chapter-title">Equity Method of Accounting</h2>
+      </div>
+
+      <h3 class="sub-header">Prinsip Dasar Equity Method</h3>
+      <p class="prose">Equity method digunakan ketika investor memiliki significant influence atas investee (umumnya 20-50% kepemilikan) atau untuk joint ventures. Metode ini sering disebut "one-line consolidation" karena investor melaporkan investasinya sebagai satu baris di balance sheet (Investment in Associate) dan satu baris di income statement (Equity in income of associate).</p>
+
+      <p class="prose">Prinsip dasar equity method: investasi awalnya dicatat pada cost (harga beli). Setelah itu, carrying amount disesuaikan untuk mengakui proportionate share investor dari earnings atau losses investee, dan dividends yang diterima diperlakukan sebagai return of capital (mengurangi carrying amount, BUKAN diakui sebagai income).</p>
+
+      <div class="formula-block">
+        <span class="label">Carrying Value Formula</span>
+        Investment Balance = Initial Cost
+          + Σ (Investor's % × Investee Net Income)
+          − Σ (Dividends Received)
+          − Σ (Amortization of Excess Purchase Price)
+        <span class="note">
+          Catatan: Dividends mengurangi carrying value, BUKAN menambah income.<br>
+          Equity income = Share of net income − Amortization of excess − Unrealized profit adjustments
+        </span>
+      </div>
+
+      <p class="prose">Jika carrying value investasi turun ke nol akibat kerugian investee, investor biasanya menghentikan equity method dan tidak mengakui kerugian lebih lanjut. Jika investee kemudian melaporkan profit, equity method dilanjutkan setelah share of profits investor sama dengan share of losses yang tidak diakui selama penghentian.</p>
+
+      <h3 class="sub-header">Excess Purchase Price dan Goodwill</h3>
+      <p class="prose">Dalam praktik, harga beli investasi hampir selalu melebihi proportionate share investor dari book value net assets investee. Ini terjadi karena banyak aset dan liabilitas investee dicatat pada historical cost, bukan fair value. Selisih ini disebut excess purchase price, dan harus dialokasikan secara sistematis.</p>
+
+      <div class="formula-block">
+        <span class="label">Alokasi Excess Purchase Price</span>
+        Excess Purchase Price = Purchase Price − (Ownership % × Book Value of Net Assets)
+
+        Alokasi:
+        1. Ke identifiable assets/liabilities berdasarkan fair value (proportionate share)
+        2. Residual = Goodwill
+        <span class="note">
+          Excess yang dialokasikan ke depreciable/amortizable assets → diamortisasi sesuai useful life<br>
+          Excess yang dialokasikan ke land atau goodwill → TIDAK diamortisasi (indefinite life)<br>
+          Amortisasi mengurangi BAIK equity income DI income statement DAN carrying value DI balance sheet
+        </span>
+      </div>
+
+      <h3 class="sub-header">Contoh Komprehensif: Parker-Prince</h3>
+      <p class="prose">Berikut adalah contoh dari kurikulum CFA yang mengilustrasikan seluruh mekanisme equity method:</p>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Contoh: Parker Co. Membeli 30% Prince Inc.</div>
+        <div class="exhibit-body">
+          <strong>Data Akuisisi (1 Januari 2018):</strong><br>
+          Purchase price: €500,000<br>
+          Prince's book value net assets: €1,200,000<br>
+          Prince's fair value net assets: €1,500,000<br>
+          Selisih FV vs BV: €300,000 (sepenuhnya dari Plant & Equipment, sisa umur 10 tahun)
+          <br><br>
+          <strong>Step 1: Hitung Excess Purchase Price</strong><br>
+          Acquired equity in BV = 30% × €1,200,000 = €360,000<br>
+          Excess = €500,000 − €360,000 = €140,000
+          <br><br>
+          <strong>Step 2: Alokasi Excess</strong><br>
+          Ke PP&E: 30% × €300,000 = €90,000 (amortisasi: €90,000 ÷ 10 = €9,000/tahun)<br>
+          Goodwill (residual): €140,000 − €90,000 = €50,000 (tidak diamortisasi)
+          <br><br>
+          <strong>Tahun 2018: Prince melaporkan NI = €100,000, Dividends = €50,000</strong><br>
+          Equity income = (30% × €100,000) − €9,000 amort = €30,000 − €9,000 = €21,000<br>
+          Dividends received = 30% × €50,000 = €15,000
+          <br><br>
+          <strong>Carrying value 31 Des 2018:</strong><br>
+          = €500,000 + €21,000 − €15,000 = <strong>€506,000</strong>
+          <br><br>
+          <strong>Verifikasi (alternative approach):</strong><br>
+          Prince ending net assets = €1,200,000 + €100,000 − €50,000 = €1,250,000<br>
+          Parker's share = 30% × €1,250,000 = €375,000<br>
+          + Unamortized excess = €140,000 − €9,000 = €131,000<br>
+          Total = €375,000 + €131,000 = <strong>€506,000</strong> ✓
+        </div>
+      </div>
+
+      <h3 class="sub-header">Fair Value Option</h3>
+      <p class="prose">Baik IFRS maupun US GAAP memberikan opsi kepada investor untuk mengukur equity method investment pada fair value. Di bawah US GAAP, opsi ini tersedia untuk semua entitas. Namun, di bawah IFRS, penggunaannya dibatasi hanya untuk venture capital organizations, mutual funds, unit trusts, dan entitas serupa.</p>
+
+      <p class="prose">Kedua standar mensyaratkan bahwa pemilihan fair value option terjadi pada saat initial recognition dan bersifat irrevocable. Setelah initial recognition, investasi dilaporkan pada fair value dengan unrealized gains/losses serta interest dan dividends diakui di profit or loss. Di bawah fair value method, account investasi TIDAK mencerminkan proportionate share dari profit/loss investee, dan excess purchase price TIDAK diamortisasi, serta goodwill TIDAK diciptakan.</p>
+
+      <h3 class="sub-header">Impairment</h3>
+      <p class="prose">Baik IFRS maupun US GAAP mensyaratkan review periodik equity method investments untuk impairment. Terdapat perbedaan penting antara kedua standar:</p>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Perbandingan Impairment: IFRS vs US GAAP</div>
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Aspek</th>
+              <th>IFRS</th>
+              <th>US GAAP</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Trigger</strong></td>
+              <td>Bukti objektif impairment dari loss events setelah initial recognition</td>
+              <td>Fair value turun di bawah carrying value dan penurunan bersifat permanent</td>
+            </tr>
+            <tr>
+              <td><strong>Goodwill testing</strong></td>
+              <td>Goodwill TIDAK ditest terpisah; seluruh carrying amount investasi ditest</td>
+              <td>Sama — goodwill termasuk dalam carrying amount</td>
+            </tr>
+            <tr>
+              <td><strong>Measurement</strong></td>
+              <td>Recoverable amount = higher of (value in use, fair value less costs to sell)</td>
+              <td>Reduced to fair value</td>
+            </tr>
+            <tr>
+              <td><strong>Reversal</strong></td>
+              <td><strong>Diperbolehkan</strong> jika recoverable amount meningkat</td>
+              <td><strong>DILARANG</strong> — impairment loss bersifat permanent</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout red">
+        <span class="callout-title">Exam Focus: Impairment Reversal</span>
+        <p>Perbedaan kritis: IFRS memperbolehkan reversal impairment loss untuk equity method investments jika recoverable amount meningkat. US GAAP secara tegas melarang reversal. Ini adalah perbedaan yang sangat sering diuji di CFA Level 2.</p>
+      </div>
+
+      <div class="kc" id="kc2-1">
+        <div class="kc-header" onclick="toggleKC('kc2-1')">
+          <div class="kc-header-title">Knowledge Check 2.1: Equity Method Carrying Value</div>
+          <div class="kc-toggle">ⓘ</div>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">PT Alfa membeli 40% saham PT Beta seharga Rp 800 milyar. Book value net assets Beta = Rp 1.500 milyar. Fair value net assets = Rp 1.800 milyar (selisih dari building, sisa umur 15 tahun). Tahun 1: Beta NI = Rp 200M, dividends = Rp 60M. Hitung carrying value investasi akhir tahun 1.</div>
+          <div class="kc-answer">
+            <strong>Jawaban:</strong><br>
+            Excess purchase price = Rp 800M − (40% × Rp 1,500M) = Rp 800M − Rp 600M = Rp 200M<br>
+            Attributable to building = 40% × (Rp 1,800M − Rp 1,500M) = 40% × Rp 300M = Rp 120M<br>
+            Goodwill = Rp 200M − Rp 120M = Rp 80M<br>
+            Amortisasi building excess = Rp 120M ÷ 15 = Rp 8M/tahun<br><br>
+            Equity income = (40% × Rp 200M) − Rp 8M = Rp 80M − Rp 8M = Rp 72M<br>
+            Dividends received = 40% × Rp 60M = Rp 24M<br><br>
+            Carrying value = Rp 800M + Rp 72M − Rp 24M = <strong>Rp 848 milyar</strong><br><br>
+            Verifikasi: Beta ending net assets = Rp 1,500M + Rp 200M − Rp 60M = Rp 1,640M<br>
+            Alfa's share = 40% × Rp 1,640M = Rp 656M<br>
+            + Unamortized excess = Rp 200M − Rp 8M = Rp 192M<br>
+            Total = Rp 656M + Rp 192M = Rp 848M ✓
+          </div>
+        </div>
+      </div>
+
+      <div class="kc" id="kc2-2">
+        <div class="kc-header" onclick="toggleKC('kc2-2')">
+          <div class="kc-header-title">Knowledge Check 2.2: Goodwill dalam Equity Method</div>
+          <div class="kc-toggle">ⓘ</div>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">Dalam equity method, goodwill termasuk dalam carrying amount investasi. Mengapa goodwill tidak ditest impairment secara terpisah? Dan apa perbedaan perlakuan goodwill antara equity method dan full consolidation?</div>
+          <div class="kc-answer">
+            <strong>Jawaban:</strong> Dalam equity method, investasi dilaporkan sebagai single line item (one-line consolidation). Goodwill TIDAK dilaporkan terpisah pada balance sheet — ia embedded dalam carrying amount investasi. Karena tidak terpisah, goodwill ditest sebagai bagian dari seluruh carrying amount investasi, bukan secara individual.<br><br>
+            Dalam full consolidation (acquisition method), goodwill DILAPORKAN sebagai line item terpisah pada consolidated balance sheet. Oleh karena itu, goodwill ditest impairment secara terpisah (setidaknya setiap tahun di bawah US GAAP, dan ketika ada indikasi impairment di bawah IFRS).<br><br>
+            Implikasi penting: karena goodwill tidak diamortisasi (indefinite life), satu-satunya cara goodwill berkurang nilainya adalah melalui impairment. Dalam equity method, ini terjadi secara implisit ketika seluruh investasi ditest. Dalam consolidation, goodwill ditest secara eksplisit dan terpisah.
+          </div>
+        </div>
+      </div>
+
+      <div class="kc" id="kc2-3">
+        <div class="kc-header" onclick="toggleKC('kc2-3')">
+          <div class="kc-header-title">Knowledge Check 2.3: One-Line Consolidation vs Full Consolidation</div>
+          <div class="kc-toggle">ⓘ</div>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">Mengapa equity method disebut "one-line consolidation"? Bagaimana dampaknya terhadap ratio analysis dibandingkan full consolidation?</div>
+          <div class="kc-answer">
+            <strong>Jawaban:</strong> Equity method disebut "one-line consolidation" karena seluruh interest investor dalam assets, liabilities, revenues, dan expenses investee direpresentasikan oleh: (1) Satu baris di balance sheet = "Investment in Associate" (yang mencerminkan proportionate share of net assets), (2) Satu baris di income statement = "Equity in income of associate" (yang mencerminkan proportionate share of net income setelah adjustments).<br><br>
+            Dampak pada ratio analysis sangat signifikan:<br>
+            - Total assets LEBIH RENDAH (karena hanya satu line item, bukan seluruh assets investee)<br>
+            - Total liabilities LEBIH RENDAH (liabilities investee tidak tampil)<br>
+            - Revenue LEBIH RENDAH (equity income ada di bawah operating income line)<br>
+            - NET MARGIN bisa OVERSTATED karena equity income termasuk dalam net income tapi tidak ada dalam sales/revenue<br>
+            - Debt ratios bisa UNDERSTATED karena liabilities investee tersembunyi<br><br>
+            Ini adalah concern utama bagi analyst: perusahaan mungkin prefer equity method (dengan &lt;50% ownership tetapi effective control) untuk menampilkan balance sheet yang "lebih bersih" dengan debt ratios lebih rendah.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: ACQUISITION METHOD -->
+    <div class="chapter" id="section3">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 3</div>
+        <h2 class="chapter-title">Acquisition Method & Full Consolidation</h2>
+      </div>
+
+      <h3 class="sub-header">Kapan Acquisition Method Digunakan</h3>
+      <p class="prose">Acquisition method digunakan ketika satu perusahaan memiliki control atas perusahaan lain, yang umumnya diasumsikan saat kepemilikan voting rights melebihi 50%. Di bawah IFRS dan US GAAP, semua business combinations harus dicatat menggunakan acquisition method (metode pooling of interests sudah tidak diperbolehkan lagi).</p>
+
+      <h3 class="sub-header">Jenis Business Combination</h3>
+      <p class="prose">Terdapat tiga bentuk business combination, ditambah special purpose entities:</p>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Jenis-Jenis Business Combination</div>
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Jenis</th>
+              <th>Karakteristik</th>
+              <th>Struktur Setelah Kombinasi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Merger</strong></td>
+              <td>Satu entitas menyerap yang lain; target cease to exist</td>
+              <td>A + B = A</td>
+            </tr>
+            <tr>
+              <td><strong>Acquisition</strong></td>
+              <td>Kedua entitas tetap ada; parent-subsidiary relationship; tidak harus 100%</td>
+              <td>A + B = (A + B)</td>
+            </tr>
+            <tr>
+              <td><strong>Consolidation</strong></td>
+              <td>Entitas baru dibentuk; kedua predecessor cease to exist</td>
+              <td>A + B = C</td>
+            </tr>
+            <tr>
+              <td><strong>SPE/VIE</strong></td>
+              <td>Kontrol bukan berdasarkan voting rights; dibentuk untuk tujuan spesifik</td>
+              <td>Consolidation jika control exists</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub-header">Langkah-Langkah Acquisition Method</h3>
+      <p class="prose">Proses acquisition method melibatkan beberapa langkah kritis:</p>
+
+      <ol class="num-list">
+        <li><strong>Identifikasi acquirer:</strong> Pihak yang memperoleh control. Di bawah IFRS, tidak ada pembedaan berdasarkan struktur hukum — satu pihak selalu diidentifikasi sebagai acquirer.</li>
+        <li><strong>Tentukan tanggal akuisisi:</strong> Tanggal di mana acquirer memperoleh control atas acquiree.</li>
+        <li><strong>Ukur consideration yang ditransfer:</strong> Pada fair value — bisa berupa cash, saham, obligasi, atau kombinasi.</li>
+        <li><strong>Akui dan ukur identifiable assets dan liabilities:</strong> Semua identifiable assets dan liabilities acquiree diakui pada FAIR VALUE pada tanggal akuisisi (bukan book value).</li>
+        <li><strong>Akui goodwill:</strong> Goodwill = Purchase consideration − Fair value of net identifiable assets acquired.</li>
+      </ol>
+
+      <h3 class="sub-header">Dampak Acquisition Method pada Financial Statements</h3>
+      <p class="prose">Dampak acquisition method pada financial statements sangat berbeda dari equity method. Dalam consolidated financial statements:</p>
+
+      <p class="prose"><strong>Balance Sheet:</strong> 100% dari assets dan liabilities acquiree dikonsolidasikan pada FAIR VALUE, bahkan jika acquirer hanya memiliki 60%. Ini berarti total assets dan total liabilities jauh lebih besar dibanding equity method. Non-controlling interest (NCI) dilaporkan terpisah dalam equity section.</p>
+
+      <p class="prose"><strong>Income Statement:</strong> 100% dari revenues dan expenses acquiree dikonsolidasikan. Namun, net income yang attributable to non-controlling interest dikurangkan sebelum sampai di "net income attributable to parent." Sehingga bottom-line net income untuk parent shareholders SAMA dengan equity method.</p>
+
+      <p class="prose"><strong>Intercompany transactions:</strong> Semua transaksi antara parent dan subsidiary (intercompany sales, loans, dividends) harus di-ELIMINATE sepenuhnya dalam konsolidasi.</p>
+
+      <div class="callout blue">
+        <span class="callout-title">Dampak pada Ratio Analysis</span>
+        <p>Dibandingkan equity method, full consolidation menghasilkan: (1) Total assets LEBIH BESAR — semua assets subsidiary termasuk, (2) Total liabilities LEBIH BESAR — semua liabilities subsidiary termasuk, (3) Revenue LEBIH BESAR — 100% revenue subsidiary termasuk, (4) Debt-to-equity ratio LEBIH TINGGI karena liabilities lebih besar, (5) Net margin LEBIH RENDAH karena revenue denominator lebih besar, (6) Asset turnover mungkin LEBIH RENDAH karena total assets lebih besar. Net income attributable to parent SAMA untuk kedua metode.</p>
+      </div>
+
+      <h3 class="sub-header">Non-Controlling Interest (Minority Interest)</h3>
+      <p class="prose">Ketika acquirer membeli kurang dari 100% acquiree (misalnya 80%), 20% sisanya dimiliki oleh non-controlling shareholders. Non-controlling interest (NCI) muncul di dua tempat:</p>
+
+      <p class="prose"><strong>Balance Sheet:</strong> NCI dilaporkan dalam equity section, terpisah dari parent equity. Di bawah IFRS, NCI dapat diukur pada: (a) fair value pada tanggal akuisisi (full goodwill method), atau (b) proportionate share of identifiable net assets (partial goodwill method). US GAAP hanya menggunakan fair value (full goodwill).</p>
+
+      <p class="prose"><strong>Income Statement:</strong> Net income diattribusikan ke dua kelompok: (1) Net income attributable to parent, dan (2) Net income attributable to non-controlling interest. Keduanya ditampilkan terpisah di bagian bawah income statement.</p>
+
+      <h3 class="sub-header">Goodwill dalam Acquisition Method</h3>
+      <p class="prose">Goodwill dalam acquisition method dicatat sebagai aset terpisah pada consolidated balance sheet (berbeda dari equity method di mana goodwill embedded dalam investment balance). Goodwill memiliki indefinite life dan TIDAK diamortisasi. Sebaliknya, goodwill ditest untuk impairment secara periodik.</p>
+
+      <p class="prose">Di bawah US GAAP, goodwill impairment test dilakukan minimal setiap tahun (dan lebih sering jika ada indikasi impairment). Di bawah IFRS, goodwill impairment test dilakukan ketika ada indikasi impairment. Jika carrying amount goodwill melebihi recoverable amount, impairment loss diakui. Di bawah US GAAP, impairment loss TIDAK dapat di-reverse. Di bawah IFRS, impairment loss untuk goodwill juga TIDAK dapat di-reverse (ini berbeda dari equity method investments secara keseluruhan).</p>
+
+      <div class="kc" id="kc3-1">
+        <div class="kc-header" onclick="toggleKC('kc3-1')">
+          <div class="kc-header-title">Knowledge Check 3.1: Equity Method vs Full Consolidation</div>
+          <div class="kc-toggle">ⓘ</div>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">Perusahaan A membeli 70% Perusahaan B. Total assets B = Rp 500M, total liabilities B = Rp 200M, revenues B = Rp 300M, net income B = Rp 50M. Jika A menggunakan equity method vs full consolidation, bagaimana impact pada reported total assets dan net income A?</div>
+          <div class="kc-answer">
+            <strong>Jawaban:</strong><br>
+            <strong>Equity Method:</strong><br>
+            - Total assets A increases by: "Investment in B" = harga beli (misal Rp 210M untuk 70% of net assets Rp 300M)<br>
+            - Net income A includes: 70% × Rp 50M = Rp 35M (minus amortization adjustments)<br><br>
+            <strong>Full Consolidation:</strong><br>
+            - Total assets A increases by: 100% of B's assets = Rp 500M (at fair value) plus goodwill<br>
+            - Total liabilities A increases by: 100% of B's liabilities = Rp 200M<br>
+            - Revenue increases by: 100% of B's revenue = Rp 300M<br>
+            - Net income attributable to parent: SAMA = Rp 35M (karena 30% × Rp 50M = Rp 15M diattribusikan ke NCI)<br><br>
+            Key insight: NET INCOME untuk parent shareholders SAMA di kedua metode. Tetapi total assets, liabilities, dan revenue JAUH LEBIH BESAR di full consolidation, yang mengubah semua rasio secara signifikan.
+          </div>
+        </div>
+      </div>
+
+      <div class="kc" id="kc3-2">
+        <div class="kc-header" onclick="toggleKC('kc3-2')">
+          <div class="kc-header-title">Knowledge Check 3.2: Full Goodwill vs Partial Goodwill</div>
+          <div class="kc-toggle">ⓘ</div>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">Perusahaan X membeli 80% Perusahaan Y seharga Rp 400M. Fair value 100% Y = Rp 500M. Fair value net identifiable assets Y = Rp 380M. Hitung goodwill di bawah full goodwill method (US GAAP) dan partial goodwill method (IFRS option).</div>
+          <div class="kc-answer">
+            <strong>Jawaban:</strong><br>
+            <strong>Full Goodwill Method (US GAAP / IFRS option):</strong><br>
+            Total implied value of Y = Rp 500M (fair value of 100%)<br>
+            Fair value of net identifiable assets = Rp 380M<br>
+            Full goodwill = Rp 500M − Rp 380M = <strong>Rp 120M</strong><br>
+            NCI value = 20% × Rp 500M = Rp 100M<br><br>
+            <strong>Partial Goodwill Method (IFRS option):</strong><br>
+            Purchase consideration = Rp 400M<br>
+            80% of FV net identifiable assets = 80% × Rp 380M = Rp 304M<br>
+            Partial goodwill = Rp 400M − Rp 304M = <strong>Rp 96M</strong><br>
+            NCI value = 20% × Rp 380M = Rp 76M<br><br>
+            Perbedaan: Full goodwill = Rp 120M vs Partial goodwill = Rp 96M. Selisih Rp 24M = goodwill yang diattribusikan ke NCI (20% × Rp 120M total goodwill). US GAAP HANYA mengizinkan full goodwill method.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: UNREALIZED PROFIT & ANALYST ISSUES -->
+    <div class="chapter" id="section4">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 4</div>
+        <h2 class="chapter-title">Unrealized Profit & Issues for Analysts</h2>
+      </div>
+
+      <h3 class="sub-header">Eliminasi Unrealized Profit</h3>
+      <p class="prose">Karena investor dapat mempengaruhi terms dan timing transaksi dengan associates-nya, profits dari transaksi tersebut tidak dapat diakui sampai dikonfirmasi melalui penggunaan atau penjualan ke pihak ketiga. Investor harus mendefer proportionate share dari unrealized profit dengan mengurangi equity income.</p>
+
+      <p class="prose">Terdapat dua jenis transaksi intercompany:</p>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Upstream vs Downstream Sales</div>
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Jenis</th>
+              <th>Arah</th>
+              <th>Profit Tercatat di</th>
+              <th>Adjustment</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Upstream</strong></td>
+              <td>Associate → Investor</td>
+              <td>IS Associate</td>
+              <td>Dikurangi dari equity income (via share of income)</td>
+            </tr>
+            <tr>
+              <td><strong>Downstream</strong></td>
+              <td>Investor → Associate</td>
+              <td>IS Investor</td>
+              <td>Dikurangi dari equity income (adjustment langsung)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="prose">Baik IFRS maupun US GAAP mensyaratkan bahwa unearned profits di-eliminate sebesar proportionate interest investor dalam associate.</p>
+
+      <h3 class="sub-header">Contoh Upstream Sale: Foxworth-Wicker</h3>
+      <p class="prose">Contoh dari kurikulum CFA untuk upstream sale:</p>
+
+      <div class="exhibit">
+        <div class="exhibit-title">Upstream Sale: Foxworth (Associate) ke Wicker (25% Owner)</div>
+        <div class="exhibit-body">
+          <strong>Data:</strong><br>
+          Wicker membeli 25% Foxworth seharga €1,000,000 pada 1 Jan 2018.<br>
+          BV Foxworth net assets = €3,800,000. FV = BV kecuali building undervalued €40,000 (sisa 20 tahun).<br>
+          Foxworth 2018: NI = €20,000, dividends = €3,200.<br>
+          Foxworth jual inventory ke Wicker, ada €8,000 unrealized profit di NI Foxworth (belum dijual Wicker ke pihak ketiga).<br><br>
+          <strong>Excess Purchase Price:</strong><br>
+          Cost = €1,000,000, BV share = 25% × €3,800,000 = €950,000<br>
+          Excess = €50,000<br>
+          Ke building = 25% × €40,000 = €10,000 (amort: €10,000 ÷ 20 = €500/tahun)<br>
+          Goodwill = €40,000<br><br>
+          <strong>Equity Income 2018:</strong><br>
+          Share of NI = 25% × €20,000 = €5,000<br>
+          − Amortisasi building = (€500)<br>
+          − Unrealized profit = 25% × €8,000 = (€2,000)<br>
+          <strong>Equity income = €2,500</strong><br><br>
+          <strong>Carrying Value:</strong><br>
+          €1,000,000 + €2,500 − (25% × €3,200) = €1,000,000 + €2,500 − €800 = <strong>€1,001,700</strong>
+        </div>
+      </div>
+
+      <h3 class="sub-header">Contoh Downstream Sale: Jones-Jason</h3>
+      <div class="exhibit">
+        <div class="exhibit-title">Downstream Sale: Jones (Investor, 25%) ke Jason (Associate)</div>
+        <div class="exhibit-body">
+          <strong>Data:</strong><br>
+          Jones memiliki 25% Jason. Amortisasi excess = €8,000/tahun.<br>
+          Jones jual inventory ke Jason: cost €96,000, selling price €160,000 (profit margin 40%).<br>
+          Jason resold 75% (€120,000) in 2017. Sisanya (€40,000) dijual di 2018.<br>
+          Jason NI: 2017 = €800,000, 2018 = €820,000.<br><br>
+          <strong>2017 Equity Income:</strong><br>
+          Share of NI = 25% × €800,000 = €200,000<br>
+          − Amortization = (€8,000)<br>
+          − Unrealized profit = 25% × (40% × €40,000) = 25% × €16,000 = (€4,000)<br>
+          <strong>Equity income 2017 = €188,000</strong><br><br>
+          Penjelasan unrealized: Total profit = €64,000. Jason masih pegang 25% goods (€40,000 at transfer price). Profit on unsold = 40% × €40,000 = €16,000. Jones's share = 25% × €16,000 = €4,000.<br><br>
+          <strong>2018 Equity Income:</strong><br>
+          Share of NI = 25% × €820,000 = €205,000<br>
+          − Amortization = (€8,000)<br>
+          + Realized profit (reversed) = 25% × €16,000 = +€4,000<br>
+          <strong>Equity income 2018 = €201,000</strong>
+        </div>
+      </div>
+
+      <h3 class="sub-header">Issues for Analysts</h3>
+      <p class="prose">Equity method accounting menghadirkan beberapa tantangan analisis yang penting bagi CFA candidates:</p>
+
+      <ol class="num-list">
+        <li><strong>Apakah equity method sesuai?</strong> Investor dengan 19% mungkin sebenarnya memiliki significant influence tetapi menghindari equity method untuk tidak melaporkan associate losses. Sebaliknya, investor dengan 25% mungkin tidak bisa mengakses cash flows namun prefer equity method untuk mengcapture associate income.</li>
+        <li><strong>Hidden assets dan liabilities:</strong> Investment account hanya menunjukkan net assets sebagai single line. Significant assets dan liabilities investee tidak terlihat di balance sheet investor, yang dapat secara signifikan mempengaruhi debt ratios dan leverage analysis.</li>
+        <li><strong>Net margin overstated:</strong> Equity income termasuk dalam net income tetapi TIDAK termasuk dalam sales/revenue. Ini membuat net profit margin tampak lebih tinggi dari realita operasional.</li>
+        <li><strong>Quality of earnings:</strong> Equity method mengasumsikan percentage of each dollar earned by investee is earned by investor, meskipun cash mungkin tidak diterima. Analysts harus memeriksa potential restrictions on dividend cash flows melalui statement of cash flows.</li>
+      </ol>
+
+      <div class="callout gold">
+        <span class="callout-title">Practical Analyst Tip</span>
+        <p>Ketika menganalisis perusahaan dengan equity method investments yang signifikan, lakukan adjustments: (1) Pertimbangkan untuk menambahkan proportionate share of investee's debt ke total debt investor untuk debt ratio analysis yang lebih akurat. (2) Pisahkan equity income dari operating income dalam profitability analysis. (3) Bandingkan equity income dengan actual dividends received untuk menilai cash conversion.</p>
+      </div>
+
+      <div class="kc" id="kc4-1">
+        <div class="kc-header" onclick="toggleKC('kc4-1')">
+          <div class="kc-header-title">Knowledge Check 4.1: Upstream vs Downstream Calculation</div>
+          <div class="kc-toggle">ⓘ</div>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">PT Mentari (30% owner of PT Cahaya) menjual inventory ke PT Cahaya dengan cost Rp 100M dan harga jual Rp 150M. Per akhir tahun, PT Cahaya masih menyimpan 40% dari inventory tersebut (belum dijual ke pihak ketiga). Berapa unrealized profit yang harus dieliminasi dari equity income Mentari?</div>
+          <div class="kc-answer">
+            <strong>Jawaban:</strong> Ini adalah downstream sale (investor → associate).<br><br>
+            Total profit = Rp 150M − Rp 100M = Rp 50M (profit margin = 33.3%)<br>
+            Inventory yang belum dijual = 40% × Rp 150M = Rp 60M (at transfer price)<br>
+            Unrealized profit pada inventory = 33.3% × Rp 60M = Rp 20M<br><br>
+            Atau secara alternatif: Total profit = Rp 50M. Cahaya sold 60%, unsold = 40%.<br>
+            Unrealized profit = 40% × Rp 50M = Rp 20M<br><br>
+            Mentari's share of unrealized profit = 30% × Rp 20M = <strong>Rp 6M</strong><br><br>
+            Equity income dikurangi Rp 6M. Di periode berikutnya ketika Cahaya menjual inventory tersebut ke pihak ketiga, Rp 6M ini di-reverse (ditambahkan kembali ke equity income).
+          </div>
+        </div>
+      </div>
+
+      <div class="kc" id="kc4-2">
+        <div class="kc-header" onclick="toggleKC('kc4-2')">
+          <div class="kc-header-title">Knowledge Check 4.2: Impact on Ratio Analysis</div>
+          <div class="kc-toggle">ⓘ</div>
+        </div>
+        <div class="kc-body">
+          <div class="kc-q">Perusahaan Z memiliki 45% associate yang memiliki total debt Rp 800M dan total assets Rp 1,200M. Z sendiri memiliki total debt Rp 500M dan total equity Rp 1,000M. Bagaimana equity method mempengaruhi perceived leverage Z, dan bagaimana analyst seharusnya adjust?</div>
+          <div class="kc-answer">
+            <strong>Jawaban:</strong><br>
+            <strong>Reported D/E (equity method):</strong> Rp 500M / Rp 1,000M = 0.50x<br><br>
+            <strong>Adjusted D/E (menambah proportionate share of associate debt):</strong><br>
+            Z's share of associate debt = 45% × Rp 800M = Rp 360M<br>
+            Adjusted debt = Rp 500M + Rp 360M = Rp 860M<br>
+            Adjusted D/E = Rp 860M / Rp 1,000M = <strong>0.86x</strong><br><br>
+            Leverage terlihat jauh lebih tinggi setelah adjustment! Equity method "menyembunyikan" Rp 360M debt dari balance sheet. Analyst yang hanya melihat reported D/E akan underestimate true leverage. Ini adalah salah satu masalah utama equity method bagi analysts, dan mengapa IFRS 12 mensyaratkan disclosures tentang interests in other entities untuk memberikan transparansi lebih.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 5: LATIHAN SOAL -->
+    <div class="chapter" id="section5">
+      <div class="chapter-header">
+        <div class="chapter-num">Section 5</div>
+        <h2 class="chapter-title">Latihan Soal: Item Set Vignette</h2>
+      </div>
+
+      <p class="prose" style="margin-bottom: 32px;">Bacalah vignette berikut dan jawab enam pertanyaan dengan memilih opsi A, B, atau C. Setiap pertanyaan worth satu poin. Setelah menyelesaikan semua pertanyaan, klik tombol "Lihat Skor" untuk melihat hasil Anda.</p>
+
+      <div class="vignette">
+        <div class="vignette-label">Vignette: PT Garuda Nusantara Investments</div>
+        <p style="margin-bottom: 16px;">
+          <strong>Skenario:</strong> Rina Wijaya, CFA, adalah senior analyst di PT Garuda Asset Management. Dia sedang mengevaluasi laporan keuangan PT Sinar Persada (SP), sebuah konglomerat yang tercatat di Bursa Efek Indonesia (BEI). SP memiliki beberapa investasi intercorporate yang kompleks yang perlu dianalisis untuk recommendation report.
+        </p>
+
+        <p style="margin-bottom: 16px;">
+          <strong>Investasi A — PT Kalimantan Timber (KT):</strong> SP membeli 35% saham KT pada 1 Januari 2026 seharga Rp 700 milyar. Pada tanggal akuisisi, book value net assets KT = Rp 1.500 milyar. Fair value net assets KT = Rp 1.800 milyar. Selisih fair value sepenuhnya berasal dari timber concession rights (sisa umur 12 tahun, straight-line). Selama 2026, KT melaporkan net income Rp 240 milyar dan membayar dividen Rp 80 milyar. SP tidak memiliki board representation di KT tetapi memiliki kontrak supply jangka panjang yang memberikan significant influence. KT memiliki total debt Rp 600 milyar.
+        </p>
+
+        <p style="margin-bottom: 16px;">
+          <strong>Investasi B — PT Jakarta Digital (JD):</strong> SP membeli 8% saham JD seharga Rp 120 milyar dan mengklasifikasikan investasi ini sebagai FVOCI di bawah IFRS 9 (irrevocable election). Pada akhir 2026, fair value investasi JD turun menjadi Rp 95 milyar. JD tidak membayar dividen.
+        </p>
+
+        <p style="margin-bottom: 16px;">
+          <strong>Investasi C — PT Sumatera Palm Oil (SPO):</strong> SP membeli 75% saham SPO seharga Rp 1.200 milyar. Fair value 100% SPO dinilai Rp 1.600 milyar. Fair value net identifiable assets SPO = Rp 1.300 milyar. SPO melaporkan net income Rp 200 milyar di 2026.
+        </p>
+
+        <p style="margin-bottom: 0;">
+          <strong>Transaksi Intercompany:</strong> Selama 2026, KT menjual CPO (crude palm oil) ke SP senilai total Rp 50 milyar. Dari transaksi ini, Rp 12 milyar masih berupa unrealized profit di inventory SP per akhir tahun (inventory belum dijual SP ke pihak ketiga).
+        </p>
+      </div>
+
+      <!-- QUESTION 1 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 1</div>
+        <div class="q-text">Berapa goodwill yang termasuk dalam purchase price investasi SP di KT?</div>
+
+        <div class="option" onclick="answer(0, 'X', 'Y')">
+          <input type="radio" name="q0" value="X" id="q0a">
+          <label for="q0a"><strong>A)</strong> Rp 175 milyar</label>
+        </div>
+        <div class="option" onclick="answer(0, 'Y', 'Y')">
+          <input type="radio" name="q0" value="Y" id="q0b">
+          <label for="q0b"><strong>B)</strong> Rp 70 milyar</label>
+        </div>
+        <div class="option" onclick="answer(0, 'Z', 'Y')">
+          <input type="radio" name="q0" value="Z" id="q0c">
+          <label for="q0c"><strong>C)</strong> Rp 105 milyar</label>
+        </div>
+
+        <div class="explanation" id="exp0">
+          <strong>Jawaban: B (Rp 70 milyar)</strong><br>
+          Excess purchase price = Rp 700M − (35% × Rp 1,500M) = Rp 700M − Rp 525M = Rp 175M<br>
+          Attributable to timber concession rights = 35% × (Rp 1,800M − Rp 1,500M) = 35% × Rp 300M = Rp 105M<br>
+          Goodwill (residual) = Rp 175M − Rp 105M = <strong>Rp 70 milyar</strong><br><br>
+          Mengapa A salah: Rp 175M adalah total excess purchase price, bukan goodwill. Goodwill hanya bagian residual setelah alokasi ke identifiable assets.<br>
+          Mengapa C salah: Rp 105M adalah amount yang dialokasikan ke timber concession rights, bukan goodwill.
+        </div>
+      </div>
+
+      <!-- QUESTION 2 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 2</div>
+        <div class="q-text">Berapa equity income yang dilaporkan SP dari investasi KT untuk tahun 2026, dengan memperhitungkan amortisasi excess purchase price dan unrealized profit dari upstream sale?</div>
+
+        <div class="option" onclick="answer(1, 'X', 'X')">
+          <input type="radio" name="q1" value="X" id="q1a">
+          <label for="q1a"><strong>A)</strong> Rp 71.05 milyar</label>
+        </div>
+        <div class="option" onclick="answer(1, 'Y', 'X')">
+          <input type="radio" name="q1" value="Y" id="q1b">
+          <label for="q1b"><strong>B)</strong> Rp 84 milyar</label>
+        </div>
+        <div class="option" onclick="answer(1, 'Z', 'X')">
+          <input type="radio" name="q1" value="Z" id="q1c">
+          <label for="q1c"><strong>C)</strong> Rp 75.25 milyar</label>
+        </div>
+
+        <div class="explanation" id="exp1">
+          <strong>Jawaban: A (Rp 71.05 milyar)</strong><br>
+          Share of NI = 35% × Rp 240M = Rp 84M<br>
+          Amortisasi timber concession = Rp 105M ÷ 12 tahun = Rp 8.75M<br>
+          Unrealized profit (upstream) = 35% × Rp 12M = Rp 4.2M<br>
+          Equity income = Rp 84M − Rp 8.75M − Rp 4.2M = <strong>Rp 71.05 milyar</strong><br><br>
+          Mengapa B salah: Rp 84M hanya memperhitungkan share of NI tanpa adjustments. Amortisasi excess dan unrealized profit HARUS dikurangkan.<br>
+          Mengapa C salah: Rp 75.25M mungkin dari kesalahan perhitungan amortisasi atau unrealized profit.
+        </div>
+      </div>
+
+      <!-- QUESTION 3 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 3</div>
+        <div class="q-text">Untuk investasi JD (FVOCI equity instrument), bagaimana penurunan fair value dari Rp 120M ke Rp 95M dilaporkan?</div>
+
+        <div class="option" onclick="answer(2, 'X', 'Y')">
+          <input type="radio" name="q2" value="X" id="q2a">
+          <label for="q2a"><strong>A)</strong> Unrealized loss Rp 25M diakui di profit or loss (P&L)</label>
+        </div>
+        <div class="option" onclick="answer(2, 'Y', 'Y')">
+          <input type="radio" name="q2" value="Y" id="q2b">
+          <label for="q2b"><strong>B)</strong> Unrealized loss Rp 25M diakui di other comprehensive income (OCI)</label>
+        </div>
+        <div class="option" onclick="answer(2, 'Z', 'Y')">
+          <input type="radio" name="q2" value="Z" id="q2c">
+          <label for="q2c"><strong>C)</strong> Tidak ada loss yang diakui karena ini investasi jangka panjang</label>
+        </div>
+
+        <div class="explanation" id="exp2">
+          <strong>Jawaban: B (OCI)</strong><br>
+          Untuk equity instruments yang diklasifikasikan FVOCI di bawah IFRS 9 (irrevocable election): SEMUA perubahan fair value (baik gains maupun losses) diakui di Other Comprehensive Income (OCI), BUKAN di P&L. Unrealized loss = Rp 120M − Rp 95M = Rp 25M → masuk OCI.<br><br>
+          Mengapa A salah: Hanya dividend income yang masuk P&L untuk equity FVOCI. Perubahan fair value selalu di OCI.<br>
+          Mengapa C salah: Loss tetap harus diakui — IFRS 9 mengharuskan pengukuran pada fair value. Loss dicatat di OCI, bukan diabaikan.
+        </div>
+      </div>
+
+      <!-- QUESTION 4 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 4</div>
+        <div class="q-text">Untuk investasi SPO (75% ownership, full consolidation), berapa goodwill yang dicatat menggunakan full goodwill method?</div>
+
+        <div class="option" onclick="answer(3, 'X', 'Z')">
+          <input type="radio" name="q3" value="X" id="q3a">
+          <label for="q3a"><strong>A)</strong> Rp 225 milyar</label>
+        </div>
+        <div class="option" onclick="answer(3, 'Y', 'Z')">
+          <input type="radio" name="q3" value="Y" id="q3b">
+          <label for="q3b"><strong>B)</strong> Rp 175 milyar</label>
+        </div>
+        <div class="option" onclick="answer(3, 'Z', 'Z')">
+          <input type="radio" name="q3" value="Z" id="q3c">
+          <label for="q3c"><strong>C)</strong> Rp 300 milyar</label>
+        </div>
+
+        <div class="explanation" id="exp3">
+          <strong>Jawaban: C (Rp 300 milyar)</strong><br>
+          Full goodwill method menggunakan fair value 100% dari acquiree:<br>
+          Fair value 100% SPO = Rp 1,600M<br>
+          Fair value net identifiable assets = Rp 1,300M<br>
+          Full goodwill = Rp 1,600M − Rp 1,300M = <strong>Rp 300 milyar</strong><br><br>
+          Perbandingan partial goodwill: Purchase price − (75% × Rp 1,300M) = Rp 1,200M − Rp 975M = Rp 225M.<br>
+          Mengapa A salah: Rp 225M adalah partial goodwill (IFRS alternative method), bukan full goodwill.<br>
+          Mengapa B salah: Rp 175M mungkin dari kesalahan perhitungan.
+        </div>
+      </div>
+
+      <!-- QUESTION 5 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 5</div>
+        <div class="q-text">Berapa net income attributable to non-controlling interest dari SPO di consolidated income statement SP?</div>
+
+        <div class="option" onclick="answer(4, 'X', 'X')">
+          <input type="radio" name="q4" value="X" id="q4a">
+          <label for="q4a"><strong>A)</strong> Rp 50 milyar (25% × Rp 200M)</label>
+        </div>
+        <div class="option" onclick="answer(4, 'Y', 'X')">
+          <input type="radio" name="q4" value="Y" id="q4b">
+          <label for="q4b"><strong>B)</strong> Rp 150 milyar (75% × Rp 200M)</label>
+        </div>
+        <div class="option" onclick="answer(4, 'Z', 'X')">
+          <input type="radio" name="q4" value="Z" id="q4c">
+          <label for="q4c"><strong>C)</strong> Rp 200 milyar (100% consolidated)</label>
+        </div>
+
+        <div class="explanation" id="exp4">
+          <strong>Jawaban: A (Rp 50 milyar)</strong><br>
+          Dalam full consolidation, 100% revenue dan expenses SPO dikonsolidasikan (Rp 200M net income). Kemudian, net income diattribusikan ke dua kelompok:<br>
+          - Non-controlling interest (NCI) = 25% × Rp 200M = <strong>Rp 50M</strong><br>
+          - Parent (SP) = 75% × Rp 200M = Rp 150M<br><br>
+          Mengapa B salah: Rp 150M adalah porsi PARENT, bukan NCI.<br>
+          Mengapa C salah: Rp 200M adalah total consolidated NI sebelum atribusi, bukan NCI portion.
+        </div>
+      </div>
+
+      <!-- QUESTION 6 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 6</div>
+        <div class="q-text">Rina ingin menilai true leverage SP. SP memiliki reported total debt Rp 2,000 milyar. Dengan memperhitungkan proportionate share of KT's debt (equity method associate), berapa adjusted debt-to-equity ratio jika SP's total equity = Rp 3,000 milyar?</div>
+
+        <div class="option" onclick="answer(5, 'X', 'Y')">
+          <input type="radio" name="q5" value="X" id="q5a">
+          <label for="q5a"><strong>A)</strong> 0.67x (Rp 2,000M / Rp 3,000M)</label>
+        </div>
+        <div class="option" onclick="answer(5, 'Y', 'Y')">
+          <input type="radio" name="q5" value="Y" id="q5b">
+          <label for="q5b"><strong>B)</strong> 0.74x [(Rp 2,000M + 35% × Rp 600M) / Rp 3,000M]</label>
+        </div>
+        <div class="option" onclick="answer(5, 'Z', 'Y')">
+          <input type="radio" name="q5" value="Z" id="q5c">
+          <label for="q5c"><strong>C)</strong> 0.87x [(Rp 2,000M + 100% × Rp 600M) / Rp 3,000M]</label>
+        </div>
+
+        <div class="explanation" id="exp5">
+          <strong>Jawaban: B (0.74x)</strong><br>
+          Untuk menilai true leverage, analyst harus menambahkan proportionate share of associate's debt ke reported debt SP:<br>
+          SP's share of KT debt = 35% × Rp 600M = Rp 210M<br>
+          Adjusted debt = Rp 2,000M + Rp 210M = Rp 2,210M<br>
+          Adjusted D/E = Rp 2,210M / Rp 3,000M = <strong>0.74x</strong><br><br>
+          Mengapa A salah: 0.67x hanya reported D/E tanpa adjustment — ini underestimates true leverage karena KT's debt tersembunyi di equity method.<br>
+          Mengapa C salah: 0.87x menambahkan 100% debt KT, tetapi SP hanya memiliki 35% — seharusnya proportionate share.
+        </div>
+      </div>
+
+      <!-- SCORE PANEL -->
+      <div style="text-align: center; margin-top: 40px;">
+        <button onclick="showScore()" style="padding: 12px 28px; background: var(--gold); color: white; border: none; border-radius: var(--r-sm); font-weight: 600; font-size: 15px; cursor: pointer;">Lihat Skor</button>
+      </div>
+
+      <div class="score-panel" id="scorePanel">
+        <h3>Skor Anda</h3>
+        <p id="scoreText">0 / 6</p>
+      </div>
+    </div>
+
+    <!-- BOTTOM NAVIGATION -->
+    <div class="nav-bottom">
+      <a href="CFA_L2_Day18_Full.html" class="nav-btn">
+        &larr; Hari Sebelumnya
+        <span class="nav-day">Day 18 &middot; Endogenous Growth & Demographics</span>
+      </a>
+      <a href="CFA_L2_Day20_Full.html" class="nav-btn">
+        Hari Berikutnya &rarr;
+        <span class="nav-day">Day 20 &middot; VIE/SPE & Minority Interest</span>
+      </a>
+    </div>
+  </div>
+
+  <script>
+function toggleKC(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('open');
+}
+
+const answers = {};
+const correct = { 0: 'Y', 1: 'X', 2: 'Y', 3: 'Z', 4: 'X', 5: 'Y' };
+const total = 6;
+
+function answer(qIdx, chosen, correctAns) {
+  if (!chosen) return;
+  answers[qIdx] = chosen === correctAns;
+  const expDiv = document.getElementById(`exp${qIdx}`);
+  expDiv.classList.add('show');
+}
+
+function showScore() {
+  let score = 0;
+  for (let key in answers) {
+    if (answers[key]) score++;
+  }
+  document.getElementById('scoreText').textContent = `${score} / ${total}`;
+  document.getElementById('scorePanel').classList.add('show');
+}
+  </script>
+</body>
+</html>
