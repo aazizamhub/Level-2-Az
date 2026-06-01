@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 47 · Residual Income Model Mechanics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #fafaf8;
+  --bg2:     #f4f3ef;
+  --bg3:     #eeece7;
+  --border:  rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text:    #1a1a2e;
+  --text2:   #4a4a6a;
+  --text3:   #8a8aaa;
+  --gold:    #9a6e1a;
+  --gold2:   #7a5010;
+  --gold-bg: rgba(154,110,26,0.08);
+  --blue:    #1a5fa8;
+  --blue-bg: rgba(26,95,168,0.08);
+  --green:   #1a7a4a;
+  --green-bg:rgba(26,122,74,0.08);
+  --red:     #b83232;
+  --red-bg:  rgba(184,50,50,0.08);
+  --amber:   #a06010;
+  --amber-bg:rgba(160,96,16,0.08);
+  --purple:  #6a3ab0;
+  --purple-bg:rgba(106,58,176,0.08);
+  --r:10px;--r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.7;min-height:100vh;}
+
+/* ── Layout ── */
+.page{max-width:820px;margin:0 auto;padding:40px 24px 80px;}
+
+/* ── Top bar ── */
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+
+/* ── Hero ── */
+.hero{margin-bottom:32px;}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:32px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:14px;color:var(--text2);}
+.meta-row{display:flex;gap:16px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+
+/* ── Section headers ── */
+.section{margin-bottom:28px;}
+.section-label{font-size:10px;color:var(--text3);letter-spacing:0.09em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* ── Objective box ── */
+.obj-box{background:var(--gold-bg);border:1px solid rgba(201,168,76,0.25);border-radius:var(--r);padding:16px 18px;margin-bottom:24px;}
+.obj-box-title{font-size:11px;color:var(--gold);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;font-weight:500;}
+.obj-list{list-style:none;}
+.obj-list li{font-size:13px;color:var(--text2);padding:3px 0 3px 16px;position:relative;}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--gold);font-size:11px;top:5px;}
+
+/* ── Concept cards ── */
+.concept-grid{display:flex;flex-direction:column;gap:14px;}
+.concept-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+.concept-card-header{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);}
+.concept-num{width:26px;height:26px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--gold);flex-shrink:0;}
+.concept-title{font-size:14px;font-weight:500;color:var(--text);}
+.concept-body{padding:14px 16px;font-size:13px;color:var(--text2);line-height:1.75;}
+.concept-body p{margin-bottom:10px;}
+.concept-body p:last-child{margin-bottom:0;}
+
+/* ── Formula box ── */
+.formula{background:var(--bg3);border:1px solid var(--border2);border-left:3px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:12px 16px;margin:10px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);line-height:1.6;}
+.formula .comment{color:var(--text3);font-style:italic;}
+
+/* ── Assumption table ── */
+.assume-table{width:100%;border-collapse:collapse;font-size:13px;}
+.assume-table th{text-align:left;padding:9px 12px;background:var(--bg3);color:var(--text2);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid var(--border2);}
+.assume-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+.assume-table tr:last-child td{border-bottom:none;}
+.assume-table .name{font-weight:500;color:var(--text);}
+.assume-table .violation{color:var(--amber);font-size:12px;}
+.badge{display:inline-flex;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;}
+.badge-blue{background:var(--blue-bg);color:var(--blue);}
+.badge-amber{background:var(--amber-bg);color:var(--amber);}
+.badge-green{background:var(--green-bg);color:var(--green);}
+.badge-red{background:var(--red-bg);color:var(--red);}
+
+/* ── Key insight ── */
+.insight{background:var(--blue-bg);border:1px solid rgba(91,156,246,0.2);border-radius:var(--r);padding:14px 16px;margin:12px 0;font-size:13px;color:var(--text2);}
+.insight strong{color:var(--blue);}
+
+/* ── Exam trap ── */
+.trap{background:var(--red-bg);border:1px solid rgba(240,108,108,0.2);border-radius:var(--r);padding:14px 16px;margin:12px 0;}
+.trap-label{font-size:10px;color:var(--red);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:6px;font-weight:500;}
+.trap p{font-size:13px;color:var(--text2);}
+
+/* ── Divider ── */
+.divider{height:1px;background:var(--border);margin:28px 0;}
+
+/* ── Practice section ── */
+.practice-header{background:var(--gold-bg);border:1px solid rgba(201,168,76,0.2);border-radius:var(--r) var(--r) 0 0;padding:14px 18px;display:flex;align-items:center;gap:12px;}
+.practice-icon{font-size:18px;}
+.practice-header-text{flex:1;}
+.practice-header-title{font-size:15px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);}
+.practice-body{background:var(--bg2);border:1px solid rgba(201,168,76,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:20px;}
+
+/* ── Vignette ── */
+.vignette{background:var(--bg3);border-left:3px solid var(--gold);padding:16px 18px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:24px;font-size:13px;color:var(--text2);line-height:1.8;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;font-weight:500;}
+
+/* ── Questions ── */
+.question-block{margin-bottom:22px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:5px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:11px;line-height:1.6;}
+.option{display:block;width:100%;text-align:left;padding:10px 14px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:7px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.5;}
+.option:hover:not(:disabled){border-color:var(--border2);color:var(--text);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);margin-top:8px;line-height:1.7;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+
+/* ── Score ── */
+.score-panel{text-align:center;padding:24px;margin-top:16px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:48px;margin-bottom:6px;}
+.score-msg{font-size:13px;color:var(--text2);}
+
+/* ── Cheat sheet ── */
+.cheat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:540px){.cheat-grid{grid-template-columns:1fr;}}
+.cheat-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;}
+.cheat-key{font-size:11px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em;}
+.cheat-val{font-size:13px;color:var(--text);font-family:'JetBrains Mono',monospace;}
+
+/* ── Nav bottom ── */
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+.nav-day{font-size:12px;color:var(--text3);text-align:center;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II · <span>Equity Valuation</span> · LM5</div>
+    <div class="day-badge">Day 47 of 90</div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-tag">Thursday, 25 June 2026</div>
+    <h1 class="hero-title">Residual Income Model Mechanics</h1>
+    <p class="hero-sub">Residual Income Valuation — Subtopic 1 of 2</p>
+    <div class="meta-row">
+      <div class="meta-pill">⏱ <b>60 min</b> total</div>
+      <div class="meta-pill">📖 <b>30 min</b> theory</div>
+      <div class="meta-pill">📝 <b>30 min</b> practice</div>
+      <div class="meta-pill">⚖️ Exam weight <b>~12%</b></div>
+    </div>
+  </div>
+
+  <!-- Objectives -->
+  <div class="obj-box">
+    <div class="obj-box-title">Learning Objectives — Hari ini lo harus bisa:</div>
+    <ul class="obj-list">
+      <li>Hitung Residual Income (RI) per saham menggunakan formula RI = EPS − (r × BV<sub>t−1</sub>) dan jelaskan interpretasinya</li>
+      <li>Terapkan single-stage RI model untuk mengestimasi intrinsic value: V₀ = B₀ + RI / (r − g)</li>
+      <li>Bedakan EVA (Economic Value Added) dan MVA (Market Value Added) serta hubungannya dengan residual income</li>
+      <li>Jelaskan mengapa RI model cocok digunakan untuk perusahaan non-dividen atau negative free cash flow</li>
+    </ul>
+  </div>
+
+  <!-- Theory -->
+  <div class="section">
+    <div class="section-label">Theory · 30 min</div>
+
+    <div class="concept-grid">
+
+      <!-- Concept 1 -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">1</div>
+          <div class="concept-title">Apa Itu Residual Income — dan Kenapa Penting?</div>
+        </div>
+        <div class="concept-body">
+          <p>Residual income (RI) adalah <em>laba yang tersisa setelah dikurangi biaya modal ekuitas</em>. Ini bukan sekadar net income — karena net income sudah memperhitungkan cost of debt (bunga), tapi <strong>tidak memperhitungkan cost of equity</strong>. Perusahaan bisa profit di akuntansi tapi masih "menghancurkan nilai" kalau ROE-nya di bawah required return pemegang saham.</p>
+          <div class="formula">
+RI<sub>t</sub> = EPS<sub>t</sub> − (r × BV<sub>t−1</sub>)
+<br><span class="comment">// RI = Earnings per share dikurangi equity charge</span>
+<br><span class="comment">// r = required rate of return on equity (cost of equity)</span>
+<br><span class="comment">// BV<sub>t−1</sub> = book value per share awal periode</span>
+          </div>
+          <p>Misal: EPS = Rp 800, r = 10%, BV awal = Rp 5.000 → Equity charge = Rp 500 → RI = Rp 300. Perusahaan ini menciptakan nilai karena menghasilkan Rp 300 di atas opportunity cost pemegang saham.</p>
+          <div class="insight">
+            <strong>Intuisi kunci:</strong> RI positif berarti perusahaan menghasilkan return di atas cost of equity → menciptakan nilai. RI negatif berarti sebaliknya. Inilah yang tidak ditangkap oleh net income biasa.
+          </div>
+          <div class="trap">
+            <div class="trap-label">⚠️ Exam Trap</div>
+            <p>Banyak yang salah menggunakan <em>average</em> book value (seperti di ratio analysis). Untuk RI model, gunakan book value <strong>awal periode</strong> (BV<sub>t−1</sub>), bukan rata-rata. Ini konsisten dengan CFA curriculum.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Concept 2 -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">2</div>
+          <div class="concept-title">The General RI Model — V₀ = B₀ + PV(RI)</div>
+        </div>
+        <div class="concept-body">
+          <p>Model umum residual income menyatakan bahwa nilai intrinsik saham adalah <strong>book value saat ini ditambah present value semua residual income di masa depan</strong>. Ini bisa diturunkan secara matematis dari Dividend Discount Model (DDM) menggunakan "clean surplus relation".</p>
+          <div class="formula">
+V₀ = B₀ + Σ [RI<sub>t</sub> / (1+r)ᵗ]
+<br><span class="comment">// V₀ = nilai intrinsik saham hari ini</span>
+<br><span class="comment">// B₀ = book value per share saat ini</span>
+<br><span class="comment">// RI<sub>t</sub> = EPS<sub>t</sub> − r×BV<sub>t−1</sub></span>
+          </div>
+          <p>Ada juga bentuk ekuivalen menggunakan ROE:</p>
+          <div class="formula">
+V₀ = B₀ + Σ [(ROE<sub>t</sub> − r) × BV<sub>t−1</sub> / (1+r)ᵗ]
+<br><span class="comment">// ROE<sub>t</sub> − r = "abnormal return" periode t</span>
+          </div>
+          <p>Perhatikan: kalau ROE = r setiap periode (perusahaan hanya earn exactly cost of capital), maka semua RI = 0 dan V₀ = B₀. Nilai sama dengan book value. Ini masuk akal — hanya perusahaan yang earn di atas cost of capital layak dihargai di atas book value.</p>
+          <div class="insight">
+            <strong>Clean Surplus Relation:</strong> BV<sub>t</sub> = BV<sub>t−1</sub> + EPS<sub>t</sub> − Dividends<sub>t</sub>. Artinya semua perubahan book value melalui income statement. IFRS sering melanggar ini (lewat OCI), dan harus ada adjustment.
+          </div>
+        </div>
+      </div>
+
+      <!-- Concept 3 -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">3</div>
+          <div class="concept-title">Single-Stage RI Model — Formula Sederhana</div>
+        </div>
+        <div class="concept-body">
+          <p>Kalau RI diasumsikan tumbuh dengan laju konstan <em>g</em> selamanya, maka model bisa disederhanakan menjadi satu formula, mirip Gordon Growth Model tapi dimulai dari book value:</p>
+          <div class="formula">
+V₀ = B₀ + RI₁ / (r − g)
+<br><span class="comment">// Asumsi: RI tumbuh konstan dengan rate g</span>
+<br><span class="comment">// Berlaku hanya jika r > g</span>
+          </div>
+          <p>Formula ini juga bisa ditulis dalam bentuk P/B justified:</p>
+          <div class="formula">
+V₀/B₀ = 1 + (ROE − r) / (r − g)
+<br><span class="comment">// Justified P/B ratio berdasarkan fundamentals</span>
+<br><span class="comment">// Jika ROE > r → P/B > 1 (premium atas book value)</span>
+<br><span class="comment">// Jika ROE < r → P/B < 1 (diskon atas book value)</span>
+          </div>
+          <p><strong>Contoh:</strong> PT Astra Inovasi (fiktif) punya B₀ = Rp 4.000/saham, ROE = 18%, r = 12%, g = 5%. RI₁ = (18% − 12%) × 4.000 = Rp 240. V₀ = 4.000 + 240/(12%−5%) = 4.000 + 3.429 = <strong>Rp 7.429/saham</strong>.</p>
+          <div class="trap">
+            <div class="trap-label">⚠️ Exam Trap</div>
+            <p>Jangan bingung antara <em>g</em> di RI model dengan <em>g</em> di DDM. Di RI model, g adalah growth rate of <strong>residual income</strong>, bukan dividend. Dan V₀/B₀ ratio ini adalah <em>justified</em> P/B — berbeda dari actual market P/B.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Concept 4 -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">4</div>
+          <div class="concept-title">EVA dan MVA — Commercial Implementations</div>
+        </div>
+        <div class="concept-body">
+          <p><strong>Economic Value Added (EVA)</strong> adalah implementasi komersial dari konsep residual income yang dikembangkan Stern Stewart & Co. EVA mengambil perspektif <em>seluruh kapital</em> (debt + equity), bukan hanya equity.</p>
+          <div class="formula">
+EVA = NOPAT − (C% × TC)
+<br><span class="comment">// NOPAT = Net Operating Profit After Tax</span>
+<br><span class="comment">// C% = WACC (Weighted Average Cost of Capital)</span>
+<br><span class="comment">// TC = Total Capital (debt + equity, book value)</span>
+          </div>
+          <p>EVA seringkali memerlukan sejumlah adjustment akuntansi, antara lain: R&D dikapitalisasi (bukan langsung expense), operating lease diperlakukan seperti capital lease, deferred tax dieliminasi sehingga hanya cash taxes yang dihitung.</p>
+          <table class="assume-table" style="margin-top:10px;">
+            <tr><th>Konsep</th><th>Perspektif</th><th>Formula Inti</th><th>Penggunaan Utama</th></tr>
+            <tr>
+              <td class="name">Residual Income (RI)</td>
+              <td>Equity holders</td>
+              <td>EPS − r×BV</td>
+              <td>Equity valuation</td>
+            </tr>
+            <tr>
+              <td class="name">EVA</td>
+              <td>All capital providers</td>
+              <td>NOPAT − WACC×TC</td>
+              <td>Internal performance / exec comp</td>
+            </tr>
+            <tr>
+              <td class="name">MVA</td>
+              <td>Market vs. Book</td>
+              <td>Market Value − Book Capital</td>
+              <td>Total value creation measure</td>
+            </tr>
+          </table>
+          <p style="margin-top:10px;"><strong>Market Value Added (MVA)</strong> adalah konsep yang terkait:</p>
+          <div class="formula">
+MVA = Market Value of Company − Book Value of Total Capital
+<br><span class="comment">// Positif MVA → perusahaan telah menciptakan nilai dari modal yang diinvestasikan</span>
+          </div>
+          <div class="insight">
+            <strong>Logika EVA vs. RI:</strong> Keduanya mengukur "value created above opportunity cost" — bedanya EVA memakai WACC dan total capital (semua investor), sedangkan RI memakai cost of equity dan book equity (hanya pemegang saham). Kedua angka ini tidak harus sama.
+          </div>
+        </div>
+      </div>
+
+      <!-- Concept 5 -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">5</div>
+          <div class="concept-title">Kapan Pakai RI Model — Strengths & When to Use</div>
+        </div>
+        <div class="concept-body">
+          <p>RI model punya kelebihan unik dibanding DDM dan FCF model, terutama dalam situasi tertentu:</p>
+          <table class="assume-table">
+            <tr><th>Situasi</th><th>DDM</th><th>FCFF/FCFE</th><th>RI Model</th></tr>
+            <tr>
+              <td>Perusahaan tidak bayar dividen</td>
+              <td class="violation">❌ Tidak applicable</td>
+              <td>✅ Bisa</td>
+              <td>✅ Bisa</td>
+            </tr>
+            <tr>
+              <td>Free cash flow negatif jangka pendek</td>
+              <td>❌</td>
+              <td class="violation">⚠️ Terminal value dominan</td>
+              <td>✅ Value recognition lebih awal</td>
+            </tr>
+            <tr>
+              <td>Earnings forecast tersedia (consensus)</td>
+              <td>⚠️ Perlu dividend policy</td>
+              <td>⚠️ Konversi manual</td>
+              <td>✅ Langsung pakai EPS + BV</td>
+            </tr>
+            <tr>
+              <td>Akuntansi clean surplus berlaku</td>
+              <td>✅</td>
+              <td>✅</td>
+              <td>✅ (Syarat utama RI model)</td>
+            </tr>
+          </table>
+          <p style="margin-top:10px;">Kelemahan utama RI model: bergantung pada kualitas data akuntansi. Jika terjadi banyak pelanggaran clean surplus (seperti OCI besar-besaran di IFRS), maka hasil RI model bisa bias kecuali ada penyesuaian eksplisit.</p>
+          <div class="insight">
+            <strong>Value recognition lebih cepat:</strong> Dalam RI model, sebagian besar nilai sudah tercermin dari book value B₀ di awal. Ini beda dengan DDM/FCF di mana terminal value sering mendominasi dan jauh di masa depan, sehingga lebih sensitif terhadap asumsi jangka panjang.
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /concept-grid -->
+  </div><!-- /theory section -->
+
+  <!-- Cheat Sheet -->
+  <div class="section">
+    <div class="section-label">Quick Reference</div>
+    <div class="cheat-grid">
+      <div class="cheat-item">
+        <div class="cheat-key">Residual Income per Share</div>
+        <div class="cheat-val">RI = EPS − (r × BV<sub>t−1</sub>)</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">General RI Model Value</div>
+        <div class="cheat-val">V₀ = B₀ + Σ[RI/(1+r)ᵗ]</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Single-Stage RI Model</div>
+        <div class="cheat-val">V₀ = B₀ + RI₁/(r−g)</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Justified P/B Ratio</div>
+        <div class="cheat-val">V/B = 1 + (ROE−r)/(r−g)</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">EVA (Economic Value Added)</div>
+        <div class="cheat-val">EVA = NOPAT − (WACC × TC)</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">MVA (Market Value Added)</div>
+        <div class="cheat-val">MVA = MktVal − BookCapital</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Practice -->
+  <div class="section">
+    <div class="practice-header">
+      <div class="practice-icon">📝</div>
+      <div class="practice-header-text">
+        <div class="practice-header-title">Latihan Soal · Item Set</div>
+        <div class="practice-header-sub">Vignette-based questions · 4 soal · ~30 menit</div>
+      </div>
+    </div>
+    <div class="practice-body">
+
+      <div class="vignette">
+        <div class="vignette-label">Vignette</div>
+        <p><strong>PT Mitra Teknologi Nusantara (MTN)</strong> adalah perusahaan software enterprise yang terdaftar di IDX. Dian Rahayu, CFA, seorang analis ekuitas di sekuritas Mandiri Investasi, sedang mengevaluasi saham MTN dengan pendekatan residual income.</p>
+        <p style="margin-top:8px;">Data yang Dian kumpulkan untuk tahun buku 2025:</p>
+        <ul style="margin-top:6px;margin-left:16px;font-size:13px;line-height:2;">
+          <li>Book value per share awal tahun 2025: <strong>Rp 3.200</strong></li>
+          <li>EPS 2025 (aktual): <strong>Rp 640</strong></li>
+          <li>Dividend per share 2025: <strong>Rp 192</strong></li>
+          <li>Required rate of return on equity (r): <strong>12%</strong></li>
+          <li>WACC: <strong>10%</strong></li>
+          <li>NOPAT 2025: <strong>Rp 5,2 miliar</strong></li>
+          <li>Total Capital (book): <strong>Rp 38 miliar</strong></li>
+          <li>Total shares outstanding: <strong>10 juta lembar</strong></li>
+          <li>Long-term RI growth rate (g): <strong>4%</strong></li>
+        </ul>
+        <p style="margin-top:8px;">Dian menganggap RI model paling cocok karena MTN jarang membayar dividen besar dan free cash flow-nya masih berfluktuasi akibat investasi besar dalam R&D.</p>
+      </div>
+
+      <!-- Q1 -->
+      <div class="question-block" id="qb0">
+        <div class="q-num">Question 1 of 4</div>
+        <div class="q-text">Berapa residual income per saham MTN untuk tahun 2025?</div>
+        <button class="option" onclick="answer(0,'A','A')">A. Rp 256 per saham</button>
+        <button class="option" onclick="answer(0,'B','A')">B. Rp 448 per saham</button>
+        <button class="option" onclick="answer(0,'C','A')">C. Rp 640 per saham</button>
+        <div class="explanation" id="exp0">
+          <strong>A adalah jawaban yang benar.</strong> RI = EPS − (r × BV<sub>t−1</sub>) = 640 − (12% × 3.200) = 640 − 384 = <strong>Rp 256</strong>. Equity charge = 12% × Rp 3.200 = Rp 384. EPS Rp 640 melebihi equity charge, sehingga RI positif — MTN menciptakan nilai bagi pemegang saham. Opsi B salah karena menggunakan r × EPS bukannya r × BV. Opsi C hanya menyebutkan EPS tanpa dikurangi equity charge.
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="question-block" id="qb1">
+        <div class="q-num">Question 2 of 4</div>
+        <div class="q-text">Dian ingin mengestimasi intrinsic value saham MTN menggunakan single-stage RI model. Berapa nilai intrinsik per saham yang paling tepat?</div>
+        <button class="option" onclick="answer(1,'A','B')">A. Rp 4.160 per saham</button>
+        <button class="option" onclick="answer(1,'B','B')">B. Rp 5.600 per saham</button>
+        <button class="option" onclick="answer(1,'C','B')">C. Rp 6.400 per saham</button>
+        <div class="explanation" id="exp1">
+          <strong>B adalah jawaban yang benar.</strong> Langkah pertama: hitung RI₁ (projected RI tahun depan). Book value akhir 2025 = BV awal + EPS − Div = 3.200 + 640 − 192 = Rp 3.648. RI₁ = EPS₁ − r × BV₂₀₂₅. Dengan asumsi ROE tetap (640/3.200 = 20%), EPS₁ = 20% × 3.648 = Rp 729,6. RI₁ = 729,6 − 12% × 3.648 = 729,6 − 437,8 = Rp 291,8. Namun untuk single-stage model yang lebih praktis, gunakan RI₁ = RI₀ × (1+g) = 256 × 1.04 = Rp 266,2. V₀ = BV₂₀₂₅ akhir + RI₁/(r−g). Dengan B₀ = Rp 3.648 (book value sekarang setelah tahun 2025), V₀ = 3.648 + 266,2/(0.12 − 0.04) = 3.648 + 3.327 = <strong>Rp 5.600</strong> (dibulatkan). Opsi A hanya menjumlahkan BV + RI tanpa diskonto. Opsi C memakai EPS langsung sebagai RI₁.
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="question-block" id="qb2">
+        <div class="q-num">Question 3 of 4</div>
+        <div class="q-text">Berapa Economic Value Added (EVA) MTN untuk tahun 2025?</div>
+        <button class="option" onclick="answer(2,'A','C')">A. Rp 1,56 miliar</button>
+        <button class="option" onclick="answer(2,'B','C')">B. Rp 2,08 miliar</button>
+        <button class="option" onclick="answer(2,'C','C')">C. Rp 1,40 miliar</button>
+        <div class="explanation" id="exp2">
+          <strong>C adalah jawaban yang benar.</strong> EVA = NOPAT − (WACC × Total Capital) = Rp 5,2 miliar − (10% × Rp 38 miliar) = 5,2 − 3,8 = <strong>Rp 1,40 miliar</strong>. Perhatikan: EVA menggunakan WACC (bukan r/cost of equity) dan total capital (debt + equity), bukan hanya equity. Opsi A menggunakan r = 12% sebagai cost of capital: 5,2 − 12%×38 = 5,2 − 4,56 = 0,64... tidak tepat. Opsi B menghitung dengan cara yang berbeda dan tidak konsisten dengan formula EVA standar.
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="question-block" id="qb3">
+        <div class="q-num">Question 4 of 4</div>
+        <div class="q-text">Kolega Dian menyarankan menggunakan DDM karena MTN mulai membayar dividen. Dian tetap mempertahankan RI model. Alasan terkuat yang mendukung pilihan Dian adalah:</div>
+        <button class="option" onclick="answer(3,'A','B')">A. RI model selalu lebih akurat daripada DDM untuk setiap jenis perusahaan</button>
+        <button class="option" onclick="answer(3,'B','B')">B. MTN masih dalam fase pertumbuhan dengan free cash flow yang berfluktuasi; RI model mengakui value lebih awal melalui book value dan tidak bergantung pada proyeksi dividen jangka panjang</button>
+        <button class="option" onclick="answer(3,'C','B')">C. DDM tidak bisa digunakan jika perusahaan sedang bertumbuh, sehingga RI model adalah satu-satunya pilihan</button>
+        <div class="explanation" id="exp3">
+          <strong>B adalah jawaban yang benar.</strong> CFA curriculum menjelaskan bahwa RI model sangat berguna ketika: (1) perusahaan tidak konsisten membayar dividen, (2) free cash flow negatif atau sangat berfluktuasi dalam horizon forecast, dan (3) analis memiliki lebih banyak keyakinan terhadap forecast earnings dan book value daripada dividend policy jangka panjang. RI model juga mengakui value lebih awal (melalui B₀) sehingga tidak terlalu bergantung pada terminal value yang jauh di masa depan. Opsi A salah — tidak ada model yang "selalu lebih akurat." Opsi C salah — DDM sangat bisa digunakan untuk perusahaan bertumbuh, asal ada dividend forecast yang reasonable.
+        </div>
+      </div>
+
+      <!-- Score -->
+      <div class="score-panel" id="score-panel">
+        <div class="score-num" id="score-num">0/4</div>
+        <div class="score-msg" id="score-msg">—</div>
+      </div>
+
+    </div><!-- /practice body -->
+
+    <!-- Bottom nav -->
+    <div class="nav-bottom">
+      <a class="nav-btn" href="CFA_L2_Day46.html">← Day 46</a>
+      <div class="nav-day">Day 47 of 90<br><span style="font-size:11px;color:var(--text3);">Next: Day 48 · Continuing RI &amp; Adjustments</span></div>
+      <a class="nav-btn primary" href="CFA_L2_Day48.html">Day 48 →</a>
+    </div>
+
+  </div><!-- /practice section -->
+
+</div><!-- /page -->
+
+<script>
+const answers = {};
+const correct = {0:'A', 1:'B', 2:'C', 3:'B'};
+const total = 4;
+
+function answer(qIdx, chosen, correctAns) {
+  if (answers[qIdx]) return;
+  answers[qIdx] = chosen;
+
+  const block = document.getElementById('qb' + qIdx);
+  const exp   = document.getElementById('exp' + qIdx);
+
+  block.querySelectorAll('.option').forEach(btn => {
+    btn.disabled = true;
+    const letter = btn.textContent.trim()[0];
+    if (letter === correctAns) btn.classList.add('correct');
+    else if (letter === chosen && chosen !== correctAns) btn.classList.add('wrong');
+  });
+
+  exp.classList.add('show');
+
+  if (Object.keys(answers).length === total) showScore();
+}
+
+function showScore() {
+  const score = Object.keys(correct).filter(k => answers[k] === correct[k]).length;
+  const panel = document.getElementById('score-panel');
+  const num   = document.getElementById('score-num');
+  const msg   = document.getElementById('score-msg');
+
+  num.textContent = score + '/' + total;
+  num.style.color = score === 4 ? 'var(--green)' : score >= 3 ? 'var(--amber)' : 'var(--red)';
+
+  const msgs = {
+    4: '🎯 Perfect! RI model mechanics dikuasai dengan solid.',
+    3: '✅ Good. Review soal yang salah sekali lagi.',
+    2: '⚠️ Perlu review — baca ulang bagian formula dan EVA vs RI.',
+    1: '🔁 Ulangi theory section sebelum lanjut ke Day 48.',
+    0: '🔁 Ulangi theory section sebelum lanjut ke Day 48.'
+  };
+  msg.textContent = msgs[score] || msgs[0];
+  panel.style.display = 'block';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level 2 - Day 33: ESG Integration (ESG in Investment Analysis)</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg:#fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+      --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;--gold:#9a6e1a;--gold2:#7a5010;
+      --gold-bg:rgba(154,110,26,0.08);--blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);
+      --green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);--red:#b83232;--red-bg:rgba(184,50,50,0.08);
+      --amber:#a06010;--amber-bg:rgba(160,96,16,0.08);--r:10px;--r-sm:6px;
+    }
+    body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6; }
+    .page { max-width:900px;margin:0 auto;padding:0 16px; }
+    .topbar { display:flex;justify-content:space-between;align-items:center;padding:12px 0;margin-top:8px;border-bottom:1px solid var(--border);font-size:13px;color:var(--text3); }
+    .breadcrumb { display:flex;gap:8px;align-items:center; }
+    .breadcrumb span { color:var(--text3); }
+    .breadcrumb strong { color:var(--text2);font-weight:600; }
+    .day-badge { background:var(--gold-bg);color:var(--gold2);padding:4px 10px;border-radius:var(--r-sm);font-size:12px;font-weight:600; }
+    .hero { padding:40px 0 32px;border-bottom:1px solid var(--border);margin-bottom:32px; }
+    .hero-tag { color:var(--blue);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px; }
+    .hero-title { font-size:36px;font-weight:700;line-height:1.2;margin-bottom:8px;color:var(--text); }
+    .hero-sub { font-size:16px;color:var(--text2);margin-bottom:16px; }
+    .meta-row { display:flex;gap:12px;flex-wrap:wrap;margin-top:16px; }
+    .meta-pill { background:var(--bg2);border:1px solid var(--border);padding:8px 14px;border-radius:var(--r-sm);font-size:12px;color:var(--text2);font-weight:500; }
+    .section { margin-bottom:40px; }
+    .section-label { font-size:12px;font-weight:700;text-transform:uppercase;color:var(--text3);letter-spacing:0.5px;margin-bottom:16px; }
+    .obj-box { background:var(--blue-bg);border-left:4px solid var(--blue);padding:20px;border-radius:var(--r-sm);margin-bottom:16px; }
+    .obj-box-title { font-size:13px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px; }
+    .obj-list { list-style:none; }
+    .obj-list li { font-size:14px;color:var(--text);margin-bottom:8px;padding-left:20px;position:relative; }
+    .obj-list li:before { content:"✓";position:absolute;left:0;color:var(--blue);font-weight:700; }
+    .concept-grid { display:grid;grid-template-columns:1fr;gap:20px;margin-bottom:24px; }
+    .concept-card { background:white;border:1px solid var(--border2);border-radius:var(--r);padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05); }
+    .concept-card-header { display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border); }
+    .concept-num { display:flex;align-items:center;justify-content:center;width:32px;height:32px;background:var(--gold-bg);color:var(--gold);border-radius:50%;font-weight:700;font-size:14px; }
+    .concept-title { font-size:16px;font-weight:700;color:var(--text);flex:1; }
+    .concept-body { font-size:14px;color:var(--text);line-height:1.7; }
+    .concept-body p { margin-bottom:12px; }
+    .formula { background:var(--bg2);border-left:3px solid var(--gold);padding:12px;border-radius:var(--r-sm);font-family:'Courier New',monospace;font-size:13px;color:var(--text);margin:12px 0;overflow-x:auto;white-space:pre-wrap; }
+    .insight { background:var(--green-bg);border-left:3px solid var(--green);padding:12px;border-radius:var(--r-sm);font-size:13px;color:var(--text);margin:12px 0; }
+    .trap { background:var(--red-bg);border-left:3px solid var(--red);padding:12px;border-radius:var(--r-sm);font-size:13px;color:var(--text);margin:12px 0; }
+    .trap-label { font-weight:700;color:var(--red);font-size:11px;text-transform:uppercase;margin-bottom:4px; }
+    .assume-table { width:100%;border-collapse:collapse;margin:12px 0;font-size:13px; }
+    .assume-table th { background:var(--bg3);border:1px solid var(--border);padding:10px;text-align:left;font-weight:700;color:var(--text); }
+    .assume-table td { border:1px solid var(--border);padding:10px;color:var(--text2); }
+    .cheat-grid { display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px; }
+    .cheat-item { background:white;border:1px solid var(--border);border-radius:var(--r-sm);padding:14px; }
+    .cheat-key { font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px; }
+    .cheat-val { font-size:13px;color:var(--text);font-weight:500;line-height:1.5; }
+    .practice-body { background:white;border:1px solid var(--border2);border-radius:var(--r);padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05); }
+    .vignette { background:var(--bg2);padding:16px;border-radius:var(--r-sm);margin-bottom:24px;border-left:3px solid var(--amber); }
+    .vignette-label { font-size:11px;font-weight:700;color:var(--amber);text-transform:uppercase;margin-bottom:8px; }
+    .vignette-text { font-size:13px;color:var(--text);line-height:1.6; }
+    .question-block { margin-bottom:28px; }
+    .q-num { font-size:12px;font-weight:700;color:var(--blue);margin-bottom:8px; }
+    .q-text { font-size:14px;color:var(--text);margin-bottom:12px;line-height:1.6;font-weight:500; }
+    .option { display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;border:1px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:all 0.2s ease;background:white; }
+    .option:hover { border-color:var(--blue);background:var(--blue-bg); }
+    .option-radio { display:flex;align-items:center;justify-content:center;width:18px;height:18px;border:2px solid var(--border2);border-radius:50%;flex-shrink:0;margin-top:2px; }
+    .option.selected .option-radio { border-color:var(--blue);background:var(--blue); }
+    .option-text { font-size:13px;color:var(--text); }
+    .explanation { background:var(--bg2);padding:12px;border-radius:var(--r-sm);font-size:12px;color:var(--text2);margin-top:8px;display:none;line-height:1.6; }
+    .explanation.show { display:block; }
+    .explanation.correct { border-left:3px solid var(--green);background:var(--green-bg);color:var(--text); }
+    .explanation.incorrect { border-left:3px solid var(--red);background:var(--red-bg);color:var(--text); }
+    .score-panel { background:var(--gold-bg);border:1px solid var(--gold);border-radius:var(--r);padding:16px;margin-top:20px;text-align:center;display:none; }
+    .score-panel.show { display:block; }
+    .score-panel-text { font-size:14px;color:var(--text);margin-bottom:8px; }
+    .score-panel-value { font-size:24px;font-weight:700;color:var(--gold2); }
+    .nav-bottom { display:flex;justify-content:space-between;align-items:center;padding:24px 0;margin-top:40px;border-top:1px solid var(--border); }
+    .nav-btn { text-decoration:none;padding:10px 16px;border-radius:var(--r-sm);font-size:13px;font-weight:600;color:var(--blue);border:1px solid var(--border);transition:all 0.2s ease;cursor:pointer; }
+    .nav-btn:hover { border-color:var(--blue);background:var(--blue-bg); }
+    @media (max-width:640px) { .hero-title{font-size:28px;} .cheat-grid{grid-template-columns:1fr;} .meta-row{flex-direction:column;} }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">
+      <span>CFA Level II</span><span>&middot;</span><span>Corporate Issuers</span><span>&middot;</span><strong>LM2</strong>
+    </div>
+    <div class="day-badge">Day 33 of 90</div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Monday, 01 June 2026</div>
+    <h1 class="hero-title">ESG Integration</h1>
+    <p class="hero-sub">ESG in Investment Analysis &mdash; Subtopic 1 of 2</p>
+    <div class="meta-row">
+      <div class="meta-pill">60 min total</div>
+      <div class="meta-pill">30 min theory</div>
+      <div class="meta-pill">30 min practice</div>
+      <div class="meta-pill">~8% exam weight</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Learning Objectives</div>
+    <div class="obj-box">
+      <div class="obj-box-title">By the end of this subtopic, you'll be able to:</div>
+      <ul class="obj-list">
+        <li>Jelaskan konsep materialitas dalam konteks ESG dan bagaimana investment horizon mempengaruhi relevansi faktor ESG dalam analisis sekuritas</li>
+        <li>Bandingkan tiga pendekatan utama untuk mengidentifikasi faktor ESG yang relevan: proprietary research, ESG data providers, dan not-for-profit frameworks (GRI, SASB)</li>
+        <li>Bedakan antara strategi ESG integration approaches: negative screening, positive/best-in-class screening, ESG tilt, dan full integration — termasuk kelebihan dan keterbatasan masing-masing</li>
+        <li>Terapkan ESG integration dalam analisis ekuitas dan fixed income, termasuk penyesuaian pada proyeksi finansial, discount rate, credit spread, dan implikasi greenwashing pada green bonds</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Key Concepts &mdash; Theory (30 min)</div>
+    <div class="concept-grid">
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">1</div>
+          <div class="concept-title">Materialitas ESG dan Investment Horizon</div>
+        </div>
+        <div class="concept-body">
+          <p>Dalam konteks ESG, <strong>materialitas</strong> mengacu pada isu-isu ESG yang diperkirakan akan mempengaruhi operasional perusahaan, kinerja keuangan, dan valuasi sekuritasnya. Ini berbeda dari definisi materialitas akuntansi konvensional — sebuah isu ESG bisa material bagi investor meski tidak harus dilaporkan secara formal dalam laporan keuangan.</p>
+
+          <p>Tantangan utama: <strong>disclosure ESG bersifat sukarela</strong> dan tidak konsisten. Perusahaan bisa menekankan informasi ESG positif sambil meminimalkan atau tidak melaporkan risiko ESG negatif. Analis harus skeptis terhadap narasi ESG yang terlalu positif dari manajemen.</p>
+
+          <table class="assume-table">
+            <thead>
+              <tr><th>Tipe Investor</th><th>Horizon</th><th>Prioritas ESG</th><th>Contoh Faktor Relevan</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Equity analyst (jangka panjang)</strong></td>
+                <td>5–10+ tahun</td>
+                <td>Tinggi — semua dimensi E, S, G</td>
+                <td>Stranded assets, carbon regulation, governance quality</td>
+              </tr>
+              <tr>
+                <td><strong>Credit analyst (obligasi jangka pendek)</strong></td>
+                <td>&lt; 3 tahun</td>
+                <td>Rendah untuk isu jangka panjang</td>
+                <td>Litigation risk, regulatory fines (near-term impact)</td>
+              </tr>
+              <tr>
+                <td><strong>Credit analyst (obligasi jangka panjang)</strong></td>
+                <td>10+ tahun</td>
+                <td>Tinggi — terutama E &amp; G</td>
+                <td>Climate transition risk, stranded assets, governance</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="insight">
+            <strong>Pergeseran horizon ESG:</strong> Faktor ESG yang tampak "jangka panjang" bisa tiba-tiba jadi relevan jangka pendek akibat perubahan regulasi mendadak atau kontroversi (seperti tumpahan minyak, skandal korupsi, atau kegagalan produk). Analis harus selalu memantau catalyst event yang bisa mempercepat dampak ESG.
+          </div>
+
+          <div class="trap">
+            <div class="trap-label">Exam Trap &mdash; Materialitas ESG ≠ Materialitas Akuntansi</div>
+            CFA exam sering mengetes pemahaman bahwa "material" dalam konteks ESG tidak identik dengan definisi akuntansi (yang berkaitan dengan threshold kuantitatif untuk pelaporan keuangan). Informasi ESG bisa material bagi investor — karena mempengaruhi valuasi — meski secara akuntansi tidak diwajibkan untuk dilaporkan.
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">2</div>
+          <div class="concept-title">Tiga Sumber Identifikasi Faktor ESG</div>
+        </div>
+        <div class="concept-body">
+          <p>Analis menggunakan tiga pendekatan utama untuk mengidentifikasi faktor ESG yang relevan bagi sebuah perusahaan atau industri. Ketiga pendekatan ini bisa digunakan secara independen atau dikombinasikan.</p>
+
+          <table class="assume-table">
+            <thead>
+              <tr><th>Pendekatan</th><th>Deskripsi</th><th>Kelebihan</th><th>Keterbatasan</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1. Proprietary Research</strong></td>
+                <td>Analis menggunakan judgment sendiri atau tools internal firm; menganalisis annual report, sustainability report, proxy filing, regulasi, dan berita</td>
+                <td>Fleksibel; bisa disesuaikan dengan kebutuhan spesifik; paling customized</td>
+                <td>Resource-intensive; bergantung pada keahlian analis; sulit untuk scaling ke banyak perusahaan</td>
+              </tr>
+              <tr>
+                <td><strong>2. ESG Data Providers</strong></td>
+                <td>Vendor seperti MSCI, Sustainalytics mengumpulkan data publik ESG dan menerjemahkannya ke dalam skor/ranking; sering ada penilaian subjektif oleh ESG analyst</td>
+                <td>Coverage luas; scalable; sudah terstandarisasi per vendor</td>
+                <td><strong>Ratings divergence</strong>: skor MSCI vs. Sustainalytics untuk perusahaan yang sama bisa sangat berbeda; metodologi tidak transparan sepenuhnya</td>
+              </tr>
+              <tr>
+                <td><strong>3. Not-for-Profit Frameworks</strong></td>
+                <td>GRI (Global Reporting Initiative), SASB (Sustainable Accounting Standards Board), IIRC, 2°Investing Initiative — menyediakan standar pelaporan dan materiality maps</td>
+                <td>Konsisten; didorong oleh multi-stakeholder; materiality maps sangat berguna untuk mapping faktor per industri</td>
+                <td>Voluntary; tidak semua perusahaan mengadopsi; standar yang berbeda-beda bisa membingungkan</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="formula">ESG Ratings Divergence (Ilustrasi):
+  Perusahaan X (tambang batu bara):
+  • MSCI ESG Rating:         BBB (Average)
+  • Sustainalytics Score:    45.2 (High Risk)
+  • Bloomberg ESG Score:     37.5/100
+
+  Penyebab divergence:
+  1. Scope yang berbeda: MSCI fokus pada governance; Sustainalytics
+     pada kontroversi; Bloomberg pada data kuantitatif
+  2. Bobot yang berbeda per dimensi E vs. S vs. G
+  3. Treatment berbeda terhadap missing data
+  4. Pendekatan: relative to industry vs. absolute score</div>
+
+          <div class="trap">
+            <div class="trap-label">Exam Trap &mdash; Ratings Divergence</div>
+            Ratings divergence bukan berarti salah satu rating salah — ini mencerminkan perbedaan metodologi, scope, dan bobot. CFA exam mengetes apakah kamu paham bahwa divergence adalah fitur struktural pasar ESG data, bukan anomali. Implikasinya: analis tidak boleh bergantung pada satu sumber saja.
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">3</div>
+          <div class="concept-title">ESG Integration Approaches: Spektrum dari Skrining ke Full Integration</div>
+        </div>
+        <div class="concept-body">
+          <p>Ada berbagai pendekatan dalam mengintegrasikan pertimbangan ESG ke dalam proses investasi, mulai dari yang paling sederhana (exclusion) sampai yang paling canggih (full quantitative integration).</p>
+
+          <table class="assume-table">
+            <thead>
+              <tr><th>Strategi</th><th>Mekanisme</th><th>Implikasi Portofolio</th><th>Catatan</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Negative Screening (Exclusion)</strong></td>
+                <td>Keluarkan sektor/perusahaan tertentu dari universe investasi (misal: rokok, senjata, batu bara, judi)</td>
+                <td>Universe lebih sempit; bisa mengurangi diversifikasi; tracking error terhadap benchmark meningkat</td>
+                <td>Pendekatan paling sederhana dan pertama secara historis (berakar dari ethical investing)</td>
+              </tr>
+              <tr>
+                <td><strong>Positive / Best-in-Class</strong></td>
+                <td>Investasi hanya pada perusahaan dengan skor ESG terbaik di kelasnya/industrinya; maintain diversifikasi sektoral</td>
+                <td>Tetap diversifikasi antar sektor; tidak mengeksklusikan seluruh industri</td>
+                <td>Lebih sophisticated dari exclusion; mempertahankan eksposur ke semua sektor tapi pilih yang terbaik</td>
+              </tr>
+              <tr>
+                <td><strong>ESG Tilt</strong></td>
+                <td>Over/under-weight sekuritas berdasarkan skor ESG relatif terhadap benchmark; bukan exclusion total</td>
+                <td>Tracking error rendah; penyesuaian bertahap; masih bisa hold semua sekuritas</td>
+                <td>Paling umum untuk passive/systematic managers; kompromi antara ESG goals dan tracking goals</td>
+              </tr>
+              <tr>
+                <td><strong>Full ESG Integration</strong></td>
+                <td>Memasukkan faktor ESG secara eksplisit ke dalam model valuation: penyesuaian revenue forecast, WACC, margin, capex, credit spread</td>
+                <td>Paling granular; setiap perusahaan dianalisis secara individual; bisa berdampak besar pada valuasi</td>
+                <td>Standard untuk active fundamental managers; mencakup equity dan fixed income</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="insight">
+            <strong>Dalam praktik di Indonesia (IDX context):</strong> Indeks IDX ESG Leaders mencakup perusahaan IDX80 yang lolos screening ESG dari IDX + Sustainalytics. Emiten seperti BBCA, ASII, TLKM masuk karena skor ESG relatif tinggi di kelasnya. Ini adalah contoh <em>best-in-class</em> approach — bukan mengeksklusikan sektor tertentu, tapi memilih yang terbaik per sektor.
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">4</div>
+          <div class="concept-title">ESG Integration dalam Analisis Ekuitas &amp; Fixed Income: Mekanisme Penyesuaian</div>
+        </div>
+        <div class="concept-body">
+          <p>Dalam <strong>analisis ekuitas</strong>, ESG integration paling sering berupa penyesuaian terhadap proyeksi keuangan dan variabel valuasi. Analis memasukkan dampak material ESG ke dalam model DCF atau relative valuation.</p>
+
+          <div class="formula">ESG Integration — Equity Analysis (Mekanisme):
+  1. Penyesuaian Income Statement:
+     • Revenue: ESG risk → kurangi proyeksi revenue
+       (contoh: pharmaceutical dengan product recalls → –2% revenue)
+     • COGS: ESG efficiency → kurangi COGS/revenue ratio
+       (contoh: beverage company kurangi water intensity → –1% COGS/revenue)
+     • Non-operating costs: fines, litigation, restructuring charges
+       (contoh: pharma dengan scandals → +4.5% non-op expense/EBIT)
+
+  2. Penyesuaian Valuation (DCF):
+     • WACC (discount rate): perusahaan ESG-baik → kurangi risk premium
+       (signal: fewer tail risks, lower regulatory/reputational risk)
+     • Terminal value multiple: ESG-premium untuk sustainable businesses
+     • Scenario analysis: stress-test terhadap perubahan regulasi atau
+       ESG controversy events</div>
+
+          <p>Dalam <strong>analisis fixed income</strong>, ESG integration umumnya berfokus pada <em>mitigating downside risk</em> (tidak seperti equity yang bisa exploit upside juga). Obligasi maturates at par — return maksimal sudah terbatas, tapi risiko gagal bayar tidak.</p>
+
+          <div class="formula">ESG Integration — Fixed Income (Mekanisme):
+  1. Penyesuaian Credit Spread:
+     • Perusahaan dengan ESG risk tinggi → widen credit spread
+     • Perusahaan dengan ESG profile baik → tighten spread
+     • Contoh: bank dengan NPL ratio 50 bps di atas peers (governance risk)
+       → analis meningkatkan credit spread relatif terhadap peers
+
+  2. Green Bonds:
+     • Proceeds earmarked untuk proyek lingkungan/iklim
+     • Analisis sama dengan conventional bonds KECUALI:
+       - Greenwashing risk: apakah proceeds benar-benar digunakan untuk
+         proyek yang dijanjikan?
+       - Potential greenium: green bonds bisa trade tighter dari
+         conventional bond yang sama
+       - Liquidity risk: sering dipegang buy-and-hold investors</div>
+
+          <div class="trap">
+            <div class="trap-label">Exam Trap &mdash; Greenwashing</div>
+            Greenwashing = risiko bahwa proceeds green bond tidak benar-benar digunakan untuk proyek lingkungan yang bermanfaat. Implikasinya: (1) investor bisa <em>overpay</em> jika membayar greenium untuk sesuatu yang bukan green; (2) investor dengan mandate ESG bisa melanggar mandatenya. CFA exam sering mengetes pemahaman bahwa green bonds punya risiko unik ini di luar risiko kredit biasa.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Quick Reference Cheat Sheet</div>
+    <div class="cheat-grid">
+      <div class="cheat-item">
+        <div class="cheat-key">Materialitas ESG</div>
+        <div class="cheat-val">Isu ESG yang mempengaruhi operasional, kinerja finansial, atau valuasi; bisa berbeda dari materialitas akuntansi</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Sumber Data ESG (3 macam)</div>
+        <div class="cheat-val">(1) Proprietary research<br>(2) ESG data providers (MSCI, Sustainalytics)<br>(3) Not-for-profit frameworks (GRI, SASB)</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Ratings Divergence</div>
+        <div class="cheat-val">Skor ESG dari vendor berbeda bisa sangat berbeda untuk perusahaan yang sama — bukan kesalahan, tapi perbedaan metodologi</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Negative Screen vs. Best-in-Class</div>
+        <div class="cheat-val">Negative: eksklusikan sektor<br>Best-in-class: pilih terbaik di setiap sektor (diversifikasi terjaga)</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">ESG dalam Equity vs. FI</div>
+        <div class="cheat-val">Equity: identify opportunities + mitigate risk<br>FI: umumnya hanya mitigate downside risk (bond mature at par)</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Greenwashing Risk</div>
+        <div class="cheat-val">Proceeds green bond tidak digunakan untuk proyek lingkungan → overpay risk + mandate violation risk</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Practice (30 min)</div>
+    <div class="practice-body">
+
+      <div class="vignette">
+        <div class="vignette-label">Mini Vignette</div>
+        <div class="vignette-text">
+          <p><strong>PT Sumber Energi Nusantara Tbk (SENA)</strong> adalah perusahaan energi terbarukan terdaftar di BEI yang beroperasi di segmen pembangkit listrik tenaga surya dan angin. Budi Santoso, CFA, seorang analis di perusahaan manajer investasi Jakarta, sedang mengevaluasi SENA untuk dimasukkan ke portofolio ESG-focused fund yang dikelolanya.</p>
+          <p style="margin-top:8px;">Budi menggunakan tiga sumber data: (1) laporan keberlanjutan SENA yang diterbitkan sendiri, (2) rating dari dua vendor — MSCI memberi rating A (Low Risk) sementara Sustainalytics memberi score 22.5 (Medium Risk), dan (3) materiality map SASB untuk sektor utilities.</p>
+          <p style="margin-top:8px;">SENA juga baru saja menerbitkan "green bond" senilai Rp 500 miliar dengan pernyataan bahwa seluruh proceeds akan digunakan untuk pembangunan PLTS baru. Fund yang dikelola Budi memiliki mandate untuk berinvestasi hanya pada perusahaan dengan skor ESG "top quartile di industrinya."</p>
+          <p style="margin-top:8px;">Dalam analisis lebih lanjut, Budi menemukan bahwa perusahaan besar di sektor batu bara seperti PT Bara Hitam Tbk (BRHM) mendapat skor MSCI: BBB, sementara SENA mendapat MSCI: A. Namun analis lain di tim Budi berpendapat bahwa BRHM juga bisa masuk ke portofolio karena termasuk "best coal company in terms of ESG."</p>
+        </div>
+      </div>
+
+      <div id="quiz-container">
+        <div class="question-block" data-q="1" data-correct="B">
+          <div class="q-num">QUESTION 1 OF 4</div>
+          <div class="q-text">Perbedaan rating ESG antara MSCI (A, Low Risk) dan Sustainalytics (22.5, Medium Risk) untuk SENA paling tepat mencerminkan:</div>
+          <div class="option" data-opt="A">
+            <div class="option-radio"></div>
+            <div class="option-text">A. Satu vendor membuat kesalahan dalam analisis; analis harus menggunakan yang lebih konservatif</div>
+          </div>
+          <div class="option" data-opt="B">
+            <div class="option-radio"></div>
+            <div class="option-text">B. Perbedaan metodologi, scope, dan pembobotan antar vendor — merupakan karakteristik struktural pasar data ESG yang disebut ratings divergence</div>
+          </div>
+          <div class="option" data-opt="C">
+            <div class="option-radio"></div>
+            <div class="option-text">C. MSCI lebih terpercaya karena lebih banyak digunakan oleh institutional investors global</div>
+          </div>
+          <div class="explanation correct">
+            ✓ <strong>B adalah jawaban benar.</strong> Ratings divergence adalah fitur struktural pasar data ESG, bukan anomali atau kesalahan. Vendor yang berbeda menggunakan: (1) scope berbeda — MSCI cenderung fokus pada governance dan material risks per industri, Sustainalytics lebih menekankan kontroversi aktual; (2) pembobotan berbeda antar dimensi E/S/G; (3) treatment berbeda terhadap data yang hilang; (4) pendekatan relative-to-industry vs. absolute scoring. CFA curriculum secara eksplisit menyatakan bahwa ratings divergence ini menjadi tantangan bagi analis dan menunjukkan pentingnya tidak bergantung pada satu vendor saja.
+          </div>
+          <div class="explanation incorrect">
+            ✗ Pilihan A salah karena divergence bukan berarti salah satu vendor membuat kesalahan — ini mencerminkan perbedaan metodologi yang legitimate. Pilihan C salah karena popularitas vendor tidak menjamin akurasi; tidak ada konsensus tentang vendor "terbaik" — bahkan MSCI dan Sustainalytics keduanya diakui sebagai pemimpin industri.
+          </div>
+        </div>
+
+        <div class="question-block" data-q="2" data-correct="A">
+          <div class="q-num">QUESTION 2 OF 4</div>
+          <div class="q-text">Kolega Budi yang berpendapat bahwa BRHM (perusahaan batu bara dengan MSCI BBB) bisa masuk ke portofolio ESG karena "best in class in the coal sector" paling tepat menggambarkan pendekatan ESG apa?</div>
+          <div class="option" data-opt="A">
+            <div class="option-radio"></div>
+            <div class="option-text">A. Best-in-class (positive screening) — memilih perusahaan dengan skor ESG terbaik di kelasnya, termasuk di industri yang kontroversial seperti batu bara</div>
+          </div>
+          <div class="option" data-opt="B">
+            <div class="option-radio"></div>
+            <div class="option-text">B. Negative screening — mengeksklusikan perusahaan dengan skor ESG rendah dari universe investasi</div>
+          </div>
+          <div class="option" data-opt="C">
+            <div class="option-radio"></div>
+            <div class="option-text">C. ESG tilt — meng-overweight BRHM karena skor ESG-nya lebih baik dari rata-rata perusahaan batu bara lain</div>
+          </div>
+          <div class="explanation correct">
+            ✓ <strong>A adalah jawaban benar.</strong> Pendekatan best-in-class (positive screening) berarti memilih perusahaan dengan performa ESG terbaik <em>di dalam industri atau sektor masing-masing</em>. Ini memungkinkan portofolio tetap terdiversifikasi secara sektoral — termasuk bisa hold perusahaan batu bara asalkan itu yang terbaik dari sisi ESG di sektornya. Perbedaan penting: best-in-class TIDAK mengeksklusikan seluruh industri, berbeda dari negative screening. Perlu dicatat: ini bisa kontroversial secara etika dan bergantung pada mandate fund — fund dengan mandate eksklusikan energi fosil tentu tidak bisa menggunakan argumen ini.
+          </div>
+          <div class="explanation incorrect">
+            ✗ Negative screening (B) justru sebaliknya — mengeksklusikan perusahaan atau sektor dengan ESG rendah. ESG tilt (C) bukan tentang memasukkan atau mengeluarkan sekuritas, tapi tentang over/under-weight relatif terhadap benchmark. Argumen kolega Budi jelas best-in-class: memilih yang terbaik di kelasnya.
+          </div>
+        </div>
+
+        <div class="question-block" data-q="3" data-correct="C">
+          <div class="q-num">QUESTION 3 OF 4</div>
+          <div class="q-text">Risiko paling spesifik dari green bond SENA senilai Rp 500 miliar yang TIDAK dimiliki oleh obligasi konvensional SENA dengan terms yang identik adalah:</div>
+          <div class="option" data-opt="A">
+            <div class="option-radio"></div>
+            <div class="option-text">A. Credit risk — kemungkinan SENA gagal membayar bunga atau pokok obligasi</div>
+          </div>
+          <div class="option" data-opt="B">
+            <div class="option-radio"></div>
+            <div class="option-text">B. Interest rate risk — durasi green bond lebih panjang dari obligasi konvensional</div>
+          </div>
+          <div class="option" data-opt="C">
+            <div class="option-radio"></div>
+            <div class="option-text">C. Greenwashing risk — proceeds tidak digunakan untuk proyek lingkungan yang dijanjikan, menyebabkan overpayment atau pelanggaran investment mandate</div>
+          </div>
+          <div class="explanation correct">
+            ✓ <strong>C adalah jawaban benar.</strong> Greenwashing risk adalah risiko unik pada green bonds yang tidak ada pada obligasi konvensional dengan terms identik. Jika investor membayar greenium (harga premium) untuk green bond karena label "hijau"-nya, tapi ternyata proceeds tidak digunakan untuk proyek lingkungan yang dijanjikan, maka: (1) investor overpay karena membayar premium untuk sesuatu yang bukan green, (2) fund dengan ESG/green mandate bisa melanggar mandatenya. Credit risk (A) dan interest rate risk (B) sama untuk kedua jenis obligasi dari emiten yang sama — bukan risiko unik green bonds.
+          </div>
+          <div class="explanation incorrect">
+            ✗ Credit risk (A) dan interest rate risk (B) berlaku sama untuk green bonds maupun conventional bonds dari emiten yang sama. Risiko yang UNIK untuk green bonds — yang tidak ada pada obligasi konvensional dari emiten yang sama — adalah greenwashing risk.
+          </div>
+        </div>
+
+        <div class="question-block" data-q="4" data-correct="A">
+          <div class="q-num">QUESTION 4 OF 4</div>
+          <div class="q-text">Jika Budi melakukan full ESG integration untuk menilai SENA sebagai emiten obligasi (bukan saham), manakah penyesuaian yang paling tepat untuk mencerminkan profil ESG-nya yang baik?</div>
+          <div class="option" data-opt="A">
+            <div class="option-radio"></div>
+            <div class="option-text">A. Mempersempit (tighten) credit spread SENA relatif terhadap peers, mencerminkan risiko gagal bayar yang lebih rendah akibat profil ESG yang lebih baik</div>
+          </div>
+          <div class="option" data-opt="B">
+            <div class="option-radio"></div>
+            <div class="option-text">B. Menurunkan WACC SENA dengan mengurangi cost of equity, karena ESG yang baik menarik lebih banyak equity investors</div>
+          </div>
+          <div class="option" data-opt="C">
+            <div class="option-radio"></div>
+            <div class="option-text">C. Meningkatkan terminal value multiple dalam model DCF untuk mencerminkan premium ESG pada valuasi ekuitas</div>
+          </div>
+          <div class="explanation correct">
+            ✓ <strong>A adalah jawaban benar.</strong> Dalam analisis fixed income, ESG integration bekerja melalui penyesuaian credit spread — bukan WACC atau equity valuation multiples (itu untuk analisis ekuitas). Perusahaan dengan profil ESG lebih baik memiliki risiko kredit yang lebih rendah (lower regulatory risk, lower reputational risk, lower governance risk), sehingga analis mempersempit (tighten) credit spread-nya relatif terhadap peers. Sebaliknya, perusahaan dengan ESG buruk → widen credit spread. Pilihan B dan C adalah mekanisme yang relevan untuk analisis ekuitas, bukan fixed income.
+          </div>
+          <div class="explanation incorrect">
+            ✗ Pilihan B (WACC adjustment) dan C (terminal value multiple) adalah mekanisme ESG integration untuk analisis ekuitas — bukan fixed income. Untuk obligasi, mekanisme utama adalah penyesuaian credit spread: ESG baik → tighter spread; ESG buruk → wider spread.
+          </div>
+        </div>
+
+        <div id="score-panel-1" class="score-panel">
+          <div class="score-panel-text">Skor Kamu:</div>
+          <div class="score-panel-value" id="score-value-1">0/4</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="CFA_L2_Day32.html" class="nav-btn">← Day 32: Share Repurchases</a>
+    <a href="CFA_L2_Day34.html" class="nav-btn">Day 34: ESG in Valuation →</a>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  var answers = {};
+  var correct = {};
+  document.querySelectorAll('.question-block').forEach(function(qb) {
+    var q = qb.dataset.q;
+    correct[q] = qb.dataset.correct;
+    qb.querySelectorAll('.option').forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        if (answers[q]) return;
+        answers[q] = opt.dataset.opt;
+        qb.querySelectorAll('.option').forEach(function(o) { o.classList.remove('selected'); });
+        opt.classList.add('selected');
+        var isCorrect = opt.dataset.opt === correct[q];
+        qb.querySelectorAll('.explanation').forEach(function(ex) {
+          ex.style.display = 'none';
+          ex.classList.remove('show');
+        });
+        var expls = qb.querySelectorAll('.explanation');
+        var target = isCorrect ? expls[0] : expls[1];
+        if (target) { target.style.display = 'block'; target.classList.add('show'); }
+        var total = Object.keys(correct).length;
+        var scored = Object.keys(answers).length;
+        if (scored === total) {
+          var score = Object.keys(answers).filter(function(k) { return answers[k] === correct[k]; }).length;
+          var panel = document.getElementById('score-panel-1');
+          if (panel) { panel.classList.add('show'); document.getElementById('score-value-1').textContent = score + '/' + total; }
+        }
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

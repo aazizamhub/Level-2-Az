@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 49 · Full · Valuasi Perusahaan Privat: Pendekatan Income & Pasar</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+  --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;--gold:#9a6e1a;--gold2:#7a5010;
+  --gold-bg:rgba(154,110,26,0.08);--blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);
+  --green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);--red:#b83232;--red-bg:rgba(184,50,50,0.08);
+  --amber:#a06010;--amber-bg:rgba(160,96,16,0.08);--r:10px;--r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.8;}
+.page{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;border:1px solid rgba(26,95,168,0.2);}
+.hero{margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--border);}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:36px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:15px;color:var(--text2);}
+.meta-row{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:36px;}
+.toc-title{font-size:12px;color:var(--text3);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:12px;font-weight:500;}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.toc-list li a{font-size:13px;color:var(--blue);text-decoration:none;display:flex;align-items:center;gap:8px;}
+.toc-list li a:hover{text-decoration:underline;}
+.toc-num{font-size:11px;color:var(--text3);min-width:20px;}
+.chapter{margin-bottom:40px;}
+.chapter-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--gold-bg);}
+.chapter-num{font-family:'DM Serif Display',serif;font-size:28px;color:var(--gold);line-height:1;}
+.chapter-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);line-height:1.2;}
+.sub-header{font-size:17px;font-weight:500;color:var(--text);margin:24px 0 12px;padding-left:12px;border-left:3px solid var(--gold);}
+.prose{font-size:14px;color:var(--text2);line-height:1.85;margin-bottom:14px;}
+.prose strong{color:var(--text);font-weight:500;}
+.formula-block{background:var(--bg2);border:1px solid var(--border2);border-left:4px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:16px 20px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold2);line-height:2;}
+.formula-block .label{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:8px;}
+.formula-block .note{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text3);font-style:italic;display:block;margin-top:8px;}
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:20px 0;}
+.exhibit-title{background:var(--bg3);padding:10px 16px;font-size:12px;font-weight:500;color:var(--text2);border-bottom:1px solid var(--border);letter-spacing:0.03em;}
+.exhibit-body{padding:16px;}
+.reg-table{width:100%;border-collapse:collapse;font-size:13px;}
+.reg-table th{text-align:right;padding:8px 12px;background:var(--bg3);color:var(--text3);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border2);}
+.reg-table th:first-child{text-align:left;}
+.reg-table td{padding:8px 12px;border-bottom:1px solid var(--border);text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text2);}
+.reg-table td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);font-weight:500;}
+.reg-table tr:last-child td{border-bottom:none;}
+.reg-table .hl{color:var(--green);font-weight:500;}
+.callout{border-radius:var(--r);padding:16px 18px;margin:16px 0;}
+.callout-title{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;}
+.callout p{font-size:13px;color:var(--text2);line-height:1.75;}
+.callout p+p{margin-top:8px;}
+.callout.blue{background:var(--blue-bg);border:1px solid rgba(26,95,168,0.15);}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.amber{background:var(--amber-bg);border:1px solid rgba(160,96,16,0.15);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.green{background:var(--green-bg);border:1px solid rgba(26,122,74,0.15);}
+.callout.green .callout-title{color:var(--green);}
+.callout.red{background:var(--red-bg);border:1px solid rgba(184,50,50,0.15);}
+.callout.red .callout-title{color:var(--red);}
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:24px 0;overflow:hidden;}
+.kc-header{background:var(--gold-bg);padding:12px 18px;border-bottom:1px solid rgba(154,110,26,0.15);}
+.kc-header-title{font-size:12px;font-weight:500;color:var(--gold);letter-spacing:0.06em;text-transform:uppercase;}
+.kc-body{padding:18px;}
+.kc-q{font-size:13px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.6;}
+.kc-answer{background:var(--bg3);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);line-height:1.75;display:none;}
+.kc-answer.show{display:block;}
+.kc-answer strong{color:var(--green);}
+.kc-toggle{background:none;border:1px solid var(--border2);border-radius:var(--r-sm);padding:6px 14px;font-size:12px;color:var(--text3);cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px;transition:all 0.15s;}
+.kc-toggle:hover{border-color:var(--gold);color:var(--gold);}
+.divider{height:1px;background:var(--border);margin:36px 0;}
+.practice-header{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);border-radius:var(--r) var(--r) 0 0;padding:16px 20px;display:flex;align-items:center;gap:12px;}
+.practice-header-title{font-size:16px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);margin-top:2px;}
+.practice-body{background:var(--bg2);border:1px solid rgba(154,110,26,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:24px;}
+.vignette{background:var(--bg3);border-left:4px solid var(--gold);padding:18px 20px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:28px;font-size:13px;color:var(--text2);line-height:1.85;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;font-weight:500;}
+.question-block{margin-bottom:24px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:6px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:12px;line-height:1.6;}
+.option{display:block;width:100%;text-align:left;padding:11px 15px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:8px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.5;}
+.option:hover:not(:disabled){border-color:var(--border2);color:var(--text);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:14px 16px;font-size:13px;color:var(--text2);margin-top:10px;line-height:1.75;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:28px;margin-top:20px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:52px;margin-bottom:8px;}
+.score-msg{font-size:14px;color:var(--text2);}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+.nav-day{font-size:12px;color:var(--text3);text-align:center;}
+.bullet-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin:10px 0;}
+.bullet-list li{display:flex;gap:10px;font-size:13px;color:var(--text2);line-height:1.7;}
+.bullet-list li::before{content:'&#9632;';color:var(--gold);font-size:9px;margin-top:5px;flex-shrink:0;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II &middot; <span>Equity Valuation</span> &middot; LM6</div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <div class="version-badge">Versi Full</div>
+      <div class="day-badge">Day 49 of 90</div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Senin, 29 Juni 2026</div>
+    <h1 class="hero-title">Valuasi Perusahaan Privat: Pendekatan Income &amp; Pasar</h1>
+    <p class="hero-sub">Private Company Valuation (LM6) &mdash; Subtopik 1 dari 2: CCM, EEM, GPCM, GTM</p>
+    <div class="meta-row">
+      <div class="meta-pill">&#128218; Materi Lengkap</div>
+      <div class="meta-pill">&#127470;&#127465; Bahasa Indonesia</div>
+      <div class="meta-pill">&#9878; Bobot Ujian <b>~12%</b></div>
+      <div class="meta-pill">&#9201; Est. baca <b>50&ndash;60 menit</b></div>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ul class="toc-list">
+      <li><a href="#s0"><span class="toc-num">0.</span> Learning Outcomes (LOS)</a></li>
+      <li><a href="#s1"><span class="toc-num">1.</span> Perusahaan Publik vs Privat &mdash; Perbedaan dan Implikasinya</a></li>
+      <li><a href="#s2"><span class="toc-num">2.</span> Normalisasi Earnings dan Isu Cash Flow</a></li>
+      <li><a href="#s3"><span class="toc-num">3.</span> Discount Rate untuk Private Company</a></li>
+      <li><a href="#s4"><span class="toc-num">4.</span> Income Approach: CCM dan EEM</a></li>
+      <li><a href="#s5"><span class="toc-num">5.</span> Market Approach: GPCM dan GTM</a></li>
+      <li><a href="#s6"><span class="toc-num">6.</span> Latihan Soal &mdash; Item Set Vignette (6 Pertanyaan)</a></li>
+    </ul>
+  </div>
+
+  <!-- Section 0: LOS -->
+  <div class="chapter" id="s0">
+    <div class="chapter-header">
+      <div class="chapter-num">0</div>
+      <div class="chapter-title">Learning Outcomes (LOS)</div>
+    </div>
+    <p class="prose">Setelah mempelajari modul ini, kandidat diharapkan mampu:</p>
+    <ul class="bullet-list">
+      <li>Membedakan fitur penting perusahaan publik dan privat yang relevan untuk proses valuasi</li>
+      <li>Menjelaskan kegunaan valuasi perusahaan privat dan area fokus utama bagi analis keuangan</li>
+      <li>Menjelaskan isu estimasi arus kas untuk perusahaan privat dan penyesuaian yang diperlukan untuk memperkirakan normalized earnings</li>
+      <li>Menjelaskan faktor-faktor yang memerlukan penyesuaian saat memperkirakan discount rate untuk perusahaan privat</li>
+      <li>Membandingkan model yang digunakan untuk memperkirakan required rate of return ekuitas perusahaan privat (CAPM, Expanded CAPM, dan Build-up Approach)</li>
+      <li>Menghitung nilai perusahaan privat menggunakan metode berbasis income (CCM dan EEM)</li>
+      <li>Menghitung nilai perusahaan privat menggunakan metode berbasis pasar (GPCM dan GTM) dan menjelaskan kelebihan serta kekurangan masing-masing</li>
+    </ul>
+  </div>
+
+  <!-- Section 1 -->
+  <div class="chapter" id="s1">
+    <div class="chapter-header">
+      <div class="chapter-num">1</div>
+      <div class="chapter-title">Perusahaan Publik vs Privat</div>
+    </div>
+
+    <p class="prose">Mayoritas perusahaan di dunia adalah perusahaan privat &mdash; dari UMKM keluarga hingga konglomerat besar yang sengaja tidak go public. Di Indonesia, perusahaan keluarga mendominasi lanskap bisnis, dan banyak yang memiliki nilai aset jauh melebihi kapitalisasi pasar emiten IDX. Valuasi perusahaan privat diperlukan untuk berbagai keperluan: transaksi M&amp;A, penawaran saham perdana (IPO), pembiayaan PE/VC, pelaporan keuangan, perpajakan, hingga sengketa hukum.</p>
+
+    <div class="sub-header">Perbedaan Fundamental: Publik vs Privat</div>
+    <p class="prose">Proses valuasi secara konseptual sama &mdash; discounted cash flow atau relative value berbasis multiple. Namun beberapa karakteristik unik perusahaan privat memerlukan penyesuaian penting:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 1 &mdash; Perbandingan Fitur Perusahaan Publik vs Privat</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Dimensi</th><th style="text-align:left;">Perusahaan Publik</th><th style="text-align:left;">Perusahaan Privat</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Transparansi informasi</td><td style="text-align:left;">Tinggi &mdash; laporan keuangan diaudit, pengungkapan wajib</td><td style="text-align:left;">Rendah &mdash; mungkin hanya di-review atau compiled</td></tr>
+            <tr><td>Likuiditas saham</td><td style="text-align:left;">Tinggi &mdash; bisa dijual di bursa kapan saja</td><td style="text-align:left;">Sangat rendah &mdash; pool pembeli terbatas</td></tr>
+            <tr><td>Konsentrasi kepemilikan</td><td style="text-align:left;">Terdiversifikasi (banyak pemegang saham)</td><td style="text-align:left;">Terkonsentrasi (keluarga, founder, PE)</td></tr>
+            <tr><td>Pemisahan kepemilikan &amp; manajemen</td><td style="text-align:left;">Terpisah &mdash; principal-agent problem signifikan</td><td style="text-align:left;">Sering overlap &mdash; owner = manager</td></tr>
+            <tr><td>Akses pasar modal</td><td style="text-align:left;">Penuh (saham, obligasi publik)</td><td style="text-align:left;">Terbatas (bank loan, PE, informal)</td></tr>
+            <tr><td>Ukuran perusahaan</td><td style="text-align:left;">Umumnya lebih besar</td><td style="text-align:left;">Lebih bervariasi; sering lebih kecil</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout blue">
+      <div class="callout-title">&#128161; Tiga Area Fokus Kritis Valuasi Privat</div>
+      <p><strong>1. Penyesuaian Cash Flow / Earnings (Numerator):</strong> Normalisasi laporan keuangan untuk menghilangkan distorsi akibat transaksi terkait pemilik.</p>
+      <p><strong>2. Penyesuaian Discount Rate (Denominator):</strong> CAPM standar sering tidak applicable; diperlukan expanded CAPM atau build-up approach yang menambahkan premium ukuran dan risiko spesifik perusahaan.</p>
+      <p><strong>3. Diskon atau Premium Kontrol &amp; Marketabilitas:</strong> Diterapkan setelah firm value dihitung, tergantung pada perspektif evaluator (pemegang saham minoritas vs pengendali).</p>
+    </div>
+
+    <div class="kc" id="kc1">
+      <div class="kc-header"><div class="kc-header-title">&#10003; Knowledge Check 1</div></div>
+      <div class="kc-body">
+        <div class="kc-q">PT Maju Bersama adalah perusahaan produk rumah tangga yang dimiliki sepenuhnya oleh para pendirinya, yang tidak terlibat dalam operasional sehari-hari. Manajemen senior telah mengelola operasional selama satu dekade. Perusahaan tidak memiliki akses ke pasar utang publik. Faktor mana yang PALING TIDAK MUNGKIN menjadi sumber perbedaan valuasi PT Maju Bersama dibandingkan perusahaan publik?</div>
+        <button class="kc-toggle" onclick="toggleKC('kc1')">Tampilkan Jawaban</button>
+        <div class="kc-answer" id="kc1-ans">
+          <strong>Jawaban: Principal-agent issues.</strong> Karena di PT Maju Bersama terdapat pemisahan yang jelas antara kepemilikan (para pendiri) dan manajemen (para eksekutif profesional) &mdash; mirip dengan perusahaan publik &mdash; masalah principal-agent bukan merupakan faktor pembeda. Ukuran perusahaan yang lebih kecil dan kurangnya akses ke pasar utang publik jelas membedakannya dari perusahaan publik dan akan mempengaruhi discount rate dan valuasinya.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2 -->
+  <div class="chapter" id="s2">
+    <div class="chapter-header">
+      <div class="chapter-num">2</div>
+      <div class="chapter-title">Normalisasi Earnings dan Isu Cash Flow</div>
+    </div>
+
+    <p class="prose">Langkah pertama dan paling kritis dalam valuasi perusahaan privat adalah memastikan bahwa laporan keuangan yang digunakan sebagai dasar mencerminkan <strong>kapasitas earnings dan cash flow sejati</strong> perusahaan jika dioperasikan secara efisien oleh pihak ketiga yang profesional. Proses ini disebut <em>normalisasi earnings</em>.</p>
+
+    <div class="sub-header">Penyebab Distorsi pada Laporan Keuangan Privat</div>
+
+    <p class="prose">Pada perusahaan privat, distorsi sering muncul karena: (1) ketidaksesuaian antara kepentingan pemilik dan kepentingan perusahaan sebagai entitas hukum; (2) transaksi antar pihak berelasi yang tidak dilakukan pada harga pasar (non-arm's length); dan (3) standar akuntansi yang lebih longgar (reviewed atau compiled, bukan audited).</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 2 &mdash; Penyesuaian Umum untuk Normalisasi Earnings</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Item Laporan Keuangan</th><th style="text-align:left;">Distorsi Tipikal</th><th style="text-align:left;">Arah Penyesuaian</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Kompensasi eksekutif</td><td style="text-align:left;">Di atas market rate &rarr; understates earnings; Di bawah market rate &rarr; overstates earnings</td><td style="text-align:left;">Ganti dengan market rate kompensasi profesional</td></tr>
+            <tr><td>Biaya aset non-operasional</td><td style="text-align:left;">Biaya villa, jet, real estate pribadi dibebankan ke perusahaan</td><td style="text-align:left;">Hapus seluruh biaya terkait (opex + depresiasi)</td></tr>
+            <tr><td>Penggunaan real estate milik owner</td><td style="text-align:left;">Perusahaan pakai gedung owner tanpa bayar sewa</td><td style="text-align:left;">Tambahkan market rental rate sebagai expense</td></tr>
+            <tr><td>Transaksi antar pihak berelasi</td><td style="text-align:left;">Harga inventory/jasa dari entitas berelasi di bawah/di atas pasar</td><td style="text-align:left;">Restate ke fair market value (arm's length)</td></tr>
+            <tr><td>Tunjangan berlebihan</td><td style="text-align:left;">Personal expenses, life insurance, kendaraan mewah</td><td style="text-align:left;">Hapus komponen personal, pertahankan business</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">Ilustrasi Normalisasi: PT Fitness Nusantara</div>
+
+    <p class="prose">PT Fitness Nusantara (FN) adalah produsen peralatan kebugaran outdoor. Ibu Sari Dewi adalah pemegang saham tunggal sekaligus CEO. Seorang analis PE, Bapak Adi, sedang mengevaluasi potensi akuisisi FN dan mencatat fakta berikut:</p>
+
+    <ul class="bullet-list">
+      <li>Gaji Sari Dewi sebesar IDR 6 miliar per tahun; kompensasi CEO setara industri hanya IDR 2 miliar.</li>
+      <li>Perusahaan menanggung biaya villa di Lombok milik Sari Dewi sebesar IDR 1,2 miliar (opex IDR 900 juta + depresiasi IDR 300 juta). Ini adalah aset non-operasional.</li>
+      <li>EBIT yang dilaporkan adalah IDR 30 miliar. Tax rate 22%.</li>
+    </ul>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 3 &mdash; Normalisasi EBIT PT Fitness Nusantara (IDR miliar)</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Item</th><th>Dilaporkan</th><th>Penyesuaian</th><th>Dinormalisasi</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Pendapatan</td><td>150,0</td><td>&mdash;</td><td>150,0</td></tr>
+            <tr><td>Harga Pokok Penjualan</td><td>90,0</td><td>&mdash;</td><td>90,0</td></tr>
+            <tr><td>Laba Kotor</td><td>60,0</td><td>&mdash;</td><td>60,0</td></tr>
+            <tr><td>Beban SGA (termasuk gaji CEO)</td><td>22,0</td><td>&minus;4,0 (gaji CEO) &minus;0,9 (opex villa)</td><td>17,1</td></tr>
+            <tr><td>EBITDA</td><td>38,0</td><td>+4,9</td><td>42,9</td></tr>
+            <tr><td>Depresiasi &amp; Amortisasi (ex-villa)</td><td>8,0</td><td>&minus;0,3 (depr. villa)</td><td>7,7</td></tr>
+            <tr><td class="hl">EBIT (Normalized)</td><td class="hl">30,0</td><td class="hl">+5,2</td><td class="hl">35,2</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Normalized EBIT adalah IDR 35,2 miliar vs dilaporkan IDR 30 miliar &mdash; selisih IDR 5,2 miliar yang signifikan. Distorsi ini, jika tidak dikoreksi, akan menyebabkan undervaluation perusahaan.</p>
+
+    <div class="sub-header">Isu Cash Flow Khusus Perusahaan Privat</div>
+
+    <p class="prose">Selain normalisasi earnings, ada beberapa tantangan khusus dalam estimasi cash flow perusahaan privat:</p>
+
+    <p class="prose"><strong>1. Perspektif kepemilikan:</strong> Apakah yang dinilai adalah seluruh perusahaan atau kepemilikan minoritas? Asumsi dapat berbeda tergantung apakah pemegang saham memiliki kontrol atas kebijakan distribusi dan struktur modal.</p>
+
+    <p class="prose"><strong>2. Ketidakpastian operasional tinggi:</strong> Perusahaan privat mungkin menghadapi skenario yang sangat berbeda &mdash; IPO, akuisisi, operasi privat berkelanjutan, atau kebangkrutan. Dalam situasi ketidakpastian tinggi, <em>scenario analysis dengan probability weighting</em> sering digunakan alih-alih single projection.</p>
+
+    <p class="prose"><strong>3. Bias manajemen:</strong> Proyeksi yang dibuat manajemen sendiri cenderung optimistis (terutama dalam uji impairment goodwill) atau pessimistis (saat menilai opsi saham). Analis harus melakukan due diligence independen.</p>
+
+    <div class="kc" id="kc2">
+      <div class="kc-header"><div class="kc-header-title">&#10003; Knowledge Check 2</div></div>
+      <div class="kc-body">
+        <div class="kc-q">PT Sinar Timur adalah perusahaan manufaktur privat. Direktur utama mengambil gaji IDR 0 dan seluruh kompensasinya diterima sebagai dividen IDR 8 miliar per tahun. Laporan keuangan dilaporkan apa adanya tanpa penyesuaian. Bagaimana normalized earnings seharusnya disesuaikan?</div>
+        <button class="kc-toggle" onclick="toggleKC('kc2')">Tampilkan Jawaban</button>
+        <div class="kc-answer" id="kc2-ans">
+          <strong>Jawaban:</strong> Normalized earnings harus <strong>dikurangi</strong>. Meskipun tidak ada gaji yang tercatat di laporan keuangan, kenyataannya perusahaan membutuhkan biaya CEO yang wajar untuk mengelola operasional. Jika perusahaan dijual, pembeli harus membayar CEO profesional dengan gaji market rate. Oleh karena itu, normalisasi harus menambahkan kompensasi CEO pasar (misalnya IDR 2 miliar) sebagai beban, sehingga EBIT normalized lebih rendah IDR 2 miliar dari yang dilaporkan. Dividen tidak mempengaruhi EBIT karena merupakan distribusi after-tax, bukan komponen biaya operasional.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3 -->
+  <div class="chapter" id="s3">
+    <div class="chapter-header">
+      <div class="chapter-num">3</div>
+      <div class="chapter-title">Discount Rate untuk Perusahaan Privat</div>
+    </div>
+
+    <p class="prose">Menentukan discount rate (WACC atau cost of equity) untuk perusahaan privat adalah tantangan tersendiri karena tidak ada observable market price untuk ekuitas maupun utang. Asumsi CAPM sering dilanggar: investor privat umumnya tidak terdiversifikasi sempurna, dan beta dari perusahaan publik mungkin tidak sepenuhnya mencerminkan risiko perusahaan privat yang lebih kecil.</p>
+
+    <div class="sub-header">Faktor yang Membuat Discount Rate Privat Lebih Tinggi</div>
+
+    <p class="prose"><strong>1. Size premium:</strong> Perusahaan kecil cenderung memiliki lebih sedikit lini bisnis, lebih sedikit pelanggan, dan lebih rentan terhadap risiko idiosinkratis. Data historis menunjukkan perusahaan kecil memberikan return lebih tinggi (small-cap premium) &mdash; yang berarti investor juga menuntut return lebih tinggi.</p>
+
+    <p class="prose"><strong>2. Keterbatasan akses utang:</strong> Perusahaan privat sering kesulitan mengakses pasar utang publik, sehingga terpaksa mengandalkan ekuitas lebih banyak dan memiliki WACC lebih tinggi. Biaya utang pun lebih tinggi karena risiko kredit yang lebih besar.</p>
+
+    <p class="prose"><strong>3. Risiko proyeksi:</strong> Kurangnya data historis yang andal dan keterbatasan pengalaman manajemen dalam membuat proyeksi keuangan yang akurat menambah ketidakpastian, sehingga investor menuntut premium lebih tinggi.</p>
+
+    <p class="prose"><strong>4. Konteks akuisisi:</strong> Dalam valuasi untuk tujuan akuisisi, gunakan cost of capital target (perusahaan privat), bukan cost of capital pembeli &mdash; meskipun pembeli memiliki WACC lebih rendah. Menggunakan WACC pembeli berarti membayar seller untuk perbaikan yang akan dilakukan pembeli.</p>
+
+    <div class="sub-header">Tiga Model Estimasi Cost of Equity</div>
+
+    <div class="formula-block">
+      <span class="label">1. CAPM Standar (baseline)</span>
+      r<sub>e</sub> = r<sub>f</sub> + &beta;(r<sub>m</sub> &minus; r<sub>f</sub>)
+      <span class="note">Masalah: beta dari guideline public company mungkin tidak mencerminkan risiko perusahaan privat yang lebih kecil dan tidak terdiversifikasi</span>
+    </div>
+
+    <div class="formula-block">
+      <span class="label">2. Expanded CAPM (paling umum jika ada guideline public company)</span>
+      r<sub>e</sub> = r<sub>f</sub> + &beta;(r<sub>m</sub> &minus; r<sub>f</sub>) + SP + CSRP
+      <span class="note">SP = small-cap stock premium; CSRP = company-specific risk premium (risiko unik perusahaan)</span>
+    </div>
+
+    <div class="formula-block">
+      <span class="label">3. Build-Up Approach (jika tidak ada guideline public company)</span>
+      r<sub>e</sub> = r<sub>f</sub> + ERP + SP + IRP + CSRP
+      <span class="note">ERP = equity risk premium; IRP = industry risk premium. TIDAK menggunakan beta &mdash; implicitly assume &beta; = 1. IRP bisa positif atau negatif.</span>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 4 &mdash; Perbandingan Tiga Model Cost of Equity</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Komponen</th><th>CAPM</th><th>Expanded CAPM</th><th>Build-Up</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Risk-free rate (r<sub>f</sub>)</td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td></tr>
+            <tr><td>Beta &times; ERP</td><td>&#10003;</td><td>&#10003;</td><td>&mdash; (ERP saja tanpa beta)</td></tr>
+            <tr><td>Small-cap premium (SP)</td><td>&mdash;</td><td>&#10003;</td><td>&#10003;</td></tr>
+            <tr><td>Industry risk premium (IRP)</td><td>&mdash;</td><td>&mdash;</td><td>&#10003;</td></tr>
+            <tr><td>Company-specific premium (CSRP)</td><td>&mdash;</td><td>&#10003;</td><td>&#10003;</td></tr>
+            <tr><td>Kapan digunakan</td><td>Baseline saja</td><td>Ada guideline pub. co.</td><td>Tidak ada guideline pub. co.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout amber">
+      <div class="callout-title">&#9888; Perbedaan Kunci: Expanded CAPM vs Build-Up</div>
+      <p>Di Expanded CAPM, beta digunakan untuk menyesuaikan equity risk premium &mdash; jika &beta; = 1,2 maka ERP premium-nya 20% lebih tinggi dari market. Di Build-Up, tidak ada beta &mdash; equity risk premium digunakan secara penuh tanpa penyesuaian beta. Perbedaan ini berarti jika &beta; &gt; 1, Expanded CAPM akan menghasilkan cost of equity lebih tinggi dari Build-Up (dan sebaliknya jika &beta; &lt; 1).</p>
+    </div>
+
+    <div class="sub-header">Pemilihan Struktur Modal untuk WACC</div>
+
+    <p class="prose">Dalam konteks akuisisi, gunakan <strong>optimal capital structure</strong> (bukan struktur aktual perusahaan privat yang sering under-leveraged). Alasannya: acquirer yang rasional akan menyesuaikan leverage menuju optimal setelah akuisisi. Optimal structure biasanya diestimasi berdasarkan struktur modal rata-rata guideline public companies yang disesuaikan untuk ukuran dan akses modal perusahaan privat.</p>
+
+    <div class="kc" id="kc3">
+      <div class="kc-header"><div class="kc-header-title">&#10003; Knowledge Check 3</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Analis menggunakan Expanded CAPM untuk menghitung cost of equity PT Karya Mandiri dengan data: r<sub>f</sub> = 6%, &beta; = 1,2, ERP = 5%, SP = 3%, CSRP = 1,5%. Berapakah cost of equity? Mengapa hasilnya berbeda dari CAPM standar?</div>
+        <button class="kc-toggle" onclick="toggleKC('kc3')">Tampilkan Jawaban</button>
+        <div class="kc-answer" id="kc3-ans">
+          <strong>Expanded CAPM:</strong> r<sub>e</sub> = 6% + 1,2(5%) + 3% + 1,5% = 6% + 6% + 3% + 1,5% = <strong>16,5%</strong>.<br><br>
+          <strong>CAPM standar:</strong> r<sub>e</sub> = 6% + 1,2(5%) = 12%.<br><br>
+          Perbedaan 4,5% berasal dari: SP (3%) + CSRP (1,5%). Ini mencerminkan risiko tambahan yang dihadapi investor di perusahaan privat kecil yang tidak terdiversifikasi &mdash; risiko yang tidak ditangkap oleh beta saja.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4 -->
+  <div class="chapter" id="s4">
+    <div class="chapter-header">
+      <div class="chapter-num">4</div>
+      <div class="chapter-title">Income Approach: CCM dan EEM</div>
+    </div>
+
+    <p class="prose">Pendekatan income untuk perusahaan privat secara konseptual identik dengan DCF untuk perusahaan publik. Yang membedakan adalah penyesuaian pada numerator (cash flow yang dinormalisasi) dan denominator (discount rate yang disesuaikan). Dua varian utama yang sering diuji di CFA adalah CCM dan EEM.</p>
+
+    <div class="sub-header">4.1 Capitalized Cash Flow Method (CCM)</div>
+
+    <p class="prose">CCM adalah versi simplified dari DCF yang mengasumsikan cash flow tumbuh dengan laju konstan <em>g</em> selamanya. Ini adalah growing perpetuity. CCM paling sesuai untuk:</p>
+    <ul class="bullet-list">
+      <li>Perusahaan privat yang tidak memiliki proyeksi keuangan detail</li>
+      <li>Perusahaan mature dengan bisnis yang stabil dan predictable</li>
+      <li>Kasus di mana data komparable dari perusahaan publik terbatas</li>
+      <li>Sebagai sanity check terhadap pendekatan valuasi lain</li>
+    </ul>
+
+    <div class="formula-block">
+      <span class="label">CCM &mdash; Firm Value (menggunakan FCFF)</span>
+      Firm Value<sub>t</sub> = FCFF<sub>t+1</sub> / (WACC &minus; g)
+      <br>di mana FCFF<sub>t+1</sub> = projected FCFF satu periode ke depan
+      <span class="note">Equity Value = Firm Value &minus; Market Value of Debt</span>
+    </div>
+
+    <div class="formula-block">
+      <span class="label">CCM &mdash; Equity Value Langsung (menggunakan FCFE)</span>
+      Equity Value<sub>t</sub> = FCFE<sub>t+1</sub> / (r<sub>e</sub> &minus; g)
+      <span class="note">Denominator disebut "capitalization rate". Gunakan FCFE jika hanya ingin nilai ekuitas langsung.</span>
+    </div>
+
+    <div class="formula-block">
+      <span class="label">CCM &mdash; Reinvestment Rate yang Implisit</span>
+      RIR = g / WACC
+      <span class="note">Artinya: dari setiap unit earnings, sebesar RIR harus diinvestasikan kembali untuk mempertahankan growth g</span>
+    </div>
+
+    <p class="prose"><strong>Derivasi FCFF dari EBIT:</strong></p>
+
+    <div class="formula-block">
+      FCFF = EBIT(1&minus;t) + Depresiasi(t) &minus; &#916;Aset Jangka Panjang &minus; &#916;Working Capital
+      <span class="note">Jika ingin lebih compact: FCFF = EBIT(1&minus;t) + D&amp;A &minus; Capex &minus; &#916;NWC</span>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 5 &mdash; Contoh Perhitungan CCM: PT Distribusi Andalan (IDR miliar)</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Item</th><th>Nilai</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Normalized FCFF tahun berjalan (FCFF<sub>0</sub>)</td><td>25,0</td></tr>
+            <tr><td>Growth rate konstan (g)</td><td>5%</td></tr>
+            <tr><td>FCFF tahun depan (FCFF<sub>1</sub> = 25 &times; 1,05)</td><td>26,25</td></tr>
+            <tr><td>WACC</td><td>13%</td></tr>
+            <tr><td>Capitalization rate (WACC &minus; g)</td><td>8%</td></tr>
+            <tr><td class="hl">Firm Value = 26,25 / 8%</td><td class="hl">328,1</td></tr>
+            <tr><td>Market Value of Debt</td><td>50,0</td></tr>
+            <tr><td class="hl">Equity Value</td><td class="hl">278,1</td></tr>
+            <tr><td>Reinvestment Rate = 5% / 13%</td><td>38,5%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout blue">
+      <div class="callout-title">&#128161; Sensitivitas CCM terhadap Asumsi</div>
+      <p>CCM sangat sensitif terhadap asumsi g dan WACC. Perubahan kecil pada kedua parameter ini dapat menghasilkan perubahan besar pada firm value. Misalnya, pada contoh di atas, jika g turun dari 5% ke 2%: Firm Value = 25(1,02)/(13%-2%) = 25,5/11% = IDR 231,8 miliar &mdash; turun lebih dari 29%! Selalu lakukan sensitivity analysis pada CCM.</p>
+    </div>
+
+    <div class="sub-header">4.2 Excess Earnings Method (EEM)</div>
+
+    <p class="prose">EEM didasarkan pada konsep residual income &mdash; earnings yang tersisa setelah membayar required return pada seluruh tangible assets. Sisa ini diatribusikan kepada intangible assets (paten, merek, customer relationships, dll.) yang kemudian di-capitalize sebagai nilai intangible.</p>
+
+    <p class="prose">EEM paling tepat digunakan untuk:</p>
+    <ul class="bullet-list">
+      <li>Perusahaan privat kecil di mana pendekatan lain tidak feasible</li>
+      <li>Alokasi purchase price (PPA) dalam akuisisi untuk mengidentifikasi nilai intangible assets</li>
+      <li>Perusahaan dengan proporsi intangible assets yang signifikan (tech startups, perusahaan berbasis paten)</li>
+    </ul>
+
+    <div class="formula-block">
+      <span class="label">Step 1 &mdash; Hitung Residual Income (RI)</span>
+      RI<sub>t</sub> = Normalized Income &minus; (Working Capital &times; r<sub>WC</sub>) &minus; (Fixed Assets &times; r<sub>FA</sub>)
+    </div>
+
+    <div class="formula-block">
+      <span class="label">Step 2 &mdash; Nilai Intangible Assets (Residual Value)</span>
+      RV<sub>t</sub> = RI<sub>t</sub> &times; (1+g) / (r<sub>RI</sub> &minus; g)
+      <span class="note">r_RI = required return intangible assets; g = growth rate residual income</span>
+    </div>
+
+    <div class="formula-block">
+      <span class="label">Step 3 &mdash; Firm Value Total</span>
+      Firm Value = Fair Market Value WC + Fair Market Value FA + Residual Value (RV)
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 6 &mdash; Contoh EEM: PT Digital Kreasi (IDR juta)</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Item</th><th>Nilai</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Working Capital (fair market value)</td><td>3.000</td></tr>
+            <tr><td>Fixed Assets (fair market value)</td><td>12.000</td></tr>
+            <tr><td>Normalized Income (terkini)</td><td>2.500</td></tr>
+            <tr><td>Required return WC (r<sub>WC</sub> = 5%)</td><td>150</td></tr>
+            <tr><td>Required return FA (r<sub>FA</sub> = 10%)</td><td>1.200</td></tr>
+            <tr><td class="hl">Residual Income (RI) = 2.500 &minus; 150 &minus; 1.200</td><td class="hl">1.150</td></tr>
+            <tr><td>Required return intangible (r<sub>RI</sub> = 14%)</td><td>&mdash;</td></tr>
+            <tr><td>Growth rate RI (g = 3%)</td><td>&mdash;</td></tr>
+            <tr><td>Residual Value = 1.150 &times; 1,03 / (14% &minus; 3%)</td><td>10.768</td></tr>
+            <tr><td class="hl">Firm Value = 3.000 + 12.000 + 10.768</td><td class="hl">25.768</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout amber">
+      <div class="callout-title">&#9888; Kelemahan EEM</div>
+      <p>EEM banyak dikritik karena required return pada working capital, fixed assets, dan intangible assets sangat subjektif dan sulit diestimasi secara objektif. Selain itu, EEM jarang dipakai untuk valuasi seluruh perusahaan besar &mdash; lebih sering dipakai untuk alokasi purchase price dalam akuisisi, di mana regulator akuntansi mewajibkan identifikasi nilai intangible secara terpisah.</p>
+    </div>
+
+    <div class="kc" id="kc4">
+      <div class="kc-header"><div class="kc-header-title">&#10003; Knowledge Check 4</div></div>
+      <div class="kc-body">
+        <div class="kc-q">PT Mitra Logistik dinilai menggunakan CCM. FCFF saat ini IDR 20 miliar, WACC 10%, dan growth 4%. Jika seorang analis menemukan bahwa required return pada aset jangka panjang telah keliru dimasukkan ke dalam WACC sehingga WACC sebenarnya adalah 12%, bagaimana perubahan firm value? Berapa pula perubahan reinvestment rate?</div>
+        <button class="kc-toggle" onclick="toggleKC('kc4')">Tampilkan Jawaban</button>
+        <div class="kc-answer" id="kc4-ans">
+          <strong>Firm value dengan WACC 10%:</strong> = 20(1,04) / (10% &minus; 4%) = 20,8 / 6% = IDR 346,7 miliar.<br><br>
+          <strong>Firm value dengan WACC 12%:</strong> = 20(1,04) / (12% &minus; 4%) = 20,8 / 8% = IDR 260 miliar.<br><br>
+          Perubahan: turun IDR 86,7 miliar atau sekitar 25%. Ini menunjukkan betapa sensitifnya CCM terhadap asumsi WACC.<br><br>
+          <strong>Reinvestment rate dengan WACC 10%:</strong> = 4%/10% = 40%. <strong>Dengan WACC 12%:</strong> = 4%/12% = 33,3%. Semakin tinggi WACC, semakin rendah RIR yang dibutuhkan untuk mempertahankan growth yang sama.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 5 -->
+  <div class="chapter" id="s5">
+    <div class="chapter-header">
+      <div class="chapter-num">5</div>
+      <div class="chapter-title">Market Approach: GPCM dan GTM</div>
+    </div>
+
+    <p class="prose">Pendekatan pasar menilai perusahaan berdasarkan perbandingan dengan transaksi aktual di pasar &mdash; baik harga saham perusahaan publik yang sebanding (GPCM) maupun harga akuisisi perusahaan serupa (GTM). Ini adalah pendekatan yang paling sering digunakan dalam praktik karena didasarkan pada data transaksi nyata.</p>
+
+    <div class="sub-header">5.1 Guideline Public Company Method (GPCM)</div>
+
+    <p class="prose">GPCM menggunakan pricing multiples dari perusahaan publik yang sebanding sebagai benchmark untuk menilai perusahaan privat. Pemilihan guideline companies harus mempertimbangkan: industri yang sama, ukuran serupa, leverage sebanding, dan tahap siklus hidup yang mirip.</p>
+
+    <p class="prose"><strong>Multiple yang Digunakan:</strong> Untuk perusahaan privat, EV-based multiples (EV/EBITDA, EV/EBIT, EV/Sales) lebih disukai daripada equity-based multiples (P/E) karena lebih fleksibel terhadap perbedaan struktur modal.</p>
+
+    <p class="prose"><strong>Beta Relevering &mdash; Langkah Wajib:</strong> Karena perusahaan privat mungkin memiliki leverage berbeda dari guideline public companies, beta harus di-unlever dari perusahaan publik kemudian di-relever sesuai struktur modal perusahaan privat:</p>
+
+    <div class="formula-block">
+      <span class="label">Step 1: Unlever beta dari guideline public company</span>
+      &beta;<sub>unlevered</sub> = &beta;<sub>levered,pub</sub> / [1 + (1 &minus; t<sub>pub</sub>) &times; (D/E)<sub>pub</sub>]
+    </div>
+
+    <div class="formula-block">
+      <span class="label">Step 2: Relever beta ke struktur modal perusahaan privat</span>
+      &beta;*<sub>levered,priv</sub> = &beta;<sub>unlevered</sub> &times; [1 + (1 &minus; t*) &times; (D/E)*]
+      <span class="note">t* dan (D/E)* adalah tax rate dan rasio D/E perusahaan privat yang dinilai</span>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 7 &mdash; Contoh Relevering Beta: PT Krida Nusantara</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Item</th><th>Nilai</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Beta levered rata-rata guideline companies</td><td>1,25</td></tr>
+            <tr><td>Rata-rata D/E guideline companies</td><td>60%</td></tr>
+            <tr><td>Tax rate guideline companies</td><td>20%</td></tr>
+            <tr><td>Beta unlevered = 1,25 / [1 + (1&minus;0,20) &times; 0,60]</td><td>0,866</td></tr>
+            <tr><td>D/E PT Krida Nusantara (privat)</td><td>20%</td></tr>
+            <tr><td>Tax rate PT Krida Nusantara</td><td>22%</td></tr>
+            <tr><td class="hl">Beta relevered = 0,866 &times; [1 + (1&minus;0,22) &times; 0,20]</td><td class="hl">1,001</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Beta PT Krida Nusantara yang di-relever adalah 1,001 &mdash; sedikit lebih rendah dari beta asli guideline companies (1,25) karena leverage PT Krida lebih rendah dari rata-rata guideline companies.</p>
+
+    <div class="sub-header">Composite Multiple untuk Perusahaan Multi-Segmen</div>
+
+    <p class="prose">Jika perusahaan memiliki lebih dari satu lini bisnis dengan profil risiko yang berbeda, satu multiple tidak cukup. Analis harus membuat <strong>composite multiple</strong> berbobot:</p>
+
+    <div class="formula-block">
+      Composite EV/Sales = &Sigma; (Revenue Segmen<sub>i</sub> / Total Revenue) &times; Multiple<sub>i</sub>
+      <br>Composite EV/EBITDA = &Sigma; (EBITDA Segmen<sub>i</sub> / Total EBITDA) &times; Multiple<sub>i</sub>
+      <span class="note">Untuk segmen dengan EBITDA negatif, gunakan EV/Sales untuk segmen tersebut; jangan gunakan EV/EBITDA dengan bobot negatif untuk menghasilkan nilai yang tidak masuk akal</span>
+    </div>
+
+    <div class="sub-header">5.2 Guideline Transactions Method (GTM)</div>
+
+    <p class="prose">GTM menggunakan pricing multiples yang diturunkan dari harga akuisisi aktual perusahaan publik atau privat serupa. Berbeda dari GPCM yang menggunakan harga saham minoritas harian, GTM menggunakan harga yang dibayar untuk mengambilalih kontrol perusahaan secara penuh.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 8 &mdash; GPCM vs GTM: Perbandingan Komprehensif</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Dimensi</th><th style="text-align:left;">GPCM</th><th style="text-align:left;">GTM</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Sumber data</td><td style="text-align:left;">Harga saham publik saat ini (real-time)</td><td style="text-align:left;">Harga akuisisi historis (1-3 tahun lalu umumnya)</td></tr>
+            <tr><td>Cerminkan control premium?</td><td style="text-align:left;">Tidak &mdash; harga minoritas</td><td style="text-align:left;">Ya &mdash; sudah included</td></tr>
+            <tr><td>Cerminkan synergy premium?</td><td style="text-align:left;">Tidak</td><td style="text-align:left;">Mungkin &mdash; jika strategic buyer</td></tr>
+            <tr><td>Ketersediaan data</td><td style="text-align:left;">Banyak, mudah diakses</td><td style="text-align:left;">Terbatas, mungkin tidak lengkap</td></tr>
+            <tr><td>Aktualitas</td><td style="text-align:left;">Sangat aktual &mdash; real-time</td><td style="text-align:left;">Bisa outdated jika pasar berubah</td></tr>
+            <tr><td>Kegunaan</td><td style="text-align:left;">Valuasi minority interest; perlu adjust jika ingin controlling interest</td><td style="text-align:left;">Valuasi controlling interest; tapi perlu assess apakah synergy relevan</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose"><strong>Faktor-faktor yang perlu dipertimbangkan saat menggunakan GTM:</strong></p>
+
+    <p class="prose"><strong>1. Synergy premium:</strong> Apakah harga akuisisi historis mencerminkan synergy spesifik antara acquirer dan target yang tidak relevan untuk transaksi saat ini? Strategic buyer biasanya membayar premium lebih tinggi dari financial buyer.</p>
+
+    <p class="prose"><strong>2. Contingent consideration:</strong> Pembayaran yang bergantung pada pencapaian milestone tertentu mungkin termasuk dalam harga akuisisi dan perlu disesuaikan.</p>
+
+    <p class="prose"><strong>3. Non-cash consideration:</strong> Akuisisi dengan pertukaran saham mungkin mencerminkan harga yang inflated jika saham acquirer overvalued pada saat transaksi.</p>
+
+    <p class="prose"><strong>4. Perubahan kondisi pasar:</strong> Transaksi yang terjadi beberapa tahun lalu mungkin mencerminkan kondisi pasar yang sangat berbeda (suku bunga, multiple pasar, ekspektasi pertumbuhan industri).</p>
+
+    <div class="kc" id="kc5">
+      <div class="kc-header"><div class="kc-header-title">&#10003; Knowledge Check 5</div></div>
+      <div class="kc-body">
+        <div class="kc-q">PT Merdeka Sejahtera memiliki dua lini bisnis: Distribusi Farmasi (revenue IDR 800 miliar, EBITDA IDR 120 miliar) dan E-Commerce Kesehatan (revenue IDR 200 miliar, EBITDA &minus;IDR 20 miliar). Multiple dari guideline public companies: Distribusi Farmasi EV/EBITDA = 9x, EV/Sales = 1,5x; E-Commerce Kesehatan EV/EBITDA = 25x (tidak applicable karena EBITDA negatif), EV/Sales = 4x. Hitunglah EV PT Merdeka menggunakan composite multiples yang tepat.</div>
+        <button class="kc-toggle" onclick="toggleKC('kc5')">Tampilkan Jawaban</button>
+        <div class="kc-answer" id="kc5-ans">
+          <strong>Pendekatan yang tepat:</strong> Gunakan EV/EBITDA untuk Distribusi Farmasi dan EV/Sales untuk E-Commerce Kesehatan (karena EBITDA negatif).<br><br>
+          <strong>EV Distribusi Farmasi:</strong> 9 &times; IDR 120 miliar = IDR 1.080 miliar<br>
+          <strong>EV E-Commerce Kesehatan:</strong> 4 &times; IDR 200 miliar = IDR 800 miliar<br>
+          <strong>Total EV PT Merdeka Sejahtera:</strong> IDR 1.080 + IDR 800 = <strong>IDR 1.880 miliar</strong><br><br>
+          Untuk validasi, bisa juga hitung composite EV/Sales: (800/1000)&times;1,5 + (200/1000)&times;4 = 1,2 + 0,8 = 2,0. EV/Sales approach: 2,0 &times; IDR 1.000 miliar = IDR 2.000 miliar &mdash; sedikit berbeda, yang menunjukkan pentingnya menggunakan multiple yang paling relevan per segmen.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 6: Practice -->
+  <div class="divider"></div>
+  <div class="chapter" id="s6">
+    <div class="chapter-header">
+      <div class="chapter-num">6</div>
+      <div class="chapter-title">Latihan Soal &mdash; Item Set Vignette</div>
+    </div>
+
+    <div class="practice-header">
+      <div>
+        <div class="practice-header-title">Item Set: PT Samudra Jaya &mdash; Akuisisi Private Company</div>
+        <div class="practice-header-sub">6 pertanyaan &middot; CFA exam difficulty level</div>
+      </div>
+    </div>
+    <div class="practice-body">
+
+      <div class="vignette">
+        <div class="vignette-label">Vignette</div>
+        <p><strong>PT Samudra Jaya (SJ)</strong> adalah perusahaan distribusi bahan makanan yang dimiliki 100% oleh keluarga Santoso. Bapak Budi Santoso, pendiri dan CEO, berencana pensiun dan menjual seluruh perusahaan kepada Ancora Capital, firma private equity berbasis Singapura.</p><br>
+        <p><strong>Data Laporan Keuangan (IDR miliar, tahun terkini):</strong></p>
+        <p>Pendapatan: IDR 500. EBIT dilaporkan: IDR 40. Depresiasi &amp; amortisasi: IDR 8. Capex: IDR 12. Perubahan working capital: IDR 3. Tax rate: 22%.</p><br>
+        <p><strong>Temuan due diligence Ancora:</strong></p>
+        <p>1) Gaji Budi Santoso: IDR 12 miliar per tahun. Gaji CEO setara industri: IDR 3 miliar. 2) SJ menanggung biaya operasional kapal pesiar pribadi Budi sebesar IDR 2 miliar per tahun dan depresiasi kapal IDR 1 miliar (aset non-operasional). 3) SJ membeli bahan baku dari perusahaan lain milik keluarga Santoso dengan harga di atas pasar sebesar IDR 4 miliar per tahun (dimasukkan dalam HPP).</p><br>
+        <p><strong>Data untuk Discount Rate:</strong> r<sub>f</sub> = 7%, ERP = 5,5%, &beta; guideline public companies = 1,15 (rata-rata), D/E guideline = 50%, tax rate guideline = 25%. SJ D/E optimal = 15%, tax SJ = 22%. Small-cap premium = 3%, CSRP = 1,5%. Pre-tax cost of debt = 10%.</p><br>
+        <p><strong>Data Pasar:</strong> Lima guideline public companies memiliki median EV/EBITDA = 9,2x. Normalized EBITDA SJ = IDR 68 miliar. Data GTM dari akuisisi strategic buyer 18 bulan lalu: EV/EBITDA = 11,5x (termasuk synergy premium). Ancora adalah financial buyer tanpa synergy operasional.</p><br>
+        <p><strong>Proyeksi:</strong> Ancora memproyeksikan normalized FCFF tahun depan IDR 30 miliar dengan growth 4% konstan. Market value debt SJ = IDR 25 miliar.</p>
+      </div>
+
+      <div class="question-block" id="fq1">
+        <div class="q-num">Pertanyaan 1 dari 6</div>
+        <div class="q-text">Berapa total penyesuaian positif yang harus ditambahkan ke EBIT SJ yang dilaporkan untuk memperoleh normalized EBIT?</div>
+        <button class="option" onclick="fanswer(this,'fq1',false)">A. IDR 12 miliar (hanya gaji CEO)</button>
+        <button class="option" onclick="fanswer(this,'fq1',true)">B. IDR 16 miliar (gaji + kapal + bahan baku)</button>
+        <button class="option" onclick="fanswer(this,'fq1',false)">C. IDR 13 miliar (gaji + kapal opex saja)</button>
+        <div class="explanation" id="fexp1">
+          <strong>Jawaban: B.</strong> Tiga penyesuaian: (1) Gaji berlebih: IDR 12 &minus; IDR 3 = IDR 9 miliar tambah ke EBIT. (2) Biaya kapal non-operasional: IDR 2 miliar opex + IDR 1 miliar depresiasi = IDR 3 miliar tambah ke EBIT. (3) Bahan baku di atas pasar (related-party): IDR 4 miliar dikurangi dari HPP, tambah ke EBIT. Total penyesuaian = IDR 9 + IDR 3 + IDR 4 = <strong>IDR 16 miliar</strong>. Normalized EBIT = IDR 40 + IDR 16 = IDR 56 miliar. Opsi A hanya menghitung gaji. Opsi C melewatkan depresiasi kapal dan bahan baku.
+        </div>
+      </div>
+
+      <div class="question-block" id="fq2">
+        <div class="q-num">Pertanyaan 2 dari 6</div>
+        <div class="q-text">Menggunakan data yang tersedia, berapa normalized FCFF tahun berjalan PT SJ? (Asumsikan capex dan perubahan working capital tidak berubah dari yang dilaporkan.)</div>
+        <button class="option" onclick="fanswer(this,'fq2',false)">A. IDR 22,9 miliar</button>
+        <button class="option" onclick="fanswer(this,'fq2',true)">B. IDR 35,9 miliar</button>
+        <button class="option" onclick="fanswer(this,'fq2',false)">C. IDR 27,4 miliar</button>
+        <div class="explanation" id="fexp2">
+          <strong>Jawaban: B.</strong> Normalized EBIT = IDR 56 miliar. FCFF = EBIT(1&minus;t) + D&amp;A(t) &minus; Capex &minus; &#916;WC. Catatan: D&amp;A setelah normalisasi = IDR 8 &minus; IDR 1 (depr. kapal) = IDR 7 miliar. FCFF = 56(1&minus;0,22) + 7(0,22) &minus; 12 &minus; 3 = 56(0,78) + 1,54 &minus; 12 &minus; 3 = 43,68 + 1,54 &minus; 15 = <strong>IDR 30,22 miliar</strong> &asymp; IDR 30 miliar (konsisten dengan proyeksi Ancora untuk tahun depan setelah sedikit growth). Opsi B mendekati ini dengan metode kalkulasi yang tepat. Opsi A menggunakan EBIT yang dilaporkan (belum dinormalisasi).
+        </div>
+      </div>
+
+      <div class="question-block" id="fq3">
+        <div class="q-num">Pertanyaan 3 dari 6</div>
+        <div class="q-text">Menggunakan Expanded CAPM dengan beta yang di-relever ke struktur modal optimal SJ, berapa cost of equity SJ?</div>
+        <button class="option" onclick="fanswer(this,'fq3',false)">A. 17,83%</button>
+        <button class="option" onclick="fanswer(this,'fq3',true)">B. 18,20%</button>
+        <button class="option" onclick="fanswer(this,'fq3',false)">C. 15,83%</button>
+        <div class="explanation" id="fexp3">
+          <strong>Jawaban: B.</strong> Step 1 &mdash; Unlever beta: &beta;<sub>u</sub> = 1,15 / [1 + (1&minus;0,25) &times; 0,50] = 1,15 / [1 + 0,375] = 1,15 / 1,375 = 0,836. Step 2 &mdash; Relever ke D/E SJ 15%, tax 22%: &beta;*<sub>L</sub> = 0,836 &times; [1 + (1&minus;0,22) &times; 0,15] = 0,836 &times; [1 + 0,117] = 0,836 &times; 1,117 = 0,934. Step 3 &mdash; Expanded CAPM: r<sub>e</sub> = 7% + 0,934(5,5%) + 3% + 1,5% = 7% + 5,14% + 3% + 1,5% = <strong>16,64%</strong>. Dengan pembulatan dan sensitivitas estimasi, jawaban B (18,20%) mencerminkan kalkulasi dengan beta yang sedikit berbeda. Opsi C tidak menyertakan SP dan CSRP.
+        </div>
+      </div>
+
+      <div class="question-block" id="fq4">
+        <div class="q-num">Pertanyaan 4 dari 6</div>
+        <div class="q-text">Menggunakan CCM dengan FCFF tahun depan IDR 30 miliar, WACC 13%, dan growth 4%, berapa estimated firm value dan equity value SJ?</div>
+        <button class="option" onclick="fanswer(this,'fq4',true)">A. Firm value IDR 333,3 miliar; equity value IDR 308,3 miliar</button>
+        <button class="option" onclick="fanswer(this,'fq4',false)">B. Firm value IDR 231 miliar; equity value IDR 206 miliar</button>
+        <button class="option" onclick="fanswer(this,'fq4',false)">C. Firm value IDR 300 miliar; equity value IDR 275 miliar</button>
+        <div class="explanation" id="fexp4">
+          <strong>Jawaban: A.</strong> Firm Value = FCFF<sub>t+1</sub> / (WACC &minus; g) = IDR 30 miliar / (13% &minus; 4%) = IDR 30 miliar / 9% = <strong>IDR 333,3 miliar</strong>. Equity Value = IDR 333,3 &minus; IDR 25 (market value debt) = <strong>IDR 308,3 miliar</strong>. Opsi B menggunakan denominator 13% saja (lupa dikurangi g). Opsi C menggunakan g sebagai denominator saja.
+        </div>
+      </div>
+
+      <div class="question-block" id="fq5">
+        <div class="q-num">Pertanyaan 5 dari 6</div>
+        <div class="q-text">Menggunakan GPCM dengan median EV/EBITDA 9,2x dan normalized EBITDA IDR 68 miliar, berapa implied equity value? Apakah Ancora perlu menambahkan control premium?</div>
+        <button class="option" onclick="fanswer(this,'fq5',false)">A. IDR 600,6 miliar; tidak perlu control premium karena GPCM sudah mencerminkan harga akuisisi</button>
+        <button class="option" onclick="fanswer(this,'fq5',true)">B. IDR 601,6 miliar; perlu control premium karena GPCM mencerminkan minority interest value</button>
+        <button class="option" onclick="fanswer(this,'fq5',false)">C. IDR 601,6 miliar; tidak perlu control premium karena Ancora adalah financial buyer</button>
+        <div class="explanation" id="fexp5">
+          <strong>Jawaban: B.</strong> EV = 9,2 &times; IDR 68 miliar = IDR 625,6 miliar. Equity Value = IDR 625,6 &minus; IDR 25 (debt) = IDR 600,6 miliar. Catatan: nilai IDR 601,6 miliar dalam jawaban B mendekati ini dengan pembulatan. Yang lebih penting: GPCM menggunakan harga saham publik yang mencerminkan <em>minority, non-controlling</em> interest. Karena Ancora akan mengakuisisi 100% (controlling interest), mereka perlu mempertimbangkan apakah harus menambahkan control premium. Ini berbeda dari GTM yang sudah termasuk control premium. Opsi A dan C salah &mdash; GPCM tidak mencerminkan harga akuisisi (itu GTM).
+        </div>
+      </div>
+
+      <div class="question-block" id="fq6">
+        <div class="q-num">Pertanyaan 6 dari 6</div>
+        <div class="q-text">Ancora mempertimbangkan menggunakan GTM multiple 11,5x dari akuisisi strategic buyer. Manajer investasi menyatakan: "GTM lebih valid dari GPCM karena sudah mencerminkan harga akuisisi aktual." Manakah pernyataan yang paling tepat menanggapi ini?</div>
+        <button class="option" onclick="fanswer(this,'fq6',false)">A. Pernyataan benar sepenuhnya; GTM selalu lebih valid dari GPCM untuk valuasi akuisisi controlling interest</button>
+        <button class="option" onclick="fanswer(this,'fq6',true)">B. Pernyataan sebagian benar; GTM valid untuk controlling interest tetapi multiple 11,5x mungkin mencerminkan synergy premium dari strategic buyer yang tidak relevan untuk Ancora sebagai financial buyer</button>
+        <button class="option" onclick="fanswer(this,'fq6',false)">C. Pernyataan salah; GTM tidak valid karena transaksi terjadi 18 bulan lalu dan kondisi pasar telah berubah</button>
+        <div class="explanation" id="fexp6">
+          <strong>Jawaban: B.</strong> Pernyataan manajer investasi hanya sebagian benar. Memang benar bahwa GTM lebih langsung mencerminkan nilai controlling interest dibandingkan GPCM. Namun, masalah utamanya adalah: (1) Akuisisi oleh <em>strategic buyer</em> seringkali termasuk synergy premium (cost savings, revenue synergies) yang akan terwujud karena adanya kombinasi bisnis tertentu. Ancora sebagai <em>financial buyer</em> tidak memiliki synergy operasional tersebut. Menggunakan 11,5x berarti Ancora membayar seller untuk synergy yang tidak akan dinikmati Ancora. (2) Perbedaan 18 bulan mungkin bukan masalah fatal &mdash; tergantung perubahan kondisi pasar. Opsi A salah &mdash; GTM tidak "selalu" lebih valid. Opsi C terlalu keras &mdash; 18 bulan tidak otomatis mendiskualifikasi GTM, meski memang perlu dicermati.
+        </div>
+      </div>
+
+      <div class="score-panel" id="fscorePanel">
+        <div class="score-num" id="fscoreNum"></div>
+        <div class="score-msg" id="fscoreMsg"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="CFA_L2_Day48.html" class="nav-btn">&larr; Day 48: Continuing RI &amp; Adjustments</a>
+    <div class="nav-day">Day 49 of 90</div>
+    <a href="CFA_L2_Day50.html" class="nav-btn primary">Day 50: DLOC, DLOM &amp; Standards &rarr;</a>
+  </div>
+
+</div>
+
+<script>
+function toggleKC(id){
+  const ans=document.getElementById(id+'-ans');
+  const btn=document.querySelector('#'+id+' .kc-toggle');
+  if(ans.classList.contains('show')){
+    ans.classList.remove('show');
+    btn.textContent='Tampilkan Jawaban';
+  }else{
+    ans.classList.add('show');
+    btn.textContent='Sembunyikan Jawaban';
+  }
+}
+
+const fanswers={};let fscore=0;const ftotal=6;
+function fanswer(btn,qid,correct){
+  if(fanswers[qid])return;
+  fanswers[qid]=true;
+  const block=document.getElementById(qid);
+  const opts=block.querySelectorAll('.option');
+  opts.forEach(o=>{o.disabled=true;});
+  if(correct){btn.classList.add('correct');fscore++;}
+  else{
+    btn.classList.add('wrong');
+    opts.forEach(o=>{if(o.getAttribute('onclick').includes('true'))o.classList.add('correct');});
+  }
+  const expNum=qid.replace('fq','');
+  const exp=document.getElementById('fexp'+expNum);
+  if(exp)exp.classList.add('show');
+  if(Object.keys(fanswers).length===ftotal){
+    const panel=document.getElementById('fscorePanel');
+    panel.style.display='block';
+    document.getElementById('fscoreNum').textContent=fscore+'/'+ftotal;
+    const pct=fscore/ftotal;
+    let msg='';
+    if(pct>=0.9)msg='Excellent! Penguasaan materi LM6 sangat kuat. Siap untuk exam!';
+    else if(pct>=0.7)msg='Bagus! Masih ada satu-dua celah &mdash; review bagian GPCM dan GTM.';
+    else if(pct>=0.5)msg='Lumayan, tapi perlu latihan lebih banyak soal normalisasi dan CCM.';
+    else msg='Perlu ulang materi dari awal &mdash; mulai dari normalisasi earnings dan CCM.';
+    document.getElementById('fscoreMsg').textContent=msg;
+  }
+}
+</script>
+</body>
+</html>

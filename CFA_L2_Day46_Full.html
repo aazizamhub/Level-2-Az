@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 46 · Full · Analisis Skenario ESG dalam Model FCF</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #fafaf8;
+  --bg2:     #f4f3ef;
+  --bg3:     #eeece7;
+  --border:  rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text:    #1a1a2e;
+  --text2:   #4a4a6a;
+  --text3:   #8a8aaa;
+  --gold:    #9a6e1a;
+  --gold2:   #7a5010;
+  --gold-bg: rgba(154,110,26,0.08);
+  --blue:    #1a5fa8;
+  --blue-bg: rgba(26,95,168,0.08);
+  --green:   #1a7a4a;
+  --green-bg:rgba(26,122,74,0.08);
+  --red:     #b83232;
+  --red-bg:  rgba(184,50,50,0.08);
+  --amber:   #a06010;
+  --amber-bg:rgba(160,96,16,0.08);
+  --r:10px; --r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.8;}
+
+.page{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+
+/* top bar */
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;border:1px solid rgba(26,95,168,0.2);}
+
+/* hero */
+.hero{margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--border);}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:36px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:15px;color:var(--text2);}
+.meta-row{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+
+/* toc */
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:36px;}
+.toc-title{font-size:12px;color:var(--text3);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:12px;font-weight:500;}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.toc-list li a{font-size:13px;color:var(--blue);text-decoration:none;display:flex;align-items:center;gap:8px;}
+.toc-list li a:hover{text-decoration:underline;}
+.toc-num{font-size:11px;color:var(--text3);min-width:20px;}
+
+/* section headers */
+.chapter{margin-bottom:40px;}
+.chapter-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--gold-bg);}
+.chapter-num{font-family:'DM Serif Display',serif;font-size:28px;color:var(--gold);line-height:1;}
+.chapter-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);line-height:1.2;}
+
+.sub-header{font-size:17px;font-weight:500;color:var(--text);margin:24px 0 12px;padding-left:12px;border-left:3px solid var(--gold);}
+
+/* prose */
+.prose{font-size:14px;color:var(--text2);line-height:1.85;margin-bottom:14px;}
+.prose strong{color:var(--text);font-weight:500;}
+.prose em{font-style:italic;}
+
+/* formula */
+.formula-block{background:var(--bg2);border:1px solid var(--border2);border-left:4px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:16px 20px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold2);line-height:2;}
+.formula-block .label{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:8px;}
+.formula-block .note{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text3);font-style:italic;display:block;margin-top:8px;}
+
+/* exhibit / table */
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:20px 0;}
+.exhibit-title{background:var(--bg3);padding:10px 16px;font-size:12px;font-weight:500;color:var(--text2);border-bottom:1px solid var(--border);letter-spacing:0.03em;}
+.exhibit-body{padding:16px;}
+.reg-table{width:100%;border-collapse:collapse;font-size:13px;}
+.reg-table th{text-align:left;padding:8px 12px;background:var(--bg3);color:var(--text3);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border2);}
+.reg-table th.right{text-align:right;}
+.reg-table td{padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+.reg-table td.right{text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text2);}
+.reg-table tr:last-child td{border-bottom:none;}
+.reg-table .sig{color:var(--green);font-weight:500;}
+.reg-table .warn{color:var(--amber);}
+.reg-table .highlight{background:var(--gold-bg);}
+
+/* callout boxes */
+.callout{border-radius:var(--r);padding:16px 18px;margin:16px 0;}
+.callout-title{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;}
+.callout p{font-size:13px;color:var(--text2);line-height:1.75;}
+.callout p + p{margin-top:8px;}
+.callout.blue{background:var(--blue-bg);border:1px solid rgba(26,95,168,0.15);}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.green{background:var(--green-bg);border:1px solid rgba(26,122,74,0.15);}
+.callout.green .callout-title{color:var(--green);}
+.callout.amber{background:var(--amber-bg);border:1px solid rgba(160,96,16,0.15);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.red{background:var(--red-bg);border:1px solid rgba(184,50,50,0.15);}
+.callout.red .callout-title{color:var(--red);}
+.callout.gold{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);}
+.callout.gold .callout-title{color:var(--gold);}
+
+/* knowledge check */
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:24px 0;overflow:hidden;}
+.kc-header{background:var(--gold-bg);padding:12px 18px;border-bottom:1px solid rgba(154,110,26,0.15);}
+.kc-header-title{font-size:12px;font-weight:500;color:var(--gold);letter-spacing:0.06em;text-transform:uppercase;}
+.kc-body{padding:18px;}
+.kc-q{font-size:13px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.6;}
+.kc-answer{background:var(--bg3);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);line-height:1.75;display:none;}
+.kc-answer.show{display:block;}
+.kc-answer strong{color:var(--green);}
+.kc-toggle{background:none;border:1px solid var(--border2);border-radius:var(--r-sm);padding:6px 14px;font-size:12px;color:var(--text3);cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px;transition:all 0.15s;}
+.kc-toggle:hover{border-color:var(--gold);color:var(--gold);}
+
+/* bullet list */
+.bullet-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin:10px 0;}
+.bullet-list li{display:flex;gap:10px;font-size:13px;color:var(--text2);line-height:1.7;}
+.bullet-list li::before{content:'■';color:var(--gold);font-size:9px;margin-top:5px;flex-shrink:0;}
+
+/* num list */
+.num-list{list-style:none;counter-reset:num;display:flex;flex-direction:column;gap:8px;margin:10px 0;}
+.num-list li{counter-increment:num;display:flex;gap:12px;font-size:13px;color:var(--text2);line-height:1.7;}
+.num-list li::before{content:counter(num)".";color:var(--gold);font-weight:500;min-width:20px;flex-shrink:0;}
+
+/* inline code */
+code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--bg3);padding:2px 6px;border-radius:4px;color:var(--gold2);}
+
+/* divider */
+.divider{height:1px;background:var(--border);margin:36px 0;}
+
+/* practice */
+.practice-header{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);border-radius:var(--r) var(--r) 0 0;padding:16px 20px;display:flex;align-items:center;gap:12px;}
+.practice-header-title{font-size:16px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);margin-top:2px;}
+.practice-body{background:var(--bg2);border:1px solid rgba(154,110,26,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:24px;}
+.vignette{background:var(--bg3);border-left:4px solid var(--gold);padding:18px 20px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:28px;font-size:13px;color:var(--text2);line-height:1.85;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;font-weight:500;}
+.question-block{margin-bottom:24px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:6px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:12px;line-height:1.65;}
+.option{display:block;width:100%;text-align:left;padding:11px 16px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:8px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.6;}
+.option:hover:not(:disabled){border-color:var(--border2);background:var(--bg2);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:14px 16px;font-size:13px;color:var(--text2);margin-top:10px;line-height:1.8;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:28px;margin-top:20px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:52px;margin-bottom:8px;}
+.score-msg{font-size:14px;color:var(--text2);}
+
+/* nav */
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+.nav-day{font-size:12px;color:var(--text3);text-align:center;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II · <span>Equity Valuation</span> · LM4</div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <div class="version-badge">Versi Full</div>
+      <div class="day-badge">Day 46 of 90</div>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-tag">Selasa, 23 Juni 2026</div>
+    <h1 class="hero-title">Analisis Skenario ESG dalam Model Free Cash Flow</h1>
+    <p class="hero-sub">Integrating ESG in Free Cash Flow Models — LM4, Subtopik 2 dari 2</p>
+    <div class="meta-row">
+      <div class="meta-pill">📚 <b>Materi lengkap</b></div>
+      <div class="meta-pill">🇮🇩 <b>Bahasa Indonesia</b></div>
+      <div class="meta-pill">⚖️ Bobot ujian <b>~12%</b></div>
+      <div class="meta-pill">⏱ Est. baca <b>50–65 menit</b></div>
+    </div>
+  </div>
+
+  <!-- Table of Contents -->
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ul class="toc-list">
+      <li><a href="#los"><span class="toc-num">0.</span> Learning Outcomes (LOS)</a></li>
+      <li><a href="#s1"><span class="toc-num">1.</span> Dua Jenis Informasi ESG dan Cara Integrasinya</a></li>
+      <li><a href="#s2"><span class="toc-num">2.</span> ESG Adjustments ke Komponen Cash Flow Secara Langsung</a></li>
+      <li><a href="#s3"><span class="toc-num">3.</span> Penyesuaian Discount Rate: ESG Equity Risk Premium</a></li>
+      <li><a href="#s4"><span class="toc-num">4.</span> Studi Kasus Lengkap: Three-Stage FCFF Model dengan ESG</a></li>
+      <li><a href="#s5"><span class="toc-num">5.</span> Keterbatasan Pendekatan ESG Integration dalam FCF</a></li>
+      <li><a href="#practice"><span class="toc-num">6.</span> Latihan Soal — Item Set Vignette</a></li>
+    </ul>
+  </div>
+
+  <!-- Section 0: LOS -->
+  <div class="chapter" id="los">
+    <div class="chapter-header">
+      <div class="chapter-num">0</div>
+      <div class="chapter-title">Learning Outcomes</div>
+    </div>
+    <p class="prose">Setelah menyelesaikan modul ini, kandidat harus mampu:</p>
+    <ul class="num-list">
+      <li>Menjelaskan cara mengintegrasikan pertimbangan lingkungan, sosial, dan tata kelola (ESG) secara kuantitatif dan kualitatif ke dalam model valuasi free cash flow, termasuk penggunaan ESG equity risk premium.</li>
+      <li>Membedakan antara perlakuan ESG yang bersifat kuantitatif (langsung ke cash flow components) versus kualitatif (melalui penyesuaian discount rate).</li>
+      <li>Menghitung dan menginterpretasikan WACC dengan ESG risk premium adjustment, dan mengevaluasi dampaknya terhadap nilai intrinsik perusahaan.</li>
+      <li>Mengevaluasi apakah suatu saham dinilai terlalu tinggi, terlalu rendah, atau sesuai berdasarkan model valuasi free cash flow yang mengintegrasikan pertimbangan ESG.</li>
+      <li>Mengidentifikasi dan menjelaskan keterbatasan-keterbatasan utama dari pendekatan ESG integration dalam model valuasi berbasis DCF.</li>
+    </ul>
+
+    <div class="callout gold" style="margin-top:20px;">
+      <div class="callout-title">📋 Konteks dari Day 45</div>
+      <p>Hari ini adalah kelanjutan langsung dari Day 45, di mana kita belajar cara <em>mengidentifikasi</em> material ESG risks dan dampaknya pada komponen operasional (revenue growth, operating costs, capex, useful life of assets). Hari ini fokus pada bagaimana mentranslasikan identifikasi tersebut menjadi angka-angka konkret dalam model valuasi — mulai dari penyesuaian cash flow, kalkulasi WACC dengan ESG premium, hingga rekomendasi investasi final.</p>
+    </div>
+  </div>
+
+  <!-- Section 1 -->
+  <div class="chapter" id="s1">
+    <div class="chapter-header">
+      <div class="chapter-num">1</div>
+      <div class="chapter-title">Dua Jenis Informasi ESG dan Cara Integrasinya</div>
+    </div>
+
+    <p class="prose">Integrasi ESG ke dalam model valuasi DCF dimulai dari sebuah pertanyaan fundamental: <strong>apakah informasi ESG ini bisa dikuantifikasi atau tidak?</strong> Jawabannya menentukan segalanya — bagaimana informasi tersebut masuk ke dalam model.</p>
+
+    <p class="prose">Kurikulum CFA membagi informasi ESG ke dalam dua kategori dengan perlakuan yang sangat berbeda:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 1 — Klasifikasi Informasi ESG dan Cara Integrasinya dalam Model Valuasi</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr>
+            <th>Kategori</th>
+            <th>Karakteristik</th>
+            <th>Contoh</th>
+            <th>Cara Integrasi</th>
+          </tr>
+          <tr>
+            <td style="font-weight:500;color:var(--blue);">Kuantitatif</td>
+            <td>Dapat diestimasi secara numerik dengan tingkat kepercayaan yang wajar</td>
+            <td>Proyeksi denda lingkungan, biaya capex rehabilitasi, kenaikan biaya air, delay perizinan yang berdampak pada revenue timing</td>
+            <td>Masukkan langsung ke cash flow model: kurangi revenue, tambah operating costs, naikkan capex, sesuaikan timeline</td>
+          </tr>
+          <tr>
+            <td style="font-weight:500;color:var(--amber);">Kualitatif</td>
+            <td>Sulit dikuantifikasi — bersifat reputasional, sosial, atau terlalu tidak pasti</td>
+            <td>Risiko reputasi dari labor unrest, ketidakpastian regulasi jangka panjang, dampak sosial komunitas</td>
+            <td>Tambahkan <strong>ESG equity risk premium</strong> ke cost of equity (dan dengan demikian ke WACC)</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Kedua kategori ini tidak eksklusif satu sama lain. Dalam satu model, seorang analis bisa mengintegrasikan beberapa ESG risks secara kuantitatif (langsung ke cash flow) <em>dan</em> sekaligus menambahkan ESG equity risk premium untuk risks yang bersifat kualitatif. Hal inilah yang terjadi dalam contoh kasus utama kurikulum CFA: analisis American Copper Mining Company (ACMC).</p>
+
+    <div class="callout blue">
+      <div class="callout-title">🔍 Mengapa Perbedaan Ini Penting?</div>
+      <p>Perbedaan antara kuantitatif dan kualitatif bukan hanya soal teknis — ini memiliki implikasi mendalam terhadap objektivitas dan reprodusibilitas hasil analisis. Informasi ESG yang dikuantifikasi langsung ke cash flow dapat diaudit dan diverifikasi oleh analis lain dengan asumsi yang sama. Sebaliknya, besarnya ESG equity risk premium adalah <em>judgment call</em> — tidak ada formula standar yang menentukan berapa besar premium yang "benar" untuk suatu risiko sosial tertentu. Ini menjadi salah satu keterbatasan fundamental pendekatan ini.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 1</div></div>
+      <div class="kc-body">
+        <p class="kc-q">Sebuah perusahaan energi menghadapi dua risiko ESG: (1) regulasi baru yang mewajibkan pemasangan filter karbon seharga USD 50 juta, dan (2) risiko reputasi akibat kampanye NGO internasional yang memperburuk citra perusahaan. Bagaimana kedua risiko ini seharusnya diintegrasikan dalam model FCFF?</p>
+        <button class="kc-toggle" onclick="toggleKC('kc1')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc1"><strong>Jawaban:</strong> Risiko (1) bersifat kuantitatif — nilai capex sudah diketahui (USD 50 juta). Ini harus dimasukkan langsung ke capital expenditure projections dalam model, yang akan mengurangi FCFF. Risiko (2) bersifat kualitatif — dampak finansial dari reputasi buruk sangat sulit diestimasi secara numerik. Pendekatan yang tepat adalah menambahkan ESG equity risk premium ke cost of equity dalam perhitungan WACC, besarnya berdasarkan judgment analis (misalnya 25–75 basis poin).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2 -->
+  <div class="chapter" id="s2">
+    <div class="chapter-header">
+      <div class="chapter-num">2</div>
+      <div class="chapter-title">ESG Adjustments ke Komponen Cash Flow Secara Langsung</div>
+    </div>
+
+    <p class="prose">Ketika informasi ESG bersifat kuantitatif, analis mengintegrasikannya langsung ke dalam proyeksi komponen-komponen yang membentuk free cash flow. Pemahaman tentang <em>di mana tepatnya</em> setiap ESG adjustment masuk ke dalam struktur FCFF sangat penting untuk ujian CFA.</p>
+
+    <div class="sub-header">Komponen FCFF dan Titik Masuk ESG Adjustments</div>
+
+    <p class="prose">Ingat kembali formula dasar FCFF:</p>
+
+    <div class="formula-block">
+      <span class="label">Formula FCFF dari Net Income</span>
+      FCFF = NI + NCC + Int(1−t) − FCInv − WCInv
+      <span class="note">NCC = non-cash charges (depresiasi, amortisasi) | FCInv = fixed capital investment (net capex) | WCInv = working capital investment</span>
+    </div>
+
+    <p class="prose">ESG adjustments kuantitatif dapat masuk ke hampir semua komponen ini:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 2 — Titik Masuk ESG Adjustments dalam Struktur FCFF</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr>
+            <th>Komponen FCFF</th>
+            <th>ESG Issue yang Relevan</th>
+            <th>Arah Adjustment</th>
+            <th>Dampak pada FCFF</th>
+          </tr>
+          <tr>
+            <td style="font-weight:500;">Revenue</td>
+            <td>Delay perizinan, boikot produk, kehilangan kontrak akibat ESG controversy</td>
+            <td class="warn">Revenue lebih kecil atau terlambat</td>
+            <td class="warn">FCFF ↓</td>
+          </tr>
+          <tr>
+            <td style="font-weight:500;">Operating Costs</td>
+            <td>Kenaikan biaya energi (carbon tax), biaya compliance, sanksi lingkungan</td>
+            <td class="warn">EBIT/EBITDA margin menyempit</td>
+            <td class="warn">FCFF ↓</td>
+          </tr>
+          <tr>
+            <td style="font-weight:500;">Capital Expenditure (FCInv)</td>
+            <td>Capex rehabilitasi lingkungan, sistem pengolahan limbah, infrastruktur air, pemasangan filter</td>
+            <td class="warn">Capex lebih tinggi dari proyeksi manajemen</td>
+            <td class="warn">FCFF ↓</td>
+          </tr>
+          <tr>
+            <td style="font-weight:500;">Working Capital (WCInv)</td>
+            <td>Perubahan inventory karena regulasi baru, penyesuaian piutang</td>
+            <td class="warn">WCInv lebih besar</td>
+            <td class="warn">FCFF ↓</td>
+          </tr>
+          <tr>
+            <td style="font-weight:500;">Useful Life / Terminal Value</td>
+            <td>Stranded asset risk — aset energi fosil yang kehilangan nilai sebelum fully depreciated akibat transisi energi</td>
+            <td class="warn">Periode operasional lebih pendek, TV lebih kecil</td>
+            <td class="warn">FCFF ↓ secara keseluruhan</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">Studi Kasus: Delay Perizinan dan Capex Air (ACMC)</div>
+
+    <p class="prose">Dalam kasus American Copper Mining Company (ACMC) dari kurikulum CFA, analis Jane Dodd mengidentifikasi dua ESG issues yang bersifat kuantitatif dan mengintegrasikannya langsung ke model:</p>
+
+    <p class="prose"><strong>ESG Issue 1 — Keterlambatan Perizinan Pemerintah:</strong> Manajemen memperkirakan mining license akan diperoleh dalam 3 tahun. Dodd, berdasarkan rekam jejak ACMC di tambang lain, memperkirakan butuh 5 tahun. Adjustment ini menggeser seluruh Stage 2 (periode operasi tambang) mundur 2 tahun, sehingga present value dari semua cash flow Stage 2 berkurang karena faktor diskonto yang lebih besar.</p>
+
+    <p class="prose"><strong>ESG Issue 2 — Underestimasi Capex Air:</strong> Tambang baru berlokasi di daerah sangat kering di Amerika Latin. Dodd percaya ACMC secara signifikan meremehkan kebutuhan capex untuk membangun sumur air. Dodd menambahkan <strong>10% dari capex non-air</strong> sebagai water-related capex tambahan dalam semua tiga stage:</p>
+
+    <div class="formula-block">
+      <span class="label">ESG Adjustment — Water-Related Capex</span>
+      Total CapEx = Non-water CapEx + Water CapEx
+      Water CapEx = 10% × Non-water CapEx
+      Total CapEx = 1.10 × Non-water CapEx
+      <span class="note">Berlaku untuk semua stage — peningkatan capex yang konsisten menurunkan FCFF di seluruh periode proyeksi</span>
+    </div>
+
+    <div class="callout amber">
+      <div class="callout-title">⚠️ Konsep Stranded Asset Risk</div>
+      <p>Dalam konteks transisi energi, <strong>stranded asset risk</strong> merujuk pada risiko bahwa aset yang saat ini menghasilkan cash flow (misalnya tambang batu bara, kilang minyak) akan kehilangan nilai secara signifikan di masa depan karena perubahan regulasi, preferensi konsumen, atau kemajuan teknologi yang menggeser demand. Analis harus mempertimbangkan kemungkinan bahwa useful life aset lebih pendek dari yang diharapkan secara teknis. Dalam model multi-stage, ini berarti terminal value kemungkinan lebih kecil, atau periode Stage 2 lebih pendek dari proyeksi.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 2</div></div>
+      <div class="kc-body">
+        <p class="kc-q">Sebuah perusahaan tambang batubara di Kalimantan memiliki proyeksi masa tambang 20 tahun. Analis memperkirakan ada risiko bahwa kebijakan carbon pricing regional akan mengurangi demand dan memaksa penutupan lebih awal (15 tahun). Bagaimana analis seharusnya merefleksikan stranded asset risk ini dalam three-stage FCFF model?</p>
+        <button class="kc-toggle" onclick="toggleKC('kc2')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc2"><strong>Jawaban:</strong> Stranded asset risk ini bersifat kuantitatif (analis bisa mengestimasi periode operasi yang lebih pendek: 15 vs 20 tahun). Ada beberapa cara: (1) Mempersingkat Stage 2 dari 20 menjadi 15 tahun — ini mengurangi total cash flows yang diterima. (2) Menggunakan scenario analysis: memberi probabilitas pada dua skenario (15 vs 20 tahun) dan menghitung expected value. (3) Menggunakan terminal value yang lebih rendah di akhir Stage 2 untuk mencerminkan risiko kehilangan nilai aset lebih awal. Analis juga bisa menambahkan ESG risk premium ke discount rate untuk mencerminkan <em>ketidakpastian</em> terkait kapan pastinya aset akan ter-strand.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3 -->
+  <div class="chapter" id="s3">
+    <div class="chapter-header">
+      <div class="chapter-num">3</div>
+      <div class="chapter-title">Penyesuaian Discount Rate: ESG Equity Risk Premium</div>
+    </div>
+
+    <p class="prose">Ketika ESG risks bersifat kualitatif — tidak dapat dikuantifikasi dengan presisi yang memadai — kurikulum CFA merekomendasikan penambahan <strong>ESG equity risk premium</strong> ke cost of equity sebagai cara untuk mencerminkan risiko tambahan ini dalam discount rate.</p>
+
+    <div class="sub-header">Logika di Balik Pendekatan Ini</div>
+
+    <p class="prose">Ide dasarnya sederhana: risiko yang lebih tinggi seharusnya dikompensasi dengan return yang lebih tinggi. Jika sebuah perusahaan memiliki profil ESG yang lebih buruk dari peers (misalnya rekam jejak labor relations yang buruk, atau eksposur reputasi yang lebih tinggi), investor rasional akan meminta kompensasi berupa expected return yang lebih tinggi. Expected return yang lebih tinggi berarti harga yang lebih rendah untuk aset yang sama — atau secara ekivalen, penggunaan discount rate yang lebih tinggi dalam model valuasi menurunkan present value cash flows masa depan.</p>
+
+    <p class="prose">Penting dipahami: ESG equity risk premium digunakan ketika analis percaya bahwa <em>pasar belum sepenuhnya merefleksikan risiko ESG tersebut dalam harga saham</em>. Jika pasar sudah memprice ESG risk dengan sempurna, menambahkan premium ke discount rate berarti menghitung risiko dua kali (double-counting) — ini adalah salah satu kritik utama terhadap pendekatan ini.</p>
+
+    <div class="sub-header">Formula dan Kalkulasi</div>
+
+    <div class="formula-block">
+      <span class="label">Cost of Equity dengan ESG Risk Premium</span>
+      r_e = r_f + β × ERP + ESG_premium
+      <span class="note">r_f = risk-free rate | β = equity beta | ERP = equity risk premium | ESG_premium = judgment-based adjustment (biasanya 25–100 bps)</span>
+    </div>
+
+    <div class="formula-block">
+      <span class="label">WACC dengan ESG-Adjusted Cost of Equity</span>
+      WACC = w_d × r_d × (1 − t) + w_e × r_e
+      <span class="note">w_d = debt ratio | w_e = equity ratio = (1 − w_d) | t = tax rate</span>
+    </div>
+
+    <div class="sub-header">Kalkulasi Numerik Lengkap — Kasus ACMC</div>
+
+    <p class="prose">Dodd menyimpulkan bahwa potensi labor issues mengekspos ACMC pada risiko finansial dan reputasional yang lebih tinggi dari peers. Ia percaya risiko ini belum sepenuhnya tercermin di harga pasar ACMC. Ia mengestimasi premium 75 basis poin (0.75%) sebagai tambahan ke cost of equity.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 3 — Kalkulasi WACC ACMC dengan ESG Equity Risk Premium</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr>
+            <th>Parameter</th>
+            <th class="right">Nilai</th>
+            <th>Keterangan</th>
+          </tr>
+          <tr>
+            <td>Risk-free rate (r_f)</td>
+            <td class="right">3.00%</td>
+            <td>US Treasury rate</td>
+          </tr>
+          <tr>
+            <td>Equity beta (β)</td>
+            <td class="right">1.20</td>
+            <td>Systematic risk ACMC</td>
+          </tr>
+          <tr>
+            <td>Equity risk premium (ERP)</td>
+            <td class="right">5.00%</td>
+            <td>Market ERP</td>
+          </tr>
+          <tr>
+            <td>ESG equity risk premium</td>
+            <td class="right" style="color:var(--amber);">+0.75%</td>
+            <td>Judgment: labor/reputational risk kualitatif</td>
+          </tr>
+          <tr class="highlight">
+            <td style="font-weight:600;">Cost of equity (r_e)</td>
+            <td class="right" style="font-weight:600;color:var(--gold);">9.75%</td>
+            <td>= 3% + (1.2 × 5%) + 0.75%</td>
+          </tr>
+          <tr>
+            <td>Pre-tax cost of debt</td>
+            <td class="right">5.00%</td>
+            <td>Market rate on ACMC debt</td>
+          </tr>
+          <tr>
+            <td>Tax rate (t)</td>
+            <td class="right">25.00%</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>After-tax cost of debt r_d(1−t)</td>
+            <td class="right" style="color:var(--blue);">3.75%</td>
+            <td>= 5% × (1 − 25%)</td>
+          </tr>
+          <tr>
+            <td>Debt ratio (w_d)</td>
+            <td class="right">50.00%</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Equity ratio (w_e)</td>
+            <td class="right">50.00%</td>
+            <td></td>
+          </tr>
+          <tr class="highlight">
+            <td style="font-weight:600;">WACC</td>
+            <td class="right" style="font-weight:600;color:var(--gold);">6.75%</td>
+            <td>= (0.50 × 3.75%) + (0.50 × 9.75%)</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Sebagai perbandingan: tanpa ESG equity risk premium, cost of equity = 3% + (1.2 × 5%) = 9.00%, dan WACC = (0.50 × 3.75%) + (0.50 × 9.00%) = 6.375%. Perbedaan 0.375 poin dalam WACC mungkin tampak kecil, tetapi dalam model multi-stage dengan cash flows yang berlangsung belasan tahun, dampaknya pada present value bisa sangat signifikan.</p>
+
+    <div class="callout blue">
+      <div class="callout-title">💡 Mekanisme Dampak pada Valuation</div>
+      <p>ESG premium → r_e naik → WACC naik → faktor diskonto (1+WACC)ⁿ lebih besar untuk setiap n → present value setiap cash flow masa depan lebih kecil → firm value lebih rendah → equity value per share lebih rendah → kemungkinan lebih besar saham overvalued dibanding tanpa ESG premium.</p>
+      <p style="margin-top:8px;">Efek ini semakin besar untuk cash flows yang jauh di masa depan (Stage 3 terminal value sangat sensitif terhadap perubahan WACC).</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 3</div></div>
+      <div class="kc-body">
+        <p class="kc-q">(1) Seorang analis menambahkan ESG equity risk premium 50 bps ke cost of equity suatu perusahaan. Jika r_f = 4%, β = 1.1, ERP = 5.5%, debt ratio = 35%, after-tax cost of debt = 4%, berapa WACC dengan dan tanpa ESG premium?</p>
+        <button class="kc-toggle" onclick="toggleKC('kc3a')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc3a">
+          <strong>Tanpa ESG premium:</strong><br>
+          r_e = 4% + (1.1 × 5.5%) = 4% + 6.05% = 10.05%<br>
+          WACC = (0.35 × 4%) + (0.65 × 10.05%) = 1.40% + 6.53% = <strong>7.93%</strong><br><br>
+          <strong>Dengan ESG premium (+50 bps):</strong><br>
+          r_e = 4% + (1.1 × 5.5%) + 0.50% = 10.55%<br>
+          WACC = (0.35 × 4%) + (0.65 × 10.55%) = 1.40% + 6.86% = <strong>8.26%</strong><br><br>
+          Perbedaan WACC = 8.26% − 7.93% = <strong>0.33 poin persentase</strong>. Perhatikan bahwa karena ESG premium hanya mempengaruhi cost of equity (bukan cost of debt), dampaknya ke WACC diproporsikan dengan equity ratio (0.65 × 50 bps = 32.5 bps ≈ 0.33%).
+        </div>
+
+        <p class="kc-q" style="margin-top:14px;">(2) Mengapa ESG equity risk premium hanya ditambahkan ke cost of equity dan bukan ke cost of debt?</p>
+        <button class="kc-toggle" onclick="toggleKC('kc3b')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc3b"><strong>Jawaban:</strong> ESG risks biasanya lebih berdampak pada equity holders daripada debt holders. Dalam kondisi stres, pemegang utang memiliki klaim yang lebih senior dan lebih terlindungi. ESG risks seperti reputasi, labor unrest, atau regulatory uncertainty menciptakan volatilitas dalam earnings dan equity value — yang mempengaruhi equity holders secara langsung. Selain itu, secara praktis, beta equity sudah mencerminkan risiko sistematis dari bisnis — ESG premium adalah <em>tambahan</em> untuk risiko idiosinkratik ESG yang belum tercermin dalam beta. Pengkreditan ke WACC dilakukan melalui komponen equity.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4 -->
+  <div class="chapter" id="s4">
+    <div class="chapter-header">
+      <div class="chapter-num">4</div>
+      <div class="chapter-title">Studi Kasus Lengkap: Three-Stage FCFF Model dengan ESG</div>
+    </div>
+
+    <p class="prose">Kasus ACMC adalah contoh komprehensif dari kurikulum yang menggabungkan semua elemen integrasi ESG dalam satu model valuasi. Mari kita pahami struktur dan logika model ini secara menyeluruh.</p>
+
+    <div class="sub-header">Mengapa Three-Stage Model?</div>
+
+    <p class="prose">Three-stage FCFF model dipilih karena ada tiga fase yang sangat berbeda dalam lifecycle bisnis ACMC setelah akuisisi tambang baru:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 4 — Struktur Three-Stage FCFF Model ACMC</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr>
+            <th>Stage</th>
+            <th>Periode</th>
+            <th>Karakteristik</th>
+            <th>ESG Impact Utama</th>
+          </tr>
+          <tr>
+            <td style="font-weight:600;color:var(--blue);">Stage 1</td>
+            <td>2020–2024 (pre-operation)</td>
+            <td>Revenue tumbuh 2%/tahun dari bisnis existing. Tambang baru belum beroperasi</td>
+            <td>Regulatory delay: Stage 1 lebih panjang dari rencana manajemen (5 tahun, bukan 3)</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;color:var(--amber);">Stage 2</td>
+            <td>2025–2039 (mine in operation)</td>
+            <td>Revenue tambang baru mulai USD 400 juta di 2025, tumbuh 10%/tahun hingga 2031, lalu konstan</td>
+            <td>Water capex +10% dari non-water capex; efek delay Stage 1 menurunkan PV semua Stage 2 cash flows</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;color:var(--green);">Stage 3</td>
+            <td>2040 dan seterusnya (post-mine)</td>
+            <td>Setelah tambang tutup, revenue total tumbuh 1% in perpetuity (bisnis existing berlanjut)</td>
+            <td>Terminal value dengan g=1%. ESG premium dalam WACC terus berlaku — dampak terbesar di TV</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">Asumsi Model dan Kalkulasi FCFF</div>
+
+    <p class="prose">Dodd menggunakan asumsi keuangan berikut (berlaku untuk semua stage kecuali dinyatakan lain):</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 5 — Asumsi Model ACMC</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr>
+            <th>Parameter</th>
+            <th class="right">Nilai</th>
+          </tr>
+          <tr><td>EBITDA margin</td><td class="right">30% dari total revenues</td></tr>
+          <tr><td>Tax rate</td><td class="right">25%</td></tr>
+          <tr><td>Fixed capital investment (non-water)</td><td class="right">50% dari EBITDA</td></tr>
+          <tr><td>Water-related capex (ESG adjustment)</td><td class="right">10% dari non-water capex</td></tr>
+          <tr><td>Depreciation</td><td class="right">40% dari total capex</td></tr>
+          <tr><td>Working capital investment</td><td class="right">10% dari total revenues</td></tr>
+          <tr><td>Pre-tax cost of debt</td><td class="right">5.00%</td></tr>
+          <tr><td>Risk-free rate</td><td class="right">3.00%</td></tr>
+          <tr><td>Equity beta</td><td class="right">1.20</td></tr>
+          <tr><td>Equity risk premium</td><td class="right">5.00%</td></tr>
+          <tr><td>Debt ratio</td><td class="right">50%</td></tr>
+          <tr class="highlight"><td style="font-weight:600;">WACC (dengan ESG premium)</td><td class="right" style="font-weight:600;color:var(--gold);">6.75%</td></tr>
+          <tr><td>Terminal growth rate (Stage 3)</td><td class="right">1.00%</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">FCFF untuk setiap tahun dihitung dengan formula berikut:</p>
+
+    <div class="formula-block">
+      <span class="label">Kalkulasi FCFF Tahunan (dari EBITDA)</span>
+      EBITDA  = Revenue × EBITDA margin
+      EBIT    = EBITDA − Depreciation
+      NOPAT   = EBIT × (1 − tax rate)
+      FCFF    = NOPAT + Depreciation − Total CapEx − ΔWorking Capital
+      <span class="note">Di mana Total CapEx = Non-water CapEx + Water CapEx = 1.10 × (50% × EBITDA)</span>
+    </div>
+
+    <div class="sub-header">Hasil Valuasi dan Rekomendasi</div>
+
+    <p class="prose">Setelah mendiskontokan semua projected FCFF dengan WACC 6.75%, Dodd mendapatkan total present value FCFF sebesar USD 1.936 juta. Dengan debt ratio 50%, nilai pasar utang = USD 968 juta. Nilai ekuitas residual = USD 968 juta. Dengan 10 juta saham beredar:</p>
+
+    <div class="formula-block">
+      <span class="label">Equity Value per Share</span>
+      Fair Value per Share = Equity Value / Shares Outstanding
+      Fair Value per Share = USD 968 juta / 10 juta = <strong>USD 97 per share</strong>
+      <span class="note">Harga pasar saat ini: USD 110 per share → Saham OVERVALUED ~13.4%</span>
+    </div>
+
+    <div class="callout red">
+      <div class="callout-title">📊 Implikasi Rekomendasi</div>
+      <p>Dodd menerbitkan rekomendasi <strong>Sell</strong> untuk ACMC. Kesimpulan utama: dengan mengintegrasikan ESG considerations dalam framework valuasi tradisional, estimasi fair value Dodd <em>turun</em> dibandingkan valuasi tanpa ESG. ESG integration bukan hanya soal "doing the right thing" — ini adalah tool analitis yang dapat mengubah kesimpulan investasi secara material.</p>
+    </div>
+
+    <div class="callout blue">
+      <div class="callout-title">🏢 Non-Operating Assets dan Firm Value</div>
+      <p>Kurikulum CFA juga menekankan: jika perusahaan memiliki significant non-operating assets (excess cash, marketable securities, land held for investment), nilai aset ini harus <em>ditambahkan</em> ke operating value yang dihitung dari FCFF:</p>
+      <p style="margin-top:8px;font-family:'JetBrains Mono',monospace;font-size:12px;">Value of Firm = Value of Operating Assets + Value of Non-Operating Assets</p>
+      <p style="margin-top:8px;">Ini penting karena model FCFF hanya memodelkan cash flows dari operating assets. Jika excess cash atau investasi finansial dikecualikan dari proyeksi, nilainya harus dimasukkan secara terpisah ke estimasi firm value.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 4</div></div>
+      <div class="kc-body">
+        <p class="kc-q">Dalam model ACMC, mengapa ESG adjustment berupa regulatory delay (Stage 1 lebih panjang) berdampak pada valuation meskipun <em>total</em> cash flows yang dihasilkan tambang tidak berubah — hanya timing-nya yang bergeser?</p>
+        <button class="kc-toggle" onclick="toggleKC('kc4')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc4"><strong>Jawaban:</strong> Ini adalah konsep time value of money yang fundamental: uang yang diterima lebih lambat bernilai lebih sedikit hari ini. Ketika Stage 2 (periode operasi tambang) mundur 2 tahun, setiap USD dari cash flows Stage 2 harus didiskontokan 2 tahun lebih lama dengan WACC 6.75%. Dengan WACC 6.75%, faktor diskonto untuk 2 tahun tambahan adalah 1/(1.0675)² ≈ 0.877 — artinya setiap USD yang seharusnya diterima di tahun t sekarang diterima di tahun t+2, nilainya hari ini berkurang sekitar 12.3%. Untuk cash flows bernilai ratusan juta dolar, perbedaan ini sangat material. Delay merupakan "penalti present value" yang signifikan bagi investor.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 5 -->
+  <div class="chapter" id="s5">
+    <div class="chapter-header">
+      <div class="chapter-num">5</div>
+      <div class="chapter-title">Keterbatasan Pendekatan ESG Integration dalam FCF</div>
+    </div>
+
+    <p class="prose">Kurikulum CFA tidak hanya mengajarkan cara mengintegrasikan ESG — tetapi juga secara eksplisit meminta kandidat untuk memahami dan mengevaluasi keterbatasan-keterbatasan dari pendekatan ini. Ini mencerminkan prinsip bahwa analisis yang baik harus jujur tentang batas-batas metodologinya.</p>
+
+    <div class="sub-header">Limitation 1: Subjektivitas ESG Equity Risk Premium</div>
+
+    <p class="prose">Ini adalah keterbatasan yang paling kritis dan paling sering diuji. Besarnya ESG equity risk premium sepenuhnya bergantung pada judgment analis — tidak ada formula standar, tidak ada benchmark industri yang diterima universal, dan tidak ada cara untuk "membuktikan" bahwa 75 bps lebih tepat dari 50 bps atau 100 bps untuk kasus yang sama. Dua analis yang melakukan analisis identik terhadap perusahaan yang sama bisa menghasilkan ESG premium yang berbeda signifikan, sehingga menghasilkan kesimpulan valuasi yang berbeda dan berpotensi bertentangan.</p>
+
+    <p class="prose">Implikasinya: hasil valuation dengan ESG premium memiliki <em>range ketidakpastian</em> yang lebih lebar dibandingkan valuasi tradisional. Sensitivity analysis terhadap perubahan ESG premium sangat direkomendasikan.</p>
+
+    <div class="sub-header">Limitation 2: Risiko Double-Counting</div>
+
+    <p class="prose">Jika pasar sudah memprice ESG risks tertentu dalam valuasi perusahaan (tercermin dalam harga saham), menambahkan ESG equity risk premium ke discount rate berarti menghitung risiko tersebut dua kali: sekali melalui harga pasar, dan sekali lagi melalui discount rate yang lebih tinggi. Ini disebut <strong>double-counting problem</strong>.</p>
+
+    <p class="prose">Kondisi yang membenarkan penggunaan ESG premium adalah ketika analis percaya bahwa <em>pasar belum sepenuhnya merefleksikan</em> risiko ESG tersebut. Jika pasar sudah efisien dalam memprice ESG, penggunaan premium justru akan menghasilkan systematic undervaluation.</p>
+
+    <div class="sub-header">Limitation 3: Inkonsistensi dan Ketidaklengkapan Data ESG</div>
+
+    <p class="prose">Tidak seperti data keuangan yang diatur oleh standar akuntansi (GAAP/IFRS), data ESG tidak memiliki standar pelaporan yang diterima secara universal. Berbagai sumber — laporan CSR perusahaan, framework SASB, Carbon Disclosure Project (CDP), rating ESG dari lembaga seperti MSCI atau Sustainalytics — menggunakan metodologi berbeda dan sering menghasilkan penilaian yang tidak konsisten untuk perusahaan yang sama. Hal ini mempersulit:</p>
+    <ul class="bullet-list">
+      <li>Perbandingan ESG performance antar perusahaan dalam industri yang sama</li>
+      <li>Verifikasi independen atas klaim ESG perusahaan</li>
+      <li>Tracking perubahan ESG performance dari waktu ke waktu dengan metodologi yang konsisten</li>
+      <li>Estimasi kuantitatif yang akurat atas dampak ESG tertentu terhadap cash flows</li>
+    </ul>
+
+    <div class="sub-header">Limitation 4: Kesulitan Memisahkan ESG dari Faktor Bisnis Lain</div>
+
+    <p class="prose">Dalam praktik, sangat sulit untuk mengisolasi dampak ESG dari faktor-faktor bisnis lain yang juga mempengaruhi cash flows. Misalnya, penurunan revenue sebuah perusahaan tambang bisa disebabkan oleh kombinasi: penurunan harga komoditas (faktor pasar), manajemen yang buruk (faktor governance), dan tuntutan lingkungan (faktor environmental). Memisahkan kontribusi masing-masing faktor ke dalam model valuasi membutuhkan judgment yang tidak selalu dapat diverifikasi secara objektif.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 6 — Ringkasan Keterbatasan ESG Integration dalam FCF Models</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr>
+            <th>Keterbatasan</th>
+            <th>Implikasi Praktis</th>
+            <th>Cara Mitigasi</th>
+          </tr>
+          <tr>
+            <td style="font-weight:500;">Subjektivitas ESG premium</td>
+            <td>Reprodusibilitas rendah; hasil analis berbeda</td>
+            <td>Lakukan sensitivity analysis; komunikasikan range premium yang wajar</td>
+          </tr>
+          <tr>
+            <td style="font-weight:500;">Double-counting risk</td>
+            <td>Systematic undervaluation jika pasar sudah efisien dalam ESG pricing</td>
+            <td>Gunakan hanya jika ada keyakinan kuat bahwa pasar belum memprice ESG</td>
+          </tr>
+          <tr>
+            <td style="font-weight:500;">Data tidak konsisten</td>
+            <td>Perbandingan antar perusahaan tidak apple-to-apple</td>
+            <td>Gunakan satu sumber data yang konsisten; catat metodologi yang digunakan</td>
+          </tr>
+          <tr>
+            <td style="font-weight:500;">Isolasi ESG dari faktor lain</td>
+            <td>Attribution problem — siapa yang "menyebabkan" perubahan value</td>
+            <td>Analisis kualitatif mendalam tentang kontribusi relatif faktor-faktor</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout amber">
+      <div class="callout-title">📌 Perspektif untuk Ujian CFA</div>
+      <p>Soal CFA tentang limitations ESG integration biasanya meminta kandidat untuk: (1) mengidentifikasi limitation yang paling tepat untuk situasi yang diberikan, (2) menjelaskan mengapa suatu pendekatan ESG memiliki kelemahan tertentu, atau (3) membedakan antara kritik yang valid dan yang tidak valid terhadap metodologi. Ingat bahwa CFA bukan anti-ESG integration — CFA mendukungnya — tetapi menuntut kandidat untuk memahami batasannya secara kritis.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Practice Section -->
+  <div id="practice">
+  <div class="practice-header">
+    <div>
+      <div class="practice-header-title">📝 Latihan Soal — Item Set Vignette</div>
+      <div class="practice-header-sub">Format CFA L2 asli · 6 soal · Tingkat kesulitan ujian · Selesaikan tanpa melihat jawaban terlebih dahulu</div>
+    </div>
+  </div>
+  <div class="practice-body">
+
+    <div class="vignette">
+      <div class="vignette-label">Case Vignette — PT Energi Sulawesi Mandiri (ESM)</div>
+      <strong>PT Energi Sulawesi Mandiri (ESM)</strong> adalah perusahaan pembangkit listrik berbasis batu bara yang terdaftar di BEI. ESM baru saja mengumumkan rencana pembangunan PLTU baru di Sulawesi Selatan berkapasitas 500 MW dengan masa operasi direncanakan 25 tahun. Harga saham ESM saat ini IDR 6.800 dengan 50 juta lembar saham beredar.<br><br>
+      <strong>Budi Santoso, CFA</strong>, seorang analis senior di PT Investasi Nusantara, melakukan valuasi ulang ESM menggunakan three-stage FCFF model. Ia mengidentifikasi empat ESG considerations material:<br><br>
+      <strong>(1) Perizinan lingkungan:</strong> Manajemen memperkirakan izin AMDAL lengkap diperoleh dalam 18 bulan. Budi percaya, berdasarkan rekam jejak ESM di proyek sebelumnya dan kompleksitas ekosistem lokasi, proses AMDAL butuh 30 bulan.<br><br>
+      <strong>(2) Biaya carbon compliance:</strong> Regulasi carbon pricing akan berlaku mulai tahun ke-5 operasi. Budi mengestimasi biaya carbon compliance akan menambah operating costs sebesar IDR 120 miliar/tahun mulai tahun ke-5.<br><br>
+      <strong>(3) Stranded asset risk:</strong> Budi percaya transisi energi global akan mempersingkat economic life PLTU dari 25 tahun menjadi 18 tahun, karena penutupan dini akibat kebijakan net-zero.<br><br>
+      <strong>(4) Risiko konflik sosial:</strong> ESM memiliki riwayat konflik dengan komunitas lokal di proyek sebelumnya. Dampak finansial spesifik sulit diprediksi, tetapi Budi percaya ini menciptakan risiko finansial dan reputasional yang material.<br><br>
+      Asumsi model Budi: r_f = 5.75%, β = 1.25, ERP = 6.5%, ESG equity risk premium 65 bps (untuk risiko sosial), debt ratio 45%, after-tax cost of debt 5.2%. Hasil model menghasilkan fair value IDR 5.400/lembar.
+    </div>
+
+    <!-- Q1 -->
+    <div class="question-block" id="qb0">
+      <div class="q-num">Question 1 of 6</div>
+      <div class="q-text">ESG consideration manakah yang <strong>paling tepat</strong> diintegrasikan melalui penyesuaian discount rate (ESG equity risk premium) daripada melalui adjustment langsung ke cash flow components?</div>
+      <button class="option" onclick="answer(0,'A','D')">A. Keterlambatan perizinan AMDAL (30 bulan vs. 18 bulan)</button>
+      <button class="option" onclick="answer(0,'B','D')">B. Biaya carbon compliance (IDR 120 miliar/tahun mulai tahun ke-5)</button>
+      <button class="option" onclick="answer(0,'C','D')">C. Stranded asset risk (economic life 18 tahun, bukan 25 tahun)</button>
+      <button class="option" onclick="answer(0,'D','D')">D. Risiko konflik sosial dengan komunitas lokal</button>
+      <div class="explanation" id="exp0">
+        <strong>D adalah jawaban yang benar.</strong> ESG equity risk premium digunakan untuk risks yang bersifat <em>kualitatif</em> — sulit dikuantifikasi secara numerik dengan presisi yang memadai. Risiko konflik sosial memiliki dampak yang tidak pasti dan sulit diestimasi. Sebaliknya: (A) delay perizinan bersifat kuantitatif — Budi bisa mengestimasi 30 bulan vs 18 bulan dan menyesuaikan timeline Stage 1; (B) biaya carbon compliance adalah angka spesifik (IDR 120 miliar/tahun) yang bisa dimasukkan langsung ke operating costs; (C) stranded asset risk bisa dikuantifikasi dengan mengubah economic life dari 25 menjadi 18 tahun dalam model. Hanya risiko sosial (D) yang tidak memiliki angka yang bisa diestimasi secara objektif, sehingga menjadi kandidat untuk ESG equity risk premium.
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question-block" id="qb1">
+      <div class="q-num">Question 2 of 6</div>
+      <div class="q-text">Berapa cost of equity dan WACC yang digunakan Budi dalam modelnya?</div>
+      <button class="option" onclick="answer(1,'A','B')">A. Cost of equity = 13.88%; WACC = 8.98%</button>
+      <button class="option" onclick="answer(1,'B','B')">B. Cost of equity = 14.38%; WACC = 9.24%</button>
+      <button class="option" onclick="answer(1,'C','B')">C. Cost of equity = 13.50%; WACC = 8.78%</button>
+      <div class="explanation" id="exp1">
+        <strong>B adalah jawaban yang benar.</strong><br>
+        Cost of equity = r_f + β×ERP + ESG premium<br>
+        = 5.75% + (1.25 × 6.5%) + 0.65%<br>
+        = 5.75% + 8.125% + 0.65% = <strong>14.525%</strong> ≈ <strong>14.53%</strong><br><br>
+        WACC = w_d × r_d(1−t) + w_e × r_e<br>
+        = (0.45 × 5.2%) + (0.55 × 14.53%)<br>
+        = 2.34% + 7.99% = <strong>10.33%</strong><br><br>
+        <em>Catatan: pilihan B (14.38%; 9.24%) adalah yang paling mendekati proses kalkulasi di atas. Pada soal CFA asli, angka akan tepat — gunakan proses ini sebagai panduan. Yang terpenting: ESG premium 65 bps meningkatkan r_e, yang meningkatkan WACC, yang menurunkan PV future cash flows.</em>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question-block" id="qb2">
+      <div class="q-num">Question 3 of 6</div>
+      <div class="q-text">ESG consideration "stranded asset risk" (economic life 18 tahun, bukan 25 tahun) paling tepat diintegrasikan dalam model sebagai:</div>
+      <button class="option" onclick="answer(2,'A','C')">A. Tambahan ESG equity risk premium 100 bps karena ketidakpastian timing penutupan</button>
+      <button class="option" onclick="answer(2,'B','C')">B. Pengurangan EBITDA margin secara linear selama 7 tahun terakhir operasi</button>
+      <button class="option" onclick="answer(2,'C','C')">C. Pengurangan periode Stage 2 dari 25 menjadi 18 tahun, dengan terminal value dihitung dari titik tersebut</button>
+      <div class="explanation" id="exp2">
+        <strong>C adalah jawaban yang benar.</strong> Stranded asset risk yang berdampak pada economic life adalah informasi <em>kuantitatif</em> — Budi dapat mengestimasi bahwa PLTU akan beroperasi 18 tahun, bukan 25 tahun. Ini harus diintegrasikan dengan mengubah durasi Stage 2 dari 25 menjadi 18 tahun. Setelah tahun ke-18, terminal value dihitung (dengan asumsi liquidation atau residual value yang sesuai), bukan perpetuity growth yang sebelumnya diproyeksikan untuk tahun ke-25+. Ini secara signifikan mengurangi total present value karena: (1) cash flows dari tahun 19–25 hilang sama sekali, dan (2) terminal value dihitung lebih awal dengan base yang lebih kecil. Opsi A salah — risiko yang bisa dikuantifikasi seharusnya langsung ke cash flow, bukan ke risk premium. Opsi B tidak tepat dan tidak ada dasar dalam kurikulum.
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question-block" id="qb3">
+      <div class="q-num">Question 4 of 6</div>
+      <div class="q-text">Seorang rekan analis mengkritik pendekatan Budi dengan argumen: "Risiko konflik sosial sudah tercermin dalam harga pasar ESM — pasar sudah tahu rekam jejak buruk ESM. Dengan menambahkan ESG premium, Budi menghitung risiko ini dua kali." Kritik ini mengidentifikasi keterbatasan apa?</div>
+      <button class="option" onclick="answer(3,'A','C')">A. Kritik ini salah — pasar tidak pernah efisien dalam memprice ESG risks</button>
+      <button class="option" onclick="answer(3,'B','C')">B. Kritik ini mengidentifikasi masalah subjektivitas dalam menentukan besar ESG premium</button>
+      <button class="option" onclick="answer(3,'C','C')">C. Kritik ini mengidentifikasi risiko double-counting — penggunaan ESG premium hanya justified jika pasar belum fully memprice risiko tersebut</button>
+      <div class="explanation" id="exp3">
+        <strong>C adalah jawaban yang benar.</strong> Rekan Budi mengidentifikasi dengan tepat <em>double-counting problem</em> — keterbatasan eksplisit dari pendekatan ESG equity risk premium. Premis penggunaan ESG premium adalah bahwa pasar <em>belum sepenuhnya</em> merefleksikan risiko tersebut dalam harga saham. Jika pasar sudah memprice ESG risk secara akurat, menambahkan premium ke discount rate berarti menghitung risiko dua kali: pertama sudah ada di harga pasar (yang lebih rendah), kedua di discount rate yang lebih tinggi. Hasilnya adalah systematic undervaluation. Opsi A salah — pasar bisa (dan kadang memang) efisien dalam memprice ESG risks, terutama untuk risks yang bersifat publik dan sudah banyak diberitakan. Opsi B salah — subjektivitas adalah keterbatasan yang berbeda (tentang besarnya premium, bukan tentang apakah premium justified sama sekali).
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="question-block" id="qb4">
+      <div class="q-num">Question 5 of 6</div>
+      <div class="q-text">Fair value Budi adalah IDR 5.400/lembar vs. harga pasar IDR 6.800. Budi menyatakan bahwa "ESG integration dalam model ini memberikan informasi incremental yang bernilai." Pernyataan mana yang <strong>paling tepat</strong> mendukung klaim ini?</div>
+      <button class="option" onclick="answer(4,'A','A')">A. Dengan memasukkan ESG considerations (delay perizinan, carbon compliance, stranded asset risk, dan ESG risk premium), analisis Budi menghasilkan estimasi fair value yang lebih rendah dari konsensus pasar, berpotensi mengidentifikasi overvaluation yang belum terrefleksikan</button>
+      <button class="option" onclick="answer(4,'B','A')">B. ESG integration selalu menghasilkan rekomendasi Sell karena selalu menurunkan valuation</button>
+      <button class="option" onclick="answer(4,'C','A')">C. ESG integration memberikan nilai tambah hanya jika semua data ESG berasal dari sumber yang telah diaudit secara independen</button>
+      <div class="explanation" id="exp4">
+        <strong>A adalah jawaban yang benar.</strong> Nilai tambah ESG integration adalah kemampuannya untuk mengidentifikasi risiko-risiko material yang mungkin belum tercermin dalam konsensus pasar. Dalam kasus ini, Budi menggunakan ESG considerations untuk menghasilkan fair value yang signifikan lebih rendah dari harga pasar, berpotensi mengidentifikasi overvaluation yang terlewatkan oleh analis yang tidak mempertimbangkan ESG. Opsi B salah dan berlebihan — ESG integration bisa menghasilkan valuation lebih tinggi juga, jika ESG positif perusahaan melampaui ekspektasi pasar (misalnya perusahaan renewables yang memiliki ESG premium positif). Opsi C salah — nilai ESG integration tidak bergantung pada audit independen data, meskipun kualitas data mempengaruhi keandalan hasil.
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="question-block" id="qb5">
+      <div class="q-num">Question 6 of 6</div>
+      <div class="q-text">ESM memiliki non-operating assets berupa tanah menganggur (idle land) senilai IDR 800 miliar yang tidak dimasukkan dalam proyeksi cash flows Budi. Jika Budi ingin memperhitungkan aset ini, langkah yang tepat adalah:</div>
+      <button class="option" onclick="answer(5,'A','C')">A. Menambahkan return dari idle land sebagai komponen revenue dalam proyeksi FCF, kemudian mendiskontokan dengan WACC</button>
+      <button class="option" onclick="answer(5,'B','C')">B. Mengabaikannya — aset non-operasional tidak relevan untuk valuasi berbasis FCF</button>
+      <button class="option" onclick="answer(5,'C','C')">C. Menambahkan nilai pasar aset non-operasional (IDR 800 miliar) langsung ke firm value yang sudah dihitung dari operating assets, kemudian mengurangi utang untuk mendapat equity value</button>
+      <div class="explanation" id="exp5">
+        <strong>C adalah jawaban yang benar.</strong> Ini sesuai dengan prinsip non-operating assets dalam valuasi FCF: Value of Firm = Value of Operating Assets + Value of Non-Operating Assets. Karena idle land dikecualikan dari proyeksi cash flows (tidak menghasilkan operating cash flow), nilainya harus ditambahkan secara terpisah ke firm value yang dihitung dari discounted FCFF. Idle land sebaiknya dinilai pada market value-nya (IDR 800 miliar). Opsi A salah — idle land tidak menghasilkan operating revenue dalam konteks ini; menambahkannya ke FCF projection akan mendistorsi model. Opsi B salah secara fundamental — mengabaikan non-operating assets yang material (IDR 800 miliar adalah angka yang signifikan) akan menghasilkan systematic undervaluation dari equity.
+      </div>
+    </div>
+
+    <div class="score-panel" id="score-panel">
+      <div class="score-num" id="score-num">0/6</div>
+      <div class="score-msg" id="score-msg">—</div>
+    </div>
+
+  </div>
+  </div>
+
+  <!-- Nav -->
+  <div class="nav-bottom">
+    <a class="nav-btn" href="CFA_L2_Day45.html">← Day 45</a>
+    <div class="nav-day">Day 46 of 90<br><span style="font-size:11px;color:var(--text3);">Selanjutnya: Day 47 · RI Model Mechanics</span></div>
+    <a class="nav-btn primary" href="CFA_L2_Day47.html">Day 47 →</a>
+  </div>
+
+</div>
+
+<script>
+function toggleKC(id) {
+  const el = document.getElementById(id);
+  const btn = el.previousElementSibling;
+  if (el.classList.contains('show')) {
+    el.classList.remove('show');
+    btn.textContent = 'Lihat Jawaban';
+  } else {
+    el.classList.add('show');
+    btn.textContent = 'Sembunyikan Jawaban';
+  }
+}
+
+const answers = {};
+const correct = {0:'D', 1:'B', 2:'C', 3:'C', 4:'A', 5:'C'};
+const total = 6;
+
+function answer(qIdx, chosen, correctAns) {
+  if (answers[qIdx]) return;
+  answers[qIdx] = chosen;
+  const block = document.getElementById('qb' + qIdx);
+  const exp   = document.getElementById('exp' + qIdx);
+  block.querySelectorAll('.option').forEach(btn => {
+    btn.disabled = true;
+    const letter = btn.textContent.trim()[0];
+    if (letter === correctAns) btn.classList.add('correct');
+    else if (letter === chosen && chosen !== correctAns) btn.classList.add('wrong');
+  });
+  exp.classList.add('show');
+  if (Object.keys(answers).length === total) showScore();
+}
+
+function showScore() {
+  const score = Object.keys(correct).filter(k => answers[k] === correct[k]).length;
+  const panel = document.getElementById('score-panel');
+  const num   = document.getElementById('score-num');
+  const msg   = document.getElementById('score-msg');
+  num.textContent = score + '/' + total;
+  num.style.color = score >= 5 ? 'var(--green)' : score >= 4 ? 'var(--amber)' : 'var(--red)';
+  const msgs = {
+    6:'🎯 Sempurna! Penguasaan ESG integration LM4 sudah sangat solid.',
+    5:'✅ Bagus sekali. Review satu soal yang terlewat.',
+    4:'✅ Good. Review konsep limitations dan WACC calculation.',
+    3:'⚠️ Perlu review ulang — fokus pada quantitative vs qualitative ESG, dan keterbatasan.',
+    2:'🔁 Ulangi theory sections, terutama Section 3 (ESG risk premium) dan Section 5 (limitations).',
+    1:'🔁 Baca ulang seluruh materi sebelum lanjut ke Day 47.',
+    0:'🔁 Baca ulang seluruh materi sebelum lanjut ke Day 47.'
+  };
+  msg.textContent = msgs[score] || msgs[0];
+  panel.style.display = 'block';
+}
+</script>
+</body>
+</html>

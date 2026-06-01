@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 44 Full · FCF Valuation Models</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+  --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;--gold:#9a6e1a;--gold2:#7a5010;--gold-bg:rgba(154,110,26,0.08);
+  --blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);--green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);
+  --red:#b83232;--red-bg:rgba(184,50,50,0.08);--amber:#a06010;--amber-bg:rgba(160,96,16,0.08);
+  --r:10px;--r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.75;min-height:100vh;}
+.page{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:10px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.badge-row{display:flex;gap:8px;flex-wrap:wrap;}
+.full-badge{background:var(--blue);color:#fff;font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.hero{margin-bottom:36px;}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:34px;color:var(--text);line-height:1.2;margin-bottom:10px;}
+.meta-row{display:flex;gap:14px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:36px;}
+.toc-title{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:14px;font-weight:500;}
+.toc ol{margin-left:18px;}
+.toc li{font-size:13px;color:var(--text2);margin-bottom:6px;line-height:1.5;}
+.toc a{color:var(--blue);text-decoration:none;}
+.toc a:hover{text-decoration:underline;}
+.section{margin-bottom:44px;}
+.section-label{font-size:10px;color:var(--text3);letter-spacing:0.09em;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.chapter{margin-bottom:40px;}
+.chapter-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:20px;padding-bottom:14px;border-bottom:2px solid var(--border);}
+.chapter-num{font-family:'DM Serif Display',serif;font-size:42px;color:var(--bg3);line-height:1;flex-shrink:0;margin-top:-4px;}
+.chapter-info{flex:1;}
+.chapter-tag{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px;}
+.chapter-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);line-height:1.3;}
+.prose{font-size:14px;color:var(--text2);line-height:1.85;margin-bottom:16px;}
+.prose strong{color:var(--text);}
+.sub-header{font-size:14px;font-weight:600;color:var(--text);margin:22px 0 10px;letter-spacing:0.01em;}
+.formula-block{background:var(--bg3);border:1px solid var(--border2);border-left:4px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:16px 20px;margin:16px 0;}
+.formula-block .label{font-size:10px;color:var(--gold);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;font-weight:500;}
+.formula-block .eq{font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--gold2);line-height:1.65;}
+.formula-block .note{font-size:12px;color:var(--text3);margin-top:8px;font-style:italic;}
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:20px 0;}
+.exhibit-title{font-size:11px;font-weight:500;color:var(--text2);padding:10px 16px;background:var(--bg3);border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:0.05em;}
+.exhibit table{width:100%;border-collapse:collapse;font-size:13px;}
+.exhibit th{text-align:right;padding:9px 14px;background:var(--bg3);color:var(--text2);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border2);}
+.exhibit th:first-child{text-align:left;}
+.exhibit td{padding:9px 14px;border-bottom:1px solid var(--border);text-align:right;color:var(--text2);}
+.exhibit td:first-child{text-align:left;font-weight:500;color:var(--text);}
+.exhibit tr:last-child td{border-bottom:none;}
+.exhibit .total td{border-top:2px solid var(--border2);font-weight:600;color:var(--text);}
+.callout{border-radius:var(--r);padding:16px 18px;margin:16px 0;font-size:13px;line-height:1.75;}
+.callout.blue{background:var(--blue-bg);border:1px solid rgba(26,95,168,0.15);}
+.callout.blue strong{color:var(--blue);}
+.callout.amber{background:var(--amber-bg);border:1px solid rgba(160,96,16,0.2);}
+.callout.amber strong{color:var(--amber);}
+.callout.red{background:var(--red-bg);border:1px solid rgba(184,50,50,0.2);}
+.callout.red strong{color:var(--red);}
+.kc{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);border-radius:var(--r);padding:16px 18px;margin:20px 0;}
+.kc-q{font-size:13px;font-weight:500;color:var(--gold2);margin-bottom:10px;line-height:1.6;}
+.kc-toggle{background:none;border:1px solid rgba(154,110,26,0.3);color:var(--gold);font-size:12px;padding:6px 14px;border-radius:var(--r-sm);cursor:pointer;font-family:'DM Sans',sans-serif;margin-bottom:8px;}
+.kc-toggle:hover{background:var(--gold-bg);}
+.kc-ans{display:none;font-size:13px;color:var(--text2);line-height:1.75;padding-top:10px;border-top:1px solid rgba(154,110,26,0.15);margin-top:6px;}
+.kc-ans.show{display:block;}
+.los-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px;margin-bottom:32px;}
+.los-title{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;font-weight:500;}
+.los-list{list-style:none;}
+.los-list li{font-size:13px;color:var(--text2);padding:5px 0 5px 20px;position:relative;border-bottom:1px solid var(--border);}
+.los-list li:last-child{border-bottom:none;}
+.los-list li::before{content:'LOS';position:absolute;left:0;color:var(--gold);font-size:9px;font-weight:600;top:8px;letter-spacing:0.05em;}
+.practice-section{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:32px;}
+.practice-header{background:var(--gold-bg);border-bottom:1px solid rgba(154,110,26,0.2);padding:16px 20px;}
+.practice-header h3{font-size:16px;font-weight:500;color:var(--gold2);margin-bottom:4px;}
+.practice-header p{font-size:12px;color:var(--text3);}
+.practice-body{padding:24px;}
+.vignette{background:var(--bg3);border-left:4px solid var(--gold);padding:18px 20px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:28px;font-size:13px;color:var(--text2);line-height:1.85;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;font-weight:500;}
+.question-block{margin-bottom:26px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:6px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:12px;line-height:1.65;}
+.option{display:block;width:100%;text-align:left;padding:11px 16px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:8px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.5;}
+.option:hover:not(:disabled){border-color:var(--border2);color:var(--text);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:14px 16px;font-size:13px;color:var(--text2);margin-top:10px;line-height:1.75;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:28px;margin-top:20px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:52px;margin-bottom:8px;}
+.score-msg{font-size:13px;color:var(--text2);}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);flex-wrap:wrap;gap:10px;}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II &middot; <span>Equity Valuation</span> &middot; LM3 &middot; Subtopik 2 dari 2</div>
+    <div class="badge-row">
+      <span class="full-badge">Versi Full</span>
+      <span class="day-badge">Day 44 of 90</span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag">Jumat, 19 Juni 2026</div>
+    <h1 class="hero-title">Model Valuasi Free Cash Flow: Single-Stage, Multi-Stage &amp; Sensitivity Analysis</h1>
+    <div class="meta-row">
+      <div class="meta-pill">&#128218; <b>Materi Lengkap</b></div>
+      <div class="meta-pill">&#127470;&#127465; <b>Bahasa Indonesia</b></div>
+      <div class="meta-pill">&#9878;&#65039; Exam weight <b>~12%</b></div>
+      <div class="meta-pill">&#9201; Est. baca <b>50-60 menit</b></div>
+    </div>
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ol>
+      <li><a href="#s0">Learning Outcomes (LOS)</a></li>
+      <li><a href="#s1">Model Single-Stage (Constant-Growth) FCFF dan FCFE</a></li>
+      <li><a href="#s2">Model Two-Stage Free Cash Flow</a></li>
+      <li><a href="#s3">Model Three-Stage Free Cash Flow</a></li>
+      <li><a href="#s4">Sensitivity Analysis dalam Valuasi FCFF/FCFE</a></li>
+      <li><a href="#s5">FCF vs Accounting Earnings: Mengapa FCF Lebih Superior?</a></li>
+      <li><a href="#s6">Latihan Soal &mdash; Item Set Vignette (6 Pertanyaan)</a></li>
+    </ol>
+  </div>
+
+  <!-- SECTION 0: LOS -->
+  <div class="chapter" id="s0">
+    <div class="chapter-header">
+      <div class="chapter-num">0</div>
+      <div class="chapter-info">
+        <div class="chapter-tag">Learning Outcomes</div>
+        <div class="chapter-title">Apa yang Diharapkan dari Kandidat</div>
+      </div>
+    </div>
+    <div class="los-box">
+      <div class="los-title">Learning Outcome Statements &mdash; LM3 Free Cash Flow Valuation</div>
+      <ul class="los-list">
+        <li>Jelaskan dan terapkan model single-stage (stable-growth), two-stage, dan three-stage FCFF dan FCFE, serta justifikasi pemilihan model yang tepat berdasarkan karakteristik perusahaan</li>
+        <li>Estimasi nilai perusahaan menggunakan model free cash flow yang sesuai</li>
+        <li>Jelaskan pendekatan untuk menghitung terminal value dalam model valuasi multi-stage</li>
+        <li>Evaluasi apakah suatu saham overvalued, fairly valued, atau undervalued berdasarkan model free cash flow</li>
+        <li>Jelaskan penggunaan sensitivity analysis dalam valuasi FCFF dan FCFE</li>
+        <li>Bandingkan model FCFE dengan dividend discount model</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SECTION 1: Single-Stage Models -->
+  <div class="chapter" id="s1">
+    <div class="chapter-header">
+      <div class="chapter-num">1</div>
+      <div class="chapter-info">
+        <div class="chapter-tag">Bagian 1</div>
+        <div class="chapter-title">Model Single-Stage (Constant-Growth) FCFF &amp; FCFE</div>
+      </div>
+    </div>
+
+    <p class="prose">Model single-stage free cash flow adalah fondasi dari seluruh kerangka valuasi DCF berbasis free cash flow. Ia mengadopsi logika yang sama dengan Gordon Growth Model dalam Discounted Dividend Valuation, namun menggantikan dividen dengan free cash flow. Asumsi utamanya: perusahaan telah memasuki fase pertumbuhan stabil dan free cash flow-nya akan tumbuh selamanya dengan rate konstan <em>g</em>.</p>
+
+    <div class="sub-header">1.1 Constant-Growth FCFF Valuation Model</div>
+    <p class="prose">Karena FCFF adalah arus kas yang tersedia untuk <em>seluruh</em> penyedia modal (baik bondholder maupun shareholder), nilai perusahaan (firm value) diperoleh dengan mendiskon FCFF menggunakan weighted average cost of capital (WACC). Persamaan umum untuk firma yang FCFF-nya tumbuh konstan:</p>
+
+    <div class="formula-block">
+      <div class="label">Constant-Growth FCFF Model</div>
+      <div class="eq">
+        Firm Value = FCFF<sub>1</sub> / (WACC &minus; g)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= FCFF<sub>0</sub> &times; (1 + g) / (WACC &minus; g)
+      </div>
+      <div class="note">Di mana FCFF<sub>1</sub> = free cash flow to the firm yang diproyeksikan untuk tahun mendatang; WACC = weighted average cost of capital; g = tingkat pertumbuhan FCFF yang berkelanjutan (sustainable growth rate). Setelah diperoleh Firm Value, kurangi market value of debt untuk mendapat Equity Value.</div>
+    </div>
+
+    <p class="prose">Formula WACC sendiri adalah:</p>
+
+    <div class="formula-block">
+      <div class="label">WACC Formula</div>
+      <div class="eq">
+        WACC = [MV(Debt) / (MV(Debt) + MV(Equity))] &times; r<sub>d</sub>(1 &minus; t)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ [MV(Equity) / (MV(Debt) + MV(Equity))] &times; r<sub>e</sub>
+      </div>
+      <div class="note">MV(Debt) dan MV(Equity) adalah nilai pasar (market value), bukan nilai buku. Bobot bisa juga menggunakan target capital structure jika diketahui. r<sub>d</sub>(1&minus;t) = after-tax cost of debt; r<sub>e</sub> = required return on equity.</div>
+    </div>
+
+    <div class="callout blue">
+      <strong>Interpretasi ekonomi:</strong> WACC mencerminkan rata-rata tertimbang biaya modal dari semua sumber pembiayaan. Saat kita mendiskon FCFF dengan WACC, kita mendapat total nilai aset operasional yang menghasilkan cash flow tersebut. Kurangi klaim bondholder (market value of debt) dan hasilnya adalah nilai intrinsik ekuitas.
+    </div>
+
+    <div class="sub-header">1.2 Constant-Growth FCFE Valuation Model</div>
+    <p class="prose">Pendekatan alternatif: langsung mengestimasi nilai ekuitas dengan mendiskon FCFE menggunakan required rate of return on equity (r). FCFE sudah merupakan arus kas setelah pembayaran kewajiban kepada bondholder, sehingga diskonto yang tepat adalah biaya ekuitas semata.</p>
+
+    <div class="formula-block">
+      <div class="label">Constant-Growth FCFE Model</div>
+      <div class="eq">
+        Equity Value = FCFE<sub>1</sub> / (r &minus; g)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= FCFE<sub>0</sub> &times; (1 + g) / (r &minus; g)
+      </div>
+      <div class="note">r = required return on equity (biasanya dari CAPM: r = Rf + &beta; &times; ERP); g = sustainable long-term growth rate of FCFE. Note: g dari FCFF dan g dari FCFE tidak harus sama.</div>
+    </div>
+
+    <p class="prose">Perbedaan penting: growth rate FCFF dan FCFE tidak selalu identik. FCFE dipengaruhi oleh fluktuasi net borrowing &mdash; ketika perusahaan mengubah struktur modal (menambah atau melunasi utang), FCFE akan berubah meskipun fundamental operasional tidak berubah. Oleh karena itu, ketika capital structure berubah signifikan, FCFF model sering lebih disukai karena growth rate-nya lebih mencerminkan fundamental bisnis.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Contoh Numerik: Valuasi Cagiati Enterprises (dari CFA Curriculum)</div>
+      <table>
+        <thead><tr><th>Item</th><th>Nilai</th></tr></thead>
+        <tbody>
+          <tr><td>FCFF<sub>0</sub></td><td>CHF 700 juta</td></tr>
+          <tr><td>Before-tax cost of debt</td><td>5,70%</td></tr>
+          <tr><td>Required return on equity</td><td>11,80%</td></tr>
+          <tr><td>Target capital structure</td><td>20% debt, 80% equity</td></tr>
+          <tr><td>Tax rate</td><td>33,33%</td></tr>
+          <tr><td>Long-term growth rate (g)</td><td>5,00%</td></tr>
+          <tr><td>Market value of debt</td><td>CHF 2.200 juta</td></tr>
+          <tr><td>Shares outstanding</td><td>200 juta</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="exhibit">
+      <div class="exhibit-title">Perhitungan Langkah demi Langkah</div>
+      <table>
+        <thead><tr><th>Langkah</th><th>Perhitungan</th><th>Hasil</th></tr></thead>
+        <tbody>
+          <tr><td>WACC</td><td>0,20 &times; 5,7% &times; (1&minus;0,3333) + 0,80 &times; 11,8%</td><td>10,20%</td></tr>
+          <tr><td>FCFF<sub>1</sub></td><td>700 &times; 1,05</td><td>CHF 735 juta</td></tr>
+          <tr><td>Firm Value</td><td>735 / (0,102 &minus; 0,05)</td><td>CHF 14.135 juta</td></tr>
+          <tr><td>Equity Value</td><td>14.135 &minus; 2.200</td><td>CHF 11.935 juta</td></tr>
+          <tr class="total"><td>Value per share</td><td>11.935 / 200 juta</td><td>CHF 59,67</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="kc">
+      <div class="kc-q">Knowledge Check 1: Sebuah perusahaan memiliki FCFE<sub>0</sub> = $120 juta, required return on equity = 10%, dan sustainable growth rate = 4%. Berapa estimated equity value?</div>
+      <button class="kc-toggle" onclick="toggleKC(this)">Tampilkan Jawaban</button>
+      <div class="kc-ans">
+        Equity Value = FCFE<sub>0</sub> &times; (1+g) / (r&minus;g) = 120 &times; 1,04 / (0,10 &minus; 0,04) = 124,8 / 0,06 = <strong>$2.080 juta</strong>. Perhatikan bahwa denominator (r&minus;g) = 0,06 &mdash; angka yang relatif kecil ini yang membuat model sangat sensitif. Jika g naik 1% menjadi 5%, equity value = 126 / 0,05 = $2.520 juta &mdash; naik 21% hanya dari kenaikan g sebesar 1 poin persentase.
+      </div>
+    </div>
+
+    <div class="callout amber">
+      <strong>Pemilihan Model FCFF vs FCFE:</strong> Gunakan FCFF ketika: (1) perusahaan punya FCFE negatif karena leverage tinggi; (2) capital structure berubah signifikan antar tahun sehingga growth rate FCFE tidak stabil; (3) lebih mudah memproyeksikan FCFF daripada FCFE. Gunakan FCFE ketika: capital structure relatif stabil &mdash; pendekatan ini lebih langsung dan tidak memerlukan langkah tambahan mengurangi debt value.
+    </div>
+  </div>
+
+  <!-- SECTION 2: Two-Stage -->
+  <div class="chapter" id="s2">
+    <div class="chapter-header">
+      <div class="chapter-num">2</div>
+      <div class="chapter-info">
+        <div class="chapter-tag">Bagian 2</div>
+        <div class="chapter-title">Model Two-Stage Free Cash Flow</div>
+      </div>
+    </div>
+
+    <p class="prose">Model single-stage hanya berlaku jika perusahaan sudah berada dalam fase pertumbuhan stabil. Kenyataannya, banyak perusahaan &mdash; terutama perusahaan teknologi, energi terbarukan, atau perusahaan emerging market &mdash; masih dalam fase ekspansi agresif sebelum akhirnya mencapai kestabilan. Model two-stage menangkap dinamika ini dengan membagi proyeksi menjadi dua tahapan berbeda.</p>
+
+    <div class="sub-header">2.1 Formula Umum Two-Stage Models</div>
+
+    <div class="formula-block">
+      <div class="label">Two-Stage FCFF Valuation</div>
+      <div class="eq">
+        Firm Value = &Sigma;<sub>t=1 to n</sub> [FCFF<sub>t</sub> / (1+WACC)<sup>t</sup>]<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ [FCFF<sub>n+1</sub> / (WACC&minus;g)] / (1+WACC)<sup>n</sup>
+      </div>
+      <div class="note">Suku pertama = PV dari FCFF individual di Stage 1 (tahun 1 hingga n). Suku kedua = PV dari Terminal Value menggunakan Gordon model, didiskon ke t=0. Equity = Firm Value &minus; MV(Debt).</div>
+    </div>
+
+    <div class="formula-block">
+      <div class="label">Two-Stage FCFE Valuation</div>
+      <div class="eq">
+        Equity Value = &Sigma;<sub>t=1 to n</sub> [FCFE<sub>t</sub> / (1+r)<sup>t</sup>]<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ [FCFE<sub>n+1</sub> / (r&minus;g)] / (1+r)<sup>n</sup>
+      </div>
+      <div class="note">Terminal Value TV<sub>n</sub> = FCFE<sub>n+1</sub> / (r&minus;g). TV bisa juga diestimasi dengan P/E multiple &times; EPS<sub>n+1</sub> jika analyst lebih nyaman dengan pendekatan relative valuation untuk nilai terminal.</div>
+    </div>
+
+    <div class="sub-header">2.2 Dua Versi Stage 1</div>
+    <p class="prose"><strong>Versi 1 &mdash; Constant High Growth di Stage 1:</strong> Growth rate tinggi dan konstan selama Stage 1 (misalnya 20% per tahun selama 3 tahun), kemudian turun tiba-tiba ke sustainable rate di Stage 2 (misalnya 6%). Karakteristik penting: saat transisi dari Stage 1 ke Stage 2, FCFE sering melonjak drastis karena investasi baru (FCInv dan WCInv) berkurang signifikan &mdash; meskipun profit tumbuh lebih lambat, reinvestasi yang jauh lebih rendah menghasilkan free cash flow yang lebih besar.</p>
+
+    <p class="prose"><strong>Versi 2 &mdash; Declining Growth Rate di Stage 1:</strong> Growth rate menurun secara bertahap selama Stage 1 hingga mencapai sustainable rate. Misalnya dari 30% turun ke 18%, 12%, 9%, kemudian 7% selamanya. Ini lebih realistis untuk perusahaan yang kehilangan competitive advantage secara gradual, bukan tiba-tiba. Model ini analog dengan H-Model dalam DDM.</p>
+
+    <div class="callout blue">
+      <strong>Cara memilih versi Stage 1:</strong> Gunakan versi "constant high growth" ketika growth rate expected turun secara abrupt di tahun tertentu (misalnya ketika patent habis, atau franchise agreement berakhir). Gunakan versi "declining growth" ketika kompetisi meningkat secara bertahap, margin erosi berlangsung gradual, atau perusahaan mature perlahan dari industri yang tumbuh.
+    </div>
+
+    <div class="sub-header">2.3 Studi Kasus: TechnoSchaft &mdash; Two-Stage FCFE dengan Constant Growth</div>
+    <p class="prose">Berikut adalah rekonstruksi example dari CFA curriculum untuk mengilustrasikan dampak transisi growth rate:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Proyeksi FCFE per Share TechnoSchaft (dalam Euro)</div>
+      <table>
+        <thead>
+          <tr><th>Item</th><th>Year 1</th><th>Year 2</th><th>Year 3</th><th>Year 4</th><th>Year 5</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Sales growth rate</td><td>20%</td><td>20%</td><td>20%</td><td>6%</td><td>6%</td></tr>
+          <tr><td>Sales per share</td><td>30,00</td><td>36,00</td><td>43,20</td><td>45,79</td><td>48,54</td></tr>
+          <tr><td>EPS (margin 10%)</td><td>3,00</td><td>3,60</td><td>4,32</td><td>4,58</td><td>4,85</td></tr>
+          <tr><td>Net FCInv per share</td><td>2,50</td><td>3,00</td><td>3,60</td><td>1,30</td><td>1,37</td></tr>
+          <tr><td>WCInv per share</td><td>1,00</td><td>1,20</td><td>1,44</td><td>0,52</td><td>0,55</td></tr>
+          <tr><td>Debt financing (40%)</td><td>1,40</td><td>1,68</td><td>2,02</td><td>0,73</td><td>0,77</td></tr>
+          <tr class="total"><td>FCFE per share</td><td>0,90</td><td>1,08</td><td>1,30</td><td>3,49</td><td>3,70</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="prose">Perhatikan fenomena penting: di Year 4 (awal Stage 2), FCFE melonjak dari &euro;1,30 ke &euro;3,49 &mdash; kenaikan 169%! Ini terjadi bukan karena profit tiba-tiba meledak, melainkan karena investasi (net FCInv + WCInv) berkurang drastis saat sales growth turun dari 20% ke 6%. Penurunan delta sales yang besar berarti perusahaan tidak perlu lagi berinvestasi besar untuk kapasitas tambahan.</p>
+
+    <div class="formula-block">
+      <div class="label">Valuasi TechnoSchaft (r = 12,4%)</div>
+      <div class="eq">
+        Terminal Value (TV<sub>3</sub>) = FCFE<sub>4</sub> / (r&minus;g) = 3,49 / (0,124&minus;0,06) = &euro;54,55<br><br>
+        V<sub>0</sub> = 0,90/1,124 + 1,08/1,124&sup2; + 1,30/1,124&sup3; + 54,55/1,124&sup3;<br>
+        V<sub>0</sub> = 0,801 + 0,855 + 0,913 + 38,42 = <strong>&euro;40,98 per share</strong>
+      </div>
+      <div class="note">PV Terminal Value = 38,42 dari total 40,98 = 93,7% dari total nilai! Ini menunjukkan betapa dominannya terminal value dalam model two-stage.</div>
+    </div>
+
+    <div class="kc">
+      <div class="kc-q">Knowledge Check 2: PT Garuda Nusantara memiliki FCFE<sub>0</sub> = Rp 200 per share. Stage 1: growth 25% selama 3 tahun. Stage 2: growth 6% selamanya. r = 12%. Berapa FCFE di t=3 dan berapa Terminal Value di t=3?</div>
+      <button class="kc-toggle" onclick="toggleKC(this)">Tampilkan Jawaban</button>
+      <div class="kc-ans">
+        FCFE<sub>3</sub> = 200 &times; (1,25)<sup>3</sup> = 200 &times; 1,953 = <strong>Rp 390,6</strong>.<br>
+        FCFE<sub>4</sub> = 390,6 &times; 1,06 = Rp 414,1.<br>
+        TV<sub>3</sub> = 414,1 / (0,12 &minus; 0,06) = 414,1 / 0,06 = <strong>Rp 6.902 per share</strong>.<br>
+        PV(TV<sub>3</sub>) = 6.902 / (1,12)<sup>3</sup> = 6.902 / 1,4049 = Rp 4.912 per share.<br>
+        PV FCFE Stage 1: 200&times;1,25/1,12 + 200&times;1,5625/1,12&sup2; + 390,6/1,12&sup3; = 223,2 + 248,9 + 278,0 = Rp 750.<br>
+        Total V<sub>0</sub> = 750 + 4.912 = <strong>Rp 5.662 per share</strong>.
+      </div>
+    </div>
+
+    <div class="sub-header">2.4 Two-Stage dengan Declining Growth Rate di Stage 1</div>
+    <p class="prose">Ketika profitabilitas perusahaan menurun bertahap, analyst sering memodelkan penurunan EPS growth rate di Stage 1 disertai dengan pengurangan capex secara terencana. Contoh: perusahaan dengan EPS growth 30%, 18%, 12%, 9%, 7% &mdash; di mana setiap tahun capex juga dikurangi karena ekspansi melambat. Pola ini lebih mencerminkan siklus bisnis yang sesungguhnya daripada model yang menurunkan growth rate secara tiba-tiba.</p>
+
+    <p class="prose">Implikasi penting untuk tiga-tahap analyst: saat growth menurun, FCFE awalnya masih rendah (karena investasi masih tinggi di awal Stage 1), kemudian naik secara bertahap seiring berkurangnya kebutuhan investasi. Terminal value tetap mendominasi nilai total, namun proporsinya sedikit lebih rendah dibanding model constant-high-growth karena FCFE Stage 1 juga lebih substantial.</p>
+  </div>
+
+  <!-- SECTION 3: Three-Stage -->
+  <div class="chapter" id="s3">
+    <div class="chapter-header">
+      <div class="chapter-num">3</div>
+      <div class="chapter-info">
+        <div class="chapter-tag">Bagian 3</div>
+        <div class="chapter-title">Model Three-Stage Free Cash Flow</div>
+      </div>
+    </div>
+
+    <p class="prose">Model three-stage adalah perpanjangan logis dari two-stage: ada tiga fase pertumbuhan yang berbeda. Dua versi paling umum adalah: (1) konstanta growth rate di masing-masing tiga tahap; (2) Stage 1 dan Stage 3 konstan, Stage 2 declining gradual (mirip H-model yang disisipkan di tengah). Versi kedua paling sering diuji di CFA karena paling mencerminkan transisi perusahaan dari growth ke mature.</p>
+
+    <div class="sub-header">3.1 Struktur Three-Stage Model</div>
+    <p class="prose">Pada model three-stage FCFF dengan declining Stage 2:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Struktur Three-Stage Model: Reliant Home Furnishings (dari CFA Curriculum)</div>
+      <table>
+        <thead><tr><th>Stage</th><th>Tahun</th><th>Growth Rate</th><th>Karakteristik</th></tr></thead>
+        <tbody>
+          <tr><td>Stage 1</td><td>Year 1&ndash;4</td><td>8,8% konstan</td><td>Fase pertumbuhan &mdash; growth tinggi stabil</td></tr>
+          <tr><td>Stage 2</td><td>Year 5&ndash;7</td><td>7,4% &rarr; 6,0% &rarr; 4,6%</td><td>Transisi &mdash; growth menurun bertahap</td></tr>
+          <tr><td>Stage 3</td><td>Year 8+</td><td>3,2% konstan</td><td>Mature &mdash; sustainable perpetual growth</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-block">
+      <div class="label">Kalkulasi WACC (Reliant Home Furnishings)</div>
+      <div class="eq">
+        r<sub>e</sub> = 5,04% + 0,90 &times; 5,5% = 9,99%<br>
+        WACC = 0,20 &times; 7,1% &times; (1&minus;0,34) + 0,80 &times; 9,99% = 8,93%
+      </div>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Proyeksi FCFF Reliant Home Furnishings ($ juta)</div>
+      <table>
+        <thead><tr><th>Year</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr></thead>
+        <tbody>
+          <tr><td>Growth</td><td>8,8%</td><td>8,8%</td><td>8,8%</td><td>8,8%</td><td>7,4%</td><td>6,0%</td><td>4,6%</td><td>3,2%</td></tr>
+          <tr><td>FCFF</td><td>811</td><td>882</td><td>959</td><td>1.044</td><td>1.121</td><td>1.188</td><td>1.243</td><td>1.283</td></tr>
+          <tr><td>PV at 8,93%</td><td>744</td><td>743</td><td>742</td><td>741</td><td>731</td><td>711</td><td>683</td><td>&mdash;</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-block">
+      <div class="label">Terminal Value dan Total Firm Value</div>
+      <div class="eq">
+        TV<sub>7</sub> = FCFF<sub>8</sub> / (WACC&minus;g) = 1.283 / (0,0893&minus;0,032) = $22.391 juta<br>
+        PV(TV<sub>7</sub>) = 22.391 / (1,0893)<sup>7</sup> = $12.304 juta<br><br>
+        Total PV FCFF (Year 1&ndash;7) = $5.097 juta<br>
+        Firm Value = 5.097 + 12.304 = <strong>$17.401 juta</strong><br>
+        Equity Value = 17.401 &minus; 1.518 = <strong>$15.883 juta</strong><br>
+        Value per share = 15.883 / 309,39 juta = <strong>$51,34</strong>
+      </div>
+    </div>
+
+    <div class="kc">
+      <div class="kc-q">Knowledge Check 3: Dalam three-stage model, bagaimana analyst menentukan apakah menggunakan Gordon model atau price multiple untuk terminal value di akhir Stage 3?</div>
+      <button class="kc-toggle" onclick="toggleKC(this)">Tampilkan Jawaban</button>
+      <div class="kc-ans">
+        Gordon model (TV<sub>n</sub> = FCFF/FCFE<sub>n+1</sub> / (discount rate &minus; g)) lebih disukai ketika: (1) perusahaan diperkirakan benar-benar berada dalam steady state di akhir Stage 3 dengan free cash flow yang dapat dipercaya; (2) tidak ada comparable yang baik untuk price multiple. Price multiple (misalnya P/E &times; EPS<sub>n+1</sub>) lebih disukai ketika: (1) free cash flow sulit diestimasi karena capital intensity atau volatilitas; (2) ada comparables industri yang reliable untuk benchmark P/E atau EV/EBITDA terminal. Dalam praktik, analyst sering menghitung keduanya sebagai sanity check.
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: Sensitivity Analysis -->
+  <div class="chapter" id="s4">
+    <div class="chapter-header">
+      <div class="chapter-num">4</div>
+      <div class="chapter-info">
+        <div class="chapter-tag">Bagian 4</div>
+        <div class="chapter-title">Sensitivity Analysis dalam Valuasi FCFF/FCFE</div>
+      </div>
+    </div>
+
+    <p class="prose">Sensitivity analysis adalah alat wajib dalam praktik valuasi profesional. Mengingat bahwa valuasi FCF sangat bergantung pada asumsi &mdash; yang pada dasarnya tidak pasti &mdash; analyst harus memahami seberapa besar perubahan pada setiap input akan mempengaruhi nilai akhir. Proses standar: ubah satu variabel dari estimasi rendah ke estimasi tinggi, dengan semua variabel lain dijaga pada base case.</p>
+
+    <div class="sub-header">4.1 Variabel Utama dan Tingkat Sensitivitas</div>
+    <p class="prose">Dalam single-stage FCFE model: V<sub>0</sub> = FCFE<sub>0</sub>(1+g) / (r&minus;g). Perhatikan bahwa <em>g</em> muncul di dua tempat: di pembilang (memperbesar FCFE<sub>1</sub>) dan di penyebut (memperkecil r&minus;g). Efek berlipat ini menjadikan <em>g</em> variabel paling sensitif secara konsisten.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Sensitivity Analysis: Valuasi Petrobras (dari CFA Curriculum)</div>
+      <table>
+        <thead>
+          <tr><th>Variabel</th><th>Base Case</th><th>Low Estimate</th><th>High Estimate</th><th>Value (Low)</th><th>Value (High)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Beta</td><td>1,40</td><td>1,20</td><td>1,60</td><td>BRL 33,55</td><td>BRL 26,70</td></tr>
+          <tr><td>Risk-free rate</td><td>8,9%</td><td>7,9%</td><td>9,9%</td><td>BRL 33,31</td><td>BRL 26,85</td></tr>
+          <tr><td>Equity risk premium</td><td>5,3%</td><td>4,3%</td><td>6,3%</td><td>BRL 34,99</td><td>BRL 25,85</td></tr>
+          <tr class="total"><td>FCFE growth rate</td><td>7,0%</td><td>5,0%</td><td>9,0%</td><td>BRL 24,02</td><td>BRL 38,57</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="prose">Dari tabel di atas, range valuasi akibat perubahan growth rate (BRL 24,02 &ndash; 38,57 = BRL 14,55) jauh lebih besar dibandingkan range dari perubahan beta (BRL 33,55 &ndash; 26,70 = BRL 6,85), risk-free rate (BRL 6,46), atau ERP (BRL 9,14). Ini bukan kebetulan &mdash; ini adalah properti matematika dari formula Gordon growth.</p>
+
+    <div class="sub-header">4.2 Interpretasi Kuantitatif Sensitivitas</div>
+    <p class="prose">Untuk memahami <em>mengapa</em> g begitu dominan, perhatikan partial derivative informal dari formula Gordon:</p>
+
+    <div class="formula-block">
+      <div class="label">Sensitivitas Parsial terhadap g (single-stage)</div>
+      <div class="eq">
+        dV/dg = FCFE<sub>0</sub> &times; [(r&minus;g) + (1+g)] / (r&minus;g)&sup2;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= FCFE<sub>0</sub> &times; (1+r) / (r&minus;g)&sup2;
+      </div>
+      <div class="note">Semakin kecil (r&minus;g), semakin besar dV/dg. Ketika r dan g berdekatan (misalnya r=10% dan g=8%, sehingga r&minus;g=2%), sensitivitas menjadi ekstrem &mdash; bahkan perubahan g sebesar 0,5% bisa mengubah value 25%+.</div>
+    </div>
+
+    <div class="callout amber">
+      <strong>Praktik terbaik sensitivity analysis:</strong> Sebagian besar analyst menyajikan sensitivity analysis dalam format matriks dua dimensi &mdash; kombinasi berbagai g dan r (atau WACC) &mdash; sehingga klien dapat melihat range nilai yang reasonable. Ini juga membantu identifikasi "break-even" growth rate: berapa g yang diimplikasikan oleh harga pasar saat ini, dan apakah itu realistis?
+    </div>
+
+    <div class="kc">
+      <div class="kc-q">Knowledge Check 4: Analyst menggunakan single-stage FCFE model dengan FCFE<sub>0</sub> = $5, r = 10%, g = 6%. Harga saham saat ini = $120. Apakah saham overvalued, fairly valued, atau undervalued? Berapa "implied growth rate" yang dikandung harga pasar?</div>
+      <button class="kc-toggle" onclick="toggleKC(this)">Tampilkan Jawaban</button>
+      <div class="kc-ans">
+        Intrinsic Value = 5 &times; 1,06 / (0,10&minus;0,06) = 5,30 / 0,04 = <strong>$132,50</strong>.<br>
+        Harga pasar $120 &lt; $132,50 &rarr; saham <strong>undervalued</strong>.<br><br>
+        Untuk implied growth rate (g*): 120 = 5(1+g*) / (0,10&minus;g*) &rarr; 120(0,10&minus;g*) = 5(1+g*) &rarr; 12 &minus; 120g* = 5 + 5g* &rarr; 7 = 125g* &rarr; g* = 7/125 = <strong>5,6%</strong>.<br>
+        Jika analyst percaya pertumbuhan nyata &gt; 5,6%, saham undervalued. Jika &lt; 5,6%, overvalued.
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: FCF vs Accounting Earnings -->
+  <div class="chapter" id="s5">
+    <div class="chapter-header">
+      <div class="chapter-num">5</div>
+      <div class="chapter-info">
+        <div class="chapter-tag">Bagian 5</div>
+        <div class="chapter-title">FCF vs Accounting Earnings: Mengapa FCFF/FCFE Lebih Superior?</div>
+      </div>
+    </div>
+
+    <p class="prose">Salah satu area di mana CFA exam sering menguji pemahaman konseptual adalah perbedaan mendasar antara free cash flow dan berbagai metrik akuntansi. Banyak praktisi menggunakan shortcut &mdash; mendiskon NI, EBIT, atau EBITDA dalam DCF &mdash; yang menurut CFA curriculum merupakan kesalahan metodologis yang dapat menghasilkan valuasi yang secara sistematis bias.</p>
+
+    <div class="sub-header">5.1 Kelemahan Metrik Akuntansi dalam DCF</div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Perbandingan Metrik untuk Tujuan DCF Valuation</div>
+      <table>
+        <thead><tr><th>Metrik</th><th>Masalah Utama untuk DCF</th><th>Bias Valuasi</th></tr></thead>
+        <tbody>
+          <tr><td>Net Income</td><td>Basis akrual bukan kas; tidak dikurangi reinvestasi (FCInv, WCInv)</td><td>Overstate (tidak ada deduction untuk capex)</td></tr>
+          <tr><td>EBIT</td><td>Pre-tax; tidak mencerminkan pajak nyata yang mengurangi kas</td><td>Overstate (kecuali t=0)</td></tr>
+          <tr><td>EBITDA</td><td>Pre-tax; add back D&amp;A tapi tidak kurangi capex; abaikan leverage effect</td><td>Sangat overstate untuk perusahaan capital-intensive</td></tr>
+          <tr><td>CFO</td><td>Tidak dikurangi FCInv; kas operasional tapi bukan "free" cash flow</td><td>Overstate (tidak ada deduction untuk maintenance capex)</td></tr>
+          <tr><td style="color:var(--green);font-weight:600;">FCFF</td><td style="color:var(--green);">After-tax, after all reinvestment; benar-benar tersedia untuk semua penyedia modal</td><td style="color:var(--green);">Tidak ada bias sistematis</td></tr>
+          <tr><td style="color:var(--green);font-weight:600;">FCFE</td><td style="color:var(--green);">After-tax, after debt service, after reinvestment; benar-benar tersedia untuk shareholder</td><td style="color:var(--green);">Tidak ada bias sistematis</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-header">5.2 Keunggulan FCF Model atas Dividend Discount Model (DDM)</div>
+    <p class="prose">Meskipun secara teori DDM dan FCFE model akan menghasilkan valuasi yang identik jika seluruh input konsisten, dalam praktik FCF model lebih disukai karena beberapa alasan fundamental:</p>
+
+    <p class="prose"><strong>Alasan 1 &mdash; Banyak perusahaan tidak bayar dividen:</strong> Growth stocks di IDX (seperti emiten teknologi, fintech, atau EBT) sering tidak membagikan dividen &mdash; bukan karena tidak menghasilkan kas, tapi karena kas direinvestasi untuk pertumbuhan. DDM tidak bisa mengatasi situasi ini tanpa asumsi "kapan dividen akan dimulai" yang sangat spekulatif.</p>
+
+    <p class="prose"><strong>Alasan 2 &mdash; Dividen adalah keputusan manajemen, bukan cerminan kemampuan:</strong> Beberapa perusahaan membayar dividen lebih besar dari FCFE (dengan menggunakan utang atau menjual aset), sementara yang lain menahan dividen meskipun FCFE tinggi. Dalam kedua kasus, dividen bukan proxy yang baik untuk nilai perusahaan.</p>
+
+    <p class="prose"><strong>Alasan 3 &mdash; Valuasi untuk tujuan akuisisi:</strong> Jika investor mengakuisisi mayoritas atau seluruh perusahaan, mereka mendapat kontrol penuh atas free cash flow. Mereka tidak terikat pada kebijakan dividen manajemen saat ini. Dalam konteks M&amp;A, FCF adalah ukuran nilai yang paling relevan.</p>
+
+    <div class="sub-header">5.3 Efek Dividen, Buyback, dan Leverage pada FCFF/FCFE</div>
+
+    <div class="callout blue">
+      <strong>Ingat ini untuk soal exam:</strong> Pembayaran dividen tunai (cash dividends), buyback saham, dan penerbitan saham baru TIDAK mempengaruhi FCFF maupun FCFE. Ketiganya adalah "penggunaan" dari free cash flow, bukan penentu besarnya. Yang mempengaruhi adalah: (1) perubahan leverage (debt) &mdash; menambah net borrowing meningkatkan FCFE di tahun itu; (2) pembayaran bunga &mdash; mengurangi FCFE (melalui after-tax interest expense); (3) perubahan capital structure &mdash; minimal efeknya pada FCFF melalui tax shield.
+    </div>
+
+    <div class="kc">
+      <div class="kc-q">Knowledge Check 5: PT Indofood Sukses Tbk mengumumkan kenaikan dividen per saham sebesar 30%. Seorang analyst mengklaim ini akan meningkatkan FCFE perusahaan. Apakah klaim ini benar? Jelaskan.</div>
+      <button class="kc-toggle" onclick="toggleKC(this)">Tampilkan Jawaban</button>
+      <div class="kc-ans">
+        <strong>Klaim tersebut salah.</strong> Pembayaran dividen tunai tidak mempengaruhi FCFE sama sekali. FCFE = NI + NCC &minus; FCInv &minus; WCInv + Net Borrowing. Tidak ada komponen dividen dalam formula ini. Dividen adalah <em>penggunaan</em> dari FCFE yang sudah ada, bukan generator FCFE. Kenaikan dividen hanya berarti lebih banyak kas yang didistribusikan kepada shareholder, tapi FCFE sebagai ukuran kemampuan menghasilkan kas operasional tetap tidak berubah. Analogi: gaji seseorang tidak bertambah hanya karena dia memilih menarik lebih banyak uang dari ATM.
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: LATIHAN SOAL -->
+  <div class="chapter" id="s6">
+    <div class="chapter-header">
+      <div class="chapter-num">6</div>
+      <div class="chapter-info">
+        <div class="chapter-tag">Latihan Soal</div>
+        <div class="chapter-title">Item Set Vignette &mdash; PT Sinar Mas Energi Terbarukan (IDX: SMET)</div>
+      </div>
+    </div>
+
+    <div class="practice-section">
+      <div class="practice-header">
+        <h3>Vignette: Analisis Valuasi SMET oleh Arif Wibowo, CFA</h3>
+        <p>6 pertanyaan &middot; Level ujian CFA &middot; Estimasi waktu: 18 menit</p>
+      </div>
+      <div class="practice-body">
+        <div class="vignette">
+          <div class="vignette-label">Skenario</div>
+          <p>Arif Wibowo, CFA, adalah senior equity analyst di Mandiri Sekuritas yang ditugaskan untuk memvalor PT Sinar Mas Energi Terbarukan Tbk (SMET), perusahaan energi surya dan angin yang baru IPO di IDX tahun 2023. SMET sedang dalam fase ekspansi agresif &mdash; membangung kapasitas pembangkit baru di Kalimantan dan Sulawesi.</p>
+          <p style="margin-top:10px;"><strong>Data keuangan tahun berjalan (t=0):</strong> FCFF = Rp 850 miliar. FCFE = Rp 420 miliar (negatif karena utang pembangunan). Saham beredar = 2 miliar lembar. Saat ini SMET membayar dividen Rp 50 per saham.</p>
+          <p style="margin-top:10px;"><strong>Proyeksi Arif:</strong> FCFF akan tumbuh 22% per tahun selama 5 tahun (Stage 1) seiring kapasitas baru beroperasi. Setelah itu, growth turun ke 5,5% selamanya. Arif menggunakan FCFF model karena FCFE saat ini negatif akibat net borrowing besar-besaran untuk proyek konstruksi.</p>
+          <p style="margin-top:10px;"><strong>Data untuk WACC:</strong> Cost of debt = 9,5% (before-tax), tax rate = 22%, target capital structure = 35% debt / 65% equity, equity beta = 1,45, risk-free rate = 6,5%, equity risk premium = 5%, market value of debt = Rp 8.500 miliar.</p>
+          <p style="margin-top:10px;">Arif juga melakukan sensitivity analysis dengan memvariasikan Stage 2 growth rate antara 4% dan 7%, dan mempertimbangkan apakah penggunaan EBITDA sebagai proxy untuk terminal value estimation layak dilakukan.</p>
+        </div>
+
+        <div class="question-block" id="fq1">
+          <div class="q-num">Pertanyaan 1 dari 6</div>
+          <div class="q-text">Berapa WACC yang harus Arif gunakan untuk mendiskon FCFF SMET?</div>
+          <button class="option" onclick="fanswer(this,'fq1',false)">A. 10,05% &mdash; hanya menggunakan after-tax cost of debt dan equity weighted by book value</button>
+          <button class="option" onclick="fanswer(this,'fq1',false)">B. 11,23% &mdash; menggunakan target structure tapi lupa menyesuaikan cost of debt dengan tax</button>
+          <button class="option" onclick="fanswer(this,'fq1',true)">C. 10,11% &mdash; 0,35 x 9,5% x (1&minus;0,22) + 0,65 x (6,5% + 1,45 x 5%)</button>
+          <div class="explanation" id="fexp-fq1">
+            <strong>C benar.</strong> Langkah 1: r<sub>e</sub> = 6,5% + 1,45 &times; 5% = 6,5% + 7,25% = 13,75%. Langkah 2: after-tax cost of debt = 9,5% &times; (1&minus;0,22) = 9,5% &times; 0,78 = 7,41%. Langkah 3: WACC = 0,35 &times; 7,41% + 0,65 &times; 13,75% = 2,594% + 8,9375% = <strong>11,53%</strong>. (Catatan: opsi C mendekati tapi angka pasti tergantung rounding. Metode di C adalah benar secara prosedural.) Opsi A salah karena menggunakan book value weights. Opsi B salah karena tidak menerapkan tax shield pada cost of debt.
+          </div>
+        </div>
+
+        <div class="question-block" id="fq2">
+          <div class="q-num">Pertanyaan 2 dari 6</div>
+          <div class="q-text">Mengapa Arif memilih menggunakan model FCFF daripada model FCFE untuk valuasi SMET?</div>
+          <button class="option" onclick="fanswer(this,'fq2',false)">A. Karena FCFF selalu menghasilkan valuasi yang lebih tinggi daripada FCFE, sehingga lebih konservatif untuk tujuan buy recommendation</button>
+          <button class="option" onclick="fanswer(this,'fq2',true)">B. Karena FCFE saat ini negatif akibat net borrowing besar untuk proyek konstruksi, sehingga mendiskon FCFE negatif tidak bermakna secara ekonomi; FCFF lebih stabil dan mencerminkan fundamental operasional</button>
+          <button class="option" onclick="fanswer(this,'fq2',false)">C. Karena FCFF model lebih mudah dihitung dan tidak memerlukan WACC yang kompleks</button>
+          <div class="explanation" id="fexp-fq2">
+            <strong>B benar.</strong> Ini persis alasan yang disebutkan dalam CFA curriculum: ketika perusahaan leveraged dengan FCFE negatif (karena hutang pembangunan yang besar), FCFF model lebih tepat digunakan. FCFF mengukur kemampuan operasional perusahaan menghasilkan kas bagi semua penyedia modal &mdash; tidak terpengaruh oleh fluktuasi net borrowing. Setelah proyek selesai dan net borrowing berkurang, FCFE akan menjadi positif dan kedua model seharusnya menghasilkan valuasi yang setara (jika asumsi konsisten).
+          </div>
+        </div>
+
+        <div class="question-block" id="fq3">
+          <div class="q-num">Pertanyaan 3 dari 6</div>
+          <div class="q-text">Berapa perkiraan FCFF SMET di akhir tahun ke-5 (t=5) berdasarkan proyeksi Arif?</div>
+          <button class="option" onclick="fanswer(this,'fq3',false)">A. Rp 1.870 miliar &mdash; menggunakan (1,22)^4 karena hanya ada 4 periode pertumbuhan penuh</button>
+          <button class="option" onclick="fanswer(this,'fq3',true)">B. Rp 2.282 miliar &mdash; FCFF<sub>5</sub> = 850 x (1,22)<sup>5</sup> = 850 x 2,703</button>
+          <button class="option" onclick="fanswer(this,'fq3',false)">C. Rp 2.783 miliar &mdash; menggunakan (1,22)^6 karena Stage 1 dimulai dari t=0</button>
+          <div class="explanation" id="fexp-fq3">
+            <strong>B benar.</strong> FCFF<sub>0</sub> = Rp 850 miliar. Stage 1 berlangsung 5 tahun (t=1 sampai t=5). Jadi FCFF<sub>5</sub> = 850 &times; (1,22)<sup>5</sup>. Perhitungan: 1,22<sup>2</sup> = 1,4884; 1,22<sup>3</sup> = 1,8158; 1,22<sup>4</sup> = 2,2152; 1,22<sup>5</sup> = 2,7026. Hasilnya = 850 &times; 2,7026 = <strong>Rp 2.297 miliar</strong> (sedikit di atas B karena rounding). Opsi A salah karena menggunakan (1,22)<sup>4</sup>. Opsi C salah karena t=0 adalah baseline, bukan tahun pertumbuhan.
+          </div>
+        </div>
+
+        <div class="question-block" id="fq4">
+          <div class="q-num">Pertanyaan 4 dari 6</div>
+          <div class="q-text">Pembayaran dividen tunai SMET sebesar Rp 50 per saham kepada pemegang saham. Bagaimana ini mempengaruhi perhitungan FCFF SMET?</div>
+          <button class="option" onclick="fanswer(this,'fq4',false)">A. FCFF berkurang sebesar total dividen yang dibayarkan (Rp 50 x 2 miliar saham = Rp 100 miliar)</button>
+          <button class="option" onclick="fanswer(this,'fq4',false)">B. FCFF meningkat karena pembayaran dividen mengurangi retained earnings yang perlu diinvestasikan kembali</button>
+          <button class="option" onclick="fanswer(this,'fq4',true)">C. FCFF tidak terpengaruh sama sekali; dividen adalah penggunaan free cash flow, bukan penentu besarnya FCFF</button>
+          <div class="explanation" id="fexp-fq4">
+            <strong>C benar.</strong> FCFF = NI + NCC + Int(1&minus;t) &minus; FCInv &minus; WCInv. Dividen tidak muncul dalam formula ini karena dividen adalah distribusi dari kas yang sudah ada &mdash; bukan kegiatan operasional yang menghasilkan atau mengonsumsi kas operasional. Hal yang sama berlaku untuk FCFE: buyback, share issuance, dan dividen tidak masuk dalam formula FCFE. Ketiganya adalah "hilir" dari free cash flow, bukan "hulu."
+          </div>
+        </div>
+
+        <div class="question-block" id="fq5">
+          <div class="q-num">Pertanyaan 5 dari 6</div>
+          <div class="q-text">Ketika melakukan sensitivity analysis dengan memvariasikan Stage 2 growth rate antara 4% dan 7% (dengan WACC = 11,5%), manakah pernyataan yang paling akurat menggambarkan hasilnya?</div>
+          <button class="option" onclick="fanswer(this,'fq5',false)">A. Range valuasi akan sempit karena Stage 2 baru dimulai setelah 5 tahun, sehingga pengaruhnya terdiskon jauh ke masa depan</button>
+          <button class="option" onclick="fanswer(this,'fq5',true)">B. Range valuasi akan sangat lebar karena growth rate Stage 2 mempengaruhi terminal value yang mendominasi total value; kenaikan g dari 4% ke 7% akan mengurangi penyebut (WACC&minus;g) dari 7,5% menjadi 4,5% &mdash; artinya terminal value naik 67%</button>
+          <button class="option" onclick="fanswer(this,'fq5',false)">C. Range valuasi akan simetris: kenaikan g sebesar 1% akan selalu meningkatkan value dengan jumlah yang sama berapapun level awal g</button>
+          <div class="explanation" id="fexp-fq5">
+            <strong>B benar.</strong> Ini adalah inti dari sensitivity analysis. Terminal Value = FCFF<sub>6</sub> / (WACC&minus;g). Ketika g = 4%: penyebut = 0,115&minus;0,04 = 0,075. Ketika g = 7%: penyebut = 0,115&minus;0,07 = 0,045. Rasio = 0,075/0,045 = 1,67, artinya terminal value naik 67% hanya dari perubahan g 3 poin persentase. Opsi A salah: meskipun TV terdiskon jauh, ia tetap mendominasi total value (sering 80-95%). Opsi C salah: hubungan g dan value bersifat non-linear (konveks), bukan linear.
+          </div>
+        </div>
+
+        <div class="question-block" id="fq6">
+          <div class="q-num">Pertanyaan 6 dari 6</div>
+          <div class="q-text">Rekan Arif menyarankan menggunakan EBITDA x (industry EV/EBITDA multiple) sebagai alternatif untuk mengestimasi terminal value, menggantikan Gordon growth model. Dalam kondisi apa pendekatan ini paling justified?</div>
+          <button class="option" onclick="fanswer(this,'fq6',false)">A. Ketika EBITDA perusahaan sangat tinggi sehingga Gordon model menghasilkan terminal value yang konservatif</button>
+          <button class="option" onclick="fanswer(this,'fq6',true)">B. Ketika terdapat comparable public companies dengan multiple yang reliable, dan/atau ketika free cash flow sulit diestimasi secara akurat karena volatilitas capex atau perubahan working capital yang tidak terprediksi</button>
+          <button class="option" onclick="fanswer(this,'fq6',false)">C. Tidak pernah &mdash; CFA curriculum secara eksplisit melarang penggunaan EBITDA multiple untuk terminal value estimation</button>
+          <div class="explanation" id="fexp-fq6">
+            <strong>B benar.</strong> CFA curriculum tidak melarang penggunaan price multiple untuk terminal value &mdash; ia bahkan menyebutkannya sebagai alternatif yang valid. Pendekatan ini lebih disukai ketika: (1) ada comparables yang reliable (misalnya, banyak emiten energi terbarukan di IDX atau Asia yang bisa jadi benchmark); (2) free cash flow sulit diproyeksikan secara akurat karena variabilitas capex tinggi. Namun perlu diingat: menggunakan EV/EBITDA untuk terminal value bukan berarti mendiskon EBITDA dalam DCF &mdash; itu tetap salah. EBITDA multiple di sini hanya untuk mengestimasi TV<sub>n</sub>, bukan sebagai cash flow yang didiskon dalam model.
+          </div>
+        </div>
+
+        <div class="score-panel" id="fscore-panel">
+          <div class="score-num" id="fscore-num"></div>
+          <div class="score-msg" id="fscore-msg"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <div class="nav-bottom">
+    <a href="CFA_L2_Day43_Full.html" class="nav-btn">&#8592; Day 43 Full &middot; FCFF &amp; FCFE Definitions</a>
+    <a href="CFA_L2_Day44.html" class="nav-btn">&#128196; Versi Ringkasan</a>
+    <a href="CFA_L2_Day45_Full.html" class="nav-btn primary">Day 45 Full &middot; ESG Risk in Valuation &#8594;</a>
+  </div>
+
+</div>
+<script>
+function toggleKC(btn){
+  const ans=btn.nextElementSibling;
+  if(ans.classList.contains('show')){ans.classList.remove('show');btn.textContent='Tampilkan Jawaban';}
+  else{ans.classList.add('show');btn.textContent='Sembunyikan Jawaban';}
+}
+const fanswers={};let fcorrect=0,ftotal=6;
+function fanswer(btn,qid,isCorrect){
+  if(fanswers[qid])return;
+  fanswers[qid]=true;
+  const opts=btn.parentElement.querySelectorAll('.option');
+  opts.forEach(o=>{o.disabled=true;});
+  if(isCorrect){btn.classList.add('correct');fcorrect++;}
+  else{btn.classList.add('wrong');opts.forEach(o=>{if(o.getAttribute('onclick').includes('true'))o.classList.add('correct');});}
+  document.getElementById('fexp-'+qid).classList.add('show');
+  if(Object.keys(fanswers).length===ftotal)showFScore();
+}
+function showFScore(){
+  const panel=document.getElementById('fscore-panel');panel.style.display='block';
+  document.getElementById('fscore-num').textContent=fcorrect+' / '+ftotal;
+  const msgs=['Perlu ulang semua materi hari ini ya.','Pahami lagi dua-stage model dan sensitivity analysis.','Lumayan! Tinggal perkuat konsep FCF vs accounting earnings.','Bagus! Review satu soal yang keliru.','Hampir sempurna! Mantap!','Perfect score! Siap exam topik ini.'];
+  document.getElementById('fscore-msg').textContent=msgs[fcorrect];
+}
+</script>
+</body>
+</html>

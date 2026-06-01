@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level 2 - Day 31: Dividend Policy (Dividends and Share Repurchases)</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg:#fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+      --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;--gold:#9a6e1a;--gold2:#7a5010;
+      --gold-bg:rgba(154,110,26,0.08);--blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);
+      --green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);--red:#b83232;--red-bg:rgba(184,50,50,0.08);
+      --amber:#a06010;--amber-bg:rgba(160,96,16,0.08);--r:10px;--r-sm:6px;
+    }
+    body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6; }
+    .page { max-width:900px;margin:0 auto;padding:0 16px; }
+    .topbar { display:flex;justify-content:space-between;align-items:center;padding:12px 0;margin-top:8px;border-bottom:1px solid var(--border);font-size:13px;color:var(--text3); }
+    .breadcrumb { display:flex;gap:8px;align-items:center; }
+    .breadcrumb span { color:var(--text3); }
+    .breadcrumb strong { color:var(--text2);font-weight:600; }
+    .day-badge { background:var(--gold-bg);color:var(--gold2);padding:4px 10px;border-radius:var(--r-sm);font-size:12px;font-weight:600; }
+    .hero { padding:40px 0 32px;border-bottom:1px solid var(--border);margin-bottom:32px; }
+    .hero-tag { color:var(--blue);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px; }
+    .hero-title { font-size:36px;font-weight:700;line-height:1.2;margin-bottom:8px;color:var(--text); }
+    .hero-sub { font-size:16px;color:var(--text2);margin-bottom:16px; }
+    .meta-row { display:flex;gap:12px;flex-wrap:wrap;margin-top:16px; }
+    .meta-pill { background:var(--bg2);border:1px solid var(--border);padding:8px 14px;border-radius:var(--r-sm);font-size:12px;color:var(--text2);font-weight:500; }
+    .section { margin-bottom:40px; }
+    .section-label { font-size:12px;font-weight:700;text-transform:uppercase;color:var(--text3);letter-spacing:0.5px;margin-bottom:16px; }
+    .obj-box { background:var(--blue-bg);border-left:4px solid var(--blue);padding:20px;border-radius:var(--r-sm);margin-bottom:16px; }
+    .obj-box-title { font-size:13px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px; }
+    .obj-list { list-style:none; }
+    .obj-list li { font-size:14px;color:var(--text);margin-bottom:8px;padding-left:20px;position:relative; }
+    .obj-list li:before { content:"checkmark";position:absolute;left:0;color:var(--blue);font-weight:700; }
+    .concept-grid { display:grid;grid-template-columns:1fr;gap:20px;margin-bottom:24px; }
+    .concept-card { background:white;border:1px solid var(--border2);border-radius:var(--r);padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05); }
+    .concept-card-header { display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border); }
+    .concept-num { display:flex;align-items:center;justify-content:center;width:32px;height:32px;background:var(--gold-bg);color:var(--gold);border-radius:50%;font-weight:700;font-size:14px; }
+    .concept-title { font-size:16px;font-weight:700;color:var(--text);flex:1; }
+    .concept-body { font-size:14px;color:var(--text);line-height:1.7; }
+    .concept-body p { margin-bottom:12px; }
+    .formula { background:var(--bg2);border-left:3px solid var(--gold);padding:12px;border-radius:var(--r-sm);font-family:'Courier New',monospace;font-size:13px;color:var(--text);margin:12px 0;overflow-x:auto;white-space:pre-wrap; }
+    .insight { background:var(--green-bg);border-left:3px solid var(--green);padding:12px;border-radius:var(--r-sm);font-size:13px;color:var(--text);margin:12px 0; }
+    .trap { background:var(--red-bg);border-left:3px solid var(--red);padding:12px;border-radius:var(--r-sm);font-size:13px;color:var(--text);margin:12px 0; }
+    .trap-label { font-weight:700;color:var(--red);font-size:11px;text-transform:uppercase;margin-bottom:4px; }
+    .assume-table { width:100%;border-collapse:collapse;margin:12px 0;font-size:13px; }
+    .assume-table th { background:var(--bg3);border:1px solid var(--border);padding:10px;text-align:left;font-weight:700;color:var(--text); }
+    .assume-table td { border:1px solid var(--border);padding:10px;color:var(--text2); }
+    .cheat-grid { display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px; }
+    .cheat-item { background:white;border:1px solid var(--border);border-radius:var(--r-sm);padding:14px; }
+    .cheat-key { font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px; }
+    .cheat-val { font-size:13px;color:var(--text);font-weight:500;line-height:1.5; }
+    .practice-body { background:white;border:1px solid var(--border2);border-radius:var(--r);padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05); }
+    .vignette { background:var(--bg2);padding:16px;border-radius:var(--r-sm);margin-bottom:24px;border-left:3px solid var(--amber); }
+    .vignette-label { font-size:11px;font-weight:700;color:var(--amber);text-transform:uppercase;margin-bottom:8px; }
+    .vignette-text { font-size:13px;color:var(--text);line-height:1.6; }
+    .question-block { margin-bottom:28px; }
+    .q-num { font-size:12px;font-weight:700;color:var(--blue);margin-bottom:8px; }
+    .q-text { font-size:14px;color:var(--text);margin-bottom:12px;line-height:1.6;font-weight:500; }
+    .option { display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;border:1px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:all 0.2s ease;background:white; }
+    .option:hover { border-color:var(--blue);background:var(--blue-bg); }
+    .option-radio { display:flex;align-items:center;justify-content:center;width:18px;height:18px;border:2px solid var(--border2);border-radius:50%;flex-shrink:0;margin-top:2px; }
+    .option.selected .option-radio { border-color:var(--blue);background:var(--blue); }
+    .option-text { font-size:13px;color:var(--text); }
+    .explanation { background:var(--bg2);padding:12px;border-radius:var(--r-sm);font-size:12px;color:var(--text2);margin-top:8px;display:none;line-height:1.6; }
+    .explanation.show { display:block; }
+    .explanation.correct { border-left:3px solid var(--green);background:var(--green-bg);color:var(--text); }
+    .explanation.incorrect { border-left:3px solid var(--red);background:var(--red-bg);color:var(--text); }
+    .score-panel { background:var(--gold-bg);border:1px solid var(--gold);border-radius:var(--r);padding:16px;margin-top:20px;text-align:center;display:none; }
+    .score-panel.show { display:block; }
+    .score-panel-text { font-size:14px;color:var(--text);margin-bottom:8px; }
+    .score-panel-value { font-size:24px;font-weight:700;color:var(--gold2); }
+    .nav-bottom { display:flex;justify-content:space-between;align-items:center;padding:24px 0;margin-top:40px;border-top:1px solid var(--border); }
+    .nav-btn { text-decoration:none;padding:10px 16px;border-radius:var(--r-sm);font-size:13px;font-weight:600;color:var(--blue);border:1px solid var(--border);transition:all 0.2s ease;cursor:pointer; }
+    .nav-btn:hover { border-color:var(--blue);background:var(--blue-bg); }
+    @media (max-width:640px) { .hero-title{font-size:28px;} .cheat-grid{grid-template-columns:1fr;} .meta-row{flex-direction:column;} }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">
+      <span>CFA Level II</span><span>&middot;</span><span>Corporate Issuers</span><span>&middot;</span><strong>LM1</strong>
+    </div>
+    <div class="day-badge">Day 31 of 90</div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Thursday, 28 May 2026</div>
+    <h1 class="hero-title">Dividend Policy</h1>
+    <p class="hero-sub">Dividends and Share Repurchases &mdash; Subtopic 1 of 2</p>
+    <div class="meta-row">
+      <div class="meta-pill">60 min total</div>
+      <div class="meta-pill">30 min theory</div>
+      <div class="meta-pill">30 min practice</div>
+      <div class="meta-pill">~8% exam weight</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Learning Objectives</div>
+    <div class="obj-box">
+      <div class="obj-box-title">By the end of this subtopic, you'll be able to:</div>
+      <ul class="obj-list">
+        <li>Bandingkan teori-teori dividend policy (MM irrelevance, bird-in-hand, tax argument, signaling, agency costs) dan jelaskan implikasi masing-masing terhadap nilai perusahaan</li>
+        <li>Jelaskan bagaimana signaling theory dan clientele effect mempengaruhi keputusan manajemen dalam menetapkan dan mengubah dividend policy</li>
+        <li>Hitung expected dividend menggunakan Lintner stable dividend model (target payout adjustment) dan bedakan karakteristik stable vs. constant payout ratio policy</li>
+        <li>Terapkan dividend coverage ratio dan FCFE coverage ratio untuk menganalisis dividend safety, dan identifikasi red flags perusahaan yang berpotensi memotong dividen</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Key Concepts &mdash; Theory (30 min)</div>
+    <div class="concept-grid">
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">1</div>
+          <div class="concept-title">Teori Dividend Policy: MM Irrelevance dan Imperfeksi Pasar</div>
+        </div>
+        <div class="concept-body">
+          <p>Debat terpanjang dalam corporate finance: apakah dividend policy mempengaruhi nilai perusahaan? Miller &amp; Modigliani (1961) dalam pasar sempurna menyatakan <em>tidak</em>. Di dunia nyata, berbagai imperfeksi menciptakan relevansi yang berbeda-beda.</p>
+
+          <p><strong>MM Dividend Irrelevance &mdash; asumsi wajib hafal:</strong></p>
+          <div class="formula">Asumsi MM (semua harus terpenuhi untuk irrelevance):
+  1. Tidak ada pajak (dividend = capital gains, sama)
+  2. Tidak ada transaction costs
+  3. Symmetric information (manajer = investor, tahu sama)
+  4. Investment policy fixed (semua NPV+ proyek sudah diambil)
+  5. Capital structure optimal sudah tercapai
+
+Argumen MM (Homemade Dividend):
+  Jika perusahaan bayar Rp 1 dividen per saham
+  -> harga saham turun Rp 1 (ex-dividend)
+  -> total wealth pemegang saham TIDAK BERUBAH
+
+  Investor yang mau dividen: jual saham untuk create income
+  Investor yang tidak mau: reinvest dividen
+  -> Kedua investor bisa replicate sendiri policy manapun!</div>
+
+          <table class="assume-table">
+            <thead><tr><th>Teori</th><th>Implikasi untuk Nilai Perusahaan</th><th>Imperfeksi Pasar yang Relevan</th></tr></thead>
+            <tbody>
+              <tr><td><strong>MM Irrelevance</strong></td><td>Dividend policy tidak relevan; nilai sama apapun payout-nya</td><td>Tidak ada (perfect market)</td></tr>
+              <tr><td><strong>Bird in the Hand</strong></td><td>Dividen lebih pasti dari capital gains; high payout = lower cost of equity = higher price</td><td>Risk aversion investor terhadap future capital gains</td></tr>
+              <tr><td><strong>Tax Argument</strong></td><td>Jika capital gains pajak lebih rendah dari dividen: prefer low payout &amp; reinvest</td><td>Perbedaan tarif pajak dividen vs. capital gains</td></tr>
+              <tr><td><strong>Clientele Effect</strong></td><td>Investor yang suka dividen beli high-payout; perubahan policy = perubahan investor base</td><td>Heterogeneous tax preferences antar investor</td></tr>
+              <tr><td><strong>Signaling Theory</strong></td><td>Dividend increase = sinyal positif earnings; cut = sinyal negatif yang sangat kuat</td><td>Asymmetric information manajer vs. investor luar</td></tr>
+              <tr><td><strong>Agency Cost (Jensen FCF)</strong></td><td>Dividen memaksa disiplin; kurangi free cash flow yang bisa disalahgunakan untuk NPV- projects</td><td>Principal-agent conflict, overinvestment problem</td></tr>
+            </tbody>
+          </table>
+          <div class="insight">
+            <strong>Bird in the Hand &mdash; MM counter:</strong> Salah kaprah! Risiko saham tidak berkurang hanya karena dividen dibayar. Risiko berasal dari underlying business. Jika perusahaan bayar dividen besar hari ini, harga turun proporsi sama. Total risk tidak berubah. MM: yang "two in the bush" bukan capital gains masa depan yang lebih risky, tapi reinvestasi earnings oleh perusahaan yang sama risikonya dengan dividen itu sendiri.
+          </div>
+          <div class="trap">
+            <div class="trap-label">Exam Trap &mdash; Jensen Free Cash Flow Hypothesis</div>
+            Agency cost argument: dividends BAIK karena mengurangi free cash flow yang mungkin disalahgunakan manajemen untuk project NPV negatif (empire building). Ini bukan berarti dividen selalu baik &mdash; hanya bahwa untuk mature companies dengan few NPV+ investments, membayar dividen mengurangi overinvestment agency problem. Untuk growth companies, justru sebaliknya.
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">2</div>
+          <div class="concept-title">Signaling Theory &amp; Clientele Effect: Informasi dalam Setiap Dividen</div>
+        </div>
+        <div class="concept-body">
+          <p>Signaling theory muncul dari asymmetric information: manajer tahu lebih banyak dari investor luar. Tindakan dividen menjadi sinyal yang <em>costly to mimic</em> &mdash; perusahaan dengan cash flow lemah tidak bisa sustain dividen tinggi jangka panjang tanpa memotongnya kemudian.</p>
+
+          <table class="assume-table">
+            <thead><tr><th>Tindakan Dividen</th><th>Sinyal yang Dikomunikasikan</th><th>Reaksi Harga Tipikal</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Dividend Initiation</strong></td><td>Bisnis mature, cash flow kuat, confident tentang sustainability earnings</td><td>Positif (biasanya)</td></tr>
+              <tr><td><strong>Dividend Increase</strong></td><td>Optimis tentang future earnings; unexpected increase = sinyal terkuat</td><td>Positif</td></tr>
+              <tr><td><strong>Dividend Decrease</strong></td><td>Earnings difficulties; bisa juga reinvest strategic tapi pasar default tafsirkan negatif</td><td>Negatif</td></tr>
+              <tr><td><strong>Dividend Omission</strong></td><td>Financial difficulties serius; sinyal negatif terkuat</td><td>Sangat Negatif</td></tr>
+            </tbody>
+          </table>
+
+          <div class="formula">Mengapa dividend increase = credible signal?
+  Perusahaan dengan earnings lemah TIDAK BISA sustain high
+  dividend jangka panjang tanpa:
+    1. Memotong di masa depan (sinyal negatif ganda = lebih buruk)
+    2. Meminjam untuk bayar dividen (tidak sustainable)
+    3. Mengorbankan capex krusial (merusak business jangka panjang)
+
+  Maka: raise dividend hanya dilakukan jika manajer
+  confident earningsnya akan sustain level baru tersebut.
+  -> Costly to imitate = credible signal</div>
+
+          <p><strong>Clientele Effect:</strong> Investor memiliki preferensi berbeda tergantung tax bracket dan kebutuhan income. Saham dengan payout policy tertentu menarik investor yang sesuai. Perubahan policy = perubahan investor base = potensi selling pressure transisional.</p>
+
+          <div class="insight">
+            <strong>Practical implication signaling:</strong> Ketika TLKM atau BBRI mengumumkan kenaikan dividen di BEI, reaksi positif pasar bukan karena "lebih banyak uang hari ini" tapi karena manajemen sedang mengirim sinyal: "kami confident earnings masa depan kami kuat." Sebaliknya, pemotongan dividen pertama TLKM misalnya akan berdampak sangat besar pada harga karena pasar akan menafsirkannya sebagai sinyal serius tentang future earnings.
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">3</div>
+          <div class="concept-title">Payout Policies: Stable Dividend vs. Constant Payout Ratio &amp; Lintner Model</div>
+        </div>
+        <div class="concept-body">
+          <p><strong>Stable Dividend Policy</strong> adalah yang paling umum. Perusahaan membayar dividen yang stabil atau naik perlahan berdasarkan long-term sustainable earnings &mdash; tidak mencerminkan volatilitas earnings jangka pendek. <strong>Constant Dividend Payout Ratio Policy</strong> jarang digunakan; dividen = x% dari earnings, naik turun mengikuti laba.</p>
+
+          <table class="assume-table">
+            <thead><tr><th>Aspek</th><th>Stable Dividend Policy</th><th>Constant Payout Ratio</th></tr></thead>
+            <tbody>
+              <tr><td>Prediktabilitas untuk investor</td><td>Tinggi</td><td>Rendah (volatile)</td></tr>
+              <tr><td>Frekuensi di praktik</td><td>Mayoritas perusahaan matang (most common)</td><td>Jarang; biasanya resource companies</td></tr>
+              <tr><td>Kenaikan dividen</td><td>Bertahap, menuju target payout ratio</td><td>Langsung proporsional dengan EPS</td></tr>
+              <tr><td>Manajer sangat enggan</td><td>Memotong dividen (Lintner's finding)</td><td>Tidak ada keengganan khusus</td></tr>
+            </tbody>
+          </table>
+
+          <p><strong>Lintner's Target Payout Adjustment Model (1956):</strong> Tiga kesimpulan kunci Lintner: (1) Perusahaan punya target payout ratio jangka panjang; (2) Manajer lebih peduli pada perubahan dividen daripada level-nya; (3) Perusahaan hanya memotong dividen dalam keadaan ekstrem &mdash; last resort.</p>
+
+          <div class="formula">FORMULA LINTNER &mdash; Expected Dividend Change:
+
+  Delta_D = (EPS_expected x Target_Payout% - D_prev) x Adj_Factor
+
+  New Dividend = D_prev + Delta_D
+
+  Di mana:
+    Delta_D     = perubahan dividen yang diharapkan
+    EPS_expected = EPS yang diharapkan tahun ini
+    Target_Payout = target payout ratio jangka panjang
+    D_prev      = dividen per saham tahun sebelumnya
+    Adj_Factor  = 1/n (n = jumlah tahun untuk full adjustment)
+
+Contoh Kalkulasi:
+  EPS_expected = Rp 2.800, Target_Payout = 30%
+  D_prev = Rp 400, Adj_Factor = 1/4 = 0.25
+
+  Delta_D = (2.800 x 0.30 - 400) x 0.25
+          = (840 - 400) x 0.25
+          = 440 x 0.25 = Rp 110
+
+  New Dividend = Rp 400 + Rp 110 = Rp 510
+
+  [Meski target = Rp 840, naik bertahap karena adjustment factor]</div>
+
+          <div class="trap">
+            <div class="trap-label">Exam Trap &mdash; Lintner Saat EPS Turun</div>
+            Jika EPS turun, (EPS x Target%) mungkin MASIH lebih besar dari D_prev. Dalam kasus itu, Delta_D positif &mdash; dividen tetap naik meskipun EPS turun! Contoh: EPS turun dari 2.800 ke 2.200, Target 30%, D_prev 400, Adj 0.25: Delta_D = (2.200 x 0.30 - 400) x 0.25 = (660-400) x 0.25 = 65. Dividen tetap naik Rp 65. Ini mencerminkan keengganan manajer memotong dividen dan komitmen terhadap target jangka panjang.
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">4</div>
+          <div class="concept-title">Faktor Praktis &amp; Dividend Safety Analysis</div>
+        </div>
+        <div class="concept-body">
+          <p><strong>Enam faktor utama yang mempengaruhi dividend policy di praktik:</strong></p>
+          <table class="assume-table">
+            <thead><tr><th>Faktor</th><th>Pengaruh terhadap Payout</th></tr></thead>
+            <tbody>
+              <tr><td>Investment Opportunities (NPV+)</td><td>Semakin banyak proyek NPV+, semakin rendah payout (lebih baik reinvest secara internal)</td></tr>
+              <tr><td>Volatility of Future Earnings</td><td>Earnings volatile: rendahkan target payout; hindari stable policy yang sulit dipertahankan</td></tr>
+              <tr><td>Financial Flexibility</td><td>Ingin jaga fleksibilitas finansial: kurangi dividen; hindari situasi yang memaksa pemotongan</td></tr>
+              <tr><td>Tax Considerations</td><td>Jika capital gains taxed lower: prefer low dividend, return via buybacks atau capital appreciation</td></tr>
+              <tr><td>Flotation Costs</td><td>Biaya rights issue tinggi: hindari payout yang memaksa menerbitkan ekuitas baru</td></tr>
+              <tr><td>Legal/Contractual Restrictions</td><td>Debt covenants, impairment of capital rules: membatasi maksimum dividen yang boleh dibayar</td></tr>
+            </tbody>
+          </table>
+
+          <p><strong>Dividend Safety Analysis &mdash; dua pendekatan:</strong></p>
+          <div class="formula">PENDEKATAN 1: Earnings-Based (Traditional)
+  Dividend Payout Ratio   = Dividends / Net Income
+  Dividend Coverage Ratio = Net Income / Dividends
+
+  Benchmark umum untuk mature companies:
+  -> Payout 40-60% = Coverage 1.7x-2.5x = NORMAL
+  -> Coverage 1.0x = BERBAHAYA (satu penurunan EPS = masalah)
+  -> Coverage &lt; 1.0x = dividen dibayar dari modal, tidak sustainable
+
+PENDEKATAN 2: FCFE-Based (lebih akurat, lebih susah di-manage)
+  FCFE = CFO - FCInv + Net Borrowing
+
+  FCFE Coverage Ratio = FCFE / (Dividends + Share Repurchases)
+
+  -> Ratio = 1.0: semua free cash flow dibagikan ke shareholders
+  -> Ratio &gt; 1.0: ada kas surplus setelah distribusi (healthy)
+  -> Ratio &lt; 1.0: bayar lebih dari yang bisa dihasilkan
+      -> tidak sustainable: akan kurangi capex, naikkan utang,
+         ATAU akhirnya potong dividen</div>
+
+          <div class="insight">
+            <strong>Kenapa FCFE lebih informatif dari earnings?</strong> Earnings bisa di-manage melalui accruals, perubahan estimasi, dan kebijakan akuntansi. FCFE lebih susah "dipercantik" karena mencerminkan arus kas nyata. Tren FCFE coverage yang menurun selama beberapa tahun adalah warning sign jauh lebih reliable daripada tren earnings coverage yang masih 2x tapi turun dari 4x.
+          </div>
+          <div class="trap">
+            <div class="trap-label">Exam Trap &mdash; Dividend Yield Tinggi Bukan Selalu Bagus</div>
+            Dividend yield sangat tinggi (jauh di atas rata-rata pasar/sektor) seringkali adalah RED FLAG, bukan kesempatan. Mekanisme: harga saham sudah turun (pasar antisipasi pemotongan dividen) sehingga yield = DPS/P menjadi artifisial tinggi. Contoh kurikulum: StarHub Singapore yield 9.4% tepat sebelum dividend cut. Selalu evaluasi sustainability dividen, bukan hanya level yield-nya.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Quick Reference Cheat Sheet</div>
+    <div class="cheat-grid">
+      <div class="cheat-item">
+        <div class="cheat-key">MM Irrelevance Conditions</div>
+        <div class="cheat-val">No tax + no transaction costs + symmetric info + fixed investment policy = dividend policy irrelevant to value</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Lintner Formula</div>
+        <div class="cheat-val">Delta_D = (EPS x Target% - D_prev) x (1/n). New Div = D_prev + Delta_D. Manajer enggan potong dividen.</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Signaling Content</div>
+        <div class="cheat-val">Initiation/Increase = positive future earnings signal. Cut/Omission = strong negative signal. Costly to fake = credible.</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">FCFE Coverage</div>
+        <div class="cheat-val">FCFE / (Divs + Buybacks). FCFE = CFO - FCInv + Net Borrowing. Ratio &lt; 1.0x = unsustainable payout</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Clientele Effect</div>
+        <div class="cheat-val">Policy change = investor base change = transisi selling pressure. Tax-exempt institutions indifferent to payout form.</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">High Yield Warning</div>
+        <div class="cheat-val">Yield jauh di atas rata-rata = harga sudah turun = pasar antisipasi dividend cut. Selalu cek FCFE coverage sebelum tergiur yield tinggi.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Practice Session (30 min)</div>
+    <div class="practice-body">
+
+      <div class="vignette">
+        <div class="vignette-label">Vignette &mdash; PT Tambang Nusantara Energi Tbk (TANE)</div>
+        <div class="vignette-text">
+          <strong>Konteks:</strong> Rizky Pratama, CFA, adalah analis ekuitas di BRI Danareksa yang menganalisis PT Tambang Nusantara Energi Tbk (kode IDX: TANE), perusahaan pertambangan batu bara termal yang listing di BEI. TANE dikenal dengan dividend yield tinggi dan telah membayar dividen reguler sejak 2015.
+          <br><br>
+          <strong>Data keuangan TANE (Rp miliar):</strong><br>
+          Net Income: 2025=3.200 | 2024=3.800 | 2023=4.200<br>
+          CFO: 2025=2.100 | 2024=3.200 | 2023=3.900<br>
+          Capital Expenditure (FCInv): 2025=1.800 | 2024=1.500 | 2023=1.200<br>
+          Net Borrowing: 2025=+600 | 2024=(200) | 2023=(300)<br>
+          Dividends Paid: 2025=1.900 | 2024=1.900 | 2023=1.700<br>
+          Share Repurchases: 2025=0 | 2024=200 | 2023=0
+          <br><br>
+          TANE menggunakan <em>stable dividend policy</em> dengan target payout ratio 50% berdasarkan sustainable earnings jangka panjang. Adjustment factor = 0.25 (4-year). DPS 2025 = Rp 380. Shares beredar = 5.000 juta lembar. Expected EPS 2026 = Rp 560 (ekspektasi pemulihan harga batu bara). Harga saham saat ini = Rp 3.200 (trailing dividend yield = 11,9%).
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="q-num">PERTANYAAN 1 dari 4</div>
+        <div class="q-text">Hitung FCFE Coverage Ratio TANE untuk tahun 2025 (mencakup dividends dan share repurchases). Apa kesimpulannya?</div>
+        <div class="option" onclick="selectOption(this, 1, 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. FCFE 2025 = Rp 900 miliar; FCFE Coverage Ratio = 0.47x. Dividen TANE tidak bisa di-sustain dari free cash flow; perusahaan menutupi kekurangan dengan utang baru, situasi tidak sustainable jangka panjang.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 1, 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. FCFE 2025 = Rp 2.700 miliar; FCFE Coverage Ratio = 1.42x. Coverage di atas 1.0x menunjukkan TANE aman membayar dividen dari free cash flow.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 1, 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. FCFE 2025 = Rp 300 miliar; FCFE Coverage Ratio = 0.16x. TANE hampir insolvable karena hampir seluruh dividen dibayar dari modal.</div>
+        </div>
+        <div class="explanation correct" id="exp-1-correct" style="display:none;">
+          JAWABAN BENAR: A<br><br>
+          Kalkulasi: FCFE = CFO - FCInv + Net Borrowing = 2.100 - 1.800 + 600 = Rp 900 miliar.<br><br>
+          Denominator = Dividends + Share Repurchases = 1.900 + 0 = Rp 1.900 miliar.<br><br>
+          FCFE Coverage Ratio = 900 / 1.900 = 0.47x -- jauh di bawah 1.0x.<br><br>
+          TANE hanya menghasilkan Rp 900 miliar free cash flow untuk equity, tapi membayar Rp 1.900 miliar dividen. Gap Rp 1.000 miliar ditutup dengan kombinasi utang baru (Net Borrowing +600 miliar sudah di dalam FCFE) dan pengurasan kas/aset. Net Borrowing positif menunjukkan TANE sudah meminjam untuk mendukung dividen -- sinyal peringatan keras tentang sustainability.<br><br>
+          Perbandingan tren: 2023 FCFE = 3.900-1.200+(-300) = 2.400; coverage = 2.400/1.700 = 1.41x (aman). 2024 FCFE = 3.200-1.500+(-200) = 1.500; coverage = 1.500/(1.900+200) = 0.71x (sudah warning). 2025 = 0.47x (semakin buruk). Tren jelas memburuk!<br><br>
+          Jawaban B salah (perhitungan FCFE tidak tepat). Jawaban C salah dalam kalkulasi dasar.
+        </div>
+        <div class="explanation incorrect" id="exp-1-wrong" style="display:none;">
+          Jawaban yang benar adalah A. FCFE = CFO - FCInv + Net Borrowing = 2.100 - 1.800 + 600 = Rp 900 miliar. Coverage = 900/1.900 = 0.47x. TANE membayar hampir dua kali lipat dari free cash flow yang dihasilkannya, dengan shortfall ditutup dari utang baru -- tidak sustainable.
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="q-num">PERTANYAAN 2 dari 4</div>
+        <div class="q-text">Menggunakan Lintner's model, hitung expected DPS TANE untuk 2026. (EPS 2026 = Rp 560, target payout = 50%, adjustment factor = 0.25, D_prev = Rp 380)</div>
+        <div class="option" onclick="selectOption(this, 2, 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Expected DPS 2026 = Rp 280 (langsung ke target = 560 x 50%), karena stable dividend policy berarti dividen harus mencerminkan target payout dari expected earnings.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 2, 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Formula Lintner menghasilkan DPS 2026 = Rp 355 (karena Delta_D = -25, penurunan), tapi karena manajer sangat enggan memotong dividen, dalam praktiknya TANE kemungkinan mempertahankan Rp 380 daripada menurunkan ke Rp 355.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 2, 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Expected DPS 2026 = Rp 407,50 karena EPS naik dari kondisi saat ini dan manajemen akan naikkan dividen mengikuti target payout.</div>
+        </div>
+        <div class="explanation correct" id="exp-2-correct" style="display:none;">
+          JAWABAN BENAR: B<br><br>
+          Kalkulasi Lintner: Delta_D = (EPS x Target% - D_prev) x Adj_Factor = (560 x 0.50 - 380) x 0.25 = (280 - 380) x 0.25 = (-100) x 0.25 = -Rp 25.<br><br>
+          Secara mekanis: New DPS = 380 + (-25) = Rp 355.<br><br>
+          TAPI: ini adalah model tentang KECENDERUNGAN, bukan aturan kaku. Lintner menemukan bahwa salah satu karakteristik terpenting stable dividend policy adalah keengganan manajer memotong dividen (bahkan ketika formula menunjukkan penurunan). Manajer hanya akan memotong jika yakin penurunan earnings adalah permanen, bukan sementara.<br><br>
+          Konteks TANE: manajemen sudah mengkomunikasikan ekspektasi pemulihan harga batu bara untuk 2026. EPS 2026 (Rp 560) memang lebih rendah dari target ideal (Rp 840 = 1.500 x 50% misalnya) tapi ini karena siklus industri. Manajer kemungkinan akan mempertahankan Rp 380 (bukan memotong ke 355) karena: (1) enggan memotong, (2) berharap harga batu bara pulih lebih jauh.<br><br>
+          Jawaban A salah: Lintner bukan "langsung ke target" -- justru adjustment factor dibuat untuk BERTAHAP. Jawaban C salah dalam kalkulasi.
+        </div>
+        <div class="explanation incorrect" id="exp-2-wrong" style="display:none;">
+          Jawaban yang benar adalah B. Formula Lintner: Delta_D = (560 x 0.50 - 380) x 0.25 = -25. New DPS formula = Rp 355. Tapi karena manajer sangat enggan memotong dividen (behavioral aspect Lintner), praktiknya TANE kemungkinan pertahankan Rp 380 selama penurunan earnings dianggap temporer.
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="q-num">PERTANYAAN 3 dari 4</div>
+        <div class="q-text">Berdasarkan teori signaling, bagaimana Rizky seharusnya menginterpretasikan dividend yield TANE yang 11,9% dibanding rata-rata IDX 3-4%?</div>
+        <div class="option" onclick="selectOption(this, 3, 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Dividend yield tinggi adalah sinyal positif -- investor mendapat income lebih besar. Semakin tinggi yield, semakin menarik investasinya. Rizky sebaiknya rekomendasikan beli berdasarkan income return superior.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 3, 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Yield jauh di atas rata-rata pasar sering bukan tanda kemurahan, melainkan sinyal bahwa pasar antisipasi pemotongan dividen. Harga saham sudah tertekan (sehingga yield tinggi), dan sustainability dividen harus dievaluasi secara independen dari level yield-nya.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 3, 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Teori signaling tidak relevan di sini karena yield tinggi hanya mencerminkan karakteristik sektor pertambangan yang selalu memberikan yield lebih tinggi dari rata-rata.</div>
+        </div>
+        <div class="explanation correct" id="exp-3-correct" style="display:none;">
+          JAWABAN BENAR: B<br><br>
+          Ini adalah konsep penting dalam dividend safety analysis: dividend yield yang sangat tinggi dibandingkan normal sering kali adalah WARNING SIGNAL, bukan buying opportunity.<br><br>
+          Mekanisme: harga saham sudah turun secara signifikan (pasar antisipasi masalah) sehingga yield = DPS/P menjadi artifisial tinggi karena P (denominator) mengecil.<br><br>
+          Contoh dari kurikulum CFA L2: StarHub (Singapore telecoms) memiliki yield 9,4% tepat sebelum mengumumkan pemotongan dividend dari fixed ke variable policy di 2019.<br><br>
+          Dalam konteks TANE: semua yang sudah dianalisis menunjukkan dividen tidak sustainable: FCFE Coverage 0.47x (2025), tren menurun dari 1.41x (2023), earnings dan CFO terus turun 3 tahun berturut, Net Borrowing positif. Yield 11,9% kemungkinan mencerminkan: (1) harga saham sudah drop karena pasar sudah memprice-in risiko cut, dan/atau (2) market sedang menunggu konfirmasi cut sebelum drop lebih jauh.<br><br>
+          Rizky harus sangat berhati-hati, bukan excited dengan yield ini.
+        </div>
+        <div class="explanation incorrect" id="exp-3-wrong" style="display:none;">
+          Jawaban yang benar adalah B. Yield 11,9% vs rata-rata pasar 3-4% adalah RED FLAG. Yield sangat tinggi biasanya mencerminkan harga saham yang sudah tertekan karena pasar antisipasi pemotongan dividen -- bukan kemurahan perusahaan. Selalu evaluasi FCFE coverage sebelum tergiur yield tinggi.
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="q-num">PERTANYAAN 4 dari 4</div>
+        <div class="q-text">Misalkan TANE tiba-tiba menemukan cadangan batu bara thermal baru berkualitas premium yang memerlukan investasi Rp 8 triliun (IRR proyek = 22%, jauh di atas WACC 12%). Bagaimana dividend theory memprediksi perubahan optimal pada dividend policy TANE?</div>
+        <div class="option" onclick="selectOption(this, 4, 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Pertahankan dividend policy yang sama dan terbitkan ekuitas baru untuk mendanai proyek. Stabilitas dividen lebih penting dari pendanaan proyek baru (bird-in-hand argument).</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 4, 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Sesuai residual dividend principle dan faktor investment opportunities: kurangi dividen untuk mendanai investasi NPV-positive ini secara internal. Jika manajer berhasil mengkomunikasikan kualitas proyek (IRR 22% vs WACC 12%), pasar mungkin menerima dividend cut secara positif karena menciptakan shareholder value jangka panjang.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 4, 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Tidak ada hubungan antara investment opportunities dan dividend policy. Dividend policy dan capital budgeting adalah keputusan yang sepenuhnya independen.</div>
+        </div>
+        <div class="explanation correct" id="exp-4-correct" style="display:none;">
+          JAWABAN BENAR: B<br><br>
+          Ini menguji pemahaman tentang residual dividend theory dan faktor investment opportunities dalam dividend policy.<br><br>
+          Prinsip inti (residual dividend approach): dividen seharusnya dibayar dari SISA cash setelah semua investasi NPV-positive dipenuhi. Ketika ada proyek dengan return jauh di atas cost of capital (22% vs WACC 12%), menggunakan internal cash untuk mendanai proyek tersebut adalah value-creating bagi pemegang saham jangka panjang.<br><br>
+          Mengapa bukan rights issue (jawaban A)?<br>
+          (1) Flotation costs sangat tinggi (4-10% dari proceeds untuk typical equity issuance)<br>
+          (2) Equity issuance dalam pasar yang sudah menekan harga saham bisa sulit/mahal<br>
+          (3) Ada signaling negatif dari equity dilution<br><br>
+          Mengapa dividend cut bisa diterima positif?<br>
+          Contoh Telstra 2017: cut dividend 30% untuk reinvest ke bisnis. Awalnya harga turun 12% (income investors kecewa), tapi secara retrospektif dianggap keputusan yang tepat karena mencerminkan commitment untuk long-term value creation. Kuncinya: KOMUNIKASI yang jelas tentang alasan (reinvest ke NPV+ project, bukan financial distress).<br><br>
+          Jawaban C salah: MM sendiri mengasumsikan investment policy fixed untuk arrive at irrelevance. Investment opportunities adalah faktor TERPENTING dalam dividend policy praktis.
+        </div>
+        <div class="explanation incorrect" id="exp-4-wrong" style="display:none;">
+          Jawaban yang benar adalah B. Residual dividend principle: dividen = sisa setelah NPV+ investments dipenuhi. Proyek dengan IRR 22% vs WACC 12% adalah value-creating -- mengurangi dividen untuk mendanainya meningkatkan shareholder wealth jangka panjang. Rights issue lebih mahal karena flotation costs dan potential signaling negatif.
+        </div>
+      </div>
+
+      <div class="score-panel" id="score-panel">
+        <div class="score-panel-text">Skor kamu:</div>
+        <div class="score-panel-value" id="score-value">0 / 4</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="CFA_L2_Day30.html" class="nav-btn">&larr; Day 30: Balance Sheet &amp; Footnotes</a>
+    <a href="CFA_L2_Day32.html" class="nav-btn">Day 32: Share Repurchases &rarr;</a>
+  </div>
+
+</div>
+
+<script>
+  const answers = {};
+  const correct_answers = { 1: 'A', 2: 'B', 3: 'B', 4: 'B' };
+  let totalQ = 4;
+
+  function selectOption(el, qNum, choice) {
+    const block = el.closest('.question-block');
+    const opts = block.querySelectorAll('.option');
+    opts.forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+
+    block.querySelectorAll('.explanation').forEach(e => {
+      e.style.display = 'none';
+    });
+
+    const isCorrect = (choice === correct_answers[qNum]);
+    const expId = isCorrect ? 'exp-' + qNum + '-correct' : 'exp-' + qNum + '-wrong';
+    const exp = document.getElementById(expId);
+    if (exp) exp.style.display = 'block';
+
+    answers[qNum] = choice;
+
+    const answered = Object.keys(answers).length;
+    if (answered === totalQ) {
+      const score = Object.entries(answers).filter(([q, a]) => a === correct_answers[q]).length;
+      const panel = document.getElementById('score-panel');
+      document.getElementById('score-value').textContent = score + ' / ' + totalQ;
+      panel.classList.add('show');
+    }
+  }
+</script>
+</body>
+</html>

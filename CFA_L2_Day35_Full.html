@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level II Day 35 - Board &amp; Ownership Structure: Corporate Governance (Full)</title>
+  <style>
+:root {
+  --bg:#fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+  --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;--gold:#9a6e1a;--gold2:#7a5010;
+  --gold-bg:rgba(154,110,26,0.08);--blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);
+  --green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);--red:#b83232;--red-bg:rgba(184,50,50,0.08);
+  --amber:#a06010;--amber-bg:rgba(160,96,16,0.08);--r:10px;--r-sm:6px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:15px;}
+.page{max-width:960px;margin:0 auto;padding:0 20px;background:white;box-shadow:0 0 40px rgba(0,0,0,0.04);}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid var(--border);margin-bottom:24px;}
+.breadcrumb{font-size:13px;color:var(--text2);letter-spacing:0.5px;font-weight:500;}
+.day-badge,.version-badge{display:inline-block;padding:6px 12px;background:var(--gold-bg);color:var(--gold2);border-radius:var(--r-sm);font-size:12px;font-weight:600;margin-left:12px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);margin-left:8px;}
+.hero{margin-bottom:48px;}
+.hero-tag{font-size:13px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;}
+.hero-title{font-size:40px;font-weight:700;line-height:1.2;margin-bottom:12px;color:var(--text);}
+.hero-sub{font-size:18px;color:var(--text2);margin-bottom:28px;}
+.meta-row{display:flex;flex-wrap:wrap;gap:12px;}
+.meta-pill{display:inline-flex;align-items:center;padding:8px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:20px;font-size:13px;color:var(--text2);font-weight:500;}
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:32px;margin-bottom:48px;}
+.toc-title{font-size:18px;font-weight:700;margin-bottom:20px;color:var(--text);}
+.toc-list{list-style:none;}
+.toc-list li{margin-bottom:12px;font-size:15px;}
+.toc-list a{color:var(--blue);text-decoration:none;}
+.toc-list a:hover{text-decoration:underline;}
+.toc-num{color:var(--gold);font-weight:600;margin-right:8px;}
+.chapter{margin-bottom:56px;scroll-margin-top:100px;}
+.chapter-header{margin-bottom:28px;}
+.chapter-num{font-size:13px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:1px;}
+.chapter-title{font-size:32px;font-weight:700;color:var(--text);margin-top:8px;}
+.sub-header{font-size:20px;font-weight:700;color:var(--text);margin:32px 0 16px 0;border-bottom:2px solid var(--border);padding-bottom:8px;}
+.sub-header-sm{font-size:17px;font-weight:700;color:var(--text2);margin:24px 0 12px 0;}
+.prose{color:var(--text);margin-bottom:16px;line-height:1.8;}
+.formula-block{background:var(--bg2);border-left:4px solid var(--gold);border-radius:var(--r-sm);padding:20px;margin:24px 0;font-family:'Courier New',monospace;font-size:14px;color:var(--text);overflow-x:auto;white-space:pre-wrap;}
+.formula-block .label{font-weight:700;color:var(--gold);display:block;margin-bottom:8px;font-size:13px;text-transform:uppercase;letter-spacing:0.5px;font-family:'Inter',sans-serif;}
+.formula-block .note{font-family:'Inter',sans-serif;font-size:13px;color:var(--text2);margin-top:12px;line-height:1.6;}
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:28px;margin:32px 0;}
+.exhibit-title{font-size:15px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:20px;}
+.exhibit-body{color:var(--text);line-height:1.8;font-size:14px;}
+.reg-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;}
+.reg-table th{background:var(--bg3);border:1px solid var(--border);padding:12px;text-align:left;font-weight:700;color:var(--text);}
+.reg-table td{border:1px solid var(--border);padding:12px;color:var(--text2);}
+.reg-table tr:nth-child(even){background:rgba(255,255,255,0.5);}
+.callout{border-radius:var(--r);padding:20px;margin:24px 0;border-left:4px solid;}
+.callout.blue{background:var(--blue-bg);border-left-color:var(--blue);}
+.callout.amber{background:var(--amber-bg);border-left-color:var(--amber);}
+.callout.green{background:var(--green-bg);border-left-color:var(--green);}
+.callout.red{background:var(--red-bg);border-left-color:var(--red);}
+.callout.gold{background:var(--gold-bg);border-left-color:var(--gold);}
+.callout-title{font-weight:700;margin-bottom:8px;display:block;font-size:14px;text-transform:uppercase;letter-spacing:0.5px;}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.green .callout-title{color:var(--green);}
+.callout.red .callout-title{color:var(--red);}
+.callout.gold .callout-title{color:var(--gold);}
+.callout p,.callout li{color:var(--text);font-size:14px;line-height:1.7;}
+.callout ul{padding-left:20px;margin-top:8px;}
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:28px 0;overflow:hidden;}
+.kc-header{padding:18px 20px;background:var(--bg3);border-bottom:1px solid var(--border);cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none;}
+.kc-header:hover{background:rgba(0,0,0,0.04);}
+.kc-header-title{font-weight:600;color:var(--text);font-size:14px;}
+.kc-toggle{color:var(--text3);font-weight:700;font-size:18px;transition:transform 0.2s;}
+.kc.open .kc-toggle{transform:rotate(180deg);}
+.kc-body{padding:20px;max-height:0;overflow:hidden;transition:max-height 0.4s ease-out;}
+.kc.open .kc-body{max-height:2000px;}
+.kc-q{color:var(--text);margin-bottom:14px;line-height:1.7;font-weight:600;}
+.kc-answer{color:var(--text2);line-height:1.8;font-size:14px;border-top:1px solid var(--border);padding-top:14px;margin-top:4px;}
+.num-list,.bullet-list{margin:16px 0;padding-left:24px;}
+.num-list li,.bullet-list li{margin-bottom:10px;color:var(--text);line-height:1.7;}
+.divider{height:1px;background:var(--border);margin:48px 0;}
+.practice-body{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:28px;}
+.vignette{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-bottom:32px;}
+.vignette-label{font-size:12px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;}
+.vignette-text{font-size:14px;color:var(--text);line-height:1.8;}
+.question-block{margin-bottom:32px;}
+.q-num{font-size:12px;font-weight:700;color:var(--blue);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;}
+.q-text{font-size:15px;color:var(--text);margin-bottom:16px;line-height:1.65;font-weight:500;}
+.option{display:flex;align-items:flex-start;gap:14px;padding:12px 16px;margin-bottom:10px;border:1px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:all 0.2s ease;background:white;}
+.option:hover{border-color:var(--blue);background:var(--blue-bg);}
+.option-radio{display:flex;align-items:center;justify-content:center;width:20px;height:20px;border:2px solid var(--border2);border-radius:50%;flex-shrink:0;margin-top:2px;}
+.option.selected .option-radio{border-color:var(--blue);background:var(--blue);}
+.option-text{font-size:14px;color:var(--text);line-height:1.6;}
+.explanation{background:var(--bg2);padding:16px;border-radius:var(--r-sm);font-size:13px;color:var(--text2);margin-top:10px;display:none;line-height:1.7;}
+.explanation.show{display:block;}
+.explanation.correct{border-left:3px solid var(--green);background:var(--green-bg);color:var(--text);}
+.explanation.incorrect{border-left:3px solid var(--red);background:var(--red-bg);color:var(--text);}
+.score-panel{background:var(--gold-bg);border:1px solid var(--gold);border-radius:var(--r);padding:20px;margin-top:24px;text-align:center;display:none;}
+.score-panel.show{display:block;}
+.score-panel-text{font-size:15px;color:var(--text);margin-bottom:8px;}
+.score-panel-value{font-size:28px;font-weight:700;color:var(--gold2);}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;padding:28px 0;margin-top:48px;border-top:1px solid var(--border);}
+.nav-btn{text-decoration:none;padding:12px 18px;border-radius:var(--r-sm);font-size:13px;font-weight:600;color:var(--blue);border:1px solid var(--border);transition:all 0.2s ease;}
+.nav-btn:hover{border-color:var(--blue);background:var(--blue-bg);}
+@media(max-width:640px){.hero-title{font-size:28px;}.meta-row{flex-direction:column;}}
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II &nbsp;&middot;&nbsp; Corporate Issuers &nbsp;&middot;&nbsp; LM3
+      <span class="version-badge">Versi Full</span>
+      <span class="day-badge">Day 35 of 90</span>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Kamis, 04 Juni 2026</div>
+    <h1 class="hero-title">Board &amp; Ownership Structure: Corporate Governance</h1>
+    <p class="hero-sub">Corporate Governance (LM3) &mdash; Subtopik 1 dari 2</p>
+    <div class="meta-row">
+      <div class="meta-pill">Materi Lengkap</div>
+      <div class="meta-pill">Bahasa Indonesia</div>
+      <div class="meta-pill">~8% Exam Weight</div>
+      <div class="meta-pill">Est. Baca 45&ndash;60 Menit</div>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ul class="toc-list">
+      <li><a href="#los"><span class="toc-num">0.</span>Learning Outcomes (LOS)</a></li>
+      <li><a href="#ch1"><span class="toc-num">1.</span>Struktur Kepemilikan Global: Dispersed vs. Concentrated</a></li>
+      <li><a href="#ch2"><span class="toc-num">2.</span>Konflik dalam Struktur Kepemilikan dan Jenis Pemegang Saham Berpengaruh</a></li>
+      <li><a href="#ch3"><span class="toc-num">3.</span>Dual-Class Shares, Staggered Boards, dan Poison Pills</a></li>
+      <li><a href="#ch4"><span class="toc-num">4.</span>Evaluasi Efektivitas Dewan Direksi: Independence, Struktur, dan Komite</a></li>
+      <li><a href="#ch5"><span class="toc-num">5.</span>Executive Remuneration: Say-on-Pay, Clawback, dan Hak Voting</a></li>
+      <li><a href="#ch6"><span class="toc-num">6.</span>Latihan Soal &mdash; Item Set Vignette (6 Soal)</a></li>
+    </ul>
+  </div>
+
+  <!-- SECTION 0: LOS -->
+  <div class="chapter" id="los">
+    <div class="chapter-header">
+      <div class="chapter-num">Learning Outcomes</div>
+      <h2 class="chapter-title">LOS yang Diuji dalam Subtopik Ini</h2>
+    </div>
+    <p class="prose">Berdasarkan CFA Level II Curriculum 2026 (Learning Module 3: Corporate Governance &mdash; Ownership Structures and Their Effects), kandidat harus mampu:</p>
+    <ul class="num-list">
+      <li><strong>Mendeskripsikan</strong> variasi global dalam struktur kepemilikan perusahaan dan kemungkinan dampaknya terhadap kebijakan dan praktik corporate governance (LOS 3a)</li>
+      <li><strong>Mengevaluasi</strong> efektivitas kebijakan dan praktik corporate governance sebuah perusahaan, termasuk board independence, board structure, komite dewan, executive remuneration, dan shareholder voting rights (LOS 3b)</li>
+      <li><strong>Mengidentifikasi</strong> dan menjelaskan mekanisme anti-takeover seperti dual-class shares, staggered boards, dan poison pills serta implikasinya bagi investor (LOS 3b)</li>
+      <li><strong>Menerapkan</strong> analisis corporate governance dalam konteks evaluasi investasi, termasuk dampak kualitas governance terhadap cost of capital dan risk premium (LOS 3b)</li>
+    </ul>
+    <div class="callout blue">
+      <span class="callout-title">Hubungan dengan Subtopik Berikutnya</span>
+      <p>Subtopik Day 35 ini membahas <em>struktur</em> corporate governance &mdash; ownership structures, board composition, dan mekanisme kontrol. Subtopik Day 36 (Agency Conflicts &amp; Activism) akan membahas <em>dinamika</em> governance &mdash; bagaimana konflik antar pihak termanifestasi dalam praktik bisnis, dan bagaimana aktivis investor merespons governance yang lemah.</p>
+    </div>
+  </div>
+
+  <!-- CHAPTER 1 -->
+  <div class="chapter" id="ch1">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 1</div>
+      <h2 class="chapter-title">Struktur Kepemilikan Global: Dispersed vs. Concentrated</h2>
+    </div>
+
+    <p class="prose">Lanskap corporate governance global sangat beragam, dibentuk oleh kekuatan ekonomi, politik, sosial, hukum, dan sejarah yang berbeda di setiap negara. Pada intinya, keberagaman ini bermuara pada dua model utama: <strong>dispersed ownership</strong> dan <strong>concentrated ownership</strong>. Memahami distinksi ini adalah fondasi untuk memahami konflik governance yang mungkin muncul dan mengapa solusi governance berbeda di berbagai belahan dunia.</p>
+
+    <div class="sub-header">1.1 Dispersed vs. Concentrated Ownership</div>
+
+    <p class="prose"><strong>Dispersed ownership</strong> mencerminkan keberadaan banyak pemegang saham, di mana tidak satu pun yang secara individu mampu mengendalikan korporasi. Model ini dominan di Amerika Serikat, Inggris, Australia, dan Irlandia. Dalam model dispersed, kepemilikan saham biasanya tersebar di antara jutaan investor ritel, reksa dana, dan dana pensiun &mdash; tidak ada yang memiliki lebih dari beberapa persen saham.</p>
+
+    <p class="prose"><strong>Concentrated ownership</strong> mencerminkan keberadaan satu individu atau kelompok &mdash; bisa berupa keluarga, perusahaan lain, atau entitas negara &mdash; yang memiliki kemampuan untuk mengendalikan korporasi. Ini adalah model yang jauh lebih umum secara global: laporan OECD mencatat bahwa 38 dari 47 yurisdiksi yang dianalisis memiliki struktur kepemilikan yang predominantly concentrated. Ini termasuk hampir seluruh kawasan Asia, Amerika Latin, Afrika, dan Eropa Kontinental.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 1: Klasifikasi Ownership Structure Berdasarkan Yurisdiksi (OECD)</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Tipe Ownership</th><th>Yurisdiksi Contoh</th><th>Karakteristik Dominan</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Concentrated</strong></td>
+              <td>Indonesia, India, Brasil, China, Meksiko, Korea Selatan, Prancis, Italia, Spanyol (38 dari 47 yurisdiksi)</td>
+              <td>Kepemilikan oleh keluarga, negara (SOE), atau group perusahaan; controlling shareholders memiliki pengaruh dominan</td>
+            </tr>
+            <tr>
+              <td><strong>Dispersed</strong></td>
+              <td>Amerika Serikat, Inggris, Australia, Irlandia (4 yurisdiksi)</td>
+              <td>Kepemilikan tersebar di antara jutaan investor; tidak ada controlling shareholder; institutional investors dominan</td>
+            </tr>
+            <tr>
+              <td><strong>Hybrid</strong></td>
+              <td>Kanada, Jerman, Jepang, Belanda, Swiss (5 yurisdiksi)</td>
+              <td>Campuran: sebagian perusahaan dispersed, sebagian concentrated tergantung ukuran dan sektor</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Penting untuk dipahami bahwa tingkat kepemilikan saham (economic ownership) tidak selalu mencerminkan kekuatan voting (voting power). Perbedaan ini muncul melalui beberapa mekanisme struktural yang sering ditemui di pasar berkembang dan pasar dengan concentrated ownership.</p>
+
+    <div class="sub-header">1.2 Mekanisme yang Memisahkan Ownership dari Voting Power</div>
+
+    <p class="prose">Ada tiga mekanisme utama yang memungkinkan seorang pemegang saham atau kelompok mengendalikan perusahaan dengan kepemilikan ekonomis yang jauh lebih kecil dari proporsi kontrol yang mereka miliki:</p>
+
+    <p class="prose"><strong>Horizontal Ownership (Cross-Holding):</strong> Terjadi ketika dua perusahaan atau lebih saling memiliki saham satu sama lain. Misalnya Perusahaan A memiliki 15% saham Perusahaan B, dan Perusahaan B memiliki 12% saham Perusahaan A. Struktur ini menciptakan aliansi strategis dan hubungan jangka panjang antar perusahaan, namun juga mempersulit pihak luar untuk mengakuisisi salah satu dari mereka. Cross-holding umum ditemukan di Jepang dalam bentuk keiretsu, di mana bank, pemasok, dan pelanggan saling memiliki saham.</p>
+
+    <p class="prose"><strong>Vertical Ownership (Pyramid Structure):</strong> Terjadi ketika satu perusahaan atau kelompok memiliki controlling interest di perusahaan holding, yang pada gilirannya memiliki controlling interest di perusahaan holding lain, yang akhirnya mengendalikan perusahaan operasional. Struktur piramidal ini memungkinkan pemegang saham di puncak piramid untuk mengendalikan perusahaan operasional yang nilainya jauh lebih besar dari modal yang mereka investasikan sendiri. Ini adalah struktur yang sangat umum di konglomerat Asia Tenggara, termasuk Indonesia.</p>
+
+    <div class="formula-block"><span class="label">Ilustrasi Pyramid Structure</span>Keluarga X memiliki 51% saham di Holding Company A
+(nilai investasi: Rp 500 miliar)
+
+    Holding Company A memiliki 51% saham di Sub-Holding B
+    (nilai Sub-Holding B: Rp 2 triliun)
+
+        Sub-Holding B memiliki 51% saham di Operating Co C
+        (nilai Operating Co C: Rp 10 triliun)
+
+Efek: Keluarga X mengendalikan Operating Co C senilai
+      Rp 10 triliun hanya dengan menginvestasikan Rp 500 miliar.
+      Leverage kontrol: 20x dari kepemilikan modal langsung.
+<span class="note">Catatan: Dalam struktur piramidal, kepemilikan ekonomis keluarga X di Operating Co C sebenarnya hanya: 51% x 51% x 51% = ~13.3%, namun mereka memegang kontrol efektif 51% di setiap level. Ini menciptakan potensi besar untuk principal-principal problem.</span></div>
+
+    <p class="prose"><strong>Dual-Class (Multiple-Class) Shares:</strong> Memberikan satu kelas saham hak voting superior atau eksklusif, sementara kelas lain memiliki hak voting yang lebih rendah atau tidak ada sama sekali. Saham dengan super-voting rights biasanya dipegang oleh pendiri atau manajemen, sedangkan saham yang dijual ke publik di bursa adalah saham dengan voting rights terbatas. Mekanisme ini memungkinkan pendiri untuk mempertahankan kontrol atas arah strategis perusahaan bahkan setelah menjual sebagian besar kepemilikan ekonomisnya melalui IPO.</p>
+
+    <div class="callout amber">
+      <span class="callout-title">Voting Caps sebagai Mekanisme Terbalik</span>
+      <p>Selain mekanisme yang meningkatkan kontrol relative terhadap kepemilikan, ada juga mekanisme sebaliknya: <strong>voting caps</strong>. Beberapa pemerintah memberlakukan batasan maksimum hak voting bagi pemegang saham besar &mdash; misalnya, bahkan jika seorang investor asing memiliki 40% saham perusahaan strategis, mereka mungkin hanya boleh menggunakan 10% voting rights. Ini adalah cara pemerintah mencegah investor asing mendapatkan kontrol atas perusahaan-perusahaan strategis nasional. Ini menciptakan kombinasi concentrated ownership + dispersed voting power.</p>
+    </div>
+
+    <div class="kc" id="kc1">
+      <div class="kc-header" onclick="toggleKC('kc1')">
+        <span class="kc-header-title">Knowledge Check 1.1 &mdash; Struktur Kepemilikan dan Voting</span>
+        <span class="kc-toggle">&#9660;</span>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">PT Garuda Konglomerasi (GK) memiliki struktur sebagai berikut: Keluarga Santoso memegang 60% saham GK Holding. GK Holding memegang 55% saham GK Operasi (perusahaan publik di BEI). Saham GK Operasi dibagi dua kelas: Kelas A (1 suara/saham, dimiliki publik, 40% dari total saham) dan Kelas B (10 suara/saham, dimiliki GK Holding, 60% dari total saham). Hitung: (a) kepemilikan ekonomis efektif keluarga Santoso di GK Operasi, dan (b) persentase voting power keluarga Santoso di GK Operasi.</p>
+        <div class="kc-answer">
+          <strong>Jawaban:</strong><br>
+          (a) Kepemilikan ekonomis efektif = 60% (di GK Holding) x 60% (saham Kelas B di GK Operasi yang dipegang GK Holding) = 36% dari total saham GK Operasi. Ditambah kepemilikan tidak langsung: 60% x 55% = 33% dari total economic interest GK Operasi. Namun dalam struktur ini yang lebih tepat: GK Holding memegang 55% saham GK Operasi (semua Kelas B, 60% total saham adalah Kelas B, tapi GK Holding hanya pegang 55% dari keseluruhan GK Operasi = mix Kelas B dan mungkin sebagian kecil Kelas A). Penyederhanaan: Kepemilikan ekonomis keluarga = 60% x 55% = 33% dari total ekonomi GK Operasi.<br><br>
+          (b) Voting power: GK Holding memegang Kelas B (10 suara/saham). Jika GK Holding memegang 55% saham GK Operasi dan semuanya Kelas B, maka voting GK Holding = (55% x 10 suara) / [(55% x 10 suara) + (45% x 1 suara)] = 5.5 / (5.5 + 0.45) = 5.5/5.95 = ~92.4% voting power. Keluarga Santoso mengontrol 60% GK Holding, jadi voting power efektif = 60% x 92.4% = ~55.4% langsung, namun secara efektif keluarga Santoso mengendalikan GK Holding sepenuhnya (memiliki 60% = controlling stake), sehingga mereka mengendalikan seluruh 92.4% voting power GK Holding di GK Operasi.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAPTER 2 -->
+  <div class="chapter" id="ch2">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 2</div>
+      <h2 class="chapter-title">Konflik dalam Struktur Kepemilikan dan Jenis Pemegang Saham Berpengaruh</h2>
+    </div>
+
+    <p class="prose">Jenis struktur kepemilikan menentukan jenis konflik yang paling mungkin muncul dalam korporasi. Memahami konflik ini penting karena solusi governance yang tepat berbeda tergantung konflik yang dihadapi.</p>
+
+    <div class="sub-header">2.1 Empat Kombinasi Ownership dan Voting Power</div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 2: Matriks Konflik Berdasarkan Kombinasi Ownership dan Voting</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Kombinasi</th><th>Karakteristik</th><th>Jenis Konflik</th><th>Contoh</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Dispersed Ownership + Dispersed Voting</strong></td>
+              <td>Pemegang saham lemah, manajer kuat (weak shareholders, strong managers)</td>
+              <td><strong>Principal-Agent Problem:</strong> Manajer mungkin mengutamakan kepentingan diri sendiri atas kepentingan pemegang saham</td>
+              <td>Perusahaan publik AS tanpa controlling shareholder; manajemen mendapat kompensasi berlebihan atau melakukan empire building</td>
+            </tr>
+            <tr>
+              <td><strong>Concentrated Ownership + Concentrated Voting</strong></td>
+              <td>Controlling shareholder kuat, manajer lemah (strong shareholders, weak managers)</td>
+              <td><strong>Principal-Principal Problem:</strong> Controlling shareholder mengalihkan sumber daya perusahaan untuk keuntungan sendiri, merugikan minority shareholders</td>
+              <td>Konglomerat keluarga di Asia; SOE; perusahaan dengan pyramid structure yang kuat</td>
+            </tr>
+            <tr>
+              <td><strong>Dispersed Ownership + Concentrated Voting</strong></td>
+              <td>Controlling shareholders tidak memiliki mayoritas saham tapi memegang kontrol voting mayoritas</td>
+              <td><strong>Principal-Principal Problem</strong> (varian): Controlling shareholders dengan kepemilikan kecil menekan minority shareholders melalui dual-class atau pyramid structures</td>
+              <td>Tech founders dengan super-voting shares (Alphabet, Meta); keluarga dengan pyramid structures di pasar berkembang</td>
+            </tr>
+            <tr>
+              <td><strong>Concentrated Ownership + Dispersed Voting (Voting Caps)</strong></td>
+              <td>Pemegang saham besar dibatasi hak votingnya oleh regulasi</td>
+              <td>Konflik lebih terbatas; pemerintah melindungi perusahaan strategis dari kontrol asing</td>
+              <td>SOE dengan investor asing yang dibatasi voting rights; sektor perbankan dan pertahanan di banyak negara</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">2.2 Jenis Pemegang Saham Berpengaruh</div>
+
+    <p class="prose">Di berbagai belahan dunia, jenis pemegang saham yang memiliki pengaruh signifikan terhadap corporate governance berbeda-beda. Setiap tipe memiliki motivasi, kepentingan, dan agenda yang unik:</p>
+
+    <p class="prose"><strong>Bank:</strong> Di Eropa dan Asia, bank sering memiliki kepemilikan ekuitas signifikan di perusahaan yang juga menjadi debiturnya. Konflik kepentingan bisa muncul &mdash; misalnya bank mendorong perusahaan untuk mengambil lebih banyak pinjaman (demi pendapatan bunga bank) bahkan jika tidak menguntungkan pemegang saham lain.</p>
+
+    <p class="prose"><strong>Keluarga:</strong> Kepemilikan keluarga adalah struktur yang dominan di Amerika Latin, Asia, dan sebagian Eropa. Manfaatnya: lebih sedikit principal-agent problem karena pemilik sekaligus manajemen. Risikonya: kurang transparansi, loyalitas pada anggota keluarga di atas kompetensi, serta kesulitan menarik manajemen profesional.</p>
+
+    <p class="prose"><strong>State-Owned Enterprises (SOE):</strong> BUMN memiliki saham di bursa (listed SOEs atau mixed-ownership model). Risikonya: manajemen mungkin mengejar tujuan sosial atau kebijakan publik yang tidak selalu memaksimalkan shareholder value. Pengawasan pasar biasanya lebih lemah karena adanya implicit state guarantee untuk mencegah kebangkrutan.</p>
+
+    <p class="prose"><strong>Institutional Investors:</strong> Reksa dana, dana pensiun, perusahaan asuransi, dan hedge fund adalah pemegang saham institusional terbesar di pasar modern. Di pasar dispersed, mereka tidak memiliki controlling stake namun bisa mendorong good governance melalui engagement aktif dan ancaman divestasi.</p>
+
+    <p class="prose"><strong>Private Equity Firms:</strong> Venture capital (early stage) dan LBO firms (mature companies) umumnya memiliki controlling interest dan langsung terlibat dalam manajemen. Keterlibatan mereka sering membawa perubahan governance positif seperti implementasi performance-based compensation dan pengembangan corporate codes.</p>
+
+    <div class="callout green">
+      <span class="callout-title">Interlocking Directorates</span>
+      <p>Di Amerika Latin dan beberapa bagian Asia, satu individu bisa duduk di dewan beberapa perusahaan berbeda yang semuanya dikendalikan oleh keluarga atau group yang sama. Ini dikenal sebagai <strong>interlocking directorates</strong>. Dampaknya: satu keluarga atau group bisa mengendalikan beberapa korporasi sekaligus, menciptakan potensi besar untuk related-party transactions dan penempatan anggota keluarga di posisi strategis tanpa pertimbangan meritokrasi.</p>
+    </div>
+
+    <div class="kc" id="kc2">
+      <div class="kc-header" onclick="toggleKC('kc2')">
+        <span class="kc-header-title">Knowledge Check 2.1 &mdash; Jenis Konflik Governance</span>
+        <span class="kc-toggle">&#9660;</span>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">Sebuah perusahaan otomotif besar di Jerman dimiliki oleh publik secara tersebar (tidak ada yang pegang lebih dari 3%), namun manajemennya (CEO, CFO, dan COO) bersama-sama memiliki total 28% saham melalui program ESOP historis, dan masing-masing memegang voting rights yang setara (straight voting). Manajemen menggunakan posisi ini untuk menolak tawaran akuisisi premium 40% di atas harga pasar dari pesaing global. Identifikasi: (a) Tipe konflik governance yang dominan; (b) Apakah penolakan tawaran ini merupakan indikasi governance yang baik atau buruk, dan mengapa.</p>
+        <div class="kc-answer">
+          <strong>Jawaban:</strong><br>
+          (a) Ini adalah <em>principal-agent problem</em>. Meskipun manajemen memiliki 28% saham (lebih tinggi dari individual pemegang saham lain), struktur dasarnya adalah dispersed ownership + dispersed voting. Manajemen (agent) memiliki informasi dan kontrol yang lebih besar dari dispersed shareholders (principals), dan bisa menggunakan kekuatan itu untuk kepentingan diri sendiri (mempertahankan posisi dan gaji mereka) di atas kepentingan pemegang saham.<br><br>
+          (b) Ini kemungkinan adalah indikasi governance yang buruk. Tawaran premium 40% di atas harga pasar secara umum dianggap menguntungkan pemegang saham &mdash; namun manajemen menolaknya. Motivasi yang paling mungkin: manajemen khawatir kehilangan posisi mereka jika terjadi akuisisi (career concerns). Ini adalah contoh klasik manajemen yang mengutamakan job security atas shareholder value. Dari perspektif governance, dewan direksi independen yang kuat seharusnya mengevaluasi tawaran ini secara objektif dan melindungi kepentingan pemegang saham &mdash; bukan hanya manajemen.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAPTER 3 -->
+  <div class="chapter" id="ch3">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 3</div>
+      <h2 class="chapter-title">Dual-Class Shares, Staggered Boards, dan Poison Pills</h2>
+    </div>
+
+    <p class="prose">Tiga mekanisme ini sering dikelompokkan sebagai "anti-takeover provisions" atau "shareholder rights arrangements" &mdash; namun dalam praktiknya, fungsinya jauh lebih nuanced dan bisa menjadi instrumen yang baik maupun buruk tergantung konteks implementasinya.</p>
+
+    <div class="sub-header">3.1 Dual-Class Shares: Memisahkan Ekonomi dari Kontrol</div>
+
+    <p class="prose">Dalam straight voting (one share, one vote), setiap saham memberikan satu suara terlepas siapa yang memegangnya. Ini adalah sistem yang paling merata secara proporsional dan paling melindungi minority shareholders. <strong>Dual-class share structures</strong> menyimpang dari prinsip ini &mdash; satu kelas saham memiliki voting rights yang jauh lebih besar dari kelas lainnya.</p>
+
+    <p class="prose">Secara tipikal, pendiri atau keluarga pengendali memegang saham Kelas B (super-voting, misalnya 10 suara per saham) yang tidak dijual ke publik, sedangkan investor publik di bursa hanya bisa membeli saham Kelas A (1 suara per saham atau bahkan tanpa voting rights). Ini memungkinkan pendiri mempertahankan kontrol penuh atas arah strategis perusahaan bahkan setelah menjual mayoritas kepemilikan ekonomis ke publik melalui IPO.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 3: Contoh Dual-Class Structure di Perusahaan Teknologi Global</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Perusahaan</th><th>Kelas Pendiri</th><th>Kelas Publik</th><th>Rasio Voting</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Alphabet (Google)</td>
+              <td>Kelas B: 10 suara/saham</td>
+              <td>Kelas A: 1 suara/saham</td>
+              <td>10:1</td>
+            </tr>
+            <tr>
+              <td>Meta (Facebook)</td>
+              <td>Kelas B: 10 suara/saham</td>
+              <td>Kelas A: 1 suara/saham</td>
+              <td>10:1</td>
+            </tr>
+            <tr>
+              <td>Berkshire Hathaway</td>
+              <td>Kelas A: 1 suara/saham (tidak dapat dipecah)</td>
+              <td>Kelas B: 1/10.000 suara/saham</td>
+              <td>10,000:1</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="margin-top:12px;font-size:13px;color:var(--text2);">Dari perspektif CFA: Dual-class structures menciptakan potensi conflict of interest antara pemegang saham super-voting dan pemegang saham publik. Analis harus secara eksplisit mempertimbangkan ini dalam risk assessment investasi di perusahaan dengan struktur tersebut.</p>
+      </div>
+    </div>
+
+    <div class="sub-header">3.2 Staggered Board (Classified Board): Hambatan Sistemik untuk Perubahan</div>
+
+    <p class="prose">Dalam struktur dewan normal, seluruh anggota dewan dipilih atau dikonfirmasi dalam setiap rapat pemegang saham tahunan. Artinya, jika pemegang saham tidak puas dengan seluruh dewan, mereka bisa mengganti seluruhnya dalam satu tahun.</p>
+
+    <p class="prose">Dalam <strong>staggered board</strong> (juga disebut classified board), direktur dibagi ke dalam beberapa kelompok (biasanya tiga), dan hanya satu kelompok yang menjalani pemilihan ulang setiap tahunnya. Artinya, mengganti seluruh dewan membutuhkan waktu 2-3 tahun berturut-turut &mdash; bahkan jika pemegang saham sudah mendapat kontrol mayoritas saham.</p>
+
+    <div class="formula-block"><span class="label">Staggered Board: Mekanisme dan Dampak</span>Struktur Dewan Normal (10 direktur):
+  Tahun 1: Semua 10 direktur bisa diganti dalam RUPS
+  Hasil: Acquirer/aktivis bisa segera mendapat kontrol dewan
+
+Staggered Board (10 direktur, 3 kelas):
+  Kelas I (3-4 direktur): Pemilihan Tahun 2026
+  Kelas II (3-4 direktur): Pemilihan Tahun 2027
+  Kelas III (3-4 direktur): Pemilihan Tahun 2028
+
+  Tahun 2026: Acquirer mengambil alih 51% saham
+    -> Hanya bisa ganti 3-4 direktur (Kelas I)
+    -> Dewan masih dikendalikan 6-7 direktur lama
+  Tahun 2027: Bisa ganti 3-4 lagi (Kelas II)
+    -> Masih butuh 1 tahun lagi untuk kontrol penuh
+  Tahun 2028: Baru bisa ganti Kelas III dan kendalikan dewan
+
+Dampak Hostile Takeover:
+  -> Acquirer harus menunggu 2 tahun penuh setelah
+     mengambil alih saham sebelum bisa mengendalikan dewan
+  -> Ini memberi manajemen lama waktu untuk defensi atau mencari white knight
+<span class="note">Catatan: Staggered board secara teknis bukan melarang hostile takeover, tapi membuatnya jauh lebih mahal dan memakan waktu. Beberapa penelitian menunjukkan staggered board berkorelasi dengan valuasi perusahaan yang lebih rendah.</span></div>
+
+    <div class="sub-header">3.3 Poison Pill (Shareholder Rights Plan): Pertahanan Ekstrem</div>
+
+    <p class="prose"><strong>Poison pill</strong> adalah mekanisme yang memungkinkan semua pemegang saham yang ada (kecuali acquirer yang ditarget) untuk membeli saham baru perusahaan dengan diskon yang sangat besar &mdash; biasanya 50% dari harga pasar &mdash; jika satu pemegang saham melampaui threshold kepemilikan tertentu (biasanya 15-20%).</p>
+
+    <p class="prose">Efeknya sangat dramatis: ketika poison pill diaktifkan, posisi kepemilikan calon acquirer akan sangat terdilusi karena ribuan pemegang saham lain membeli saham baru dengan harga setengah harga pasar. Ini membuat proses akuisisi menjadi sangat mahal &mdash; seringkali membutuhkan persetujuan dewan (yang bisa menolak mengaktifkan poison pill) untuk melanjutkan akuisisi secara bersahabat.</p>
+
+    <div class="callout red">
+      <span class="callout-title">Kontroversi Poison Pill dari Perspektif Governance</span>
+      <p>Poison pill adalah salah satu mekanisme paling kontroversial dalam corporate governance. Argumen pro: melindungi pemegang saham dari tawaran akuisisi predatory yang undervalued; memberi dewan waktu untuk mengevaluasi tawaran secara menyeluruh; mencegah creeping takeovers. Argumen kontra: manajemen bisa menggunakannya untuk melindungi posisi mereka sendiri dari tawaran yang sebenarnya menguntungkan pemegang saham; mengurangi tekanan pasar untuk kinerja (market for corporate control); sering diaktifkan tanpa persetujuan pemegang saham. Mayoritas aktivis investor dan governance advocates memandang poison pill sebagai anti-shareholder provision yang sebaiknya dihindari atau dibatasi.</p>
+    </div>
+
+    <div class="kc" id="kc3">
+      <div class="kc-header" onclick="toggleKC('kc3')">
+        <span class="kc-header-title">Knowledge Check 3.1 &mdash; Anti-Takeover Provisions</span>
+        <span class="kc-toggle">&#9660;</span>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">PT Teknologi Masa Depan (TMDF) memiliki staggered board (9 direktur, 3 kelas, 3 direktur per kelas, satu kelas dipilih per tahun) dan poison pill yang aktif jika seseorang mengakuisisi lebih dari 20% saham. Investor aktivis XYZ Fund berhasil mengakuisisi 35% saham TMDF pada RUPS 2026. Jelaskan: (a) Apa yang bisa dilakukan XYZ Fund di RUPS 2026 terkait staggered board? (b) Apakah poison pill sudah aktif? (c) Apa langkah yang mungkin dilakukan XYZ Fund dalam 2-3 tahun ke depan?</p>
+        <div class="kc-answer">
+          <strong>Jawaban:</strong><br>
+          (a) Di RUPS 2026, XYZ Fund dengan 35% saham hanya bisa mempengaruhi pemilihan 3 direktur (Kelas I yang diperbarui tahun itu). Meskipun XYZ Fund memegang 35% saham, mereka hanya bisa mendapat representasi 3 dari 9 kursi dewan di tahun pertama. Enam direktur lainnya tetap menjabat hingga 2027 dan 2028.<br><br>
+          (b) Ya, poison pill sudah aktif karena XYZ Fund mengakuisisi 35% &mdash; melampaui threshold 20%. Namun jika poison pill sudah diaktifkan sebelum mereka mencapai 35%, artinya posisi mereka sudah terdilusi. Dalam praktiknya, XYZ Fund mungkin harus bernegosiasi dengan dewan untuk mendapat "waiver" dari poison pill agar bisa terus menambah kepemilikan tanpa terdilusi lebih lanjuh.<br><br>
+          (c) Strategi XYZ Fund yang mungkin: (1) Mendorong pemilihan 3 direktur pro-XYZ di setiap siklus hingga 2028 untuk akhirnya mendapat kontrol mayoritas; (2) Mengajukan proxy fight untuk mengganti lebih banyak direktur; (3) Bernegosiasi langsung dengan dewan untuk reformasi governance; (4) Meminta penghapusan staggered board dan poison pill melalui resolusi pemegang saham; (5) Mencari white knight atau katalis lain.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAPTER 4 -->
+  <div class="chapter" id="ch4">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 4</div>
+      <h2 class="chapter-title">Evaluasi Efektivitas Dewan Direksi: Independence, Struktur, dan Komite</h2>
+    </div>
+
+    <p class="prose">Evaluasi kualitas board of directors adalah titik awal yang esensial dalam analisis corporate governance perusahaan. CFA curriculum menyatakan bahwa kualitas governance umumnya tercermin dalam perilaku perusahaan di pasar dan terhadap stakeholdernya &mdash; dan evaluasi dewan adalah starting point untuk investor memahami risiko governance.</p>
+
+    <div class="sub-header">4.1 Board Independence: Definisi dan Standar Global</div>
+
+    <p class="prose"><strong>Independent board directors</strong> (direktur independen) didefinisikan sebagai direktur yang tidak memiliki hubungan material dengan perusahaan dalam hal employment (riwayat bekerja di perusahaan), ownership (kepemilikan saham yang signifikan), atau remuneration (menerima kompensasi dari perusahaan selain honorarium sebagai direktur).</p>
+
+    <p class="prose">Prinsip di balik independensi direktur sederhana: tanpa independent directors yang cukup, manajemen bisa bertindak untuk kepentingan diri sendiri tanpa pengawasan yang memadai. Independent directors berasal dari tradition dispersed-ownership jurisdictions (terutama AS dan UK) sebagai mekanisme untuk memperkuat fungsi pengawasan dewan atas manajemen yang kuat.</p>
+
+    <p class="prose">Namun, standar independensi berbeda secara signifikan antar yurisdiksi:</p>
+
+    <ul class="bullet-list">
+      <li><strong>Amerika Serikat:</strong> Mensyaratkan komite audit, nominasi, dan kompensasi seluruhnya terdiri dari independent directors. Ini adalah standar yang paling ketat.</li>
+      <li><strong>Sebagian besar OECD:</strong> Mensyaratkan atau merekomendasikan minimum 20%-50% independent directors di dewan.</li>
+      <li><strong>Yurisdiksi concentrated ownership:</strong> Komite nominasi dan remunerasi umumnya tidak wajib; jika ada, direkomendasikan untuk sebagian besar terdiri dari direktur independen.</li>
+    </ul>
+
+    <div class="callout amber">
+      <span class="callout-title">Independensi dan Board Tenure</span>
+      <p>Banyak kode governance perusahaan menyatakan bahwa tenur direktur yang melebihi 10 tahun umumnya dianggap mengurangi independensi. Alasannya: direktur dengan tenur sangat panjang cenderung membangun hubungan personal yang kuat dengan manajemen, sehingga pengawasan mereka bisa terkompromikan. Namun, tenur panjang juga bisa positif karena direktur memiliki pemahaman mendalam tentang bisnis. CFA curriculum mengakui kedua sisi ini &mdash; analis harus mengevaluasi konteksnya, bukan secara otomatis mengkategorikan direktur bertenur panjang sebagai masalah governance.</p>
+    </div>
+
+    <div class="sub-header">4.2 Board Structure: One-Tier vs. Two-Tier dan CEO Duality</div>
+
+    <p class="prose">Struktur dewan direksi secara global dibagi menjadi dua model utama:</p>
+
+    <p class="prose"><strong>One-Tier Board Structure:</strong> Terdiri dari satu dewan tunggal yang mencakup executive directors (direktur eksekutif, biasanya anggota manajemen senior) dan non-executive directors (direktur non-eksekutif, termasuk independent directors). Ini adalah struktur yang paling umum secara global dan berlaku di AS, UK, dan sebagian besar Asia Tenggara termasuk Indonesia.</p>
+
+    <p class="prose"><strong>Two-Tier Board Structure:</strong> Terdiri dari dua dewan terpisah: supervisory board (dewan pengawas) yang terdiri dari non-executives dan bertanggung jawab mengawasi management board; dan management board yang terdiri dari eksekutif senior yang menjalankan operasional perusahaan. Model ini wajib di Jerman (di mana supervisory board bahkan mencakup perwakilan karyawan &mdash; Mitbestimmung), Belanda, Austria, Argentina, dan Rusia.</p>
+
+    <p class="prose"><strong>CEO Duality</strong> adalah situasi di mana CEO juga menjabat sebagai chairperson dewan direksi. Ini menimbulkan kekhawatiran serius: bagaimana dewan bisa mengawasi manajemen secara independen jika orang yang sama memimpin kedua institusi tersebut? CFA curriculum menyatakan bahwa CEO duality "may raise concerns that the monitoring and oversight role of the board may be compromised." Solusi yang sering diterapkan adalah menunjuk <em>lead independent director</em> &mdash; seorang direktur independen yang berperan sebagai penyeimbang ketika chairperson tidak independen.</p>
+
+    <div class="sub-header">4.3 Board Committees: Struktur Komite sebagai Mekanisme Pengawasan</div>
+
+    <p class="prose">Komite-komite dewan adalah mekanisme kritis dalam corporate governance karena mereka memungkinkan pengawasan yang lebih terfokus pada area-area kritis seperti pelaporan keuangan, kompensasi, dan seleksi direksi. CFA curriculum mengidentifikasi komite-komite utama berikut:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 4: Komite Dewan &mdash; Fungsi, Komposisi, dan Risiko Jika Tidak Independen</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Komite</th><th>Fungsi Utama</th><th>Persyaratan Independensi</th><th>Risiko Jika Tidak Independen</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Audit Committee</strong></td>
+              <td>Menjaga integritas pelaporan keuangan; mengawasi auditor eksternal; mereview laporan keuangan sebelum dipublikasikan</td>
+              <td>WAJIB seluruhnya independen di AS (SOX Act); sangat direkomendasikan di yurisdiksi lain</td>
+              <td>Risiko manipulasi laporan keuangan; manajemen bisa mempengaruhi auditor melalui komite; skandal akuntansi (Enron, WorldCom)</td>
+            </tr>
+            <tr>
+              <td><strong>Remuneration / Compensation Committee</strong></td>
+              <td>Menetapkan paket kompensasi CEO dan eksekutif senior; mendesain struktur insentif; melakukan review terhadap KPI yang digunakan</td>
+              <td>WAJIB seluruhnya independen di AS; sangat direkomendasikan di yurisdiksi lain</td>
+              <td>CEO bisa mempengaruhi direktur non-independen untuk menetapkan kompensasinya sendiri secara berlebihan (pay-for-friendship bukan pay-for-performance)</td>
+            </tr>
+            <tr>
+              <td><strong>Nomination Committee</strong></td>
+              <td>Menseleksi dan mengusulkan calon direktur baru; merencanakan suksesi kepemimpinan</td>
+              <td>Harus independen di AS; direkomendasikan di banyak yurisdiksi lain</td>
+              <td>Manajemen atau controlling shareholders bisa menominasikan orang-orang yang berpihak pada mereka, mengurangi independensi dewan secara keseluruhan</td>
+            </tr>
+            <tr>
+              <td><strong>Risk and Compliance Committee</strong></td>
+              <td>Mengawasi framework manajemen risiko; memastikan kepatuhan terhadap regulasi; memonitor risiko operasional, kredit, dan reputasional</td>
+              <td>Umumnya direkomendasikan independen terutama di industri perbankan dan keuangan</td>
+              <td>Pengambilan risiko yang berlebihan oleh manajemen tanpa pengawasan memadai; pelanggaran regulasi yang tidak terdeteksi dini</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">4.4 Board Composition: Diversity, Skills, dan Evaluasi Berkala</div>
+
+    <p class="prose">Selain independensi dan struktur komite, komposisi dewan secara keseluruhan adalah faktor penting dalam evaluasi governance. Ini mencakup keberagaman latar belakang profesional, pengalaman industri, gender, usia, dan kebangsaan. Dewan dengan terlalu banyak anggota berlatarbelakang homogen mungkin kekurangan perspektif yang diperlukan untuk mengawasi bisnis yang kompleks. Sebaliknya, dewan dengan keragaman skill yang tidak relevan dengan bisnis inti juga bisa kurang efektif.</p>
+
+    <p class="prose">Evaluasi dewan dilakukan melalui dua pendekatan utama: <strong>self-evaluation</strong> (dilakukan oleh dewan itu sendiri) atau <strong>external review</strong> (dilakukan oleh konsultan independen atas nama dewan). Dimensi yang dievaluasi mencakup kinerja dewan, kepemimpinan, struktur komite, dan interaksi antara dewan dan manajemen (termasuk kultur rapat).</p>
+
+    <div class="kc" id="kc4">
+      <div class="kc-header" onclick="toggleKC('kc4')">
+        <span class="kc-header-title">Knowledge Check 4.1 &mdash; Evaluasi Board SNAR</span>
+        <span class="kc-toggle">&#9660;</span>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">Sebuah analis mengevaluasi dewan PT Style Italia (contoh dari CFA curriculum): dewan 11 anggota; komisaris utama adalah Leila Donato (keluarga pendiri, tidak merangkap CEO); 2 direktur independen; 4 anggota keluarga Donato; 5 direktur eksekutif. Keluarga Donato sudah menjabat lebih dari 20 tahun. Gender beragam (5 perempuan dari 11 anggota) dan usia beragam (35-75 tahun). Identifikasi: kekuatan dan kelemahan board Style Italia.</p>
+        <div class="kc-answer">
+          <strong>Jawaban (sesuai CFA curriculum):</strong><br>
+          <strong>Kekuatan:</strong> (1) Chairperson dan CEO adalah orang berbeda (tidak ada CEO duality) &mdash; positif; (2) Keberagaman gender dan usia dewan &mdash; positif dari sisi diversity.<br><br>
+          <strong>Kelemahan:</strong> (1) Board independence sangat rendah: hanya 2 dari 11 direktur independen (18%) &mdash; jauh di bawah standar yang direkomendasikan; (2) 4 anggota keluarga Donato di dewan menciptakan risiko principal-principal problem yang tinggi; (3) Tenur keluarga Donato lebih dari 20 tahun jauh melampaui threshold 10 tahun yang umum dianggap mengurangi independensi; (4) Komposisi ini membuat controlling family sangat dominan dalam pengambilan keputusan dewan, meminimalisir peran pengawasan direktur independen. Ini adalah evaluasi negatif secara keseluruhan dari perspektif board independence.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAPTER 5 -->
+  <div class="chapter" id="ch5">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 5</div>
+      <h2 class="chapter-title">Executive Remuneration: Say-on-Pay, Clawback, dan Hak Voting Pemegang Saham</h2>
+    </div>
+
+    <p class="prose">Kompensasi eksekutif adalah salah satu topik governance yang paling sering menjadi sumber ketegangan antara manajemen dan pemegang saham. Paket kompensasi yang dirancang buruk dapat menciptakan insentif yang salah &mdash; mendorong manajemen untuk memaksimalkan kinerja jangka pendek dengan mengorbankan penciptaan nilai jangka panjang, atau bahkan mendorong perilaku yang berisiko bagi perusahaan.</p>
+
+    <div class="sub-header">5.1 Framework Evaluasi Executive Remuneration</div>
+
+    <p class="prose">Dalam mengevaluasi paket kompensasi eksekutif, investor mempertimbangkan empat dimensi utama:</p>
+
+    <p class="prose"><strong>Transparansi:</strong> Apakah disclosure kompensasi lengkap dan dapat dipahami? Apakah KPI yang digunakan dalam insentif dijelaskan secara spesifik dengan target yang terukur? Disclosure yang samar atau tidak mencantumkan target spesifik adalah red flag.</p>
+
+    <p class="prose"><strong>Performance Linkage:</strong> Apakah struktur insentif benar-benar terhubung ke kinerja yang menciptakan nilai bagi pemegang saham? Insentif jangka pendek (STI, biasanya berbasis tahunan) dan insentif jangka panjang (LTI, biasanya berbasis multi-tahun dengan saham atau opsi) seharusnya menggunakan metrik yang relevan, sulit dimanipulasi, dan selaras dengan strategi perusahaan jangka panjang. Metrik seperti ROIC (Return on Invested Capital), free cash flow generation, atau total shareholder return (TSR) relatif terhadap peers umumnya lebih baik dari EPS sederhana.</p>
+
+    <p class="prose"><strong>Pay Differential:</strong> Investor semakin memperhatikan rasio antara gaji CEO dan rata-rata gaji karyawan perusahaan. Rasio yang terlalu ekstrem tanpa justifikasi kinerja yang jelas menjadi indikator potensi governance yang buruk dan bisa mempengaruhi employee morale.</p>
+
+    <p class="prose"><strong>Strategy Alignment:</strong> KPI yang digunakan dalam insentif harus mencerminkan prioritas strategis perusahaan. Misalnya, jika perusahaan sedang dalam fase transformasi digital, KPI terkait penetrasi digital lebih relevan dari pure earnings metrics.</p>
+
+    <div class="sub-header">5.2 Say-on-Pay: Mekanisme dan Batas-Batasnya</div>
+
+    <p class="prose">Ketika perusahaan memiliki ketentuan <strong>say-on-pay</strong>, pemegang saham memiliki hak untuk memberikan suara dan/atau feedback terkait kebijakan remunerasi eksekutif. Ini adalah mekanisme check-and-balance penting dalam governance karena memungkinkan pemegang saham mengekspresikan ketidakpuasan terhadap paket kompensasi eksekutif secara formal, tanpa harus menunggu pemilihan ulang direktur.</p>
+
+    <p class="prose">Namun penting dipahami: dalam sebagian besar yurisdiksi, hasil say-on-pay vote bersifat <strong>advisory (non-binding)</strong> &mdash; dewan secara teknis dan hukum tidak diwajibkan untuk mengubah kebijakan kompensasi meskipun mayoritas pemegang saham menolak. Namun, secara praktis, hasil negatif yang signifikan (terutama di bawah 70% persetujuan) akan menciptakan tekanan reputasional yang kuat pada manajemen dan dewan, serta dapat menarik perhatian media, investor institusional besar, dan regulator.</p>
+
+    <div class="sub-header">5.3 Clawback Policy: Akuntabilitas Pasca-Pembayaran</div>
+
+    <p class="prose"><strong>Clawback policy</strong> memberikan perusahaan hak untuk meminta kembali (recover) remunerasi yang sudah dibayarkan kepada eksekutif jika terjadi kondisi-kondisi tertentu yang membuat pembayaran tersebut menjadi tidak tepat secara retrospektif. Ini adalah mekanisme akuntabilitas yang penting karena menghilangkan insentif bagi eksekutif untuk "gaming" metrik kinerja jangka pendek &mdash; karena mereka tahu bahwa jika manipulasi terungkap, kompensasi mereka bisa ditarik kembali.</p>
+
+    <div class="formula-block"><span class="label">Clawback Policy: Trigger Events dan Implementasi</span>Trigger Events Umum:
+  1. Financial Restatements
+     Laporan keuangan harus direvisi karena error
+     atau misrepresentation yang material
+     -> Insentif yang dibayar berdasarkan angka
+        yang salah bisa ditarik kembali
+
+  2. Misconduct
+     Pelanggaran kode etik, pelecehan,
+     atau perilaku yang merusak reputasi perusahaan
+
+  3. Pelanggaran Hukum / Regulasi
+     Eksekutif terbukti melanggar hukum
+     dalam kapasitasnya sebagai karyawan/pejabat perusahaan
+
+  4. Risk Management Deficiencies
+     Pengambilan risiko berlebihan yang tidak
+     sesuai dengan kebijakan perusahaan dan
+     merugikan pemegang saham
+
+Implementasi:
+  - Biasanya berlaku untuk 3-5 tahun setelah pembayaran
+  - Mencakup bonus tunai dan insentif berbasis saham
+  - Regulasi AS (Dodd-Frank, SEC) mensyaratkan clawback
+    untuk perusahaan publik sejak 2022
+<span class="note">Catatan: Clawback policy yang kuat adalah salah satu indikator kualitas governance yang baik. Absennya clawback policy adalah red flag, terutama di industri perbankan dan keuangan di mana kinerja sering baru terlihat beberapa tahun kemudian.</span></div>
+
+    <div class="sub-header">5.4 Shareholder Voting Rights dan Governance Codes</div>
+
+    <p class="prose">Selain say-on-pay, pemegang saham memiliki berbagai voting rights yang berkaitan dengan governance perusahaan. Di bawah straight voting (one share, one vote), setiap pemegang saham memiliki pengaruh proporsional dengan kepemilikan ekonomisnya. Dual-class structures, seperti yang dibahas di Bab 3, menyimpang dari prinsip ini dan menciptakan disparitas antara voting power dan economic ownership.</p>
+
+    <p class="prose">Beberapa yurisdiksi memiliki pengaturan khusus untuk memperkuat posisi minority shareholders dalam proses pemilihan direksi. Di Inggris misalnya, sebuah perusahaan dengan controlling shareholder yang ingin mendapat "premium listing" di London Stock Exchange harus mensyaratkan bahwa independent directors disetujui secara terpisah oleh seluruh basis pemegang saham DAN secara terpisah oleh non-controlling shareholders. Ini mencegah controlling shareholders memveto direktur independen yang dipilih oleh minority shareholders.</p>
+
+    <p class="prose"><strong>Governance Codes:</strong> Banyak negara mengadopsi national corporate governance codes berbasis prinsip "comply or explain" &mdash; perusahaan harus mengadopsi rekomendasi dalam code atau menjelaskan secara publik mengapa mereka tidak melakukannya. <strong>Stewardship codes</strong> melengkapi ini dengan mendorong investor institusional untuk secara aktif memonitor perusahaan investasinya dan menggunakan hak votingnya. Di UK, asset managers yang berinvestasi di saham UK wajib mempublikasikan pernyataan komitmen mereka terhadap UK Stewardship Code.</p>
+
+    <div class="callout gold">
+      <span class="callout-title">Dampak Kualitas Governance terhadap Cost of Capital</span>
+      <p>CFA curriculum menyatakan secara eksplisit bahwa perusahaan dengan corporate governance yang lemah umumnya menghadapi <strong>higher cost of capital</strong>. Alasannya: investor mempersepsikan risiko yang lebih tinggi dari perusahaan dengan governance buruk &mdash; risiko principal-agent problem, risiko manipulasi laporan keuangan, risiko kebijakan yang mengutamakan insiders atas shareholders &mdash; dan meminta risk premium yang lebih tinggi sebagai kompensasi. Dalam praktik analisis investasi, analis bisa mempertimbangkan governance quality sebagai faktor dalam penyesuaian cost of equity atau credit spread, serupa dengan penyesuaian ESG risk premium yang dibahas di Day 34.</p>
+    </div>
+
+    <div class="kc" id="kc5">
+      <div class="kc-header" onclick="toggleKC('kc5')">
+        <span class="kc-header-title">Knowledge Check 5.1 &mdash; Evaluasi Remuneration Design</span>
+        <span class="kc-toggle">&#9660;</span>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">CEO PT Maju Jaya Tbk menerima insentif tahunan yang sepenuhnya berbasis pada pencapaian EPS. Tahun ini, EPS naik 12% melebihi target 10%, namun hal ini terjadi karena: (a) perusahaan melakukan agresive share buyback senilai Rp 500 miliar, dan (b) manajemen memangkas secara signifikan R&D spending yang biasanya digunakan untuk inovasi produk. Pendapatan dan EBIT sebenarnya turun 3% dari tahun sebelumnya. Evaluasilah kualitas design kompensasi CEO ini dari perspektif CFA corporate governance.</p>
+        <div class="kc-answer">
+          <strong>Jawaban:</strong> Design kompensasi ini memiliki beberapa kelemahan serius dari perspektif governance:<br><br>
+          (1) <strong>Metrik yang mudah dimanipulasi:</strong> EPS dapat dinaikkan secara artificial melalui share buyback tanpa mencerminkan perbaikan kinerja operasional sesungguhnya. Ini adalah masalah klasik dalam remuneration design.<br><br>
+          (2) <strong>Tidak selaras dengan penciptaan nilai jangka panjang:</strong> Memangkas R&D spending mungkin meningkatkan EPS jangka pendek, namun berpotensi merusak inovasi dan daya saing jangka panjang perusahaan. Insentif yang mendorong perilaku ini bertentangan dengan kepentingan pemegang saham jangka panjang.<br><br>
+          (3) <strong>Tidak ada performance linkage yang sesungguhnya:</strong> Pendapatan dan EBIT turun 3% &mdash; kinerja operasional sejati memburuk. Jika CEO menerima bonus penuh karena EPS (yang dinaikkan secara rekayasa) melampaui target, ini adalah contoh pay-for-manipulation, bukan pay-for-performance.<br><br>
+          <strong>Rekomendasi perbaikan:</strong> Gunakan metrik multi-dimensi: kombinasi ROIC, free cash flow, revenue growth, dan TSR relatif terhadap peers. Tambahkan multi-year vesting untuk LTI agar CEO berorientasi jangka panjang. Tambahkan clawback policy jika di kemudian hari terungkap manipulasi laporan.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAPTER 6: PRACTICE -->
+  <div class="chapter" id="ch6">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 6</div>
+      <h2 class="chapter-title">Latihan Soal &mdash; Item Set Vignette (6 Soal)</h2>
+    </div>
+
+    <div class="practice-body">
+      <div class="vignette">
+        <div class="vignette-label">Item Set Vignette</div>
+        <div class="vignette-text">
+          <p><strong>PT Nusantara Digital Utama Tbk (NUDT)</strong> adalah perusahaan e-commerce terbesar di Indonesia yang baru saja melaksanakan IPO di BEI dan NYSE secara bersamaan (dual listing). Perusahaan didirikan 12 tahun yang lalu oleh dua co-founder: Budi Setiawan (CEO, 28% kepemilikan ekonomis melalui Kelas B &mdash; 20 suara per saham) dan Rani Maharani (COO, 12% kepemilikan ekonomis melalui Kelas B). Investor publik pasca-IPO memegang 60% kepemilikan ekonomis melalui Kelas A (1 suara per saham). Total voting power Budi dan Rani bersama: 87% meskipun kepemilikan ekonomis gabungan mereka hanya 40%.</p>
+
+          <p style="margin-top:10px;">Dewan NUDT terdiri dari 9 anggota: Budi Setiawan (CEO dan Chairman &mdash; CEO duality), Rani Maharani (COO, direktur eksekutif), 2 representasi investor institusional besar (Temasek Holdings dan SoftBank), dan 5 direktur independen. Seluruh 5 direktur independen baru diangkat saat IPO &mdash; belum ada yang bertenur lebih dari 6 bulan. Komite audit terdiri dari 3 direktur independen. Komite remunerasi terdiri dari 2 direktur independen dan Rani Maharani.</p>
+
+          <p style="margin-top:10px;">Paket kompensasi CEO Budi untuk tahun pertama pasca-IPO adalah: gaji pokok Rp 8 miliar/tahun + STI berbasis Revenue Growth (target: 25% YoY) + LTI berupa stock options yang vest setelah 3 tahun berbasis TSR vs. peer group. NUDT juga memiliki clawback policy yang berlaku jika ada financial restatement dalam 3 tahun ke depan.</p>
+
+          <p style="margin-top:10px;">Setahun setelah IPO, revenue NUDT tumbuh 28% (melampaui target) namun EBIT masih negatif (-5% dari revenue) karena aggressive expansion strategy. Saham NUDT turun 35% dari harga IPO, sementara TSR peer group rata-rata turun hanya 8%. Dewan mengadakan say-on-pay vote di RUPS: 58% pemegang saham (berdasarkan total saham, bukan total suara) menolak STI yang akan dibayarkan kepada Budi.</p>
+
+          <p style="margin-top:10px;">Terdapat juga ketentuan dalam anggaran dasar: staggered board (3 kelas, 3 direktur per kelas, satu kelas dipilih per tahun) dan poison pill yang aktif jika seseorang memperoleh lebih dari 10% saham tanpa persetujuan dewan.</p>
+
+          <p style="margin-top:10px;"><em>Analis Dewi Kartika, CFA, dari Dana Investasi Nusantara (DIN) sedang mengevaluasi corporate governance NUDT sebelum memutuskan apakah DIN akan menambah posisi.</em></p>
+        </div>
+      </div>
+
+      <div id="quiz-container-full">
+        <div class="question-block" data-q="f1" data-correct="C">
+          <div class="q-num">Question 1 of 6</div>
+          <div class="q-text">Berdasarkan struktur kepemilikan dan voting power NUDT, kombinasi mana yang paling tepat menggambarkan kondisi governance NUDT, dan jenis konflik apa yang paling dominan?</div>
+          <div class="option" data-opt="A"><div class="option-radio"></div><div class="option-text">A. Dispersed ownership + Dispersed voting; Principal-agent problem antara pemegang saham dan manajemen Budi/Rani yang tidak memiliki kepemilikan mayoritas</div></div>
+          <div class="option" data-opt="B"><div class="option-radio"></div><div class="option-text">B. Concentrated ownership + Concentrated voting; Principal-agent problem karena Budi dan Rani juga menjabat sebagai manajemen eksekutif</div></div>
+          <div class="option" data-opt="C"><div class="option-radio"></div><div class="option-text">C. Dispersed economic ownership + Concentrated voting power; Principal-principal problem karena Budi dan Rani (40% ekonomis, 87% voting) bisa mengambil keputusan yang merugikan pemegang saham publik (60% ekonomis, 13% voting)</div></div>
+          <div class="explanation correct">✓ <strong>C adalah jawaban benar.</strong> Ini adalah contoh sempurna dari kombinasi dispersed economic ownership + concentrated voting power melalui dual-class structure. Pemegang saham publik memegang 60% kepemilikan ekonomis (mereka menanggung 60% risiko kerugian dan menerima 60% dividen) namun hanya memiliki 13% voting power. Budi dan Rani dengan 40% ekonomis memegang 87% voting power. Ini menciptakan principal-principal problem yang klasik: co-founders bisa mengambil keputusan strategis yang menguntungkan mereka sendiri (seperti kompensasi tinggi, strategi expansion berisiko tanpa akuntabilitas, atau mempertahankan posisi mereka) tanpa bisa di-override oleh 60% pemegang saham publik.</div>
+          <div class="explanation incorrect">✗ Pilihan A salah karena ownership bukan dispersed dalam artian yang relevan &mdash; Budi dan Rani memiliki 87% voting power yang sangat concentrated. Pilihan B salah karena kepemilikan ekonomis co-founders hanya 40% &mdash; kurang dari mayoritas secara ekonomis. Konflik yang relevan bukan antara pemilik dan manajer (karena Budi/Rani adalah keduanya), melainkan antara mereka sebagai controlling voting bloc dan pemegang saham publik sebagai minority (meskipun majority secara ekonomis).</div>
+        </div>
+
+        <div class="question-block" data-q="f2" data-correct="B">
+          <div class="q-num">Question 2 of 6</div>
+          <div class="q-text">Evaluasi komposisi komite remunerasi NUDT (2 direktur independen + Rani Maharani sebagai COO). Apakah ini mencerminkan governance yang baik atau buruk, dan mengapa?</div>
+          <div class="option" data-opt="A"><div class="option-radio"></div><div class="option-text">A. Governance yang baik &mdash; mayoritas komite remunerasi sudah independen (2 dari 3), dan kehadiran Rani sebagai COO memberikan perspektif operasional yang berharga dalam mendesain kompensasi yang realistis</div></div>
+          <div class="option" data-opt="B"><div class="option-radio"></div><div class="option-text">B. Governance yang buruk &mdash; kehadiran Rani sebagai anggota eksekutif dalam komite remunerasi menciptakan conflict of interest langsung; Rani mungkin dipengaruhi oleh pertimbangan kompensasinya sendiri dan kepentingannya sebagai mitra Budi ketika mengevaluasi kompensasi CEO</div></div>
+          <div class="option" data-opt="C"><div class="option-radio"></div><div class="option-text">C. Governance yang netral &mdash; satu anggota non-independen dalam tiga-anggota komite tidak material pengaruhnya karena direktur independen tetap bisa membuat keputusan mayoritas</div></div>
+          <div class="explanation correct">✓ <strong>B adalah jawaban benar.</strong> Komite remunerasi harus sepenuhnya terdiri dari direktur independen untuk mencegah conflict of interest. Kehadiran Rani sebagai COO (eksekutif) dalam komite yang mengevaluasi kompensasi CEO Budi (mitranya) menciptakan beberapa lapisan conflict of interest: (1) Rani mungkin dipengaruhi kepentingan pribadi &mdash; jika Budi dibayar lebih banyak, ada tekanan untuk menaikkan kompensasi Rani juga; (2) Budi dan Rani adalah mitra co-founder dengan kepentingan yang sangat aligned &mdash; sulit bagi Rani untuk mengevaluasi kompensasi Budi secara objektif; (3) CFA curriculum secara eksplisit menyatakan bahwa kehadiran direktur eksekutif dalam komite remunerasi "may prompt the consideration of potential conflicts of interest or biases." Ini adalah governance yang buruk, terlepas dari apakah dua direktur independen bisa membuat keputusan mayoritas secara teknis.</div>
+          <div class="explanation incorrect">✗ Pilihan A terlalu optimistis &mdash; bahkan satu anggota non-independen dalam komite remunerasi dapat mengkompromikan objektivitas seluruh proses jika orang tersebut memiliki kepentingan yang kuat dalam hasilnya (seperti mitra co-founder). Pilihan C salah secara prinsip &mdash; governance terbaik mensyaratkan semua anggota komite remunerasi independen, bukan hanya mayoritas. Standar di AS secara eksplisit mensyaratkan 100% independen untuk komite kompensasi.</div>
+        </div>
+
+        <div class="question-block" data-q="f3" data-correct="A">
+          <div class="q-num">Question 3 of 6</div>
+          <div class="q-text">Tentang hasil say-on-pay NUDT di mana 58% pemegang saham (berdasarkan total saham) menolak STI Budi, namun co-founders memegang 87% voting power berdasarkan total suara: apa implikasi praktis dari say-on-pay vote ini?</div>
+          <div class="option" data-opt="A"><div class="option-radio"></div><div class="option-text">A. STI kemungkinan besar tetap dibayarkan karena: (1) say-on-pay umumnya bersifat advisory/non-binding sehingga dewan tidak harus mengubah keputusan, dan (2) bahkan jika dihitung berdasarkan voting power, co-founders dengan 87% suara bisa mengoverride penolakan pemegang saham publik</div></div>
+          <div class="option" data-opt="B"><div class="option-radio"></div><div class="option-text">B. STI tidak boleh dibayarkan karena 58% pemegang saham (berdasarkan jumlah saham beredar) sudah menolak secara mayoritas dalam say-on-pay vote yang mengikat secara hukum</div></div>
+          <div class="option" data-opt="C"><div class="option-radio"></div><div class="option-text">C. Say-on-pay vote hanya berlaku untuk perusahaan yang tidak memiliki dual-class structure; karena NUDT memiliki Kelas A dan Kelas B, say-on-pay tidak relevan</div></div>
+          <div class="explanation correct">✓ <strong>A adalah jawaban benar.</strong> Ada dua alasan utama mengapa STI kemungkinan tetap dibayar: (1) <strong>Non-binding nature:</strong> CFA curriculum secara eksplisit menyatakan bahwa say-on-pay vote di banyak yurisdiksi bersifat advisory, bukan mengikat secara hukum. Dewan NUDT tidak secara hukum diwajibkan mengubah keputusan kompensasi hanya karena 58% saham menolak (berdasarkan share count); (2) <strong>Voting power dynamics:</strong> Jika say-on-pay dihitung berdasarkan voting power (bukan share count), co-founders dengan 87% suara akan dengan mudah mengalahkan 13% suara pemegang saham publik. Meskipun 58% saham (berdasarkan ekonomis) menolak, mereka hanya mewakili 13% suara. Ini menunjukkan betapa bermasalahnya dual-class structure dalam konteks say-on-pay governance.</div>
+          <div class="explanation incorrect">✗ Pilihan B salah &mdash; say-on-pay umumnya tidak mengikat secara hukum di sebagian besar yurisdiksi; ini adalah aspek kritis yang harus dipahami dalam CFA curriculum. Pilihan C tidak berdasar &mdash; say-on-pay tidak secara otomatis dikecualikan karena adanya dual-class structure, meskipun tentu saja dual-class structure membuat say-on-pay jauh kurang efektif karena pemegang saham Kelas A (yang mungkin paling tidak puas dengan kompensasi) memiliki suara yang sangat kecil.</div>
+        </div>
+
+        <div class="question-block" data-q="f4" data-correct="B">
+          <div class="q-num">Question 4 of 6</div>
+          <div class="q-text">Evaluasi desain LTI (Long-Term Incentive) berbasis TSR vs. peer group dengan vesting 3 tahun untuk CEO Budi. Mengingat saham NUDT turun 35% sementara peer group turun 8%, apa yang dapat disimpulkan tentang LTI Budi di akhir tahun pertama?</div>
+          <div class="option" data-opt="A"><div class="option-radio"></div><div class="option-text">A. LTI Budi akan dibayarkan karena revenue tumbuh 28% melampaui target, yang membuktikan kinerja manajemen yang baik</div></div>
+          <div class="option" data-opt="B"><div class="option-radio"></div><div class="option-text">B. LTI Budi belum bisa dibayarkan karena belum mencapai periode vesting 3 tahun; namun jika kinerja TSR vs. peers tetap buruk (NUDT underperform peers -27%), kemungkinan LTI Budi akan bernilai sangat rendah atau nol saat vesting</div></div>
+          <div class="option" data-opt="C"><div class="option-radio"></div><div class="option-text">C. LTI berbasis TSR tidak relevan karena penurunan saham 35% mencerminkan kondisi pasar yang buruk secara umum, bukan kinerja manajemen spesifik</div></div>
+          <div class="explanation correct">✓ <strong>B adalah jawaban benar.</strong> Ada dua bagian penting dari jawaban ini: (1) LTI dengan vesting 3 tahun secara definisi belum bisa dibayarkan di tahun pertama &mdash; vesting period belum selesai. Ini adalah desain yang baik karena memaksa CEO berorientasi jangka panjang; (2) Namun, melihat kinerja TSR: NUDT turun 35% sementara peer group turun hanya 8% &mdash; NUDT underperform peer group sebesar -27 percentage points. Jika ini adalah benchmark yang digunakan (relative TSR vs. peers), dan pola ini berlanjut, maka stock options Budi kemungkinan akan bernilai sangat rendah atau bahkan worthless saat vesting. Ini sebenarnya adalah aspek positif dari desain LTI ini &mdash; setidaknya ada alignment antara kinerja relatif dan kompensasi jangka panjang CEO. Berbeda dengan STI (revenue growth) yang bisa dibayarkan meski bisnis rugi.</div>
+          <div class="explanation incorrect">✗ Pilihan A mengkonfusikan STI (berbasis revenue growth) dengan LTI (berbasis TSR). Revenue tumbuh 28% memang memenuhi target STI, namun LTI-nya berbasis TSR relatif terhadap peers &mdash; dan TSR NUDT jauh lebih buruk dari peers. Pilihan C salah &mdash; justru keunggulan TSR berbasis relative performance (vs. absolute performance) adalah bahwa penurunan pasar secara umum sudah ter-adjust. NUDT turun 35% sementara peers turun 8% &mdash; ini menunjukkan underperformance spesifik NUDT, bukan sekadar kondisi pasar.</div>
+        </div>
+
+        <div class="question-block" data-q="f5" data-correct="C">
+          <div class="q-num">Question 5 of 6</div>
+          <div class="q-text">Dewi Kartika mengidentifikasi bahwa staggered board dan poison pill NUDT (aktif jika seseorang mencapai lebih dari 10% tanpa persetujuan dewan) secara efektif tidak berdampak signifikan bagi pemegang saham publik NUDT. Apa alasan utamanya?</div>
+          <div class="option" data-opt="A"><div class="option-radio"></div><div class="option-text">A. Karena staggered board hanya berlaku untuk direktur independen, sementara Budi dan Rani sebagai co-founders dapat mengganti anggota dewan mereka kapan saja</div></div>
+          <div class="option" data-opt="B"><div class="option-radio"></div><div class="option-text">B. Karena poison pill 10% threshold memang ketat, tapi tidak berlaku untuk founder-class shares yang sudah melebihi threshold tersebut</div></div>
+          <div class="option" data-opt="C"><div class="option-radio"></div><div class="option-text">C. Karena dengan 87% voting power, co-founders sudah mengendalikan seluruh keputusan governance secara efektif &mdash; staggered board dan poison pill hanya menambah lapisan perlindungan yang sebetulnya tidak diperlukan co-founders namun semakin mempersulit posisi pemegang saham publik</div></div>
+          <div class="explanation correct">✓ <strong>C adalah jawaban benar.</strong> Ini adalah poin analitik yang sangat penting. Dengan 87% voting power, co-founders Budi dan Rani sudah secara efektif tidak dapat di-challenge oleh pemegang saham publik dalam hampir semua keputusan governance &mdash; pemilihan direktur, strategi perusahaan, kompensasi eksekutif, dan lain-lain. Staggered board dan poison pill sebenarnya adalah mekanisme anti-takeover yang dirancang untuk situasi di mana tidak ada controlling shareholder (yaitu untuk melindungi manajemen dari hostile takeover di perusahaan dengan dispersed ownership). Dalam konteks NUDT yang sudah punya voting super-majority co-founders, mekanisme ini sudah redundant dalam melindungi co-founders &mdash; namun tetap merugikan pemegang saham publik karena membatasi opsi mereka lebih lanjut (misalnya investor institusional tidak bisa mengakuisisi lebih dari 10% tanpa persetujuan dewan, meskipun voting power mereka sudah sangat kecil).</div>
+          <div class="explanation incorrect">✗ Pilihan A tidak akurat &mdash; staggered board berlaku untuk seluruh direktur, bukan hanya direktur independen. Pilihan B sebagian benar (founders sudah memegang &gt;10%) tapi ini bukan alasan utama mengapa mekanisme-mekanisme ini tidak berdampak signifikan. Alasan fundamentalnya adalah bahwa co-founders sudah mengendalikan voting power secara overwhelming &mdash; sehingga perlindungan tambahan dari staggered board dan poison pill redundant untuk mereka, namun menjadi hambatan tambahan bagi investor publik.</div>
+        </div>
+
+        <div class="question-block" data-q="f6" data-correct="A">
+          <div class="q-num">Question 6 of 6</div>
+          <div class="q-text">Dalam rangka due diligence governance, Dewi mempertimbangkan apakah kualitas governance NUDT yang buruk seharusnya direfleksikan dalam valuasinya. Berdasarkan CFA curriculum, bagaimana analis sebaiknya merefleksikan risiko governance buruk dalam model valuasi?</div>
+          <div class="option" data-opt="A"><div class="option-radio"></div><div class="option-text">A. Dengan menaikkan cost of equity (menambahkan governance risk premium ke Ke) atau memperlebar credit spread yang digunakan dalam analisis, yang akan menurunkan fair value relatif terhadap baseline dengan governance yang baik</div></div>
+          <div class="option" data-opt="B"><div class="option-radio"></div><div class="option-text">B. Governance risk tidak bisa dikuantifikasi dan tidak boleh masuk ke model valuasi; seorang analis hanya bisa membuat catatan kualitatif tentang governance sebagai lampiran analisis</div></div>
+          <div class="option" data-opt="C"><div class="option-radio"></div><div class="option-text">C. Governance buruk harus direfleksikan dengan mengurangi terminal growth rate karena perusahaan dengan governance buruk tidak bisa tumbuh berkelanjutan dalam jangka panjang</div></div>
+          <div class="explanation correct">✓ <strong>A adalah jawaban benar.</strong> CFA curriculum secara eksplisit menyatakan bahwa "in practice, analysts typically adjust the risk premium (cost of capital) or credit spread of a company to reflect their assessment of corporate governance considerations." Ini adalah konsep yang sama dengan ESG equity risk premium yang dibahas di Day 34, hanya saja dalam konteks governance quality lebih luas. Perusahaan dengan governance buruk menghadapi risiko yang lebih tinggi &mdash; risiko principal-principal problem, manipulasi laporan keuangan, keputusan manajemen yang mengutamakan insiders &mdash; dan investor meminta risk premium yang lebih tinggi sebagai kompensasi. Menaikkan Ke (cost of equity) atau memperlebar credit spread akan menurunkan valuasi fair value, mencerminkan governance discount yang sesuai.</div>
+          <div class="explanation incorrect">✗ Pilihan B salah &mdash; governance risk memang sulit dikuantifikasi secara presisi, namun CFA curriculum justru mendorong analis untuk merefleksikannya dalam penyesuaian kuantitatif (risk premium adjustment). Pilihan C tidak salah secara logika (governance buruk memang bisa mengurangi growth sustainability), namun ini bukan mekanisme yang paling tepat dan eksplisit disebutkan dalam CFA curriculum untuk merefleksikan governance risk. Mekanisme yang lebih standar dan lebih langsung adalah melalui penyesuaian risk premium atau credit spread.</div>
+        </div>
+
+        <div id="score-panel-full" class="score-panel">
+          <div class="score-panel-text">Skor Latihan:</div>
+          <div class="score-panel-value" id="score-value-full">0/6</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="CFA_L2_Day34_Full.html" class="nav-btn">&larr; Day 34 Full: ESG in Valuation</a>
+    <a href="CFA_L2_Day36_Full.html" class="nav-btn">Day 36 Full: Agency Conflicts &amp; Activism &rarr;</a>
+  </div>
+
+</div>
+
+<script>
+function toggleKC(id) {
+  var el = document.getElementById(id);
+  if (el) el.classList.toggle('open');
+}
+
+(function() {
+  var answers = {};
+  var correct = {};
+  document.querySelectorAll('.question-block').forEach(function(qb) {
+    var q = qb.dataset.q;
+    correct[q] = qb.dataset.correct;
+    qb.querySelectorAll('.option').forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        if (answers[q]) return;
+        answers[q] = opt.dataset.opt;
+        qb.querySelectorAll('.option').forEach(function(o) { o.classList.remove('selected'); });
+        opt.classList.add('selected');
+        var isCorrect = opt.dataset.opt === correct[q];
+        qb.querySelectorAll('.explanation').forEach(function(ex) {
+          ex.style.display = 'none';
+          ex.classList.remove('show');
+        });
+        var expls = qb.querySelectorAll('.explanation');
+        var target = isCorrect ? expls[0] : expls[1];
+        if (target) { target.style.display = 'block'; target.classList.add('show'); }
+        var total = Object.keys(correct).length;
+        var scored = Object.keys(answers).length;
+        if (scored === total) {
+          var score = Object.keys(answers).filter(function(k) { return answers[k] === correct[k]; }).length;
+          var panel = document.getElementById('score-panel-full');
+          if (panel) { panel.classList.add('show'); document.getElementById('score-value-full').textContent = score + '/' + total; }
+        }
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

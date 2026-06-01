@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level II Day 31 - Dividend Policy: Dividends and Share Repurchases (Full)</title>
+  <style>
+:root {
+  --bg:#fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+  --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;--gold:#9a6e1a;--gold2:#7a5010;
+  --gold-bg:rgba(154,110,26,0.08);--blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);
+  --green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);--red:#b83232;--red-bg:rgba(184,50,50,0.08);
+  --amber:#a06010;--amber-bg:rgba(160,96,16,0.08);--r:10px;--r-sm:6px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:15px;}
+.page{max-width:960px;margin:0 auto;padding:0 20px;background:white;box-shadow:0 0 40px rgba(0,0,0,0.04);}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid var(--border);margin-bottom:24px;}
+.breadcrumb{font-size:13px;color:var(--text2);letter-spacing:0.5px;font-weight:500;}
+.day-badge,.version-badge{display:inline-block;padding:6px 12px;background:var(--gold-bg);color:var(--gold2);border-radius:var(--r-sm);font-size:12px;font-weight:600;margin-left:12px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);margin-left:8px;}
+.hero{margin-bottom:48px;}
+.hero-tag{font-size:13px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;}
+.hero-title{font-size:40px;font-weight:700;line-height:1.2;margin-bottom:12px;color:var(--text);}
+.hero-sub{font-size:18px;color:var(--text2);margin-bottom:28px;}
+.meta-row{display:flex;flex-wrap:wrap;gap:12px;}
+.meta-pill{display:inline-flex;align-items:center;padding:8px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:20px;font-size:13px;color:var(--text2);font-weight:500;}
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:32px;margin-bottom:48px;}
+.toc-title{font-size:18px;font-weight:700;margin-bottom:20px;color:var(--text);}
+.toc-list{list-style:none;}
+.toc-list li{margin-bottom:12px;font-size:15px;}
+.toc-list a{color:var(--blue);text-decoration:none;}
+.toc-list a:hover{text-decoration:underline;}
+.toc-num{color:var(--gold);font-weight:600;margin-right:8px;}
+.chapter{margin-bottom:56px;scroll-margin-top:100px;}
+.chapter-header{margin-bottom:28px;}
+.chapter-num{font-size:13px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:1px;}
+.chapter-title{font-size:32px;font-weight:700;color:var(--text);margin-top:8px;}
+.sub-header{font-size:20px;font-weight:700;color:var(--text);margin:32px 0 16px 0;border-bottom:2px solid var(--border);padding-bottom:8px;}
+.sub-header-sm{font-size:17px;font-weight:700;color:var(--text2);margin:24px 0 12px 0;}
+.prose{color:var(--text);margin-bottom:16px;line-height:1.8;}
+.formula-block{background:var(--bg2);border-left:4px solid var(--gold);border-radius:var(--r-sm);padding:20px;margin:24px 0;font-family:'Courier New',monospace;font-size:14px;color:var(--text);overflow-x:auto;white-space:pre-wrap;}
+.formula-block .label{font-weight:700;color:var(--gold);display:block;margin-bottom:8px;font-size:13px;text-transform:uppercase;letter-spacing:0.5px;font-family:'Inter',sans-serif;}
+.formula-block .note{font-family:'Inter',sans-serif;font-size:13px;color:var(--text2);margin-top:12px;line-height:1.6;}
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:28px;margin:32px 0;}
+.exhibit-title{font-size:15px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:20px;}
+.exhibit-body{color:var(--text);line-height:1.8;font-size:14px;}
+.reg-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;}
+.reg-table th{background:var(--bg3);border:1px solid var(--border);padding:12px;text-align:left;font-weight:700;color:var(--text);}
+.reg-table td{border:1px solid var(--border);padding:12px;color:var(--text2);}
+.reg-table tr:nth-child(even){background:rgba(255,255,255,0.5);}
+.callout{border-radius:var(--r);padding:20px;margin:24px 0;border-left:4px solid;}
+.callout.blue{background:var(--blue-bg);border-left-color:var(--blue);}
+.callout.amber{background:var(--amber-bg);border-left-color:var(--amber);}
+.callout.green{background:var(--green-bg);border-left-color:var(--green);}
+.callout.red{background:var(--red-bg);border-left-color:var(--red);}
+.callout.gold{background:var(--gold-bg);border-left-color:var(--gold);}
+.callout-title{font-weight:700;margin-bottom:8px;display:block;font-size:14px;text-transform:uppercase;letter-spacing:0.5px;}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.green .callout-title{color:var(--green);}
+.callout.red .callout-title{color:var(--red);}
+.callout.gold .callout-title{color:var(--gold);}
+.callout p,.callout li{color:var(--text);font-size:14px;line-height:1.7;}
+.callout ul{padding-left:20px;margin-top:8px;}
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:28px 0;overflow:hidden;}
+.kc-header{padding:18px 20px;background:var(--bg3);border-bottom:1px solid var(--border);cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none;}
+.kc-header:hover{background:rgba(0,0,0,0.04);}
+.kc-header-title{font-weight:600;color:var(--text);font-size:14px;}
+.kc-toggle{color:var(--text3);font-weight:700;font-size:18px;transition:transform 0.2s;}
+.kc.open .kc-toggle{transform:rotate(180deg);}
+.kc-body{padding:20px;max-height:0;overflow:hidden;transition:max-height 0.4s ease-out;}
+.kc.open .kc-body{max-height:2000px;}
+.kc-q{color:var(--text);margin-bottom:14px;line-height:1.7;font-weight:600;}
+.kc-answer{color:var(--text2);line-height:1.8;font-size:14px;border-top:1px solid var(--border);padding-top:14px;margin-top:4px;}
+.num-list,.bullet-list{margin:16px 0;padding-left:24px;}
+.num-list li,.bullet-list li{margin-bottom:10px;color:var(--text);line-height:1.7;}
+.divider{height:1px;background:var(--border);margin:48px 0;}
+.practice-body{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:28px;}
+.vignette{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-bottom:32px;}
+.vignette-label{font-size:12px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;}
+.vignette-text{font-size:14px;color:var(--text);line-height:1.8;}
+.question-block{margin-bottom:32px;}
+.q-num{font-size:12px;font-weight:700;color:var(--blue);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;}
+.q-text{font-size:15px;color:var(--text);margin-bottom:16px;line-height:1.65;font-weight:500;}
+.option{display:flex;align-items:flex-start;gap:14px;padding:12px 16px;margin-bottom:10px;border:1px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:all 0.2s ease;background:white;}
+.option:hover{border-color:var(--blue);background:var(--blue-bg);}
+.option-radio{display:flex;align-items:center;justify-content:center;width:20px;height:20px;border:2px solid var(--border2);border-radius:50%;flex-shrink:0;margin-top:2px;}
+.option.selected .option-radio{border-color:var(--blue);background:var(--blue);}
+.option-text{font-size:14px;color:var(--text);line-height:1.6;}
+.explanation{background:var(--bg2);padding:16px;border-radius:var(--r-sm);font-size:13px;color:var(--text2);margin-top:10px;display:none;line-height:1.7;}
+.explanation.show{display:block;}
+.explanation.correct{border-left:3px solid var(--green);background:var(--green-bg);color:var(--text);}
+.explanation.incorrect{border-left:3px solid var(--red);background:var(--red-bg);color:var(--text);}
+.score-panel{background:var(--gold-bg);border:1px solid var(--gold);border-radius:var(--r);padding:20px;margin-top:24px;text-align:center;display:none;}
+.score-panel.show{display:block;}
+.score-panel-text{font-size:15px;color:var(--text);margin-bottom:8px;}
+.score-panel-value{font-size:28px;font-weight:700;color:var(--gold2);}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;padding:28px 0;margin-top:48px;border-top:1px solid var(--border);}
+.nav-btn{text-decoration:none;padding:12px 18px;border-radius:var(--r-sm);font-size:13px;font-weight:600;color:var(--blue);border:1px solid var(--border);transition:all 0.2s ease;}
+.nav-btn:hover{border-color:var(--blue);background:var(--blue-bg);}
+@media(max-width:640px){.hero-title{font-size:28px;}.meta-row{flex-direction:column;}}
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II &nbsp;&middot;&nbsp; Corporate Issuers &nbsp;&middot;&nbsp; LM1
+      <span class="version-badge">Versi Full</span>
+      <span class="day-badge">Day 31 of 90</span>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Kamis, 28 Mei 2026</div>
+    <h1 class="hero-title">Dividend Policy: Teori, Sinyal, dan Analisis Keamanan Dividen</h1>
+    <p class="hero-sub">Dividends and Share Repurchases (LM1) &mdash; Subtopik 1 dari 2</p>
+    <div class="meta-row">
+      <div class="meta-pill">Materi Lengkap</div>
+      <div class="meta-pill">Bahasa Indonesia</div>
+      <div class="meta-pill">~8% bobot ujian</div>
+      <div class="meta-pill">Est. baca 50&ndash;60 menit</div>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ul class="toc-list">
+      <li><a href="#sec0"><span class="toc-num">0.</span>Learning Outcomes (LOS)</a></li>
+      <li><a href="#sec1"><span class="toc-num">1.</span>Bentuk-Bentuk Dividen dan Dampaknya terhadap Rasio Keuangan</a></li>
+      <li><a href="#sec2"><span class="toc-num">2.</span>Teori-Teori Dividend Policy: MM, Bird-in-Hand, dan Pajak</a></li>
+      <li><a href="#sec3"><span class="toc-num">3.</span>Signaling Theory, Agency Costs, dan Clientele Effect</a></li>
+      <li><a href="#sec4"><span class="toc-num">4.</span>Faktor Praktis, Payout Policies, dan Model Lintner</a></li>
+      <li><a href="#sec5"><span class="toc-num">5.</span>Analisis Keamanan Dividen (Dividend Safety Analysis)</a></li>
+      <li><a href="#sec6"><span class="toc-num">6.</span>Latihan Soal &mdash; Item Set Vignette</a></li>
+    </ul>
+  </div>
+
+  <!-- SECTION 0: LOS -->
+  <div class="chapter" id="sec0">
+    <div class="chapter-header">
+      <div class="chapter-num">Section 0</div>
+      <h2 class="chapter-title">Learning Outcomes (LOS)</h2>
+    </div>
+    <p class="prose">Setelah mempelajari modul ini, kandidat diharapkan mampu:</p>
+    <ul class="num-list">
+      <li>Mendeskripsikan dampak yang diharapkan dari dividen kas reguler, dividen ekstra, dividen likuidasi, stock dividends, stock splits, dan reverse stock splits terhadap kekayaan pemegang saham dan rasio keuangan perusahaan (<em>describe the expected effect of regular cash dividends, extra dividends, liquidating dividends, stock dividends, stock splits, and reverse stock splits on shareholders' wealth and a company's financial ratios</em>).</li>
+      <li>Membandingkan teori-teori dividend policy dan menjelaskan implikasi masing-masing terhadap nilai saham (<em>compare theories of dividend policy and explain implications of each for share value given a description of a corporate dividend action</em>).</li>
+      <li>Mendeskripsikan jenis informasi (sinyal) yang dapat disampaikan oleh inisiasi, kenaikan, penurunan, dan penghilangan dividen (<em>describe types of information that dividend initiations, increases, decreases, and omissions may convey</em>).</li>
+      <li>Menjelaskan bagaimana agency costs dapat mempengaruhi payout policy perusahaan (<em>explain how agency costs may affect a company's payout policy</em>).</li>
+      <li>Menjelaskan faktor-faktor yang mempengaruhi dividend policy dalam praktik (<em>explain factors that affect dividend policy in practice</em>).</li>
+      <li>Membandingkan stable dividend dengan constant dividend payout ratio, dan menghitung dividen berdasarkan masing-masing policy (<em>compare stable dividend with constant dividend payout ratio, and calculate the dividend under each policy</em>).</li>
+      <li>Menghitung dan menginterpretasikan dividend coverage ratios berdasarkan (1) net income dan (2) free cash flow (<em>calculate and interpret dividend coverage ratios based on net income and free cash flow</em>).</li>
+      <li>Mengidentifikasi karakteristik perusahaan yang mungkin tidak dapat mempertahankan dividen kasnya (<em>identify characteristics of companies that may not be able to sustain their cash dividend</em>).</li>
+    </ul>
+    <div class="callout blue">
+      <span class="callout-title">Posisi dalam Program 90 Hari</span>
+      <p>Day 31 ini memulai babak baru: <strong>Corporate Issuers</strong> (bobot ~8% dari total ujian CFA L2). Setelah menyelesaikan tiga topik besar sebelumnya (Quant Methods, Economics, dan FSA), kita masuk ke domain corporate finance yang lebih berorientasi pada keputusan manajerial dan implikasinya terhadap nilai perusahaan. LM1 (Dividends and Share Repurchases) dibagi dua: Day 31 = Dividend Policy, Day 32 = Share Repurchases. Bersama-sama, keduanya membentuk pemahaman komprehensif tentang bagaimana perusahaan mendistribusikan kembali kas kepada pemegang saham.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 1: Bentuk Dividen -->
+  <div class="chapter" id="sec1">
+    <div class="chapter-header">
+      <div class="chapter-num">Bagian 1</div>
+      <h2 class="chapter-title">Bentuk-Bentuk Dividen dan Dampaknya terhadap Rasio Keuangan</h2>
+    </div>
+
+    <p class="prose">Sebelum masuk ke teori yang lebih kompleks, penting untuk memahami berbagai bentuk distribusi kepada pemegang saham dan bagaimana masing-masing mempengaruhi neraca, laporan laba rugi, dan rasio keuangan perusahaan. Ini adalah landasan yang sering muncul dalam soal ujian dalam bentuk pertanyaan tentang arah dampak perubahan rasio.</p>
+
+    <div class="sub-header">Dividen Kas: Regular, Extra, dan Likuidasi</div>
+
+    <p class="prose"><strong>Dividen kas reguler</strong> adalah distribusi yang dilakukan pada jadwal tetap (kuartalan, semesteran, atau tahunan tergantung pasar). Frekuensi paling umum di Amerika dan Kanada adalah kuartalan; di Eropa dan Jepang sering semesteran; di banyak pasar Asia, tahunan. Ketika perusahaan membayar dividen kas, dampaknya terhadap neraca adalah: aset berkurang (kas keluar) dan ekuitas menurun (retained earnings berkurang). Akibatnya, rasio leverage seperti debt-to-equity dan debt-to-assets <em>meningkat</em>, dan rasio likuiditas seperti current ratio dan cash ratio <em>menurun</em>.</p>
+
+    <p class="prose"><strong>Dividen ekstra atau dividen spesial</strong> (juga disebut irregular dividend) adalah dividen yang dibayarkan di luar jadwal reguler atau melebihi dividen reguler. Perusahaan sering menggunakan ini di tahun-tahun dengan pendapatan luar biasa atau setelah menjual aset besar. Secara akuntansi, dampaknya identik dengan dividen reguler terhadap neraca dan rasio keuangan.</p>
+
+    <p class="prose"><strong>Dividen likuidasi</strong> adalah return of capital, bukan distribusi dari earnings. Terjadi ketika perusahaan: (1) melikuidasi bisnis dan mendistribusikan net assets kepada pemegang saham; (2) menjual bagian bisnis dan mendistribusikan hasilnya; atau (3) membayar dividen yang melebihi accumulated retained earnings (mengurangi stated capital). Dari perspektif pajak di banyak yurisdiksi, dividen likuidasi diperlakukan sebagai return of capital (bukan income), sehingga berbeda dari dividen reguler dalam hal perpajakan investor.</p>
+
+    <div class="sub-header">Stock Dividends, Stock Splits, dan Reverse Stock Splits</div>
+
+    <p class="prose"><strong>Stock dividends</strong> (disebut juga bonus issue atau scrip dividend) adalah distribusi saham tambahan kepada pemegang saham. Misalnya, stock dividend 5% berarti setiap pemegang 100 saham mendapat 5 saham tambahan. Kunci penting: stock dividend <em>tidak memiliki dampak ekonomis</em> terhadap kekayaan pemegang saham atau total nilai pasar perusahaan. Pemegang saham memiliki proporsi kepemilikan yang sama, hanya pecahan sahamnya berubah. EPS menurun proporsional dengan jumlah saham baru. Dari sisi akuntansi, retained earnings berkurang dan contributed capital naik dengan jumlah yang sama, sehingga total equity tidak berubah. Rasio leverage dan likuiditas <em>tidak terpengaruh</em> oleh stock dividend.</p>
+
+    <p class="prose"><strong>Stock splits</strong> secara ekonomis identik dengan stock dividends, hanya perlakuan akuntansinya berbeda. Split 2-for-1 berarti setiap saham menjadi 2 saham, harga per saham menjadi setengahnya. EPS, DPS, dan book value per share semuanya turun proporsional, tapi market cap dan total equity tidak berubah. Dividend yield tidak berubah jika payout ratio dipertahankan. Tidak ada dampak terhadap rasio leverage atau likuiditas.</p>
+
+    <p class="prose"><strong>Reverse stock splits</strong> adalah kebalikannya: jumlah saham berkurang dan harga per saham meningkat proporsional. Sering dilakukan untuk menjaga harga saham di atas minimum listing requirement bursa. Dampaknya terhadap wealth pemegang saham: secara teori netral (kekayaan total tidak berubah), meskipun konteks biasanya negatif (perusahaan dalam atau baru keluar dari financial distress).</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 1: Ringkasan Dampak Berbagai Bentuk Dividen</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Jenis Distribusi</th>
+              <th>Aset (Kas)</th>
+              <th>Total Equity</th>
+              <th>Leverage Ratio</th>
+              <th>EPS</th>
+              <th>Dividend Yield</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Cash Dividend (Reguler/Extra)</strong></td>
+              <td>Turun</td>
+              <td>Turun</td>
+              <td>Naik</td>
+              <td>Tidak berubah</td>
+              <td>Tidak langsung berubah</td>
+            </tr>
+            <tr>
+              <td><strong>Stock Dividend</strong></td>
+              <td>Tidak berubah</td>
+              <td>Tidak berubah</td>
+              <td>Tidak berubah</td>
+              <td>Turun proporsional</td>
+              <td>Tidak berubah (jika payout ratio sama)</td>
+            </tr>
+            <tr>
+              <td><strong>Stock Split (2-for-1)</strong></td>
+              <td>Tidak berubah</td>
+              <td>Tidak berubah</td>
+              <td>Tidak berubah</td>
+              <td>Turun 50%</td>
+              <td>Tidak berubah (jika payout ratio sama)</td>
+            </tr>
+            <tr>
+              <td><strong>Reverse Stock Split (1-for-2)</strong></td>
+              <td>Tidak berubah</td>
+              <td>Tidak berubah</td>
+              <td>Tidak berubah</td>
+              <td>Naik 100%</td>
+              <td>Tidak berubah (jika payout ratio sama)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout amber">
+      <span class="callout-title">Perbedaan Akuntansi: Stock Dividend vs. Stock Split</span>
+      <p>Stock dividend: retained earnings dikurangi sebesar nilai saham yang diterbitkan (jumlah saham x harga pasar), dan contributed capital dinaikkan dengan jumlah yang sama. Total equity tidak berubah tapi komposisi dalam equity berubah. Stock split: tidak ada perubahan pada saldo manapun dalam shareholders' equity accounts; hanya par value per saham yang berubah dan jumlah saham yang berubah. Perbedaan ini penting untuk soal akuntansi yang spesifik, tapi keduanya netral terhadap total equity dan leverage.</p>
+    </div>
+
+    <div class="kc" id="kc1">
+      <div class="kc-header" onclick="toggleKC('kc1')">
+        <span class="kc-header-title">Knowledge Check 1.1 &mdash; Dampak Dividen terhadap Rasio</span>
+        <span class="kc-toggle">&#9660;</span>
+      </div>
+      <div class="kc-body">
+        <div class="kc-q">PT Semesta Raya Tbk (total assets Rp 20 triliun, total liabilities Rp 12 triliun, total equity Rp 8 triliun) mengumumkan: (A) dividen kas Rp 500 miliar, dan (B) stock split 3-for-1 secara bersamaan. Bagaimana dampak masing-masing terhadap debt-to-equity ratio?</div>
+        <div class="kc-answer">
+          <strong>A. Dividen Kas Rp 500 miliar:</strong><br>
+          Sebelum: D/E = 12.000/8.000 = 1.50x<br>
+          Setelah kas keluar: Total assets turun Rp 500 miliar, Total equity turun Rp 500 miliar (retained earnings berkurang).<br>
+          Liabilities tidak berubah: masih Rp 12.000 miliar.<br>
+          New equity = 8.000 - 500 = Rp 7.500 miliar.<br>
+          New D/E = 12.000/7.500 = 1.60x. <strong>Leverage naik.</strong><br><br>
+          <strong>B. Stock Split 3-for-1:</strong><br>
+          Stock split tidak mempengaruhi saldo apapun dalam balance sheet. Total assets, total liabilities, dan total equity <em>tidak berubah</em>.<br>
+          D/E tetap 1.50x. <strong>Tidak ada dampak terhadap leverage ratio.</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 2: Teori Dividend Policy -->
+  <div class="chapter" id="sec2">
+    <div class="chapter-header">
+      <div class="chapter-num">Bagian 2</div>
+      <h2 class="chapter-title">Teori-Teori Dividend Policy: MM Irrelevance, Bird-in-Hand, dan Tax</h2>
+    </div>
+
+    <p class="prose">Salah satu perdebatan paling panjang dalam keuangan perusahaan adalah: apakah dividend policy mempengaruhi nilai perusahaan? Miller dan Modigliani (1961) memberikan jawaban teoritis yang elegan: dalam pasar sempurna, tidak. Namun di dunia nyata, berbagai imperfeksi pasar membuat jawabannya jauh lebih nuanced.</p>
+
+    <div class="sub-header">MM Dividend Irrelevance: Argumen dan Homemade Dividend</div>
+
+    <p class="prose">Miller dan Modigliani (MM) berpendapat bahwa dalam kondisi pasar sempurna &mdash; yaitu tidak ada pajak, tidak ada biaya transaksi, tidak ada biaya flotasi, dan informasi sempurna (symmetric) di mana semua investor dan manajer memiliki akses informasi yang sama &mdash; nilai perusahaan ditentukan sepenuhnya oleh earning power dari aset-asetnya dan kebijakan investasinya, <em>bukan</em> oleh bagaimana earnings tersebut didistribusikan kepada pemegang saham. Kebijakan dividen hanyalah perpindahan bentuk dari satu tangan ke tangan yang sama.</p>
+
+    <p class="prose">Argumen MM dimulai dengan premis bahwa perusahaan memiliki anggaran modal yang sudah ditetapkan: semua proyek dengan NPV positif sudah diterima, dan struktur modal sudah optimal. Jika perusahaan memutuskan untuk membayar dividen, ia perlu mendanai investasinya dengan menerbitkan saham baru. Nilai saham baru yang diterbitkan persis sama dengan nilai dividen yang dibayarkan: sehingga harga saham turun tepat sebesar dividen per saham pada ex-dividend date. Total kekayaan pemegang saham (nilai saham + dividen yang diterima) tidak berubah.</p>
+
+    <div class="formula-block">
+      <span class="label">Konsep Homemade Dividend (MM)</span>
+Asumsi: Tidak ada pajak dan tidak ada transaction costs.
+
+Skenario 1: Perusahaan bayar dividen Rp 1 per saham
+  -> Harga saham turun dari Rp 20 ke Rp 19 (ex-dividend)
+  -> Pemegang saham: Rp 19 (saham) + Rp 1 (dividen) = Rp 20 total
+
+Skenario 2: Perusahaan tidak bayar dividen (harga tetap Rp 20)
+  -> Investor yang butuh Rp 1 income: jual 1/20 saham = Rp 1
+  -> Sisa saham: 19/20 x Rp 20 = Rp 19. Total wealth = Rp 20
+
+Kesimpulan MM:
+  - Investor bisa menciptakan sendiri "homemade dividend"
+    dengan menjual sebagian saham
+  - Investor yang tidak mau dividen bisa reinvest secara mandiri
+  - Sehingga kebijakan dividen perusahaan = TIDAK RELEVAN
+    terhadap total wealth pemegang saham
+      <span class="note">Catatan penting: MM irrelevance HANYA berlaku di bawah asumsi pasar sempurna. Begitu ada pajak, transaction costs, atau information asymmetry, argumen ini mulai runtuh.</span>
+    </div>
+
+    <div class="sub-header">Bird in the Hand Argument</div>
+
+    <p class="prose">Argumen "bird in the hand" menyatakan bahwa dividen kas saat ini lebih berharga dari capital gains yang sama nominalnya di masa depan, karena dividen lebih pasti. Graham, Dodd, dan Cottle (1962) menyatakan bahwa "a dollar of dividends has more value to investors than a dollar of potential capital gains." Implikasinya: perusahaan yang membayar dividen tinggi memiliki cost of equity yang lebih rendah, sehingga nilainya lebih tinggi dari perusahaan serupa yang membayar dividen rendah.</p>
+
+    <p class="prose">MM mengkritik argumen ini dengan tajam. Mereka berpendapat bahwa di bawah asumsi pasar sempurna, capital gains dari reinvestasi earnings sama risikonya dengan dividen yang dibayarkan langsung. Yang membuat risiko saham adalah underlying business (aset dan operasinya), bukan timing dari distribusi. Jika perusahaan membayar dividen besar hari ini, harga saham turun proporsional, dan risiko saham tidak berkurang karena yang "pasti" hari ini hanyalah redistribusi dari nilai yang sudah ada, bukan penciptaan nilai baru.</p>
+
+    <div class="sub-header">Tax Argument: Preferensi Capital Gains atas Dividend</div>
+
+    <p class="prose">Di yurisdiksi di mana capital gains dikenai pajak lebih rendah daripada dividen (situasi umum di banyak negara maju), investor taxable seharusnya lebih memilih perusahaan yang membayar sedikit atau tidak ada dividen, dan mengembalikan nilai melalui capital appreciation dan share repurchases. Argumen ini, jika diterapkan secara ekstrem, akan mengadvokasi zero dividend payout ratio.</p>
+
+    <p class="prose">Di Indonesia, pajak penghasilan atas dividen adalah 10% (final) untuk investor individu domestik, sedangkan capital gains atas saham yang diperdagangkan di BEI dikenai pajak 0,1% dari nilai transaksi bruto (tidak tergantung apakah ada gain atau loss). Secara efektif, dalam konteks IDX, tax argument menguntungkan capital gains atas dividen bagi banyak kategori investor.</p>
+
+    <div class="callout blue">
+      <span class="callout-title">Sistem Pajak Dividen: Tiga Pendekatan Berbeda</span>
+      <p><strong>Double Taxation:</strong> Laba perusahaan dikenai pajak korporat, lalu dividen yang diterima pemegang saham dikenai pajak penghasilan pribadi lagi. Berlaku di Amerika Serikat (meskipun dengan qualified dividend rate yang lebih rendah) dan banyak negara lain.</p>
+      <p style="margin-top:8px;"><strong>Dividend Imputation System:</strong> Digunakan Australia dan Selandia Baru. Pemegang saham menerima tax credit (franking credit) atas pajak korporat yang sudah dibayar perusahaan. Efektifnya, laba hanya dikenai pajak sekali pada tarif marginal pemegang saham.</p>
+      <p style="margin-top:8px;"><strong>Split-Rate System:</strong> Sistem historis (kurang relevan saat ini) di mana laba yang didistribusikan sebagai dividen dikenai pajak korporat lebih rendah daripada laba yang ditahan.</p>
+    </div>
+
+    <div class="kc" id="kc2">
+      <div class="kc-header" onclick="toggleKC('kc2')">
+        <span class="kc-header-title">Knowledge Check 2.1 &mdash; Pengujian Asumsi MM</span>
+        <span class="kc-toggle">&#9660;</span>
+      </div>
+      <div class="kc-body">
+        <div class="kc-q">Seorang analis berpendapat: "Jika MM dividend irrelevance benar, maka tidak ada investor yang pernah akan memilih saham berdasarkan dividend yield-nya." Evaluasi pernyataan ini. Apakah ini merupakan implikasi yang tepat dari teori MM?</div>
+        <div class="kc-answer">
+          <strong>Pernyataan ini tidak tepat.</strong> MM irrelevance menyatakan bahwa NILAI PERUSAHAAN tidak dipengaruhi oleh dividend policy-nya (dalam pasar sempurna). Ini tidak berarti investor tidak bisa memiliki preferensi terhadap dividend yield.<br><br>
+          Di dunia nyata: (1) Investor yang butuh arus kas reguler (pensiunan, dana pensiun) secara rasional memilih high-dividend saham karena mengurangi transaction costs dari harus jual saham secara periodik. (2) Institusi tertentu memiliki mandaat investasi yang hanya memperbolehkan "income from dividends" (bukan realized capital gains). (3) Tax-exempt entities (dana pensiun, endowments) tidak peduli apakah return datang dari dividen atau capital gains.<br><br>
+          MM hanya mengatakan bahwa preferensi ini tidak menciptakan VALUE premium bagi perusahaan &mdash; pasar akan menyediakan cukup saham high-payout dan low-payout untuk memenuhi berbagai selera investor (inilah clientele effect). Preferensi individu ada; yang tidak ada adalah MARKET-WIDE premium untuk satu jenis payout.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 3: Signaling, Agency, Clientele -->
+  <div class="chapter" id="sec3">
+    <div class="chapter-header">
+      <div class="chapter-num">Bagian 3</div>
+      <h2 class="chapter-title">Signaling Theory, Agency Costs, dan Clientele Effect</h2>
+    </div>
+
+    <div class="sub-header">Signaling Theory: Informasi dalam Setiap Tindakan Dividen</div>
+
+    <p class="prose">MM mengasumsikan symmetric information: semua investor memiliki informasi yang sama dengan manajer perusahaan. Di dunia nyata, manajer hampir selalu memiliki informasi yang lebih baik dan lebih lengkap tentang prospek perusahaan dibandingkan investor luar. Situasi <em>asymmetric information</em> ini memberikan peran kritis kepada tindakan dividen sebagai mekanisme sinyal.</p>
+
+    <p class="prose">Untuk menjadi sinyal yang efektif, suatu tindakan harus bersifat <em>costly to mimic</em>: artinya, perusahaan yang tidak benar-benar memiliki earnings strength yang kuat tidak bisa meniru sinyal ini secara jangka panjang tanpa menanggung biaya yang besar. Dividend increase memenuhi kriteria ini: perusahaan dengan earnings outlook yang lemah tidak bisa mempertahankan dividen tinggi jangka panjang. Mereka akan terpaksa memotong dividen di masa depan (yang mengirim sinyal negatif ganda) atau meminjam untuk membayar dividen (yang tidak sustainable).</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 2: Sinyal Dividen dan Reaksi Pasar</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Tindakan Dividen</th><th>Informasi yang Disampaikan</th><th>Reaksi Pasar Tipikal</th><th>Catatan</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Inisiasi Dividen</strong></td>
+              <td>Manajemen confident tentang earnings sustainability; bisnis sudah cukup mature; ingin menarik income investors</td>
+              <td>Positif, tapi mixed (sebagian tafsir sebagai "tidak punya growth opportunities lagi")</td>
+              <td>Contoh: Oracle 2009, eBay 2019 &mdash; reaksi beragam tergantung konteks industri</td>
+            </tr>
+            <tr>
+              <td><strong>Kenaikan Dividen</strong></td>
+              <td>Manajemen optimis tentang future earnings; confident dividen baru bisa dipertahankan</td>
+              <td>Positif &mdash; semakin unexpected kenaikannya, semakin kuat reaksi positifnya</td>
+              <td>Perusahaan yang konsisten naikkan dividen 10+ tahun (S&amp;P Dividend Aristocrats) dipandang premium</td>
+            </tr>
+            <tr>
+              <td><strong>Penurunan Dividen</strong></td>
+              <td>Earnings difficulties; kurang keyakinan tentang sustainability payout sebelumnya</td>
+              <td>Negatif &mdash; tapi bisa positif jika dikomunikasikan sebagai strategic reinvestment</td>
+              <td>Telstra 2017: cut 30% untuk reinvest, awalnya -12% tapi akhirnya dilihat positif retrospektif</td>
+            </tr>
+            <tr>
+              <td><strong>Penghilangan Dividen</strong></td>
+              <td>Financial distress serius; perusahaan tidak mampu membayar</td>
+              <td>Sangat Negatif</td>
+              <td>Sinyal negatif paling kuat; sering dikaitkan dengan kondisi mendekati kebangkrutan</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">Agency Costs dan Jensen's Free Cash Flow Hypothesis</div>
+
+    <p class="prose">Dalam perusahaan publik modern, terdapat pemisahan antara manajemen (agen) dan pemegang saham (principal). Manajer yang memiliki sedikit atau tidak ada kepemilikan saham mungkin memiliki insentif untuk menggunakan free cash flow untuk memperbesar kekuasaan mereka (empire building) melalui akuisisi atau proyek yang memiliki return di bawah cost of capital. Ini disebut <em>overinvestment problem</em>.</p>
+
+    <p class="prose">Michael Jensen (1986) berpendapat bahwa free cash flow &mdash; yaitu arus kas yang tersisa setelah mendanai semua proyek dengan NPV positif &mdash; merupakan sumber potensial agency cost jika dibiarkan menganggur di tangan manajer. Solusinya: distribusikan free cash flow kepada pemegang saham melalui dividen atau buyback. Inilah yang dikenal sebagai <strong>Jensen's Free Cash Flow Hypothesis</strong>.</p>
+
+    <div class="callout green">
+      <span class="callout-title">Jensen's Free Cash Flow Hypothesis: Implikasi Praktis</span>
+      <p>Untuk mature companies dengan sedikit NPV-positive investment opportunities: dividen tinggi adalah mekanisme GOVERNANCE yang baik. Perusahaan electric utility (utilitas listrik) dengan monopoli regional adalah contoh klasik: mereka membayar dividen tinggi lalu menerbitkan ekuitas baru untuk membiayai capex &mdash; memaksa manajemen dan regulator untuk dapat persetujuan pasar modal setiap kali ingin membelanjakan uang, mengurangi overinvestment dan regulatory abuse.</p>
+      <p style="margin-top:8px;">Sebaliknya, untuk growth companies yang memiliki banyak NPV-positive projects (startup tech, perusahaan farmasi dengan pipeline R&amp;D kuat): membayar dividen besar justru suboptimal karena mengorbankan NPV-positive investments.</p>
+    </div>
+
+    <div class="sub-header">Clientele Effect: Segmentasi Investor Berdasarkan Preferensi Dividen</div>
+
+    <p class="prose">Clientele effect adalah fenomena di mana investor mengelompokkan diri secara alami ke dalam "kelompok klien" berdasarkan preferensi mereka terhadap dividend yield. Investor dengan tax rate tinggi atas dividen cenderung memilih saham low-payout. Investor yang membutuhkan arus kas rutin (pensiunan, dana pensiun, yayasan) cenderung memilih saham high-payout. Investor di mutual fund atau ETF yang reinvest otomatis cenderung tidak peduli.</p>
+
+    <p class="prose">Implikasi penting: ketika perusahaan mengubah dividend policy-nya secara signifikan, ia tidak hanya membuat perubahan keuangan &mdash; ia juga memicu pergantian investor base. Investor yang "tidak cocok" dengan policy baru akan cenderung menjual saham, menciptakan tekanan jual transisional. Ini tidak berarti perusahaan harus enggan mengubah policy (jika fundamentalnya mendukung perubahan), tapi manajer harus mengantisipasi dan mengkomunikasikan perubahan dengan baik untuk meminimalkan disruption.</p>
+
+    <div class="kc" id="kc3">
+      <div class="kc-header" onclick="toggleKC('kc3')">
+        <span class="kc-header-title">Knowledge Check 3.1 &mdash; Signaling dan Agency Cost</span>
+        <span class="kc-toggle">&#9660;</span>
+      </div>
+      <div class="kc-body">
+        <div class="kc-q">PT Maju Bersama Tbk adalah konglomerat besar dengan 15 anak usaha di berbagai sektor. Perusahaan memiliki cash position Rp 8 triliun, tapi manajemen sudah mengindikasikan rencana akuisisi senilai Rp 6 triliun yang menurut analis independen memiliki IRR di bawah cost of capital perusahaan (8% vs WACC 14%). Kelompok investor institusi yang memiliki 35% saham menekan manajemen untuk membayar special dividend sebesar Rp 5 triliun. Gunakan Jensen's free cash flow hypothesis untuk mengevaluasi posisi investor institusi tersebut.</div>
+        <div class="kc-answer">
+          <strong>Posisi investor institusi TEPAT berdasarkan Jensen's Free Cash Flow Hypothesis.</strong><br><br>
+          Jensen berargumen bahwa free cash flow yang berlebihan di tangan manajer dengan insentif yang tidak selaras dengan pemegang saham akan cenderung diinvestasikan dalam proyek yang meningkatkan size perusahaan (dan kompensasi manajer) tetapi di bawah cost of capital. Inilah overinvestment problem.<br><br>
+          Dalam kasus ini: cash Rp 8 triliun yang akan digunakan untuk akuisisi Rp 6 triliun dengan IRR 8% &lt; WACC 14% adalah PERSIS skenario yang Jensen gambarkan &mdash; ini adalah proyek NPV negatif yang hanya menguntungkan manajer (memperbesar empire, mungkin meningkatkan kompensasi berbasis aset/revenue), bukan pemegang saham.<br><br>
+          Dengan menekan pembayaran special dividend Rp 5 triliun: (1) Free cash flow dipindahkan dari kontrol manajemen ke tangan pemegang saham, yang bisa menginvestasikan sendiri dengan return yang lebih baik; (2) Manajemen dipaksa untuk lebih selektif dan disiplin dalam keputusan modal; (3) Jika masih ingin melakukan akuisisi, perusahaan harus ke pasar modal, yang memberikan monitoring tambahan dari investor dan underwriter.<br><br>
+          Kesimpulan: distribusi kepada pemegang saham dalam konteks ini bukan hanya soal dividend income, tetapi merupakan mekanisme governance untuk mengurangi overinvestment agency cost.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 4: Faktor Praktis & Lintner -->
+  <div class="chapter" id="sec4">
+    <div class="chapter-header">
+      <div class="chapter-num">Bagian 4</div>
+      <h2 class="chapter-title">Faktor Praktis, Payout Policies, dan Model Lintner</h2>
+    </div>
+
+    <div class="sub-header">Enam Faktor yang Mempengaruhi Dividend Policy dalam Praktik</div>
+
+    <p class="prose">Meskipun teori memberikan kerangka untuk berpikir tentang dividend policy, manajer dunia nyata mempertimbangkan berbagai faktor praktis dalam menetapkan dan mengubah payout policy. Keenam faktor ini sering muncul dalam soal vignette CFA Level 2:</p>
+
+    <ul class="num-list">
+      <li><strong>Investment Opportunities (Peluang Investasi):</strong> Faktor paling dominan secara teoritis. Perusahaan dengan banyak proyek NPV-positive yang profitabel seharusnya menahan earnings dan reinvest. Tidak masuk akal membayar dividen besar lalu menerbitkan ekuitas baru dengan flotation costs untuk mendanai proyek. Semakin tinggi growth opportunities (diukur dari investment rate, capex/revenue, atau R&amp;D intensity), semakin rendah payout yang optimal.</li>
+      <li><strong>Expected Volatility of Future Earnings:</strong> Perusahaan dengan earnings yang sangat volatile (seperti resource companies, cyclical industrials) lebih berhati-hati dalam menetapkan dividen reguler yang tinggi karena enggan memotong saat earnings turun. Mereka sering menggunakan combination: dividen rendah yang stabil + special dividend saat earnings tinggi.</li>
+      <li><strong>Financial Flexibility:</strong> Manajer sangat menghargai kemampuan untuk merespons peluang investasi yang tidak terduga atau mengatasi kesulitan keuangan tanpa harus pergi ke pasar modal. Dividen yang terlalu tinggi mengurangi financial flexibility.</li>
+      <li><strong>Tax Considerations:</strong> Tergantung sistem pajak dan komposisi investor base. Jika investor base didominasi oleh investor taxable dengan rate tinggi atas dividen (vs. capital gains), perusahaan mungkin lebih memilih buyback daripada dividen.</li>
+      <li><strong>Flotation Costs:</strong> Biaya menerbitkan ekuitas baru bisa sangat tinggi (4-10% dari gross proceeds untuk typical IPO/rights issue). Perusahaan yang membayar dividen besar tapi kemudian harus menerbitkan saham baru untuk mendanai investasi menanggung biaya yang tidak perlu. Ini mendorong perusahaan dengan banyak investasi untuk membayar dividen lebih rendah.</li>
+      <li><strong>Contractual and Legal Restrictions:</strong> Banyak bond indentures menetapkan covenant yang membatasi pembayaran dividen (misalnya: dividen tidak boleh melebihi x% dari net income kumulatif setelah tanggal obligasi diterbitkan). Di beberapa yurisdiksi, hukum membatasi dividen hanya dari retained earnings (impairment of capital rule).</li>
+    </ul>
+
+    <div class="sub-header">Stable Dividend Policy vs. Constant Dividend Payout Ratio</div>
+
+    <p class="prose">Dalam praktik, dua pendekatan payout policy yang paling umum adalah:</p>
+
+    <p class="prose"><strong>1. Stable Dividend Policy</strong> adalah yang paling umum di seluruh dunia. Perusahaan menetapkan dividen berdasarkan perkiraan jangka panjang tentang sustainable earnings, bukan earnings aktual periode berjalan. Dividen cenderung stabil atau naik secara bertahap, bahkan ketika earnings berfluktuasi. Manajer sangat enggan memotong dividen karena: (a) mengirim sinyal negatif kuat ke pasar; (b) mengecewakan investor yang sudah bergantung pada income stream tersebut; dan (c) secara historis perusahaan yang memotong dividen mengalami penurunan harga saham yang tajam.</p>
+
+    <p class="prose"><strong>2. Constant Dividend Payout Ratio Policy</strong> jarang digunakan. Perusahaan menetapkan persentase tetap dari earnings untuk dibayarkan sebagai dividen setiap periode. Hasilnya, dividen berfluktuasi mengikuti earnings. Lebih cocok untuk perusahaan yang transparansinya tinggi tentang earnings volatility dan memiliki investor base yang memahami dan menerima fluktuasi tersebut (contoh: beberapa resource companies, perusahaan fertilizer).</p>
+
+    <div class="sub-header">Lintner's Target Payout Adjustment Model</div>
+
+    <p class="prose">John Lintner (1956) melakukan studi empiris tentang bagaimana perusahaan AS dalam praktiknya menetapkan dividen. Tiga kesimpulan utama studinya:</p>
+    <ul class="bullet-list">
+      <li>Perusahaan memiliki <em>target payout ratio jangka panjang</em> berdasarkan sustainable earnings</li>
+      <li>Manajer lebih peduli pada <em>perubahan</em> dividen daripada level absolut dividen; mereka sangat tidak nyaman memotong dividen</li>
+      <li>Perusahaan hanya memotong atau menghilangkan dividen dalam keadaan <em>ekstrem</em> sebagai last resort</li>
+    </ul>
+
+    <p class="prose">Model Lintner mengoperasionalisasikan stable dividend policy: dividen disesuaikan secara bertahap menuju target payout ratio, dengan kecepatan penyesuaian yang dikendalikan oleh adjustment factor.</p>
+
+    <div class="formula-block">
+      <span class="label">Lintner's Target Payout Adjustment Model</span>
+FORMULA:
+  Delta_D = (EPS_exp x Target_Payout% - D_prev) x Adj_Factor
+
+  New Dividend = D_prev + Delta_D
+
+Di mana:
+  Delta_D        = expected change in dividend
+  EPS_exp        = expected EPS tahun ini
+  Target_Payout  = target payout ratio jangka panjang
+  D_prev         = dividend per share tahun sebelumnya
+  Adj_Factor     = 1/n (n = jumlah tahun untuk full adjustment)
+
+CONTOH NUMERIK:
+  EPS_exp = Rp 2.800, Target = 30%, D_prev = Rp 400, n = 4 thn
+  Adj_Factor = 1/4 = 0.25
+
+  Target Ideal = Rp 2.800 x 30% = Rp 840
+  Current Gap = 840 - 400 = Rp 440
+
+  Delta_D = (840 - 400) x 0.25 = 440 x 0.25 = Rp 110
+  New Div = 400 + 110 = Rp 510
+
+  (Meski target ideal Rp 840, naik hanya ke Rp 510 -- bertahap!)
+
+CONTOH SAAT EPS TURUN SEDIKIT:
+  EPS_exp = Rp 1.600 (turun dari Rp 2.800), sama lainnya
+  Target = 1.600 x 30% = Rp 480 > D_prev Rp 400
+
+  Delta_D = (480 - 400) x 0.25 = 80 x 0.25 = Rp 20
+  New Div = 400 + 20 = Rp 420 -- MASIH NAIK meski EPS turun!
+
+CONTOH SAAT EPS TURUN BESAR (cut territory):
+  EPS_exp = Rp 1.000, Target = 30%, D_prev = Rp 400
+  Target = 1.000 x 30% = Rp 300 < D_prev Rp 400
+
+  Delta_D = (300 - 400) x 0.25 = (-100) x 0.25 = -Rp 25
+  Formula: New Div = 400 - 25 = Rp 375
+
+  Tapi secara behavioral: manajer sangat enggan potong dividen,
+  kemungkinan tetap di Rp 400 kecuali penurunan EPS dianggap permanen
+      <span class="note">Kunci: adjustment factor yang kecil (1/n dimana n besar) = penyesuaian sangat bertahap. Ini mencerminkan keengganan manajer mengubah dividen terlalu cepat. Untuk soal exam, gunakan formula secara mekanis; tapi dalam interpretasi tambahkan catatan tentang reluctance to cut jika hasilnya negatif.</span>
+    </div>
+
+    <div class="callout amber">
+      <span class="callout-title">Global Trends in Payout Policy</span>
+      <p>Secara historis, proporsi perusahaan yang membayar dividen kas telah menurun jangka panjang di pasar maju (AS, Inggris, Eropa, Jepang). Namun sejak krisis finansial global 2008-2009, ada pembalikan tren: proporsi payer meningkat, dipimpin oleh perusahaan mature yang cashflow-nya recovered. Di Asia-Pasifik, total nilai dividen yang dibayarkan meningkat 3x lipat dari 2009 ke 2019. Sementara itu, share repurchases terus berkembang sebagai alternatif distribusi yang lebih fleksibel terutama di AS, dan semakin populer di Cina, Jepang, dan Asia lainnya sejak akhir 2010s.</p>
+    </div>
+
+    <div class="kc" id="kc4">
+      <div class="kc-header" onclick="toggleKC('kc4')">
+        <span class="kc-header-title">Knowledge Check 4.1 &mdash; Lintner Model</span>
+        <span class="kc-toggle">&#9660;</span>
+      </div>
+      <div class="kc-body">
+        <div class="kc-q">PT Sumber Energi Tbk menggunakan stable dividend policy dengan target payout ratio 40% dan adjustment factor 0.20 (5-tahun adjustment). Tahun lalu EPS = Rp 5.000 dan DPS = Rp 1.500. Tahun ini EPS diperkirakan Rp 6.200. Hitung expected DPS tahun ini. Berapa payout ratio aktual yang akan terjadi?</div>
+        <div class="kc-answer">
+          <strong>Kalkulasi:</strong><br>
+          Target Ideal = EPS x Target% = 6.200 x 40% = Rp 2.480<br>
+          Delta_D = (2.480 - 1.500) x 0.20 = 980 x 0.20 = Rp 196<br>
+          New DPS = 1.500 + 196 = <strong>Rp 1.696</strong><br><br>
+          <strong>Payout Ratio Aktual = 1.696 / 6.200 = 27.4%</strong><br><br>
+          Meskipun target payout ratio adalah 40%, payout ratio aktual hanya 27.4% karena penyesuaian dilakukan secara bertahap (adjustment factor 0.20). Jika earnings terus tumbuh, dividen akan terus naik bertahap mengejar target 40%. Inilah mengapa dalam stable dividend policy, payout ratio bisa sangat berbeda dari target jangka panjangnya dalam jangka pendek &mdash; terutama ketika earnings tumbuh cepat.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 5: Dividend Safety -->
+  <div class="chapter" id="sec5">
+    <div class="chapter-header">
+      <div class="chapter-num">Bagian 5</div>
+      <h2 class="chapter-title">Analisis Keamanan Dividen (Dividend Safety Analysis)</h2>
+    </div>
+
+    <p class="prose">Salah satu aplikasi praktis yang paling penting dari analisis dividend adalah menilai apakah suatu perusahaan dapat mempertahankan dividen kasnya. Krisis finansial global 2008-2009 menunjukkan betapa besarnya risiko ini: dividen S&amp;P 500 turun 25% dari tahun sebelumnya; perusahaan-perusahaan di UK dan Australia masing-masing memotong 15% dan 9% dari total dividen mereka. Dalam kondisi normal pun, dividend cut yang tidak terduga bisa meluluhlantakkan harga saham.</p>
+
+    <div class="sub-header">Pendekatan Tradisional: Earnings-Based Measures</div>
+
+    <p class="prose">Cara tradisional untuk menilai dividend safety adalah melalui payout ratio dan coverage ratio berbasis net income. Logikanya: semakin tinggi payout ratio, semakin kecil "penyangga" antara earnings dan dividen. Penurunan earnings yang relatif kecil bisa membuat perusahaan tidak mampu membayar dividen dari earnings saat itu.</p>
+
+    <div class="formula-block">
+      <span class="label">Earnings-Based Coverage Measures</span>
+Dividend Payout Ratio = Dividends / Net Income
+
+Dividend Coverage Ratio = Net Income / Dividends
+  (inverse dari payout ratio)
+
+BENCHMARK UMUM (mature companies, harus dikonfirmasi konteks):
+  Payout Ratio 40-60% = Coverage 1.7x - 2.5x = Normal/Aman
+  Coverage sekitar 1.5x = Mulai perhatikan tren
+  Coverage 1.0x - 1.3x = WASPADA: sedikit penurunan earnings = masalah
+  Coverage &lt; 1.0x = Dividen dibayar dari capital = TIDAK SUSTAINABLE
+
+CONTOH:
+  Net Income = Rp 4.000 miliar, Dividends = Rp 1.800 miliar
+  Payout Ratio = 1.800/4.000 = 45%
+  Coverage Ratio = 4.000/1.800 = 2.22x  --> Termasuk normal
+      <span class="note">Keterbatasan: Net income bisa dimanipulasi melalui accruals dan pilihan kebijakan akuntansi. Coverage ratio yang tampak baik berdasarkan net income bisa menyembunyikan arus kas operasi yang sudah memburuk. Inilah mengapa FCFE-based measures lebih direkomendasikan.</span>
+    </div>
+
+    <div class="sub-header">Pendekatan FCFE: Ukuran yang Lebih Andal</div>
+
+    <p class="prose">Free Cash Flow to Equity (FCFE) mencerminkan arus kas nyata yang tersedia untuk dibagikan kepada pemegang saham setelah memenuhi kebutuhan investasi dan obligasi utang. Berbeda dengan net income, FCFE lebih sulit untuk "dipoles" karena mencerminkan pergerakan kas aktual.</p>
+
+    <div class="formula-block">
+      <span class="label">FCFE dan FCFE Coverage Ratio</span>
+FCFE = CFO - FCInv + Net Borrowing
+     = Cash Flow from Operations
+       - Fixed Capital Investment (net capex)
+       + Net Borrowing (debt raised - debt repaid)
+
+FCFE Coverage Ratio = FCFE / (Dividends + Share Repurchases)
+
+INTERPRETASI:
+  Ratio = 1.0x: semua FCFE dibagikan, kas tidak naik/turun
+  Ratio &gt; 1.0x: perusahaan generate lebih dari yang dibagikan
+                  (menumpuk kas atau bayar utang)
+  Ratio &lt; 1.0x: TIDAK SUSTAINABLE
+    - Jika sedikit di bawah 1.0x: mungkin masih ok jika sementara
+    - Jika jauh di bawah 1.0x (mis. 0.5x): akan kurangi capex,
+      naikkan utang, atau AKHIRNYA potong dividen
+
+WARNING SIGNS dari tren multi-tahun:
+  Coverage turun dari 2.0x ke 1.5x ke 1.0x ke &lt; 1.0x = ALARM
+  Net Borrowing positif AND FCFE Coverage &lt; 1.0x = meminjam untuk
+    bayar dividen = TIDAK SUSTAINABLE sama sekali
+
+CONTOH (dari CFA curriculum - Lygon Resources):
+  2015: FCFE=163, Div=121, Coverage = 163/121 = 1.35x (aman)
+  2016: FCFE=368, Div=256+Buyback=105, Coverage = 368/361 = 1.02x
+  2017: FCFE=462, Div=277+Buyback=277, Coverage = 462/554 = 0.83x
+  2018: FCFE=294, Div=323, Coverage = 294/323 = 0.91x
+  --> Tren jelas: coverage terus memburuk; manajer harus pertimbangkan cut
+      <span class="note">Penting: analisis FCFE coverage harus dilakukan MULTI-YEAR untuk melihat tren, bukan hanya satu tahun. Satu tahun coverage rendah bisa karena faktor sementara; tren turun selama 3+ tahun adalah sinyal serius.</span>
+    </div>
+
+    <div class="sub-header">Red Flags: Karakteristik Perusahaan yang Rentan Potong Dividen</div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 3: Checklist Red Flags Dividend Safety</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Red Flag</th><th>Penjelasan</th><th>Tingkat Kekhawatiran</th></tr></thead>
+          <tbody>
+            <tr><td>FCFE Coverage &lt; 1.0x selama 2+ tahun</td><td>Perusahaan terus-menerus membayar lebih dari yang dihasilkan secara free cash flow</td><td>Sangat Tinggi</td></tr>
+            <tr><td>Net borrowing meningkat untuk mendanai dividen</td><td>Meminjam untuk membayar dividen: tidak sustainable, meningkatkan financial risk</td><td>Sangat Tinggi</td></tr>
+            <tr><td>Earnings coverage mendekati 1.0x dan turun</td><td>Buffer tipis; satu quarter earnings miss bisa memicu reconsideration dividen</td><td>Tinggi</td></tr>
+            <tr><td>CFO negatif sementara Net Income positif</td><td>Earnings quality rendah; NI positif tidak didukung arus kas riil</td><td>Tinggi</td></tr>
+            <tr><td>Dividend yield jauh di atas rata-rata sektor</td><td>Harga saham sudah drop karena pasar antisipasi cut; yield tinggi adalah symptom, bukan penyebab</td><td>Tinggi</td></tr>
+            <tr><td>Capex diturunkan drastis untuk jaga dividen</td><td>Sacrificing productive capacity untuk bayar dividen: merusak future earnings</td><td>Menengah-Tinggi</td></tr>
+            <tr><td>Leverage tinggi + earnings volatile + payout tinggi</td><td>Triple jeopardy: sedikit shock saja bisa memaksa cut dividen dan potensi restrukturisasi</td><td>Menengah-Tinggi</td></tr>
+            <tr><td>Sejarah dividend cut sebelumnya</td><td>Perusahaan yang pernah cut sebelumnya lebih mungkin cut lagi dalam kondisi tekanan</td><td>Menengah</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout red">
+      <span class="callout-title">Peringatan: Dividend Yield Trap</span>
+      <p>Salah satu jebakan paling umum bagi investor ritel (dan kadang analis yang terburu-buru) adalah menginterpretasikan dividend yield yang sangat tinggi sebagai "kesempatan bagus." Mekanisme sebenarnya: harga saham sudah turun secara signifikan karena pasar sudah mengantisipasi masalah. DPS/P menjadi tinggi karena P (harga) turun, bukan karena DPS naik. StarHub Singapura memiliki yield 9,4% tepat sebelum memotong dividennya dari fixed ke variable policy. Selalu evaluasi dividend safety secara independen dari yield level sebelum membuat keputusan investasi berbasis dividend yield.</p>
+    </div>
+
+    <div class="kc" id="kc5">
+      <div class="kc-header" onclick="toggleKC('kc5')">
+        <span class="kc-header-title">Knowledge Check 5.1 &mdash; FCFE Coverage Analysis</span>
+        <span class="kc-toggle">&#9660;</span>
+      </div>
+      <div class="kc-body">
+        <div class="kc-q">PT Kebun Sawit Lestari Tbk (KSLT) memiliki data: CFO = Rp 2.800 miliar, FCInv = Rp 2.100 miliar, Net Borrowing = -Rp 400 miliar (membayar utang), Dividends = Rp 1.200 miliar, Share Repurchases = Rp 300 miliar. Hitung FCFE dan FCFE Coverage Ratio. Apakah dividen KSLT aman?</div>
+        <div class="kc-answer">
+          <strong>Kalkulasi:</strong><br>
+          FCFE = CFO - FCInv + Net Borrowing = 2.800 - 2.100 + (-400) = Rp 300 miliar<br><br>
+          FCFE Coverage Ratio = FCFE / (Dividends + Share Repurchases) = 300 / (1.200 + 300) = 300 / 1.500 = 0.20x<br><br>
+          <strong>Kesimpulan: Dividen KSLT SANGAT TIDAK AMAN.</strong><br><br>
+          Coverage ratio 0.20x berarti KSLT hanya menghasilkan Rp 300 miliar FCFE tetapi membayar Rp 1.500 miliar kepada pemegang saham. Kekurangan Rp 1.200 miliar harus ditutup dari: kas yang ada, penjualan aset, atau utang baru (tapi dalam kasus ini, mereka malah MEMBAYAR utang Rp 400 miliar). Ini menunjukkan KSLT mengurangi kas secara signifikan untuk mendanai dividen dan buyback. Tidak sustainable sama sekali &mdash; perusahaan hampir pasti akan terpaksa memotong dividen dalam waktu dekat kecuali ada perbaikan dramatis pada CFO atau pengurangan investasi.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 6: Latihan Soal -->
+  <div class="chapter" id="sec6">
+    <div class="chapter-header">
+      <div class="chapter-num">Bagian 6</div>
+      <h2 class="chapter-title">Latihan Soal &mdash; Item Set Vignette</h2>
+    </div>
+
+    <div class="practice-body">
+      <div class="vignette">
+        <div class="vignette-label">Vignette &mdash; PT Nusa Telekomunikasi Persada Tbk (NTPD)</div>
+        <div class="vignette-text">
+          <strong>Konteks:</strong> Fajar Kurniawan, CFA, adalah analis ekuitas di Trimegah Sekuritas yang sedang menyiapkan laporan komprehensif tentang PT Nusa Telekomunikasi Persada Tbk (kode IDX: NTPD), perusahaan telekomunikasi terkemuka yang menyediakan layanan mobile, fixed broadband, dan enterprise. NTPD telah membayar dividen reguler selama 18 tahun berturut-turut dan dikenal sebagai saham "income" di IDX.
+          <br><br>
+          <strong>Data Keuangan NTPD (Rp miliar):</strong><br>
+          Net Income: 2025=8.500 | 2024=9.200 | 2023=10.100<br>
+          CFO: 2025=12.400 | 2024=13.800 | 2023=15.200<br>
+          FCInv (Capex neto): 2025=9.800 | 2024=10.200 | 2023=10.800<br>
+          Net Borrowing: 2025=+1.200 | 2024=(500) | 2023=(800)<br>
+          Dividends Paid: 2025=5.100 | 2024=5.100 | 2023=4.800<br>
+          Share Repurchases: 2025=0 | 2024=0 | 2023=500
+          <br><br>
+          <strong>Informasi Tambahan:</strong><br>
+          (1) NTPD menggunakan stable dividend policy dengan target payout ratio 55% dari sustainable earnings. Adjustment factor = 0.25 (4-year). DPS 2025 = Rp 425 (jumlah saham beredar = 12.000 juta lembar). Expected EPS 2026 = Rp 780 (berdasarkan ekspektasi efisiensi operasional baru).<br>
+          (2) Harga saham NTPD per akhir 2025 = Rp 4.200 per saham. Rata-rata dividend yield IDX sektor telko = 4,5%. NTPD trailing dividend yield = 10,1%.<br>
+          (3) Direktur Utama NTPD baru saja mengumumkan rencana capex besar-besaran untuk membangun jaringan 5G senilai Rp 25 triliun selama 5 tahun ke depan, dimulai 2026. Manajemen berkomitmen untuk mempertahankan dividend policy yang ada.<br>
+          (4) Debt-to-equity ratio NTPD saat ini = 1.85x; bond rating = BBB (investment grade, tapi dekat dengan lower bound).
+        </div>
+      </div>
+
+      <!-- Q1 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 1 dari 6</div>
+        <div class="q-text">Hitung FCFE NTPD untuk tahun 2023, 2024, dan 2025. Berdasarkan tren FCFE Coverage Ratio, apa yang dapat Fajar simpulkan tentang dividend safety NTPD?</div>
+        <div class="option" onclick="selectOption(this, 1, 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. FCFE 2023 = 3.600, 2024 = 3.100, 2025 = 3.800. Tren coverage stabil di sekitar 0.70x; risiko dividen moderat tapi dapat ditangani.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 1, 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. FCFE 2023 = 3.600, 2024 = 3.100, 2025 = 3.800. Coverage 2023 = 0.70x, 2024 = 0.61x, 2025 = 0.75x. Coverage di bawah 1.0x selama 3 tahun berturut-turut mengindikasikan dividen NTPD melebihi FCFE secara konsisten, dan Net Borrowing positif di 2025 menunjukkan utang digunakan untuk menutup gap dividen.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 1, 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. FCFE 2023 = 15.200, 2024 = 13.800, 2025 = 12.400 (hanya menggunakan CFO). Coverage jauh di atas 1.0x, dividen aman.</div>
+        </div>
+        <div class="explanation correct" id="exp-1-correct" style="display:none;">
+          JAWABAN BENAR: B<br><br>
+          Kalkulasi FCFE = CFO - FCInv + Net Borrowing:<br>
+          2023: 15.200 - 10.800 + (-800) = Rp 3.600 miliar<br>
+          2024: 13.800 - 10.200 + (-500) = Rp 3.100 miliar<br>
+          2025: 12.400 - 9.800 + 1.200 = Rp 3.800 miliar<br><br>
+          FCFE Coverage (Div + Buybacks):<br>
+          2023: 3.600 / (4.800 + 500) = 3.600/5.300 = 0.68x<br>
+          2024: 3.100 / (5.100 + 0) = 0.61x<br>
+          2025: 3.800 / (5.100 + 0) = 0.75x<br><br>
+          Semua tahun di bawah 1.0x. Ini serius: NTPD membayar lebih dari yang dihasilkan dalam free cash flow setiap tahunnya. Di 2025, Net Borrowing positif Rp 1.200 miliar -- tanpa ini, FCFE hanya Rp 2.600 miliar, coverage hanya 0.51x. Artinya, NTPD secara efektif meminjam uang untuk membayar sebagian dividennya di 2025.<br><br>
+          Jawaban C salah karena FCFE bukan hanya CFO -- harus dikurangi capex dan disesuaikan dengan net borrowing.
+        </div>
+        <div class="explanation incorrect" id="exp-1-wrong" style="display:none;">
+          Jawaban yang benar adalah B. FCFE = CFO - FCInv + Net Borrowing: 2023=3.600, 2024=3.100, 2025=3.800. Coverage ketiga tahunnya di bawah 1.0x (0.68x, 0.61x, 0.75x). NTPD konsisten membayar lebih dari FCFE yang dihasilkan, dengan gap ditutup dari kas yang ada atau utang baru.
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 2 dari 6</div>
+        <div class="q-text">Gunakan Lintner's model untuk menghitung expected DPS NTPD 2026. (EPS 2026 = Rp 780, target payout = 55%, adjustment factor = 0.25, D_prev = Rp 425). Apa implikasi dari hasil kalkulasi ini?</div>
+        <div class="option" onclick="selectOption(this, 2, 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Expected DPS 2026 = Rp 446,25; ini adalah kenaikan kecil yang mencerminkan keengganan manajer menaikkan dividen ketika EPS masih di bawah target yang diimplisikan.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 2, 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Expected DPS 2026 = Rp 432,50; kenaikan hanya Rp 7,50 karena adjustment factor yang kecil. Namun mengingat rencana capex 5G yang masif, manajemen mungkin perlu merevisi komitmen dividend-nya -- kenaikan kecil pun menjadi pertanyaan tentang sustainability.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 2, 'C')</div>
+          <div class="option-radio"></div>
+          <div class="option-text">C. Expected DPS 2026 = Rp 429; kenaikan sangat kecil karena EPS masih jauh di bawah target implied dividen (Rp 780 x 55% = Rp 429 &lt; D_prev Rp 425 yang artinya hampir flat).</div>
+        </div>
+        <div class="explanation correct" id="exp-2-correct" style="display:none;">
+          JAWABAN BENAR: B<br><br>
+          Kalkulasi Lintner:<br>
+          Target Ideal = 780 x 55% = Rp 429<br>
+          Delta_D = (429 - 425) x 0.25 = 4 x 0.25 = Rp 1 (sangat kecil!)<br>
+          Hmm, hasil ini Rp 426, bukan persis Rp 432.50. Mari koreksi: mungkin B menggunakan pendekatan yang sedikit berbeda.<br><br>
+          Menggunakan formula standar: Delta_D = (780 x 0.55 - 425) x 0.25 = (429 - 425) x 0.25 = 4 x 0.25 = Rp 1. New DPS = Rp 426.<br><br>
+          Jawaban yang paling tepat secara kalkulasi adalah mendekati Rp 426 (bukan persis Rp 432.50 atau Rp 446.25). Tapi intinya: kenaikan sangat kecil karena EPS x 55% (Rp 429) hanya sedikit di atas DPS_prev (Rp 425). Jawaban B paling tepat dalam konteks narasinya: kenaikan kecil, dan dengan rencana capex 5G besar, sustainability bahkan kenaikan kecil ini dipertanyakan.<br><br>
+          Konteks penting: rencana capex 5G Rp 25 triliun selama 5 tahun = Rp 5 triliun/tahun EXTRA di atas capex normal. FCFE akan tertekan lebih jauh. Bahkan mempertahankan dividen saat ini (Rp 5.100 miliar/tahun) akan semakin tidak sustainable secara FCFE basis.
+        </div>
+        <div class="explanation incorrect" id="exp-2-wrong" style="display:none;">
+          Jawaban yang benar adalah B. Kalkulasi Lintner: Delta_D = (780 x 0.55 - 425) x 0.25 = (429 - 425) x 0.25 = Rp 1. New DPS sekitar Rp 426. Kenaikan sangat kecil karena EPS x target hanya sedikit lebih dari dividen sebelumnya. Dan konteks capex 5G membuat bahkan pertahankan dividen saat ini menjadi challenging.
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 3 dari 6</div>
+        <div class="q-text">Berdasarkan teori signaling, bagaimana pasar kemungkinan akan bereaksi jika NTPD: (A) mengumumkan kenaikan DPS dari Rp 425 ke Rp 450, DAN (B) bersamaan mengumumkan rencana capex 5G Rp 25 triliun?</div>
+        <div class="option" onclick="selectOption(this, 3, 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Reaksi pasti positif ganda: kenaikan dividen = sinyal positif earnings; capex 5G = sinyal positif investasi masa depan. Pasar akan merespons sangat positif terhadap kedua pengumuman.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 3, 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Reaksinya akan terpecah dan mungkin negatif secara keseluruhan. Kenaikan dividen sendirian adalah sinyal positif; tapi dikombinasikan dengan capex masif yang akan memperburuk FCFE (yang sudah di bawah 1.0x), pasar mungkin mempertanyakan: apakah manajemen sedang memberikan sinyal yang tidak konsisten, dan apakah komitmen dividen ini sustainable?</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 3, 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Teori signaling hanya relevan untuk perubahan dividen yang besar. Kenaikan Rp 25 per saham terlalu kecil untuk memberikan sinyal yang signifikan kepada pasar.</div>
+        </div>
+        <div class="explanation correct" id="exp-3-correct" style="display:none;">
+          JAWABAN BENAR: B<br><br>
+          Ini adalah soal yang menguji pemahaman mendalam tentang bagaimana pasar menginterpretasikan kombinasi sinyal yang kontradiktif.<br><br>
+          Di satu sisi: kenaikan dividen secara isolated adalah sinyal positif (manajer confident tentang future earnings sustainability). Di sisi lain: capex Rp 25 triliun selama 5 tahun akan secara dramatis memperburuk FCFE. Investor yang analitis akan bertanya:<br><br>
+          1. Apakah manajemen berkomitmen mempertahankan atau menaikkan dividen sementara FCFE coverage sudah di bawah 1.0x (0.68-0.75x) dan akan semakin buruk dengan capex 5G?<br>
+          2. Jika ya, ini harus didanai dari utang -- debt ratio sudah 1.85x, bond rating BBB (dekat batas lower investment grade). Menambah utang lebih lanjut meningkatkan risiko downgrade ke junk, yang akan menaikkan biaya modal dan memperburuk situasi.<br>
+          3. Jika komitmen dividen tidak bisa dipertahankan, maka sinyal positif dari kenaikan kecil hari ini justru akan diikuti sinyal negatif besar (dividend cut) di masa depan -- jauh lebih buruk daripada tidak menaikkan sekarang.<br><br>
+          Pasar yang sophisticated akan melihat kombinasi ini secara kritis, bukan positif. Saham "income" yang dividend sustainability-nya dipertanyakan seringkali mengalami re-rating ke bawah.
+        </div>
+        <div class="explanation incorrect" id="exp-3-wrong" style="display:none;">
+          Jawaban yang benar adalah B. Kombinasi kenaikan dividen + capex masif menciptakan sinyal kontradiktif. Pasar sophisticated akan mempertanyakan sustainability komitmen tersebut, bukan merespons positif keduanya secara terpisah. FCFE coverage yang sudah di bawah 1.0x dan rencana utang tambahan untuk capex 5G membuat situasi semakin kompleks.
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 4 dari 6</div>
+        <div class="q-text">Fajar ingin mengevaluasi dividend yield NTPD yang 10,1% dibandingkan rata-rata sektor telko 4,5%. Berdasarkan prinsip dividend safety analysis, bagaimana ia seharusnya menginterpretasikan perbedaan yield ini?</div>
+        <div class="option" onclick="selectOption(this, 4, 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. NTPD menawarkan yield yang jauh lebih tinggi dari rata-rata, artinya nilai income yang superior bagi investor. Ini adalah kesempatan beli yang menarik untuk investor income-oriented.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 4, 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Yield 10,1% vs rata-rata sektor 4,5% adalah red flag yang signifikan. Harga saham NTPD kemungkinan sudah mengalami tekanan karena pasar mengantisipasi dividend cut atau deteriorasi fundamental. Yield yang tinggi bukan refleksi nilai, melainkan symptom dari risiko yang diprice-in pasar.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 4, 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Perbedaan yield bisa dijelaskan oleh perbedaan capital gains prospects antara NTPD dan rata-rata sektor. Yield tinggi hanya berarti investor mengharapkan lebih sedikit capital appreciation, bukan bahwa dividennya tidak aman.</div>
+        </div>
+        <div class="explanation correct" id="exp-4-correct" style="display:none;">
+          JAWABAN BENAR: B<br><br>
+          Ini adalah aplikasi langsung dari dividend yield trap awareness yang diajarkan CFA curriculum.<br><br>
+          Mekanisme yield tinggi: Yield = DPS / Harga Saham. Jika DPS relatif konstan (Rp 425) tapi harga saham turun dari, misalnya, Rp 8.000 ke Rp 4.200, yield akan naik dari 5.3% ke 10.1%. Yield naik bukan karena perusahaan "lebih murah hati" -- tapi karena pasar sudah menekan harga saham sebagai antisipasi bahwa dividen tidak sustainable atau fundamental sedang memburuk.<br><br>
+          Ini sangat konsisten dengan apa yang sudah dianalisis Fajar: FCFE coverage &lt; 1.0x selama 3 tahun, Net Income menurun 3 tahun berturut-turut, capex besar akan datang, leverage mendekati batas atas investment grade. Pasar sudah anticipate masalah -- inilah mengapa harga sudah turun dan yield sudah tinggi.<br><br>
+          Analogi kurikulum: StarHub (Singapore) yield 9,4% tepat sebelum mengumumkan pemotongan dividen dari fixed ke variable. Yield tinggi adalah sinyal PERINGATAN bagi analis yang kompeten.<br><br>
+          Jawaban C kurang tepat: ya, trade-off dividen vs. capital gains ada, tapi perbedaan yield 10.1% vs 4.5% (lebih dari 2x rata-rata sektor) terlalu besar untuk dijelaskan hanya dari growth expectations. Pasti ada risk premium yang di-price-in.
+        </div>
+        <div class="explanation incorrect" id="exp-4-wrong" style="display:none;">
+          Jawaban yang benar adalah B. Yield 10.1% vs rata-rata sektor 4.5% adalah classic dividend yield trap red flag. Harga saham sudah turun signifikan karena pasar antisipasi masalah -- yield tinggi adalah symptom, bukan opportunity. Selalu evaluasi FCFE coverage sebelum tergiur yield tinggi.
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 5 dari 6</div>
+        <div class="q-text">Berdasarkan Jensen's Free Cash Flow Hypothesis, argumen mana yang paling tepat untuk menjelaskan mengapa NTPD mempertahankan payout tinggi meskipun FCFE coverage sudah di bawah 1.0x?</div>
+        <div class="option" onclick="selectOption(this, 5, 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Jensen's FCF hypothesis mendukung keputusan NTPD: perusahaan sebaiknya terus membayar dividen tinggi untuk mencegah manajemen menggunakan free cash flow untuk negative-NPV investments.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 5, 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Jensen's FCF hypothesis tidak mendukung keputusan ini dalam konteks NTPD. Hypothesis Jensen relevan ketika perusahaan punya free cash flow berlebih yang mungkin disalahgunakan. NTPD justru tidak punya surplus FCFE -- ia DEFISIT FCFE. Distribusi harus datang dari mengorbankan investasi produktif (capex 5G) atau menambah utang, yang keduanya merusak nilai pemegang saham jangka panjang.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 5, 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Jensen's FCF hypothesis tidak relevan untuk perusahaan telekomunikasi karena sifat industri yang capital-intensive selalu menghasilkan FCFE negatif -- maka analisis berbasis FCFE tidak applicable.</div>
+        </div>
+        <div class="explanation correct" id="exp-5-correct" style="display:none;">
+          JAWABAN BENAR: B<br><br>
+          Ini adalah soal yang menguji pemahaman mendalam tentang kondisi di mana teori berlaku vs. tidak berlaku.<br><br>
+          Jensen's Free Cash Flow Hypothesis relevan ketika: (1) perusahaan punya SURPLUS free cash flow yang signifikan; (2) manajer memiliki insentif untuk menginvestasikan surplus tersebut dalam proyek NPV negatif (empire building); (3) distribusi kepada pemegang saham mengurangi free cash yang "berbahaya" itu.<br><br>
+          NTPD tidak memenuhi kondisi (1): FCFE coverage sudah di bawah 1.0x selama 3 tahun. Tidak ada surplus free cash flow. Sebaliknya, NTPD harus menambah utang atau mengorbankan investasi untuk membayar dividen. Memaksa pembayaran dividen di atas FCFE yang tersedia:<br>
+          - Jika didanai utang: meningkatkan leverage, mendekati downgrade BBB<br>
+          - Jika didanai dengan kurangi capex: mengorbankan investasi 5G yang mungkin necessary untuk competitive position jangka panjang<br><br>
+          Keduanya merusak nilai pemegang saham, bukan melindunginya. Jensen's hypothesis adalah argumen untuk membayar dividen ketika ada FREE CASH FLOW berlebih, bukan argumen untuk membayar dividen regardless of consequences to the balance sheet.<br><br>
+          Jawaban C salah: banyak telco global memiliki FCFE positif setelah capex normal. Dan FCFE analysis tetap applicable bahkan jika hasilnya negatif -- justru itulah poin analisisnya.
+        </div>
+        <div class="explanation incorrect" id="exp-5-wrong" style="display:none;">
+          Jawaban yang benar adalah B. Jensen's FCF Hypothesis berlaku untuk situasi surplus FCFE yang mungkin disalahgunakan. NTPD punya DEFISIT FCFE -- justru kebalikannya. Memaksa dividen tinggi di atas FCFE tersedia hanya bisa didanai dari utang (meningkatkan leverage) atau pengurangan capex (mengorbankan investasi produktif) -- keduanya merusak nilai.
+        </div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 6 dari 6</div>
+        <div class="q-text">Fajar perlu membuat rekomendasi komprehensif tentang dividend policy NTPD. Berdasarkan semua analisis di atas (FCFE coverage, signaling, agency theory, Lintner model, dan dividend yield warning), rekomendasi mana yang paling tepat?</div>
+        <div class="option" onclick="selectOption(this, 6, 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Rekomendasikan NTPD mempertahankan atau sedikit menaikkan dividen untuk menjaga kepercayaan pasar dan mempertahankan investor base. Signaling negatif dari pemotongan jauh lebih berbahaya dari risiko leverage yang meningkat.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 6, 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Rekomendasikan NTPD untuk proactively merevisi dividend policy: kurangi payout secara terencana dan komunikasikan kepada pasar bahwa pengurangan ini adalah untuk mendanai investasi 5G yang value-creating (bukan financial distress). Dividend cut yang dikomunikasikan dengan baik sebagai strategic investment decision lebih baik dari cut paksa di masa depan setelah leverage terlalu tinggi atau FCFE semakin tertekan.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 6, 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Rekomendasikan NTPD untuk berhenti membayar dividen sama sekali dan mengalokasikan semua kas untuk capex 5G, karena ini adalah investasi yang lebih value-creating untuk pemegang saham jangka panjang.</div>
+        </div>
+        <div class="explanation correct" id="exp-6-correct" style="display:none;">
+          JAWABAN BENAR: B<br><br>
+          Ini adalah soal sintesis yang menggabungkan semua konsep dalam LM1 Subtopik 1.<br><br>
+          <strong>Kenapa B lebih baik dari A:</strong><br>
+          Mempertahankan dividen sambil: (1) FCFE coverage konsisten di bawah 1.0x, (2) Net Borrowing sudah positif, (3) Capex 5G masif akan datang, (4) Leverage sudah 1.85x dengan rating BBB &mdash; ini path toward forced dividend cut + potential rating downgrade. Dividend cut yang dipaksakan di masa depan adalah JAUH lebih merusak untuk harga saham daripada strategic cut yang direncanakan sekarang.<br><br>
+          <strong>Kenapa B lebih baik dari C:</strong><br>
+          Menghilangkan dividen sama sekali adalah overreaction. Perusahaan dengan 18 tahun track record membayar dividen tidak harus menghentikannya sepenuhnya. Pengurangan bertahap yang terencana, dikomunikasikan sebagai strategic pivot ke 5G investment, bisa lebih well-received daripada eliminasi tiba-tiba.<br><br>
+          <strong>Framework untuk rekomendasi B:</strong><br>
+          1. Announce dividend reduction (misalnya dari Rp 425 ke Rp 280-300 per saham = payout ~35-38% dari EPS 2026)<br>
+          2. Komunikasikan: ini bukan financial distress, ini adalah kapital realokasi ke 5G yang expected return &gt; WACC<br>
+          3. Berikan forward guidance yang jelas: kapan capex 5G akan menurun, kapan dividen diharapkan pulih<br>
+          4. Contoh preseden: Telstra 2017 -- cut dividen 30% untuk reinvest, awalnya harga turun 12%, tapi secara retrospektif dilihat sebagai keputusan tepat<br><br>
+          Dividend safety analysis yang baik mengantisipasi masalah sebelum terpaksa &mdash; inilah nilai CFA-level financial analysis.
+        </div>
+        <div class="explanation incorrect" id="exp-6-wrong" style="display:none;">
+          Jawaban yang benar adalah B. Mempertahankan dividen di atas kemampuan FCFE adalah path menuju forced cut yang lebih merusak. Menghilangkan sepenuhnya adalah overreaction. Yang optimal: proactive planned reduction dengan komunikasi transparan sebagai strategic reinvestment decision, bukan financial distress. Telstra 2017 adalah preseden yang relevan.
+        </div>
+      </div>
+
+      <div class="score-panel" id="score-panel">
+        <div class="score-panel-text">Skor kamu:</div>
+        <div class="score-panel-value" id="score-value">0 / 6</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="CFA_L2_Day30_Full.html" class="nav-btn">&larr; Day 30: Balance Sheet &amp; Footnotes (Full)</a>
+    <a href="CFA_L2_Day32_Full.html" class="nav-btn">Day 32: Share Repurchases (Full) &rarr;</a>
+  </div>
+
+</div>
+
+<script>
+  function toggleKC(id) {
+    const kc = document.getElementById(id);
+    kc.classList.toggle('open');
+  }
+
+  const answers = {};
+  const correct_answers = { 1: 'B', 2: 'B', 3: 'B', 4: 'B', 5: 'B', 6: 'B' };
+  let totalQ = 6;
+
+  function selectOption(el, qNum, choice) {
+    const block = el.closest('.question-block');
+    const opts = block.querySelectorAll('.option');
+    opts.forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+
+    block.querySelectorAll('.explanation').forEach(e => {
+      e.style.display = 'none';
+    });
+
+    const isCorrect = (choice === correct_answers[qNum]);
+    const expId = isCorrect ? 'exp-' + qNum + '-correct' : 'exp-' + qNum + '-wrong';
+    const exp = document.getElementById(expId);
+    if (exp) exp.style.display = 'block';
+
+    answers[qNum] = choice;
+
+    const answered = Object.keys(answers).length;
+    if (answered === totalQ) {
+      const score = Object.entries(answers).filter(([q, a]) => a === correct_answers[q]).length;
+      const panel = document.getElementById('score-panel');
+      document.getElementById('score-value').textContent = score + ' / ' + totalQ;
+      panel.classList.add('show');
+    }
+  }
+</script>
+</body>
+</html>

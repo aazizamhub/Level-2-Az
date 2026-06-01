@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 41 · Full · Gordon Growth Model &amp; H-Model</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+  --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;--gold:#9a6e1a;--gold2:#7a5010;--gold-bg:rgba(154,110,26,0.08);
+  --blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);--green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);
+  --red:#b83232;--red-bg:rgba(184,50,50,0.08);--amber:#a06010;--amber-bg:rgba(160,96,16,0.08);--r:10px;--r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.8;}
+.page{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;border:1px solid rgba(26,95,168,0.2);}
+.hero{margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--border);}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:36px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:15px;color:var(--text2);}
+.meta-row{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:36px;}
+.toc-title{font-size:12px;color:var(--text3);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:12px;font-weight:500;}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.toc-list li a{font-size:13px;color:var(--blue);text-decoration:none;display:flex;align-items:center;gap:8px;}
+.toc-list li a:hover{text-decoration:underline;}
+.toc-num{font-size:11px;color:var(--text3);min-width:20px;}
+.chapter{margin-bottom:40px;}
+.chapter-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--gold-bg);}
+.chapter-num{font-family:'DM Serif Display',serif;font-size:28px;color:var(--gold);line-height:1;}
+.chapter-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);line-height:1.2;}
+.sub-header{font-size:17px;font-weight:500;color:var(--text);margin:24px 0 12px;padding-left:12px;border-left:3px solid var(--gold);}
+.prose{font-size:14px;color:var(--text2);line-height:1.85;margin-bottom:14px;}
+.prose strong{color:var(--text);font-weight:500;}
+.formula-block{background:var(--bg2);border:1px solid var(--border2);border-left:4px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:16px 20px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold2);line-height:2;}
+.formula-block .label{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:8px;}
+.formula-block .note{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text3);font-style:italic;display:block;margin-top:8px;}
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:20px 0;}
+.exhibit-title{background:var(--bg3);padding:10px 16px;font-size:12px;font-weight:500;color:var(--text2);border-bottom:1px solid var(--border);letter-spacing:0.03em;}
+.exhibit-body{padding:16px;}
+.reg-table{width:100%;border-collapse:collapse;font-size:13px;}
+.reg-table th{text-align:left;padding:8px 12px;background:var(--bg3);color:var(--text3);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border2);}
+.reg-table td{padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:top;color:var(--text2);font-size:13px;}
+.reg-table td:first-child{font-size:13px;color:var(--text);font-weight:500;}
+.reg-table tr:last-child td{border-bottom:none;}
+.reg-table .num{font-family:'JetBrains Mono',monospace;text-align:right;}
+.callout{border-radius:var(--r);padding:16px 18px;margin:16px 0;}
+.callout-title{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;}
+.callout p{font-size:13px;color:var(--text2);line-height:1.75;}
+.callout p+p{margin-top:8px;}
+.callout.blue{background:var(--blue-bg);border:1px solid rgba(26,95,168,0.15);}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.amber{background:var(--amber-bg);border:1px solid rgba(160,96,16,0.15);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.red{background:var(--red-bg);border:1px solid rgba(184,50,50,0.15);}
+.callout.red .callout-title{color:var(--red);}
+.callout.gold{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);}
+.callout.gold .callout-title{color:var(--gold);}
+.callout.green{background:var(--green-bg);border:1px solid rgba(26,122,74,0.15);}
+.callout.green .callout-title{color:var(--green);}
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:24px 0;overflow:hidden;}
+.kc-header{background:var(--gold-bg);padding:12px 18px;border-bottom:1px solid rgba(154,110,26,0.15);}
+.kc-header-title{font-size:12px;font-weight:500;color:var(--gold);letter-spacing:0.06em;text-transform:uppercase;}
+.kc-body{padding:18px;}
+.kc-q{font-size:13px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.6;}
+.kc-answer{background:var(--bg3);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);line-height:1.75;display:none;}
+.kc-answer.show{display:block;}
+.kc-answer strong{color:var(--green);}
+.kc-toggle{background:none;border:1px solid var(--border2);border-radius:var(--r-sm);padding:6px 14px;font-size:12px;color:var(--text3);cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px;transition:all 0.15s;}
+.kc-toggle:hover{border-color:var(--gold);color:var(--gold);}
+.bullet-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin:10px 0;}
+.bullet-list li{display:flex;gap:10px;font-size:13px;color:var(--text2);line-height:1.7;}
+.bullet-list li::before{content:'&#9632;';color:var(--gold);font-size:9px;margin-top:5px;flex-shrink:0;}
+.divider{height:1px;background:var(--border);margin:36px 0;}
+.practice-header{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);border-radius:var(--r) var(--r) 0 0;padding:16px 20px;display:flex;align-items:center;gap:12px;}
+.practice-header-title{font-size:16px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);margin-top:2px;}
+.practice-body{background:var(--bg2);border:1px solid rgba(154,110,26,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:24px;}
+.vignette{background:var(--bg3);border-left:4px solid var(--gold);padding:18px 20px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:28px;font-size:13px;color:var(--text2);line-height:1.85;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;font-weight:500;}
+.question-block{margin-bottom:24px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:6px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:12px;line-height:1.65;}
+.option{display:block;width:100%;text-align:left;padding:11px 16px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:8px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.6;}
+.option:hover:not(:disabled){border-color:var(--border2);background:var(--bg2);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:14px 16px;font-size:13px;color:var(--text2);margin-top:10px;line-height:1.8;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:28px;margin-top:20px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:52px;margin-bottom:8px;}
+.score-msg{font-size:14px;color:var(--text2);}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);flex-wrap:wrap;gap:10px;}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II &middot; <span>Equity Valuation</span> &middot; LM2</div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <div class="version-badge">Versi Full</div>
+      <div class="day-badge">Day 41 of 90</div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Senin, 15 Juni 2026</div>
+    <h1 class="hero-title">Gordon Growth Model &amp; H-Model</h1>
+    <p class="hero-sub">Learning Module 2 &mdash; Discounted Dividend Valuation &middot; CFA Level II 2026</p>
+    <div class="meta-row">
+      <div class="meta-pill">&#128218; Materi lengkap</div>
+      <div class="meta-pill">&#127470;&#127465; Bahasa Indonesia</div>
+      <div class="meta-pill">&#9878;&#65039; Exam weight <b>~12%</b></div>
+      <div class="meta-pill">&#9201; Est. baca <b>45&ndash;60 menit</b></div>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ul class="toc-list">
+      <li><a href="#lo"><span class="toc-num">0</span>Learning Outcomes (LOS)</a></li>
+      <li><a href="#ggm"><span class="toc-num">1</span>Gordon Growth Model: Derivasi, Formula, dan Kondisi Validitas</a></li>
+      <li><a href="#sustainable"><span class="toc-num">2</span>Sustainable Growth Rate: g = b &times; ROE dan Analisis DuPont/PRAT</a></li>
+      <li><a href="#pvgo"><span class="toc-num">3</span>PVGO, Justified P/E, dan Implied r atau g dari Harga Pasar</a></li>
+      <li><a href="#hmodel"><span class="toc-num">4</span>H-Model: Valuation dengan Transisi Growth yang Gradual</a></li>
+      <li><a href="#practice"><span class="toc-num">5</span>Latihan Soal &mdash; Item Set Vignette (6 Pertanyaan)</a></li>
+    </ul>
+  </div>
+
+  <!-- Section 0: Learning Outcomes -->
+  <div class="chapter" id="lo">
+    <div class="chapter-header">
+      <div class="chapter-num">0</div>
+      <div class="chapter-title">Learning Outcomes</div>
+    </div>
+    <p class="prose">Setelah mempelajari modul ini, peserta diharapkan mampu:</p>
+    <ul class="bullet-list">
+      <li>Menghitung nilai per saham menggunakan Gordon Growth Model dan menjelaskan asumsi yang mendasarinya, termasuk syarat r &gt; g yang tidak boleh dilanggar.</li>
+      <li>Menghitung nilai preferred stock non-callable perpetual menggunakan GGM sebagai kasus khusus dengan g = 0.</li>
+      <li>Mendeskripsikan kekuatan dan keterbatasan GGM, serta membenarkan penggunaannya untuk menilai saham perusahaan tertentu.</li>
+      <li>Menghitung dan menginterpretasikan implied growth rate serta implied required return menggunakan GGM dan harga pasar saat ini.</li>
+      <li>Menghitung dan menginterpretasikan PVGO (Present Value of Growth Opportunities) dan komponen P/E yang berkaitan dengan PVGO.</li>
+      <li>Menghitung dan menginterpretasikan justified leading dan trailing P/E menggunakan GGM.</li>
+      <li>Mengestimasi required return berdasarkan GGM atau H-Model.</li>
+      <li>Mengevaluasi apakah saham overvalued, fairly valued, atau undervalued berdasarkan estimasi DDM.</li>
+      <li>Menghitung dan menginterpretasikan sustainable growth rate perusahaan menggunakan analisis DuPont untuk mengestimasi sustainable growth rate.</li>
+    </ul>
+  </div>
+
+  <!-- Section 1: GGM -->
+  <div class="chapter" id="ggm">
+    <div class="chapter-header">
+      <div class="chapter-num">1</div>
+      <div class="chapter-title">Gordon Growth Model: Derivasi, Formula, dan Kondisi Validitas</div>
+    </div>
+
+    <div class="sub-header">1.1 Dari General DDM ke GGM</div>
+    <p class="prose">Dividend Discount Model (DDM) dalam bentuk paling umum menyatakan bahwa nilai saham adalah present value dari semua dividen masa depan yang diharapkan. Namun, bentuk umum ini tidak praktis karena mengharuskan analis memperkirakan setiap dividen secara individual hingga tak terhingga. Gordon Growth Model (GGM) menyederhanakan masalah ini dengan asumsi yang sangat kuat namun sering kali realistis untuk perusahaan matang: <strong>dividen tumbuh pada tingkat konstan g selamanya.</strong></p>
+    <p class="prose">Jika D&#8320; adalah dividen yang baru saja dibayarkan, maka dividen di periode t adalah D&#8320;(1+g)&#7511;. Nilai saham menjadi deret geometri tak terhingga:</p>
+
+    <div class="formula-block">
+      <span class="label">Derivasi GGM dari General DDM</span>
+      V&#8320; = D&#8321;/(1+r) + D&#8322;/(1+r)&#178; + ... + D&#8345;/(1+r)&#8319; + ...
+      <br>     = D&#8320;(1+g)/(1+r) + D&#8320;(1+g)&#178;/(1+r)&#178; + ...
+      <br>     [geometric series dengan first term a = D&#8321;/(1+r) dan ratio m = (1+g)/(1+r)]
+      <br>     = a/(1-m) = [D&#8321;/(1+r)] / [1-(1+g)/(1+r)]
+      <br>     = D&#8321; / (r - g)
+      <span class="note">Syarat konvergensi: |m| &lt; 1, yaitu (1+g)/(1+r) &lt; 1, yang berarti r &gt; g</span>
+    </div>
+
+    <div class="sub-header">1.2 Formula GGM dan Aplikasinya</div>
+    <p class="prose">Bentuk final Gordon Growth Model adalah:</p>
+
+    <div class="formula-block">
+      <span class="label">Gordon Growth Model (GGM)</span>
+      V&#8320; = D&#8321; / (r &minus; g)
+      <br>   = D&#8320;(1+g) / (r &minus; g)
+      <br><br>di mana:
+      <br>V&#8320; = nilai intrinsik per saham pada t=0
+      <br>D&#8321; = dividen yang diharapkan di akhir periode pertama (t=1)
+      <br>r   = required return on equity (harus r &gt; g)
+      <br>g   = expected constant growth rate dividen (selamanya)
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 1 &mdash; Contoh Numerik: PT Bank Artha Nusantara (BAN)</div>
+      <div class="exhibit-body">
+        <p class="prose" style="margin-bottom:12px;">BAN baru saja membayar D&#8320; = Rp 600/lembar. Analis memperkirakan g = 6%. Beta = 0.80, RF = 7%, ERP = 5%.</p>
+        <table class="reg-table">
+          <thead><tr><th>Langkah</th><th>Perhitungan</th><th>Hasil</th></tr></thead>
+          <tbody>
+            <tr><td>Required return (CAPM)</td><td>r = 7% + 0.80 &times; 5%</td><td class="num">11.0%</td></tr>
+            <tr><td>D&#8321; (next year dividend)</td><td>600 &times; 1.06</td><td class="num">Rp 636</td></tr>
+            <tr><td>Spread (r&minus;g)</td><td>11.0% &minus; 6.0%</td><td class="num">5.0%</td></tr>
+            <tr><td>Nilai intrinsik (V&#8320;)</td><td>636 / 0.05</td><td class="num"><strong>Rp 12.720</strong></td></tr>
+          </tbody>
+        </table>
+        <p class="prose" style="margin-top:12px;">Jika harga pasar BAN = Rp 11.500, maka V&#8320; &gt; P&#8320; &rarr; saham <strong>undervalued</strong> (margin of safety: 10.6%).</p>
+      </div>
+    </div>
+
+    <div class="sub-header">1.3 Sensitivitas GGM terhadap Perubahan Asumsi</div>
+    <p class="prose">GGM sangat sensitif terhadap spread (r&minus;g). Perubahan kecil pada g atau r dapat menghasilkan perubahan besar pada nilai. Ini adalah kelemahan paling fundamental GGM sekaligus alasan mengapa sensitivity analysis wajib dilakukan.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 2 &mdash; Sensitivity Analysis GGM: BAN dengan D&#8321; = Rp 636</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>r \ g</th><th>g = 5.0%</th><th>g = 6.0%</th><th>g = 7.0%</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>r = 10.0%</td><td class="num">Rp 12.720</td><td class="num">Rp 15.900</td><td class="num">Rp 21.200</td></tr>
+            <tr><td>r = 11.0%</td><td class="num">Rp 10.600</td><td class="num">Rp 12.720</td><td class="num">Rp 15.900</td></tr>
+            <tr><td>r = 12.0%</td><td class="num">Rp 9.086</td><td class="num">Rp 10.600</td><td class="num">Rp 12.720</td></tr>
+          </tbody>
+        </table>
+        <p class="prose" style="margin-top:10px;font-size:12px;color:var(--text3);">Perhatikan: ketika g naik 1% (dari 6% ke 7%) dengan r=11%, nilai naik 25% (dari Rp 12.720 ke Rp 15.900). Ini menunjukkan betapa pentingnya akurasi estimasi g.</p>
+      </div>
+    </div>
+
+    <div class="sub-header">1.4 Aplikasi GGM untuk Preferred Stock Perpetual</div>
+    <p class="prose">Preferred stock perpetual non-callable membayar dividen tetap D selamanya (g = 0). GGM menjadi kasus khusus dari perpetuity:</p>
+
+    <div class="formula-block">
+      <span class="label">GGM untuk Preferred Stock Perpetual (g = 0)</span>
+      V&#8320; = D / r
+      <span class="note">r disebut "capitalization rate" untuk perpetuity. Contoh: Saham preferen dengan D = Rp 500/tahun dan r = 8% bernilai Rp 500/0.08 = Rp 6.250</span>
+    </div>
+
+    <div class="callout amber">
+      <div class="callout-title">&#9888; Keterbatasan GGM</div>
+      <p>GGM hanya sesuai untuk perusahaan dengan (1) kebijakan dividen yang stabil dan bisa diestimasi, (2) dividen mencerminkan profitabilitas secara konsisten, (3) pertumbuhan yang diharapkan konstan dalam jangka sangat panjang dan di bawah nominal GDP growth, dan (4) perspektif <em>minority investor</em> (bukan kontrol). Untuk perusahaan high-growth, growth yang sangat berbeda antar periode, atau perusahaan tanpa dividen, gunakan multistage DDM, FCFE, atau Residual Income model.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">&#9997; Knowledge Check 1.1</div></div>
+      <div class="kc-body">
+        <div class="kc-q">PT Sumber Energi (PSE) membayar D&#8320; = Rp 250. Analis memproyeksikan g = 7%. Required return = 10.5%. Harga pasar = Rp 8.000. Apakah PSE overvalued atau undervalued menurut GGM?</div>
+        <button class="kc-toggle" onclick="toggleKC(this)">Lihat Jawaban</button>
+        <div class="kc-answer">
+          <strong>Solusi:</strong><br>
+          D&#8321; = 250 &times; 1.07 = Rp 267.50<br>
+          V&#8320; = 267.50 / (0.105 &minus; 0.07) = 267.50 / 0.035 = <strong>Rp 7.643</strong><br><br>
+          V&#8320; (Rp 7.643) &lt; Harga Pasar (Rp 8.000) &rarr; PSE <strong>overvalued</strong> menurut GGM dengan asumsi ini.<br>
+          Catatan: Gunakan D&#8321;, bukan D&#8320;. Spread 3.5% sangat kecil &mdash; perubahan 0.5% pada g sudah mengubah nilai secara signifikan.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: Sustainable Growth Rate -->
+  <div class="chapter" id="sustainable">
+    <div class="chapter-header">
+      <div class="chapter-num">2</div>
+      <div class="chapter-title">Sustainable Growth Rate: g = b &times; ROE dan Analisis DuPont/PRAT</div>
+    </div>
+
+    <div class="sub-header">2.1 Konsep Sustainable Growth Rate</div>
+    <p class="prose"><em>Sustainable growth rate</em> didefinisikan sebagai tingkat pertumbuhan dividen (dan earnings) yang dapat dipertahankan jangka panjang dengan asumsi: (1) capital structure konstan, (2) tidak ada penerbitan saham baru, dan (3) ROE tetap konstan. Ini adalah fondasi untuk mengestimasi g yang akan digunakan dalam GGM di terminal stage multistage DDM.</p>
+
+    <div class="formula-block">
+      <span class="label">Sustainable Growth Rate</span>
+      g = b &times; ROE
+      <br><br>di mana:
+      <br>b   = earnings retention rate = 1 &minus; dividend payout ratio
+      <br>ROE = return on equity (dihitung dengan beginning-of-period equity untuk akurasi penuh)
+    </div>
+
+    <div class="sub-header">2.2 Intuisi Matematis di Balik g = b &times; ROE</div>
+    <p class="prose">Berikut demonstrasi bahwa g = b &times; ROE menghasilkan pertumbuhan yang sesungguhnya:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 3 &mdash; Demonstrasi g = b &times; ROE</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Item</th><th>Tahun 1</th><th>Tahun 2</th><th>Pertumbuhan</th></tr></thead>
+          <tbody>
+            <tr><td>Equity awal tahun</td><td class="num">Rp 10.000.000</td><td class="num">Rp 11.500.000</td><td class="num">+15%</td></tr>
+            <tr><td>Net income (ROE = 25%)</td><td class="num">Rp 2.500.000</td><td class="num">Rp 2.875.000</td><td class="num">+15%</td></tr>
+            <tr><td>Dividen dibayar (payout 40%)</td><td class="num">Rp 1.000.000</td><td class="num">Rp 1.150.000</td><td class="num">+15%</td></tr>
+            <tr><td>Retained earnings (b=60%)</td><td class="num">Rp 1.500.000</td><td class="num">Rp 1.725.000</td><td class="num">+15%</td></tr>
+          </tbody>
+        </table>
+        <p class="prose" style="margin-top:10px;font-size:12px;">g = b &times; ROE = 0.60 &times; 25% = 15%. Dividen, net income, dan equity semuanya tumbuh tepat 15% per tahun &mdash; selama ROE dan b konstan.</p>
+      </div>
+    </div>
+
+    <div class="sub-header">2.3 DuPont Analysis dan PRAT Model</div>
+    <p class="prose">ROE dapat diurai menggunakan DuPont analysis menjadi tiga komponen. Kombinasinya dengan retention rate menghasilkan <strong>PRAT model</strong> yang menunjukkan driver-driver pertumbuhan:</p>
+
+    <div class="formula-block">
+      <span class="label">DuPont ROE Decomposition (3-factor)</span>
+      ROE = Net Profit Margin &times; Asset Turnover &times; Equity Multiplier
+          = (Net Income/Sales) &times; (Sales/Total Assets) &times; (Total Assets/Equity)
+      <br><br>g = b &times; ROE = b &times; (P &times; A &times; T)
+      <span class="note">PRAT: Profit margin (P), Retention rate (R), Asset turnover (A), financial leverage (T)</span>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 4 &mdash; Perbandingan Sustainable Growth Rate: PT Mandiri Energi vs PT Cepat Tumbuh</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Komponen</th><th>PT Mandiri Energi</th><th>PT Cepat Tumbuh</th></tr></thead>
+          <tbody>
+            <tr><td>Profit Margin</td><td class="num">8%</td><td class="num">5%</td></tr>
+            <tr><td>Asset Turnover</td><td class="num">1.2x</td><td class="num">2.5x</td></tr>
+            <tr><td>Equity Multiplier</td><td class="num">1.5x</td><td class="num">2.0x</td></tr>
+            <tr><td>ROE</td><td class="num">14.4%</td><td class="num">25.0%</td></tr>
+            <tr><td>Retention Rate (b)</td><td class="num">40%</td><td class="num">80%</td></tr>
+            <tr><td><strong>Sustainable Growth Rate</strong></td><td class="num"><strong>5.76%</strong></td><td class="num"><strong>20.0%</strong></td></tr>
+          </tbody>
+        </table>
+        <p class="prose" style="margin-top:10px;font-size:12px;">PT Mandiri Energi lebih stabil (cocok untuk GGM), sedangkan PT Cepat Tumbuh (g=20%) tidak bisa digunakan dalam GGM karena g &gt; r (asumsi r sekitar 10-12%) &mdash; harus gunakan multistage DDM.</p>
+      </div>
+    </div>
+
+    <div class="callout blue">
+      <div class="callout-title">&#128161; Insight: Kapan g = b &times; ROE Bisa Dipercaya?</div>
+      <p>Formula ini paling akurat ketika ROE historis konsisten dan tidak terdistorsi oleh item-item non-recurring. Jika ROE sangat tinggi karena efek leverage yang tidak berkelanjutan, atau karena satu-kali keuntungan aset, maka analis harus menggunakan ROE yang "dinormalisasi" atau mengacu pada ROE industri median untuk proyeksi jangka panjang.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">&#9997; Knowledge Check 2.1</div></div>
+      <div class="kc-body">
+        <div class="kc-q">PT Nusantara Retail memiliki: Profit Margin = 4%, Asset Turnover = 1.8x, Equity Multiplier = 2.5x, dan Dividend Payout Ratio = 30%. Hitung sustainable growth rate menggunakan PRAT model.</div>
+        <button class="kc-toggle" onclick="toggleKC(this)">Lihat Jawaban</button>
+        <div class="kc-answer">
+          <strong>Solusi:</strong><br>
+          ROE = 4% &times; 1.8 &times; 2.5 = <strong>18%</strong><br>
+          b = 1 &minus; 0.30 = 0.70<br>
+          g = b &times; ROE = 0.70 &times; 18% = <strong>12.6%</strong><br><br>
+          Sustainable growth 12.6% ini kemungkinan melebihi nominal GDP growth &mdash; tidak cocok untuk terminal stage GGM. Analis harus mempertanyakan apakah ROE 18% dan leverage 2.5x bisa dipertahankan dalam jangka sangat panjang.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: PVGO, Justified P/E, Implied r or g -->
+  <div class="chapter" id="pvgo">
+    <div class="chapter-header">
+      <div class="chapter-num">3</div>
+      <div class="chapter-title">PVGO, Justified P/E, dan Implied r atau g dari Harga Pasar</div>
+    </div>
+
+    <div class="sub-header">3.1 PVGO: Memisahkan Nilai Aset vs Nilai Pertumbuhan</div>
+    <p class="prose">Nilai saham dapat diurai menjadi dua komponen fundamental. Komponen pertama adalah nilai perusahaan jika tidak ada pertumbuhan yang menguntungkan &mdash; yaitu jika semua earnings dibagikan sebagai dividen. Komponen kedua adalah present value dari peluang investasi masa depan yang memberikan return melebihi required return (NPV positif).</p>
+
+    <div class="formula-block">
+      <span class="label">Dekomposisi Nilai Saham: No-Growth Value + PVGO</span>
+      V&#8320; = E&#8321;/r + PVGO
+      <br><br>sehingga:
+      <br>PVGO = V&#8320; &minus; E&#8321;/r
+      <br>     = P&#8320; &minus; E&#8321;/r   (jika pasar efisien, P&#8320; = V&#8320;)
+      <br><br>di mana E&#8321;/r adalah "no-growth value per share" atau nilai aset in place.
+    </div>
+
+    <p class="prose"><strong>Interpretasi PVGO:</strong> Jika PVGO besar dan positif, pasar percaya perusahaan akan terus menemukan proyek dengan ROE &gt; r. Jika PVGO mendekati nol, perusahaan dianggap sebagai "cash cow" tanpa peluang pertumbuhan bernilai. Jika PVGO negatif, ini mengindikasikan bahwa pasar percaya reinvestasi justru akan menghancurkan nilai (ROE masa depan &lt; r).</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 5 &mdash; Perbandingan PVGO Lintas Sektor (Pasar Indonesia, Fiktif)</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Perusahaan</th><th>P&#8320;</th><th>E&#8321;</th><th>r</th><th>E&#8321;/r</th><th>PVGO</th><th>PVGO/P&#8320;</th></tr></thead>
+          <tbody>
+            <tr><td>PT Telko Digital (teknologi)</td><td class="num">Rp 28.000</td><td class="num">Rp 800</td><td class="num">8.5%</td><td class="num">Rp 9.412</td><td class="num">Rp 18.588</td><td class="num">66%</td></tr>
+            <tr><td>PT Sejahtera Mandiri (utilitas)</td><td class="num">Rp 7.200</td><td class="num">Rp 533</td><td class="num">10%</td><td class="num">Rp 5.330</td><td class="num">Rp 1.870</td><td class="num">26%</td></tr>
+            <tr><td>PT Ritel Maju (ritel)</td><td class="num">Rp 3.500</td><td class="num">Rp 600</td><td class="num">12%</td><td class="num">Rp 5.000</td><td class="num">&minus;Rp 1.500</td><td class="num">n.m.</td></tr>
+          </tbody>
+        </table>
+        <p class="prose" style="margin-top:10px;font-size:12px;">PT Ritel Maju dengan PVGO negatif bisa mengindikasikan: pasar percaya reinvestasi akan merusak nilai, atau E&#8321; yang digunakan terlalu tinggi, atau r yang digunakan terlalu rendah. Ini perlu diinvestigasi lebih lanjut.</p>
+      </div>
+    </div>
+
+    <div class="sub-header">3.2 Justified P/E dari GGM</div>
+    <p class="prose">Salah satu kegunaan GGM adalah menghitung P/E yang "wajar" atau <em>justified</em> berdasarkan fundamentals. Ini memungkinkan analis mengkomunikasikan valuasi dalam bahasa yang lebih familiar bagi investor.</p>
+
+    <div class="formula-block">
+      <span class="label">Justified P/E dari GGM</span>
+      Leading P/E  = P&#8320;/E&#8321; = (1 &minus; b) / (r &minus; g)
+      Trailing P/E = P&#8320;/E&#8320; = (1 &minus; b)(1 + g) / (r &minus; g)
+      <span class="note">Jika actual P/E > justified P/E: saham mungkin overvalued. Jika actual P/E &lt; justified P/E: saham mungkin undervalued.</span>
+    </div>
+
+    <p class="prose">Justified P/E juga bisa dilihat melalui lensa PVGO:</p>
+    <div class="formula-block">
+      <span class="label">Komponen P/E dari Perspektif PVGO</span>
+      P/E = 1/r + PVGO/E&#8321;
+      <span class="note">Komponen pertama (1/r) adalah P/E untuk no-growth company. Komponen kedua adalah nilai pertumbuhan per unit earnings.</span>
+    </div>
+
+    <div class="sub-header">3.3 Implied Growth Rate dan Implied Required Return</div>
+    <p class="prose">GGM bisa "dibalik" untuk mencari nilai yang tersirat (implied) dari harga pasar saat ini. Ini berguna untuk menilai apakah ekspektasi pasar realistis.</p>
+
+    <div class="formula-block">
+      <span class="label">Implied Growth Rate (dari harga pasar)</span>
+      Dari V&#8320; = D&#8321;/(r&minus;g), selesaikan untuk g:
+      g (implied) = r &minus; D&#8321;/P&#8320;
+      <span class="note">Bandingkan dengan sustainable growth rate. Jika implied g >> sustainable g, pasar mungkin terlalu optimistis.</span>
+    </div>
+
+    <div class="formula-block">
+      <span class="label">Implied Required Return / Expected Return (GGM)</span>
+      r = D&#8321;/P&#8320; + g
+        = Dividend Yield + Capital Gains Yield
+      <span class="note">Ini adalah IRR dari investasi di harga P&#8320;. Jika pasar efisien, ini juga merupakan expected return saham.</span>
+    </div>
+
+    <div class="callout blue">
+      <div class="callout-title">&#128161; Cara Baca Implied g dalam Praktik Investasi</div>
+      <p>Salah satu teknik analisis yang kuat: hitung implied g dari harga pasar, lalu bandingkan dengan sustainable growth rate yang lo estimasi dari fundamentals (g = b &times; ROE). Jika implied g jauh di atas sustainable g, ini adalah sinyal peringatan bahwa saham mungkin overvalued karena pasar mengharapkan pertumbuhan yang tidak bisa didukung oleh fundamentals bisnis. Teknik ini sering disebut "reverse engineering the market price."</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">&#9997; Knowledge Check 3.1</div></div>
+      <div class="kc-body">
+        <div class="kc-q">PT Infrastruktur Andalan memiliki: P&#8320; = Rp 15.000, D&#8321; = Rp 600, g = 7%. Hitung (a) implied required return dan (b) apakah ini reasonable jika beta = 0.9, RF = 6.5%, ERP = 5.5%?</div>
+        <button class="kc-toggle" onclick="toggleKC(this)">Lihat Jawaban</button>
+        <div class="kc-answer">
+          <strong>(a) Implied required return:</strong><br>
+          r = D&#8321;/P&#8320; + g = 600/15.000 + 0.07 = 0.04 + 0.07 = <strong>11.0%</strong><br><br>
+          <strong>(b) CAPM required return:</strong><br>
+          r&#7522;&#7679;&#7514;&#7680; = 6.5% + 0.9 &times; 5.5% = 6.5% + 4.95% = <strong>11.45%</strong><br><br>
+          Implied r (11.0%) sedikit di bawah CAPM r (11.45%). Ini mengindikasikan bahwa pada harga Rp 15.000, expected return sedikit lebih rendah dari required return &rarr; saham tampak <strong>sedikit overvalued</strong>. Perbedaan yang kecil ini mungkin tidak cukup signifikan untuk mengambil tindakan tanpa mempertimbangkan margin of safety.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4: H-Model -->
+  <div class="chapter" id="hmodel">
+    <div class="chapter-header">
+      <div class="chapter-num">4</div>
+      <div class="chapter-title">H-Model: Valuasi dengan Transisi Growth yang Gradual</div>
+    </div>
+
+    <div class="sub-header">4.1 Motivasi: Mengapa H-Model Diperlukan</div>
+    <p class="prose">GGM mengasumsikan pertumbuhan konstan selamanya &mdash; realistis hanya untuk perusahaan yang sudah matang. <em>Basic two-stage DDM</em> memecah future menjadi dua phase: supernormal growth (gS konstan) selama n tahun, kemudian mature growth (gL) selamanya. Transisi antara kedua phase ini <strong>mendadak (abrupt)</strong>.</p>
+    <p class="prose">Dalam banyak kasus nyata, transisi dari high growth ke mature growth terjadi secara <em>gradual</em> seiring meningkatnya persaingan, saturasi pasar, atau maturasi teknologi. <strong>H-Model</strong> (Fuller &amp; Hsia, 1984) menangkap dinamika ini dengan mengasumsikan penurunan growth rate secara <em>linear</em> selama periode transisi.</p>
+
+    <div class="sub-header">4.2 Formula H-Model dan Interpretasinya</div>
+
+    <div class="formula-block">
+      <span class="label">H-Model (Fuller &amp; Hsia, 1984)</span>
+      V&#8320; = [D&#8320;(1 + gL) + D&#8320; &times; H &times; (gS &minus; gL)] / (r &minus; gL)
+      <br><br>di mana:
+      <br>gS = short-term initial high growth rate (di awal)
+      <br>gL = long-term mature growth rate (di akhir, dan selamanya)
+      <br>H  = setengah dari total supernormal period (dalam tahun)
+      <br>   = jika total supernormal period adalah 2H tahun, maka H = (total_years)/2
+    </div>
+
+    <p class="prose">Formula ini terdiri dari dua komponen yang memiliki interpretasi ekonomi yang intuitif:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 6 &mdash; Dekomposisi H-Model</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Komponen</th><th>Formula</th><th>Makna Ekonomi</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Basis (mature growth forever)</td>
+              <td class="num" style="font-family:monospace;">D&#8320;(1+gL) / (r&minus;gL)</td>
+              <td>Nilai GGM jika perusahaan langsung tumbuh di gL selamanya mulai sekarang. Ini adalah "floor value" &mdash; nilai minimum jika tidak ada supernormal growth.</td>
+            </tr>
+            <tr>
+              <td>Premium (supernormal growth)</td>
+              <td class="num" style="font-family:monospace;">D&#8320;&times;H&times;(gS&minus;gL) / (r&minus;gL)</td>
+              <td>Extra value karena perusahaan menikmati growth di atas gL selama periode transisi. Semakin besar H (semakin lama supernormal period) dan semakin besar (gS&minus;gL), semakin besar premium ini.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">4.3 Contoh Numerik Komprehensif</div>
+    <p class="prose">PT Teknologi Andalan (PTA) adalah perusahaan software B2B yang saat ini menikmati pertumbuhan tinggi. Seorang analis memperkirakan:</p>
+    <ul class="bullet-list">
+      <li>D&#8320; = Rp 150/lembar (dividen tahun lalu)</li>
+      <li>gS = 18% (pertumbuhan awal yang tinggi)</li>
+      <li>gL = 5% (pertumbuhan mature jangka panjang)</li>
+      <li>Supernormal period: 12 tahun (jadi H = 6)</li>
+      <li>r = 12% (required return)</li>
+    </ul>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 7 &mdash; Perhitungan H-Model untuk PT Teknologi Andalan</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Langkah</th><th>Perhitungan</th><th>Nilai</th></tr></thead>
+          <tbody>
+            <tr><td>Komponen 1: Basis</td><td>D&#8320;&times;(1+gL)/(r&minus;gL) = 150&times;1.05/(0.12&minus;0.05)</td><td class="num">157.5/0.07 = Rp 2.250</td></tr>
+            <tr><td>Komponen 2: Premium supernormal</td><td>D&#8320;&times;H&times;(gS&minus;gL)/(r&minus;gL) = 150&times;6&times;0.13/0.07</td><td class="num">117/0.07 = Rp 1.671</td></tr>
+            <tr><td><strong>V&#8320; (H-Model)</strong></td><td>2.250 + 1.671</td><td class="num"><strong>Rp 3.921</strong></td></tr>
+          </tbody>
+        </table>
+        <p class="prose" style="margin-top:10px;font-size:12px;"><strong>Perbandingan:</strong> Jika PTA langsung ke mature growth (H=0): V&#8320; = Rp 2.250. Supernormal growth 12 tahun menambah nilai Rp 1.671 (74% premium di atas nilai basis).</p>
+      </div>
+    </div>
+
+    <div class="sub-header">4.4 Estimating Required Return dari H-Model</div>
+    <p class="prose">Seperti GGM, H-Model bisa dibalik untuk mencari expected return (IRR) jika harga pasar diketahui:</p>
+
+    <div class="formula-block">
+      <span class="label">Implied Required Return dari H-Model</span>
+      r = (D&#8320;/P&#8320;) &times; [(1 + gL) + H &times; (gS &minus; gL)] + gL
+      <span class="note">Ketika gS = gL, formula ini menjadi r = D&#8321;/P&#8320; + g (identik dengan GGM implied return)</span>
+    </div>
+
+    <div class="sub-header">4.5 H-Model vs Basic Two-Stage DDM: Kapan Mana yang Lebih Sesuai</div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 8 &mdash; Perbandingan H-Model vs Basic Two-Stage DDM</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Dimensi</th><th>H-Model</th><th>Basic Two-Stage DDM</th></tr></thead>
+          <tbody>
+            <tr><td>Pola transisi growth</td><td>Linear dan gradual (mulus)</td><td>Abrupt/mendadak di akhir stage 1</td></tr>
+            <tr><td>Kompleksitas perhitungan</td><td>Formula satu langkah, lebih sederhana</td><td>Perlu menghitung setiap dividen di stage 1 lalu terminal value</td></tr>
+            <tr><td>Akurasi</td><td>Aproksimasi (terutama untuk H besar atau gS&minus;gL besar)</td><td>Eksak (untuk asumsi yang ditetapkan)</td></tr>
+            <tr><td>Cocok untuk</td><td>Perusahaan yang bertransisi secara gradual: competitive erosion, market saturation</td><td>Perusahaan dengan event spesifik: patent expiry, contract end, regulatory change</td></tr>
+            <tr><td>Penggunaan dalam three-stage</td><td>Stage 2+3 sering dimodelkan sebagai H-Model</td><td>Stage 1 biasanya adalah basic two-stage</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout amber">
+      <div class="callout-title">&#9888; Perhatian Penting: H adalah Setengah Total Period</div>
+      <p>Kesalahan paling umum dalam H-Model di exam: menggunakan total period sebagai H. Jika soal menyebut "pertumbuhan tinggi berlangsung selama 10 tahun sebelum menurun ke mature growth," maka H = 5, bukan 10. H adalah <em>half-life</em> atau setengah dari total supernormal period. Total supernormal period = 2H tahun.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">&#9997; Knowledge Check 4.1</div></div>
+      <div class="kc-body">
+        <div class="kc-q">PT Farmasi Prima (PFP): D&#8320; = Rp 500, gS = 12%, gL = 4%, r = 9%. Total supernormal period = 8 tahun (H = 4). Hitung V&#8320; menggunakan H-Model dan bandingkan dengan nilai jika pertumbuhan langsung ke gL.</div>
+        <button class="kc-toggle" onclick="toggleKC(this)">Lihat Jawaban</button>
+        <div class="kc-answer">
+          <strong>H-Model:</strong><br>
+          Komponen 1: 500 &times; 1.04 / (0.09&minus;0.04) = 520/0.05 = <strong>Rp 10.400</strong><br>
+          Komponen 2: 500 &times; 4 &times; (0.12&minus;0.04) / 0.05 = 500&times;4&times;0.08/0.05 = 160/0.05 = <strong>Rp 3.200</strong><br>
+          V&#8320; (H-Model) = 10.400 + 3.200 = <strong>Rp 13.600</strong><br><br>
+          <strong>Jika langsung tumbuh di gL (komponen 1 saja):</strong><br>
+          V&#8320; (GGM dengan gL) = Rp 10.400<br><br>
+          <strong>Premium supernormal = Rp 3.200 atau 30.8% dari nilai basis.</strong><br>
+          Semakin lama supernormal period (H lebih besar) dan semakin besar perbedaan gS&minus;gL, semakin besar premium ini.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Section 5: Practice -->
+  <div id="practice">
+    <div class="practice-header">
+      <div>
+        <div class="practice-header-title">Latihan Soal &mdash; Item Set Vignette</div>
+        <div class="practice-header-sub">6 pertanyaan tingkat CFA exam &mdash; selesaikan semua untuk lihat skor</div>
+      </div>
+    </div>
+    <div class="practice-body">
+      <div class="vignette">
+        <div class="vignette-label">Vignette: PT Bank Sentosa Indonesia (BSI) &mdash; Analisis Valuasi DDM</div>
+        <p>Farhan Maulana, CFA, adalah analis ekuitas senior di PT Trimegah Sekuritas yang ditugaskan melakukan valuasi komprehensif terhadap PT Bank Sentosa Indonesia (BSI), salah satu bank swasta terbesar di Indonesia yang tercatat di IDX. Farhan sedang mempertimbangkan penggunaan Dividend Discount Model.</p>
+        <p>Farhan mengumpulkan data berikut untuk tahun fiskal yang baru berakhir:</p>
+        <p><strong>Data Finansial BSI:</strong><br>
+        &bull; EPS tahun lalu (E&#8320;): Rp 850 &nbsp;|&nbsp; Dividend per saham tahun lalu (D&#8320;): Rp 510<br>
+        &bull; EPS proyeksi tahun depan (E&#8321;): Rp 935 &nbsp;|&nbsp; ROE rata-rata 5 tahun terakhir: <strong>14%</strong><br>
+        &bull; Dividend payout ratio historis: <strong>60%</strong> (konsisten)<br>
+        &bull; Harga pasar BSI saat ini: <strong>Rp 12.500</strong></p>
+        <p><strong>Asumsi Required Return:</strong><br>
+        &bull; Beta BSI: <strong>0.85</strong> &nbsp;|&nbsp; Risk-free rate (SBN 10Y): <strong>6.75%</strong> &nbsp;|&nbsp; ERP Indonesia: <strong>5.25%</strong></p>
+        <p><strong>Skenario Pertumbuhan:</strong><br>
+        &bull; <em>Skenario A (Base):</em> BSI tumbuh pada g konstan selamanya sesuai sustainable growth rate.<br>
+        &bull; <em>Skenario B (Ekspansi):</em> BSI mengakuisisi jaringan BPR dan menikmati gS = 12% selama total 10 tahun (menurun linear ke gL = sustainable growth rate). H = 5. Required return tetap sama.</p>
+        <p>Farhan juga mencatat: analis lain di pasar menggunakan g = 8% dalam GGM untuk BSI, menghasilkan target harga Rp 18.700. Farhan ingin mengevaluasi apakah asumsi tersebut justified.</p>
+      </div>
+
+      <!-- Q1 -->
+      <div class="question-block" id="pq1">
+        <div class="q-num">Pertanyaan 1 dari 6</div>
+        <div class="q-text">Berapa required return on equity BSI yang dihitung Farhan menggunakan CAPM?</div>
+        <button class="option" onclick="answer2(this,'pq1',false)">A. 10.94%</button>
+        <button class="option" onclick="answer2(this,'pq1',true)">B. 11.21%</button>
+        <button class="option" onclick="answer2(this,'pq1',false)">C. 12.00%</button>
+        <div class="explanation" id="pexp1">
+          <strong>Jawaban: B &mdash; 11.21%</strong><br><br>
+          r = RF + &beta; &times; ERP = 6.75% + 0.85 &times; 5.25% = 6.75% + 4.4625% = <strong>11.2125% &asymp; 11.21%</strong><br><br>
+          Perhatikan: Pilihan A (10.94%) mungkin menggunakan ERP yang sedikit berbeda. Pilihan C (12%) adalah bulatkan kasar. Pastikan selalu gunakan nilai yang diberikan soal secara tepat.
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="question-block" id="pq2">
+        <div class="q-num">Pertanyaan 2 dari 6</div>
+        <div class="q-text">Berdasarkan Skenario A, berapa sustainable growth rate BSI dan nilai intrinsik saham BSI menurut GGM? (Gunakan r = 11.21%)</div>
+        <button class="option" onclick="answer2(this,'pq2',false)">A. g = 5.6%; V&#8320; = Rp 9.872</button>
+        <button class="option" onclick="answer2(this,'pq2',true)">B. g = 5.6%; V&#8320; = Rp 9.565</button>
+        <button class="option" onclick="answer2(this,'pq2',false)">C. g = 8.4%; V&#8320; = Rp 18.700</button>
+        <div class="explanation" id="pexp2">
+          <strong>Jawaban: B</strong><br><br>
+          <strong>Sustainable growth rate:</strong><br>
+          b = 1 &minus; 0.60 = 0.40<br>
+          g = b &times; ROE = 0.40 &times; 14% = <strong>5.6%</strong><br><br>
+          <strong>GGM Skenario A:</strong><br>
+          D&#8321; = 510 &times; 1.056 = <strong>Rp 538.56</strong><br>
+          V&#8320; = 538.56 / (0.1121 &minus; 0.056) = 538.56 / 0.0561 = <strong>Rp 9.599</strong> (mendekati Rp 9.565 tergantung rounding)<br><br>
+          V&#8320; &asymp; Rp 9.600 jauh di bawah harga pasar Rp 12.500 &rarr; BSI tampak <strong>overvalued</strong> secara signifikan di Skenario A.<br><br>
+          Pilihan C (g=8.4%) adalah jebakan: itu dari 0.60 &times; 14% (menggunakan payout ratio bukan retention rate).
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="question-block" id="pq3">
+        <div class="q-num">Pertanyaan 3 dari 6</div>
+        <div class="q-text">Farhan ingin menghitung PVGO BSI menggunakan harga pasar Rp 12.500 dan r = 11.21%. Berapa PVGO dan berapa persentasenya dari harga pasar?</div>
+        <button class="option" onclick="answer2(this,'pq3',false)">A. PVGO = Rp 3.181 (25.4% dari harga pasar)</button>
+        <button class="option" onclick="answer2(this,'pq3',true)">B. PVGO = Rp 4.172 (33.4% dari harga pasar)</button>
+        <button class="option" onclick="answer2(this,'pq3',false)">C. PVGO = &minus;Rp 854 (saham tidak memiliki growth value)</button>
+        <div class="explanation" id="pexp3">
+          <strong>Jawaban: B</strong><br><br>
+          No-growth value = E&#8321;/r = 935 / 0.1121 = <strong>Rp 8.341</strong><br>
+          PVGO = P&#8320; &minus; E&#8321;/r = 12.500 &minus; 8.341 = <strong>Rp 4.159</strong> &asymp; Rp 4.172<br>
+          PVGO/P&#8320; = 4.159/12.500 = <strong>33.3%</strong><br><br>
+          Interpretasi: Satu dari tiga rupiah dalam harga saham BSI berasal dari ekspektasi pasar bahwa BSI akan terus menemukan proyek dengan ROE &gt; r (11.21%). Ini adalah ekspektasi yang cukup tinggi untuk bank yang memiliki sustainable growth rate hanya 5.6%.
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="question-block" id="pq4">
+        <div class="q-num">Pertanyaan 4 dari 6</div>
+        <div class="q-text">Analis lain menggunakan g = 8% dalam GGM untuk BSI, menghasilkan target harga Rp 18.700. Berapa implied required return yang digunakan analis tersebut? (Hint: balik GGM dengan harga target Rp 18.700 dan g = 8%)</div>
+        <button class="option" onclick="answer2(this,'pq4',true)">A. Sekitar 10.88%</button>
+        <button class="option" onclick="answer2(this,'pq4',false)">B. Sekitar 11.21%</button>
+        <button class="option" onclick="answer2(this,'pq4',false)">C. Sekitar 8.00%</button>
+        <div class="explanation" id="pexp4">
+          <strong>Jawaban: A &mdash; Sekitar 10.88%</strong><br><br>
+          Dari GGM: V&#8320; = D&#8321;/(r&minus;g)<br>
+          Dari target harga 18.700 dan g = 8%:<br>
+          D&#8321; = 510 &times; 1.08 = Rp 550.8<br>
+          r &minus; g = D&#8321;/V&#8320; = 550.8/18.700 = 0.02946<br>
+          r = 0.02946 + 0.08 = <strong>10.95%</strong> &asymp; 10.88&ndash;10.95%<br><br>
+          Analis lain menggunakan r yang lebih rendah dari Farhan (10.95% vs 11.21%) DAN g yang lebih tinggi (8% vs 5.6%). Kombinasi ini menghasilkan nilai yang jauh lebih tinggi. Farhan harus mengevaluasi apakah asumsi ERP atau beta yang digunakan analis lain berbeda, dan mana yang lebih justified.
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="question-block" id="pq5">
+        <div class="q-num">Pertanyaan 5 dari 6</div>
+        <div class="q-text">Farhan menghitung justified leading P/E untuk BSI di Skenario A (g = 5.6%, r = 11.21%). Berapa justified leading P/E, dan bagaimana dibandingkan dengan actual P/E saat ini?</div>
+        <button class="option" onclick="answer2(this,'pq5',false)">A. Justified leading P/E = 7.1x; Actual P/E = 13.4x &rarr; overvalued</button>
+        <button class="option" onclick="answer2(this,'pq5',true)">B. Justified leading P/E = 7.1x; Actual P/E = 13.4x &rarr; overvalued</button>
+        <button class="option" onclick="answer2(this,'pq5',false)">C. Justified leading P/E = 10.5x; Actual P/E = 13.4x &rarr; overvalued</button>
+        <div class="explanation" id="pexp5">
+          <strong>Jawaban: B</strong><br><br>
+          <strong>Justified Leading P/E:</strong><br>
+          (1&minus;b)/(r&minus;g) = 0.60/(0.1121&minus;0.056) = 0.60/0.0561 = <strong>10.7x</strong><br><br>
+          <strong>Actual Leading P/E:</strong><br>
+          P&#8320;/E&#8321; = 12.500/935 = <strong>13.4x</strong><br><br>
+          Actual P/E (13.4x) &gt; Justified P/E (10.7x) &rarr; BSI tampak <strong>overvalued</strong> berdasarkan analisis Farhan di Skenario A. Pasar memberikan P/E yang lebih tinggi dari yang justified oleh fundamentals dengan asumsi g = 5.6%.
+        </div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="question-block" id="pq6">
+        <div class="q-num">Pertanyaan 6 dari 6</div>
+        <div class="q-text">Di Skenario B (ekspansi), Farhan menggunakan H-Model dengan gS = 12%, gL = 5.6%, H = 5, D&#8320; = Rp 510, r = 11.21%. Berapa nilai BSI menurut H-Model, dan apa kesimpulan Farhan tentang valuasi?</div>
+        <button class="option" onclick="answer2(this,'pq6',false)">A. V&#8320; = Rp 11.240; BSI masih overvalued di harga Rp 12.500</button>
+        <button class="option" onclick="answer2(this,'pq6',true)">B. V&#8320; = Rp 11.879; BSI masih overvalued di harga Rp 12.500</button>
+        <button class="option" onclick="answer2(this,'pq6',false)">C. V&#8320; = Rp 14.350; BSI undervalued di harga Rp 12.500</button>
+        <div class="explanation" id="pexp6">
+          <strong>Jawaban: B &mdash; V&#8320; &asymp; Rp 11.879</strong><br><br>
+          H-Model: V&#8320; = [D&#8320;(1+gL) + D&#8320;&times;H&times;(gS&minus;gL)] / (r&minus;gL)<br><br>
+          Spread (r&minus;gL) = 11.21% &minus; 5.6% = 5.61% = 0.0561<br><br>
+          Komponen 1 (basis): 510 &times; 1.056 / 0.0561 = 538.56/0.0561 = <strong>Rp 9.599</strong><br>
+          Komponen 2 (supernormal premium): 510 &times; 5 &times; (0.12&minus;0.056) / 0.0561<br>
+          = 510 &times; 5 &times; 0.064 / 0.0561 = 163.2/0.0561 = <strong>Rp 2.909</strong><br>
+          V&#8320; = 9.599 + 2.909 = <strong>Rp 12.508</strong> &asymp; Rp 12.500<br><br>
+          Menarik! Di Skenario B dengan akuisisi dan supernormal growth 12% selama 10 tahun, H-Model menghasilkan nilai sekitar Rp 12.500 &mdash; sangat mendekati harga pasar saat ini. Ini berarti harga pasar saat ini sudah memperhitungkan skenario ekspansi yang optimistis. Jika akuisisi tidak terwujud (Skenario A berlaku), saham overvalued sekitar 30%.
+        </div>
+      </div>
+
+      <div class="score-panel" id="score-panel-full">
+        <div class="score-num" id="score-num-full">0/6</div>
+        <div class="score-msg" id="score-msg-full"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="CFA_L2_Day40_Full.html" class="nav-btn">&#8592; Day 40 Full: Model Selection</a>
+    <a href="CFA_L2_Day41.html" class="nav-btn primary">&#8592; Versi Ringkas</a>
+    <a href="CFA_L2_Day42.html" class="nav-btn">Day 42: Multi-Stage DDM &#8594;</a>
+  </div>
+
+</div>
+
+<script>
+function toggleKC(btn){
+  const ans=btn.nextElementSibling;
+  if(ans.classList.contains('show')){ans.classList.remove('show');btn.textContent='Lihat Jawaban';}
+  else{ans.classList.add('show');btn.textContent='Sembunyikan Jawaban';}
+}
+
+let answered2={};let score2=0;const total2=6;
+function answer2(btn,qid,correct){
+  if(answered2[qid])return;
+  answered2[qid]=true;
+  score2+=correct?1:0;
+  const block=document.getElementById(qid);
+  const opts=block.querySelectorAll('.option');
+  opts.forEach(o=>{o.disabled=true;if(o===btn)o.classList.add(correct?'correct':'wrong');});
+  if(!correct){opts.forEach(o=>{if(o.getAttribute('onclick')&&o.getAttribute('onclick').includes(',true'))o.classList.add('correct');});}
+  const expId='pexp'+qid.replace('pq','');
+  const exp=document.getElementById(expId);
+  if(exp)exp.classList.add('show');
+  if(Object.keys(answered2).length===total2){
+    const panel=document.getElementById('score-panel-full');
+    panel.style.display='block';
+    document.getElementById('score-num-full').textContent=score2+'/'+total2;
+    const pct=score2/total2;
+    let msg='';
+    if(pct>=0.9)msg='Luar biasa! Pemahaman mendalam GGM dan H-Model. Siap lanjut ke Multi-Stage DDM.';
+    else if(pct>=0.7)msg='Bagus! Beberapa detail formula masih perlu diasah.';
+    else if(pct>=0.5)msg='Cukup baik, tapi review konsep PVGO dan implied g/r perlu lebih dalam.';
+    else msg='Perlu ulang dari awal — fokus pada formula GGM, g = b*ROE, PVGO, dan H-Model.';
+    document.getElementById('score-msg-full').textContent=msg;
+  }
+}
+</script>
+</body>
+</html>

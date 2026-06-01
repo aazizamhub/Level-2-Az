@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level II Day 28 - Insurance Analysis: Analysis of Financial Institutions (Full)</title>
+  <style>
+:root {
+  --bg:#fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+  --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;--gold:#9a6e1a;--gold2:#7a5010;
+  --gold-bg:rgba(154,110,26,0.08);--blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);
+  --green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);--red:#b83232;--red-bg:rgba(184,50,50,0.08);
+  --amber:#a06010;--amber-bg:rgba(160,96,16,0.08);--r:10px;--r-sm:6px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:15px;}
+.page{max-width:960px;margin:0 auto;padding:0 20px;background:white;box-shadow:0 0 40px rgba(0,0,0,0.04);}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid var(--border);margin-bottom:24px;}
+.breadcrumb{font-size:13px;color:var(--text2);letter-spacing:0.5px;font-weight:500;}
+.day-badge,.version-badge{display:inline-block;padding:6px 12px;background:var(--gold-bg);color:var(--gold2);border-radius:var(--r-sm);font-size:12px;font-weight:600;margin-left:12px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);margin-left:8px;}
+.hero{margin-bottom:48px;}
+.hero-tag{font-size:13px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;}
+.hero-title{font-size:42px;font-weight:700;line-height:1.2;margin-bottom:12px;color:var(--text);}
+.hero-sub{font-size:18px;color:var(--text2);margin-bottom:28px;}
+.meta-row{display:flex;flex-wrap:wrap;gap:12px;}
+.meta-pill{display:inline-flex;align-items:center;padding:8px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:20px;font-size:13px;color:var(--text2);font-weight:500;}
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:32px;margin-bottom:48px;}
+.toc-title{font-size:18px;font-weight:700;margin-bottom:20px;color:var(--text);}
+.toc-list{list-style:none;}
+.toc-list li{margin-bottom:12px;font-size:15px;}
+.toc-list a{color:var(--blue);text-decoration:none;}
+.toc-list a:hover{text-decoration:underline;}
+.toc-num{color:var(--gold);font-weight:600;margin-right:8px;}
+.chapter{margin-bottom:56px;scroll-margin-top:100px;}
+.chapter-header{margin-bottom:28px;}
+.chapter-num{font-size:13px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:1px;}
+.chapter-title{font-size:32px;font-weight:700;color:var(--text);margin-top:8px;}
+.sub-header{font-size:18px;font-weight:700;color:var(--text);margin:28px 0 16px 0;}
+.prose{color:var(--text);margin-bottom:16px;line-height:1.75;}
+.formula-block{background:var(--bg2);border-left:4px solid var(--gold);border-radius:var(--r-sm);padding:20px;margin:24px 0;font-family:'Courier New',monospace;font-size:14px;color:var(--text);overflow-x:auto;}
+.formula-block .label{font-weight:700;color:var(--gold);display:block;margin-bottom:8px;font-size:13px;text-transform:uppercase;letter-spacing:0.5px;font-family:'Inter',sans-serif;}
+.formula-block .note{font-family:'Inter',sans-serif;font-size:13px;color:var(--text2);margin-top:12px;line-height:1.6;}
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:28px;margin:32px 0;}
+.exhibit-title{font-size:15px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:20px;}
+.exhibit-body{color:var(--text);line-height:1.8;font-size:14px;}
+.reg-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;}
+.reg-table th{background:var(--bg3);border:1px solid var(--border);padding:12px;text-align:left;font-weight:700;color:var(--text);}
+.reg-table td{border:1px solid var(--border);padding:12px;color:var(--text2);}
+.reg-table tr:nth-child(even){background:rgba(255,255,255,0.5);}
+.callout{border-radius:var(--r);padding:20px;margin:24px 0;border-left:4px solid;}
+.callout.blue{background:var(--blue-bg);border-left-color:var(--blue);}
+.callout.amber{background:var(--amber-bg);border-left-color:var(--amber);}
+.callout.green{background:var(--green-bg);border-left-color:var(--green);}
+.callout.red{background:var(--red-bg);border-left-color:var(--red);}
+.callout.gold{background:var(--gold-bg);border-left-color:var(--gold);}
+.callout-title{font-weight:700;margin-bottom:8px;display:block;font-size:14px;text-transform:uppercase;letter-spacing:0.5px;}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.green .callout-title{color:var(--green);}
+.callout.red .callout-title{color:var(--red);}
+.callout.gold .callout-title{color:var(--gold);}
+.callout p,.callout li{color:var(--text);font-size:14px;line-height:1.7;}
+.callout ul{padding-left:20px;margin-top:8px;}
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:28px 0;overflow:hidden;}
+.kc-header{padding:18px 20px;background:var(--bg3);border-bottom:1px solid var(--border);cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none;}
+.kc-header:hover{background:rgba(0,0,0,0.04);}
+.kc-header-title{font-weight:600;color:var(--text);font-size:14px;}
+.kc-toggle{color:var(--text3);font-weight:700;font-size:18px;transition:transform 0.2s;}
+.kc.open .kc-toggle{transform:rotate(180deg);}
+.kc-body{padding:20px;max-height:0;overflow:hidden;transition:max-height 0.3s ease-out;}
+.kc.open .kc-body{max-height:1200px;}
+.kc-q{color:var(--text);margin-bottom:16px;line-height:1.7;font-weight:500;}
+.kc-answer{color:var(--text2);line-height:1.8;font-size:14px;}
+.num-list,.bullet-list{margin:16px 0;padding-left:24px;}
+.num-list li,.bullet-list li{margin-bottom:10px;color:var(--text);line-height:1.7;}
+.divider{height:1px;background:var(--border);margin:40px 0;}
+.practice-body{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:28px;}
+.vignette{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-bottom:32px;}
+.vignette-label{font-size:12px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;}
+.vignette-text{font-size:14px;color:var(--text);line-height:1.75;}
+.question-block{margin-bottom:32px;}
+.q-num{font-size:12px;font-weight:700;color:var(--blue);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;}
+.q-text{font-size:15px;color:var(--text);margin-bottom:16px;line-height:1.65;font-weight:500;}
+.option{display:flex;align-items:flex-start;gap:14px;padding:12px 16px;margin-bottom:10px;border:1px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:all 0.2s ease;background:white;}
+.option:hover{border-color:var(--blue);background:var(--blue-bg);}
+.option-radio{display:flex;align-items:center;justify-content:center;width:20px;height:20px;border:2px solid var(--border2);border-radius:50%;flex-shrink:0;margin-top:2px;}
+.option.selected .option-radio{border-color:var(--blue);background:var(--blue);}
+.option.selected .option-radio:after{content:"✓";color:white;font-size:12px;font-weight:700;}
+.option-text{font-size:14px;color:var(--text);line-height:1.6;}
+.explanation{background:var(--bg2);padding:16px;border-radius:var(--r-sm);font-size:13px;color:var(--text2);margin-top:10px;display:none;line-height:1.7;}
+.explanation.show{display:block;}
+.explanation.correct{border-left:3px solid var(--green);background:var(--green-bg);color:var(--text);}
+.explanation.incorrect{border-left:3px solid var(--red);background:var(--red-bg);color:var(--text);}
+.score-panel{background:var(--gold-bg);border:1px solid var(--gold);border-radius:var(--r);padding:20px;margin-top:24px;text-align:center;display:none;}
+.score-panel.show{display:block;}
+.score-panel-text{font-size:15px;color:var(--text);margin-bottom:8px;}
+.score-panel-value{font-size:28px;font-weight:700;color:var(--gold2);}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;padding:28px 0;margin-top:48px;border-top:1px solid var(--border);}
+.nav-btn{text-decoration:none;padding:12px 18px;border-radius:var(--r-sm);font-size:13px;font-weight:600;color:var(--blue);border:1px solid var(--border);transition:all 0.2s ease;}
+.nav-btn:hover{border-color:var(--blue);background:var(--blue-bg);}
+@media(max-width:640px){.hero-title{font-size:30px;}.meta-row{flex-direction:column;}}
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II &nbsp;·&nbsp; FSA &nbsp;·&nbsp; LM5
+      <span class="version-badge">Versi Full</span>
+      <span class="day-badge">Day 28 of 90</span>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Jumat, 22 Mei 2026</div>
+    <h1 class="hero-title">Analisis Perusahaan Asuransi: Rasio Kunci, Reserve &amp; IFRS 17</h1>
+    <p class="hero-sub">Analysis of Financial Institutions (LM5) — Subtopik 2 dari 2</p>
+    <div class="meta-row">
+      <div class="meta-pill">📚 Materi Lengkap</div>
+      <div class="meta-pill">🇮🇩 Bahasa Indonesia</div>
+      <div class="meta-pill">~12% Bobot Ujian</div>
+      <div class="meta-pill">⏱ Est. Baca 50–60 Menit</div>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ol class="toc-list">
+      <li><span class="toc-num">0.</span><a href="#los">Learning Outcomes (LOS)</a></li>
+      <li><span class="toc-num">1.</span><a href="#bab1">Perusahaan Asuransi: P&amp;C vs L&amp;H — Model Bisnis &amp; Perbedaan Fundamental</a></li>
+      <li><span class="toc-num">2.</span><a href="#bab2">Analisis P&amp;C: Rasio Underwriting — Loss Ratio, Expense Ratio, Combined Ratio</a></li>
+      <li><span class="toc-num">3.</span><a href="#bab3">Reserve Adequacy: Loss Reserve Roll-Forward &amp; Earnings Quality</a></li>
+      <li><span class="toc-num">4.</span><a href="#bab4">Analisis L&amp;H: Investment Returns, Duration Mismatch &amp; Profitabilitas</a></li>
+      <li><span class="toc-num">5.</span><a href="#bab5">IFRS 17: Kerangka Akuntansi Baru untuk Kontrak Asuransi</a></li>
+      <li><span class="toc-num">6.</span><a href="#latihan">Latihan Soal — Item Set Vignette (6 Soal)</a></li>
+    </ol>
+  </div>
+
+  <!-- SECTION 0: LOS -->
+  <div class="chapter" id="los">
+    <div class="chapter-header">
+      <div class="chapter-num">Learning Outcomes</div>
+      <div class="chapter-title">Apa yang Harus Dikuasai</div>
+    </div>
+    <p class="prose">Setelah menyelesaikan subtopik Insurance Analysis dari Learning Module 5 — Analysis of Financial Institutions, kandidat CFA Level 2 diharapkan mampu:</p>
+    <ul class="bullet-list">
+      <li><strong>Mendeskripsikan perbedaan fundamental</strong> antara P&amp;C insurer dan L&amp;H insurer — dalam hal durasi polis, variabilitas klaim, strategi investasi, dan ukuran profitabilitas yang relevan</li>
+      <li><strong>Menghitung dan menginterpretasikan rasio underwriting P&amp;C</strong>: loss and loss adjustment expense (LAE) ratio, underwriting expense ratio, combined ratio, dan combined ratio after dividends</li>
+      <li><strong>Menganalisis loss reserve adequacy</strong> melalui roll-forward schedule dan mengevaluasi dampak favorable/adverse development terhadap earnings quality</li>
+      <li><strong>Mengevaluasi investment returns dan risiko</strong> dari P&amp;C dan L&amp;H insurer — termasuk komposisi portofolio investasi dan duration mismatch untuk L&amp;H</li>
+      <li><strong>Menjelaskan kerangka kapitalisasi insurer</strong> — Solvency II di Eropa dan risk-based capital requirements NAIC di AS</li>
+      <li><strong>Mendeskripsikan IFRS 17</strong> — tiga model pengukuran (GMM, PAA, VFA), konsep Contractual Service Margin (CSM), dan perbandingannya dengan IFRS 4 dalam konteks analisis laporan keuangan insurer</li>
+    </ul>
+    <div class="callout blue">
+      <span class="callout-title">Konteks dalam Kurikulum</span>
+      <p>Day 28 melengkapi Day 27 (Bank Analysis) untuk membentuk pemahaman komprehensif tentang analisis financial institutions. Berbeda dari bank yang dianalisis dengan CAMELS, insurer tidak memiliki kerangka tunggal yang analog — tapi kombinasi rasio underwriting, reserve analysis, dan investment analysis memberikan gambaran yang setara lengkapnya. IFRS 17 adalah standar baru (efektif 2023) yang sering muncul di soal CFA L2 dalam konteks perubahan akuntansi insurer.</p>
+    </div>
+  </div>
+
+  <!-- BAB 1 -->
+  <div class="chapter" id="bab1">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 1</div>
+      <div class="chapter-title">Perusahaan Asuransi: P&amp;C vs L&amp;H — Model Bisnis &amp; Perbedaan Fundamental</div>
+    </div>
+
+    <p class="prose">Perusahaan asuransi menjalankan bisnis yang unik: mereka mengumpulkan premi hari ini dan berjanji membayar klaim di masa depan — sebuah model yang pada dasarnya adalah kebalikan dari model bisnis kebanyakan perusahaan. Pemahaman tentang dua jenis utama asuransi dan perbedaannya merupakan fondasi analisis yang tepat.</p>
+
+    <div class="sub-header">1.1 Dua Bisnis Dalam Satu: Underwriting dan Investasi</div>
+    <p class="prose">Setiap perusahaan asuransi pada dasarnya menjalankan dua bisnis secara bersamaan. <strong>Bisnis underwriting</strong> adalah inti operasional: menilai risiko, menentukan harga premi yang tepat, dan mengelola klaim. <strong>Bisnis investasi</strong> lahir dari "float" — selisih waktu antara penerimaan premi dan pembayaran klaim. Selama periode float ini, insurer menginvestasikan premi yang dikumpulkan dan menghasilkan investment income.</p>
+    <p class="prose">Warrent Buffett pernah menggambarkan float sebagai "uang yang kita pegang tapi bukan milik kita" — dan itulah keunggulan kompetitif luar biasa bisnis asuransi. Semakin panjang float dan semakin murah biaya untuk mendapatkannya (via underwriting profit), semakin menguntungkan bisnis asuransinya. Namun tidak semua insurer sama. Perbedaan antara P&amp;C dan L&amp;H sangat menentukan cara kita menganalisis keduanya.</p>
+
+    <div class="sub-header">1.2 P&amp;C Insurance: Karakteristik Kunci</div>
+    <p class="prose">Perusahaan asuransi P&amp;C (di Indonesia dikenal sebagai "asuransi umum") memberikan perlindungan terhadap kerugian properti dan kewajiban hukum — mulai dari asuransi kendaraan, properti, marine, hingga workers' compensation. Karakteristik utama:</p>
+    <ul class="bullet-list">
+      <li><strong>Polis berdurasi pendek</strong>: Biasanya tahunan. Artinya insurer dapat menyesuaikan harga premi lebih cepat merespons perubahan risiko.</li>
+      <li><strong>Klaim sangat variabel</strong>: Bencana alam, kecelakaan besar, atau banjir bisa menciptakan "klaim yang menumpuk" (catastrophe losses) dalam waktu singkat. Ini menciptakan ketidakpastian yang tinggi.</li>
+      <li><strong>Siklus underwriting (hard vs soft market)</strong>: Ketika combined ratio industri rendah (profit besar), banyak pemain baru masuk, persaingan meningkat, harga premi turun → combined ratio naik → pemain keluar → siklus berulang.</li>
+      <li><strong>Strategi investasi konservatif</strong>: Karena klaim bisa datang kapan saja dan dalam jumlah besar, P&amp;C insurer harus menjaga portofolio yang sangat likuid dan rendah risiko — dominan investment-grade fixed income.</li>
+    </ul>
+
+    <div class="sub-header">1.3 L&amp;H Insurance: Karakteristik Kunci</div>
+    <p class="prose">Perusahaan asuransi L&amp;H (di Indonesia disebut "asuransi jiwa") menawarkan perlindungan risiko kematian, kesehatan, dan sering kali berfungsi sebagai kendaraan tabungan/investasi (produk seperti whole life, unit-linked, annuity). Karakteristik kunci:</p>
+    <ul class="bullet-list">
+      <li><strong>Polis berdurasi panjang</strong>: Bisa berlangsung puluhan tahun atau bahkan seumur hidup. Ini menciptakan kewajiban jangka panjang yang perlu di-match dengan aset yang tepat.</li>
+      <li><strong>Klaim lebih prediktabel</strong>: Berbasis tabel mortalitas aktuarial yang sudah teruji. Ketika portofolio polis besar, law of large numbers membuat klaim agregatnya jauh lebih dapat diprediksi.</li>
+      <li><strong>Portofolio investasi lebih agresif diperbolehkan</strong>: Karena prediktabilitas klaim lebih tinggi, L&amp;H insurer bisa mengalokasikan lebih banyak ke ekuitas dan real estate untuk mengejar return yang lebih tinggi.</li>
+      <li><strong>Sensitivitas terhadap suku bunga sangat tinggi</strong>: Kewajiban polis jangka panjang sangat sensitif terhadap perubahan suku bunga. Duration mismatch (durasi liabilitas &gt; durasi aset) bisa menciptakan kerugian besar saat suku bunga berubah.</li>
+    </ul>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 1 — Perbandingan P&amp;C vs L&amp;H Insurance</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Dimensi Analisis</th><th>P&amp;C (Asuransi Umum)</th><th>L&amp;H (Asuransi Jiwa)</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Durasi Polis</strong></td><td>Pendek (biasanya 1 tahun)</td><td>Panjang (10–30+ tahun atau seumur hidup)</td></tr>
+            <tr><td><strong>Variabilitas Klaim</strong></td><td>Tinggi — bencana dan kecelakaan tak terduga</td><td>Rendah — berbasis mortalitas aktuarial yang stabil</td></tr>
+            <tr><td><strong>Strategi Investasi</strong></td><td>Konservatif: IG bonds, sangat likuid (&gt;85% fixed income)</td><td>Lebih agresif: bisa ekuitas, real estate, IG + HY bonds</td></tr>
+            <tr><td><strong>Risiko Utama</strong></td><td>Catastrophe risk, reserve inadequacy, underwriting cycle</td><td>Interest rate risk, duration mismatch, policyholder lapse</td></tr>
+            <tr><td><strong>Rasio Profitabilitas Khas</strong></td><td>Combined ratio, loss &amp; LAE ratio, expense ratio</td><td>ROE, pretax operating ROE, benefits ratio, lapse rate</td></tr>
+            <tr><td><strong>Persyaratan Kapital</strong></td><td>NAIC RBC (AS); Solvency II (Eropa); OJK BUMN (Indonesia)</td><td>Lebih rendah dari P&amp;C karena klaim lebih prediktabel</td></tr>
+            <tr><td><strong>Sumber Revenue</strong></td><td>Net premiums + investment income</td><td>Premiums + investment income + fee dari produk investasi</td></tr>
+            <tr><td><strong>Contoh di Indonesia</strong></td><td>Asuransi Astra, Adira Insurance, Jasa Raharja</td><td>Prudential Indonesia, AIA, Manulife, BNI Life</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="kc" onclick="this.classList.toggle('open')">
+      <div class="kc-header">
+        <span class="kc-header-title">Knowledge Check 1.1 — Sebuah perusahaan asuransi mengalokasikan 25% portofolio investasinya ke ekuitas publik. Apakah ini lebih konsisten dengan P&amp;C atau L&amp;H insurer? Jelaskan.</span>
+        <span class="kc-toggle">▼</span>
+      </div>
+      <div class="kc-body">
+        <div class="kc-q">Alokasi 25% ke ekuitas publik — P&amp;C atau L&amp;H?</div>
+        <div class="kc-answer">Ini lebih konsisten dengan <strong>L&amp;H insurer</strong>. P&amp;C insurer umumnya mengalokasikan kurang dari 5% ke ekuitas karena kebutuhan likuiditas yang tinggi — klaim bencana bisa datang kapan saja dalam jumlah besar. Sebaliknya, L&amp;H insurer memiliki kewajiban yang lebih prediktabel berbasis mortalitas dan bisa mentolerir volatilitas yang lebih tinggi dalam portofolio investasi untuk mengejar return yang lebih baik. Alokasi ekuitas 25% untuk L&amp;H adalah wajar, terutama jika produk yang ditawarkan adalah unit-linked atau annuity dengan komponen investasi yang signifikan. Untuk P&amp;C, alokasi ini akan dianggap terlalu berisiko dan mengkhawatirkan bagi regulator dan rating agency.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BAB 2 -->
+  <div class="chapter" id="bab2">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 2</div>
+      <div class="chapter-title">Analisis P&amp;C: Rasio Underwriting — Loss Ratio, Expense Ratio, Combined Ratio</div>
+    </div>
+
+    <p class="prose">Rasio underwriting adalah alat ukur terpenting untuk mengevaluasi profitabilitas inti bisnis P&amp;C insurer. Mereka mengukur seberapa efektif insurer dalam menilai risiko (loss ratio), seberapa efisien dalam memperoleh dan mengelola bisnis (expense ratio), dan apakah keseluruhan operasi underwriting menghasilkan profit atau rugi (combined ratio).</p>
+
+    <div class="sub-header">2.1 Terminologi Dasar: Premiums Written vs Premiums Earned</div>
+    <p class="prose">Sebelum memahami rasio-rasio ini, penting untuk memahami perbedaan antara dua konsep premi yang sering membingungkan:</p>
+    <ul class="bullet-list">
+      <li><strong>Net Premiums Written</strong>: Premi yang ditulis (dikontrak) dalam periode akuntansi, dikurangi premi yang di-cede ke reinsurer. Ini adalah ukuran volume bisnis yang diperoleh.</li>
+      <li><strong>Net Premiums Earned</strong>: Bagian dari premi yang sudah "diperoleh" karena coverage sudah diberikan. Premi biasanya dibayar di muka, sehingga hanya bagian yang berkorespondensi dengan periode coverage yang sudah berlalu yang diakui sebagai earned.</li>
+    </ul>
+    <p class="prose">Perbedaan antara written dan earned mencerminkan <em>unearned premium reserve</em> — bagian premi yang belum "bisa diklaim" karena coverage ke depan belum diberikan. Dalam periode pertumbuhan bisnis, written &gt; earned; dalam periode penyusutan bisnis, earned &gt; written.</p>
+
+    <div class="sub-header">2.2 Loss and Loss Adjustment Expense (LAE) Ratio</div>
+    <p class="prose">Ini adalah rasio yang mengukur kualitas underwriting secara langsung — berapa besar klaim dan biaya penyelesaian klaim relatif terhadap premi yang diperoleh.</p>
+
+    <div class="formula-block">
+      <span class="label">Loss &amp; LAE Ratio</span>
+Loss &amp; LAE Ratio = (Losses + Loss Adjustment Expenses) / Net Premiums Earned
+
+Komponen:
+  Losses = klaim yang dibayar + perubahan bersih pada loss reserves
+  LAE    = Loss Adjustment Expenses — biaya untuk memproses dan menyelesaikan klaim
+           (investigasi, biaya legal, biaya surveyor, dll.)
+  Net Premiums Earned = denominator SELALU earned (bukan written)
+
+Interpretasi:
+  Semakin rendah → kualitas underwriting lebih baik (fewer/smaller claims relative to premiums)
+  Perbandingan vs peers sangat penting karena angka "normal" berbeda antar lini bisnis
+
+Contoh:
+  Losses = Rp 2.200 M, LAE = Rp 300 M, Net Premiums Earned = Rp 4.200 M
+  Loss &amp; LAE Ratio = (2.200 + 300) / 4.200 = 59.5%
+      <span class="note">Catatan: Beberapa perusahaan hanya melaporkan "loss ratio" (tanpa LAE) dan "loss adjustment expense ratio" secara terpisah. CFA biasanya menggabungkan keduanya sebagai "loss &amp; LAE ratio."</span>
+    </div>
+
+    <div class="sub-header">2.3 Underwriting Expense Ratio</div>
+    <p class="prose">Rasio ini mengukur efisiensi insurer dalam memperoleh dan mengelola bisnis underwriting — berapa besar biaya untuk setiap rupiah premi yang ditulis.</p>
+
+    <div class="formula-block">
+      <span class="label">Underwriting Expense Ratio</span>
+Underwriting Expense Ratio = Underwriting Expenses / Net Premiums Written
+
+Komponen:
+  Underwriting Expenses = komisi agen/broker + biaya marketing + biaya administrasi underwriting
+                          + biaya akuisisi lainnya
+  Net Premiums Written = denominator SELALU written (bukan earned)
+
+Logika denominatornya:
+  Biaya akuisisi terjadi saat polis ditulis, bukan saat premi diakui sebagai earned
+  → Lebih tepat dibandingkan dengan premi yang "diperoleh" di momen yang sama
+
+Interpretasi:
+  Direct writers (punya tim sales sendiri) → fixed costs tinggi → expense ratio lebih tinggi
+  Agency writers (pakai agen independen) → variable costs (komisi) → expense ratio lebih fleksibel
+      <span class="note">Perhatian: Beberapa perusahaan melaporkan expense ratio dengan denominator earned (bukan written) untuk kepentingan GAAP. Saat membandingkan, pastikan denominator yang digunakan konsisten.</span>
+    </div>
+
+    <div class="sub-header">2.4 Combined Ratio: Ukuran Profitabilitas Underwriting Keseluruhan</div>
+    <p class="prose">Combined ratio adalah ringkasan tunggal dari profitabilitas underwriting — menggabungkan loss ratio dan expense ratio menjadi satu metrik yang mudah dibandingkan.</p>
+
+    <div class="formula-block">
+      <span class="label">Combined Ratio</span>
+Combined Ratio = Loss &amp; LAE Ratio + Underwriting Expense Ratio
+
+Interpretasi Kritis:
+  Combined Ratio &lt; 100%: UNDERWRITING PROFIT
+    → Premi yang dikumpulkan MELEBIHI total klaim + biaya
+    → Setiap 1% di bawah 100% adalah 1% margin underwriting
+
+  Combined Ratio &gt; 100%: UNDERWRITING LOSS
+    → Premi yang dikumpulkan LEBIH KECIL dari total klaim + biaya
+    → Insurer tetap bisa untung secara keseluruhan berkat INVESTMENT INCOME dari float!
+
+  Combined Ratio After Dividends = Combined Ratio + (Dividends to Policyholders / Net Premiums Earned)
+    → Versi yang lebih ketat; memperhitungkan distribusi ke pemegang polis
+
+Contoh Numerik:
+  Loss &amp; LAE Ratio = 61.4%, Expense Ratio = 32.6%
+  Combined Ratio = 61.4% + 32.6% = 94.0% → Underwriting PROFIT (6% margin)
+      <span class="note">Konteks: Industri P&amp;C global secara historis beroperasi dengan combined ratio antara 95–105%. Combined ratio di bawah 92% konsisten dianggap exceptional underwriting performance. Dalam siklus "hard market," combined ratio bisa turun ke 88–92%; dalam "soft market," bisa melonjak di atas 105%.</span>
+    </div>
+
+    <div class="callout amber">
+      <span class="callout-title">Exam Trap: Combined Ratio &gt;100% Tidak Otomatis Rugi</span>
+      <p>Ini adalah salah satu jebakan paling umum di ujian CFA. Combined ratio &gt;100% hanya berarti rugi dari sisi underwriting — bukan kerugian keseluruhan. Insurer yang combined ratio-nya 105% bisa masih profitable jika investment income dari float cukup besar. Model bisnis berkualitas tinggi menghasilkan profit dari dua sumber: underwriting (combined ratio &lt;100%) DAN investasi. Insurer dengan combined ratio konsisten &lt;100% adalah "double dip" — mereka untung dari keduanya sekaligus.</p>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 2 — Ilustrasi Rasio Underwriting Beberapa P&amp;C Insurer (Berdasarkan Data CFA Curriculum)</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Insurer</th><th>Loss &amp; LAE Ratio</th><th>Expense Ratio</th><th>Combined Ratio</th><th>Interpretasi</th></tr></thead>
+          <tbody>
+            <tr><td>Travelers</td><td>61.4%</td><td>32.6%</td><td>94.0%</td><td>Kuat — underwriting profitable, expense efisien</td></tr>
+            <tr><td>Hartford</td><td>82.2%</td><td>48.8%</td><td>131.0%</td><td>Lemah — underwriting loss besar, perlu perbaikan</td></tr>
+            <tr><td>W. R. Berkley</td><td>61.1%</td><td>37.3%</td><td>98.4%</td><td>Wajar — nyaris breakeven di underwriting</td></tr>
+            <tr><td>Markel Corp.</td><td>53.1%</td><td>35.9%</td><td>89.0%</td><td>Exceptional — underwriting sangat menguntungkan</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:13px;color:var(--text2);margin-top:12px;">Sumber: Data dari CFA Institute Curriculum 2026, Learning Module 5. Angka berdasarkan laporan keuangan 2016.</p>
+      </div>
+    </div>
+
+    <div class="kc" onclick="this.classList.toggle('open')">
+      <div class="kc-header">
+        <span class="kc-header-title">Knowledge Check 2.1 — PT Asuransi Garuda Nusantara melaporkan: Net Premiums Written Rp 3.600 M, Net Premiums Earned Rp 3.500 M, Losses &amp; LAE Rp 2.100 M, Underwriting Expenses Rp 1.080 M. Hitung combined ratio.</span>
+        <span class="kc-toggle">▼</span>
+      </div>
+      <div class="kc-body">
+        <div class="kc-q">Perhitungan Combined Ratio:</div>
+        <div class="kc-answer">
+          Loss &amp; LAE Ratio = 2.100 / 3.500 = <strong>60.0%</strong> (denominator: Earned)<br>
+          Expense Ratio = 1.080 / 3.600 = <strong>30.0%</strong> (denominator: Written)<br>
+          Combined Ratio = 60.0% + 30.0% = <strong>90.0%</strong><br><br>
+          Interpretasi: Combined ratio 90% → underwriting PROFIT dengan margin 10%. Untuk setiap Rp 100 premi yang diperoleh, insurer hanya membayar Rp 90 dalam bentuk klaim dan biaya — menyisakan Rp 10 sebagai underwriting profit sebelum investment income. Ini adalah kinerja yang sangat baik.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BAB 3 -->
+  <div class="chapter" id="bab3">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 3</div>
+      <div class="chapter-title">Reserve Adequacy: Loss Reserve Roll-Forward &amp; Earnings Quality</div>
+    </div>
+
+    <p class="prose">Loss reserves adalah komponen paling kritikal dan paling discretionary dalam laporan keuangan P&amp;C insurer. Ini adalah estimasi total klaim yang sudah terjadi (atau telah dilaporkan) namun belum sepenuhnya diselesaikan. Ketidaktepatan dalam estimasi reserves bisa berakibat fatal: under-reserving menyebabkan pricing yang terlalu murah dan potensi insolvency di masa depan; over-reserving berarti modal "dikunci" secara tidak efisien.</p>
+
+    <div class="sub-header">3.1 Memahami Loss Reserve Roll-Forward</div>
+    <p class="prose">Roll-forward schedule adalah cara paling efektif untuk memahami dinamika loss reserves. Analis CFA diharapkan mampu membangun dan menginterpretasikan roll-forward ini:</p>
+
+    <div class="formula-block">
+      <span class="label">Loss Reserve Roll-Forward (Net of Reinsurance)</span>
+Beginning Net Loss Reserves (awal tahun)
+  + Incurred Losses for Current Year (klaim baru yang terjadi di tahun ini)
+  +/− Development on Prior Year Reserves (revisi estimasi tahun-tahun lalu)
+  − Loss Payments (klaim yang dibayar tunai sepanjang tahun)
+  +/− Acquisition / Foreign Exchange Adjustments (jika relevan)
+= Ending Net Loss Reserves (akhir tahun)
+
+Keterangan:
+  "Incurred Losses" ≠ "Losses Paid"
+  Incurred = klaim yang diakui tahun ini (belum tentu dibayar)
+  Paid = klaim yang benar-benar dibayarkan tunai
+  Selisih keduanya masuk ke perubahan reserves
+      <span class="note">Roll-forward ini biasanya disajikan pada level NET (setelah reinsurance). Gross reserves (sebelum reinsurance) dikurangi reinsurance recoverables = net reserves.</span>
+    </div>
+
+    <div class="sub-header">3.2 Favorable vs Adverse Reserve Development</div>
+    <p class="prose"><strong>Reserve development</strong> mengacu pada perubahan estimasi klaim untuk tahun-tahun sebelumnya (prior year development). Ini terjadi karena estimasi awal selalu didasarkan pada informasi yang tidak lengkap — seiring waktu, informasi baru tersedia dan estimasi perlu direvisi.</p>
+    <ul class="bullet-list">
+      <li><strong>Favorable Development (Downward Revision)</strong>: Estimasi cadangan untuk tahun-tahun lalu ternyata terlalu besar → cadangan dikurangi → income meningkat. Ini bisa berarti insurer konservatif dalam provisioning, atau bisa juga digunakan sebagai earnings management.</li>
+      <li><strong>Adverse Development (Upward Revision)</strong>: Estimasi cadangan untuk tahun-tahun lalu ternyata terlalu kecil → cadangan ditambah → income berkurang. Ini menandakan masalah dalam pricing atau underwriting di masa lalu — "emerging losses."</li>
+    </ul>
+
+    <div class="callout amber">
+      <span class="callout-title">Sinyal Kualitas Earnings: Analisis % Kontribusi Development</span>
+      <p>Cara terbaik untuk mengevaluasi ketergantungan earnings pada reserve development adalah menghitung kontribusinya terhadap pre-tax income: <strong>(Favorable Development / Pre-Tax Income) × 100%</strong>. Jika insurer secara konsisten memperoleh 15–20% pre-tax income-nya dari favorable development setiap tahun, analis harus waspada — apakah ini genuine conservatism atau taktik mengelola earnings? Bandingkan dengan peers untuk mendapatkan gambaran yang lebih objektif.</p>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 3 — Ilustrasi Analisis Reserve Development (Travelers Companies, Data CFA Curriculum)</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Metrik</th><th>2016</th><th>2015</th><th>2014</th></tr></thead>
+          <tbody>
+            <tr><td>Favorable Development ($M)</td><td>$680</td><td>$817</td><td>$885</td></tr>
+            <tr><td>Pre-Tax Income ($M)</td><td>$4.053</td><td>$4.740</td><td>$5.089</td></tr>
+            <tr><td>% Kontribusi ke Pre-Tax Income</td><td>16.8%</td><td>17.2%</td><td>17.4%</td></tr>
+            <tr><td>Interpretasi</td><td colspan="3">Kontribusi stabil ~17% per tahun — mencerminkan provisioning yang konsisten konservatif. Wajar tapi perlu dibandingkan dengan peers untuk memastikan bukan earnings management sistematis.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">3.3 Tanda Bahaya: Under-Reserving</div>
+    <p class="prose">Under-reserving adalah risiko yang lebih berbahaya daripada over-reserving karena dampaknya baru terasa di masa depan. Beberapa indikator potensial under-reserving yang perlu diwaspadai analis:</p>
+    <ul class="bullet-list">
+      <li><strong>Adverse development berulang</strong>: Jika setiap tahun insurer harus menaikkan estimasi klaim tahun sebelumnya, ini adalah sinyal kuat bahwa pricing dan provisioning awal tidak memadai.</li>
+      <li><strong>Reserve / Net Premium Earned ratio rendah vs peers</strong>: Menunjukkan bahwa untuk setiap rupiah premi yang diperoleh, insurer menyisihkan cadangan yang lebih kecil dari biasanya.</li>
+      <li><strong>Loss &amp; LAE ratio yang meningkat secara akselerasi</strong>: Jika klaim tumbuh lebih cepat dari premi, bisa mengindikasikan masalah underwriting yang menumpuk.</li>
+    </ul>
+
+    <div class="kc" onclick="this.classList.toggle('open')">
+      <div class="kc-header">
+        <span class="kc-header-title">Knowledge Check 3.1 — Mengapa adverse reserve development lebih merugikan dari yang terlihat di income statement tahun berjalan? Apa implikasinya untuk pricing ke depan?</span>
+        <span class="kc-toggle">▼</span>
+      </div>
+      <div class="kc-body">
+        <div class="kc-q">Dampak lebih dalam dari adverse development:</div>
+        <div class="kc-answer">
+          Adverse development mengindikasikan bahwa insurer secara sistematis under-estimate klaim masa lalu. Dampak berlapis: (1) Income statement tahun berjalan langsung tertekan karena harus menambah reserves. (2) Yang lebih berbahaya: jika under-reserving terjadi karena <em>mispricing</em> risiko, maka polis-polis yang masih aktif pun mungkin belum mencerminkan harga yang tepat — artinya masalah ini bersifat struktural. (3) Untuk pricing ke depan, insurer harus menaikan premi — yang dalam pasar kompetitif bisa menyebabkan kehilangan market share. (4) Jika under-reserving cukup parah, regulator bisa meminta tambahan modal. Ringkasnya: adverse development adalah early warning sign yang bisa berdampak jauh melampaui angka yang terlihat di income statement tahun itu.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BAB 4 -->
+  <div class="chapter" id="bab4">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 4</div>
+      <div class="chapter-title">Analisis L&amp;H: Investment Returns, Duration Mismatch &amp; Profitabilitas</div>
+    </div>
+
+    <p class="prose">Analisis L&amp;H insurer memerlukan pendekatan yang berbeda dari P&amp;C. Karena klaim lebih prediktabel dan polis lebih panjang, fokus analisis bergeser dari underwriting cycle ke kualitas investasi, manajemen risiko suku bunga, dan sustainability laba jangka panjang.</p>
+
+    <div class="sub-header">4.1 Investment Returns: Sumber Vital Profitabilitas L&amp;H</div>
+    <p class="prose">Investment income adalah komponen terbesar kedua (setelah premium income) dalam revenue L&amp;H insurer, dan sering kali menjadi penentu utama profitabilitas. Evaluasi investment returns mencakup:</p>
+
+    <div class="formula-block">
+      <span class="label">Mengukur Investment Performance</span>
+Investment Yield = Total Investment Income / Average Invested Assets
+
+  Total Investment Income = Interest income + Dividend income + Rental income
+  Average Invested Assets = (Beginning + Ending Invested Assets) / 2
+
+Investment Return (Comprehensive) = (Investment Income + Realized Gains) / Avg Invested Assets
+  → Versi ini menambahkan realized gains/losses untuk gambaran lebih lengkap
+
+Total Investment Return = (Investment Income + Realized + Unrealized Gains) / Avg Invested Assets
+  → Versi paling komprehensif; mencerminkan perubahan nilai ekonomis portofolio
+      <span class="note">Catatan: Pilihan mana yang digunakan tergantung tujuan analisis. Untuk menilai earnings quality, income-only yield (tanpa unrealized gains) lebih stabil dan relevan untuk recurring profitability.</span>
+    </div>
+
+    <div class="sub-header">4.2 Duration Mismatch: Risiko Struktural L&amp;H Insurer</div>
+    <p class="prose">Risiko terbesar yang bersifat struktural bagi L&amp;H insurer adalah <strong>duration mismatch</strong> — ketidaksesuaian antara durasi aset dan durasi liabilitas. Secara umum, liabilitas polis L&amp;H memiliki durasi yang lebih panjang dari aset investasi — karena sulit menemukan aset berdurasi 30–40 tahun dalam jumlah yang memadai.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 4 — Dampak Perubahan Suku Bunga pada L&amp;H Insurer (Duration Mismatch)</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Skenario</th><th>Dampak pada Liabilitas</th><th>Dampak pada Aset</th><th>Dampak Net pada Equity</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Suku bunga turun drastis</strong></td><td>PV liabilitas NAIK signifikan (durasi panjang → sangat sensitif)</td><td>PV aset naik, tapi lebih kecil (durasi lebih pendek)</td><td>Equity TERTEKAN — liabilitas naik lebih cepat dari aset</td></tr>
+            <tr><td><strong>Suku bunga naik drastis</strong></td><td>PV liabilitas TURUN (menguntungkan secara present value)</td><td>PV aset turun; unrealized losses pada fixed income</td><td>Efek campuran — bergantung pada degree of mismatch</td></tr>
+            <tr><td><strong>Lingkungan suku bunga rendah berkepanjangan</strong></td><td>Reinvestment risk: return aset baru lebih rendah dari yang dijanjikan ke polis lama</td><td>Nilai aset lama tinggi tapi yield baru rendah</td><td>Spread antara aset dan liabilitas menyempit secara struktural</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Analis mengevaluasi duration mismatch dengan membandingkan durasi rata-rata portofolio investasi insurer dengan durasi estimasi kewajiban polis mereka. Disclosure tentang interest rate sensitivity analysis (mirip dengan VaR atau sensitivity analysis perbankan) sangat berguna untuk evaluasi ini.</p>
+
+    <div class="sub-header">4.3 Ukuran Profitabilitas L&amp;H</div>
+    <p class="prose">Untuk L&amp;H, rasio underwriting seperti combined ratio tidak relevan. Sebagai gantinya, digunakan:</p>
+    <ul class="bullet-list">
+      <li><strong>Return on Equity (ROE)</strong>: Net Income / Average Equity. Ukuran profitabilitas keseluruhan. Komponen earnings harus diperiksa: apakah berasal dari operasi sustainable atau item non-recurring?</li>
+      <li><strong>Pretax Operating ROE</strong>: Menghilangkan distorsi pajak dan unrealized gains/losses untuk mendapatkan gambaran "run-rate" profitabilitas operasi. Ini lebih stabil dan lebih comparable antar insurer.</li>
+      <li><strong>Benefits ratio</strong>: Total benefits paid / Net premiums written + deposits. Mengukur berapa porsi dari premi yang dikembalikan ke pemegang polis.</li>
+    </ul>
+
+    <div class="kc" onclick="this.classList.toggle('open')">
+      <div class="kc-header">
+        <span class="kc-header-title">Knowledge Check 4.1 — Mengapa pretax operating ROE lebih berguna daripada reported ROE untuk membandingkan profitabilitas dua L&amp;H insurer yang berbeda?</span>
+        <span class="kc-toggle">▼</span>
+      </div>
+      <div class="kc-body">
+        <div class="kc-q">Pretax operating ROE vs reported ROE:</div>
+        <div class="kc-answer">
+          Reported ROE L&amp;H insurer sering terdistorsi oleh dua faktor: (1) <strong>Perubahan fair value investasi</strong> — unrealized gains/losses dari portofolio besar dapat mengfluktasi reported net income secara dramatis meskipun operasi bisnis tidak berubah. (2) <strong>Perbedaan tarif pajak</strong> — insurer di yurisdiksi yang berbeda membayar pajak berbeda, membuat post-tax comparison tidak apple-to-apple. Pretax operating ROE menghilangkan kedua distorsi ini, sehingga analis mendapatkan gambaran murni tentang seberapa profitable operasi bisnis asuransi itu sendiri. Ini sangat penting untuk perbandingan antar perusahaan (peer analysis) dan untuk menilai apakah kinerja saat ini sustainable ke depannya.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BAB 5 -->
+  <div class="chapter" id="bab5">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 5</div>
+      <div class="chapter-title">IFRS 17: Kerangka Akuntansi Baru untuk Kontrak Asuransi</div>
+    </div>
+
+    <p class="prose">IFRS 17 <em>Insurance Contracts</em>, efektif 1 Januari 2023, adalah perubahan paling signifikan dalam akuntansi asuransi dalam dua dekade terakhir. Standar ini menggantikan IFRS 4, yang merupakan standar "interim" yang memperbolehkan perusahaan menggunakan berbagai metode akuntansi tidak konsisten dalam melaporkan kontrak asuransi mereka. IFRS 17 membawa konsistensi, transparansi, dan comparability yang jauh lebih besar.</p>
+
+    <div class="sub-header">5.1 Mengapa IFRS 17 Diperlukan?</div>
+    <p class="prose">Di bawah IFRS 4, perusahaan asuransi menggunakan metode akuntansi yang sangat beragam — warisan dari standar akuntansi nasional masing-masing sebelum IFRS diadopsi. Ini membuat perbandingan antar insurer sangat sulit, bahkan di negara yang sama. Masalah spesifik IFRS 4:</p>
+    <ul class="bullet-list">
+      <li><strong>Day-1 profit recognition</strong>: Beberapa metode mengizinkan pengakuan keuntungan langsung saat kontrak ditulis, meski layanan belum diberikan.</li>
+      <li><strong>Mismatch aset-liabilitas</strong>: Aset diukur berdasarkan current market value sedangkan liabilitas sering diukur berdasarkan asumsi historis — menciptakan volatilitas earnings yang artifisial.</li>
+      <li><strong>Kurangnya transparansi profitabilitas</strong>: Sulit membedakan profitabilitas dari underwriting vs investasi.</li>
+    </ul>
+
+    <div class="sub-header">5.2 Tiga Model Pengukuran IFRS 17</div>
+    <p class="prose">IFRS 17 menetapkan tiga model pengukuran yang berbeda sesuai karakteristik kontrak:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 5 — Tiga Model Pengukuran IFRS 17</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Model</th><th>Kapan Digunakan</th><th>Karakteristik Utama</th></tr></thead>
+          <tbody>
+            <tr><td><strong>General Measurement Model (GMM)</strong> / Building Block Approach (BBA)</td><td>Default — digunakan untuk mayoritas kontrak asuransi jangka panjang (seperti produk L&amp;H)</td><td>Tiga "building blocks": (1) Present Value Future Cash Flows; (2) Risk Adjustment; (3) Contractual Service Margin (CSM)</td></tr>
+            <tr><td><strong>Premium Allocation Approach (PAA)</strong></td><td>Kontrak jangka pendek (≤1 tahun coverage, seperti sebagian besar P&amp;C) OR kontrak yang PAA menghasilkan angka tidak materially different dari GMM</td><td>Metode yang lebih sederhana; mirip dengan unearned premium reserve approach yang lama; lebih sedikit requirment estimasi aktuarial</td></tr>
+            <tr><td><strong>Variable Fee Approach (VFA)</strong></td><td>Direct participating contracts — di mana pemegang polis berbagi langsung dalam underlying items (seperti unit-linked L&amp;H atau whole life dengan return terkait investasi)</td><td>Modifikasi GMM; CSM menyesuaikan diri dengan perubahan fair value underlying items sehingga mengurangi volatilitas earnings</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">5.3 General Measurement Model: Tiga Building Blocks</div>
+    <p class="prose">Inti IFRS 17 adalah General Measurement Model dengan tiga komponen:</p>
+
+    <div class="formula-block">
+      <span class="label">Liability for Remaining Coverage (LRC) — GMM</span>
+LRC = Present Value of Future Cash Flows (PVFCF)
+      + Risk Adjustment (RA)
+      + Contractual Service Margin (CSM)
+
+Komponen:
+  PVFCF = PV(future cash outflows) − PV(future cash inflows)
+           = PV(claims + expenses + investment components)
+             − PV(premiums + investment returns to policyholders)
+
+  Risk Adjustment (RA) = kompensasi atas ketidakpastian timing &amp; jumlah cash flows
+                         → Mencerminkan berapa besar insurer "charge" untuk menanggung risiko non-finansial
+
+  Contractual Service Margin (CSM) = keuntungan yang belum direalisasi dari kontrak asuransi
+    → Jika PVFCF + RA &lt; 0 (inflows &gt; outflows + risk): ada keuntungan → masuk CSM
+    → CSM TIDAK langsung ke P&amp;L; dilepas bertahap seiring coverage period
+    → Jika PVFCF + RA &gt; 0 (outflows &gt; inflows + risk): kontrak ONEROUS → kerugian langsung ke P&amp;L
+      <span class="note">Kata kunci: Day-1 PROFIT tidak diakui langsung → masuk CSM. Day-1 LOSS langsung ke P&amp;L. Ini adalah prinsip fundamental yang sering diuji.</span>
+    </div>
+
+    <div class="sub-header">5.4 Contractual Service Margin (CSM): Konsep Kunci</div>
+    <p class="prose">CSM adalah jantung IFRS 17 dan konsep yang paling sering diuji di CFA. CSM merepresentasikan keuntungan yang "didefer" — profit yang sudah terkunci dalam kontrak tapi belum bisa diakui karena layanan (coverage) belum diberikan sepenuhnya.</p>
+
+    <div class="formula-block">
+      <span class="label">CSM Roll-Forward (Simplified)</span>
+CSM Awal Tahun
+  + Keuntungan baru dari kontrak baru yang ditulis tahun ini
+  +/− Efek perubahan asumsi non-financial yang berkaitan dengan layanan masa depan
+  + Accretion of interest (bunga atas CSM saldo, menggunakan locked-in rate)
+  − Pelepasan ke P&amp;L (sebanding dengan coverage units yang diberikan tahun ini)
+= CSM Akhir Tahun
+
+Interpretasi CSM Roll-Forward:
+  CSM yang konsisten tinggi &amp; tumbuh → portofolio kontrak profitable, profitabilitas masa depan terjamin
+  CSM yang menyusut cepat → kontrak baru kurang profitable atau ada revisi negatif asumsi
+  Onerous contracts yang bertambah → kualitas underwriting memburuk
+      <span class="note">CSM adalah "reservoir of future profitability" — analis bisa menilai kualitas earnings masa depan dari ukuran dan pertumbuhan CSM. Berbeda dari earnings reported saat ini, CSM memberikan pandangan ke depan tentang profitabilitas.</span>
+    </div>
+
+    <div class="callout green">
+      <span class="callout-title">IFRS 17 vs IFRS 4: Perubahan Fundamental dalam Pelaporan</span>
+      <p>Di bawah IFRS 4, "revenue" insurer sering dianggap = premi bruto yang dikumpulkan. Di bawah IFRS 17, konsep "insurance revenue" menjadi berbeda total: revenue = layanan yang diberikan dalam periode tersebut (sebanding dengan coverage yang diberikan). Ini berarti:</p>
+      <ul>
+        <li>Premi bukan lagi revenue langsung → masuk ke LRC dulu</li>
+        <li>Insurance revenue diakui seiring coverage period berlangsung</li>
+        <li>Income statement lebih mencerminkan nilai ekonomis yang benar-benar tercipta</li>
+        <li>Perbandingan antar insurer (baik P&amp;C maupun L&amp;H) menjadi jauh lebih bermakna</li>
+      </ul>
+    </div>
+
+    <div class="callout red">
+      <span class="callout-title">Exam Trap: Kontrak Onerous vs Profitable</span>
+      <p>IFRS 17 memiliki asimetri penting: Jika grup kontrak asuransi baru bersifat profitable (CSM &gt; 0), keuntungan ditunda di CSM — tidak boleh langsung ke P&amp;L. Tapi jika kontrak bersifat onerous (CSM yang akan jadi negatif), kerugian LANGSUNG diakui ke P&amp;L pada saat kontrak ditulis. Ini adalah prinsip konservatisme akuntansi: accelerate losses, defer gains. Soal CFA sering menguji ini dengan memberikan skenario dan meminta kandidat mengidentifikasi apakah insurer harus mengakui gain atau loss pada hari pertama.</p>
+    </div>
+
+    <div class="kc" onclick="this.classList.toggle('open')">
+      <div class="kc-header">
+        <span class="kc-header-title">Knowledge Check 5.1 — Sebuah L&amp;H insurer menulis kelompok kontrak baru dengan: PV future premiums = Rp 800 M, PV future claims &amp; expenses = Rp 680 M, Risk Adjustment = Rp 60 M. (1) Hitung CSM. (2) Bagaimana dampaknya pada P&amp;L hari pertama?</span>
+        <span class="kc-toggle">▼</span>
+      </div>
+      <div class="kc-body">
+        <div class="kc-q">CSM Calculation dan Day-1 P&amp;L impact:</div>
+        <div class="kc-answer">
+          PVFCF = PV future outflows − PV future inflows = 680 − 800 = (−120) — insurer akan menerima lebih banyak dari yang dibayar → "profitable"<br><br>
+          Liability = PVFCF + RA = (−120) + 60 = (−60) — negatif, artinya ini menguntungkan<br><br>
+          CSM = −PVFCF − RA = 120 − 60 = <strong>Rp 60 miliar</strong><br><br>
+          <strong>Day-1 P&amp;L impact: NIHIL</strong>. CSM Rp 60 M masuk ke neraca sebagai komponen dari Liability for Remaining Coverage (LRC) — bukan ke income statement. Keuntungan ini akan dilepas ke P&amp;L secara bertahap seiring coverage diberikan kepada pemegang polis selama masa kontrak. Prinsip: IFRS 17 melarang "front-loading" keuntungan dari kontrak asuransi.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BAB 6: LATIHAN -->
+  <div class="chapter" id="latihan">
+    <div class="chapter-header">
+      <div class="chapter-num">Latihan Soal</div>
+      <div class="chapter-title">Item Set Vignette — 6 Soal (CFA Exam Level)</div>
+    </div>
+
+    <div class="practice-body">
+      <div class="vignette">
+        <div class="vignette-label">Vignette — PT Asuransi Cakrawala Nusantara (ACN) dan IFRS 17 Adoption</div>
+        <div class="vignette-text">
+          <strong>Konteks:</strong> Dewi Rahayu, CFA, seorang analis sektor keuangan di PT Danareksa Sekuritas, mengevaluasi dua entitas: (1) PT Asuransi Cakrawala Nusantara (ACN) — perusahaan asuransi umum (P&amp;C) yang terdaftar di BEI, dan (2) PT Sejahtera Jiwa Indonesia (SJI) — perusahaan asuransi jiwa (L&amp;H). Dewi membandingkan keduanya untuk laporan riset ekuitas yang akan dipresentasikan ke tim investment committee.<br><br>
+
+          <strong>Data ACN (P&amp;C Insurer), Tahun 2025 (Rp Miliar):</strong><br>
+          Net Premiums Written: 6.200 | Net Premiums Earned: 5.980<br>
+          Losses &amp; LAE: 3.528 | Underwriting Expenses: 1.984<br>
+          Net Investment Income: 620 | Pre-Tax Income: 740<br>
+          Dividends to Policyholders: 180 | Beginning Net Loss Reserves: 4.100<br>
+          Current Year Incurred Losses: 3.580 | Prior Year Favorable Development: (52)<br>
+          Loss Payments (net): 3.450 | Ending Net Loss Reserves: 4.178<br>
+          Average Invested Assets: 12.400 | Total Revenue: 6.600<br><br>
+
+          <strong>Data SJI (L&amp;H Insurer), Tahun 2025 (Rp Miliar):</strong><br>
+          Net Premiums: 8.500 | Net Investment Income: 2.600<br>
+          Total Revenue: 11.200 | Net Income: 840 | Average Equity: 7.200<br>
+          Pretax Operating Income: 1.200 | Average Invested Assets: 52.000<br>
+          Duration of Assets (years): 8.5 | Duration of Liabilities (years): 14.2<br><br>
+
+          <strong>Informasi IFRS 17 (ACN, untuk grup kontrak baru diterbitkan Desember 2025):</strong><br>
+          ACN baru saja mengadopsi IFRS 17 per 1 Januari 2026. Untuk tujuan illustration, satu kelompok kontrak asuransi properti diterbitkan dengan: PV future premiums = Rp 1.200 M, PV future claims &amp; expenses = Rp 1.050 M, Risk Adjustment = Rp 80 M, Coverage period = 3 tahun (uniform coverage units).
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="q-num">PERTANYAAN 1 dari 6</div>
+        <div class="q-text">Hitung Loss &amp; LAE Ratio, Expense Ratio, Combined Ratio, dan Combined Ratio After Dividends untuk ACN. Berdasarkan angka-angka ini, bagaimana penilaian underwriting performance ACN?</div>
+        <div class="option" onclick="selectOption(this, 1, true)">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Loss Ratio = 59.0%, Expense Ratio = 32.0%, Combined = 91.0%, Combined After Div = 94.0% — underwriting sangat profitable, efisiensi operasi di atas rata-rata</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 1, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Loss Ratio = 56.9%, Expense Ratio = 32.0%, Combined = 88.9%, Combined After Div = 91.9% — underwriting exceptional performance</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 1, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Loss Ratio = 59.0%, Expense Ratio = 31.0%, Combined = 90.0%, Combined After Div = 93.0% — underwriting baik tapi expense ratio perlu perhatian lebih lanjut</div>
+        </div>
+        <div class="explanation" id="exp-1-A">✅ Loss &amp; LAE Ratio = 3.528/5.980 = 59.0% (÷ Earned). Expense Ratio = 1.984/6.200 = 32.0% (÷ Written). Combined = 59.0% + 32.0% = 91.0% — underwriting PROFIT dengan margin 9%, sangat baik. Combined After Dividends = 91.0% + (180/5.980) = 91.0% + 3.01% ≈ 94.0%. Kesimpulan: ACN adalah underwriter berkualitas tinggi — combined ratio 91% menunjukkan efisiensi di atas rata-rata industri (95%+). Bahkan setelah distribusi dividen ke pemegang polis (94%), tetap dalam range yang sangat baik.</div>
+        <div class="explanation" id="exp-1-B">❌ Loss ratio yang benar = 3.528/5.980 = 59.0%, bukan 56.9%. Angka 56.9% mungkin berasal dari menggunakan Net Premiums Written (6.200) sebagai denominator, padahal seharusnya Net Premiums Earned (5.980) untuk loss ratio.</div>
+        <div class="explanation" id="exp-1-C">❌ Expense ratio = 1.984/6.200 = 32.0%, bukan 31.0%. Periksa kembali pembagi yang digunakan. Combined ratio pun ikut salah: 59.0% + 32.0% = 91.0%, bukan 90.0%.</div>
+      </div>
+
+      <div class="question-block">
+        <div class="q-num">PERTANYAAN 2 dari 6</div>
+        <div class="q-text">Verifikasi loss reserve roll-forward ACN untuk 2025 dan hitung % kontribusi favorable development terhadap pre-tax income. Apa implikasinya untuk earnings quality?</div>
+        <div class="option" onclick="selectOption(this, 2, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Roll-forward verified (ending = 4.178). Kontribusi favorable dev = 7.0% dari pre-tax income — sangat kecil, tidak mengindikasikan earnings management</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 2, true)">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Roll-forward verified (ending = 4.178). Kontribusi favorable dev = 7.0% dari pre-tax income — moderat, menunjukkan provisioning yang cukup konservatif tapi tidak mengkhawatirkan; perlu dibandingkan dengan trend multi-tahun</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 2, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Roll-forward tidak dapat diverifikasi karena terjadi discrepancy — ending reserve seharusnya 4.230, bukan 4.178</div>
+        </div>
+        <div class="explanation" id="exp-2-A">❌ Perhitungan kontribusi benar (52/740 = 7.0%), tapi interpretasi "sangat kecil, tidak mengindikasikan earnings management" terlalu definitif hanya dari satu tahun data. Jawaban B lebih tepat karena menekankan perlunya perbandingan trend multi-tahun — satu titik data tidak cukup untuk kesimpulan kuat.</div>
+        <div class="explanation" id="exp-2-B">✅ Roll-forward: 4.100 + 3.580 − 52 − 3.450 = 4.178 ✓. Favorable development Rp 52 M / Pre-tax income Rp 740 M = 7.0% — ini adalah kontribusi moderat. Konteks: Travelers (dalam kurikulum) secara konsisten 16–17%, yang sudah dianggap "perlu perhatian lebih." ACN di 7% lebih rendah dari itu, menunjukkan dependensi yang lebih rendah pada revisi cadangan untuk mendukung earnings. Namun kesimpulan definitif memerlukan data multi-tahun dan perbandingan dengan peers industri asuransi umum Indonesia.</div>
+        <div class="explanation" id="exp-2-C">❌ Roll-forward: 4.100 + 3.580 − 52 − 3.450 = 4.178. Ini tepat sesuai dengan yang dilaporkan. Tidak ada discrepancy. Perhatikan tanda favorable development: negatif (mengurangi reserves) karena ini adalah downward revision dari estimasi sebelumnya.</div>
+      </div>
+
+      <div class="question-block">
+        <div class="q-num">PERTANYAAN 3 dari 6</div>
+        <div class="q-text">Hitung investment yield ACN dan SJI. Mengapa perbedaan yield ini wajar dan apa hubungannya dengan tipe bisnis masing-masing?</div>
+        <div class="option" onclick="selectOption(this, 3, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">A. ACN yield = 5.0%, SJI yield = 5.0% — tidak ada perbedaan signifikan, keduanya insurer yang dikelola dengan baik</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 3, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">B. ACN yield = 4.2%, SJI yield = 5.8% — SJI lebih tinggi tapi keduanya dalam range yang wajar untuk asuransi</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 3, true)">
+          <div class="option-radio"></div>
+          <div class="option-text">C. ACN yield = 5.0%, SJI yield = 5.0% — meski yield sama, SJI dapat mengambil risiko lebih dalam portofolio (misalnya lebih banyak ekuitas) karena klaim L&amp;H lebih prediktabel, sedangkan ACN harus tetap konservatif meski yield-nya identik</div>
+        </div>
+        <div class="explanation" id="exp-3-A">❌ Perhitungan yield benar (620/12.400 = 5.0% dan 2.600/52.000 = 5.0%), tapi interpretasi kurang mendalam. Yield yang sama bisa dicapai melalui profil risiko yang sangat berbeda — ini adalah insight kritis yang terlewat.</div>
+        <div class="explanation" id="exp-3-B">❌ ACN yield = 620/12.400 = 5.0% (bukan 4.2%). SJI yield = 2.600/52.000 = 5.0% (bukan 5.8%). Periksa pembagi yang digunakan — Average Invested Assets sudah diberikan secara eksplisit.</div>
+        <div class="explanation" id="exp-3-C">✅ ACN yield = 620/12.400 = 5.0%. SJI yield = 2.600/52.000 = 5.0% — keduanya identik. Ini adalah kasus menarik: yield sama, tapi implikasi sangat berbeda. ACN (P&amp;C) mencapai 5% dengan portofolio yang sangat konservatif dan likuid (IG bonds). SJI (L&amp;H) bisa mencapai 5% yang sama dengan portofolio yang mengambil risiko lebih tinggi (lebih banyak ekuitas, real estate, atau long-duration bonds) karena prediktabilitas klaim memberi ruang lebih besar. Analis harus mengevaluasi komposisi, bukan hanya level yield.</div>
+      </div>
+
+      <div class="question-block">
+        <div class="q-num">PERTANYAAN 4 dari 6</div>
+        <div class="q-text">Hitung ROE SJI dan evaluasi duration mismatch-nya. Apa risiko utama yang dihadapi SJI jika suku bunga BI Rate turun 200 bps?</div>
+        <div class="option" onclick="selectOption(this, 4, true)">
+          <div class="option-radio"></div>
+          <div class="option-text">A. ROE = 11.7%. Duration mismatch (14.2 − 8.5 = 5.7 tahun) berarti penurunan suku bunga 200 bps akan menyebabkan PV liabilitas naik lebih cepat dari PV aset → equity SJI tertekan signifikan</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 4, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">B. ROE = 11.7%. Duration mismatch tidak mengkhawatirkan karena liabilitas L&amp;H berbasis mortalitas, bukan interest rate sensitive</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 4, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">C. ROE = 8.5%. Duration mismatch berarti SJI akan diuntungkan dari penurunan suku bunga karena nilai portofolio investasinya akan naik</div>
+        </div>
+        <div class="explanation" id="exp-4-A">✅ ROE = Net Income / Avg Equity = 840/7.200 = 11.7% — return yang baik untuk L&amp;H insurer. Duration mismatch: Liability duration (14.2) &gt; Asset duration (8.5) → GAP = 5.7 tahun. Ini berarti ketika suku bunga turun 200 bps: PV liabilitas naik sebesar ≈14.2 × 2% × PV liabilities, sedangkan PV aset hanya naik ≈8.5 × 2% × PV assets. Karena sensitivitas liabilitas jauh lebih besar, equity akan tertekan. Ini adalah risiko struktural klasik bagi L&amp;H insurer dengan duration mismatch yang besar. Dalam lingkungan low-rate seperti 2015–2022, banyak L&amp;H insurer global mengalami tekanan equity yang signifikan akibat fenomena ini.</div>
+        <div class="explanation" id="exp-4-B">❌ Liabilitas L&amp;H SANGAT interest rate sensitive. Meski kasusnya berbasis mortalitas, nilai present value dari kewajiban masa depan sangat bergantung pada discount rate yang digunakan. Duration gap 5.7 tahun adalah risiko yang sangat nyata dan material bagi L&amp;H insurer.</div>
+        <div class="explanation" id="exp-4-C">❌ ROE = 840/7.200 = 11.7%, bukan 8.5%. Dan penurunan suku bunga TIDAK menguntungkan SJI secara net — meski nilai aset naik, kenaikan nilai liabilitas jauh lebih besar (karena durasi lebih panjang). Hasil netnya adalah penurunan equity.</div>
+      </div>
+
+      <div class="question-block">
+        <div class="q-num">PERTANYAAN 5 dari 6</div>
+        <div class="q-text">Berdasarkan data IFRS 17 untuk kelompok kontrak ACN yang baru diterbitkan, hitung CSM dan jelaskan dampaknya pada P&amp;L hari pertama vs tahun-tahun coverage berikutnya.</div>
+        <div class="option" onclick="selectOption(this, 5, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">A. CSM = Rp 150 M. Diakui langsung ke P&amp;L sebagai "day-1 gain" sesuai prinsip revenue recognition IFRS 17</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 5, true)">
+          <div class="option-radio"></div>
+          <div class="option-text">B. CSM = Rp 70 M. Tidak ada dampak P&amp;L hari pertama — CSM masuk ke neraca dan dilepas sebesar Rp 23.3 M per tahun ke P&amp;L selama 3 tahun coverage (diasumsikan uniform)</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 5, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">C. CSM = Rp 70 M. Seluruh CSM diakui ke P&amp;L pada akhir tahun pertama karena coverage sudah dimulai</div>
+        </div>
+        <div class="explanation" id="exp-5-A">❌ CSM = PV Inflows − (PV Outflows + RA) = 1.200 − (1.050 + 80) = 1.200 − 1.130 = 70. Bukan 150 (angka itu muncul jika Risk Adjustment tidak dikurangi: 1.200 − 1.050 = 150). Dan sesuai IFRS 17, day-1 gain TIDAK pernah langsung ke P&amp;L — ini adalah prinsip fundamental yang membedakan IFRS 17 dari metode lama.</div>
+        <div class="explanation" id="exp-5-B">✅ CSM = 1.200 − (1.050 + 80) = Rp 70 M. Ini adalah kontrak profitable (CSM &gt; 0), sehingga: (1) Day-1 P&amp;L: NIHIL — keuntungan ditunda di neraca sebagai CSM. (2) Coverage period 3 tahun uniform → per tahun dilepas: 70/3 ≈ Rp 23.3 M. Setiap tahun, Rp 23.3 M dari CSM dilepas ke P&amp;L sebagai "insurance service result." Di akhir tahun ketiga, seluruh CSM habis dan profit dari kontrak ini sudah sepenuhnya diakui. Ini mencerminkan matching principle yang lebih baik: profit diakui seiring layanan diberikan.</div>
+        <div class="explanation" id="exp-5-C">❌ CSM Rp 70 M benar, tapi pelepasan seluruhnya di akhir tahun pertama salah. IFRS 17 mensyaratkan pelepasan CSM sesuai dengan "coverage units" yang diberikan — yaitu secara proporsional sepanjang coverage period. Untuk kontrak 3 tahun dengan uniform coverage, pelepasan adalah 1/3 per tahun.</div>
+      </div>
+
+      <div class="question-block">
+        <div class="q-num">PERTANYAAN 6 dari 6</div>
+        <div class="q-text">Dewi menyimpulkan bahwa ACN lebih menarik dari SJI karena combined ratio yang lebih baik dan tidak ada duration mismatch. Apakah kesimpulan ini tepat? Faktor apa yang paling mengkhawatirkan untuk masing-masing entitas?</div>
+        <div class="option" onclick="selectOption(this, 6, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Kesimpulan tepat — combined ratio ACN yang rendah adalah sinyal fundamental yang lebih kuat dan lebih sustainable daripada profitabilitas SJI yang terekspos duration risk</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 6, true)">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Kesimpulan tidak tepat — ini adalah perbandingan apples-to-oranges. P&amp;C dan L&amp;H memiliki profil risiko-return yang berbeda dan tidak bisa langsung dibandingkan hanya dari combined ratio. Keputusan investasi memerlukan analisis yang lebih holistik.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 6, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Kesimpulan tepat — duration mismatch SJI merupakan risiko fatal yang membuat SJI tidak layak investasi</div>
+        </div>
+        <div class="explanation" id="exp-6-A">❌ Meskipun combined ratio ACN memang sangat baik, menyebut ini "lebih kuat secara fundamental" tanpa mempertimbangkan faktor lain adalah simplifikasi berlebihan. ACN menghadapi risiko siklus underwriting, catastrophe exposure, dan reserve development risk yang tidak berlaku untuk SJI. Perbandingan langsung antara keduanya tidak tepat karena model bisnis dan risk profile-nya sangat berbeda.</div>
+        <div class="explanation" id="exp-6-B">✅ Kesimpulan Dewi terlalu simplistis. Membandingkan P&amp;C dan L&amp;H secara langsung menggunakan combined ratio adalah metodologi yang keliru — L&amp;H tidak menggunakan combined ratio sebagai ukuran kinerja. Analisis holistik: <strong>ACN (P&amp;C)</strong> — kekuatan: combined ratio 91% (exceptional underwriting), konservatif investasi; concern: exposure bencana alam, siklus underwriting soft market, ketergantungan favorable development meski moderat. <strong>SJI (L&amp;H)</strong> — kekuatan: ROE 11.7% solid, revenue terdiversifikasi antara premium dan investment income; concern: duration mismatch 5.7 tahun yang signifikan (sangat vulnerable jika suku bunga turun). Keduanya bisa menarik tergantung risk appetite investor dan outlook makro suku bunga.</div>
+        <div class="explanation" id="exp-6-C">❌ Duration mismatch 5.7 tahun adalah risiko yang signifikan, tapi tidak "fatal" atau membuat SJI "tidak layak investasi." Hampir semua L&amp;H insurer di seluruh dunia menghadapi degree tertentu dari duration mismatch — ini adalah risiko yang dikelola (melalui hedging, ALM strategies), bukan bencana yang tak terelakkan. ROE 11.7% menunjukkan SJI tetap profitable meski menanggung risiko ini.</div>
+      </div>
+
+      <div class="score-panel" id="score-panel">
+        <div class="score-panel-text">Hasil Latihan Soal Hari Ini</div>
+        <div class="score-panel-value" id="score-value">—</div>
+        <div class="score-panel-text" style="margin-top:8px;font-size:12px;color:var(--text3);" id="score-detail"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="CFA_L2_Day27_Full.html" class="nav-btn">← Day 27 Full: Bank Analysis</a>
+    <a href="CFA_L2_Day28.html" class="nav-btn" style="background:var(--gold-bg);border-color:var(--gold);color:var(--gold2);">📋 Versi Ringkas</a>
+    <a href="CFA_L2_Day29.html" class="nav-btn">Day 29: Earnings &amp; Cash Flow Quality →</a>
+  </div>
+
+</div>
+
+<script>
+  function toggleKC(el) { el.closest('.kc').classList.toggle('open'); }
+  document.querySelectorAll('.kc-header').forEach(h => h.onclick = () => h.closest('.kc').classList.toggle('open'));
+
+  const answers = {};
+  const totalQ = 6;
+
+  function selectOption(el, qNum, isCorrect) {
+    const qBlock = el.closest('.question-block');
+    const options = qBlock.querySelectorAll('.option');
+    options.forEach(o => { o.classList.remove('selected'); o.style.pointerEvents = 'none'; o.style.opacity = '0.7'; });
+    el.classList.add('selected');
+    el.style.opacity = '1';
+    const optLetter = el.querySelector('.option-text').textContent.trim().charAt(0);
+    const expEl = document.getElementById('exp-' + qNum + '-' + optLetter);
+    if (expEl) { expEl.classList.add('show'); expEl.classList.add(isCorrect ? 'correct' : 'incorrect'); }
+    answers[qNum] = isCorrect;
+    if (Object.keys(answers).length === totalQ) {
+      const score = Object.values(answers).filter(v => v).length;
+      const panel = document.getElementById('score-panel');
+      panel.classList.add('show');
+      document.getElementById('score-value').textContent = score + ' / ' + totalQ;
+      document.getElementById('score-detail').textContent = score === totalQ ? '🎉 Sempurna! Semua konsep analisis asuransi dikuasai.'
+        : score >= 5 ? '💪 Hampir sempurna. Review 1 soal yang salah.'
+        : score >= 4 ? '📚 Baik. Perlu pendalaman pada soal yang salah.'
+        : score >= 3 ? '⚠️ Cukup baik. Beberapa konsep inti perlu direview ulang.'
+        : '🔄 Perlu review lengkap materi hari ini sebelum lanjut ke Day 29.';
+    }
+  }
+</script>
+</body>
+</html>

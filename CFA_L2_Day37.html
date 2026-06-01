@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 37 · M&A Mechanics &amp; Defense</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+  --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;--gold:#9a6e1a;--gold2:#7a5010;--gold-bg:rgba(154,110,26,0.08);
+  --blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);--green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);
+  --red:#b83232;--red-bg:rgba(184,50,50,0.08);--amber:#a06010;--amber-bg:rgba(160,96,16,0.08);
+  --purple:#6a3ab0;--purple-bg:rgba(106,58,176,0.08);--r:10px;--r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.7;min-height:100vh;}
+.page{max-width:820px;margin:0 auto;padding:40px 24px 80px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.hero{margin-bottom:32px;}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:32px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:14px;color:var(--text2);}
+.meta-row{display:flex;gap:16px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+.section{margin-bottom:28px;}
+.section-label{font-size:10px;color:var(--text3);letter-spacing:0.09em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.obj-box{background:var(--gold-bg);border:1px solid rgba(201,168,76,0.25);border-radius:var(--r);padding:16px 18px;margin-bottom:24px;}
+.obj-box-title{font-size:11px;color:var(--gold);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;font-weight:500;}
+.obj-list{list-style:none;}
+.obj-list li{font-size:13px;color:var(--text2);padding:3px 0 3px 16px;position:relative;}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--gold);font-size:11px;top:5px;}
+.concept-grid{display:flex;flex-direction:column;gap:14px;}
+.concept-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+.concept-card-header{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);}
+.concept-num{width:26px;height:26px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--gold);flex-shrink:0;}
+.concept-title{font-size:14px;font-weight:500;color:var(--text);}
+.concept-body{padding:14px 16px;font-size:13px;color:var(--text2);line-height:1.75;}
+.concept-body p{margin-bottom:10px;}
+.concept-body p:last-child{margin-bottom:0;}
+.formula{background:var(--bg3);border:1px solid var(--border2);border-left:3px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:12px 16px;margin:10px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);line-height:1.6;}
+.formula .comment{color:var(--text3);font-style:italic;}
+.assume-table{width:100%;border-collapse:collapse;font-size:13px;}
+.assume-table th{text-align:left;padding:9px 12px;background:var(--bg3);color:var(--text2);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid var(--border2);}
+.assume-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+.assume-table tr:last-child td{border-bottom:none;}
+.assume-table .name{font-weight:500;color:var(--text);}
+.badge{display:inline-flex;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;}
+.badge-blue{background:var(--blue-bg);color:var(--blue);}
+.badge-amber{background:var(--amber-bg);color:var(--amber);}
+.badge-green{background:var(--green-bg);color:var(--green);}
+.badge-red{background:var(--red-bg);color:var(--red);}
+.insight{background:var(--blue-bg);border:1px solid rgba(91,156,246,0.2);border-radius:var(--r);padding:14px 16px;margin:12px 0;font-size:13px;color:var(--text2);}
+.insight strong{color:var(--blue);}
+.trap{background:var(--red-bg);border:1px solid rgba(240,108,108,0.2);border-radius:var(--r);padding:14px 16px;margin:12px 0;}
+.trap-label{font-size:10px;color:var(--red);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:6px;font-weight:500;}
+.trap p{font-size:13px;color:var(--text2);}
+.divider{height:1px;background:var(--border);margin:28px 0;}
+.practice-header{background:var(--gold-bg);border:1px solid rgba(201,168,76,0.2);border-radius:var(--r) var(--r) 0 0;padding:14px 18px;display:flex;align-items:center;gap:12px;}
+.practice-icon{font-size:18px;}
+.practice-header-text{flex:1;}
+.practice-header-title{font-size:15px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);}
+.practice-body{background:var(--bg2);border:1px solid rgba(201,168,76,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:20px;}
+.vignette{background:var(--bg3);border-left:3px solid var(--gold);padding:16px 18px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:24px;font-size:13px;color:var(--text2);line-height:1.8;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;font-weight:500;}
+.question-block{margin-bottom:22px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:5px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:11px;line-height:1.6;}
+.option{display:block;width:100%;text-align:left;padding:10px 14px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:7px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.5;}
+.option:hover:not(:disabled){border-color:var(--border2);color:var(--text);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);margin-top:8px;line-height:1.7;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:24px;margin-top:16px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:48px;margin-bottom:6px;}
+.score-msg{font-size:13px;color:var(--text2);}
+.cheat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:540px){.cheat-grid{grid-template-columns:1fr;}}
+.cheat-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;}
+.cheat-key{font-size:11px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em;}
+.cheat-val{font-size:13px;color:var(--text);font-family:'JetBrains Mono',monospace;}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II &middot; <span>Corporate Issuers</span> &middot; LM4</div>
+    <div class="day-badge">Day 37 of 90</div>
+  </div>
+  <div class="hero">
+    <div class="hero-tag">Monday, 8 June 2026</div>
+    <h1 class="hero-title">M&amp;A Mechanics &amp; Defense</h1>
+    <p class="hero-sub">M&amp;A and Corporate Restructuring &mdash; Subtopic 1 of 2</p>
+    <div class="meta-row">
+      <div class="meta-pill">&#9201; <b>60 min</b> total</div>
+      <div class="meta-pill">&#128218; <b>30 min</b> theory</div>
+      <div class="meta-pill">&#128221; <b>30 min</b> practice</div>
+      <div class="meta-pill">&#9878;&#65039; Exam weight <b>~8%</b></div>
+    </div>
+  </div>
+  <div class="obj-box">
+    <div class="obj-box-title">Learning Objectives &mdash; Hari ini lo harus bisa:</div>
+    <ul class="obj-list">
+      <li>Bedakan empat tipe merger (horizontal, vertical, conglomerate, congeneric) dan motivasi di balik masing-masing</li>
+      <li>Hitung dan interpretasikan HHI serta perubahan HHI untuk menilai risiko penolakan regulasi</li>
+      <li>Jelaskan mekanisme takeover defenses pre-offer dan post-offer beserta trade-off shareholder value-nya</li>
+      <li>Terapkan framework identifikasi jenis merger dan defense yang paling tepat dari vignette CFA</li>
+    </ul>
+  </div>
+  <div class="section">
+    <div class="section-label">Theory &middot; 30 min</div>
+    <div class="concept-grid">
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">1</div>
+          <div class="concept-title">Tipe-Tipe Merger &mdash; Kenali dari Konteksnya</div>
+        </div>
+        <div class="concept-body">
+          <p>Merger diklasifikasikan berdasarkan <em>hubungan bisnis</em> antara acquirer dan target. Ini penting karena berbeda tipe &rarr; berbeda motivasi synergy &rarr; berbeda risiko regulatory scrutiny.</p>
+          <table class="assume-table">
+            <thead><tr><th>Tipe Merger</th><th>Definisi</th><th>Contoh</th><th>Risiko Regulasi</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="name">Horizontal</td>
+                <td>Dua perusahaan di industri yang sama dan level yang sama dalam rantai produksi &mdash; kompetitor langsung</td>
+                <td>Bank A akuisisi Bank B; dua maskapai penerbangan merger</td>
+                <td><span class="badge badge-red">Tertinggi</span></td>
+              </tr>
+              <tr>
+                <td class="name">Vertical</td>
+                <td>Perusahaan dengan hubungan supplier-customer; integrasi ke hulu (backward) atau hilir (forward)</td>
+                <td>Produsen baja akuisisi tambang bijih besi; pabrik akuisisi retailer</td>
+                <td><span class="badge badge-amber">Sedang</span></td>
+              </tr>
+              <tr>
+                <td class="name">Conglomerate</td>
+                <td>Perusahaan dari industri yang tidak berkaitan sama sekali; tidak ada hubungan operasional</td>
+                <td>Perusahaan energi akuisisi perusahaan media; grup konglomerat Indonesia</td>
+                <td><span class="badge badge-green">Rendah</span></td>
+              </tr>
+              <tr>
+                <td class="name">Congeneric</td>
+                <td>Industri sama atau sangat terkait, tapi tidak bersaing secara langsung (product extension / market extension)</td>
+                <td>Bank akuisisi perusahaan asuransi; produsen HP akuisisi produsen tablet</td>
+                <td><span class="badge badge-blue">Sedang-rendah</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="insight">
+            <strong>Kunci identifikasi:</strong> Horizontal = sama persis bidang dan level-nya &rarr; paling banyak muncul di soal HHI. Conglomerate = totally different industries &rarr; almost no antitrust concern. Congeneric sering jadi distractor karena mirip horizontal &mdash; tapi bedanya mereka tidak bersaing langsung di pasar yang sama.
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">2</div>
+          <div class="concept-title">HHI &mdash; Alat Ukur Konsentrasi Pasar</div>
+        </div>
+        <div class="concept-body">
+          <p>Herfindahl-Hirschman Index (HHI) digunakan regulator (KPPU di Indonesia, DOJ/FTC di AS) untuk mengukur seberapa terkonsentrasi suatu pasar dan apakah merger akan meningkatkan konsentrasi secara signifikan hingga merugikan konsumen.</p>
+          <div class="formula">
+            HHI = &Sigma; (s<sub>i</sub>)<sup>2</sup>
+            <span class="comment">// s_i = market share pemain ke-i dalam bentuk PERSEN (bukan desimal)</span>
+            <span class="comment">// misalnya share 30% ditulis 30 &rarr; kontribusi = 30&sup2; = 900</span>
+          </div>
+          <div class="formula">
+            &Delta;HHI (post-merger) = 2 &times; s<sub>A</sub> &times; s<sub>B</sub>
+            <span class="comment">// s_A dan s_B = market share acquirer dan target (dalam persen)</span>
+            <span class="comment">// Shortcut karena (s_A + s_B)&sup2; = s_A&sup2; + 2s_As_B + s_B&sup2;</span>
+          </div>
+          <table class="assume-table">
+            <thead><tr><th>Post-Merger HHI</th><th>Klasifikasi Pasar</th><th>Implikasi Regulasi</th></tr></thead>
+            <tbody>
+              <tr><td class="name">&lt; 1.500</td><td>Unconcentrated</td><td>Umumnya disetujui tanpa penyelidikan tambahan</td></tr>
+              <tr><td class="name">1.500 &ndash; 2.500</td><td>Moderately Concentrated</td><td>Diinvestigasi lebih lanjut jika &Delta;HHI &gt; 100</td></tr>
+              <tr><td class="name">&gt; 2.500</td><td>Highly Concentrated</td><td>Presumed anticompetitive jika &Delta;HHI &gt; 200</td></tr>
+            </tbody>
+          </table>
+          <div class="trap">
+            <div class="trap-label">&#9888; Exam Trap</div>
+            <p>Soal CFA sering minta hitung HHI sebelum dan sesudah merger, lalu tentukan apakah regulator akan menentang. Ingat: yang dihitung adalah HHI <em>seluruh pasar</em> &mdash; bukan hanya dua perusahaan yang merger. Post-merger, kedua perusahaan dihitung sebagai satu entitas dengan share gabungan. Formula shortcut &Delta;HHI = 2 &times; s<sub>A</sub> &times; s<sub>B</sub> sangat berguna &mdash; hafalkan.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">3</div>
+          <div class="concept-title">Pre-Offer Defenses &mdash; Pagar Sebelum Ada Serangan</div>
+        </div>
+        <div class="concept-body">
+          <p>Pre-offer defenses dipasang <em>sebelum</em> ada tawaran akuisisi. Tujuan: membuat target lebih sulit atau mahal untuk diambil alih. Umumnya memerlukan persetujuan shareholders saat dipasang, tapi setelah itu bekerja otomatis.</p>
+          <table class="assume-table">
+            <thead><tr><th>Defense</th><th>Mekanisme</th><th>Efek Utama</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="name">Poison Pill<br><small style="font-weight:normal">(Shareholder Rights Plan)</small></td>
+                <td>Memberikan hak kepada existing shareholders untuk membeli saham baru dengan harga diskon besar (biasanya 50%) jika acquirer melampaui threshold kepemilikan tertentu (biasanya 15-20%). <em>Flip-in</em>: beli saham target. <em>Flip-over</em>: beli saham acquirer.</td>
+                <td>Sangat mendilusi saham acquirer &rarr; membuat akuisisi jauh lebih mahal dan tidak ekonomis</td>
+              </tr>
+              <tr>
+                <td class="name">Staggered Board<br><small style="font-weight:normal">(Classified Board)</small></td>
+                <td>Direksi dibagi menjadi beberapa kelas (biasanya 3), dengan masa jabatan multi-tahun. Hanya satu kelas yang bisa diganti per tahun melalui pemilihan rutin.</td>
+                <td>Acquirer butuh 2-3 siklus pemilihan (2-3 tahun) untuk mendapat kontrol mayoritas board &rarr; mengurangi insentif hostile takeover</td>
+              </tr>
+              <tr>
+                <td class="name">Supermajority Provision</td>
+                <td>Merger memerlukan persetujuan 67%-90% pemegang saham, bukan sekadar simple majority (50%+1)</td>
+                <td>Menaikkan bar approval secara signifikan &rarr; lebih sulit bagi acquirer untuk memenangkan shareholder vote</td>
+              </tr>
+              <tr>
+                <td class="name">Fair Price Amendment</td>
+                <td>Mengharuskan acquirer membayar "fair price" (biasanya harga tertinggi yang pernah dibayar) kepada <em>semua</em> shareholders</td>
+                <td>Mencegah two-tiered bids yang memberikan harga berbeda ke kelompok shareholders berbeda</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="insight">
+            <strong>Penting:</strong> Poison pill adalah defense paling kuat dan paling sering diujikan di CFA. Ia bersifat self-executing &mdash; aktivasinya otomatis tanpa perlu shareholder vote setelah dipasang. Inilah yang membuat poison pill sangat efektif melawan hostile takeover.
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">4</div>
+          <div class="concept-title">Post-Offer Defenses &mdash; Respons Setelah Tawaran Datang</div>
+        </div>
+        <div class="concept-body">
+          <p>Post-offer defenses digunakan <em>setelah</em> ada tawaran akuisisi yang tidak diinginkan. Target perlu bertindak cepat. Beberapa defense ini controversial dari perspektif shareholder value.</p>
+          <table class="assume-table">
+            <thead><tr><th>Defense</th><th>Deskripsi</th><th>Catatan Governance</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="name">White Knight</td>
+                <td>Target mencari acquirer lain yang lebih friendly untuk mengajukan tawaran tandingan yang lebih menarik bagi shareholders</td>
+                <td>Hasilnya tetap merger, tapi dengan pihak yang diinginkan manajemen; umumnya menguntungkan shareholders</td>
+              </tr>
+              <tr>
+                <td class="name">White Squire</td>
+                <td>Target menjual blok saham signifikan ke pihak ketiga yang bersahabat, tapi <em>tidak</em> yang akan mengambil alih penuh</td>
+                <td>Mengurangi floating shares; mempersulit hostile acquirer mendapat kontrol; target tetap independen</td>
+              </tr>
+              <tr>
+                <td class="name">Pac-Man Defense</td>
+                <td>Target balik menyerang dengan mengajukan tawaran akuisisi kepada si acquirer itu sendiri</td>
+                <td>Agresif dan sangat mahal; jarang digunakan; nama dari game klasik di mana yang dimakan balik makan</td>
+              </tr>
+              <tr>
+                <td class="name">Crown Jewel Defense</td>
+                <td>Target menjual atau mengancam menjual aset paling berharga agar target menjadi tidak menarik lagi bagi acquirer</td>
+                <td>Sangat kontroversial; merusak nilai untuk semua shareholders demi resistensi manajemen</td>
+              </tr>
+              <tr>
+                <td class="name">Greenmail</td>
+                <td>Target membeli kembali saham hostile acquirer dengan harga premium di atas harga pasar</td>
+                <td>Menguntungkan acquirer; merugikan shareholders lain yang tidak mendapat premium; dianggap managerial entrenchment</td>
+              </tr>
+              <tr>
+                <td class="name">Golden Parachute</td>
+                <td>Paket pesangon sangat besar bagi eksekutif jika terjadi perubahan kontrol (biasanya dipasang sebagai pre-offer defense)</td>
+                <td>Membuat akuisisi lebih mahal; tapi juga menurunkan resistensi manajemen karena mereka tetap dibayar besar</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="trap">
+            <div class="trap-label">&#9888; Exam Trap &mdash; Pac-Man vs White Knight</div>
+            <p>Pac-Man = target <em>menyerang balik acquirer dengan counter-bid</em>. White Knight = target <em>mencari penyelamat lain</em>. Bedakan: White Knight tidak menghentikan merger &mdash; ia hanya mengubah siapa yang mengakuisisi. Juga bedakan White Knight vs White Squire: White Knight mengambil alih penuh; White Squire hanya menjadi friendly blockholder tanpa mengambil alih.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="section">
+    <div class="section-label">Quick Reference Cheat Sheet</div>
+    <div class="cheat-grid">
+      <div class="cheat-item">
+        <div class="cheat-key">Formula HHI</div>
+        <div class="cheat-val">&#8721;(si&sup2;) &mdash; si dalam %</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">&Delta;HHI post-merger</div>
+        <div class="cheat-val">2 &times; sA &times; sB</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">HHI Highly Concentrated</div>
+        <div class="cheat-val">&gt;2,500 &amp; &Delta;HHI&gt;200 &rarr; ditolak</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Poison Pill (flip-in)</div>
+        <div class="cheat-val">Existing SH beli saham target diskon</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">White Knight vs Pac-Man</div>
+        <div class="cheat-val">WK: cari friendlier buyer; PM: counter-bid pada attacker</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Merger Risiko Regulasi Tertinggi</div>
+        <div class="cheat-val">Horizontal (same industry + same level)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="section">
+    <div class="section-label">Practice &middot; 30 min</div>
+    <div class="practice-header">
+      <div class="practice-icon">&#128203;</div>
+      <div class="practice-header-text">
+        <div class="practice-header-title">Mini Case: Akuisisi di Sektor Perbankan Indonesia</div>
+        <div class="practice-header-sub">Baca vignette berikut, lalu jawab 4 pertanyaan</div>
+      </div>
+    </div>
+    <div class="practice-body">
+      <div class="vignette">
+        <div class="vignette-label">Vignette</div>
+        <p>PT Nusantara Bank Tbk (NUSA) adalah bank swasta nasional kelas menengah dengan market share simpanan sebesar <strong>12%</strong> di pasar perbankan Indonesia. NUSA mengumumkan rencana akuisisi 100% saham PT Bank Mahardika Tbk (MHRD), bank regional dengan market share simpanan <strong>8%</strong>.</p>
+        <p style="margin-top:10px;">Sebelum pengumuman, distribusi market share di industri perbankan Indonesia adalah: Bank Mandiri 22%, BRI 20%, BCA 18%, NUSA 12%, Bank CIMB Niaga 9%, Bank Mahardika 8%, dan sisanya terdistribusi di berbagai bank kecil (11% total, diasumsikan sebagai satu entitas untuk keperluan perhitungan).</p>
+        <p style="margin-top:10px;">Menjelang rapat pemegang saham, muncul laporan bahwa Bank Garuda Internasional (BGI) &mdash; bank asing yang ingin memasuki pasar Indonesia &mdash; juga tertarik mengakuisisi MHRD dengan tawaran harga 15% di atas tawaran NUSA. Merespons ancaman ini, manajemen MHRD segera menjual 25% saham MHRD kepada Dana Pensiun Pertamina, sebuah entitas yang tidak berminat mengambil alih MHRD.</p>
+        <p style="margin-top:10px;">MHRD juga memiliki jaringan ATM eksklusif di seluruh SPBU Nasional yang dianggap sebagai aset terpentingnya. Direksi MHRD mempertimbangkan berbagai opsi strategis untuk mempertahankan independensinya.</p>
+      </div>
+
+      <div class="question-block" data-q="1" data-correct="B">
+        <div class="q-num">QUESTION 1 OF 4</div>
+        <div class="q-text">Merger antara NUSA dan MHRD paling tepat diklasifikasikan sebagai tipe merger apa, dan apakah merger ini berpotensi menghadapi tantangan dari regulator persaingan usaha?</div>
+        <button class="option" data-opt="A">A. Vertical merger; tidak akan menghadapi scrutiny regulasi karena tidak mengurangi persaingan horizontal</button>
+        <button class="option" data-opt="B">B. Horizontal merger; berpotensi diinvestigasi karena &Delta;HHI &gt; 100 di pasar yang moderately concentrated</button>
+        <button class="option" data-opt="C">C. Congeneric merger; kemungkinan besar disetujui tanpa syarat karena keduanya di sub-sektor berbeda</button>
+        <div class="explanation correct">
+          &#10003; <strong>B adalah jawaban benar.</strong> NUSA dan MHRD adalah dua bank umum yang bersaing langsung &rarr; ini adalah <em>horizontal merger</em>. Hitung HHI pre-merger: 22&sup2; + 20&sup2; + 18&sup2; + 12&sup2; + 9&sup2; + 8&sup2; + 11&sup2; = 484+400+324+144+81+64+121 = 1.618. Post-merger NUSA+MHRD menjadi satu entitas dengan share 20%: HHI = 22&sup2;+20&sup2;+18&sup2;+20&sup2;+9&sup2;+11&sup2; = 484+400+324+400+81+121 = 1.810. HHI berada di zona moderately concentrated (1.500&ndash;2.500), dan &Delta;HHI = 2&times;12&times;8 = 192 &gt; 100 &rarr; berpotensi diselidiki lebih lanjut oleh KPPU/regulator.
+        </div>
+        <div class="explanation incorrect">
+          &#10007; NUSA dan MHRD adalah bank umum yang bersaing langsung di pasar simpanan yang sama, jadi ini jelas horizontal merger, bukan vertical (yang melibatkan hubungan supplier-customer) atau congeneric (yang berarti industri terkait tapi tidak bersaing langsung). Hitung HHI untuk mengonfirmasi risiko regulasi &mdash; jangan abaikan numerik di soal.
+        </div>
+      </div>
+
+      <div class="question-block" data-q="2" data-correct="A">
+        <div class="q-num">QUESTION 2 OF 4</div>
+        <div class="q-text">Tindakan manajemen MHRD yang menjual 25% saham kepada Dana Pensiun Pertamina untuk mempersulit BGI mengambil alih MHRD paling tepat diklasifikasikan sebagai defense apa?</div>
+        <button class="option" data-opt="A">A. White squire defense &mdash; menjual blok saham besar ke pihak bersahabat yang tidak berniat mengambil alih penuh</button>
+        <button class="option" data-opt="B">B. White knight defense &mdash; mencari acquirer alternatif yang lebih friendly dari BGI</button>
+        <button class="option" data-opt="C">C. Poison pill &mdash; mekanisme yang mendilusi kepemilikan hostile acquirer secara otomatis</button>
+        <div class="explanation correct">
+          &#10003; <strong>A adalah jawaban benar.</strong> White squire adalah ketika target menjual blok saham signifikan kepada pihak ketiga yang bersahabat (<em>bukan</em> yang akan mengakuisisi penuh). Dana Pensiun Pertamina adalah <em>friendly blockholder</em> yang tidak berniat mengambil alih &mdash; inilah definisi white squire. Dengan 25% saham di tangan pihak bersahabat, floating shares yang tersedia untuk BGI berkurang, dan BGI butuh membeli lebih banyak saham dengan biaya lebih besar untuk mendapat kontrol.
+        </div>
+        <div class="explanation incorrect">
+          &#10007; White knight (B) salah karena white knight adalah calon acquirer yang akan mengambil alih <em>penuh</em> MHRD dengan tawaran yang mengalahkan BGI &mdash; bukan sekadar investor pasif. Dana Pensiun Pertamina tidak akan mengakuisisi MHRD, jadi bukan white knight. Poison pill (C) salah karena poison pill adalah rights plan otomatis yang memberikan hak membeli saham diskon &mdash; bukan penjualan saham bilateral kepada satu pihak.
+        </div>
+      </div>
+
+      <div class="question-block" data-q="3" data-correct="C">
+        <div class="q-num">QUESTION 3 OF 4</div>
+        <div class="q-text">Jika direksi MHRD memutuskan untuk menjual jaringan ATM eksklusif di SPBU Nasional kepada pihak lain agar BGI tidak tertarik lagi mengakuisisi MHRD, strategi ini disebut apa dan apa kelemahan utamanya dari perspektif shareholder?</div>
+        <button class="option" data-opt="A">A. Poison pill; kelemahan: aktivasinya memerlukan persetujuan pemegang saham sehingga terlalu lambat dalam situasi darurat</button>
+        <button class="option" data-opt="B">B. Greenmail; kelemahan: manajemen harus menggunakan kas perusahaan untuk membeli kembali saham BGI dengan premium yang merugikan kas perusahaan</button>
+        <button class="option" data-opt="C">C. Crown jewel defense; kelemahan: merusak nilai intrinsik perusahaan bagi semua pemegang saham karena aset paling berharga dijual demi resistensi manajemen</button>
+        <div class="explanation correct">
+          &#10003; <strong>C adalah jawaban benar.</strong> Menjual aset paling berharga perusahaan (jaringan ATM eksklusif yang merupakan &ldquo;crown jewel&rdquo; MHRD) untuk membuat diri tidak menarik bagi hostile acquirer adalah definisi tepat dari <em>crown jewel defense</em>. Kelemahannya sangat jelas dari sudut pandang corporate governance: dengan menjual aset terbaik, manajemen justru menghancurkan nilai intrinsik perusahaan bagi <em>semua</em> pemegang saham &mdash; ini dianggap sebagai managerial entrenchment yang memprioritaskan kepentingan manajemen bertahan di atas nilai pemegang saham.
+        </div>
+        <div class="explanation incorrect">
+          &#10007; Poison pill (A) bukan tentang menjual aset &mdash; ia adalah shareholder rights plan yang mendilusi saham acquirer. Greenmail (B) adalah pembelian kembali saham <em>acquirer</em> oleh target dengan harga premium, bukan penjualan aset perusahaan. Pastikan lo hafal definisi masing-masing defense secara presisi karena soal CFA sering memainkan distractor berdasarkan kemiripan superfisial.
+        </div>
+      </div>
+
+      <div class="question-block" data-q="4" data-correct="A">
+        <div class="q-num">QUESTION 4 OF 4</div>
+        <div class="q-text">Dari perspektif shareholder value, defense mana yang paling sering dikritik sebagai managerial entrenchment karena langsung merugikan existing shareholders?</div>
+        <button class="option" data-opt="A">A. Greenmail dan crown jewel defense, karena keduanya langsung merugikan nilai shareholders demi mempertahankan manajemen saat ini</button>
+        <button class="option" data-opt="B">B. Poison pill, karena menghalangi hostile takeover bahkan ketika tawaran akuisisi memberikan premium signifikan bagi shareholders</button>
+        <button class="option" data-opt="C">C. White knight, karena hasilnya tetap merger sehingga manajemen lama akhirnya tetap diganti oleh acquirer baru</button>
+        <div class="explanation correct">
+          &#10003; <strong>A adalah jawaban benar.</strong> Greenmail membelikan kembali saham hostile acquirer dengan harga premium &mdash; artinya acquirer yang berperilaku seperti ancaman justru mendapat keuntungan finansial, sementara pemegang saham lain tidak mendapat premium tersebut dan nilai perusahaan bisa turun karena kas dipakai untuk greenmail. Crown jewel defense bahkan lebih ekstrem: menjual aset terbaik perusahaan menghancurkan nilai langsung bagi semua pemegang saham. Keduanya adalah contoh klasik tindakan manajemen yang memprioritaskan self-preservation di atas kepentingan shareholders.
+        </div>
+        <div class="explanation incorrect">
+          &#10007; Poison pill (B) memang bisa dikritik karena menghalangi takeover, tapi argumennya lebih seimbang &mdash; ia juga bisa memberi waktu board untuk mencari tawaran yang lebih tinggi bagi shareholders. White knight (C) tidak dianggap merugikan shareholders &mdash; justru tujuannya adalah mendapatkan nilai yang lebih baik melalui kompetisi antar acquirer; shareholders di target umumnya diuntungkan.
+        </div>
+      </div>
+
+      <div id="score-panel-1" class="score-panel">
+        <div class="score-num" id="score-value-1"></div>
+        <div class="score-msg">Review setiap explanation &mdash; pahami mekanismenya, bukan sekadar hafalnya.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="CFA_L2_Day36.html" class="nav-btn">&larr; Day 36: Agency Conflicts &amp; Activism</a>
+    <a href="CFA_L2_Day38.html" class="nav-btn primary">Day 38: Synergy Valuation &amp; Restructuring &rarr;</a>
+  </div>
+</div>
+
+<script>
+(function() {
+  var answers = {};
+  var correct = {};
+  document.querySelectorAll('.question-block').forEach(function(qb) {
+    var q = qb.dataset.q;
+    correct[q] = qb.dataset.correct;
+    qb.querySelectorAll('.option').forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        if (answers[q]) return;
+        answers[q] = opt.dataset.opt;
+        qb.querySelectorAll('.option').forEach(function(o) { o.disabled = true; });
+        var isCorrect = opt.dataset.opt === correct[q];
+        if (isCorrect) {
+          opt.classList.add('correct');
+        } else {
+          opt.classList.add('wrong');
+          qb.querySelectorAll('.option').forEach(function(o) {
+            if (o.dataset.opt === correct[q]) o.classList.add('correct');
+          });
+        }
+        var expls = qb.querySelectorAll('.explanation');
+        var target = isCorrect ? expls[0] : expls[1];
+        if (target) { target.style.display = 'block'; target.classList.add('show'); }
+        var total = Object.keys(correct).length;
+        var scored = Object.keys(answers).length;
+        if (scored === total) {
+          var score = Object.keys(answers).filter(function(k) { return answers[k] === correct[k]; }).length;
+          var panel = document.getElementById('score-panel-1');
+          if (panel) {
+            panel.style.display = 'block';
+            document.getElementById('score-value-1').textContent = score + '/' + total;
+          }
+        }
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

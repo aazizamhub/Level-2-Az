@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 39 · Full · Kerangka Penilaian Ekuitas: Aplikasi dan Proses</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+  --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;--gold:#9a6e1a;--gold2:#7a5010;--gold-bg:rgba(154,110,26,0.08);
+  --blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);--green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);
+  --red:#b83232;--red-bg:rgba(184,50,50,0.08);--amber:#a06010;--amber-bg:rgba(160,96,16,0.08);--r:10px;--r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.8;}
+.page{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;border:1px solid rgba(26,95,168,0.2);}
+.hero{margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--border);}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:36px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:15px;color:var(--text2);}
+.meta-row{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:36px;}
+.toc-title{font-size:12px;color:var(--text3);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:12px;font-weight:500;}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.toc-list li a{font-size:13px;color:var(--blue);text-decoration:none;display:flex;align-items:center;gap:8px;}
+.toc-list li a:hover{text-decoration:underline;}
+.toc-num{font-size:11px;color:var(--text3);min-width:20px;}
+.chapter{margin-bottom:40px;}
+.chapter-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--gold-bg);}
+.chapter-num{font-family:'DM Serif Display',serif;font-size:28px;color:var(--gold);line-height:1;}
+.chapter-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);line-height:1.2;}
+.sub-header{font-size:17px;font-weight:500;color:var(--text);margin:24px 0 12px;padding-left:12px;border-left:3px solid var(--gold);}
+.prose{font-size:14px;color:var(--text2);line-height:1.85;margin-bottom:14px;}
+.prose strong{color:var(--text);font-weight:500;}
+.formula-block{background:var(--bg2);border:1px solid var(--border2);border-left:4px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:16px 20px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold2);line-height:2;}
+.formula-block .label{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:8px;}
+.formula-block .note{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text3);font-style:italic;display:block;margin-top:8px;}
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:20px 0;}
+.exhibit-title{background:var(--bg3);padding:10px 16px;font-size:12px;font-weight:500;color:var(--text2);border-bottom:1px solid var(--border);letter-spacing:0.03em;}
+.exhibit-body{padding:16px;}
+.reg-table{width:100%;border-collapse:collapse;font-size:13px;}
+.reg-table th{text-align:left;padding:8px 12px;background:var(--bg3);color:var(--text3);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border2);}
+.reg-table td{padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:top;color:var(--text2);font-size:13px;}
+.reg-table td:first-child{font-size:13px;color:var(--text);font-weight:500;}
+.reg-table tr:last-child td{border-bottom:none;}
+.reg-table .num{font-family:'JetBrains Mono',monospace;text-align:right;}
+.callout{border-radius:var(--r);padding:16px 18px;margin:16px 0;}
+.callout-title{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;}
+.callout p{font-size:13px;color:var(--text2);line-height:1.75;}
+.callout p+p{margin-top:8px;}
+.callout.blue{background:var(--blue-bg);border:1px solid rgba(26,95,168,0.15);}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.amber{background:var(--amber-bg);border:1px solid rgba(160,96,16,0.15);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.red{background:var(--red-bg);border:1px solid rgba(184,50,50,0.15);}
+.callout.red .callout-title{color:var(--red);}
+.callout.gold{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);}
+.callout.gold .callout-title{color:var(--gold);}
+.callout.green{background:var(--green-bg);border:1px solid rgba(26,122,74,0.15);}
+.callout.green .callout-title{color:var(--green);}
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:24px 0;overflow:hidden;}
+.kc-header{background:var(--gold-bg);padding:12px 18px;border-bottom:1px solid rgba(154,110,26,0.15);}
+.kc-header-title{font-size:12px;font-weight:500;color:var(--gold);letter-spacing:0.06em;text-transform:uppercase;}
+.kc-body{padding:18px;}
+.kc-q{font-size:13px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.6;}
+.kc-answer{background:var(--bg3);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);line-height:1.75;display:none;}
+.kc-answer.show{display:block;}
+.kc-answer strong{color:var(--green);}
+.kc-toggle{background:none;border:1px solid var(--border2);border-radius:var(--r-sm);padding:6px 14px;font-size:12px;color:var(--text3);cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px;transition:all 0.15s;}
+.kc-toggle:hover{border-color:var(--gold);color:var(--gold);}
+.bullet-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin:10px 0;}
+.bullet-list li{display:flex;gap:10px;font-size:13px;color:var(--text2);line-height:1.7;}
+.bullet-list li::before{content:'■';color:var(--gold);font-size:9px;margin-top:5px;flex-shrink:0;}
+.num-list{list-style:none;counter-reset:num;display:flex;flex-direction:column;gap:8px;margin:10px 0;}
+.num-list li{counter-increment:num;display:flex;gap:12px;font-size:13px;color:var(--text2);line-height:1.7;}
+.num-list li::before{content:counter(num)".";color:var(--gold);font-weight:500;min-width:20px;flex-shrink:0;}
+.divider{height:1px;background:var(--border);margin:36px 0;}
+.practice-header{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);border-radius:var(--r) var(--r) 0 0;padding:16px 20px;display:flex;align-items:center;gap:12px;}
+.practice-header-title{font-size:16px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);margin-top:2px;}
+.practice-body{background:var(--bg2);border:1px solid rgba(154,110,26,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:24px;}
+.vignette{background:var(--bg3);border-left:4px solid var(--gold);padding:18px 20px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:28px;font-size:13px;color:var(--text2);line-height:1.85;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;font-weight:500;}
+.question-block{margin-bottom:24px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:6px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:12px;line-height:1.65;}
+.option{display:block;width:100%;text-align:left;padding:11px 16px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:8px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.6;}
+.option:hover:not(:disabled){border-color:var(--border2);background:var(--bg2);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:14px 16px;font-size:13px;color:var(--text2);margin-top:10px;line-height:1.8;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:28px;margin-top:20px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:52px;margin-bottom:8px;}
+.score-msg{font-size:14px;color:var(--text2);}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II &middot; <span>Equity Valuation</span> &middot; LM1</div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <div class="version-badge">Versi Full</div>
+      <div class="day-badge">Day 39 of 90</div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Kamis, 11 Juni 2026</div>
+    <h1 class="hero-title">Kerangka Penilaian Ekuitas: Aplikasi dan Proses</h1>
+    <p class="hero-sub">Learning Module 1 &mdash; Equity Valuation &middot; CFA Level II 2026</p>
+    <div class="meta-row">
+      <div class="meta-pill">&#128218; Materi lengkap</div>
+      <div class="meta-pill">&#127470;&#127465; Bahasa Indonesia</div>
+      <div class="meta-pill">&#9878;&#65039; Exam weight <b>~12%</b></div>
+      <div class="meta-pill">&#9201; Est. baca <b>45&ndash;60 menit</b></div>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ul class="toc-list">
+      <li><a href="#lo"><span class="toc-num">0</span>Learning Outcomes</a></li>
+      <li><a href="#definisi-nilai"><span class="toc-num">1</span>Definisi-Definisi Nilai dalam Penilaian Ekuitas</a></li>
+      <li><a href="#mispricing"><span class="toc-num">2</span>Intrinsic Value, Mispricing, dan Sumber Alpha</a></li>
+      <li><a href="#proses-valuasi"><span class="toc-num">3</span>Lima Langkah Proses Valuasi dan Analisis Industri</a></li>
+      <li><a href="#forecasting"><span class="toc-num">4</span>Top-Down vs Bottom-Up Forecasting dan Model Selection</a></li>
+      <li><a href="#independensi"><span class="toc-num">5</span>Independensi Analis, Laporan Riset, dan Kualitas Earnings</a></li>
+      <li><a href="#practice"><span class="toc-num">6</span>Latihan Soal &mdash; Item Set Vignette</a></li>
+    </ul>
+  </div>
+
+  <!-- Section 0: Learning Outcomes -->
+  <div class="chapter" id="lo">
+    <div class="chapter-header">
+      <div class="chapter-num">0</div>
+      <div class="chapter-title">Learning Outcomes</div>
+    </div>
+    <p class="prose">Setelah mempelajari modul ini secara mendalam, kandidat harus mampu:</p>
+    <ul class="bullet-list">
+      <li>Mendefinisikan valuasi dan intrinsic value serta menjelaskan sumber-sumber perceived mispricing</li>
+      <li>Menjelaskan asumsi going-concern dan membandingkan going-concern value dengan liquidation value</li>
+      <li>Mendeskripsikan definisi-definisi nilai yang relevan dan membenarkan definisi mana yang paling relevan untuk penilaian perusahaan publik</li>
+      <li>Mendeskripsikan aplikasi-aplikasi penilaian ekuitas dalam praktik investasi profesional</li>
+      <li>Mendeskripsikan pertanyaan-pertanyaan yang harus dijawab dalam analisis industri dan kompetitif</li>
+      <li>Mendeskripsikan pertimbangan dalam penggunaan informasi akuntansi sebagai basis valuasi</li>
+      <li>Membedakan model valuasi absolut dengan model valuasi relatif serta mendeskripsikan contoh masing-masing</li>
+      <li>Mendeskripsikan pertimbangan dalam pemilihan model valuasi yang sesuai</li>
+      <li>Mendeskripsikan pendekatan dan prinsip dalam mengkomunikasikan hasil valuasi</li>
+    </ul>
+  </div>
+
+  <!-- Section 1: Definisi Nilai -->
+  <div class="chapter" id="definisi-nilai">
+    <div class="chapter-header">
+      <div class="chapter-num">1</div>
+      <div class="chapter-title">Definisi-Definisi Nilai dalam Penilaian Ekuitas</div>
+    </div>
+
+    <p class="prose">Sebelum memilih model valuasi yang tepat, seorang analis harus memahami dengan jelas <em>definisi nilai</em> yang paling relevan untuk konteks penugasan mereka. Konteks sebuah valuasi &mdash; termasuk tujuannya &mdash; menentukan definisi nilai yang sesuai dan pada akhirnya memengaruhi pemilihan pendekatan valuasi. Ada lima konsep nilai yang secara reguler muncul dalam CFA Level 2.</p>
+
+    <div class="sub-header">1.1 Intrinsic Value</div>
+    <p class="prose">Asumsi kritis dalam penilaian ekuitas saham yang diperdagangkan secara publik adalah bahwa harga pasar sebuah sekuritas <em>bisa berbeda</em> dari nilai intrinsiknya. <strong>Intrinsic value</strong> suatu aset adalah nilai aset tersebut berdasarkan pemahaman yang secara hipotesis lengkap tentang karakteristik investasinya. Untuk investor manapun, estimasi intrinsic value mencerminkan pandangan mereka tentang nilai "sejati" atau "riil" dari suatu aset.</p>
+    <p class="prose">Jika seseorang mengasumsikan bahwa harga pasar sekuritas ekuitas secara sempurna mencerminkan nilai intrinsiknya, maka "valuasi" hanya memerlukan melihat harga pasar. Inilah asumsi yang mendasari teori pasar efisien tradisional, yang menyatakan bahwa harga pasar aset adalah estimasi terbaik yang tersedia dari nilai intrinsiknya.</p>
+
+    <div class="callout blue">
+      <div class="callout-title">&#128218; Grossman-Stiglitz Paradox</div>
+      <p>Sebuah counter-argumen teoritis penting terhadap gagasan bahwa harga pasar dan intrinsic value selalu identik dapat ditemukan dalam Grossman-Stiglitz Paradox. Jika harga pasar &mdash; yang pada dasarnya dapat diperoleh secara gratis &mdash; secara sempurna mencerminkan nilai intrinsik sekuritas, maka investor rasional tidak akan mengeluarkan biaya untuk memperoleh dan menganalisis informasi guna mendapatkan estimasi kedua dari nilai sekuritas. Namun jika tidak ada investor yang memperoleh dan menganalisis informasi tentang sekuritas, bagaimana harga pasar dapat mencerminkan nilai intrinsiknya?</p>
+      <p>Formulasi pasar efisien yang rasional (Grossman dan Stiglitz, 1980) mengakui bahwa investor tidak akan secara rasional menanggung biaya pengumpulan informasi kecuali mereka mengharapkan imbalan berupa gross return yang lebih tinggi dibandingkan alternatif gratis yaitu menerima harga pasar. Paradoks ini menjelaskan mengapa active management tetap ada: ada ekuilibrium di mana sebagian investor melakukan riset dan mendapat kompensasi berupa alpha.</p>
+    </div>
+
+    <div class="sub-header">1.2 Going-Concern Value vs Liquidation Value</div>
+    <p class="prose">Sebuah perusahaan umumnya memiliki nilai yang berbeda jika akan segera dibubarkan versus jika akan terus beroperasi. <strong>Going-concern assumption</strong> adalah asumsi bahwa perusahaan akan melanjutkan aktivitas bisnisnya ke masa depan yang dapat diperkirakan &mdash; terus memproduksi dan menjual barang/jasa, menggunakan asetnya secara optimal, dan mengakses sumber pembiayaan yang optimal. <strong>Going-concern value</strong> perusahaan adalah nilainya berdasarkan asumsi ini.</p>
+    <p class="prose">Asumsi going-concern mungkin tidak tepat untuk perusahaan yang mengalami financial distress. Alternatifnya adalah <strong>liquidation value</strong>: nilai perusahaan jika dibubarkan dan aset-asetnya dijual secara individual.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 1 — Perbandingan Going-Concern Value vs Liquidation Value</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Dimensi</th><th>Going-Concern Value</th><th>Liquidation Value</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Asumsi dasar</td><td>Perusahaan terus beroperasi menghasilkan cash flow di masa depan</td><td>Perusahaan dibubarkan; aset dijual secara individual</td></tr>
+            <tr><td>Komponen nilai</td><td>Mencakup nilai sinergi aset bekerja bersama + human capital manajemen + going concern premium</td><td>Hanya nilai pasar individual setiap aset, biasanya dikurangi biaya penjualan</td></tr>
+            <tr><td>Hubungan umum</td><td>Umumnya &gt; liquidation value karena nilai tambahan dari operasi terintegrasi</td><td>Umumnya &lt; going-concern value untuk perusahaan yang profitable</td></tr>
+            <tr><td>Pengecualian penting</td><td>Perusahaan yang rugi persisten: going-concern value bisa negatif atau sangat rendah</td><td>Untuk perusahaan yang rugi persisten, liquidation value > going-concern value ("lebih bernilai mati")</td></tr>
+            <tr><td>Pengaruh waktu likuidasi</td><td>Tidak relevan (asumsi operasi berkelanjutan)</td><td>Likuidasi terpaksa (forced) menghasilkan nilai lebih rendah dari likuidasi teratur (orderly)</td></tr>
+            <tr><td>Paling relevan untuk</td><td>Mayoritas public equity valuation; core business analysis</td><td>Distressed securities; bankruptcy analysis; perusahaan rugi persisten</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">1.3 Fair Market Value dan Investment Value</div>
+    <p class="prose">Untuk analis yang menilai public equities, intrinsic value biasanya merupakan konsep nilai yang relevan. Namun dalam konteks lain, definisi nilai yang berbeda lebih relevan.</p>
+    <p class="prose"><strong>Fair market value</strong> adalah harga di mana suatu aset (atau liabilitas) akan berpindah tangan antara willing buyer dan willing seller ketika pihak pertama tidak berada di bawah compulsion untuk membeli dan pihak kedua tidak berada di bawah compulsion untuk menjual. Selain itu, konsep fair market value umumnya mencakup asumsi bahwa baik pembeli maupun penjual memiliki informasi yang memadai tentang semua aspek material dari investasi tersebut. Fair market value sering digunakan dalam konteks perpajakan dan buy-sell agreements.</p>
+    <p class="prose"><strong>Investment value</strong> adalah nilai bagi pembeli spesifik yang mempertimbangkan potensi sinergi dan berdasarkan persyaratan serta ekspektasi investor tersebut. Konsep ini berbeda dari fair market value karena mempertimbangkan karakteristik unik dan strategi pembeli tertentu. Dalam konteks M&amp;A, investment value acquirer bisa lebih tinggi dari fair market value jika acquirer dapat merealisasikan sinergi yang tidak tersedia bagi pembeli lain.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 2 — Ringkasan Lima Definisi Nilai</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Definisi Nilai</th><th>Penjelasan Singkat</th><th>Konteks Penggunaan Utama</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Intrinsic Value</td><td>Nilai "sejati" berdasarkan pemahaman lengkap karakteristik investasi; tidak dapat diobservasi langsung</td><td>Public equity valuation (paling relevan)</td></tr>
+            <tr><td>Going-Concern Value</td><td>Nilai dengan asumsi perusahaan terus beroperasi; basis untuk sebagian besar model DCF</td><td>Core equity analysis, DDM/FCF models</td></tr>
+            <tr><td>Liquidation Value</td><td>Nilai jika perusahaan dibubarkan dan aset dijual individual; biasanya &lt; going-concern value</td><td>Distressed companies, bankruptcy proceedings</td></tr>
+            <tr><td>Fair Market Value</td><td>Harga antara informed willing buyer dan willing seller tanpa compulsion; konsep standar untuk tujuan hukum/pajak</td><td>Tax purposes, buy-sell agreements, private business</td></tr>
+            <tr><td>Investment Value</td><td>Nilai bagi pembeli spesifik mempertimbangkan sinergi unik; bisa &gt; fair market value</td><td>M&amp;A analysis, strategic acquisition decisions</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout gold">
+      <div class="callout-title">&#9733; Poin Kritis untuk Ujian</div>
+      <p>Untuk penilaian <em>public equities</em>, definisi nilai yang paling relevan adalah <strong>intrinsic value</strong>, diestimasi di bawah asumsi <strong>going-concern</strong>. Ini adalah pernyataan langsung dari CFA curriculum. Banyak kandidat yang mengacaukan "going-concern value" (sebuah asumsi operasional) dengan intrinsic value (konsep nilai teoritis) &mdash; keduanya terkait tapi tidak identik.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">&#128161; Knowledge Check 1</div></div>
+      <div class="kc-body">
+        <div class="kc-q">PT Karya Mandiri Tbk telah merugi selama 7 tahun berturut-turut dan tidak menunjukkan tanda-tanda pemulihan. Nilai present value arus kas bebas yang diproyeksikan adalah negatif Rp 200 miliar (going-concern value). Namun, nilai pasar individual aset-aset perusahaan jika dijual secara terpisah diestimasi Rp 850 miliar. Konsep nilai mana yang paling relevan untuk keputusan investor, dan apa implikasinya?</div>
+        <button class="kc-toggle" onclick="this.previousElementSibling.classList.toggle('show');this.textContent=this.previousElementSibling.classList.contains('show')?'Sembunyikan Jawaban':'Tampilkan Jawaban'">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          <strong>Liquidation value (Rp 850 miliar)</strong> adalah konsep yang paling relevan. Ketika going-concern value (negatif Rp 200 miliar) jauh lebih rendah dari liquidation value (Rp 850 miliar), perusahaan secara harfiah "lebih bernilai mati daripada hidup." Mempertahankan perusahaan sebagai going-concern justru menghancurkan nilai pemegang saham. Implikasinya: keputusan optimal adalah melikuidasi aset atau menjual perusahaan kepada pihak yang dapat menggunakan aset-aset tersebut secara lebih produktif. Analis yang hanya menggunakan model going-concern (seperti DCF) akan menghasilkan valuasi yang tidak relevan dan menyesatkan dalam konteks ini.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: Mispricing -->
+  <div class="chapter" id="mispricing">
+    <div class="chapter-header">
+      <div class="chapter-num">2</div>
+      <div class="chapter-title">Intrinsic Value, Mispricing, dan Sumber Alpha</div>
+    </div>
+
+    <p class="prose">Equity valuation, sebagaimana diterapkan pada sekuritas yang diperdagangkan secara publik, mengakui kemungkinan mispricing. Setiap active investment manager yang bertujuan menghasilkan alpha perlu memahami dengan tepat dari mana alpha tersebut bisa berasal.</p>
+
+    <div class="sub-header">2.1 Dekomposisi Perceived Mispricing</div>
+    <p class="prose">Perbedaan antara estimasi nilai seorang analis (V<sub>E</sub>) dan harga pasar saat ini (P) dapat diuraikan menjadi dua komponen yang secara konseptual penting:</p>
+
+    <div class="formula-block">
+      <span class="label">Formula Perceived Mispricing (CFA L2)</span>
+      V<sub>E</sub> &minus; P = (V &minus; P) + (V<sub>E</sub> &minus; V)
+      <span class="note">Di mana: V<sub>E</sub> = estimasi intrinsic value analis | P = harga pasar saat ini | V = intrinsic value sesungguhnya (tidak observable)</span>
+    </div>
+
+    <p class="prose">Komponen pertama, <strong>(V &minus; P)</strong>, adalah <em>true mispricing</em>: perbedaan antara nilai intrinsik sesungguhnya dan harga pasar. Inilah yang berkontribusi pada <em>abnormal return</em> atau <em>alpha</em>. Jika pasar akhirnya mengenali mispricing ini dan harga bergerak menuju intrinsic value, investor yang membeli saat P &lt; V akan mendapatkan return melebihi yang seharusnya berdasarkan risiko.</p>
+    <p class="prose">Komponen kedua, <strong>(V<sub>E</sub> &minus; V)</strong>, adalah <em>estimation error</em>: perbedaan antara estimasi analis dan nilai intrinsik sesungguhnya. Ini bukan merupakan sumber alpha &mdash; ini adalah sumber risiko. Semakin akurat estimasi analis (V<sub>E</sub> ≈ V), semakin bermanfaat analisis tersebut.</p>
+
+    <div class="callout amber">
+      <div class="callout-title">&#9888; Implikasi Praktis Dekomposisi Ini</div>
+      <p>Seorang analis tidak pernah bisa mengetahui secara pasti berapa porsi dari (V<sub>E</sub> &minus; P) yang merupakan true mispricing vs estimation error, karena V tidak dapat diobservasi. Inilah yang membuat equity valuation fundamentally berbeda dari bond valuation: untuk obligasi, cash flow masa depan sebagian besar dikontrakkan secara legal, sehingga ketidakpastian estimasi jauh lebih kecil. Untuk ekuitas, ketidakpastian ini lebih besar, maka range estimasi nilai (bukan satu angka tunggal) adalah pendekatan yang lebih jujur.</p>
+    </div>
+
+    <div class="sub-header">2.2 Aplikasi Equity Valuation dalam Praktik</div>
+    <p class="prose">Analis investasi menggunakan konsep dan model valuasi untuk berbagai tujuan praktis, di luar sekadar memilih saham:</p>
+    <ul class="bullet-list">
+      <li><strong>Stock selection:</strong> Pertanyaan utama &mdash; apakah sekuritas ini fairly priced, overpriced, atau underpriced relatif terhadap estimated intrinsic value dan relatif terhadap harga sekuritas yang sebanding?</li>
+      <li><strong>Inferring market expectations:</strong> Harga pasar mencerminkan ekspektasi investor. Analis dapat "reverse-engineer" harga untuk mengetahui asumsi pertumbuhan atau return yang implisit dalam harga tersebut, lalu mengevaluasi apakah asumsi tersebut masuk akal.</li>
+      <li><strong>Evaluating corporate events:</strong> Merger, akuisisi, divestasi, spin-off, dan going-private transactions &mdash; semua mempengaruhi arus kas masa depan dan nilai ekuitas.</li>
+      <li><strong>Rendering fairness opinions:</strong> Pihak-pihak dalam merger mungkin diwajibkan untuk mendapatkan fairness opinion dari pihak ketiga (seperti investment bank) mengenai kewajaran persyaratan merger.</li>
+      <li><strong>Evaluating business strategies:</strong> Perusahaan yang berorientasi pada shareholder value mengevaluasi dampak berbagai pilihan strategis terhadap nilai saham.</li>
+      <li><strong>Appraising private businesses:</strong> Tidak adanya harga pasar memberikan karakteristik tersendiri pada valuasi private company, meskipun model fundamental yang digunakan sama.</li>
+    </ul>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">&#128161; Knowledge Check 2</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Seorang portfolio manager memiliki estimasi intrinsic value saham PT Tambang Nusantara Tbk sebesar Rp 8.500, sementara harga pasar saat ini adalah Rp 6.800. Ia memutuskan untuk membeli saham tersebut. Tiga bulan kemudian, harga saham masih di Rp 6.800. Apakah ini berarti analisis manager tersebut salah?</div>
+        <button class="kc-toggle" onclick="this.previousElementSibling.classList.toggle('show');this.textContent=this.previousElementSibling.classList.contains('show')?'Sembunyikan Jawaban':'Tampilkan Jawaban'">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          <strong>Tidak necessarily.</strong> CFA mengajarkan bahwa bahkan jika analis benar (V<sub>E</sub> ≈ V) dan harga memang lebih rendah dari intrinsic value, konvergensi harga menuju intrinsic value tidak terjamin dalam investment horizon tertentu. Harga bisa tetap "salah" untuk waktu yang lama &mdash; pasar bisa irasional lebih lama daripada investor bisa solvent. Keputusan untuk tetap hold atau menjual bergantung pada: (1) apakah estimasi masih valid, (2) apakah ada catalyst yang akan mendorong pasar merevaluasi, dan (3) apakah ada investasi lain dengan risk-adjusted return yang lebih menarik.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: Proses Valuasi -->
+  <div class="chapter" id="proses-valuasi">
+    <div class="chapter-header">
+      <div class="chapter-num">3</div>
+      <div class="chapter-title">Lima Langkah Proses Valuasi dan Analisis Industri</div>
+    </div>
+
+    <p class="prose">CFA mendefinisikan proses valuasi sebagai lima langkah berurutan yang saling bergantung. Memahami tujuan dan konten setiap langkah sangat penting, bukan sekadar hafal urutannya.</p>
+
+    <div class="sub-header">3.1 Lima Langkah Proses Valuasi</div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 3 — Lima Langkah Proses Valuasi CFA L2</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>#</th><th>Langkah</th><th>Konten Utama</th><th>Output</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Understanding the Business</td>
+              <td>Analisis industri (Porter's 5 Forces, competitive strategy); analisis laporan keuangan historis; ESG analysis; quality of earnings assessment</td>
+              <td>Pemahaman mendalam tentang driver profitabilitas dan risiko bisnis</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Forecasting Company Performance</td>
+              <td>Pro forma analysis: proyeksi sales, earnings, dividends, dan posisi keuangan. Menggunakan top-down atau bottom-up approach</td>
+              <td>Proyeksi finansial yang menjadi input model valuasi</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Selecting the Valuation Model</td>
+              <td>Pilihan antara absolute (DDM, FCF, RI, asset-based) vs relative (P/E, P/B, EV/EBITDA comparables). Karakteristik perusahaan dan konteks menentukan pilihan</td>
+              <td>Model valuasi yang tepat untuk konteks analisis</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>Converting Forecasts to Valuation</td>
+              <td>Input proyeksi ke model; sensitivity analysis; menyatakan range nilai; memerlukan judgment, bukan kalkulasi mekanis semata</td>
+              <td>Estimasi nilai beserta range dan analisis sensitivitas</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>Applying the Valuation Conclusions</td>
+              <td>Investment recommendation; fairness opinion; evaluasi strategic alternatives; komunikasi dengan manajemen/shareholders</td>
+              <td>Keputusan atau rekomendasi yang dapat ditindaklanjuti</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">3.2 Understanding the Business: Analisis Industri dan Kompetitif</div>
+    <p class="prose">Langkah pertama &mdash; memahami bisnis &mdash; adalah fondasi seluruh proses valuasi. Proyeksi yang akurat tidak mungkin dibuat tanpa memahami konteks ekonomi, industri, dan strategis tempat perusahaan beroperasi. Beberapa pertanyaan yang harus dijawab dalam analisis industri:</p>
+    <ul class="bullet-list">
+      <li><strong>Seberapa atraktif industri ini?</strong> Gunakan Porter's Five Forces untuk mengevaluasi structure industri: intensitas persaingan (rivalry), ancaman pendatang baru, ancaman produk substitusi, bargaining power supplier, dan bargaining power pembeli.</li>
+      <li><strong>Apa posisi kompetitif relatif perusahaan?</strong> Strategi generik Porter (cost leadership, differentiation, focus) menentukan cara perusahaan menciptakan keunggulan kompetitif berkelanjutan.</li>
+      <li><strong>Seberapa baik perusahaan mengeksekusi strateginya?</strong> Analisis laporan keuangan historis memberikan bukti tentang keberhasilan eksekusi, tetapi hindari sekadar mengekstrapolasi masa lalu &mdash; perhatikan tren regresi ke rata-rata industri seiring waktu.</li>
+    </ul>
+
+    <div class="callout blue">
+      <div class="callout-title">&#9432; Mengapa Langkah 1 Sangat Kritis</div>
+      <p>Kualitas valuasi akhir sangat bergantung pada kualitas proyeksi, dan kualitas proyeksi bergantung pada kedalaman pemahaman bisnis. Analis yang melewatkan atau mengabaikan langkah pertama akan menghasilkan proyeksi yang hanya merupakan ekstrapolasi mekanis dari tren historis &mdash; tanpa mempertimbangkan perubahan struktural industri, pergeseran kompetitif, atau faktor makro yang relevan. Model yang canggih dengan asumsi yang buruk menghasilkan "garbage in, garbage out."</p>
+    </div>
+
+    <div class="sub-header">3.3 Quality of Earnings Analysis</div>
+    <p class="prose">Bagian dari langkah pertama adalah menilai <em>quality of earnings</em>: seberapa akurat dan berkelanjutan laba yang dilaporkan mencerminkan kinerja ekonomis sesungguhnya. Analisis ini sangat kritis karena banyak model valuasi menggunakan earnings sebagai input utama.</p>
+    <p class="prose">Aspek utama quality of earnings analysis:</p>
+    <ul class="bullet-list">
+      <li><strong>Persistensi (sustainability):</strong> Komponen laba yang bersifat non-recurring (keuntungan penjualan aset, settlement hukum, pengurangan pajak sementara) memiliki kualitas lebih rendah karena tidak akan berulang.</li>
+      <li><strong>Accrual vs cash component:</strong> Riset akademis (Sloan, 1996) menunjukkan bahwa komponen kas dari laba lebih persisten daripada komponen akrual. Perusahaan dengan proporsi akrual lebih tinggi cenderung memiliki ROA yang lebih rendah di masa depan.</li>
+      <li><strong>Aggressive accounting:</strong> Pengakuan pendapatan terlalu dini, kapitalisasi biaya yang seharusnya di-expense, dan asumsi yang terlalu optimistis (misalnya expected return on pension assets) dapat menggelembungkan laba sementara.</li>
+    </ul>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 4 — Indikator Kualitas Earnings yang Rendah</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Kategori</th><th>Indikator Spesifik</th><th>Interpretasi Potensial</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Pendapatan dan Keuntungan</td><td>Pengakuan pendapatan terlalu awal (bill-and-hold sales, recording sales sebelum instalasi); klasifikasi non-operating income sebagai operating</td><td>Akselerasi pengakuan pendapatan menutupi penurunan kinerja operasional</td></tr>
+            <tr><td>Biaya dan Kerugian</td><td>Pengaturan cadangan yang terlalu kecil/besar; kapitalisasi biaya sebagai aset (customer acquisition costs, biaya pengembangan produk); asumsi yang terlalu agresif (depreciation life panjang, expected return pension tinggi)</td><td>Boost laba saat ini dengan mengorbankan akurasi jangka panjang</td></tr>
+            <tr><td>Neraca</td><td>Off-balance sheet financing; pertumbuhan piutang jauh lebih cepat dari pertumbuhan penjualan; tingkat days receivable meningkat</td><td>Aset atau liabilitas tidak terefleksi dengan benar; mungkin ada masalah penagihan</td></tr>
+            <tr><td>Arus Kas Operasi</td><td>Net income jauh melebihi operating cash flow secara konsisten</td><td>Laba mengandung banyak akrual yang tidak pernah menghasilkan kas</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">&#128161; Knowledge Check 3</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Dalam mengevaluasi laporan keuangan PT Teknologi Inovasi Tbk, seorang analis menemukan bahwa selama 3 tahun terakhir net income perusahaan rata-rata Rp 500 miliar per tahun, namun operating cash flow rata-rata hanya Rp 180 miliar per tahun. Apa implikasi dari pola ini terhadap quality of earnings?</div>
+        <button class="kc-toggle" onclick="this.previousElementSibling.classList.toggle('show');this.textContent=this.previousElementSibling.classList.contains('show')?'Sembunyikan Jawaban':'Tampilkan Jawaban'">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          <strong>Ini adalah tanda peringatan signifikan terhadap quality of earnings.</strong> Kesenjangan besar antara net income (Rp 500M) dan operating cash flow (Rp 180M) mengindikasikan bahwa sebagian besar laba yang dilaporkan merupakan komponen akrual yang belum menghasilkan kas. Penyebab potensial: (1) piutang yang tumbuh jauh lebih cepat dari penjualan (mungkin ada masalah kolektibilitas), (2) pengakuan pendapatan yang agresif, (3) biaya yang dikapitalisasi secara berlebihan sebagai aset. Analis seharusnya menginvestigasi lebih lanjut menggunakan cash flow accrual analysis (net income dikurangi operating + investing cash flows), memeriksa tren accounts receivable turnover, dan membaca footnotes dengan cermat. Valuasi berbasis earnings yang tidak disesuaikan akan melebih-lebihkan nilai perusahaan secara signifikan.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4: Forecasting dan Model Selection -->
+  <div class="chapter" id="forecasting">
+    <div class="chapter-header">
+      <div class="chapter-num">4</div>
+      <div class="chapter-title">Top-Down vs Bottom-Up Forecasting dan Pemilihan Model Valuasi</div>
+    </div>
+
+    <div class="sub-header">4.1 Pendekatan Forecasting: Top-Down vs Bottom-Up</div>
+    <p class="prose">Dalam langkah kedua proses valuasi &mdash; forecasting kinerja perusahaan &mdash; analis dapat memilih dua pendekatan utama atau kombinasi keduanya.</p>
+    <p class="prose"><strong>Top-down forecasting approach</strong> bergerak dari konteks yang lebih luas (makroekonomi) ke yang lebih spesifik (perusahaan). Prosesnya dimulai dengan proyeksi kondisi ekonomi internasional dan nasional, kemudian menurunkan implikasinya ke industri tertentu, dan akhirnya ke perusahaan individual. Contoh klasik: untuk memproyeksikan penjualan produsen alat berat, analis dimulai dengan proyeksi pertumbuhan GDP, kemudian memperkirakan pertumbuhan industri konstruksi dan pertambangan, lalu menggunakan market share perusahaan untuk memperoleh proyeksi unit sales.</p>
+    <p class="prose"><strong>Bottom-up forecasting approach</strong> sebaliknya mengagregasi proyeksi dari level yang paling granular ke level yang lebih besar. Analis memulai dengan data spesifik seperti penjualan per toko, penjualan per karyawan, atau kapasitas per fasilitas produksi, kemudian mengagregasikan proyeksi-proyeksi tersebut untuk menghasilkan proyeksi perusahaan secara keseluruhan. Contoh: retailer dengan 200 toko dapat diproyeksikan berdasarkan estimasi same-store sales growth plus kontribusi dari rencana pembukaan toko baru.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 5 — Perbandingan Top-Down vs Bottom-Up Forecasting</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Dimensi</th><th>Top-Down</th><th>Bottom-Up</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Titik awal</td><td>Proyeksi makroekonomi global/nasional</td><td>Data operasional granular tingkat perusahaan</td></tr>
+            <tr><td>Alur proyeksi</td><td>Macro → Industri → Perusahaan</td><td>Unit/toko/fasilitas → Segmen → Perusahaan</td></tr>
+            <tr><td>Keunggulan</td><td>Konsisten dengan kondisi makro; efektif untuk perusahaan dengan eksposur siklus ekonomi tinggi; memfasilitasi perbandingan antar-perusahaan dalam industri</td><td>Lebih granular dan presisi untuk operasi spesifik; langsung mempertimbangkan kapasitas aktual, kontrak, dan pipeline</td></tr>
+            <tr><td>Kelemahan</td><td>Bisa kehilangan nuansa operasional spesifik perusahaan; sensitif terhadap akurasi proyeksi makro</td><td>Bisa miss tren makro yang mempengaruhi seluruh industri; lebih time-intensive</td></tr>
+            <tr><td>Paling cocok untuk</td><td>Perusahaan cyclical (komoditas, manufaktur); analisis lintas-perusahaan</td><td>Retailer, properti, perusahaan dengan operasi yang sangat terstruktur</td></tr>
+            <tr><td>Dalam praktik</td><td colspan="2" style="text-align:center;font-style:italic;">Analis terbaik mengintegrasikan kedua pendekatan: top-down untuk validasi makro, bottom-up untuk detail operasional</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">4.2 Absolute vs Relative Valuation Models</div>
+    <p class="prose">Dalam langkah ketiga &mdash; pemilihan model &mdash; ada dua kategori besar model valuasi going-concern:</p>
+    <p class="prose"><strong>Absolute valuation models</strong> (juga disebut intrinsic value models atau income models) menentukan nilai intrinsik aset berdasarkan karakteristik fundamentalnya sendiri. Model ini menggunakan present value dari expected future cash flows. Tiga tipe utama:</p>
+    <ul class="bullet-list">
+      <li><strong>Dividend Discount Models (DDM):</strong> Cash flow didefinisikan sebagai dividen yang dibayarkan kepada pemegang saham. Berguna untuk perusahaan mature yang membayar dividen secara konsisten dan dividend payout predictable.</li>
+      <li><strong>Free Cash Flow Models (FCFF/FCFE):</strong> Cash flow didefinisikan di level perusahaan (FCFF) atau ekuitas (FCFE). Lebih fleksibel dan dapat diterapkan bahkan ketika perusahaan tidak membayar dividen atau dividen tidak mencerminkan kemampuan bayar.</li>
+      <li><strong>Residual Income Models:</strong> Berbasis akuntansi akrual; mendefinisikan nilai sebagai book value ditambah present value dari "excess earnings" di atas cost of equity. Berguna ketika free cash flow negatif tapi perusahaan profitable secara akuntansi.</li>
+    </ul>
+    <p class="prose"><strong>Relative valuation models</strong> mengestimasi nilai aset <em>relatif</em> terhadap aset lain yang sebanding. Ide dasarnya: aset yang serupa seharusnya dijual pada harga yang serupa. Diimplementasikan menggunakan price multiples (P/E, P/B, P/S, P/CF) atau enterprise multiples (EV/EBITDA, EV/EBIT). Pendekatan ini cepat dan mudah dikomunikasikan, namun bergantung pada ketersediaan comparable dan mengasumsikan comparable memang fairly valued.</p>
+
+    <div class="callout amber">
+      <div class="callout-title">&#9888; Relative Valuation: Relatively Undervalued ≠ Absolutely Undervalued</div>
+      <p>Ini adalah jebakan penting. Jika analis menyimpulkan bahwa saham X "undervalued" berdasarkan P/E yang lebih rendah dari peer group, ini hanya berarti X <em>relatif lebih murah</em> dari peer-nya. Jika seluruh peer group itu sendiri overvalued (misalnya dalam bubble), maka X juga overvalued secara absolut meskipun relatif lebih murah. Analis profesional sering menggunakan kedua pendekatan untuk saling validasi.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">&#128161; Knowledge Check 4</div></div>
+      <div class="kc-body">
+        <div class="kc-q">PT Startup Digital Tbk baru saja IPO. Perusahaan ini belum pernah membayar dividen, memiliki free cash flow yang negatif karena masih dalam fase investasi agresif, namun memiliki profitabilitas akuntansi positif (laba bersih positif) karena pendapatan tumbuh jauh lebih cepat dari beban operasional. Model valuasi absolute mana yang kemungkinan paling cocok, dan mengapa?</div>
+        <button class="kc-toggle" onclick="this.previousElementSibling.classList.toggle('show');this.textContent=this.previousElementSibling.classList.contains('show')?'Sembunyikan Jawaban':'Tampilkan Jawaban'">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          <strong>Residual Income Model</strong> kemungkinan paling cocok dalam situasi ini. DDM tidak applicable karena tidak ada dividen. FCFF/FCFE sulit diterapkan ketika free cash flow negatif (meskipun bisa digunakan dengan proyeksi jangka panjang hingga FCF menjadi positif &mdash; tapi sangat sensitif terhadap asumsi terminal value). Residual income model menggunakan laba akuntansi yang tersedia dan book value, keduanya ada untuk perusahaan ini. Selain itu, residual income model lebih baik dalam menangkap nilai dari aset yang diinvestasikan saat ini meskipun FCF belum positif. Dalam praktik, analis juga sering menggunakan relative valuation (EV/Revenue atau P/S) untuk perusahaan growth-stage yang belum profitable secara FCF.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 5: Independensi Analis -->
+  <div class="chapter" id="independensi">
+    <div class="chapter-header">
+      <div class="chapter-num">5</div>
+      <div class="chapter-title">Independensi Analis, Laporan Riset, dan Komunikasi Hasil Valuasi</div>
+    </div>
+
+    <div class="sub-header">5.1 Independensi dan Objektivitas Analis</div>
+    <p class="prose">CFA Institute Code of Ethics dan Standards of Professional Conduct sangat menekankan independensi dan objektivitas analis. Standard I(B) &mdash; Independence and Objectivity &mdash; secara eksplisit menyatakan:</p>
+    <p class="prose" style="font-style:italic;padding:12px 16px;background:var(--bg2);border-left:3px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;margin:12px 0;">"Members and Candidates must use reasonable care and judgment to achieve and maintain independence and objectivity in their professional activities. Members and Candidates must not offer, solicit, or accept any gift, benefit, compensation, or consideration that reasonably could be expected to compromise their own or another's independence and objectivity."</p>
+
+    <p class="prose">Konflik kepentingan paling umum yang mengancam independensi analis sell-side:</p>
+    <ul class="bullet-list">
+      <li><strong>Investment banking pressure:</strong> Analis di firma yang juga memiliki divisi IB mungkin menghadapi tekanan implisit atau eksplisit untuk memberikan rating positif kepada klien IB, karena fee IB jauh lebih besar daripada pendapatan riset.</li>
+      <li><strong>Corporate access and management relations:</strong> Analis yang memiliki hubungan dekat dengan manajemen mungkin secara tidak sadar bias terhadap pandangan manajemen dan menghindari penilaian kritis.</li>
+      <li><strong>Personal investment:</strong> Analis yang memiliki posisi pribadi di saham yang mereka cover memiliki insentif finansial langsung dalam valuasi mereka.</li>
+      <li><strong>Compensation structure:</strong> Jika kompensasi analis terkait langsung dengan performa saham yang direkomendasikan, insentifnya adalah untuk merekomendasikan saham yang sudah naik (confirmation bias).</li>
+    </ul>
+
+    <div class="callout red">
+      <div class="callout-title">&#9888; Regulation FD dan Material Nonpublic Information</div>
+      <p>Regulation FD (Fair Disclosure) di AS melarang perusahaan publik mengungkapkan material nonpublic information kepada analis atau investor tertentu tanpa secara bersamaan mengungkapkannya kepada publik. Ini melindungi investor dari disadvantage informasional. Jika seorang analis secara tidak sengaja menerima material nonpublic information dari manajemen, ia harus menghindari menggunakannya dan berkonsultasi dengan bagian hukum atau compliance. Ini terkait dengan CFA Standard II(A) &mdash; Material Nonpublic Information.</p>
+    </div>
+
+    <div class="sub-header">5.2 Karakteristik Research Report Berkualitas</div>
+    <p class="prose">CFA mendefinisikan sejumlah karakteristik yang harus dimiliki oleh research report yang berkualitas tinggi dan berguna:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 6 — Karakteristik Research Report Berkualitas</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Karakteristik</th><th>Penjelasan Detail</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Timely and Clear</td><td>Ditulis dalam bahasa yang jelas, ringkas, dan tidak ambigu; dipublikasikan tepat waktu agar dapat ditindaklanjuti oleh investor</td></tr>
+            <tr><td>Objective and Well-Researched</td><td>Asumsi kunci secara eksplisit dinyatakan; membedakan dengan jelas antara fakta dan opini; riset yang solid, bukan echo konsensus pasar</td></tr>
+            <tr><td>Internally Consistent</td><td>Analisis industri, proyeksi finansial, model valuasi, dan rekomendasi investasi harus saling mendukung dan konsisten</td></tr>
+            <tr><td>Critiqueable</td><td>Menyediakan informasi yang cukup agar pembaca yang terampil dapat mengevaluasi metodologi dan asumsi valuasi; tidak menyembunyikan ketidakpastian</td></tr>
+            <tr><td>States Key Risk Factors</td><td>Mengidentifikasi faktor-faktor risiko utama yang dapat menyebabkan valuasi aktual berbeda secara signifikan dari estimasi</td></tr>
+            <tr><td>Discloses Conflicts</td><td>Mengungkapkan semua potensi konflik kepentingan yang relevan (investasi pribadi, hubungan IB, kompensasi terkait saham, dll.)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">5.3 "Good Company ≠ Good Investment"</div>
+    <p class="prose">Salah satu insight paling fundamental yang ditekankan CFA adalah perbedaan antara <em>kualitas bisnis</em> dan <em>kualitas investasi</em>. Return dari investasi saham selalu bergantung pada harga yang dibayarkan, bukan semata-mata pada kualitas bisnis.</p>
+    <p class="prose">Perusahaan berkualitas tinggi &mdash; dengan pertumbuhan kuat, margin tinggi, manajemen excellent, dan competitive moat yang lebar &mdash; bisa menjadi investasi yang sangat buruk jika semua keunggulan tersebut sudah sepenuhnya tercermin (atau bahkan over-priced) dalam harga pasar saat ini. Sebaliknya, perusahaan yang "biasa-biasa saja" dapat menjadi investasi luar biasa jika harganya jauh di bawah intrinsic value.</p>
+    <p class="prose">Ini juga berarti analis harus selalu mempertahankan perbedaan antara:</p>
+    <ul class="bullet-list">
+      <li><strong>"Undervalued"</strong> (absolut) &mdash; harga pasar di bawah estimated intrinsic value berdasarkan fundamental</li>
+      <li><strong>"Relatively undervalued"</strong> &mdash; harga pasar lebih rendah dari comparable, tapi comparable itu sendiri mungkin overvalued</li>
+    </ul>
+
+    <div class="callout gold">
+      <div class="callout-title">&#9733; Implikasi untuk Portfolio Management</div>
+      <p>Pemahaman tentang perbedaan antara kualitas bisnis dan kualitas investasi adalah fondasi dari value investing (Graham, Buffett) dan growth-at-a-reasonable-price (GARP) investing. Seorang analis yang sangat positif terhadap prospek bisnis sebuah perusahaan tetap harus melakukan analisis valuasi yang ketat untuk menentukan apakah harga pasar saat ini menawarkan margin of safety yang memadai. CFA juga mengingatkan bahwa beberapa firma menentukan kebijakan "buy only if stock trades at X% below estimated intrinsic value" &mdash; ini membangun margin of safety secara sistematis ke dalam proses.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">&#128161; Knowledge Check 5</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Seorang portfolio manager menyimpulkan bahwa PT Consumer Unggul Tbk adalah "perusahaan terbaik di industrinya" &mdash; margin tertinggi, pertumbuhan tercepat, brand terkuat. Ia langsung memasukkan saham tersebut ke dalam portofolionya tanpa melakukan analisis valuasi lebih lanjut. Apakah pendekatan ini konsisten dengan prinsip CFA, dan apa risikonya?</div>
+        <button class="kc-toggle" onclick="this.previousElementSibling.classList.toggle('show');this.textContent=this.previousElementSibling.classList.contains('show')?'Sembunyikan Jawaban':'Tampilkan Jawaban'">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          <strong>Tidak konsisten dengan prinsip CFA.</strong> Prinsip "good company ≠ good investment" secara eksplisit ditekankan dalam CFA curriculum. Mengetahui bahwa sebuah perusahaan berkualitas tinggi adalah langkah pertama (dan penting), namun langkah berikutnya yang sama pentingnya adalah menentukan apakah kualitas tersebut sudah atau belum tercermin dalam harga. Risikonya: jika pasar sudah mempricing in semua keunggulan tersebut (misalnya P/E 50x vs rata-rata industri 20x), maka investasi pada harga tersebut tidak memberikan margin of safety dan kemungkinan akan underperform meskipun bisnis terus berjalan baik. Bahkan minor disappointment dari ekspektasi yang sangat tinggi dapat menyebabkan koreksi harga yang tajam.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 6: Practice -->
+  <div class="divider" id="practice"></div>
+  <div class="practice-header">
+    <div>
+      <div class="practice-header-title">&#128221; Latihan Soal &mdash; Item Set Vignette (6 Soal)</div>
+      <div class="practice-header-sub">Skenario: PT Bumi Energi Tbk &mdash; Analisis Valuasi oleh Tim Riset Sekuritas Artana</div>
+    </div>
+  </div>
+  <div class="practice-body">
+    <div class="vignette">
+      <div class="vignette-label">Vignette</div>
+      <p>Rahmat Hidayat, CFA, adalah kepala tim riset ekuitas di Sekuritas Artana, Jakarta. Timnya sedang mengevaluasi PT Bumi Energi Tbk (BMEN), perusahaan energi terbarukan yang baru saja terdaftar di BEI melalui IPO 6 bulan lalu. BMEN memiliki dua unit bisnis utama: Unit Tenaga Surya (profitable, FCF positif Rp 400M/tahun) dan Unit Angin Lepas Pantai (masih dalam fase konstruksi, belum menghasilkan pendapatan, memerlukan investasi Rp 3 triliun selama 4 tahun ke depan).</p>
+      <p>Analisis Rahmat menunjukkan estimasi intrinsic value BMEN sebesar Rp 2.800 per saham. Harga pasar saat ini adalah Rp 2.100. Namun anggota tim yang lebih junior, Sinta Maharani, mempertanyakan: "Mungkin model kita terlalu optimistis tentang Unit Angin &mdash; asumsi biaya konstruksi kita mungkin terlalu rendah 15-20%."</p>
+      <p>Direktur Sekuritas Artana kemudian memanggil Rahmat dan menginformasikan bahwa Direktur Utama BMEN akan mengunjungi kantor mereka besok untuk "memperkenalkan beberapa perkembangan menarik yang belum diumumkan ke publik." Direktur Artana menyarankan agar Rahmat memperhatikan informasi ini untuk memperbarui rekomendasinya.</p>
+      <p>Dalam memilih model valuasi, Rahmat mempertimbangkan tiga pendekatan: (A) DDM dengan proyeksi dividen 10 tahun, (B) FCFF Model dengan sum-of-the-parts approach &mdash; memisahkan Unit Surya dan Unit Angin, dan (C) EV/EBITDA multiple berdasarkan comparable companies dari sektor energi terbarukan global.</p>
+      <p>Rekan Rahmat di tim, Dian Permatasari, menggunakan pendekatan yang berbeda. Ia memulai dengan proyeksi pertumbuhan energi terbarukan Indonesia (17% CAGR 5 tahun berdasarkan target pemerintah), kemudian mengalokasikan market share BMEN, untuk menghasilkan proyeksi kapasitas terpasang dan revenue BMEN. Dian membandingkan proyeksinya dengan proyeksi bottom-up Rahmat yang berbasis pada kontrak konstruksi aktual dan pipeline proyek spesifik BMEN.</p>
+    </div>
+
+    <!-- Q1 -->
+    <div class="question-block" data-q="q1" data-correct="B">
+      <div class="q-num">QUESTION 1 OF 6</div>
+      <div class="q-text">Berdasarkan pernyataan Sinta bahwa asumsi biaya konstruksi mungkin terlalu rendah 15-20%, komponen mana dari formula V<sub>E</sub> &minus; P = (V &minus; P) + (V<sub>E</sub> &minus; V) yang paling langsung dipermasalahkan?</div>
+      <button class="option" data-opt="A">A. (V &minus; P) &mdash; Sinta mempertanyakan apakah pasar telah mispriced saham BMEN</button>
+      <button class="option" data-opt="B">B. (V<sub>E</sub> &minus; V) &mdash; Sinta mempertanyakan akurasi model estimasi tim, bukan mispricing pasar</button>
+      <button class="option" data-opt="C">C. V<sub>E</sub> &minus; P secara keseluruhan &mdash; Sinta menyarankan bahwa perceived mispricing tersebut tidak nyata</button>
+      <div class="explanation correct">
+        &#10003; <strong>B adalah jawaban benar.</strong> Sinta mempertanyakan apakah asumsi dalam model valuasi tim (biaya konstruksi) akurat &mdash; ini adalah pertanyaan tentang (V<sub>E</sub> &minus; V), yaitu estimation error: seberapa jauh estimasi intrinsic value tim dari nilai sesungguhnya. Jika asumsi biaya terlalu rendah 15-20%, maka V<sub>E</sub> yang dihasilkan model mungkin terlalu tinggi, artinya (V<sub>E</sub> &minus; V) memiliki komponen positif yang signifikan dari estimation error. Sinta TIDAK mempertanyakan apakah pasar telah mispriced BMEN &mdash; itulah yang akan dipermasalahkan oleh (V &minus; P).
+      </div>
+      <div class="explanation incorrect">
+        &#10007; Kekhawatiran Sinta berfokus pada akurasi asumsi dalam model tim (biaya konstruksi yang mungkin underestimated), bukan pada perilaku pasar. Ini adalah pertanyaan tentang kualitas estimasi analis &mdash; komponen (V<sub>E</sub> &minus; V) atau estimation error. Komponen (V &minus; P) berkaitan dengan apakah harga pasar sendiri mencerminkan nilai sesungguhnya, yang merupakan pertanyaan berbeda.
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question-block" data-q="q2" data-correct="C">
+      <div class="q-num">QUESTION 2 OF 6</div>
+      <div class="q-text">Dari tiga model valuasi yang dipertimbangkan Rahmat (DDM, FCFF sum-of-parts, EV/EBITDA comparables), mana yang paling tepat untuk kondisi BMEN, dan apa alasan utamanya?</div>
+      <button class="option" data-opt="A">A. DDM, karena BMEN adalah perusahaan energi yang pada akhirnya akan membayar dividen ketika Unit Angin sudah beroperasi</button>
+      <button class="option" data-opt="B">B. EV/EBITDA comparables saja, karena lebih cepat dan menghindari ketidakpastian proyeksi jangka panjang</button>
+      <button class="option" data-opt="C">C. FCFF sum-of-the-parts, karena BMEN memiliki dua segmen dengan karakteristik yang sangat berbeda dan DDM tidak applicable ketika dividen belum ada</button>
+      <div class="explanation correct">
+        &#10003; <strong>C adalah jawaban benar.</strong> FCFF dengan sum-of-the-parts adalah pilihan terbaik karena: (1) BMEN belum membayar dividen (DDM tidak applicable), (2) kedua unit bisnis memiliki karakteristik yang sangat berbeda &mdash; Unit Surya sudah menghasilkan FCF positif sementara Unit Angin masih dalam investasi besar, sehingga valuasi terpisah lebih akurat, (3) FCFF dapat mengakomodasi perusahaan yang sedang dalam fase investasi berat dengan FCF agregat yang mungkin negatif. EV/EBITDA comparables berguna sebagai cross-check tapi tidak cukup sebagai model utama karena mengabaikan perbedaan profil pertumbuhan dan tahap bisnis kedua unit.
+      </div>
+      <div class="explanation incorrect">
+        &#10007; DDM tidak cocok karena BMEN belum membayar dividen dan tidak jelas kapan akan mulai. EV/EBITDA comparables saja tidak cukup karena: pertama, BMEN memiliki dua unit bisnis dengan karakteristik sangat berbeda sehingga comparable tunggal tidak representatif; kedua, comparables juga bisa semua overvalued. FCFF sum-of-parts yang memisahkan Unit Surya (profitable, FCF positif) dan Unit Angin (pre-revenue, capex heavy) memberikan framework valuasi yang paling akurat untuk situasi BMEN.
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question-block" data-q="q3" data-correct="A">
+      <div class="q-num">QUESTION 3 OF 6</div>
+      <div class="q-text">Saran Direktur Artana agar Rahmat "memperhatikan informasi yang belum diumumkan ke publik" dari kunjungan Direktur Utama BMEN melanggar prinsip CFA yang mana?</div>
+      <button class="option" data-opt="A">A. Standard II(A) &mdash; Material Nonpublic Information, karena informasi yang belum diumumkan ke publik berpotensi bersifat material dan nonpublik</button>
+      <button class="option" data-opt="B">B. Standard I(B) &mdash; Independence and Objectivity, karena kunjungan manajemen dapat membiaskan objektivitas analis</button>
+      <button class="option" data-opt="C">C. Standard V(A) &mdash; Diligence and Reasonable Basis, karena analis seharusnya hanya menggunakan informasi publik</button>
+      <div class="explanation correct">
+        &#10003; <strong>A adalah jawaban benar.</strong> "Perkembangan menarik yang belum diumumkan ke publik" adalah deskripsi yang hampir secara eksplisit mengidentifikasi material nonpublic information. Standard II(A) melarang analis untuk bertransaksi atau membuat rekomendasi berdasarkan material nonpublic information. "Material" artinya jika dipublikasikan, informasi tersebut akan secara substansial mempengaruhi harga saham. Rahmat harus menolak pertemuan tersebut atau memastikan bahwa semua informasi yang diterima bersifat publik. Jika tidak sengaja menerima MNPI, ia harus berkonsultasi dengan compliance dan tidak menggunakannya.
+      </div>
+      <div class="explanation incorrect">
+        &#10007; Meskipun Standard I(B) dan V(A) juga relevan secara general, masalah paling langsung dan spesifik di sini adalah penggunaan material nonpublic information &mdash; Standard II(A). Kunjungan manajemen sendiri tidak dilarang; yang dilarang adalah menerima dan menggunakan informasi yang belum dipublikasikan secara umum tetapi bersifat material. Ini adalah core issue yang paling kritis dalam skenario ini.
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question-block" data-q="q4" data-correct="B">
+      <div class="q-num">QUESTION 4 OF 6</div>
+      <div class="q-text">Pendekatan proyeksi Dian (target pemerintah energi terbarukan → market share BMEN → kapasitas dan revenue) dan pendekatan Rahmat (kontrak konstruksi aktual dan pipeline proyek spesifik) masing-masing paling tepat diklasifikasikan sebagai:</div>
+      <button class="option" data-opt="A">A. Dian: bottom-up; Rahmat: top-down</button>
+      <button class="option" data-opt="B">B. Dian: top-down; Rahmat: bottom-up</button>
+      <button class="option" data-opt="C">C. Dian: hybrid; Rahmat: absolute valuation approach</button>
+      <div class="explanation correct">
+        &#10003; <strong>B adalah jawaban benar.</strong> Dian menggunakan top-down: dimulai dari target pertumbuhan industri (pemerintah/makro level) → market share BMEN → revenue. Ini adalah pergerakan dari gambaran besar ke spesifik, yaitu definisi klasik top-down. Rahmat menggunakan bottom-up: dimulai dari data sangat granular level perusahaan (kontrak konstruksi aktual, pipeline proyek spesifik yang sudah ada) lalu mengagregasikannya untuk memproyeksikan kinerja perusahaan. Ini adalah pergerakan dari data spesifik perusahaan ke proyeksi agregat.
+      </div>
+      <div class="explanation incorrect">
+        &#10007; Perhatikan titik awal masing-masing. Dian memulai dari target makro pemerintah dan industri &mdash; ini adalah top-down. Rahmat memulai dari data kontrak dan proyek spesifik BMEN &mdash; ini adalah bottom-up. "Absolute valuation approach" (opsi C untuk Rahmat) adalah klasifikasi jenis model valuasi, bukan pendekatan forecasting.
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="question-block" data-q="q5" data-correct="C">
+      <div class="q-num">QUESTION 5 OF 6</div>
+      <div class="q-text">Jika Rahmat menyimpulkan bahwa BMEN adalah "perusahaan energi terbarukan terbaik di Indonesia dengan manajemen kelas dunia," namun harga sahamnya sudah mempricein growth 20% per tahun selama 10 tahun berturut-turut, rekomendasi investasi apa yang konsisten dengan prinsip CFA?</div>
+      <button class="option" data-opt="A">A. Buy &mdash; karena kualitas perusahaan yang superior pasti akan menghasilkan return superior bagi investor</button>
+      <button class="option" data-opt="B">B. Buy &mdash; karena perusahaan terbaik selalu merupakan investasi terbaik dalam jangka panjang</button>
+      <button class="option" data-opt="C">C. Tergantung pada apakah estimated intrinsic value melebihi harga pasar dengan margin yang memadai &mdash; kualitas bisnis saja tidak cukup untuk rekomendasi Buy</button>
+      <div class="explanation correct">
+        &#10003; <strong>C adalah jawaban benar.</strong> Prinsip "good company ≠ good investment" adalah salah satu poin terpenting dalam CFA valuation curriculum. Jika harga sudah mempricein pertumbuhan 20% per tahun selama 10 tahun (asumsi yang sangat agresif), maka margin of safety kemungkinan sangat tipis. Rekomendasi investasi yang tepat hanya bisa dibuat setelah membandingkan estimated intrinsic value dengan harga pasar &mdash; bukan berdasarkan kualitas bisnis semata. Bahkan perusahaan terbaik sekalipun bisa menjadi investasi yang buruk jika dibeli pada harga yang terlalu tinggi.
+      </div>
+      <div class="explanation incorrect">
+        &#10007; CFA secara eksplisit mengajarkan bahwa "good company ≠ good investment." Return saham selalu bergantung pada harga yang dibayarkan relatif terhadap intrinsic value, bukan semata-mata pada kualitas bisnis. Jika semua kualitas perusahaan sudah sepenuhnya (atau bahkan berlebihan) tercermin dalam harga, maka tidak ada expected alpha dari membeli saham tersebut &mdash; bahkan mungkin ada downside risk jika ekspektasi yang sangat tinggi tersebut tidak terpenuhi.
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="question-block" data-q="q6" data-correct="A">
+      <div class="q-num">QUESTION 6 OF 6</div>
+      <div class="q-text">Untuk Unit Angin Lepas Pantai yang masih pra-revenue dan membutuhkan investasi Rp 3 triliun selama 4 tahun ke depan, definisi nilai mana yang mungkin <em>tidak relevan</em> untuk digunakan sebagai basis utama valuasi, dan mengapa?</div>
+      <button class="option" data-opt="A">A. Liquidation value &mdash; karena aset konstruksi yang belum selesai memiliki nilai jual individual sangat rendah dan tidak mencerminkan potensi bisnis yang sedang dibangun</button>
+      <button class="option" data-opt="B">B. Going-concern value &mdash; karena unit bisnis yang belum menghasilkan pendapatan tidak bisa dianalisis sebagai going-concern</button>
+      <button class="option" data-opt="C">C. Investment value &mdash; karena tidak ada pembeli spesifik yang sedang mempertimbangkan akuisisi unit ini</button>
+      <div class="explanation correct">
+        &#10003; <strong>A adalah jawaban benar.</strong> Liquidation value Unit Angin saat ini sangat tidak relevan sebagai basis valuasi utama karena: (1) aset konstruksi yang sedang dibangun (dalam proses) memiliki nilai pasar individual yang sangat rendah jika dijual secara paksa &mdash; tidak ada pembeli yang siap membeli proyek konstruksi setengah jadi dengan harga premium; (2) liquidation value menangkap nilai minimum saat bisnis gagal, bukan potensi bisnis yang sedang dibangun. Going-concern value (basis FCFF model dengan proyeksi cash flow setelah konstruksi selesai) adalah jauh lebih relevan karena Unit Angin sedang dibangun dengan tujuan menghasilkan pendapatan jangka panjang.
+      </div>
+      <div class="explanation incorrect">
+        &#10007; Going-concern value masih sangat relevan untuk Unit Angin &mdash; justru inilah dasar mengapa investasi besar dilakukan sekarang: untuk menciptakan going-concern value di masa depan. Unit Angin yang sedang dibangun harus dianalisis sebagai going-concern yang akan menghasilkan arus kas mulai dari tahun ke-5 dan seterusnya, di-discount ke present value. Investment value (opsi C) juga bisa relevan dalam konteks potential strategic buyer/acquirer.
+      </div>
+    </div>
+
+    <div id="score-panel-full" class="score-panel">
+      <div class="score-num" id="score-value-full"></div>
+      <div class="score-msg">Bagus! Review setiap explanation &mdash; pahami framework konseptualnya secara mendalam untuk ujian.</div>
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="CFA_L2_Day38_Full.html" class="nav-btn">&larr; Day 38 Full: Penilaian Sinergi &amp; Restrukturisasi</a>
+    <a href="CFA_L2_Day40_Full.html" class="nav-btn primary">Day 40 Full: Pemilihan Model Valuasi &rarr;</a>
+  </div>
+</div>
+
+<script>
+(function() {
+  // Knowledge check toggles
+  document.querySelectorAll('.kc-toggle').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var ans = this.parentElement.querySelector('.kc-answer');
+      if (ans) {
+        ans.classList.toggle('show');
+        this.textContent = ans.classList.contains('show') ? 'Sembunyikan Jawaban' : 'Tampilkan Jawaban';
+      }
+    });
+  });
+
+  // Quiz
+  var answers = {};
+  var correct = {};
+  document.querySelectorAll('.question-block').forEach(function(qb) {
+    var q = qb.dataset.q;
+    correct[q] = qb.dataset.correct;
+    qb.querySelectorAll('.option').forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        if (answers[q]) return;
+        answers[q] = opt.dataset.opt;
+        qb.querySelectorAll('.option').forEach(function(o) { o.disabled = true; });
+        var isCorrect = opt.dataset.opt === correct[q];
+        if (isCorrect) {
+          opt.classList.add('correct');
+        } else {
+          opt.classList.add('wrong');
+          qb.querySelectorAll('.option').forEach(function(o) {
+            if (o.dataset.opt === correct[q]) o.classList.add('correct');
+          });
+        }
+        var expls = qb.querySelectorAll('.explanation');
+        var target = isCorrect ? expls[0] : expls[1];
+        if (target) { target.style.display = 'block'; target.classList.add('show'); }
+        var total = Object.keys(correct).length;
+        var scored = Object.keys(answers).length;
+        if (scored === total) {
+          var score = Object.keys(answers).filter(function(k) { return answers[k] === correct[k]; }).length;
+          var panel = document.getElementById('score-panel-full');
+          if (panel) {
+            panel.style.display = 'block';
+            document.getElementById('score-value-full').textContent = score + '/' + total;
+          }
+        }
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

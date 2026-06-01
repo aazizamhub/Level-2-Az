@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level II Day 30 - Balance Sheet & Footnotes: Evaluating Quality of Financial Reports (Full)</title>
+  <style>
+:root {
+  --bg:#fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+  --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;--gold:#9a6e1a;--gold2:#7a5010;
+  --gold-bg:rgba(154,110,26,0.08);--blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);
+  --green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);--red:#b83232;--red-bg:rgba(184,50,50,0.08);
+  --amber:#a06010;--amber-bg:rgba(160,96,16,0.08);--r:10px;--r-sm:6px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:15px;}
+.page{max-width:960px;margin:0 auto;padding:0 20px;background:white;box-shadow:0 0 40px rgba(0,0,0,0.04);}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid var(--border);margin-bottom:24px;}
+.breadcrumb{font-size:13px;color:var(--text2);letter-spacing:0.5px;font-weight:500;}
+.day-badge,.version-badge{display:inline-block;padding:6px 12px;background:var(--gold-bg);color:var(--gold2);border-radius:var(--r-sm);font-size:12px;font-weight:600;margin-left:12px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);margin-left:8px;}
+.hero{margin-bottom:48px;}
+.hero-tag{font-size:13px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;}
+.hero-title{font-size:40px;font-weight:700;line-height:1.2;margin-bottom:12px;color:var(--text);}
+.hero-sub{font-size:18px;color:var(--text2);margin-bottom:28px;}
+.meta-row{display:flex;flex-wrap:wrap;gap:12px;}
+.meta-pill{display:inline-flex;align-items:center;padding:8px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:20px;font-size:13px;color:var(--text2);font-weight:500;}
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:32px;margin-bottom:48px;}
+.toc-title{font-size:18px;font-weight:700;margin-bottom:20px;color:var(--text);}
+.toc-list{list-style:none;}
+.toc-list li{margin-bottom:12px;font-size:15px;}
+.toc-list a{color:var(--blue);text-decoration:none;}
+.toc-list a:hover{text-decoration:underline;}
+.toc-num{color:var(--gold);font-weight:600;margin-right:8px;}
+.chapter{margin-bottom:56px;scroll-margin-top:100px;}
+.chapter-header{margin-bottom:28px;}
+.chapter-num{font-size:13px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:1px;}
+.chapter-title{font-size:32px;font-weight:700;color:var(--text);margin-top:8px;}
+.sub-header{font-size:20px;font-weight:700;color:var(--text);margin:32px 0 16px 0;border-bottom:2px solid var(--border);padding-bottom:8px;}
+.sub-header-sm{font-size:17px;font-weight:700;color:var(--text2);margin:24px 0 12px 0;}
+.prose{color:var(--text);margin-bottom:16px;line-height:1.8;}
+.formula-block{background:var(--bg2);border-left:4px solid var(--gold);border-radius:var(--r-sm);padding:20px;margin:24px 0;font-family:'Courier New',monospace;font-size:14px;color:var(--text);overflow-x:auto;white-space:pre-wrap;}
+.formula-block .label{font-weight:700;color:var(--gold);display:block;margin-bottom:8px;font-size:13px;text-transform:uppercase;letter-spacing:0.5px;font-family:'Inter',sans-serif;}
+.formula-block .note{font-family:'Inter',sans-serif;font-size:13px;color:var(--text2);margin-top:12px;line-height:1.6;}
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:28px;margin:32px 0;}
+.exhibit-title{font-size:15px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:20px;}
+.exhibit-body{color:var(--text);line-height:1.8;font-size:14px;}
+.reg-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;}
+.reg-table th{background:var(--bg3);border:1px solid var(--border);padding:12px;text-align:left;font-weight:700;color:var(--text);}
+.reg-table td{border:1px solid var(--border);padding:12px;color:var(--text2);}
+.reg-table tr:nth-child(even){background:rgba(255,255,255,0.5);}
+.callout{border-radius:var(--r);padding:20px;margin:24px 0;border-left:4px solid;}
+.callout.blue{background:var(--blue-bg);border-left-color:var(--blue);}
+.callout.amber{background:var(--amber-bg);border-left-color:var(--amber);}
+.callout.green{background:var(--green-bg);border-left-color:var(--green);}
+.callout.red{background:var(--red-bg);border-left-color:var(--red);}
+.callout.gold{background:var(--gold-bg);border-left-color:var(--gold);}
+.callout-title{font-weight:700;margin-bottom:8px;display:block;font-size:14px;text-transform:uppercase;letter-spacing:0.5px;}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.green .callout-title{color:var(--green);}
+.callout.red .callout-title{color:var(--red);}
+.callout.gold .callout-title{color:var(--gold);}
+.callout p,.callout li{color:var(--text);font-size:14px;line-height:1.7;}
+.callout ul{padding-left:20px;margin-top:8px;}
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:28px 0;overflow:hidden;}
+.kc-header{padding:18px 20px;background:var(--bg3);border-bottom:1px solid var(--border);cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none;}
+.kc-header:hover{background:rgba(0,0,0,0.04);}
+.kc-header-title{font-weight:600;color:var(--text);font-size:14px;}
+.kc-toggle{color:var(--text3);font-weight:700;font-size:18px;transition:transform 0.2s;}
+.kc.open .kc-toggle{transform:rotate(180deg);}
+.kc-body{padding:20px;max-height:0;overflow:hidden;transition:max-height 0.4s ease-out;}
+.kc.open .kc-body{max-height:2000px;}
+.kc-q{color:var(--text);margin-bottom:14px;line-height:1.7;font-weight:600;}
+.kc-answer{color:var(--text2);line-height:1.8;font-size:14px;border-top:1px solid var(--border);padding-top:14px;margin-top:4px;}
+.num-list,.bullet-list{margin:16px 0;padding-left:24px;}
+.num-list li,.bullet-list li{margin-bottom:10px;color:var(--text);line-height:1.7;}
+.divider{height:1px;background:var(--border);margin:48px 0;}
+.practice-body{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:28px;}
+.vignette{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-bottom:32px;}
+.vignette-label{font-size:12px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;}
+.vignette-text{font-size:14px;color:var(--text);line-height:1.8;}
+.question-block{margin-bottom:32px;}
+.q-num{font-size:12px;font-weight:700;color:var(--blue);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;}
+.q-text{font-size:15px;color:var(--text);margin-bottom:16px;line-height:1.65;font-weight:500;}
+.option{display:flex;align-items:flex-start;gap:14px;padding:12px 16px;margin-bottom:10px;border:1px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:all 0.2s ease;background:white;}
+.option:hover{border-color:var(--blue);background:var(--blue-bg);}
+.option-radio{display:flex;align-items:center;justify-content:center;width:20px;height:20px;border:2px solid var(--border2);border-radius:50%;flex-shrink:0;margin-top:2px;}
+.option.selected .option-radio{border-color:var(--blue);background:var(--blue);}
+.option.selected .option-radio:after{content:"✓";color:white;font-size:12px;font-weight:700;}
+.option-text{font-size:14px;color:var(--text);line-height:1.6;}
+.explanation{background:var(--bg2);padding:16px;border-radius:var(--r-sm);font-size:13px;color:var(--text2);margin-top:10px;display:none;line-height:1.7;}
+.explanation.show{display:block;}
+.explanation.correct{border-left:3px solid var(--green);background:var(--green-bg);color:var(--text);}
+.explanation.incorrect{border-left:3px solid var(--red);background:var(--red-bg);color:var(--text);}
+.score-panel{background:var(--gold-bg);border:1px solid var(--gold);border-radius:var(--r);padding:20px;margin-top:24px;text-align:center;display:none;}
+.score-panel.show{display:block;}
+.score-panel-text{font-size:15px;color:var(--text);margin-bottom:8px;}
+.score-panel-value{font-size:28px;font-weight:700;color:var(--gold2);}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;padding:28px 0;margin-top:48px;border-top:1px solid var(--border);}
+.nav-btn{text-decoration:none;padding:12px 18px;border-radius:var(--r-sm);font-size:13px;font-weight:600;color:var(--blue);border:1px solid var(--border);transition:all 0.2s ease;}
+.nav-btn:hover{border-color:var(--blue);background:var(--blue-bg);}
+@media(max-width:640px){.hero-title{font-size:28px;}.meta-row{flex-direction:column;}}
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II &nbsp;&middot;&nbsp; FSA &nbsp;&middot;&nbsp; LM6
+      <span class="version-badge">Versi Full</span>
+      <span class="day-badge">Day 30 of 90</span>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Selasa, 26 Mei 2026</div>
+    <h1 class="hero-title">Kualitas Neraca &amp; Catatan Kaki: Membaca yang Tersembunyi</h1>
+    <p class="hero-sub">Evaluating Quality of Financial Reports (LM6) &mdash; Subtopik 2 dari 2</p>
+    <div class="meta-row">
+      <div class="meta-pill">Materi Lengkap</div>
+      <div class="meta-pill">Bahasa Indonesia</div>
+      <div class="meta-pill">~12% bobot ujian</div>
+      <div class="meta-pill">Est. baca 50&ndash;60 menit</div>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ul class="toc-list">
+      <li><a href="#sec0"><span class="toc-num">0.</span>Learning Outcomes (LOS)</a></li>
+      <li><a href="#sec1"><span class="toc-num">1.</span>Kerangka Kualitas Neraca: Tiga Dimensi Kritis</a></li>
+      <li><a href="#sec2"><span class="toc-num">2.</span>Risiko Goodwill Impairment: Membaca Sinyal Tersembunyi</a></li>
+      <li><a href="#sec3"><span class="toc-num">3.</span>Kualitas Deferred Tax Assets &amp; Valuation Allowance</a></li>
+      <li><a href="#sec4"><span class="toc-num">4.</span>Off-Balance Sheet Obligations &amp; Constructive Capitalization</a></li>
+      <li><a href="#sec5"><span class="toc-num">5.</span>Related-Party Transactions: Konflik Kepentingan yang Tersembunyi</a></li>
+      <li><a href="#sec6"><span class="toc-num">6.</span>Sumber Informasi Risiko: Auditor, Catatan Kaki, &amp; MD&amp;A</a></li>
+      <li><a href="#sec7"><span class="toc-num">7.</span>Latihan Soal &mdash; Item Set Vignette</a></li>
+    </ul>
+  </div>
+
+  <!-- SECTION 0: LOS -->
+  <div class="chapter" id="sec0">
+    <div class="chapter-header">
+      <div class="chapter-num">Section 0</div>
+      <h2 class="chapter-title">Learning Outcomes (LOS)</h2>
+    </div>
+    <p class="prose">Setelah mempelajari modul ini, kandidat diharapkan mampu:</p>
+    <ul class="num-list">
+      <li>Mendeskripsikan indikator-indikator kualitas neraca (<em>describe indicators of balance sheet quality</em>).</li>
+      <li>Mengevaluasi kualitas neraca suatu perusahaan (<em>evaluate the balance sheet quality of a company</em>).</li>
+      <li>Mendeskripsikan sumber-sumber informasi tentang risiko yang dapat diperoleh dari laporan keuangan dan sumber terkait (<em>describe sources of information about risk</em>).</li>
+      <li>Mengevaluasi kualitas laporan keuangan suatu perusahaan secara menyeluruh dengan menggunakan berbagai tools kualitatif maupun kuantitatif (<em>evaluate the quality of a company's financial reports</em>).</li>
+    </ul>
+    <div class="callout blue">
+      <span class="callout-title">Posisi dalam Modul LM6</span>
+      <p>Subtopik ini adalah kelanjutan langsung dari Day 29 (Kualitas Earnings &amp; Cash Flow). Jika Day 29 fokus pada <em>income statement dan cash flow statement</em>, Day 30 ini melengkapi analisis dengan fokus pada <em>neraca (balance sheet)</em> dan <em>pengungkapan dalam catatan kaki</em>. Bersama-sama, keduanya membentuk toolkit lengkap evaluasi kualitas laporan keuangan untuk CFA Level 2.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 1: Framework Balance Sheet Quality -->
+  <div class="chapter" id="sec1">
+    <div class="chapter-header">
+      <div class="chapter-num">Bagian 1</div>
+      <h2 class="chapter-title">Kerangka Kualitas Neraca: Tiga Dimensi Kritis</h2>
+    </div>
+
+    <p class="prose">Menurut kerangka CFA Level 2, terdapat tiga dimensi yang menentukan apakah sebuah neraca berkualitas tinggi atau tidak. Ketiga dimensi ini bukan alternatif &mdash; melainkan <em>semuanya</em> harus terpenuhi agar neraca dapat diandalkan sebagai dasar analisis dan pengambilan keputusan investasi.</p>
+
+    <div class="sub-header">Tiga Dimensi Kualitas Neraca</div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 1: Framework Kualitas Neraca</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Dimensi</th>
+              <th>Definisi</th>
+              <th>Pertanyaan Kunci</th>
+              <th>Contoh Masalah</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Completeness (Kelengkapan)</strong></td>
+              <td>Semua aset dan kewajiban material tercermin dalam neraca yang dilaporkan</td>
+              <td>Apakah ada kewajiban signifikan yang tidak muncul di neraca?</td>
+              <td>Off-balance sheet liabilities: take-or-pay contracts, unconsolidated JVs, operating leases (pre-IFRS 16), SPEs/VIEs yang tidak dikonsolidasi</td>
+            </tr>
+            <tr>
+              <td><strong>Unbiased Measurement (Pengukuran Tidak Bias)</strong></td>
+              <td>Aset dan liabilitas dinilai secara objektif, tidak melebih-lebihkan atau meremehkan nilai ekonomisnya</td>
+              <td>Apakah ada asumsi atau estimasi yang terlalu agresif atau terlalu konservatif?</td>
+              <td>Goodwill yang tidak di-impair; Valuation Allowance DTA yang terlalu kecil; Level 3 fair value assets yang overvalued; discount rate pensiun yang terlalu tinggi</td>
+            </tr>
+            <tr>
+              <td><strong>Clear Presentation (Penyajian yang Jelas)</strong></td>
+              <td>Pengungkapan memungkinkan analis untuk memahami komposisi dan sifat aset/liabilitas</td>
+              <td>Apakah catatan kaki memberikan informasi yang cukup untuk analisis?</td>
+              <td>Aggregasi line items yang menyembunyikan komposisi; catatan RPT yang tidak jelas; asumsi key valuation tidak diungkapkan; perubahan kebijakan akuntansi tanpa penjelasan</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Dimensi pertama (<em>completeness</em>) berkaitan dengan apa yang <em>tidak ada</em> di neraca &mdash; kewajiban yang seharusnya ada tapi tidak muncul. Dimensi kedua (<em>unbiased measurement</em>) berkaitan dengan bagaimana aset dan liabilitas yang sudah ada di neraca <em>dinilai</em>. Dimensi ketiga (<em>clear presentation</em>) berkaitan dengan <em>transparansi pengungkapan</em> yang memungkinkan analis eksternal untuk melakukan penilaian independen.</p>
+
+    <div class="callout amber">
+      <span class="callout-title">Mengapa Neraca Lebih Mudah Dimanipulasi daripada yang Dikira</span>
+      <p>Banyak analis pemula yang lebih waspada terhadap manipulasi income statement daripada balance sheet. Faktanya, neraca adalah medan yang sangat subur untuk manipulasi karena: (1) banyak pos neraca memerlukan <em>estimasi manajemen</em> (goodwill impairment, DTA valuation allowance, fair value aset), (2) standar akuntansi memberikan kelonggaran dalam klasifikasi entitas (konsolidasi vs. equity method), dan (3) banyak kewajiban yang bisa &ldquo;distruktisasi&rdquo; agar tidak muncul di neraca. Memahami ketiga dimensi di atas membantu analis mensistematisasikan pendekatannya.</p>
+    </div>
+
+    <div class="kc" id="kc1">
+      <div class="kc-header" onclick="toggleKC('kc1')">
+        <span class="kc-header-title">Knowledge Check 1.1 &mdash; Identifikasi Dimensi Kualitas</span>
+        <span class="kc-toggle">&#9660;</span>
+      </div>
+      <div class="kc-body">
+        <div class="kc-q">PT Rimba Sawit Tbk memiliki joint venture (JV) produksi minyak kelapa sawit dengan kepemilikan 45%. JV tersebut memiliki utang bank Rp 2 triliun yang tidak dikonsolidasi ke neraca PT Rimba Sawit. Selain itu, perusahaan memiliki goodwill senilai Rp 4,5 triliun yang belum di-impair meskipun market cap perusahaan hanya Rp 5,2 triliun. Identifikasi masalah kualitas neraca berdasarkan dimensi mana, dan jelaskan alasannya.</div>
+        <div class="kc-answer">
+          <strong>Dua masalah berbeda dimensi:</strong><br><br>
+          <strong>1. Completeness (Kelengkapan):</strong> Utang JV Rp 2 triliun dengan kepemilikan 45% tidak dikonsolidasi. Ini adalah off-balance sheet obligation yang signifikan. Analis harus mempertimbangkan untuk menambahkan proportionate share of JV debt (0.45 × Rp 2 triliun = Rp 900 miliar) ke neraca PT Rimba Sawit untuk mendapatkan gambaran leverage yang lebih lengkap.<br><br>
+          <strong>2. Unbiased Measurement:</strong> Goodwill Rp 4,5 triliun vs. market cap Rp 5,2 triliun. Nilai implisit seluruh aset operasional (selain goodwill) hanya Rp 700 miliar padahal perusahaan memiliki pabrik, lahan, dan piutang yang bernilai lebih dari itu. Goodwill kemungkinan besar overstated dan impairment charge seharusnya sudah diakui. Ini adalah masalah unbiased measurement.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 2: Goodwill Impairment Risk -->
+  <div class="chapter" id="sec2">
+    <div class="chapter-header">
+      <div class="chapter-num">Bagian 2</div>
+      <h2 class="chapter-title">Risiko Goodwill Impairment: Membaca Sinyal Tersembunyi</h2>
+    </div>
+
+    <div class="sub-header">Mengapa Goodwill Sangat Rentan terhadap Overstatement</div>
+
+    <p class="prose">Goodwill adalah sisa dari harga akuisisi setelah dikurangi fair value net identifiable assets dari entitas yang diakuisisi. Sifatnya yang tidak memiliki substansi fisik dan sangat bergantung pada <em>estimasi manajemen tentang nilai masa depan</em> menjadikannya kandidat utama overstatement. Manajemen sering memiliki insentif kuat untuk <strong>menunda pengakuan goodwill impairment</strong>: impairment charge langsung memukul laba, bisa mempengaruhi covenant keuangan, dan mengirimkan sinyal negatif ke pasar bahwa akuisisi yang lalu tidak berhasil sesuai ekspektasi.</p>
+
+    <p class="prose">Goodwill tidak dapat diamortisasi (baik di bawah IFRS maupun US GAAP sejak 2002). Sebagai gantinya, wajib dilakukan <em>impairment testing</em> setidaknya satu kali per tahun, atau lebih sering jika ada indikasi impairment. Namun karena impairment testing sendiri sangat bergantung pada asumsi manajemen tentang future cash flows, discount rates, dan growth rates, ada ruang yang sangat besar untuk manajemen &ldquo;mengatur&rdquo; hasil tes tersebut.</p>
+
+    <div class="sub-header">Sinyal Utama Goodwill Impairment yang Akan Datang</div>
+
+    <div class="formula-block">
+<span class="label">Indikator Risiko Goodwill Impairment</span>
+Signal #1 (Paling Kuat):
+  Market Cap perusahaan &lt; Book Value Shareholders' Equity
+
+  Interpretasi:
+  → Jika goodwill melebihi market cap, nilai implisit
+    SEMUA aset lain perusahaan = negatif
+  → Ini logikanya tidak mungkin → goodwill pasti overstated
+
+Signal #2:
+  (Goodwill + Intangible Assets) / Total Assets sangat tinggi
+
+  Benchmark: &gt;30-40% patut diperhatikan
+  Semakin tinggi → semakin besar dampak potensial impairment
+
+Signal #3:
+  Kinerja unit bisnis yang diakuisisi memburuk secara persisten
+  (revenue &lt; proyeksi saat akuisisi, margin menyusut, dll.)
+
+Signal #4:
+  Industri sedang mengalami teknologi disruption atau
+  pergeseran kompetitif yang mengancam profitabilitas jangka panjang
+
+<span class="note">Catatan: Impairment testing bersifat judgment-based dan tidak mengharuskan diakui sampai management sendiri mengakuinya. Analis harus mengantisipasi impairment SEBELUM pengakuan formal.</span>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 2: Kasus Sealed Air Corporation (dari Kurikulum CFA L2)</div>
+      <div class="exhibit-body">
+        <p style="margin-bottom:16px;">Kasus ini dibahas secara eksplisit dalam kurikulum CFA 2026. Pada Agustus 2012, Wall Street Journal menyorot enam perusahaan yang membawa lebih banyak goodwill di neraca daripada keseluruhan market cap mereka. Sealed Air berada di puncak daftar.</p>
+        <table class="reg-table">
+          <thead>
+            <tr><th>Metrik</th><th>Des 2011</th><th>Signifikansi</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Goodwill</td><td>$4.209,6 juta</td><td>Sumber: akuisisi Diversey senilai $4,3 miliar di 2011</td></tr>
+            <tr><td>Intangible Assets</td><td>$2.035,7 juta</td><td>Goodwill + intangibles = 55% total assets!</td></tr>
+            <tr><td>Total Assets</td><td>$11.432,0 juta</td><td>&nbsp;</td></tr>
+            <tr><td>Market Cap (Des 2011)</td><td>~$3.457 juta</td><td>192 juta saham × $18/saham</td></tr>
+            <tr><td>Market Cap (Agt 2012)</td><td>~$2.689 juta</td><td>192 juta saham × $14/saham</td></tr>
+            <tr><td><strong>Goodwill vs. Market Cap</strong></td><td><strong>$4.209 &gt; $3.457</strong></td><td><strong>Nilai implisit aset lain = NEGATIF</strong></td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:16px;"><strong>Hasilnya:</strong> Pada FY2012, Sealed Air mencatat <strong>impairment goodwill dan intangibles sebesar $1.892,3 juta</strong> &mdash; tepat seperti yang diprediksikan oleh analisis sederhana perbandingan goodwill vs. market cap. Net loss 2012: $(1.410,3) juta. Ini bukan prediksi ajaib &mdash; ini FSA standar yang diabaikan oleh investor yang terlalu bergantung pada clean audit opinion.</p>
+      </div>
+    </div>
+
+    <div class="sub-header">Perbedaan IFRS vs US GAAP dalam Goodwill</div>
+
+    <table class="reg-table">
+      <thead>
+        <tr><th>Aspek</th><th>IFRS</th><th>US GAAP</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Metode Pengakuan Goodwill</strong></td>
+          <td>Dua pilihan (per transaksi): <em>Partial goodwill</em> (NCI = porsi proporsional fair value net identifiable assets) ATAU <em>Full goodwill</em> (NCI = fair value NCI)</td>
+          <td>Hanya <em>Full goodwill</em> yang diizinkan (NCI = fair value NCI). Wajib, tidak ada pilihan.</td>
+        </tr>
+        <tr>
+          <td><strong>Unit Pengujian</strong></td>
+          <td>Cash Generating Unit (CGU): unit terkecil yang menghasilkan arus kas yang sebagian besar independen</td>
+          <td>Reporting Unit: umumnya setara dengan operating segment atau satu level di bawahnya</td>
+        </tr>
+        <tr>
+          <td><strong>Impairment Test</strong></td>
+          <td>Satu langkah: bandingkan recoverable amount CGU (nilai tertinggi antara Value in Use dan Fair Value Less Cost of Disposal) vs. carrying amount CGU termasuk goodwill. Jika recoverable amount &lt; carrying amount → impairment diakui sebesar selisihnya.</td>
+          <td>Historis dua langkah; diperbarui oleh ASU 2017-04 menjadi satu langkah: bandingkan fair value reporting unit vs. carrying amount (termasuk goodwill). Jika fair value &lt; carrying amount → impairment = selisihnya (capped at carrying amount of goodwill).</td>
+        </tr>
+        <tr>
+          <td><strong>Reversal Impairment</strong></td>
+          <td>Tidak diizinkan untuk goodwill (berbeda dengan aset lain di bawah IFRS)</td>
+          <td>Tidak diizinkan</td>
+        </tr>
+        <tr>
+          <td><strong>Amortisasi</strong></td>
+          <td>Tidak ada (sama sejak IFRS 3)</td>
+          <td>Tidak ada (sejak SFAS 142, 2002). Sebelumnya: diamortisasi max 40 tahun.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout red">
+      <span class="callout-title">Exam Trap: Goodwill Partial vs Full &amp; Dampak pada NCI</span>
+      <p>Perbedaan partial vs. full goodwill mempengaruhi nilai goodwill yang diakui DAN nilai NCI (Non-Controlling Interest). Dengan full goodwill, goodwill yang diakui lebih besar, dan NCI juga lebih besar. Dengan partial goodwill, keduanya lebih kecil. Implikasi impairment: di bawah IFRS dengan partial goodwill, jika impairment terjadi, sebagian impairment yang "tersembunyi" dalam NCI tidak perlu diakui (karena partial goodwill hanya mencerminkan bagian induk). Ini bisa membuat metode partial goodwill tampak "lebih aman" secara reporting tapi sebenarnya menyembunyikan nilai kerugian sesungguhnya.</p>
+    </div>
+
+    <div class="kc" id="kc2">
+      <div class="kc-header" onclick="toggleKC('kc2')">
+        <span class="kc-header-title">Knowledge Check 2.1 &mdash; Goodwill Impairment Test</span>
+        <span class="kc-toggle">&#9660;</span>
+      </div>
+      <div class="kc-body">
+        <div class="kc-q">PT Gemilang Akuisisi Tbk mengakuisisi PT Cahaya Bisnis dengan harga Rp 3.200 miliar. Fair value net identifiable assets PT Cahaya Bisnis = Rp 2.100 miliar. Satu tahun kemudian, recoverable amount CGU yang mencakup PT Cahaya Bisnis = Rp 2.600 miliar, sedangkan carrying amount CGU (termasuk goodwill) = Rp 3.400 miliar. Di bawah IFRS, berapa impairment yang harus diakui? Siapa yang menanggung impairment?</div>
+        <div class="kc-answer">
+          <strong>Goodwill yang diakui saat akuisisi:</strong> 3.200 &minus; 2.100 = Rp 1.100 miliar (anggap 100% kepemilikan, full goodwill = partial goodwill).<br><br>
+          <strong>Impairment test (IFRS, satu langkah):</strong><br>
+          Carrying amount CGU = Rp 3.400 miliar<br>
+          Recoverable amount CGU = Rp 2.600 miliar<br>
+          Impairment loss = 3.400 &minus; 2.600 = <strong>Rp 800 miliar</strong><br><br>
+          <strong>Alokasi impairment:</strong> Pertama kurangi goodwill sampai nol (goodwill = Rp 1.100 miliar → dikurangi Rp 800 miliar → sisa goodwill Rp 300 miliar). Jika impairment &gt; goodwill, barulah dikurangi dari aset lain secara proporsional. Dalam kasus ini, impairment Rp 800 miliar &lt; goodwill Rp 1.100 miliar, jadi seluruh impairment mengurangi goodwill saja.<br><br>
+          <strong>Siapa menanggung:</strong> Semua ditanggung pemegang saham induk (asumsi kepemilikan 100%).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 3: DTA Quality -->
+  <div class="chapter" id="sec3">
+    <div class="chapter-header">
+      <div class="chapter-num">Bagian 3</div>
+      <h2 class="chapter-title">Kualitas Deferred Tax Assets &amp; Valuation Allowance</h2>
+    </div>
+
+    <p class="prose">Deferred Tax Assets (DTA) adalah hak perusahaan untuk membayar lebih sedikit pajak di masa depan, yang timbul karena perbedaan temporer antara nilai buku akuntansi dan tax base suatu pos. DTA hanya bernilai apabila perusahaan <em>memiliki prospek penghasilan kena pajak yang cukup</em> di masa depan untuk merealisasikan manfaat penghematan pajak tersebut.</p>
+
+    <div class="sub-header">Mekanisme Deferred Tax Asset &amp; Valuation Allowance</div>
+
+    <div class="formula-block">
+<span class="label">Struktur DTA dan Valuation Allowance</span>
+DTA (Gross) = Nilai penuh hak penghematan pajak masa depan
+
+Valuation Allowance (VA) = Estimasi porsi DTA yang TIDAK akan terealisasi
+  → Diakui ketika "lebih mungkin tidak daripada ya" (more likely than not)
+    bahwa sebagian DTA tidak dapat digunakan
+  → US GAAP menggunakan threshold "more likely than not" (>50%)
+  → IFRS: mengakui DTA hanya jika probable future taxable income ada
+
+DTA (Net, yang dilaporkan) = DTA Gross &minus; Valuation Allowance
+
+Perubahan Valuation Allowance:
+  VA NAIK → deferred tax expense naik → NI turun
+    (Perusahaan lebih skeptis terhadap prospek masa depan)
+
+  VA TURUN → deferred tax benefit → NI naik
+    (Perusahaan lebih optimis, ATAU: earnings management)
+
+<span class="note">Catatan Penting: Perubahan VA berdampak langsung ke income statement melalui deferred tax expense/benefit — ini adalah channel earnings management yang sering digunakan dan kurang disadari analis awam.</span>
+    </div>
+
+    <div class="sub-header">Red Flags DTA yang Perlu Diwaspadai</div>
+
+    <p class="prose">Ada beberapa situasi di mana DTA besar menjadi sinyal kekhawatiran, bukan sinyal positif tentang masa depan:</p>
+
+    <table class="reg-table">
+      <thead>
+        <tr><th>Situasi</th><th>Mengapa Menjadi Red Flag</th><th>Contoh</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>DTA besar + riwayat rugi berkelanjutan</td>
+          <td>Manfaat DTA hanya bisa direalisasi jika ada future taxable income. Perusahaan yang rugi terus-menerus tidak punya income untuk dikompensasikan. VA seharusnya tinggi.</td>
+          <td>Startup yang belum profitabel; perusahaan siklus di fase down yang berkepanjangan</td>
+        </tr>
+        <tr>
+          <td>Penurunan VA yang besar dan unexplained</td>
+          <td>Penurunan VA menghasilkan deferred tax benefit yang meningkatkan NI. Tanpa penjelasan fundamental yang jelas, ini bisa merupakan earnings management.</td>
+          <td>Kasus Sealed Air: peningkatan DTA besar dari Rp 156,2 juta ke $393,0 juta (2011 ke 2012) bersamaan dengan goodwill impairment besar</td>
+        </tr>
+        <tr>
+          <td>DTA dari NOL (Net Operating Loss) carryforward</td>
+          <td>NOL carryforward bergantung pada profitabilitas masa depan dan batas waktu penggunaan (umumnya 20 tahun di AS; tanpa batas di beberapa yurisdiksi). Ketidakpastian tinggi.</td>
+          <td>Perusahaan pasca-restrukturisasi; perusahaan dengan perubahan bisnis besar</td>
+        </tr>
+        <tr>
+          <td>DTA sangat besar relatif terhadap total assets (>10-15%)</td>
+          <td>Potensi overstatement assets dan understatement tax expense. Terutama bermasalah untuk perusahaan perbankan (dikeluarkan dari regulatory capital).</td>
+          <td>Perbankan pasca-krisis: DTA dari kerugian kredit besar mendominasi neraca</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 3: Ilustrasi Dampak Perubahan Valuation Allowance</div>
+      <div class="exhibit-body">
+        <p style="margin-bottom:16px;"><strong>Skenario:</strong> PT Andalan Pajak memiliki DTA gross Rp 800 miliar per awal tahun. Pada akhir tahun, manajemen memutuskan menurunkan VA dari Rp 350 miliar menjadi Rp 150 miliar (turun Rp 200 miliar). Tidak ada perubahan fundamental dalam prospek bisnis yang didokumentasikan dalam notes.</p>
+        <table class="reg-table">
+          <thead>
+            <tr><th>Pos</th><th>Awal Tahun</th><th>Akhir Tahun</th><th>Perubahan</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>DTA Gross</td><td>Rp 800 M</td><td>Rp 800 M</td><td>Tidak berubah</td></tr>
+            <tr><td>Valuation Allowance</td><td>Rp 350 M</td><td>Rp 150 M</td><td><strong>&minus; Rp 200 M</strong></td></tr>
+            <tr><td>DTA Net (dilaporkan)</td><td>Rp 450 M</td><td>Rp 650 M</td><td><strong>+ Rp 200 M (asset naik)</strong></td></tr>
+            <tr><td>Deferred Tax Expense (Income Statement)</td><td>&mdash;</td><td><strong>&minus; Rp 200 M (benefit)</strong></td><td>Tax expense berkurang Rp 200 M</td></tr>
+            <tr><td>Net Income</td><td>&mdash;</td><td><strong>+ Rp 200 M</strong></td><td>NI meningkat Rp 200 M dari perubahan VA</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:16px;"><strong>Implikasi untuk Analis:</strong> Rp 200 miliar dari NI PT Andalan Pajak tidak berasal dari operasi bisnis &mdash; melainkan dari perubahan estimasi akuntansi yang bersifat diskresioner. Jika perusahaan ini melaporkan NI total Rp 500 miliar, berarti 40% dari NI berasal dari penurunan VA, bukan dari aktivitas operasional. Analis harus mengidentifikasi dan mengeksklusi komponen ini dari <em>normalized earnings</em>.</p>
+      </div>
+    </div>
+
+    <div class="callout blue">
+      <span class="callout-title">DTA dalam Regulasi Perbankan (Basel III)</span>
+      <p>Untuk industri perbankan, DTA memiliki dimensi tambahan: regulasi capital Basel III mengatur bahwa DTA yang bergantung pada profitabilitas masa depan (terutama DTA dari NOL) harus dikurangi dari Common Equity Tier 1 (CET1) jika melebihi threshold tertentu (umumnya 10% CET1 sebelum pengurangan). Oleh karena itu, bank dengan DTA besar akan mengalami dua dampak buruk: (1) risks dari realisasi DTA jika tidak profitable, dan (2) pengurangan regulatory capital yang membatasi kapasitas bisnis. Ini menjadi pertimbangan khusus dalam analisis bank menggunakan framework LM6 Vol. 3 FSA.</p>
+    </div>
+
+    <div class="kc" id="kc3">
+      <div class="kc-header" onclick="toggleKC('kc3')">
+        <span class="kc-header-title">Knowledge Check 3.1 &mdash; Arah Bias Valuation Allowance</span>
+        <span class="kc-toggle">&#9660;</span>
+      </div>
+      <div class="kc-body">
+        <div class="kc-q">Suatu perusahaan melaporkan DTA net senilai $500 juta yang dinilai analis sebagai overstatement sebesar $80 juta (Valuation Allowance yang seharusnya lebih besar Rp $80 juta). Apa dampak dari overstatement DTA ini terhadap: (a) neraca, (b) income statement, dan (c) apakah ini menghasilkan overstatement atau understatement NI?</div>
+        <div class="kc-answer">
+          <strong>(a) Neraca:</strong> DTA net overstated sebesar $80 juta → Total Assets overstated $80 juta. Equity (via retained earnings) juga overstated $80 juta × (1 &minus; tax rate, karena DTA sendiri sudah tax-adjusted) — sebenarnya dampak langsung ke equity adalah naik sebesar $80 juta × (1) karena DTA sudah merupakan angka post-tax.<br><br>
+          <strong>(b) Income Statement:</strong> Jika VA terlalu kecil, artinya di tahun di mana VA seharusnya lebih tinggi, perusahaan mengakui deferred tax benefit yang terlalu besar (atau deferred tax expense yang terlalu kecil). Ini berarti tax expense understated.<br><br>
+          <strong>(c) Dampak NI:</strong> Tax expense understated → Net Income <strong>OVERSTATED</strong>. Ini adalah bentuk earnings manipulation yang menggelembungkan laba dengan menggunakan estimasi VA yang terlalu rendah (terlalu optimis tentang kemampuan merealisasi DTA di masa depan).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 4: Off-BS Obligations -->
+  <div class="chapter" id="sec4">
+    <div class="chapter-header">
+      <div class="chapter-num">Bagian 4</div>
+      <h2 class="chapter-title">Off-Balance Sheet Obligations &amp; Constructive Capitalization</h2>
+    </div>
+
+    <p class="prose">Dimensi <em>completeness</em> dari kualitas neraca memerlukan perhatian khusus terhadap kewajiban yang secara struktural dikecualikan dari neraca. Strategi ini bukan selalu bermotif manipulasi &mdash; kadang memang ada alasan bisnis yang sah untuk membuat JV atau kontrak pembelian &mdash; tapi dampaknya terhadap analisis leverage dan solvabilitas tetap harus ditangani secara eksplisit.</p>
+
+    <div class="sub-header">Jenis-Jenis Off-Balance Sheet Obligations</div>
+
+    <div class="formula-block">
+<span class="label">Take-or-Pay Contracts (Purchase Obligations)</span>
+Definisi: Perjanjian dengan supplier di mana perusahaan wajib
+membeli minimum volume tertentu atau membayar penalty.
+
+Struktur khas:
+  Tahun 1: $X/unit × min_volume
+  Tahun 2-5: Eskalasi sesuai indeks
+  Penalty jika tidak beli: 80-100% dari nilai kontrak
+
+Tidak muncul di neraca sebagai liabilitas (hanya pengungkapan
+di notes sebagai "contractual obligations" atau "purchase commitments")
+
+CONSTRUCTIVE CAPITALIZATION (Penyesuaian Analis):
+  Step 1: Baca notes → identifikasi pembayaran minimum per tahun
+  Step 2: PV = Σ [Min Payment_t / (1 + r)^t]
+           di mana r = borrowing rate perusahaan
+  Step 3: Tambahkan PV ke Assets (right-of-use) DAN Liabilities
+  Step 4: Hitung ulang leverage ratios:
+           Debt-to-Equity, Debt-to-Assets, Interest Coverage
+
+<span class="note">Setelah adjustment: (1) leverage meningkat, (2) current ratio turun, (3) EBITDA coverage perlu disesuaikan dengan estimasi interest pada obligation baru. Semua rasio yang bergantung pada total debt akan memburuk.</span>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 4: Contoh Constructive Capitalization</div>
+      <div class="exhibit-body">
+        <p style="margin-bottom:12px;"><strong>Data:</strong> PT Energi Nusantara punya take-or-pay contract dengan PERTAMINA untuk pembelian LNG minimum: Tahun 1&ndash;3: Rp 500 miliar/tahun; Tahun 4&ndash;5: Rp 400 miliar/tahun. Borrowing rate 9%.</p>
+        <table class="reg-table">
+          <thead><tr><th>Tahun</th><th>Cash Flow</th><th>Discount Factor (9%)</th><th>PV</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>500</td><td>1/1.09 = 0.9174</td><td>458,7</td></tr>
+            <tr><td>2</td><td>500</td><td>1/1.09² = 0.8417</td><td>420,8</td></tr>
+            <tr><td>3</td><td>500</td><td>1/1.09³ = 0.7722</td><td>386,1</td></tr>
+            <tr><td>4</td><td>400</td><td>1/1.09⁴ = 0.7084</td><td>283,4</td></tr>
+            <tr><td>5</td><td>400</td><td>1/1.09⁵ = 0.6499</td><td>260,0</td></tr>
+            <tr><td><strong>Total PV</strong></td><td colspan="2">&nbsp;</td><td><strong>Rp 1.809 miliar</strong></td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:16px;"><strong>Sebelum Adjustment:</strong> Total Debt = Rp 8.000 miliar; Total Equity = Rp 4.000 miliar; D/E = 2,00×</p>
+        <p><strong>Setelah Constructive Capitalization:</strong> Total Debt = 8.000 + 1.809 = Rp 9.809 miliar; D/E = 9.809/4.000 = <strong>2,45×</strong></p>
+        <p style="margin-top:8px;"><em>Peningkatan leverage 22,5% hanya dari satu take-or-pay contract yang tidak muncul di neraca!</em></p>
+      </div>
+    </div>
+
+    <div class="sub-header">Unconsolidated Joint Ventures &amp; Associates</div>
+
+    <p class="prose">Perusahaan yang memiliki investasi dalam JV atau associates (kepemilikan biasanya 20&ndash;50%) menggunakan equity method: hanya mencatat share of profit, bukan aset dan liabilitas JV secara proporsional. Ini berarti jika JV punya utang besar, utang tersebut tidak muncul di neraca konsolidasi &mdash; padahal secara ekonomis perusahaan terekspos (terutama jika ada parent guarantee atau induk harus mendukung JV jika gagal bayar).</p>
+
+    <div class="formula-block">
+<span class="label">Penyesuaian untuk Unconsolidated JV dengan Leverage Tinggi</span>
+Reported: Investasi pada asosiasi = $X (equity method)
+Hidden: JV memiliki utang sebesar $Y
+
+Penyesuaian analis (proportionate consolidation):
+  Tambahkan ke liabilities: Ownership% × JV Debt ($Y)
+  Tambahkan ke assets: Ownership% × JV Total Assets
+
+Dampak pada rasio:
+  Debt/Equity, Debt/EBITDA → memburuk
+  Return on Assets → berpotensi berubah
+
+Kapan penyesuaian ini paling penting?
+  → JV punya utang signifikan (>10% consolidated debt)
+  → Ownership% mendekati 50% (risiko kendali de facto)
+  → Ada explicit atau implicit parent guarantee atas utang JV
+  → JV beroperasi di sektor berisiko tinggi (komoditas, infrastruktur)
+
+<span class="note">Enron menggunakan lebih dari 3.000 SPE untuk menyembunyikan $27 miliar utang. Setelah konsolidasi ulang, total utang melonjak ~$13 miliar dan leverage menjadi tidak sustainable. Ini mengakibatkan restatement laporan keuangan dan akhirnya kebangkrutan.</span>
+    </div>
+
+    <div class="callout green">
+      <span class="callout-title">Perkembangan Standar: IFRS 16 &amp; IFRS 10</span>
+      <p>Dua perkembangan standar penting yang telah mengurangi (walaupun tidak mengeliminasi) permasalahan off-balance sheet:</p>
+      <ul>
+        <li><strong>IFRS 16 / ASC 842 (Leases, efektif 2019):</strong> Sebagian besar operating leases kini harus dikapitalisasi &mdash; right-of-use asset dan lease liability muncul di neraca. Namun, leases jangka pendek (&le;12 bulan) dan low-value assets masih dikecualikan.</li>
+        <li><strong>IFRS 10 / SFAS 167 (Consolidation, efektif 2013):</strong> Memperluas kriteria konsolidasi untuk VIE (Variable Interest Entity). Lebih banyak SPE yang kini wajib dikonsolidasi oleh &ldquo;primary beneficiary&rdquo; berdasarkan power + exposure to variable returns.</li>
+      </ul>
+    </div>
+
+    <div class="kc" id="kc4">
+      <div class="kc-header" onclick="toggleKC('kc4')">
+        <span class="kc-header-title">Knowledge Check 4.1 &mdash; Off-Balance Sheet Obligations</span>
+        <span class="kc-toggle">&#9660;</span>
+      </div>
+      <div class="kc-body">
+        <div class="kc-q">Sebuah perusahaan manufaktur memiliki purchase obligation sebesar Rp 300 miliar/tahun selama 3 tahun berikutnya dan Rp 200 miliar/tahun untuk 2 tahun setelahnya (total 5 tahun). Borrowing rate = 10%. Saat ini total debt = Rp 5.000 miliar, total equity = Rp 2.500 miliar. Hitunglah PV purchase obligation dan D/E setelah adjustment.</div>
+        <div class="kc-answer">
+          <strong>Kalkulasi PV:</strong><br>
+          Tahun 1: 300 / 1.10 = 272,7<br>
+          Tahun 2: 300 / 1.10² = 247,9<br>
+          Tahun 3: 300 / 1.10³ = 225,4<br>
+          Tahun 4: 200 / 1.10⁴ = 136,6<br>
+          Tahun 5: 200 / 1.10⁵ = 124,2<br>
+          <strong>Total PV = Rp 1.006,8 miliar</strong><br><br>
+          <strong>D/E Sebelum:</strong> 5.000 / 2.500 = <strong>2,00×</strong><br>
+          <strong>D/E Setelah:</strong> (5.000 + 1.007) / 2.500 = 6.007 / 2.500 = <strong>2,40×</strong><br><br>
+          Leverage meningkat 20% dari satu sumber off-balance sheet saja. Jika analis juga memperhitungkan proportionate JV debt, dampaknya bisa jauh lebih besar.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 5: Related-Party Transactions -->
+  <div class="chapter" id="sec5">
+    <div class="chapter-header">
+      <div class="chapter-num">Bagian 5</div>
+      <h2 class="chapter-title">Related-Party Transactions: Konflik Kepentingan yang Tersembunyi</h2>
+    </div>
+
+    <p class="prose">Related-Party Transactions (RPT) adalah transaksi antara perusahaan dengan pihak-pihak yang memiliki hubungan khusus: manajemen, direktur, pemegang saham pengendali, subsidiaries, perusahaan yang dikontrol oleh orang yang sama, atau entitas terkait lainnya. RPT tidak otomatis buruk &mdash; dalam beberapa kasus, RPT merupakan bagian normal dari struktur bisnis grup. Namun, karena sifatnya yang inherently rentan terhadap konflik kepentingan, RPT memerlukan pengawasan khusus dari analis.</p>
+
+    <div class="sub-header">Mengapa RPT Menjadi Perhatian Khusus</div>
+
+    <p class="prose">Harga dalam transaksi antara pihak terkait mungkin <em>tidak mencerminkan market price yang arm's length</em>. Ini bisa digunakan untuk berbagai tujuan yang menguntungkan pihak tertentu:</p>
+
+    <table class="reg-table">
+      <thead>
+        <tr><th>Mekanisme RPT</th><th>Dampak pada Laporan Keuangan</th><th>Contoh Kasus Nyata</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Menjual aset ke afiliasi dengan harga di atas market</td>
+          <td>Mengakui gain non-recurring yang menggelembungkan NI dan memperbaiki neraca perusahaan yang menjual</td>
+          <td>Enron: menjual aset ke SPE yang dikelola oleh CFO dengan harga inflasi → gain diakui di P&amp;L Enron, kerugian tersembunyi di SPE yang tidak dikonsolidasi</td>
+        </tr>
+        <tr>
+          <td>Membeli dari afiliasi dengan harga di atas market</td>
+          <td>COGS atau opex digelembungkan di entitas pembeli; margin operasional "tersembunyi" ke afiliasi penjual</td>
+          <td>Transfer pricing antar subsidiary untuk menggeser laba ke jurisdiksi pajak rendah</td>
+        </tr>
+        <tr>
+          <td>Meminjamkan uang ke afiliasi dengan bunga di bawah market</td>
+          <td>Perusahaan menanggung opportunity cost; keuntungan mengalir ke afiliasi</td>
+          <td>Manajemen meminjamkan uang perusahaan ke entitas yang mereka kendalikan secara pribadi dengan bunga sangat rendah</td>
+        </tr>
+        <tr>
+          <td>Menjual saham/aset ke pihak terkait dalam struktur yang kompleks</td>
+          <td>Leverage tersembunyi; kewajiban off-balance sheet; keuntungan fiktif diakui</td>
+          <td>Enron: partnership Chewco dan LJM Cayman dikelola oleh eksekutif Enron sendiri → menyembunyikan $27 miliar utang</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="sub-header">Checklist Evaluasi RPT oleh Analis</div>
+
+    <p class="prose">Ketika menemukan pengungkapan RPT dalam catatan kaki, analis harus secara sistematis mengevaluasi:</p>
+
+    <ul class="num-list">
+      <li><strong>Kecukupan disclosure:</strong> Apakah perusahaan menjelaskan dengan jelas sifat transaksi, pihak yang terlibat, besaran transaksi, dan ketentuan harga? Disclosure yang tidak memadai sendiri sudah merupakan red flag.</li>
+      <li><strong>Arm's length pricing:</strong> Apakah perusahaan menyatakan bahwa transaksi dilakukan pada harga pasar yang arm's length? Jika ya, apakah ada verifikasi eksternal atau hanya pernyataan manajemen?</li>
+      <li><strong>Materialitas:</strong> Seberapa besar transaksi RPT relatif terhadap revenue, total aset, atau laba perusahaan? RPT yang tidak material secara finansial mungkin tidak perlu kekhawatiran mendalam.</li>
+      <li><strong>Perubahan pola dari tahun ke tahun:</strong> Apakah volume atau struktur RPT berubah secara signifikan? Peningkatan tiba-tiba dalam RPT bisa mengindikasikan ada sesuatu yang sedang diatur.</li>
+      <li><strong>Insider transactions &amp; compensation:</strong> Review disclosure kompensasi eksekutif dan penjualan saham oleh insider. Insider selling dalam jumlah besar, terutama ketika laporan keuangan terlihat baik, bisa menjadi sinyal bahwa orang dalam tidak percaya dengan prospek perusahaan.</li>
+      <li><strong>Konsistensi dengan narasi bisnis:</strong> Apakah penjelasan RPT masuk akal dengan strategi bisnis perusahaan yang diungkapkan? RPT yang tidak logis dari perspektif bisnis patut diwaspadai.</li>
+    </ul>
+
+    <div class="callout gold">
+      <span class="callout-title">Kasus Enron: RPT sebagai Inti Fraud Terbesar Abad 21</span>
+      <p>Ketika James Chanos (short seller legendaris) mulai menganalisis Enron pada November 2000 &mdash; 13 bulan sebelum kebangkrutan &mdash; salah satu alasan utamanya adalah <em>&ldquo;complex and difficult-to-understand disclosures on related-party transactions.&rdquo;</em> Enron memiliki ribuan SPE, beberapa di antaranya (Chewco, LJM Cayman) dikelola langsung oleh CFO Andrew Fastow. Melalui transaksi dengan SPE ini, Enron: (1) mengakui gain dari penjualan aset dengan harga inflasi, (2) menyembunyikan utang di SPE yang tidak dikonsolidasi, dan (3) memanipulasi laporan keuangan untuk menampilkan profitabilitas yang stabil. Pelajaran kuncinya: ketika RPT sangat kompleks dan sulit dipahami, itu sendiri adalah sinyal bahwa ada sesuatu yang sengaja disembunyikan.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 6: Sources of Risk Information -->
+  <div class="chapter" id="sec6">
+    <div class="chapter-header">
+      <div class="chapter-num">Bagian 6</div>
+      <h2 class="chapter-title">Sumber Informasi Risiko: Auditor, Catatan Kaki, &amp; MD&amp;A</h2>
+    </div>
+
+    <div class="sub-header">Keterbatasan Inherent Opini Auditor sebagai Sumber Informasi Risiko</div>
+
+    <p class="prose">Banyak analis dan investor secara naif menganggap opini audit <em>wajar tanpa pengecualian</em> (clean opinion) sebagai &ldquo;jaminan kualitas&rdquo; laporan keuangan. Kurikulum CFA secara eksplisit menyatakan pandangan sebaliknya: opini auditor adalah sumber informasi risiko yang <strong>sangat terbatas kegunaannya</strong>, terutama karena masalah <em>lag time</em> dan sifat historisnya.</p>
+
+    <table class="reg-table">
+      <thead>
+        <tr><th>Keterbatasan Opini Auditor</th><th>Penjelasan</th><th>Kasus Ilustrasi</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Lagging Information</strong></td>
+          <td>Opini audit berkaitan dengan tahun fiskal yang sudah lewat. Pada saat opini diterbitkan (biasanya 2&ndash;3 bulan setelah year-end), analis sudah mendapatkan informasi lebih relevan dari sumber lain.</td>
+          <td>Eastman Kodak: bangkrut 19 Januari 2012. Clean audit opinion diterbitkan 28 Februari 2012 &mdash; <em>setelah</em> kebangkrutan!</td>
+        </tr>
+        <tr>
+          <td><strong>Tidak Mendeteksi Fraud Canggih</strong></td>
+          <td>Audit dilakukan berdasarkan sampling, bukan pemeriksaan 100% transaksi. Fraud yang dirancang dengan hati-hati bisa lolos dari audit standar.</td>
+          <td>Enron: clean audit opinion dari Arthur Andersen (Big 5) hingga hampir kebangkrutan. Satyam: bank statements palsu tidak terdeteksi.</td>
+        </tr>
+        <tr>
+          <td><strong>Newly Public Companies Exemption</strong></td>
+          <td>Di AS, perusahaan yang baru IPO mendapat exemption dari audit internal control (SOX Section 404) selama satu tahun pertama.</td>
+          <td>Groupon: material weakness baru diungkap sendiri oleh manajemen Maret 2012 (setelah IPO November 2011). Tidak ada external auditor opinion atas internal control pada filing pertama.</td>
+        </tr>
+        <tr>
+          <td><strong>Going-Concern Opinion Juga Terlambat</strong></td>
+          <td>Bahkan going-concern qualification &mdash; yang seharusnya menjadi sinyal kuat &mdash; sering muncul terlalu terlambat untuk menjadi sinyal peringatan dini yang berguna.</td>
+          <td>Kodak: going-concern paragraph baru ditambahkan dalam opini Feb 2012, setelah kebangkrutan Januari 2012.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="sub-header">Apa yang Lebih Berguna daripada Opini Auditor?</div>
+
+    <div class="formula-block">
+<span class="label">Hierarki Kegunaan sebagai Early Warning Signal</span>
+SANGAT BERGUNA (Early, Forward-looking):
+  1. Analisis rasio keuangan (trend DSO, inventory, accruals ratio)
+  2. Perbandingan CFO vs NI (divergensi yang tidak dapat dijelaskan)
+  3. Perubahan kebijakan akuntansi yang tidak dijelaskan
+  4. Pola RPT yang berubah secara signifikan
+  5. Insider selling dalam volume besar
+
+BERGUNA (Contemporaneous):
+  6. Restatement laporan keuangan (sinyal keras: historical earnings tidak andal)
+  7. Regulatory filing yang tidak tepat waktu (late filing = red flag)
+  8. Perubahan auditor (terutama dari besar ke kecil = "auditor downgrade")
+  9. Perubahan CFO/CEO mendadak
+
+TERBATAS KEGUNAANNYA (Lagging):
+  10. Opini auditor (clean atau qualified)
+  11. Going-concern qualification
+  12. Pengungkapan formal material weakness
+
+<span class="note">Prinsip kunci: Semakin forward-looking dan bebas dari bias manajemen, semakin berguna sebagai sinyal risiko. Opini auditor adalah lagging, backward-looking, dan terlalu bergantung pada informasi dari manajemen sendiri.</span>
+    </div>
+
+    <div class="sub-header">Auditor Switching sebagai Red Flag</div>
+
+    <p class="prose">Meskipun opini auditor sendiri kurang informatif, <em>pergantian auditor</em> &mdash; terutama yang bersifat diskresioner (voluntary) &mdash; bisa menjadi sinyal yang berguna. Kurikulum CFA menyorot beberapa pola yang patut diwaspadai:</p>
+
+    <ul class="bullet-list">
+      <li><strong>Multiple auditor changes dalam jangka pendek:</strong> Feeder fund Madoff berganti auditor tiga kali dalam tiga tahun (2004&ndash;2006). Ini disorot dalam testimony kongres sebagai &ldquo;huge warning sign&rdquo; yang menunjukkan &ldquo;auditor shopping.&rdquo;</li>
+      <li><strong>Auditor kecil untuk perusahaan kompleks:</strong> KAP yang hanya terdiri dari 3 orang mengaudit operasi senilai $50 miliar milik Madoff. Kapasitas audit yang tidak sepadan dengan kompleksitas perusahaan seharusnya memicu pertanyaan.</li>
+      <li><strong>Downgrade dari Big 4 ke KAP lokal:</strong> Jika tidak ada alasan yang jelas (misal: biaya), pergantian dari auditor besar ke yang lebih kecil bisa mengindikasikan perusahaan tidak bisa mempertahankan atau tidak mau mempertahankan standar audit yang ketat.</li>
+    </ul>
+
+    <div class="sub-header">Catatan Kaki (Notes) dan MD&amp;A sebagai Sumber Informasi Risiko</div>
+
+    <p class="prose">Catatan kaki laporan keuangan adalah sumber informasi yang paling kaya namun paling sering diabaikan oleh investor retail. Notes wajib mengungkapkan (baik di bawah IFRS maupun US GAAP) informasi tentang:</p>
+
+    <ul class="num-list">
+      <li><strong>Contingent Obligations:</strong> Kewajiban yang timbul dari kejadian masa depan yang tidak pasti (litigasi, klaim lingkungan, jaminan, dll.). Wajib diungkapkan jika kemungkinan terjadi lebih dari remote namun belum probable untuk diakui.</li>
+      <li><strong>Pension &amp; Post-Employment Benefits:</strong> Discount rate, expected return on assets, funded status. Perubahan asumsi &mdash; terutama discount rate &mdash; dapat secara signifikan mempengaruhi nilai kewajiban pensiun.</li>
+      <li><strong>Financial Instrument Risks:</strong> Credit risk, liquidity risk, dan market risks (interest rate risk, FX risk, commodity price risk). Contoh: Shell mengungkapkan bahwa kenaikan suku bunga 1% menurunkan pre-tax income $27 juta &mdash; &lt;0,1% dari pre-tax income, jadi relatif tidak material.</li>
+      <li><strong>Segment Information:</strong> Berguna untuk mendeteksi apakah perusahaan menyembunyikan underperformance satu segmen dengan menggeser biaya atau pendapatan antar segmen.</li>
+    </ul>
+
+    <p class="prose">Management Commentary (IFRS) atau MD&amp;A (US GAAP Form 10-K) adalah sumber narasi yang seharusnya memberikan perspektif manajemen tentang risiko spesifik perusahaan. Namun dalam praktik, banyak MD&amp;A yang berisi <em>generic, boilerplate risk disclosures</em> yang tidak menambahkan nilai analitik. Analis perlu membedakan antara risiko generic (berlaku untuk semua perusahaan dalam industri) vs. risiko spesifik perusahaan yang benar-benar material.</p>
+
+    <div class="callout red">
+      <span class="callout-title">Exam Trap: Clean Opinion ≠ High Quality Reporting</span>
+      <p>Ini adalah jebakan konseptual yang paling sering muncul di soal CFA L2. Clean audit opinion (<em>wajar tanpa pengecualian</em>) menyatakan bahwa laporan keuangan disajikan sesuai GAAP &mdash; bukan bahwa laporan tersebut bebas dari earnings management, tidak mengandung bias, atau bahwa perusahaan tidak menghadapi risiko signifikan. Banyak perusahaan dengan fraud besar mendapat clean opinion bertahun-tahun berturut-turut. Analis harus melakukan analisis independen, tidak boleh mengandalkan opini auditor sebagai pengganti FSA yang mendalam.</p>
+    </div>
+
+    <div class="kc" id="kc5">
+      <div class="kc-header" onclick="toggleKC('kc5')">
+        <span class="kc-header-title">Knowledge Check 6.1 &mdash; Sumber Informasi Risiko</span>
+        <span class="kc-toggle">&#9660;</span>
+      </div>
+      <div class="kc-body">
+        <div class="kc-q">Seorang analis menemukan bahwa PT Sejahtera Makmur Tbk: (1) berganti auditor dari KPMG ke KAP lokal kecil di tahun ini, (2) mendapat clean audit opinion untuk FY terbaru, (3) direktur utama menjual 30% kepemilikannya di bulan lalu, dan (4) notes mengungkapkan contingent liabilities dari 12 gugatan lingkungan yang masih berjalan. Urutkan keempat informasi ini dari yang PALING BERGUNA hingga PALING TERBATAS sebagai early warning signal risiko.</div>
+        <div class="kc-answer">
+          <strong>Urutan dari paling berguna ke paling terbatas:</strong><br><br>
+          <strong>1. Paling Berguna: Direktur Utama menjual 30% kepemilikannya.</strong> Insider selling dalam volume besar adalah sinyal contemporaneous yang sangat kuat. Orang yang paling tahu tentang kondisi perusahaan memilih untuk merealisasikan investasinya &mdash; ini adalah signal forward-looking yang tidak bisa dengan mudah dimanipulasi.<br><br>
+          <strong>2. Berguna: Pergantian dari KPMG ke KAP lokal kecil.</strong> "Auditor downgrade" adalah red flag potensial, khususnya jika tidak ada penjelasan yang masuk akal. Bisa mengindikasikan opinion shopping atau perusahaan tidak mau mempertahankan standar audit ketat dari Big 4.<br><br>
+          <strong>3. Berguna dengan konteks: Notes tentang 12 gugatan lingkungan.</strong> Berguna untuk assessment risiko kontinjensi, tapi perlu dianalisis lebih jauh: seberapa probable? Apa estimasi besaran kerugian? Apakah ada perubahan dari tahun lalu?<br><br>
+          <strong>4. Paling Terbatas: Clean audit opinion.</strong> Seperti sudah dibahas: lagging, tidak mendeteksi fraud canggih, dan tidak menjamin kualitas reporting. Paling sedikit nilai tambahnya sebagai early warning signal.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 7: Practice -->
+  <div class="chapter" id="sec7">
+    <div class="chapter-header">
+      <div class="chapter-num">Bagian 7</div>
+      <h2 class="chapter-title">Latihan Soal &mdash; Item Set Vignette</h2>
+    </div>
+
+    <div class="practice-body">
+      <div class="vignette">
+        <div class="vignette-label">Vignette &mdash; PT Sinar Abadi Konstruksi Tbk (SIAK)</div>
+        <div class="vignette-text">
+          <strong>Latar Belakang:</strong> Budi Santoso, CFA, adalah credit analyst di BRI Danareksa yang sedang mengevaluasi proposal penerbitan obligasi senilai Rp 3 triliun oleh PT Sinar Abadi Konstruksi Tbk (SIAK), perusahaan konstruksi dan infrastruktur yang listing di BEI sejak 2018. SIAK melakukan akuisisi besar PT Waskita Jaya (perusahaan jalan tol Sumatera) pada tahun 2023 seharga Rp 9,8 triliun.
+          <br><br>
+          <strong>Data Keuangan per 31 Desember 2025 (Rp miliar):</strong>
+          <table style="margin:12px 0;font-size:13px;width:100%;border-collapse:collapse;">
+            <tr style="background:#eeece7;"><th style="padding:8px;border:1px solid rgba(0,0,0,0.1);text-align:left;">Pos</th><th style="padding:8px;border:1px solid rgba(0,0,0,0.1);text-align:right;">2025</th><th style="padding:8px;border:1px solid rgba(0,0,0,0.1);text-align:right;">2024</th></tr>
+            <tr><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);">Total Assets</td><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);text-align:right;">38.500</td><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);text-align:right;">36.200</td></tr>
+            <tr style="background:rgba(255,255,255,0.5);"><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);">Goodwill</td><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);text-align:right;">4.800</td><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);text-align:right;">4.800</td></tr>
+            <tr><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);">DTA Gross</td><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);text-align:right;">1.200</td><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);text-align:right;">1.200</td></tr>
+            <tr style="background:rgba(255,255,255,0.5);"><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);">Valuation Allowance</td><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);text-align:right;">(180)</td><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);text-align:right;">(480)</td></tr>
+            <tr><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);">DTA Net</td><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);text-align:right;">1.020</td><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);text-align:right;">720</td></tr>
+            <tr style="background:rgba(255,255,255,0.5);"><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);">Total Liabilities</td><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);text-align:right;">28.800</td><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);text-align:right;">27.000</td></tr>
+            <tr><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);">Total Equity</td><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);text-align:right;">9.700</td><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);text-align:right;">9.200</td></tr>
+            <tr style="background:rgba(255,255,255,0.5);"><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);">Net Income 2025</td><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);text-align:right;">900</td><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);text-align:right;">650</td></tr>
+            <tr><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);">CFO 2025</td><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);text-align:right;">280</td><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);text-align:right;">310</td></tr>
+            <tr style="background:rgba(255,255,255,0.5);"><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);">Market Cap (31 Des 2025)</td><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);text-align:right;">7.200</td><td style="padding:8px;border:1px solid rgba(0,0,0,0.1);text-align:right;">8.100</td></tr>
+          </table>
+          <strong>Informasi Tambahan:</strong><br>
+          (A) Goodwill Rp 4.800 miliar tidak berubah dari 2024 ke 2025, padahal divisi jalan tol PT Waskita Jaya mengalami penurunan lalu lintas kendaraan (traffic) sebesar 18% akibat jalan tol baru alternatif yang dibuka kompetitor di 2025.<br>
+          (B) VA turun dari Rp 480 miliar (2024) ke Rp 180 miliar (2025), penurunan Rp 300 miliar. Notes tidak memberikan penjelasan spesifik tentang mengapa manajemen lebih optimis terhadap realisasi DTA. NI 2025 naik dari Rp 650 miliar ke Rp 900 miliar (+Rp 250 miliar).<br>
+          (C) SIAK memiliki 40% saham di PT Tol Kalimantan (JV) yang memiliki total utang Rp 4.500 miliar. JV ini tidak dikonsolidasi.<br>
+          (D) SIAK punya take-or-pay contract dengan PT Beton Sentosa (supplier, dimiliki 30% oleh Komisaris SIAK): Rp 350 miliar/tahun selama 4 tahun. Borrowing rate SIAK 8,5%.<br>
+          (E) Auditor SIAK berganti dari Deloitte Indonesia ke KAP Hartono &amp; Mitra di awal 2025. FY2025 mendapat clean opinion.
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="q-num">PERTANYAAN 1 dari 6</div>
+        <div class="q-text">Berdasarkan data 31 Desember 2025, apakah goodwill SIAK menunjukkan indikasi kuat akan terjadi impairment? Jelaskan dengan menggunakan dua sinyal utama dari kurikulum CFA.</div>
+        <div class="option" onclick="selectOption(this, 1, 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Tidak ada indikasi kuat. Goodwill Rp 4.800 miliar = 12,5% dari Total Assets Rp 38.500 miliar &mdash; angka yang masih dalam batas wajar. Tidak ada kekhawatiran signifikan.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 1, 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Terdapat dua indikasi kuat. Pertama: Goodwill (Rp 4.800 miliar) &gt; Market Cap &minus; Total Equity lainnya, artinya market cap (Rp 7.200 miliar) hanya Rp 2.400 miliar di atas goodwill &mdash; implisit nilai seluruh aset operasional senilai Rp 33.700 miliar dinilai pasar hanya Rp 7.200 miliar &minus; Rp 4.800 miliar = Rp 2.400 miliar. Kedua: underlying business (divisi tol) mengalami penurunan traffic 18% &mdash; sinyal fundamental bahwa nilai CGU telah menurun.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 1, 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Ada kemungkinan impairment, tapi keputusan sepenuhnya ada di tangan manajemen dan auditor. Karena SIAK mendapat clean audit opinion FY2025, auditor telah mengkonfirmasi bahwa goodwill tidak perlu di-impair.</div>
+        </div>
+        <div class="explanation correct" id="exp-1-correct" style="display:none;">
+          JAWABAN BENAR: B<br><br>
+          <strong>Sinyal #1 (Market Cap vs Goodwill):</strong> Market cap SIAK Rp 7.200 miliar. Goodwill saja Rp 4.800 miliar. Selisihnya hanya Rp 2.400 miliar untuk merepresentasikan nilai seluruh aset operasional lain (properti, peralatan konstruksi, receivables, investasi, dll.) yang secara buku bernilai Rp 38.500 &minus; Rp 4.800 = Rp 33.700 miliar. Pasar menilai seluruh operasional di luar goodwill hanya Rp 2.400 miliar &mdash; ini secara implisit mengindikasikan goodwill massively overstated. Ingat kasus Sealed Air: ketika goodwill mendekati atau melebihi market cap, impairment besar hampir pasti akan datang.<br><br>
+          <strong>Sinyal #2 (Deteriorasi Fundamental):</strong> Traffic kendaraan di divisi tol Waskita Jaya turun 18% &mdash; ini langsung mempengaruhi revenue projections yang digunakan dalam impairment testing. Jika analis menurunkan traffic forecast sebesar 18%, recoverable amount CGU akan turun signifikan dan kemungkinan besar di bawah carrying amount (termasuk goodwill).<br><br>
+          Jawaban C salah: clean audit opinion tidak menjamin goodwill tidak overstated. Impairment testing berdasarkan judgment manajemen, bukan verifikasi objektif oleh auditor.
+        </div>
+        <div class="explanation incorrect" id="exp-1-wrong" style="display:none;">
+          Jawaban yang benar adalah B. Gunakan dua sinyal utama: (1) perbandingan goodwill vs. market cap (goodwill Rp 4.800 M vs. market cap Rp 7.200 M = margin tipis yang mengindikasikan goodwill overstated), dan (2) deteriorasi fundamental (traffic turun 18% menurunkan recoverable amount CGU). Clean audit opinion tidak relevan sebagai konfirmasi kualitas goodwill.
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="q-num">PERTANYAAN 2 dari 6</div>
+        <div class="q-text">Berapa besar kontribusi perubahan Valuation Allowance terhadap kenaikan Net Income SIAK dari 2024 ke 2025? Apa implikasinya terhadap kualitas earnings?</div>
+        <div class="option" onclick="selectOption(this, 2, 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Perubahan VA berkontribusi Rp 300 miliar terhadap kenaikan NI. Karena kenaikan NI total hanya Rp 250 miliar, ini berarti NI dari operasi sesungguhnya sebenarnya TURUN Rp 50 miliar &mdash; bukan naik. Ini adalah indikasi earnings quality yang sangat buruk.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 2, 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Perubahan VA berkontribusi Rp 300 miliar namun kenaikan NI total Rp 250 miliar, sehingga operasi sesungguhnya sebenarnya turun Rp 50 miliar. Tapi ini wajar karena manajemen lebih optimis terhadap DTA &mdash; ini adalah legitimate change in estimate.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 2, 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Perubahan VA tidak mempengaruhi income statement. Hanya mempengaruhi neraca (DTA naik). Kenaikan NI Rp 250 miliar berasal sepenuhnya dari perbaikan operasional.</div>
+        </div>
+        <div class="explanation correct" id="exp-2-correct" style="display:none;">
+          JAWABAN BENAR: A<br><br>
+          <strong>Kalkulasi:</strong> VA turun Rp 300 miliar (dari Rp 480 M ke Rp 180 M) → deferred tax benefit Rp 300 miliar → tax expense berkurang Rp 300 miliar → NI meningkat Rp 300 miliar hanya dari perubahan VA.<br><br>
+          Kenaikan NI total = Rp 250 miliar (900 &minus; 650). Tapi kontribusi VA = Rp 300 miliar. Artinya:<br>
+          NI dari operasi = NI total &minus; Kontribusi VA = 250 &minus; 300 = <strong>Rp &minus;50 miliar</strong><br><br>
+          Kesimpulan: Earnings OPERASIONAL SIAK sebenarnya TURUN Rp 50 miliar dari 2024 ke 2025, tapi hal ini tersembunyi di balik deferred tax benefit dari penurunan VA yang tidak didukung penjelasan fundamental. Ini adalah indikasi earnings quality yang sangat buruk. Ditambah dengan fakta bahwa traffic divisi tol turun 18%, optimisme manajemen tentang realisasi DTA semakin tidak credible.<br><br>
+          Jawaban B salah: tanpa penjelasan yang credible tentang mengapa prospek profitabilitas membaik (padahal traffic turun), ini bukan legitimate estimate revision &mdash; ini potential earnings management. Jawaban C fundamentally salah: perubahan VA sangat mempengaruhi income statement.
+        </div>
+        <div class="explanation incorrect" id="exp-2-wrong" style="display:none;">
+          Jawaban yang benar adalah A. VA turun Rp 300 M = deferred tax benefit Rp 300 M = NI naik Rp 300 M. Total kenaikan NI hanya Rp 250 M. Artinya NI operasional sesungguhnya turun Rp 50 M. Kenaikan NI yang dilaporkan adalah ilusi yang diciptakan oleh perubahan estimasi akuntansi yang tidak didukung fundamental.
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="q-num">PERTANYAAN 3 dari 6</div>
+        <div class="q-text">Budi ingin melakukan constructive capitalization atas take-or-pay contract SIAK (Rp 350 miliar/tahun × 4 tahun, discount rate 8,5%). Berapa PV obligation tersebut, dan bagaimana D/E ratio SIAK berubah setelah adjustment?</div>
+        <div class="option" onclick="selectOption(this, 3, 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. PV = Rp 350 miliar × 4 = Rp 1.400 miliar (nilai nominal). D/E naik dari 2,97× menjadi 3,11×.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 3, 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. PV ≈ Rp 1.142 miliar (PV annuity 4 tahun, 8.5%). D/E naik dari 2,97× menjadi 3,09×. Selain itu, karena supplier dimiliki 30% oleh Komisaris SIAK, ini adalah RPT yang perlu dievaluasi kewajaran harganya.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 3, 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Constructive capitalization tidak diperlukan karena take-or-pay contract sudah diungkapkan dalam notes. Pengungkapan yang adequate berarti analis tidak perlu melakukan adjustment lebih lanjut.</div>
+        </div>
+        <div class="explanation correct" id="exp-3-correct" style="display:none;">
+          JAWABAN BENAR: B<br><br>
+          <strong>Kalkulasi PV Annuity:</strong><br>
+          PV = 350 × [1 &minus; (1.085)^&minus;4] / 0.085<br>
+          (1.085)^4 = 1.3861; PV factor = (1 &minus; 1/1.3861) / 0.085 = (1 &minus; 0.7214) / 0.085 = 0.2786 / 0.085 = 3.278<br>
+          PV = 350 × 3.278 = <strong>Rp 1.147 miliar</strong> (≈ Rp 1.142 miliar, variasi minor karena rounding)<br><br>
+          <strong>D/E sebelum:</strong> 28.800 / 9.700 = 2,97×<br>
+          <strong>D/E setelah:</strong> (28.800 + 1.147) / 9.700 = 29.947 / 9.700 = 3,09×<br><br>
+          <strong>Konteks RPT:</strong> Supplier take-or-pay dimiliki 30% oleh Komisaris SIAK. Ini adalah RPT klasik. Budi harus mengevaluasi: apakah harga Rp 350 miliar/tahun arm's length? Jika tidak, SIAK mungkin membayar lebih dari harga pasar wajar ke entitas yang menguntungkan Komisaris secara pribadi &mdash; ini adalah transfer of value keluar dari perusahaan.<br><br>
+          Jawaban A salah: menggunakan nilai nominal, bukan PV. Jawaban C salah: disclosure dalam notes tidak menghilangkan kebutuhan constructive capitalization &mdash; justru sebaliknya, disclosure tersebut adalah sumber data untuk melakukannya.
+        </div>
+        <div class="explanation incorrect" id="exp-3-wrong" style="display:none;">
+          Jawaban yang benar adalah B. PV = 350 × PV annuity factor (4 tahun, 8.5%) ≈ Rp 1.142&ndash;1.147 miliar. D/E naik dari 2,97× ke ~3,09×. Poin kritis: kontrak ini adalah RPT (supplier dengan Komisaris) yang memerlukan evaluasi arm's length pricing secara terpisah.
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="q-num">PERTANYAAN 4 dari 6</div>
+        <div class="q-text">Jika Budi juga memperhitungkan proportionate share of JV debt (40% × Rp 4.500 miliar = Rp 1.800 miliar), berapa D/E SIAK yang fully-adjusted (setelah memasukkan BOTH constructive capitalization dari take-or-pay contract DAN proportionate JV debt)?</div>
+        <div class="option" onclick="selectOption(this, 4, 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. D/E fully-adjusted = (28.800 + 1.147 + 1.800) / 9.700 = 31.747 / 9.700 = 3,27× — kenaikan signifikan dari D/E reported 2,97×.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 4, 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. D/E fully-adjusted = (28.800 + 1.147 + 1.800) / 9.700 = 3,27×. Ini menunjukkan bahwa leverage sesungguhnya SIAK 10% lebih tinggi dari yang dilaporkan. Angka ini relevan untuk evaluasi proposal obligasi Rp 3 triliun — coverage ratio dan covenant akan semakin ketat jika obligasi diterbitkan.</td>
+        </div>
+        <div class="option" onclick="selectOption(this, 4, 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. JV debt tidak perlu diperhitungkan karena SIAK hanya memiliki 40% JV. Dengan equity method, SIAK tidak bertanggung jawab atas utang JV tersebut.</div>
+        </div>
+        <div class="explanation correct" id="exp-4-correct" style="display:none;">
+          JAWABAN BENAR: B<br><br>
+          Jawaban A dan B sama secara kalkulasi, tapi B lebih lengkap dan relevan untuk konteks evaluasi kredit.<br><br>
+          <strong>Kalkulasi:</strong><br>
+          Total adjusted debt = 28.800 + 1.147 (take-or-pay) + 1.800 (40% × 4.500 JV debt) = 31.747<br>
+          D/E = 31.747 / 9.700 = <strong>3,27×</strong><br><br>
+          <strong>Konteks evaluasi obligasi:</strong> SIAK ingin menerbitkan obligasi Rp 3 triliun tambahan. Jika obligasi diterbitkan, total adjusted debt akan menjadi ~34.747 dan D/E akan menjadi ~3,58×. Ini sangat relevan untuk credit analysis. Selain itu, adjusted D/E 3,27× vs. reported 2,97× menunjukkan perbedaan 10% yang cukup material untuk covenant analysis.<br><br>
+          Jawaban C mengandung pemikiran yang SALAH. Meskipun benar bahwa secara hukum SIAK tidak langsung bertanggung jawab atas utang JV (jika tidak ada parent guarantee), dalam praktik credit analysis, SIAK sebagai pemegang 40% saham JV memiliki eksposur ekonomis yang signifikan jika JV gagal bayar. Kreditor dan rating agencies biasanya memperhitungkan proportionate JV debt.
+        </div>
+        <div class="explanation incorrect" id="exp-4-wrong" style="display:none;">
+          Jawaban yang benar adalah B. D/E fully-adjusted = (28.800 + 1.147 + 1.800) / 9.700 = 3,27×. Poin penting: dalam credit analysis, JV debt yang proporsional harus diperhitungkan karena SIAK sebagai 40% pemegang saham memiliki eksposur ekonomis signifikan terhadap JV tersebut.
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="q-num">PERTANYAAN 5 dari 6</div>
+        <div class="q-text">Mengevaluasi dimensi mana dari balance sheet quality yang menjadi perhatian UTAMA dari: (i) Goodwill tidak di-impair meskipun traffic turun 18%, (ii) JV debt yang tidak dikonsolidasi, (iii) Take-or-pay contract yang tidak muncul di neraca?</div>
+        <div class="option" onclick="selectOption(this, 5, 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Semua tiga masalah adalah masalah Completeness, karena semuanya berkaitan dengan informasi yang tidak muncul di neraca secara penuh.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 5, 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. (i) Goodwill yang tidak di-impair = Unbiased Measurement (penilaian aset terlalu tinggi). (ii) JV debt tidak dikonsolidasi = Completeness (kewajiban tidak tercermin). (iii) Take-or-pay tidak di neraca = Completeness (kewajiban tidak tercermin). Dua masalah terakhir berbeda dari yang pertama.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 5, 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. (i) = Clear Presentation karena manajemen seharusnya mengungkapkan risiko ini lebih jelas di notes. (ii) dan (iii) = Completeness karena tidak ada di neraca.</div>
+        </div>
+        <div class="explanation correct" id="exp-5-correct" style="display:none;">
+          JAWABAN BENAR: B<br><br>
+          Pembedaan dimensi kualitas neraca sangat penting dan sering diuji di CFA L2:<br><br>
+          <strong>(i) Goodwill tidak di-impair = Unbiased Measurement:</strong> Goodwill SUDAH ada di neraca (Rp 4.800 miliar). Masalahnya adalah penilaian yang bias &mdash; nilai yang dilaporkan terlalu tinggi relatif terhadap nilai ekonomis aktual (yang tercermin dari penurunan traffic 18% dan market cap yang hanya Rp 2.400 miliar di atas goodwill). Ini bukan masalah ketidaklengkapan, tapi masalah pengukuran yang tidak objektif.<br><br>
+          <strong>(ii) JV debt tidak dikonsolidasi = Completeness:</strong> Utang JV Rp 1.800 miliar (proportionate share) tidak muncul di neraca. Neraca tidak lengkap karena ada kewajiban ekonomis signifikan yang hilang.<br><br>
+          <strong>(iii) Take-or-pay tidak di neraca = Completeness:</strong> Sama seperti JV debt &mdash; kewajiban nyata (PV ~Rp 1.147 miliar) tidak tercermin di neraca. Neraca tidak mencerminkan gambaran lengkap kewajiban SIAK.
+        </div>
+        <div class="explanation incorrect" id="exp-5-wrong" style="display:none;">
+          Jawaban yang benar adalah B. Kunci: goodwill yang tidak di-impair sudah ada di neraca, masalahnya adalah nilainya terlalu tinggi → Unbiased Measurement. JV debt dan take-or-pay belum ada di neraca sama sekali → Completeness. Dua dimensi yang berbeda meskipun keduanya bermasalah.
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="q-num">PERTANYAAN 6 dari 6</div>
+        <div class="q-text">Berdasarkan seluruh analisis: goodwill overstatement, earnings dari perubahan VA bukan dari operasi, leverage yang jauh lebih tinggi setelah adjustment, dan pergantian auditor dari Deloitte ke KAP kecil — apa rekomendasi Budi yang paling tepat terkait proposal obligasi Rp 3 triliun SIAK?</div>
+        <div class="option" onclick="selectOption(this, 6, 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Rekomendasikan penerbitan obligasi karena SIAK memiliki Net Income positif Rp 900 miliar dan clean audit opinion FY2025. Kinerja keuangan yang dilaporkan mendukung kemampuan membayar utang.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 6, 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Rekomendasikan penolakan atau persyaratan penjaminan yang sangat ketat. Analisis mendalam mengungkap: (1) NI operasional sesungguhnya turun Rp 50 miliar; (2) leverage adjusted 3,27× akan menjadi ~3,58× setelah obligasi baru; (3) risiko goodwill impairment besar yang bisa meluluhlantakkan equity dan covenant; (4) CFO hanya Rp 280 miliar &mdash; sangat kecil untuk mendukung debt service pada level leverage ini; (5) auditor downgrade sebagai tambahan red flag. Laporan keuangan yang tampak baik menyembunyikan fundamental yang memburuk.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 6, 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Rekomendasikan penerbitan obligasi dengan covenant yang moderat berdasarkan D/E yang dilaporkan (2,97×). Semua isu yang diidentifikasi adalah masalah akuntansi biasa yang tidak mempengaruhi kemampuan bayar jangka pendek.</div>
+        </div>
+        <div class="explanation correct" id="exp-6-correct" style="display:none;">
+          JAWABAN BENAR: B<br><br>
+          Ini adalah soal sintesis yang menggabungkan seluruh analisis LM6 ke dalam keputusan kredit konkret. Berikut adalah summary temuan:<br><br>
+          <strong>1. Earnings Quality Rendah:</strong> NI Rp 900 miliar tampak bagus, tapi Rp 300 miliar berasal dari penurunan VA &mdash; bukan dari operasi. NI operasional sesungguhnya turun Rp 50 miliar YoY. CFO hanya Rp 280 miliar &mdash; jauh lebih rendah dari NI, menunjukkan accruals yang besar.<br><br>
+          <strong>2. Leverage Sesungguhnya Jauh Lebih Tinggi:</strong> Reported D/E 2,97× vs. fully adjusted D/E 3,27×. Setelah obligasi baru Rp 3 triliun: ~3,58×. Interest coverage akan sangat ketat.<br><br>
+          <strong>3. Risiko Goodwill Impairment Besar:</strong> Jika impairment terjadi (sangat mungkin mengingat traffic &minus;18% dan market cap sudah hampir menyamai goodwill saja), equity bisa tergerus drastis. Goodwill Rp 4.800 miliar vs. Total Equity Rp 9.700 miliar &mdash; impairment 50% goodwill saja (Rp 2.400 miliar) akan menghapus 25% equity. Ini bisa memicu covenant breach.<br><br>
+          <strong>4. Auditor Downgrade &amp; RPT:</strong> Pergantian dari Deloitte ke KAP kecil + take-or-pay dengan perusahaan Komisaris = dua red flag governance tambahan.<br><br>
+          Budi sebagai credit analyst harus merekomendasikan penolakan atau covenant yang sangat ketat (misalnya: maximum adjusted D/E 3,00×, mandatory goodwill impairment testing quarterly, restriction on RPT &gt; Rp 100 miliar, auditor Big 4 requirement).
+        </div>
+        <div class="explanation incorrect" id="exp-6-wrong" style="display:none;">
+          Jawaban yang benar adalah B. Ini adalah soal yang menguji kemampuan menggabungkan seluruh analisis LM6. Laporan yang terlihat baik (NI positif, clean opinion, D/E moderate) menyembunyikan: NI operasional yang turun, leverage yang jauh lebih tinggi setelah adjustment, risiko goodwill impairment besar, dan berbagai red flag governance. Ini persis contoh mengapa FSA yang mendalam lebih penting dari permukaan laporan keuangan.
+        </div>
+      </div>
+
+      <div class="score-panel" id="score-panel">
+        <div class="score-panel-text">Skor kamu:</div>
+        <div class="score-panel-value" id="score-value">0 / 6</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="CFA_L2_Day29_Full.html" class="nav-btn">&larr; Day 29: Earnings &amp; Cash Flow Quality (Full)</a>
+    <a href="CFA_L2_Day31_Full.html" class="nav-btn">Day 31: Dividend Policy (Full) &rarr;</a>
+  </div>
+
+</div>
+
+<script>
+  // Knowledge Check toggle
+  function toggleKC(id) {
+    const kc = document.getElementById(id);
+    kc.classList.toggle('open');
+  }
+
+  // Quiz functionality
+  const answers = {};
+  const correct_answers = { 1: 'B', 2: 'A', 3: 'B', 4: 'B', 5: 'B', 6: 'B' };
+  let totalQ = 6;
+
+  function selectOption(el, qNum, choice) {
+    const block = el.closest('.question-block');
+    const opts = block.querySelectorAll('.option');
+    opts.forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+
+    block.querySelectorAll('.explanation').forEach(e => {
+      e.style.display = 'none';
+    });
+
+    const isCorrect = (choice === correct_answers[qNum]);
+    const expId = isCorrect ? 'exp-' + qNum + '-correct' : 'exp-' + qNum + '-wrong';
+    const exp = document.getElementById(expId);
+    if (exp) exp.style.display = 'block';
+
+    answers[qNum] = choice;
+
+    const answered = Object.keys(answers).length;
+    if (answered === totalQ) {
+      const score = Object.entries(answers).filter(([q, a]) => a === correct_answers[q]).length;
+      const panel = document.getElementById('score-panel');
+      document.getElementById('score-value').textContent = score + ' / ' + totalQ;
+      panel.classList.add('show');
+    }
+  }
+</script>
+</body>
+</html>

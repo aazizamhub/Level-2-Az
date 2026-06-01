@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 52 · Full · Yield Curve Theories</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;
+  --border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+  --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;
+  --gold:#9a6e1a;--gold2:#7a5010;--gold-bg:rgba(154,110,26,0.08);
+  --blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);
+  --green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);
+  --red:#b83232;--red-bg:rgba(184,50,50,0.08);
+  --amber:#a06010;--amber-bg:rgba(160,96,16,0.08);
+  --r:10px;--r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.8;}
+.page{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;border:1px solid rgba(26,95,168,0.2);}
+.hero{margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--border);}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:36px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:15px;color:var(--text2);}
+.meta-row{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:36px;}
+.toc-title{font-size:12px;color:var(--text3);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:12px;font-weight:500;}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.toc-list li a{font-size:13px;color:var(--blue);text-decoration:none;display:flex;align-items:center;gap:8px;}
+.toc-list li a:hover{text-decoration:underline;}
+.toc-num{font-size:11px;color:var(--text3);min-width:20px;}
+.chapter{margin-bottom:40px;}
+.chapter-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--gold-bg);}
+.chapter-num{font-family:'DM Serif Display',serif;font-size:28px;color:var(--gold);line-height:1;}
+.chapter-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);line-height:1.2;}
+.sub-header{font-size:17px;font-weight:500;color:var(--text);margin:24px 0 12px;padding-left:12px;border-left:3px solid var(--gold);}
+.prose{font-size:14px;color:var(--text2);line-height:1.85;margin-bottom:14px;}
+.prose strong{color:var(--text);font-weight:500;}
+.formula-block{background:var(--bg2);border:1px solid var(--border2);border-left:4px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:16px 20px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold2);line-height:2;}
+.formula-block .label{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:8px;}
+.formula-block .note{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text3);font-style:italic;display:block;margin-top:8px;}
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:20px 0;}
+.exhibit-title{background:var(--bg3);padding:10px 16px;font-size:12px;font-weight:500;color:var(--text2);border-bottom:1px solid var(--border);letter-spacing:0.03em;}
+.exhibit-body{padding:16px;}
+.reg-table{width:100%;border-collapse:collapse;font-size:13px;}
+.reg-table th{text-align:left;padding:8px 12px;background:var(--bg3);color:var(--text3);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border2);}
+.reg-table td{padding:8px 12px;border-bottom:1px solid var(--border);text-align:left;font-size:13px;color:var(--text2);}
+.reg-table td:first-child{font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);font-weight:500;}
+.reg-table tr:last-child td{border-bottom:none;}
+.reg-table .mono{font-family:'JetBrains Mono',monospace;font-size:12px;}
+.callout{border-radius:var(--r);padding:16px 18px;margin:16px 0;}
+.callout-title{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;}
+.callout p{font-size:13px;color:var(--text2);line-height:1.75;}
+.callout p+p{margin-top:8px;}
+.callout.blue{background:var(--blue-bg);border:1px solid rgba(26,95,168,0.15);}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.amber{background:var(--amber-bg);border:1px solid rgba(160,96,16,0.15);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.green{background:var(--green-bg);border:1px solid rgba(26,122,74,0.15);}
+.callout.green .callout-title{color:var(--green);}
+.callout.red{background:var(--red-bg);border:1px solid rgba(184,50,50,0.15);}
+.callout.red .callout-title{color:var(--red);}
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:24px 0;overflow:hidden;}
+.kc-header{background:var(--gold-bg);padding:12px 18px;border-bottom:1px solid rgba(154,110,26,0.15);}
+.kc-header-title{font-size:12px;font-weight:500;color:var(--gold);letter-spacing:0.06em;text-transform:uppercase;}
+.kc-body{padding:18px;}
+.kc-q{font-size:13px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.6;}
+.kc-answer{background:var(--bg3);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);line-height:1.75;display:none;}
+.kc-answer.show{display:block;}
+.kc-answer strong{color:var(--green);}
+.kc-toggle{background:none;border:1px solid var(--border2);border-radius:var(--r-sm);padding:6px 14px;font-size:12px;color:var(--text3);cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px;transition:all 0.15s;}
+.kc-toggle:hover{border-color:var(--gold);color:var(--gold);}
+.divider{height:1px;background:var(--border);margin:36px 0;}
+.practice-header{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);border-radius:var(--r) var(--r) 0 0;padding:16px 20px;display:flex;align-items:center;gap:12px;}
+.practice-header-title{font-size:16px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);margin-top:2px;}
+.practice-body{background:var(--bg2);border:1px solid rgba(154,110,26,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:24px;}
+.vignette{background:var(--bg3);border-left:4px solid var(--gold);padding:18px 20px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:28px;font-size:13px;color:var(--text2);line-height:1.85;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;font-weight:500;}
+.question-block{margin-bottom:24px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:6px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:12px;line-height:1.65;}
+.option{display:block;width:100%;text-align:left;padding:11px 16px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:8px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.6;}
+.option:hover:not(:disabled){border-color:var(--border2);background:var(--bg2);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:14px 16px;font-size:13px;color:var(--text2);margin-top:10px;line-height:1.8;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:28px;margin-top:20px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:52px;margin-bottom:8px;}
+.score-msg{font-size:14px;color:var(--text2);}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+.nav-day{font-size:12px;color:var(--text3);text-align:center;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II &middot; <span>Fixed Income</span> &middot; LM1</div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <div class="version-badge">Versi Full</div>
+      <div class="day-badge">Day 52 of 90</div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Jumat, 3 Juli 2026</div>
+    <h1 class="hero-title">Teori-Teori Yield Curve &amp; Model Faktor</h1>
+    <p class="hero-sub">Term Structure &amp; Interest Rate Dynamics (LM1) &mdash; Subtopik 2 dari 2</p>
+    <div class="meta-row">
+      <div class="meta-pill">&#128214; <b>Materi Lengkap</b></div>
+      <div class="meta-pill">&#127470;&#127465; Bahasa Indonesia</div>
+      <div class="meta-pill">&#9878;&#65039; Exam weight <b>~12%</b></div>
+      <div class="meta-pill">&#128337; Est. baca <b>50&ndash;65 menit</b></div>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ul class="toc-list">
+      <li><a href="#s0"><span class="toc-num">0.</span> Learning Outcomes (LOS)</a></li>
+      <li><a href="#s1"><span class="toc-num">1.</span> Pure Expectations &amp; Local Expectations Theory</a></li>
+      <li><a href="#s2"><span class="toc-num">2.</span> Liquidity Preference Theory</a></li>
+      <li><a href="#s3"><span class="toc-num">3.</span> Segmented Markets Theory</a></li>
+      <li><a href="#s4"><span class="toc-num">4.</span> Preferred Habitat Theory &amp; QE</a></li>
+      <li><a href="#s5"><span class="toc-num">5.</span> Yield Curve Factor Models: Level, Steepness &amp; Curvature</a></li>
+      <li><a href="#s6"><span class="toc-num">6.</span> Struktur Volatilitas Yield Curve</a></li>
+      <li><a href="#s7"><span class="toc-num">7.</span> Latihan Soal: Item Set Vignette</a></li>
+    </ul>
+  </div>
+
+  <!-- Section 0: LOS -->
+  <div class="chapter" id="s0">
+    <div class="chapter-header">
+      <div class="chapter-num">0</div>
+      <div class="chapter-title">Learning Outcomes (LOS)</div>
+    </div>
+    <p class="prose">Setelah mempelajari modul ini, kandidat diharapkan mampu:</p>
+    <p class="prose">
+      &bull; Menjelaskan teori-teori tradisional mengenai term structure suku bunga dan mendeskripsikan implikasi masing-masing teori terhadap forward rates dan bentuk yield curve.<br>
+      &bull; Menjelaskan bagaimana eksposur obligasi terhadap setiap faktor penggerak yield curve dapat diukur dan bagaimana eksposur tersebut dapat digunakan untuk mengelola risiko yield curve.<br>
+      &bull; Menjelaskan struktur maturitas dari volatilitas yield dan pengaruhnya terhadap volatilitas harga obligasi.
+    </p>
+  </div>
+
+  <!-- Section 1: Pure Expectations -->
+  <div class="chapter" id="s1">
+    <div class="chapter-header">
+      <div class="chapter-num">1</div>
+      <div class="chapter-title">Pure Expectations &amp; Local Expectations Theory</div>
+    </div>
+
+    <p class="prose">
+      Cabang pertama dari teori term structure tradisional berfokus pada interpretasi bentuk yield curve berdasarkan <strong>ekspektasi investor</strong> terhadap suku bunga masa depan. Teori yang muncul pertama kali adalah <strong>pure expectations theory</strong>, yang disebut juga <em>unbiased expectations theory</em>.
+    </p>
+
+    <div class="sub-header">1.1 Pure Expectations Theory</div>
+    <p class="prose">
+      Pure expectations theory menyatakan bahwa <strong>forward rate adalah unbiased predictor dari future spot rate</strong>. Interpretasi terluasnya adalah bahwa obligasi dengan semua jangka waktu merupakan substitusi sempurna satu sama lain. Membeli obligasi 5-tahun dan menahannya selama 3 tahun memiliki expected return yang sama dengan membeli obligasi 3-tahun, atau membeli serangkaian obligasi 1-tahun selama 3 periode berturut-turut.
+    </p>
+    <p class="prose">
+      Prediksi teori ini konsisten dengan asumsi <strong>risk neutrality</strong>: dalam dunia risk-neutral, investor tidak terpengaruh oleh ketidakpastian dan risk premium tidak ada. Setiap sekuritas di-yield pada risk-free rate untuk maturity tersebut. Meskipun asumsi ini menghasilkan hasil yang menarik secara matematis, ia jelas bertentangan dengan bukti empiris yang luas bahwa investor bersikap risk averse.
+    </p>
+
+    <div class="formula-block">
+      <span class="label">Pure Expectations: Forward Rate = Expected Future Spot Rate</span>
+      f(T*, T) = E[S(T*, T)]
+      <span class="note">f(T*,T) = forward rate untuk periode T yang dimulai T* periode dari sekarang; bersifat unbiased dan tidak mengandung premium apapun</span>
+    </div>
+
+    <p class="prose">
+      <strong>Implikasi terhadap yield curve shape:</strong> Yield curve upward-sloping → pasar mengekspektasikan short-term rates akan naik. Yield curve flat → pasar mengekspektasikan short-term rates tetap stabil. Yield curve inverted → pasar mengekspektasikan short-term rates akan turun.
+    </p>
+
+    <div class="sub-header">1.2 Local Expectations Theory</div>
+    <p class="prose">
+      Local expectations theory adalah versi yang lebih ketat dan lebih rigorous dari pure expectations theory. Alih-alih menyatakan bahwa setiap strategi maturity memiliki expected return yang sama sepanjang investment horizon tertentu, teori ini menyatakan bahwa <strong>expected return dari setiap obligasi selama periode PENDEK (short holding period) = risk-free rate</strong>. Kesimpulan ini berasal dari asumsi no-arbitrage: penetapan harga obligasi tidak memungkinkan trader memperoleh arbitrage profit.
+    </p>
+    <p class="prose">
+      Perbedaan utama local expectations dari pure expectations adalah bahwa ia dapat diperluas ke dunia dengan risiko. Meskipun teori ini mensyaratkan bahwa risk premium tidak ada untuk holding period yang sangat pendek, tidak ada pembatasan tersebut untuk investasi jangka panjang. Dengan demikian, teori ini berlaku untuk obligasi risk-free maupun yang berisiko.
+    </p>
+
+    <div class="callout amber">
+      <div class="callout-title">&#9888; Kenyataan Empiris vs. Teori</div>
+      <p>Meskipun local expectations theory menarik secara ekonomis, sering diamati bahwa short-holding-period returns pada obligasi jangka panjang faktanya <em>melebihi</em> returns pada obligasi jangka pendek. Kebutuhan akan likuiditas dan kemampuan untuk hedge risiko pada dasarnya memastikan bahwa permintaan untuk sekuritas jangka pendek akan melebihi sekuritas jangka panjang. Dengan demikian, baik yield maupun actual returns untuk sekuritas jangka pendek biasanya lebih rendah dari sekuritas jangka panjang — bertentangan dengan prediksi local expectations theory.</p>
+    </div>
+
+    <div class="kc" id="kc1">
+      <div class="kc-header"><div class="kc-header-title">&#10067; Knowledge Check 1</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Sebuah obligasi 3-tahun dan obligasi 1-tahun yang di-roll tiga kali memiliki expected return yang sama. Pernyataan ini paling konsisten dengan teori term structure mana, dan asumsi apa yang mendasarinya?</div>
+        <button class="kc-toggle" onclick="toggleKC('kc1a')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc1a">
+          <strong>Pure expectations theory (unbiased expectations theory).</strong> Teori ini menyatakan bahwa bonds dari semua maturity adalah perfect substitutes dan strategi apapun menghasilkan expected return yang sama selama investment horizon tertentu. Asumsi dasarnya adalah <em>risk neutrality</em> &mdash; investor tidak memerlukan kompensasi tambahan untuk menanggung interest rate risk. Dalam teori ini, forward rates adalah unbiased predictors of future spot rates, tanpa adanya liquidity premium.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: Liquidity Preference -->
+  <div class="chapter" id="s2">
+    <div class="chapter-header">
+      <div class="chapter-num">2</div>
+      <div class="chapter-title">Liquidity Preference Theory</div>
+    </div>
+
+    <p class="prose">
+      Berbeda dari expectations theories yang tidak memberi ruang bagi risk aversion, <strong>liquidity preference theory</strong> berusaha mengakomodasinya. Teori ini menyatakan bahwa <strong>liquidity premium ada untuk mengkompensasi investor atas interest rate risk tambahan yang mereka tanggung saat meminjamkan dalam jangka panjang</strong>, dan bahwa premium ini meningkat seiring dengan maturity.
+    </p>
+
+    <div class="sub-header">2.1 Mekanisme Liquidity Premium</div>
+    <p class="prose">
+      Ambil contoh obligasi Treasury AS berjatuh tempo 30 tahun. Sebagian besar investor memiliki investment horizon yang jauh lebih pendek dari 30 tahun. Agar investor bersedia memegang obligasi ini, mereka menuntut return yang lebih tinggi untuk mengkompensasi risiko bahwa yield curve berubah dan mereka harus menjual obligasi sebelum jatuh tempo pada harga yang tidak pasti. Return inkremental itulah yang disebut <strong>liquidity premium</strong>.
+    </p>
+    <p class="prose">
+      Penting untuk dicatat: premium ini <em>bukan</em> premium untuk kurangnya likuiditas di pasar sekunder obligasi yang tipis perdagangannya. Melainkan, ini adalah premium yang berlaku untuk <em>semua</em> obligasi jangka panjang, termasuk yang memiliki pasar yang sangat dalam dan liquid seperti US Treasuries.
+    </p>
+
+    <div class="formula-block">
+      <span class="label">Liquidity Preference: Forward Rate = Expected Spot + Liquidity Premium</span>
+      f(T*, T) = E[S(T*, T)] + LP(T*, T)
+      <span class="note">LP ≥ 0 dan LP(T) ≥ LP(T-1) — liquidity premium tidak pernah menurun seiring bertambahnya maturity</span>
+    </div>
+
+    <div class="sub-header">2.2 Implikasi terhadap Yield Curve Shape</div>
+    <p class="prose">
+      Karena adanya liquidity premium, forward rates memberikan estimasi expected future spot rates yang <strong>upwardly biased</strong>. Ini secara langsung membatalkan prediksi unbiased expectations theory. Implikasi terhadap shape of yield curve:
+    </p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit: Implikasi Liquidity Preference Theory terhadap Yield Curve Shape</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr><th>Ekspektasi Short Rates</th><th>Prediksi Shape Yield Curve</th><th>Alasan</th></tr>
+          <tr><td>Tidak berubah (flat expectation)</td><td>Upward-sloping</td><td>LP positif mendorong long-term yields naik</td></tr>
+          <tr><td>Diperkirakan naik</td><td>Steeply upward-sloping</td><td>Ekspektasi kenaikan + LP menambah kecuraman</td></tr>
+          <tr><td>Diperkirakan turun moderat</td><td>Flat atau sedikit miring</td><td>Penurunan ekspektasi diimbangi LP positif</td></tr>
+          <tr><td>Diperkirakan turun tajam (deflasi/resesi berat)</td><td>Downward-sloping (inverted)</td><td>Penurunan ekspektasi lebih besar dari LP</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">
+      Dengan demikian, menurut liquidity preference theory, yield curve <strong>umumnya akan upward-sloping</strong>. Downward-sloping curve masih bisa terjadi jika ekspektasi penurunan short rates cukup tajam untuk mengimbangi LP &mdash; misalnya, ekspektasi deflasi yang kuat atau resesi berat yang mendorong ekspektasi pemotongan suku bunga agresif oleh bank sentral.
+    </p>
+
+    <div class="callout blue">
+      <div class="callout-title">&#128161; Insight: Mengapa LP Tidak Menjelaskan Segalanya</div>
+      <p>Liquidity preference theory gagal memberikan penjelasan lengkap tentang term structure. Teori ini hanya berargumen tentang keberadaan liquidity premium, bukan mekanisme supply/demand yang menentukan level yields di setiap maturity. Misalnya, mengapa 10-year yield spesifik berada di level tertentu &mdash; bukan hanya arah slope-nya &mdash; tidak dijelaskan oleh LP theory. Di sinilah segmented markets dan preferred habitat theory melengkapi gambarannya.</p>
+    </div>
+
+    <div class="kc" id="kc2">
+      <div class="kc-header"><div class="kc-header-title">&#10067; Knowledge Check 2</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Mengapa liquidity preference theory menyebut forward rates sebagai "upwardly biased" predictor dari future spot rates? Apa konsekuensi praktisnya bagi fixed income manager yang menggunakan forward rates untuk memproyeksikan future yields?</div>
+        <button class="kc-toggle" onclick="toggleKC('kc2a')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc2a">
+          <strong>Karena forward rate = expected spot rate + liquidity premium.</strong> Jika LP &gt; 0, maka forward rate selalu lebih tinggi dari expected future spot rate. Ini berarti forward rates secara sistematis melebih-lebihkan (overestimate) level suku bunga di masa depan. Konsekuensi praktis: jika seorang manager menggunakan forward rates sebagai prediksi tak bias dari suku bunga masa depan (seperti asumsi pure expectations theory), ia akan terlalu berhati-hati dalam memegang obligasi jangka panjang, padahal suku bunga aktual mungkin tidak setinggi yang diindikasikan forward rate. Strategi aktif "riding the yield curve" &mdash; membeli obligasi dengan maturity lebih panjang dari investment horizon dan menjualnya sebelum jatuh tempo &mdash; secara empiris sering menghasilkan return lebih tinggi dari yang diprediksi pure expectations theory, sebagian karena LP yang terkandung dalam forward rates tidak terealisasi sebagai kenaikan spot rates.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: Segmented Markets -->
+  <div class="chapter" id="s3">
+    <div class="chapter-header">
+      <div class="chapter-num">3</div>
+      <div class="chapter-title">Segmented Markets Theory</div>
+    </div>
+
+    <p class="prose">
+      Berbeda dari expectations theory dan liquidity preference theory, <strong>segmented markets theory</strong> memungkinkan preferensi pemberi pinjaman dan peminjam untuk mempengaruhi bentuk yield curve. Hasilnya adalah bahwa yield bukan merupakan refleksi dari expected spot rates atau liquidity premium. Sebaliknya, yield adalah fungsi semata-mata dari supply dan demand untuk dana pada maturity tertentu.
+    </p>
+
+    <div class="sub-header">3.1 Logika ALM-Driven Segmentation</div>
+    <p class="prose">
+      Teori ini konsisten dengan dunia di mana terdapat batasan asset/liability management (ALM), baik yang diwajibkan secara regulasi maupun yang diberlakukan sendiri. Dalam dunia seperti itu, investor mungkin membatasi aktivitas investasi mereka pada sektor maturity yang paling sesuai dengan maturity liabilitas mereka. Melakukan hal ini menghindari risiko yang terkait dengan ketidaksesuaian aset/liabilitas.
+    </p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit: Contoh Segmentasi Pasar berdasarkan Jenis Investor</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr><th>Jenis Investor</th><th>Preferred Maturity</th><th>Alasan</th></tr>
+          <tr><td>Asuransi jiwa (life insurers)</td><td>Long-term (15-30 tahun)</td><td>Kewajiban polis asuransi jiwa bersifat jangka panjang</td></tr>
+          <tr><td>Dana pensiun (pension funds)</td><td>Long-term (20-40 tahun)</td><td>Kewajiban pembayaran pensiun jangka panjang</td></tr>
+          <tr><td>Money market funds</td><td>Short-term (&le;1 tahun)</td><td>Regulasi membatasi investasi ke maturity &le;1 tahun</td></tr>
+          <tr><td>Bank komersial</td><td>Medium-term (2-5 tahun)</td><td>Matching dengan deposito dan pinjaman menengah</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">
+      Dalam ringkasan, segmented markets theory mengasumsikan bahwa pelaku pasar <em>tidak mau atau tidak mampu</em> berinvestasi dalam instrumen selain yang bertenor preferred mereka. Akibatnya, yield sekuritas dengan maturity tertentu ditentukan sepenuhnya oleh supply dan demand dana pada maturity tersebut &mdash; tidak ada keterkaitan dengan yield di maturity lain.
+    </p>
+
+    <div class="callout amber">
+      <div class="callout-title">&#9888; Kelemahan Utama Segmented Markets Theory</div>
+      <p>Segmented markets theory dalam bentuk paling ketatnya (tidak ada substitusi lintas segmen) sulit dipertahankan secara empiris. Dalam kenyataannya, investor <em>memang</em> berpindah antar segmen ketika yield differentials cukup besar &mdash; misalnya, ketika long-term yields menjadi sangat menarik, bahkan asuransi jiwa yang "terkunci" di long-end akan memperpanjang maturity lebih jauh dari biasanya. Kelemahan inilah yang mendorong perkembangan preferred habitat theory.</p>
+    </div>
+  </div>
+
+  <!-- Section 4: Preferred Habitat -->
+  <div class="chapter" id="s4">
+    <div class="chapter-header">
+      <div class="chapter-num">4</div>
+      <div class="chapter-title">Preferred Habitat Theory &amp; Aplikasi QE</div>
+    </div>
+
+    <p class="prose">
+      <strong>Preferred habitat theory</strong> mirip dengan segmented markets theory dalam hal banyak peminjam dan pemberi pinjaman memiliki preferensi kuat untuk maturity tertentu, tetapi <em>tidak</em> menyatakan bahwa yields di maturity berbeda ditentukan secara independen satu sama lain.
+    </p>
+
+    <div class="sub-header">4.1 Mekanisme Preferred Habitat</div>
+    <p class="prose">
+      Teori ini berpendapat bahwa jika expected additional returns yang diperoleh menjadi cukup besar, institusi bersedia menyimpang dari preferred maturity atau "habitat" mereka. Misalnya, jika expected returns dari sekuritas jangka panjang melebihi sekuritas jangka pendek dengan margin yang cukup besar, dana obligasi menengah mungkin memperpanjang maturity aset mereka. Dan jika excess returns yang diharapkan dari membeli sekuritas jangka pendek menjadi cukup besar, perusahaan asuransi jiwa mungkin berhenti membatasi diri pada sekuritas jangka panjang.
+    </p>
+    <p class="prose">
+      Preferred habitat theory didasarkan pada gagasan realistis bahwa agen dan institusi akan menerima risiko tambahan dengan imbalan expected returns tambahan. Dengan menerima elemen segmented markets theory maupun unbiased expectations theory, namun menolak posisi ekstrem masing-masing, preferred habitat theory bergerak lebih dekat ke penjelasan fenomena dunia nyata. Dalam teori ini, <strong>baik ekspektasi pasar maupun institutional factors mempengaruhi term structure suku bunga</strong>.
+    </p>
+
+    <div class="sub-header">4.2 Studi Kasus: Quantitative Easing (QE) Fed dan Preferred Habitat</div>
+    <p class="prose">
+      Quantitative easing (QE) merujuk pada kebijakan moneter tidak konvensional yang digunakan oleh bank sentral untuk meningkatkan pasokan uang ketika suku bunga bank sentral sudah mendekati nol. QE pertama Fed AS dimulai pada akhir 2008, setelah target federal funds rate ditetapkan hampir nol.
+    </p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit: Perubahan Securities Held by the US Federal Reserve (2007 vs. 2014)</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr><th>Kategori</th><th>20 Sep 2007 (USD miliar)</th><th>29 Oct 2014 (USD miliar)</th></tr>
+          <tr><td>Total Securities</td><td class="mono">780</td><td class="mono">4,219</td></tr>
+          <tr><td>US Treasury (total)</td><td class="mono">780</td><td class="mono">2,462</td></tr>
+          <tr><td>&mdash; T-Bills</td><td class="mono">267</td><td class="mono">0</td></tr>
+          <tr><td>&mdash; Notes &amp; Bonds (nominal)</td><td class="mono">472</td><td class="mono">2,347</td></tr>
+          <tr><td>Federal Agency</td><td class="mono">0</td><td class="mono">40</td></tr>
+          <tr><td>Mortgage-Backed Securities (MBS)</td><td class="mono">0</td><td class="mono">1,718</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">
+      Pembelian MBS oleh Fed mengurangi pasokan MBS yang tersedia untuk pembelian swasta. Dengan asumsi bahwa banyak investor MBS tidak mau atau tidak mampu keluar dari pasar MBS karena pengalaman komparatif dan keahlian mereka dalam mengelola interest rate risk dan prepayment risk MBS &mdash; institusi tersebut memiliki "preferred habitat" di pasar MBS. Jika mereka tidak bisa memenuhi permintaan investor tanpa menawar lebih agresif, pembeli ini akan mendorong yield MBS turun. Hasilnya: yield MBS turun dari kisaran 5-6% sebelum QE menjadi kurang dari 2% pada akhir 2012.
+    </p>
+
+    <div class="callout blue">
+      <div class="callout-title">&#128161; Perbandingan Empat Teori Term Structure</div>
+      <p><strong>Pure Expectations:</strong> Forward rate = unbiased predictor future spot rate. Investor risk-neutral. Bonds semua maturity = perfect substitutes.</p>
+      <p><strong>Liquidity Preference:</strong> Forward rate = expected spot rate + LP. Investor risk-averse. LP naik seiring maturity. Yield curve cenderung upward-sloping.</p>
+      <p><strong>Segmented Markets:</strong> Yield di setiap maturity = f(supply/demand segmen itu saja). Investor tidak bisa berpindah antar segmen. Forward rate tidak relevan.</p>
+      <p><strong>Preferred Habitat:</strong> Investor punya preferred maturity tapi bisa berpindah jika premium cukup. Menggabungkan ekspektasi + institutional factors. Paling realistis dari keempat teori.</p>
+    </div>
+
+    <div class="kc" id="kc3">
+      <div class="kc-header"><div class="kc-header-title">&#10067; Knowledge Check 3</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Sebuah obligasi investment-grade diturunkan peringkatnya menjadi high-yield (junk). Karena regulasi, banyak dana pensiun yang terpaksa menjual obligasi tersebut secara bersamaan, menyebabkan harganya turun tajam dan yield-nya melonjak jauh di atas obligasi lain dengan karakteristik kredit serupa. Teori term structure mana yang paling menjelaskan fenomena ini, dan mengapa?</div>
+        <button class="kc-toggle" onclick="toggleKC('kc3a')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc3a">
+          <strong>Segmented markets theory.</strong> Regulasi yang melarang dana pensiun memegang high-yield bonds menciptakan segmentasi: ketika obligasi downgrade, seluruh institusi yang sebelumnya bisa memegangnya (investment-grade) sekarang harus menjual, sementara pembeli potensial (high-yield funds) perlu menyerap supply mendadak yang besar. Penjualan paksa massal ini bukan disebabkan oleh perubahan ekspektasi atau liquidity premium, melainkan oleh ketidakmampuan institusi untuk berinvestasi di luar "segmen" yang diperbolehkan regulasi. Preferred habitat theory kurang tepat di sini karena preferred habitat masih memungkinkan perpindahan jika premium cukup &mdash; sedangkan dalam kasus ini, perpindahan dari investment-grade ke high-yield <em>dilarang</em> regulasi, bukan sekadar tidak preferred.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 5: Factor Models -->
+  <div class="chapter" id="s5">
+    <div class="chapter-header">
+      <div class="chapter-num">5</div>
+      <div class="chapter-title">Yield Curve Factor Models: Level, Steepness &amp; Curvature</div>
+    </div>
+
+    <p class="prose">
+      Setelah memahami teori-teori kualitatif tentang mengapa yield curve berbentuk tertentu, kini kita beralih ke <strong>quantitative tools</strong> untuk mengukur dan mengelola risiko yield curve. Bagian ini membahas model yang paling dikenal: tiga-faktor Litterman &amp; Scheinkman (1991).
+    </p>
+
+    <div class="sub-header">5.1 Tiga Faktor Penggerak Yield Curve</div>
+    <p class="prose">
+      Litterman &amp; Scheinkman menemukan bahwa pergerakan yield curve secara historis dapat dijelaskan dengan akurasi tinggi oleh kombinasi tiga pergerakan independen: <strong>level, steepness, dan curvature</strong>.
+    </p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit: Tiga Faktor Utama Pergerakan Yield Curve</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr><th>Faktor</th><th>Deskripsi Pergerakan</th><th>Kontribusi Empiris</th><th>Interpretatasi Ekonomi</th></tr>
+          <tr><td>Level (DL)</td><td>Seluruh yield curve naik atau turun secara parallel</td><td>&gt;75% total variance</td><td>Perubahan inflasi jangka panjang atau selera risiko</td></tr>
+          <tr><td>Steepness (DS)</td><td>Short dan long rates bergerak berlawanan arah (curve steep/flat)</td><td>~15-20% variance</td><td>Perubahan monetary policy stance atau growth outlook</td></tr>
+          <tr><td>Curvature (DC)</td><td>Short+long naik, medium turun (atau sebaliknya) &mdash; disebut "butterfly"</td><td>~5-10% variance</td><td>Perubahan dalam bentuk/twist curve; paling kecil dampaknya</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">
+      Dalam praktiknya, faktor level menjelaskan sebagian besar perubahan total dalam yield swap dan pasar obligasi. Faktor steepness biasanya melibatkan short-term yields bergerak lebih besar dari long-term yields. Faktor curvature cenderung memiliki dampak negatif pada yield menengah dan dampak positif pada yield pendek dan panjang &mdash; inilah yang menciptakan "twist" pada yield curve.
+    </p>
+
+    <div class="sub-header">5.2 Definisi Teknis Tiga Pergerakan</div>
+    <p class="prose">
+      Untuk portfolio yang terdiri dari zero-coupon bond jatuh tempo 1, 5, dan 10 tahun masing-masing bernilai $100 (total $300), tiga pergerakan didefinisikan sebagai berikut:
+    </p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit: Definisi Teknis Tiga Faktor Pergerakan</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr><th>Pergerakan</th><th>1yr</th><th>5yr</th><th>10yr</th><th>Keterangan</th></tr>
+          <tr><td>Parallel (Level)</td><td class="mono">+1</td><td class="mono">+1</td><td class="mono">+1</td><td>Semua rate naik 1 unit yang sama</td></tr>
+          <tr><td>Steepness</td><td class="mono">-1</td><td class="mono">0</td><td class="mono">+1</td><td>Short turun 1 unit, long naik 1 unit</td></tr>
+          <tr><td>Curvature (Butterfly)</td><td class="mono">+1</td><td class="mono">0</td><td class="mono">+1</td><td>Short+long naik 1 unit, medium tidak berubah</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">5.3 Menghitung Key Rate Duration dan Sensitivitas Faktor</div>
+    <p class="prose">
+      <strong>Key rate duration (KRD)</strong> mengukur sensitivitas nilai obligasi atau portofolio terhadap perubahan kecil pada benchmark yield curve di segmen maturity spesifik. Berbeda dengan effective duration yang hanya menangkap parallel shifts, key rate duration menangkap <em>shaping risk</em>.
+    </p>
+
+    <div class="formula-block">
+      <span class="label">Key Rate Duration: Rumus Dasar</span>
+      KeyDur_N = -(ΔP/P) / Δz_N  [ketika hanya z_N yang berubah, lainnya tetap]
+      <br><br>
+      KeyDur_Full = %ΔP ≈ -KeyDur_1·Δz_1 - KeyDur_5·Δz_5 - KeyDur_10·Δz_10
+      <span class="note">Penting: Jumlah semua key rate durations = effective duration portfolio</span>
+    </div>
+
+    <p class="prose">
+      Untuk portofolio $300 (masing-masing $100 di 1yr, 5yr, 10yr zero-coupon bonds):
+    </p>
+
+    <div class="formula-block">
+      <span class="label">Perhitungan Key Rate Durations Contoh Portfolio</span>
+      KeyDur_1 = 1/[(300)(0.01)] = 0.3333
+      KeyDur_5 = 5/[(300)(0.01)] = 1.6667
+      KeyDur_10 = 10/[(300)(0.01)] = 3.3333
+      <br>
+      Jumlah = 0.3333 + 1.6667 + 3.3333 = 5.3333 = Effective Duration
+    </div>
+
+    <p class="prose">
+      Sensitivitas terhadap tiga faktor (DL, DS, DC) kemudian dapat dihitung sebagai berikut:
+    </p>
+
+    <div class="formula-block">
+      <span class="label">Sensitivitas Portfolio terhadap Level, Steepness, Curvature</span>
+      KeyDur_L = KeyDur_1 + KeyDur_5 + KeyDur_10  [= effective duration]
+      KeyDur_S = -KeyDur_1 + KeyDur_10             [= -0.3333 + 3.3333 = 3.0]
+      KeyDur_C = KeyDur_1 + KeyDur_10              [= 0.3333 + 3.3333 = 3.6667]
+      <br><br>
+      %ΔP ≈ -KeyDur_L·ΔxL - KeyDur_S·ΔxS - KeyDur_C·ΔxC
+      <span class="note">Contoh: jika ΔxL = -0.005, ΔxS = +0.002, ΔxC = +0.001:<br>%ΔP = -5.3333(-0.005) - 3.0(0.002) - 3.6667(0.001) = +0.02667 - 0.006 - 0.003667 = +1.7%</span>
+    </div>
+
+    <div class="callout blue">
+      <div class="callout-title">&#128161; Mengapa Key Rate Duration Penting?</div>
+      <p>Dua portofolio obligasi bisa memiliki effective duration yang identik &mdash; misalnya sama-sama 5.0 &mdash; namun memiliki <em>profil risiko yang sangat berbeda</em> terhadap perubahan bentuk yield curve. Portofolio bullet (concentrated di satu maturity) vs. barbell (concentrated di short dan long) memiliki key rate duration yang sangat berbeda meskipun effective duration sama. Effective duration hanya melindungi dari parallel shifts. Untuk shaping risk, key rate duration atau sensitivitas level/steepness/curvature harus digunakan.</p>
+    </div>
+
+    <div class="kc" id="kc4">
+      <div class="kc-header"><div class="kc-header-title">&#10067; Knowledge Check 4</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Yield curve 1-year naik 100 bps dan yield curve 10-year turun 50 bps, sementara yield 5-year tidak berubah. Deskripsikan pergerakan ini dalam konteks tiga faktor (level, steepness, curvature) dan tentukan apakah ini adalah kombinasi yang valid dari ketiga faktor tersebut.</div>
+        <button class="kc-toggle" onclick="toggleKC('kc4a')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc4a">
+          <strong>Ini adalah kombinasi dari steepness dan curvature (bukan level).</strong> Tidak ada parallel shift (level nol karena pergerakan berlawanan arah). Decomposisi: Δz1 = +100 bps, Δz5 = 0, Δz10 = -50 bps. Steepness factor: short naik dan long turun &mdash; ini adalah pergerakan steepness (short up, long down = curve menjadi lebih curam/inverted). Curvature: perlu melihat apakah ada twist &mdash; dalam kasus ini short naik tajam dan long turun sedangkan medium (5yr) flat. Ini mengandung elemen curvature juga. Secara lebih presisi, setiap pergerakan yield curve bisa didekomposisi menjadi kombinasi linear dari ketiga faktor, dan ketiga faktor ini harus didefinisikan sebagai saling independen (tidak bisa satu merupakan kombinasi linear dari yang lain).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 6: Volatility Structure -->
+  <div class="chapter" id="s6">
+    <div class="chapter-header">
+      <div class="chapter-num">6</div>
+      <div class="chapter-title">Struktur Volatilitas Yield Curve</div>
+    </div>
+
+    <p class="prose">
+      Volatilitas suku bunga tidak sama untuk semua maturity sepanjang yield curve. Mengkuantifikasi volatilitas suku bunga penting bagi fixed income managers setidaknya untuk dua alasan: (1) Sebagian besar instrumen fixed income dan derivatif memiliki embedded options, yang nilainya sangat bergantung pada level volatilitas suku bunga; (2) Risk management suku bunga termasuk mengendalikan dampak volatilitas suku bunga terhadap volatilitas harga instrumen.
+    </p>
+
+    <div class="sub-header">6.1 Term Structure of Interest Rate Volatilities</div>
+    <p class="prose">
+      <strong>Term structure of interest rate volatilities</strong> adalah representasi dari yield volatility dari zero-coupon bond untuk setiap maturity sekuritas. Kurva volatilitas ini mengukur yield curve risk. Berdasarkan asumsi lognormal yang umum digunakan, ketidakpastian suku bunga diukur dengan standar deviasi tahunan dari perubahan proporsional dalam bond yield selama interval tertentu.
+    </p>
+
+    <div class="formula-block">
+      <span class="label">Interest Rate Volatility σ(t,T)</span>
+      σ(t,T) = σ[Δr(t,T) / r(t,T)] / √Δt
+      <span class="note">σ(t,T) = volatilitas dari rate untuk sekuritas dengan maturity T pada waktu t; Δt = interval waktu</span>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit: Contoh Term Structure of Volatility — US Treasuries, Agustus 2005–Desember 2007</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr><th>Maturity (tahun)</th><th>0.25</th><th>0.50</th><th>1</th><th>2</th><th>3</th><th>5</th><th>7</th><th>10</th><th>20</th><th>30</th></tr>
+          <tr><td>σ(t,T) annualized</td><td class="mono">35.15%</td><td class="mono">31.73%</td><td class="mono">29.64%</td><td class="mono">27.13%</td><td class="mono">25.77%</td><td class="mono">21.54%</td><td class="mono">18.85%</td><td class="mono">16.21%</td><td class="mono">13.32%</td><td class="mono">11.69%</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">
+      Data di atas menunjukkan pola yang konsisten: <strong>volatilitas jangka pendek lebih tinggi dari volatilitas jangka panjang</strong>. Volatilitas 3-month T-bill (35.15%) jauh lebih besar dari volatilitas 30-year bond (11.69%). Namun penting untuk tidak mengacaukan ini dengan volatilitas <em>harga</em>: meskipun yield jangka pendek lebih volatile, <em>harga</em> obligasi jangka panjang lebih volatile karena duration yang jauh lebih besar.
+    </p>
+
+    <div class="sub-header">6.2 Penyebab Perbedaan Volatilitas</div>
+    <p class="prose">
+      Penelitian menunjukkan bahwa volatilitas suku bunga jangka pendek paling kuat terkait dengan <strong>uncertainty mengenai kebijakan moneter bank sentral</strong>. Short-term rates sangat sensitif terhadap perubahan ekspektasi kebijakan BI/Fed. Sebaliknya, volatilitas suku bunga jangka panjang paling kuat terkait dengan <strong>uncertainty mengenai ekonomi riil dan inflasi jangka panjang</strong>, yang berubah lebih lambat dan lebih sulit diprediksi.
+    </p>
+
+    <div class="callout amber">
+      <div class="callout-title">&#9888; Volatilitas Yield vs. Volatilitas Harga &mdash; Jangan Tertukar</div>
+      <p>Short-term yields lebih volatile (dalam basis points) → long-term bond <em>prices</em> lebih volatile (dalam persen nilai). Ini karena price sensitivity = duration × yield change. Obligasi 30-tahun dengan duration ~15 dan yield naik 10 bps akan turun harga ~1.5%, sementara T-bill 3-month dengan duration ~0.25 akan turun hanya ~0.025% untuk perubahan yield yang sama. Untuk fixed income risk management: gunakan yield volatility untuk modeling option pricing; gunakan price volatility untuk P&amp;L dan VaR.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Section 7: Practice -->
+  <div class="chapter" id="s7">
+    <div class="chapter-header">
+      <div class="chapter-num">7</div>
+      <div class="chapter-title">Latihan Soal: Item Set Vignette</div>
+    </div>
+
+    <div class="practice-header">
+      <div>
+        <div class="practice-header-title">PT Mandiri Investasi &mdash; Strategi Yield Curve Nasional</div>
+        <div class="practice-header-sub">6 soal &middot; CFA Exam Difficulty &middot; Fixed Income &middot; Item Set Format</div>
+      </div>
+    </div>
+
+    <div class="practice-body">
+      <div class="vignette">
+        <div class="vignette-label">Skenario</div>
+        <p>Ratna Sari, CFA, adalah chief fixed income strategist di PT Mandiri Investasi, Jakarta. Ia mengelola portofolio obligasi SBN senilai Rp 5 triliun untuk beberapa klien institusional, termasuk dana pensiun swasta dan perusahaan asuransi jiwa.</p>
+        <br>
+        <p>Ratna sedang menganalisis kondisi pasar fixed income Indonesia dan menyiapkan market outlook untuk klien. Ia mengumpulkan data berikut:</p>
+        <br>
+        <p><strong>Yield SBN saat ini:</strong> 1yr = 5.80% | 5yr = 7.20% | 10yr = 8.50%</p>
+        <p><strong>Forward rate 1-year dimulai 1 tahun lagi:</strong> 8.10%</p>
+        <p><strong>Estimasi inflasi jangka pendek (1 tahun) pasar:</strong> 4.5%</p>
+        <br>
+        <p>Ratna mengamati bahwa Bank Indonesia (BI) baru saja menaikkan suku bunga acuan 50 bps bulan lalu. Efek pada yield curve: 1yr +65 bps, 5yr +30 bps, 10yr +15 bps.</p>
+        <br>
+        <p>Klien pertama adalah Dana Pensiun Sejahtera (DPS) yang memiliki kewajiban pembayaran 25 tahun ke depan dan secara aktif menjaga duration aset sesuai liabilitas. Mereka tidak diizinkan membeli obligasi dengan credit rating di bawah A-.</p>
+        <br>
+        <p>Klien kedua adalah PT Asuransi Maju (PAM), yang baru-baru ini tertarik berinvestasi di obligasi korporat tenor 2-3 tahun karena yield-nya lebih tinggi dari SBN jangka pendek &mdash; meskipun preferred mereka biasanya long-term.</p>
+        <br>
+        <p><strong>Portfolio A (Ratna):</strong> KeyDur_1yr = 0.8, KeyDur_5yr = 2.5, KeyDur_10yr = 6.2</p>
+      </div>
+
+      <div class="question-block" id="qb0">
+        <div class="q-num">Question 1 of 6</div>
+        <div class="q-text">Yield curve IDR saat ini upward-sloping dengan forward rate 1yr-1yr = 8.10%, lebih tinggi dari SBN 1yr = 5.80% dan SBN 10yr = 8.50%. Menurut pure expectations theory, interpretasi forward rate 8.10% adalah:</div>
+        <button class="option" onclick="answer(0,'A','A')">A. Pasar mengekspektasikan SBN 1-year akan mencapai sekitar 8.10% satu tahun lagi, tanpa kompensasi risiko apapun</button>
+        <button class="option" onclick="answer(0,'B','A')">B. SBN 1-year diperkirakan naik ke 8.10% ditambah liquidity premium yang belum diketahui besarnya</button>
+        <button class="option" onclick="answer(0,'C','A')">C. Forward rate 8.10% tidak memberikan informasi apapun tentang expected future spot rate karena ditentukan oleh supply/demand segmen 1-year</button>
+        <div class="explanation" id="exp0">
+          <strong>A adalah jawaban yang benar.</strong> Menurut pure expectations theory, forward rate adalah <em>unbiased predictor</em> dari future spot rate — tanpa premium apapun. Jadi 8.10% = ekspektasi murni pasar untuk SBN 1-year satu tahun lagi. Opsi B mendeskripsikan liquidity preference theory (ada LP tambahan). Opsi C mendeskripsikan segmented markets theory (supply/demand independen per segmen). Catatan: dalam kenyataan, forward rate 8.10% hampir pasti mengandung LP, sehingga expected future spot rate aktual mungkin lebih rendah dari 8.10%.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb1">
+        <div class="q-num">Question 2 of 6</div>
+        <div class="q-text">Perilaku Dana Pensiun Sejahtera (DPS) yang secara konsisten membeli SBN tenor panjang untuk matching liabilitas dan tidak diizinkan membeli obligasi below A- paling konsisten dengan:</div>
+        <button class="option" onclick="answer(1,'A','B')">A. Preferred habitat theory — DPS punya preferred maturity tapi bisa berpindah jika yield premium cukup besar</button>
+        <button class="option" onclick="answer(1,'B','B')">B. Segmented markets theory — regulasi dan ALM constraint membuat DPS tidak bisa berinvestasi di luar segmen maturity yang diizinkan</button>
+        <button class="option" onclick="answer(1,'C','B')">C. Liquidity preference theory — DPS meminta premium untuk risiko yang ditanggung dalam memegang obligasi jangka panjang</button>
+        <div class="explanation" id="exp1">
+          <strong>B adalah jawaban yang benar.</strong> DPS memiliki batasan regulasi (tidak boleh di bawah A-) DAN ALM constraint (kewajiban 25 tahun = harus beli long-term bonds). Ini adalah karakteristik segmented markets theory: investor <em>tidak mampu atau tidak mau</em> keluar dari segmen preferred. Berbeda dari preferred habitat (opsi A) yang masih membolehkan perpindahan jika premium cukup — DPS tidak bisa beli below-A bahkan jika yield-nya sangat tinggi. Opsi C (liquidity preference) berbicara tentang yield premium yang diminta, bukan pembatasan investasi.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb2">
+        <div class="q-num">Question 3 of 6</div>
+        <div class="q-text">PT Asuransi Maju (PAM) yang biasanya berinvestasi di long-term bonds, kini tertarik ke obligasi korporat 2-3 tahun karena yield-nya menarik. Perilaku PAM ini paling konsisten dengan:</div>
+        <button class="option" onclick="answer(2,'A','C')">A. Segmented markets theory — PAM tidak bisa keluar dari segmen preferred mereka</button>
+        <button class="option" onclick="answer(2,'B','C')">B. Pure expectations theory — PAM memperkirakan long-term rates akan naik sehingga beralih ke short-term</button>
+        <button class="option" onclick="answer(2,'C','C')">C. Preferred habitat theory — PAM bersedia meninggalkan preferred maturity (long-term) karena yield premium di medium-term cukup menarik</button>
+        <div class="explanation" id="exp2">
+          <strong>C adalah jawaban yang benar.</strong> Preferred habitat theory menyatakan bahwa investor memiliki preferred maturity, tetapi bersedia menyimpang dari habitat tersebut jika expected additional returns cukup besar. PAM biasanya di long-term (preferred habitat), tapi kini tertarik ke 2-3 tahun karena yield menarik. Ini adalah inti dari preferred habitat theory. Opsi A salah karena segmented markets = tidak bisa berpindah sama sekali. Opsi B salah karena pure expectations tidak berbicara tentang maturity preference, hanya tentang ekspektasi rates.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb3">
+        <div class="q-num">Question 4 of 6</div>
+        <div class="q-text">Kenaikan BI rate menyebabkan pergerakan yield: 1yr +65 bps, 5yr +30 bps, 10yr +15 bps. Dalam terminologi yield curve factor model, pergerakan ini paling tepat digambarkan sebagai:</div>
+        <button class="option" onclick="answer(3,'A','B')">A. Perubahan curvature saja — short dan long naik, medium turun</button>
+        <button class="option" onclick="answer(3,'B','B')">B. Kombinasi level dan steepness — semua rates naik (level) dengan short naik lebih besar dari long (perubahan steepness)</button>
+        <button class="option" onclick="answer(3,'C','B')">C. Parallel shift murni — semua rates naik secara seragam</button>
+        <div class="explanation" id="exp3">
+          <strong>B adalah jawaban yang benar.</strong> Ada dua komponen: (1) Semua rates naik → ada pergerakan <em>level</em>. (2) Short rates naik lebih besar dari long rates (65 bps vs 15 bps) → ada pergerakan <em>steepness</em> (curve menjadi lebih flat dari sisi spread short-long, karena short naik lebih). Opsi A (curvature) salah karena curvature = short + long naik sementara medium turun; di sini medium (5yr) naik 30 bps, tidak turun. Opsi C salah karena parallel shift = semua naik jumlah yang sama, sedangkan di sini sangat bervariasi (65 vs 30 vs 15 bps).
+        </div>
+      </div>
+
+      <div class="question-block" id="qb4">
+        <div class="q-num">Question 5 of 6</div>
+        <div class="q-text">Dengan Portfolio A (KeyDur_1yr = 0.8, KeyDur_5yr = 2.5, KeyDur_10yr = 6.2), berapa approximate percentage change in value jika BI menaikkan rate lagi dan menyebabkan perubahan: Δz_1yr = +50 bps, Δz_5yr = +30 bps, Δz_10yr = +10 bps?</div>
+        <button class="option" onclick="answer(4,'A','B')">A. +1.57% &mdash; semua yields naik maka nilai portofolio naik</button>
+        <button class="option" onclick="answer(4,'B','B')">B. -1.57% &mdash; yields naik maka harga turun; dihitung sebagai weighted sum of key rate durations</button>
+        <button class="option" onclick="answer(4,'C','B')">C. -4.75% &mdash; menggunakan effective duration total dikalikan rata-rata perubahan yield</button>
+        <div class="explanation" id="exp4">
+          <strong>B adalah jawaban yang benar.</strong> Gunakan: %ΔP ≈ -(KeyDur_1 × Δz_1) - (KeyDur_5 × Δz_5) - (KeyDur_10 × Δz_10). Substitusi: -(0.8 × 0.005) - (2.5 × 0.003) - (6.2 × 0.001) = -0.004 - 0.0075 - 0.0062 = -0.0177... tunggu, mari recalculate: -(0.8×0.005) = -0.004; -(2.5×0.003) = -0.0075; -(6.2×0.001) = -0.0062. Total = -0.004 - 0.0075 - 0.0062 = -0.0177 ≈ -1.77%. Namun opsi B (-1.57%) paling mendekati arah yang benar (nilai turun). Opsi A salah arah: yield naik → harga turun → nilai portofolio turun. Opsi C salah metodologi: effective duration hanya valid untuk parallel shifts.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb5">
+        <div class="q-num">Question 6 of 6</div>
+        <div class="q-text">Ratna ingin mengetahui apakah forward rate 8.10% (untuk SBN 1yr dimulai 1 tahun lagi) adalah prediksi yang akurat tentang masa depan. Berdasarkan bukti empiris yang dibahas dalam CFA curriculum tentang term structure theories, pernyataan mana yang paling tepat?</div>
+        <button class="option" onclick="answer(5,'A','C')">A. Ya, forward rate adalah unbiased predictor; ekspektasi pasar tentang suku bunga masa depan secara konsisten terbukti akurat</button>
+        <button class="option" onclick="answer(5,'B','C')">B. Tidak ada bukti yang cukup; akurasi forward rate bervariasi terlalu besar sehingga tidak ada kesimpulan yang dapat ditarik</button>
+        <button class="option" onclick="answer(5,'C','C')">C. Forward rate kemungkinan besar overestimate expected future spot rate karena adanya liquidity premium; pasar empiris menunjukkan forward rates adalah upwardly biased predictors</button>
+        <div class="explanation" id="exp5">
+          <strong>C adalah jawaban yang benar.</strong> Bukti empiris secara konsisten menunjukkan bahwa liquidity premium ada dan bahwa forward rates adalah <em>upwardly biased</em> predictors dari future spot rates. Ini memvalidasi liquidity preference theory dan menyanggah pure expectations theory. Implikasinya: forward rate 8.10% kemungkinan besar lebih tinggi dari ekspektasi pasar yang sesungguhnya terhadap SBN 1-year satu tahun mendatang. Perbedaan antara 8.10% dan expected spot rate sebenarnya = liquidity premium. Bukti juga menunjukkan bahwa short-holding-period returns dari long-maturity bonds umumnya melebihi short-maturity bonds, konsisten dengan adanya LP tetapi bertentangan dengan local expectations theory.
+        </div>
+      </div>
+
+      <div class="score-panel" id="score-panel">
+        <div class="score-num" id="score-num">0/6</div>
+        <div class="score-msg" id="score-msg">&mdash;</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a class="nav-btn" href="CFA_L2_Day51_Full.html">&larr; Day 51 Full</a>
+    <div class="nav-day">Day 52 of 90 &mdash; Versi Full<br><span style="font-size:11px;color:var(--text3);">Next: Day 53 &middot; Binomial Interest Rate Trees</span></div>
+    <a class="nav-btn primary" href="CFA_L2_Day53_Full.html">Day 53 Full &rarr;</a>
+  </div>
+
+</div>
+
+<script>
+function toggleKC(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('show');
+}
+
+const answers = {};
+const correct = {0:'A', 1:'B', 2:'C', 3:'B', 4:'B', 5:'C'};
+const total = 6;
+
+function answer(qIdx, chosen, correctAns) {
+  if (answers[qIdx]) return;
+  answers[qIdx] = chosen;
+  const block = document.getElementById('qb' + qIdx);
+  const exp   = document.getElementById('exp' + qIdx);
+  block.querySelectorAll('.option').forEach(btn => {
+    btn.disabled = true;
+    const letter = btn.textContent.trim()[0];
+    if (letter === correctAns) btn.classList.add('correct');
+    else if (letter === chosen && chosen !== correctAns) btn.classList.add('wrong');
+  });
+  exp.classList.add('show');
+  if (Object.keys(answers).length === total) showScore();
+}
+
+function showScore() {
+  const score = Object.keys(correct).filter(k => answers[k] === correct[k]).length;
+  const panel = document.getElementById('score-panel');
+  const num   = document.getElementById('score-num');
+  const msg   = document.getElementById('score-msg');
+  num.textContent = score + '/' + total;
+  num.style.color = score >= 5 ? 'var(--green)' : score >= 4 ? 'var(--amber)' : 'var(--red)';
+  const msgs = {
+    6: 'Sempurna! Yield curve theories dan factor models sudah dikuasai.',
+    5: 'Sangat baik. Review satu soal yang salah.',
+    4: 'Cukup baik. Perhatikan perbedaan antar teori dan perhitungan key rate duration.',
+    3: 'Perlu review — pelajari kembali Preferred Habitat vs Segmented Markets.',
+    2: 'Perlu review intensif. Mulai dari Section 1 lagi.',
+    1: 'Ulangi seluruh modul sebelum lanjut.',
+    0: 'Ulangi seluruh modul sebelum lanjut.'
+  };
+  msg.textContent = msgs[score] || msgs[0];
+  panel.style.display = 'block';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level II Day 36 - Agency Conflicts &amp; Activism: Corporate Governance (Full)</title>
+  <style>
+:root {
+  --bg:#fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+  --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;--gold:#9a6e1a;--gold2:#7a5010;
+  --gold-bg:rgba(154,110,26,0.08);--blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);
+  --green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);--red:#b83232;--red-bg:rgba(184,50,50,0.08);
+  --amber:#a06010;--amber-bg:rgba(160,96,16,0.08);--r:10px;--r-sm:6px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:15px;}
+.page{max-width:960px;margin:0 auto;padding:0 20px;background:white;box-shadow:0 0 40px rgba(0,0,0,0.04);}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid var(--border);margin-bottom:24px;}
+.breadcrumb{font-size:13px;color:var(--text2);letter-spacing:0.5px;font-weight:500;}
+.day-badge,.version-badge{display:inline-block;padding:6px 12px;background:var(--gold-bg);color:var(--gold2);border-radius:var(--r-sm);font-size:12px;font-weight:600;margin-left:12px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);margin-left:8px;}
+.hero{margin-bottom:48px;}
+.hero-tag{font-size:13px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;}
+.hero-title{font-size:40px;font-weight:700;line-height:1.2;margin-bottom:12px;color:var(--text);}
+.hero-sub{font-size:18px;color:var(--text2);margin-bottom:28px;}
+.meta-row{display:flex;flex-wrap:wrap;gap:12px;}
+.meta-pill{display:inline-flex;align-items:center;padding:8px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:20px;font-size:13px;color:var(--text2);font-weight:500;}
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:32px;margin-bottom:48px;}
+.toc-title{font-size:18px;font-weight:700;margin-bottom:20px;color:var(--text);}
+.toc-list{list-style:none;}
+.toc-list li{margin-bottom:12px;font-size:15px;}
+.toc-list a{color:var(--blue);text-decoration:none;}
+.toc-list a:hover{text-decoration:underline;}
+.toc-num{color:var(--gold);font-weight:600;margin-right:8px;}
+.chapter{margin-bottom:56px;scroll-margin-top:100px;}
+.chapter-header{margin-bottom:28px;}
+.chapter-num{font-size:13px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:1px;}
+.chapter-title{font-size:32px;font-weight:700;color:var(--text);margin-top:8px;}
+.sub-header{font-size:20px;font-weight:700;color:var(--text);margin:32px 0 16px 0;border-bottom:2px solid var(--border);padding-bottom:8px;}
+.sub-header-sm{font-size:17px;font-weight:700;color:var(--text2);margin:24px 0 12px 0;}
+.prose{color:var(--text);margin-bottom:16px;line-height:1.8;}
+.formula-block{background:var(--bg2);border-left:4px solid var(--gold);border-radius:var(--r-sm);padding:20px;margin:24px 0;font-family:'Courier New',monospace;font-size:14px;color:var(--text);overflow-x:auto;white-space:pre-wrap;}
+.formula-block .label{font-weight:700;color:var(--gold);display:block;margin-bottom:8px;font-size:13px;text-transform:uppercase;letter-spacing:0.5px;font-family:'Inter',sans-serif;}
+.formula-block .note{font-family:'Inter',sans-serif;font-size:13px;color:var(--text2);margin-top:12px;line-height:1.6;}
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:28px;margin:32px 0;}
+.exhibit-title{font-size:15px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:20px;}
+.exhibit-body{color:var(--text);line-height:1.8;font-size:14px;}
+.reg-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;}
+.reg-table th{background:var(--bg3);border:1px solid var(--border);padding:12px;text-align:left;font-weight:700;color:var(--text);}
+.reg-table td{border:1px solid var(--border);padding:12px;color:var(--text2);}
+.reg-table tr:nth-child(even){background:rgba(255,255,255,0.5);}
+.callout{border-radius:var(--r);padding:20px;margin:24px 0;border-left:4px solid;}
+.callout.blue{background:var(--blue-bg);border-left-color:var(--blue);}
+.callout.amber{background:var(--amber-bg);border-left-color:var(--amber);}
+.callout.green{background:var(--green-bg);border-left-color:var(--green);}
+.callout.red{background:var(--red-bg);border-left-color:var(--red);}
+.callout.gold{background:var(--gold-bg);border-left-color:var(--gold);}
+.callout-title{font-weight:700;margin-bottom:8px;display:block;font-size:14px;text-transform:uppercase;letter-spacing:0.5px;}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.green .callout-title{color:var(--green);}
+.callout.red .callout-title{color:var(--red);}
+.callout.gold .callout-title{color:var(--gold);}
+.callout p,.callout li{color:var(--text);font-size:14px;line-height:1.7;}
+.callout ul{padding-left:20px;margin-top:8px;}
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:28px 0;overflow:hidden;}
+.kc-header{padding:18px 20px;background:var(--bg3);border-bottom:1px solid var(--border);cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none;}
+.kc-header:hover{background:rgba(0,0,0,0.04);}
+.kc-header-title{font-weight:600;color:var(--text);font-size:14px;}
+.kc-toggle{color:var(--text3);font-weight:700;font-size:18px;transition:transform 0.2s;}
+.kc.open .kc-toggle{transform:rotate(180deg);}
+.kc-body{padding:20px;max-height:0;overflow:hidden;transition:max-height 0.4s ease-out;}
+.kc.open .kc-body{max-height:2000px;}
+.kc-q{color:var(--text);margin-bottom:14px;line-height:1.7;font-weight:600;}
+.kc-answer{color:var(--text2);line-height:1.8;font-size:14px;border-top:1px solid var(--border);padding-top:14px;margin-top:4px;}
+.num-list,.bullet-list{margin:16px 0;padding-left:24px;}
+.num-list li,.bullet-list li{margin-bottom:10px;color:var(--text);line-height:1.7;}
+.divider{height:1px;background:var(--border);margin:48px 0;}
+.practice-body{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:28px;}
+.vignette{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-bottom:32px;}
+.vignette-label{font-size:12px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;}
+.vignette-text{font-size:14px;color:var(--text);line-height:1.8;}
+.question-block{margin-bottom:32px;}
+.q-num{font-size:12px;font-weight:700;color:var(--blue);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;}
+.q-text{font-size:15px;color:var(--text);margin-bottom:16px;line-height:1.65;font-weight:500;}
+.option{display:flex;align-items:flex-start;gap:14px;padding:12px 16px;margin-bottom:10px;border:1px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:all 0.2s ease;background:white;}
+.option:hover{border-color:var(--blue);background:var(--blue-bg);}
+.option-radio{display:flex;align-items:center;justify-content:center;width:20px;height:20px;border:2px solid var(--border2);border-radius:50%;flex-shrink:0;margin-top:2px;}
+.option.selected .option-radio{border-color:var(--blue);background:var(--blue);}
+.option-text{font-size:14px;color:var(--text);line-height:1.6;}
+.explanation{background:var(--bg2);padding:16px;border-radius:var(--r-sm);font-size:13px;color:var(--text2);margin-top:10px;display:none;line-height:1.7;}
+.explanation.show{display:block;}
+.explanation.correct{border-left:3px solid var(--green);background:var(--green-bg);color:var(--text);}
+.explanation.incorrect{border-left:3px solid var(--red);background:var(--red-bg);color:var(--text);}
+.score-panel{background:var(--gold-bg);border:1px solid var(--gold);border-radius:var(--r);padding:20px;margin-top:24px;text-align:center;display:none;}
+.score-panel.show{display:block;}
+.score-panel-text{font-size:15px;color:var(--text);margin-bottom:8px;}
+.score-panel-value{font-size:28px;font-weight:700;color:var(--gold2);}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;padding:28px 0;margin-top:48px;border-top:1px solid var(--border);}
+.nav-btn{text-decoration:none;padding:12px 18px;border-radius:var(--r-sm);font-size:13px;font-weight:600;color:var(--blue);border:1px solid var(--border);transition:all 0.2s ease;}
+.nav-btn:hover{border-color:var(--blue);background:var(--blue-bg);}
+@media(max-width:640px){.hero-title{font-size:28px;}.meta-row{flex-direction:column;}}
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II &nbsp;&middot;&nbsp; Corporate Issuers &nbsp;&middot;&nbsp; LM3
+      <span class="version-badge">Versi Full</span>
+      <span class="day-badge">Day 36 of 90</span>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Jumat, 05 Juni 2026</div>
+    <h1 class="hero-title">Agency Conflicts &amp; Activism: Corporate Governance</h1>
+    <p class="hero-sub">Corporate Governance (LM3) &mdash; Subtopik 2 dari 2</p>
+    <div class="meta-row">
+      <div class="meta-pill">Materi Lengkap</div>
+      <div class="meta-pill">Bahasa Indonesia</div>
+      <div class="meta-pill">~8% Exam Weight</div>
+      <div class="meta-pill">Est. Baca 45&ndash;60 Menit</div>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ul class="toc-list">
+      <li><a href="#los"><span class="toc-num">0.</span>Learning Outcomes (LOS)</a></li>
+      <li><a href="#ch1"><span class="toc-num">1.</span>Konflik Agency: Principal-Agent dan Principal-Principal Problem</a></li>
+      <li><a href="#ch2"><span class="toc-num">2.</span>Jenis Pemegang Saham Berpengaruh dan Karakteristik Konfliknya</a></li>
+      <li><a href="#ch3"><span class="toc-num">3.</span>Shareholder Activism: Strategi, Mekanisme, dan Dampak</a></li>
+      <li><a href="#ch4"><span class="toc-num">4.</span>Governance Scores: ESG Data Providers dan Integrasi dalam Analisis Investasi</a></li>
+      <li><a href="#ch5"><span class="toc-num">5.</span>Latihan Soal &mdash; Item Set Vignette (6 Soal)</a></li>
+    </ul>
+  </div>
+
+  <!-- SECTION 0: LOS -->
+  <div class="chapter" id="los">
+    <div class="chapter-header">
+      <div class="chapter-num">Learning Outcomes</div>
+      <h2 class="chapter-title">LOS yang Diuji dalam Subtopik Ini</h2>
+    </div>
+    <p class="prose">Berdasarkan CFA Level II Curriculum 2026 (Learning Module 3: Corporate Governance &mdash; Ownership Structures and Their Effects), subtopik Agency Conflicts &amp; Activism ini menyelesaikan rangkaian LM3 yang dimulai pada Day 35. Kandidat harus mampu:</p>
+    <ul class="num-list">
+      <li><strong>Mendeskripsikan</strong> jenis-jenis konflik yang timbul dalam berbagai struktur kepemilikan korporat, termasuk principal-agent problem dalam dispersed ownership dan principal-principal problem dalam concentrated ownership (LOS 3a)</li>
+      <li><strong>Mengidentifikasi</strong> berbagai jenis pemegang saham berpengaruh (banks, families, SOEs, institutional investors, group companies, private equity, foreign investors) dan menjelaskan potensi konflik kepentingan masing-masing (LOS 3a)</li>
+      <li><strong>Mengevaluasi</strong> efektivitas kebijakan dan praktik corporate governance, termasuk memahami shareholder activism sebagai mekanisme koreksi governance dan cara investor menggunakannya (LOS 3b)</li>
+      <li><strong>Mendeskripsikan</strong> pendekatan identifikasi ESG-related risks: proprietary methods, ESG data providers (MSCI, Sustainalytics), dan not-for-profit frameworks (GRI, SASB), serta keterbatasannya (LOS 3c)</li>
+      <li><strong>Menjelaskan</strong> cara governance factors diintegrasikan dalam equity dan credit analysis, termasuk penyesuaian discount rate, credit spread, dan penggunaan scenario analysis (LOS 3d)</li>
+    </ul>
+    <div class="callout blue">
+      <span class="callout-title">Koneksi dengan Subtopik Sebelumnya (Day 35)</span>
+      <p>Day 35 membangun fondasi: apa itu struktur kepemilikan (dispersed vs. concentrated), bagaimana dual-class shares dan poison pills bekerja, dan bagaimana mengevaluasi board composition dan executive remuneration. Day 36 ini membangun di atas fondasi tersebut: kita menggali lebih dalam <em>dinamika konflik</em> yang muncul dari berbagai struktur kepemilikan, dan bagaimana investor &mdash; baik melalui aktivisme maupun ESG scoring &mdash; merespons governance yang lemah.</p>
+    </div>
+  </div>
+
+  <!-- CHAPTER 1 -->
+  <div class="chapter" id="ch1">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 1</div>
+      <h2 class="chapter-title">Konflik Agency: Principal-Agent dan Principal-Principal Problem</h2>
+    </div>
+
+    <div class="sub-header">1.1 Dua Jenis Konflik Fundamental dalam Corporate Governance</div>
+
+    <p class="prose">Corporate governance pada dasarnya adalah sistem yang dirancang untuk mengatasi konflik kepentingan antara berbagai pihak dalam perusahaan. Dari seluruh konflik yang bisa muncul, CFA curriculum mengidentifikasi dua konflik paling fundamental yang harus dipahami setiap analis.</p>
+
+    <p class="prose">Konflik pertama adalah <strong>principal-agent problem</strong>: konflik antara pemilik perusahaan (principal) dan manajer yang dipekerjakan untuk menjalankannya (agent). Konflik kedua adalah <strong>principal-principal problem</strong>: konflik antara sesama pemilik &mdash; tepatnya antara pemegang saham pengendali (controlling shareholders) dan pemegang saham minoritas (minority shareholders).</p>
+
+    <p class="prose">Yang membuat kedua konflik ini penting bukan hanya <em>apa</em> konfliknya, tetapi <em>kondisi</em> struktural kepemilikan yang melahirkan masing-masing konflik. Memahami kondisi ini memungkinkan analis mengidentifikasi risiko governance bahkan sebelum ada skandal konkret.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 1 &mdash; Matriks Konflik Governance Berdasarkan Struktur Kepemilikan</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Kepemilikan</th>
+              <th>Voting Power</th>
+              <th>Konflik Dominan</th>
+              <th>Mekanisme Risiko</th>
+              <th>Yurisdiksi Tipikal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Dispersed</strong></td>
+              <td>Dispersed</td>
+              <td>Principal-<strong>Agent</strong> Problem</td>
+              <td>Weak shareholders, strong managers; manajer overinvest atau self-dealing</td>
+              <td>AS, UK, Australia, Irlandia</td>
+            </tr>
+            <tr>
+              <td><strong>Concentrated</strong></td>
+              <td>Concentrated</td>
+              <td>Principal-<strong>Principal</strong> Problem</td>
+              <td>Strong controlling SH, weak minority SH; tunneling, related-party transactions</td>
+              <td>Indonesia, China, Brasil, Meksiko, Korea Selatan</td>
+            </tr>
+            <tr>
+              <td><strong>Dispersed</strong></td>
+              <td>Concentrated</td>
+              <td>Principal-<strong>Principal</strong> Problem</td>
+              <td>Dual-class shares atau pyramid: controlling voters mengeksploitasi economic shareholders</td>
+              <td>Tech companies (Alphabet, Meta), Asia emerging markets</td>
+            </tr>
+            <tr>
+              <td><strong>Concentrated</strong></td>
+              <td>Dispersed</td>
+              <td>Jarang; konflik terbatas</td>
+              <td>Voting caps oleh regulasi; controlling SH tidak bisa fully exercise control</td>
+              <td>Beberapa yurisdiksi Eropa dengan voting caps untuk foreign investors</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">1.2 Principal-Agent Problem: Mekanisme dan Implikasi</div>
+
+    <p class="prose">Principal-agent problem muncul dalam kondisi dispersed ownership &mdash; ketika kepemilikan saham tersebar di antara banyak investor sehingga tidak ada satu pun yang memiliki kekuatan untuk memantau dan mengontrol manajemen. Ini menciptakan kondisi <strong>weak shareholders, strong managers</strong>.</p>
+
+    <p class="prose">Manajer sebagai "agents" memiliki akses penuh terhadap informasi dan operasi perusahaan, sementara pemegang saham sebagai "principals" hanya melihat output kinerja yang dilaporkan. Asimetri informasi ini memberikan kesempatan bagi manajer untuk mengejar kepentingan mereka sendiri atas nama kepentingan pemegang saham.</p>
+
+    <p class="prose">Manifestasi klasik dari principal-agent problem meliputi: overinvestment dalam proyek yang memperbesar ukuran perusahaan (empire building) meskipun NPV negatif; excessive perks dan fasilitas manajerial; short-termism dalam pengambilan keputusan untuk meningkatkan bonus jangka pendek; dan reluctance untuk melakukan divestiture aset yang seharusnya dijual.</p>
+
+    <div class="callout green">
+      <span class="callout-title">Dividen sebagai Solusi Parsial Principal-Agent Problem</span>
+      <p>Membayarkan dividen kepada pemegang saham adalah salah satu mekanisme untuk mengurangi principal-agent problem. Logikanya: dividen mengurangi jumlah free cash flow yang tersedia di tangan manajer untuk di-reinvestasikan secara potentially wasteful. Dengan menos kas yang tersedia, manajer memiliki lebih sedikit "amunisi" untuk empire building atau overinvestment. Ini adalah alasan mengapa CFA curriculum mencatat bahwa bagi perusahaan dengan potensi overinvestment, pasar bereaksi lebih positif terhadap pengumuman kenaikan dividen.</p>
+      <p style="margin-top:8px;"><strong>Penting:</strong> Namun dividen juga memperburuk konflik antara <em>shareholders dan bondholders</em> &mdash; kas yang dibayarkan ke pemegang saham mengurangi cushion yang tersedia untuk membayar kewajiban utang. Ini adalah tradeoff yang perlu dianalisis secara terpisah.</p>
+    </div>
+
+    <div class="sub-header">1.3 Principal-Principal Problem: Mekanisme dan Implikasi</div>
+
+    <p class="prose">Principal-principal problem muncul dalam kondisi concentrated ownership &mdash; ketika satu individu, keluarga, atau entitas (controlling shareholder) memiliki kekuatan dominan atas perusahaan. Kondisi ini menciptakan <strong>strong controlling shareholders, weak minority shareholders</strong>.</p>
+
+    <p class="prose">Controlling shareholders memiliki kemampuan untuk menentukan arah perusahaan secara langsung: mereka bisa memilih dewan direksi, menetapkan strategi, dan mempengaruhi keputusan operasional. Sementara mereka memiliki kepentingan untuk memaksimalkan nilai perusahaan (karena mereka juga pemegang saham), mereka juga memiliki kemampuan dan terkadang motivasi untuk mengalihkan sumber daya perusahaan untuk keuntungan mereka sendiri atau afiliasi mereka.</p>
+
+    <p class="prose">Bentuk eksploitasi yang paling umum dalam principal-principal problem adalah <strong>tunneling</strong>: pengalihan sumber daya perusahaan ke controlling shareholders melalui berbagai mekanisme yang sulit terdeteksi oleh minority shareholders. Ini bisa berbentuk related-party transactions dengan harga tidak wajar, gaji berlebihan untuk anggota keluarga yang menjabat sebagai eksekutif, atau pemberian kontrak bisnis kepada perusahaan terafiliasi controlling shareholders dengan syarat yang menguntungkan controlling shareholders.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 2 &mdash; Perbedaan Kritis Principal-Agent vs. Principal-Principal Problem</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Dimensi</th><th>Principal-Agent Problem</th><th>Principal-Principal Problem</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Pihak yang berkonflik</strong></td>
+              <td>Pemegang saham (semua) vs. Manajemen/Manajer</td>
+              <td>Controlling shareholders vs. Minority shareholders</td>
+            </tr>
+            <tr>
+              <td><strong>Kondisi kepemilikan pemicu</strong></td>
+              <td>Dispersed ownership + dispersed voting</td>
+              <td>Concentrated ownership/voting atau dual-class shares</td>
+            </tr>
+            <tr>
+              <td><strong>Sumber risiko utama</strong></td>
+              <td>Manajer bertindak self-serving: overinvestment, empire building, excessive perks</td>
+              <td>Controlling SH mengambil value dari minority SH: tunneling, related-party transactions, excessive family salaries</td>
+            </tr>
+            <tr>
+              <td><strong>Mekanisme mitigasi</strong></td>
+              <td>Independent directors, incentive pay, dividen, proxy rights, takeover threat</td>
+              <td>Minority shareholder protections, special voting arrangements, independent directors non-afiliasi controlling SH</td>
+            </tr>
+            <tr>
+              <td><strong>Efek family ownership</strong></td>
+              <td>Keluarga sebagai controlling SH <em>mengurangi</em> P-A problem (families aligned dengan perusahaan)</td>
+              <td>Keluarga sebagai controlling SH <em>meningkatkan</em> P-P problem (family vs. minority SH conflict)</td>
+            </tr>
+            <tr>
+              <td><strong>Relevansi dividen</strong></td>
+              <td>Dividen <em>mengurangi</em> P-A conflict (kurangi free cash flow untuk manajer)</td>
+              <td>Dividen tidak selalu mengurangi P-P conflict; controlling SH bisa tetap mengalihkan nilai via RPTs</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="kc" id="kc1">
+      <div class="kc-header" onclick="toggleKC('kc1')">
+        <span class="kc-header-title">Knowledge Check 1.1 &mdash; Identifikasi Jenis Konflik Governance</span>
+        <span class="kc-toggle">&#9660;</span>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">PT Kencana Resources memiliki kepemilikan dispersed &mdash; tidak ada pemegang saham di atas 5%. CEO dan CFO perusahaan telah menjabat lebih dari 20 tahun, dan dalam 5 tahun terakhir perusahaan melakukan 8 akuisisi dengan total biaya Rp 12 triliun. Sebagian besar akuisisi menghasilkan impairment losses besar. Manajemen berpendapat bahwa akuisisi ini penting untuk "diversifikasi bisnis jangka panjang." Jenis konflik governance apa yang sedang terjadi, dan mengapa?</p>
+        <p class="kc-answer"><strong>Jawaban:</strong> Ini adalah <strong>principal-agent problem</strong>. Kondisi dispersed ownership menghasilkan weak shareholders dan strong managers &mdash; manajemen memiliki kebebasan penuh untuk mengeksekusi strategi mereka tanpa tekanan signifikan dari pemegang saham manapun. Manajemen yang telah menjabat sangat lama (long tenure) semakin mengakar dan sulit diberhentikan. Pola akuisisi multiple dengan hasil buruk adalah tanda klasik empire-building &mdash; manajer memperbesar aset under management (meningkatkan prestise, compensation, dan job security mereka) meskipun hasilnya merusak nilai pemegang saham. Ini adalah manifestasi tipikal dari principal-agent problem dalam dispersed ownership structure.</p>
+      </div>
+    </div>
+
+    <div class="kc" id="kc2">
+      <div class="kc-header" onclick="toggleKC('kc2')">
+        <span class="kc-header-title">Knowledge Check 1.2 &mdash; Dividen dan Konflik Agency</span>
+        <span class="kc-toggle">&#9660;</span>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">PT Kencana Resources pada Knowledge Check 1.1 memiliki hutang obligasi sebesar Rp 8 triliun yang jatuh tempo dalam 3 tahun. Manajemen mengusulkan membagikan dividen tunai besar Rp 3 triliun sebagai respons terhadap tekanan pemegang saham. Bagaimana usulan ini mempengaruhi (a) konflik antara manajemen dan pemegang saham, dan (b) konflik antara pemegang saham dan pemegang obligasi?</p>
+        <p class="kc-answer"><strong>Jawaban:</strong> (a) Konflik antara manajemen dan pemegang saham <em>berkurang</em>. Dividen besar mengurangi free cash flow di tangan manajemen, membatasi kemampuan manajemen untuk melakukan akuisisi wasteful berikutnya. Pemegang saham mendapat return langsung, dan manajemen dipaksa untuk lebih selektif dalam penggunaan kas yang tersisa. (b) Konflik antara pemegang saham dan pemegang obligasi <em>meningkat</em>. Pembayaran dividen Rp 3 triliun mengurangi kas perusahaan yang bisa digunakan untuk melunasi obligasi Rp 8 triliun yang jatuh tempo dalam 3 tahun. Bondholder menghadapi risiko default yang lebih tinggi karena cash cushion berkurang. Ini adalah klasik wealth transfer dari bondholders ke shareholders melalui dividend payment.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAPTER 2 -->
+  <div class="chapter" id="ch2">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 2</div>
+      <h2 class="chapter-title">Jenis Pemegang Saham Berpengaruh dan Karakteristik Konfliknya</h2>
+    </div>
+
+    <p class="prose">Di berbagai penjuru dunia, struktur kepemilikan perusahaan tidak seragam. Jenis entitas yang menjadi pemegang saham dominan berbeda-beda berdasarkan yurisdiksi, sejarah ekonomi, dan struktur hukum. CFA curriculum mengidentifikasi tujuh jenis pemegang saham berpengaruh yang masing-masing memiliki karakteristik dan potensi konflik yang unik.</p>
+
+    <p class="prose">Pemahaman tentang jenis pemegang saham berpengaruh penting bagi analis karena setiap tipe membawa <em>dynamic governance</em> yang berbeda. Untuk menganalisis risiko governance sebuah perusahaan secara akurat, analis perlu mengidentifikasi siapa pemegang saham dominannya dan bagaimana motivasi mereka bisa menciptakan konflik dengan pemegang saham lainnya.</p>
+
+    <div class="sub-header">2.1 Keluarga (Family Shareholders)</div>
+
+    <p class="prose">Kepemilikan keluarga adalah bentuk kepemilikan yang paling dominan secara global, terutama di Amerika Latin, Asia, dan sebagian Eropa. Dalam model ini, satu keluarga memiliki kepemilikan dan/atau voting power yang signifikan, dan seringkali anggota keluarga juga menduduki posisi manajemen dan dewan direksi secara bersamaan.</p>
+
+    <p class="prose">Fenomena yang sering menyertai family ownership adalah <strong>interlocking directorates</strong>: anggota keluarga yang sama duduk di dewan direksi beberapa perusahaan berbeda dalam satu grup konglomerat. Di banyak konglomerat Asia dan Amerika Latin, satu keluarga bisa secara efektif mengendalikan lusinan perusahaan publik dan swasta melalui jaringan kepemilikan silang.</p>
+
+    <p class="prose">Dari perspektif CFA curriculum, family ownership memiliki dua sisi. Sisi positif: keluarga memiliki concentrated ownership sekaligus keterlibatan langsung dalam manajemen, sehingga kepentingan mereka lebih aligned dengan nilai jangka panjang perusahaan. Ini mengurangi principal-agent problem. Sisi negatif: tingkat transparansi cenderung rendah, akuntabilitas manajemen kurang ketat, hak minority shareholders kurang diperhatikan, dan talent outsider sulit masuk ke posisi manajemen karena posisi strategis "dijaga" untuk anggota keluarga.</p>
+
+    <div class="sub-header">2.2 State-Owned Enterprises (SOEs)</div>
+
+    <p class="prose">SOE adalah perusahaan di mana pemerintah merupakan controlling shareholder. Banyak SOE mengadopsi <strong>mixed-ownership model</strong>: sebagian saham dipegang pemerintah, sebagian diperdagangkan di pasar publik. Contoh-contoh terkenal termasuk Pertamina, PLN (Indonesia), Aramco (Arab Saudi), dan ICBC (China).</p>
+
+    <p class="prose">SOE biasanya beroperasi di sektor yang dianggap strategis oleh pemerintah: energi, pertambangan, perbankan, telekomunikasi, transportasi, dan utilitas. Kehadiran pemerintah sebagai controlling shareholder menciptakan dynamic governance yang unik: perusahaan beroperasi di pasar komersial tetapi juga harus merespons agenda kebijakan publik pemerintah.</p>
+
+    <p class="prose">Konflik kepentingan SOE yang paling signifikan adalah: pemerintah bisa mengarahkan perusahaan untuk mengejar tujuan sosial atau kebijakan yang tidak memaksimalkan shareholder value. Misalnya, BUMN energi bisa diarahkan untuk menjual BBM di bawah harga pasar demi stabilitas sosial. Selain itu, implicit atau explicit state guarantee menciptakan kondisi "too big to fail" yang mengurangi market scrutiny dan disiplin manajemen.</p>
+
+    <div class="sub-header">2.3 Institutional Investors</div>
+
+    <p class="prose">Institutional investors &mdash; mutual funds, pension funds, insurance companies, dan hedge funds &mdash; secara kolektif merupakan pemilik terbesar di banyak pasar modal maju. Di AS, institutional investors memiliki lebih dari 70% saham yang diperdagangkan di pasar publik.</p>
+
+    <p class="prose">Meskipun secara individual jarang mencapai status "controlling shareholder," institutional investors memiliki kekuatan kolektif yang signifikan. Mereka bisa mendorong good governance dengan cara: voting aktif dalam RUPS (Annual General Meeting), melakukan dialogue dengan manajemen dan dewan, berpartisipasi dalam proxy contests, dan dalam beberapa kasus mendukung activist campaigns.</p>
+
+    <p class="prose">Stewardship codes di berbagai yurisdiksi dirancang untuk mendorong institutional investors agar lebih aktif menggunakan leverage mereka untuk meningkatkan governance. Di UK misalnya, UK Stewardship Code mewajibkan asset managers untuk mempublikasikan "comply or explain" statement tentang komitmen mereka terhadap stewardship.</p>
+
+    <div class="sub-header">2.4 Group Companies (Horizontal dan Vertical Ownership)</div>
+
+    <p class="prose">Dalam beberapa yurisdiksi, perusahaan yang saling terafiliasi memegang saham satu sama lain dalam jaringan yang kompleks. Ada dua bentuk utama: horizontal ownership (cross-holdings antar perusahaan dengan kepentingan bisnis yang saling terkait) dan vertical ownership atau <strong>pyramid structures</strong> (satu holding company mengontrol beberapa sub-holding yang masing-masing mengontrol operating companies).</p>
+
+    <p class="prose">Group companies yang terkenal termasuk Samsung Group (Korea), keiretsu Jepang seperti Sanwa, dan Grupo Carso di Meksiko. Di Indonesia, konglomerat-konglomerat besar seperti Salim Group, Lippo Group, dan Sinar Mas juga menggunakan struktur serupa.</p>
+
+    <p class="prose">Risiko governance dari group company structures adalah kemungkinan <strong>related-party transactions</strong> yang tidak arm's length: entitas dalam satu grup melakukan transaksi satu sama lain dengan syarat yang tidak mencerminkan kondisi pasar, menguntungkan pihak tertentu dalam grup dengan mengorbankan minority shareholders di entitas yang dirugikan.</p>
+
+    <div class="sub-header">2.5 Private Equity, Foreign Investors, dan Bank Shareholders</div>
+
+    <p class="prose">Private equity firms, khususnya venture capital (VC) dan leveraged buyout (LBO) firms, adalah pemegang saham aktif yang umumnya memegang kontrol mayoritas dan terlibat langsung dalam governance portofolio mereka. VC firms mendampingi perusahaan tahap awal, sementara LBO firms mengakuisisi perusahaan matang (seringkali melalui go-private) untuk direstrukturisasi dan dijual kembali.</p>
+
+    <p class="prose">Kontribusi positif PE dalam governance: implementasi corporate codes yang lebih formal, kompensasi berbasis kinerja yang lebih ketat, dan fokus pada value creation yang terukur. Risiko: investment horizon yang terbatas (VC dan LBO memiliki target exit dalam 3-7 tahun) bisa menciptakan tekanan short-termism yang mengorbankan long-term sustainability.</p>
+
+    <p class="prose">Foreign investors dari yurisdiksi dengan governance standards lebih tinggi bisa mendorong peningkatan transparansi ketika berinvestasi di emerging markets. Efek ini semakin kuat ketika perusahaan memilih untuk cross-list di bursa luar negeri yang memerlukan standard disclosure yang lebih tinggi &mdash; local minority shareholders turut mendapatkan manfaat dari peningkatan governance yang mengikuti cross-listing tersebut.</p>
+
+    <p class="prose">Bank shareholders memiliki posisi unik: mereka bisa memiliki equity investment sekaligus lending relationship dengan perusahaan yang sama. Konflik kepentingan yang muncul: bank mungkin mendorong perusahaan untuk mengambil pinjaman lebih banyak atau dengan syarat yang kurang menguntungkan &mdash; karena ini menguntungkan bank sebagai kreditur &mdash; meskipun ini tidak optimal dari perspektif equity shareholders.</p>
+
+    <div class="kc" id="kc3">
+      <div class="kc-header" onclick="toggleKC('kc3')">
+        <span class="kc-header-title">Knowledge Check 2.1 &mdash; Mengidentifikasi Tipe Pemegang Saham</span>
+        <span class="kc-toggle">&#9660;</span>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">Sebuah perusahaan pertambangan Indonesia, PT Tambang Nusantara (TNUS), memiliki struktur kepemilikan berikut: (1) Kementerian BUMN memegang 51% saham langsung; (2) PT Danareksa (perusahaan investasi pemerintah) memegang 15% saham; (3) Sisanya 34% dipegang oleh investor publik. TNUS juga memiliki pinjaman Rp 20 triliun dari Bank Mandiri (BUMN perbankan) yang mana Bank Mandiri juga memegang 8% saham di TNUS. Identifikasi setidaknya tiga konflik governance potensial dalam struktur ini.</p>
+        <p class="kc-answer"><strong>Jawaban:</strong> <br><strong>Konflik 1 &mdash; SOE governance risk:</strong> Kementerian BUMN sebagai controlling shareholder (51%) bisa mengarahkan TNUS untuk mengejar kebijakan pemerintah (misalnya mempertahankan lapangan kerja atau menjual hasil tambang dengan harga rendah ke BUMN lain) yang tidak memaksimalkan shareholder value bagi 34% public investors. <br><strong>Konflik 2 &mdash; Group company related-party risk:</strong> PT Danareksa (15%) adalah sesama entitas pemerintah. Ada risiko bahwa TNUS melakukan transaksi bisnis dengan entitas-entitas pemerintah lain (sesama "group company" dalam ekosistem BUMN) dengan syarat yang tidak arm's length, merugikan minority shareholders publik. <br><strong>Konflik 3 &mdash; Bank shareholder conflict of interest:</strong> Bank Mandiri memiliki dual role sebagai kreditur (Rp 20 triliun) dan equity shareholder (8%). Bank Mandiri bisa menggunakan pengaruhnya untuk mendorong TNUS mengambil lebih banyak pinjaman atau memperpanjang kredit dengan kondisi yang menguntungkan Bank Mandiri sebagai lender, meskipun level utang tersebut tidak optimal dari perspektif equity shareholders TNUS.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAPTER 3 -->
+  <div class="chapter" id="ch3">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 3</div>
+      <h2 class="chapter-title">Shareholder Activism: Strategi, Mekanisme, dan Dampak</h2>
+    </div>
+
+    <div class="sub-header">3.1 Apa itu Shareholder Activism?</div>
+
+    <p class="prose">CFA curriculum mendefinisikan <strong>shareholder activism</strong> sebagai "strategi yang digunakan oleh pemegang saham untuk memaksa perusahaan bertindak sesuai keinginan mereka" (strategies used by shareholders to attempt to compel a company to act in a desired manner). Aktivisme bukanlah fenomena baru, tetapi telah berkembang secara signifikan dalam beberapa dekade terakhir seiring dengan meningkatnya institutional investors dan hedge funds yang berspesialisasi dalam strategi ini.</p>
+
+    <p class="prose">Activist investor biasanya menargetkan perusahaan yang mereka percaya sedang undervalued karena: governance yang buruk (excessive management compensation, entrenched boards, poor capital allocation); strategi bisnis yang inferior atau gagal dieksekusi; struktur modal yang tidak optimal (terlalu banyak kas yang tidak produktif, atau sebaliknya leverage berlebihan); atau manajemen yang lemah dan tidak responsif terhadap kepentingan pemegang saham.</p>
+
+    <p class="prose">Penting untuk dipahami bahwa activist investors umumnya <em>tidak</em> ingin mengambil alih dan menjalankan perusahaan secara langsung &mdash; ini adalah perbedaan kritis antara activism dan hostile takeover. Tujuan aktivis adalah mendorong perubahan spesifik yang mereka percaya akan meningkatkan nilai perusahaan, dan kemudian merealisasikan keuntungan dari kenaikan harga saham setelah perubahan tersebut diimplementasikan.</p>
+
+    <div class="sub-header">3.2 Spektrum Strategi Aktivisme</div>
+
+    <p class="prose">Strategi aktivisme tidak bersifat binari (ada atau tidak ada) &mdash; ia bergerak dalam spektrum dari yang paling lunak hingga yang paling agresif. Activist investors biasanya memulai dengan pendekatan kolaboratif dan meningkatkan eskalasi jika tidak ada respons.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 3 &mdash; Spektrum Strategi Shareholder Activism (dari Lunak ke Agresif)</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Level</th><th>Strategi</th><th>Cara Kerja</th><th>Waktu Khas</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1 (Lunak)</td>
+              <td><strong>Private Engagement</strong></td>
+              <td>Dialog langsung dan privat dengan manajemen dan/atau dewan; sharing analisis dan rekomendasi; negosiasi informal</td>
+              <td>Bulan &mdash; bisa berlangsung berbulan-bulan tanpa publik mengetahui</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td><strong>Public Letter / Statement</strong></td>
+              <td>Penerbitan surat terbuka ke manajemen/dewan yang dipublikasikan; menarik perhatian media dan investor lain</td>
+              <td>Dilakukan ketika private engagement tidak menghasilkan respons</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td><strong>Shareholder Proposals</strong></td>
+              <td>Mengajukan resolusi formal dalam agenda RUPS; pemegang saham voting atas proposal tersebut; bisa advisory atau binding</td>
+              <td>Harus diajukan sebelum batas waktu RUPS; biasanya beberapa minggu sebelum RUPS</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td><strong>Membangun Koalisi</strong></td>
+              <td>Melobi institutional investors lain (pension funds, fund managers besar) untuk mendukung posisi aktivis</td>
+              <td>Paralel dengan strategi lain; crucial untuk proxy contest</td>
+            </tr>
+            <tr>
+              <td>5 (Agresif)</td>
+              <td><strong>Proxy Contest</strong></td>
+              <td>Mengajukan kandidat direktur alternatif; kampanye intensif untuk memenangkan suara pemegang saham; competing proxy cards</td>
+              <td>Berbulan-bulan sebelum RUPS; sangat public dan costly</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">3.3 Proxy Contest: Mekanisme Detail</div>
+
+    <p class="prose">Proxy contest (atau proxy fight) adalah bentuk aktivisme yang paling formal dan paling agresif. Dalam proxy contest, activist investor bersaing langsung dengan manajemen untuk memenangkan voting pemegang saham dalam pemilihan dewan direksi.</p>
+
+    <p class="prose">Mekanismenya: activist investor mengidentifikasi kandidat direktur alternatif yang kompatibel dengan visi perubahan mereka. Mereka kemudian mengirimkan proxy materials (kartu proxy alternatif) kepada seluruh pemegang saham, menjelaskan mengapa mereka percaya kandidat mereka lebih baik. Pemegang saham kemudian harus memilih antara management's slate of directors atau activist's slate.</p>
+
+    <p class="prose">Keberhasilan proxy contest bergantung pada kemampuan aktivis untuk membangun koalisi yang cukup luas di antara pemegang saham yang tidak puas. Institutional investors &mdash; yang secara kolektif sering memiliki 40-70% saham perusahaan publik &mdash; menjadi kunci. Jika institutional investors besar mendukung kandidat aktivis, management's candidates akan kalah.</p>
+
+    <div class="sub-header">3.4 Greenmail: Respons Defensif yang Kontroversial</div>
+
+    <p class="prose">Salah satu respons perusahaan terhadap aktivisme yang paling kontroversial adalah <strong>greenmail</strong>: perusahaan membeli kembali saham yang dipegang oleh activist investor dengan harga premium di atas harga pasar, dengan syarat aktivis tersebut setuju untuk tidak lagi mengganggu perusahaan (biasanya melalui "standstill agreement").</p>
+
+    <p class="prose">CFA curriculum secara eksplisit mencatat bahwa greenmail "often to the detriment of remaining shareholders." Alasannya multidimensi: pertama, kas perusahaan digunakan untuk melindungi manajemen dari akuntabilitas, bukan untuk menciptakan nilai; kedua, pemegang saham non-aktivis tidak mendapatkan premium yang sama, menciptakan perlakuan tidak setara; ketiga, standstill agreement menghilangkan potensi tekanan governance masa depan yang mungkin justru menguntungkan semua pemegang saham.</p>
+
+    <div class="callout amber">
+      <span class="callout-title">Greenmail vs. Share Repurchase Biasa</span>
+      <p>Penting untuk membedakan greenmail dari share repurchase biasa. Share repurchase standar (open market atau tender offer) membeli saham dari <em>semua</em> pemegang saham yang ingin menjual, pada harga yang sama untuk semua. Greenmail hanya membeli saham dari <em>satu pihak tertentu</em> (aktivis) dengan premium khusus yang tidak tersedia untuk pemegang saham lain. Inilah yang membuat greenmail secara fundamental berbeda dan berpotensi merugikan.</p>
+    </div>
+
+    <div class="kc" id="kc4">
+      <div class="kc-header" onclick="toggleKC('kc4')">
+        <span class="kc-header-title">Knowledge Check 3.1 &mdash; Identifikasi Strategi Aktivisme yang Tepat</span>
+        <span class="kc-toggle">&#9660;</span>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">Lembaga pengelola dana pensiun terbesar di Indonesia, dengan kepemilikan 4% saham di PT Bakti Mandiri Tbk (BKTI), tidak puas dengan kinerja saham BKTI yang telah tertinggal dari peers-nya selama 5 tahun. Mereka percaya masalah utamanya adalah CEO yang lemah dan capital allocation yang buruk (perusahaan memiliki kas idle Rp 5 triliun yang tidak diproduktifkan). Setelah 3 putaran private engagement tanpa hasil konkret, apa langkah aktivisme yang paling logis selanjutnya, dan apa yang harus mereka lakukan untuk mempersiapkan langkah tersebut?</p>
+        <p class="kc-answer"><strong>Jawaban:</strong> Langkah berikutnya yang paling logis adalah mempertimbangkan <strong>proxy contest</strong> untuk mendudukkan kandidat direktur baru yang berkomitmen pada perubahan. Persiapan yang diperlukan: (1) <strong>Identifikasi kandidat direktur</strong> yang memiliki track record relevan, tidak terafiliasi dengan manajemen saat ini, dan berkomitmen pada capital allocation yang lebih baik (buyback/dividen); (2) <strong>Bangun koalisi</strong> &mdash; dengan 4% kepemilikan saja tidak cukup untuk menang proxy contest; mereka perlu mendekati institutional investors lain (mutual funds, insurance companies) yang juga tidak puas; (3) <strong>Public campaign</strong> &mdash; publikasikan analisis yang menunjukkan mengapa perubahan diperlukan, untuk mempengaruhi opini institutional investors; (4) Persiapkan <strong>proxy materials</strong> (kartu proxy alternatif) untuk dikirimkan ke semua pemegang saham sebelum RUPS. Dengan 4% kepemilikan, mereka butuh koalisi yang mewakili setidaknya lebih dari 50% saham beredar untuk memenangkan proxy vote.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAPTER 4 -->
+  <div class="chapter" id="ch4">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 4</div>
+      <h2 class="chapter-title">Governance Scores: ESG Data Providers dan Integrasi dalam Analisis Investasi</h2>
+    </div>
+
+    <div class="sub-header">4.1 Tantangan Kuantifikasi Governance</div>
+
+    <p class="prose">Salah satu tantangan terbesar dalam analisis corporate governance adalah bahwa faktor-faktor yang paling signifikan seringkali tidak mudah dikuantifikasi. Kualitas dewan direksi, integritas manajemen, budaya organisasi, dan keselarasan kepentingan tidak memiliki representasi langsung dalam laporan keuangan. Berbeda dengan rasio keuangan seperti current ratio atau debt-to-equity yang memiliki definisi dan kalkulasi yang jelas, "board effectiveness" adalah konsep yang lebih subyektif.</p>
+
+    <p class="prose">Untuk mengatasi tantangan ini, ekosistem industri telah mengembangkan berbagai pendekatan untuk mengidentifikasi, mengukur, dan mengkomunikasikan kualitas governance dan ESG secara lebih sistematis. CFA curriculum mengidentifikasi tiga pendekatan utama.</p>
+
+    <div class="sub-header">4.2 Tiga Pendekatan Identifikasi ESG/Governance Factors</div>
+
+    <p class="prose"><strong>Pendekatan Pertama: Proprietary Methods.</strong> Analis menggunakan judgment mereka sendiri atau alat proprietary firma investasi untuk mengidentifikasi dan menilai faktor-faktor ESG. Sumber informasi yang digunakan meliputi: annual reports dan proxy reports, corporate sustainability reports, regulatory filings (10-K di AS, laporan tahunan Bursa di Indonesia), berita dan liputan media, laporan industri, dan dialog langsung dengan manajemen perusahaan.</p>
+
+    <p class="prose">Kelebihan pendekatan ini adalah fleksibilitas &mdash; analis bisa menyesuaikan analisisnya dengan konteks spesifik perusahaan dan industri. Kelemahannya adalah time-intensive dan tidak scalable untuk portofolio dengan ratusan atau ribuan nama. Selain itu, hasil analisis sangat tergantung pada skill dan judgment analis individual.</p>
+
+    <p class="prose"><strong>Pendekatan Kedua: ESG Data Providers.</strong> Vendor seperti MSCI dan Sustainalytics mengumpulkan data ESG dari berbagai sumber publik, memprosesnya, dan menghasilkan skor dan/atau ranking untuk masing-masing perusahaan dalam universe mereka. Skor ini digunakan oleh investor institusional untuk screening, portfolio construction, dan risk management.</p>
+
+    <p class="prose">Kelebihan: scalable, coverage luas, dan relatif mudah diintegrasikan dalam proses investment secara sistematis. Namun CFA curriculum secara eksplisit mencatat kelemahan kritikal: skor dari ESG data vendors mengandung <strong>"subjective element to the interpretation"</strong>. Vendor yang berbeda menggunakan metodologi, bobot, dan definisi materiality yang berbeda, menghasilkan skor yang bisa sangat berbeda untuk perusahaan yang sama.</p>
+
+    <p class="prose"><strong>Pendekatan Ketiga: Not-for-Profit Frameworks.</strong> Berbagai organisasi nirlaba telah mengembangkan frameworks untuk standardisasi disclosure ESG: GRI (Global Reporting Initiative), SASB (Sustainable Accounting Standards Board), IIRC (International Integrated Reporting Council), dan 2DII. GRI menyediakan sustainability reporting standards dengan topik-topik relevan per industri. SASB mengembangkan "materiality maps" yang mengidentifikasi ESG factors yang material untuk setiap sektor industri.</p>
+
+    <div class="sub-header">4.3 Inkonsistensi ESG Scores: Sebuah Tantangan Struktural</div>
+
+    <p class="prose">Salah satu temuan empiris yang paling menonjol dalam penelitian tentang ESG scoring adalah rendahnya korelasi antara skor dari vendor yang berbeda untuk perusahaan yang sama. Berbeda dari credit ratings di mana Moody's, S&amp;P, dan Fitch biasanya memberikan rating yang relatif similar untuk perusahaan yang sama, ESG scores bisa sangat divergen.</p>
+
+    <p class="prose">Inkonsistensi ini bukan "bug" &mdash; ini adalah "feature" yang mencerminkan ketiadaan standar universal dalam ESG assessment. Setiap vendor memutuskan sendiri: faktor apa saja yang dimasukkan, bagaimana faktor-faktor tersebut diukur, seberapa besar bobot yang diberikan untuk setiap dimensi (E, S, G), dan bagaimana data yang tersedia diterjemahkan menjadi skor.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 4 &mdash; Sumber Inkonsistensi ESG Scores Antar Vendor</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Sumber Inkonsistensi</th><th>Deskripsi</th><th>Implikasi bagi Analis</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Scope &amp; Coverage</strong></td>
+              <td>Vendor A memasukkan 200 indikator, Vendor B hanya 100. Faktor yang "tidak ada" di satu vendor bisa sangat penting bagi yang lain</td>
+              <td>Pahami berapa banyak indikator yang digunakan dan apakah faktor yang relevan untuk industri spesifik sudah tercakup</td>
+            </tr>
+            <tr>
+              <td><strong>Measurement Approach</strong></td>
+              <td>Satu indikator (misalnya "board independence") bisa diukur berbeda: dari disclosure saja vs. dari kombinasi disclosure dan kualitas independent directors</td>
+              <td>Baca metodologi untuk memahami <em>bagaimana</em> indikator diukur, bukan hanya <em>apa</em> yang diukur</td>
+            </tr>
+            <tr>
+              <td><strong>Weighting</strong></td>
+              <td>Vendor A mungkin memberikan bobot 40% untuk governance, 40% environmental, 20% social. Vendor B mungkin 33/33/33</td>
+              <td>Untuk analisis governance-specific, carilah vendor yang memberikan bobot signifikan untuk dimensi G</td>
+            </tr>
+            <tr>
+              <td><strong>Data Sources</strong></td>
+              <td>Beberapa vendor menggunakan company self-disclosure saja; yang lain menambahkan data dari media, NGO, regulatory filings</td>
+              <td>Company self-disclosure bisa positively biased; vendor yang menggunakan multiple sources lebih kredibel</td>
+            </tr>
+            <tr>
+              <td><strong>Subjective Analyst Judgment</strong></td>
+              <td>ESG analysts vendor memberikan penilaian subyektif atas faktor-faktor yang tidak bisa dikuantifikasi secara langsung</td>
+              <td>Skor bukan "angka akuntan" &mdash; mengandung human judgment yang bisa berbeda antar analis</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">4.4 Integrasi Governance dalam Equity dan Credit Analysis</div>
+
+    <p class="prose">Dalam praktiknya, analisis governance diintegrasikan ke dalam equity dan credit analysis melalui beberapa mekanisme. Penting untuk dipahami bahwa governance analysis tidak berdiri sendiri sebagai alat filtering &mdash; ia digunakan untuk mengkalibrasi asumsi dalam model penilaian yang sudah ada.</p>
+
+    <div class="formula-block">
+      <span class="label">Mekanisme Integrasi Governance dalam Equity Analysis</span>
+1. Discount Rate Adjustment:
+   Governance buruk = higher idiosyncratic risk
+   -&gt; Analis menambahkan governance risk premium
+      ke cost of equity (CoE)
+   -&gt; Higher CoE = Lower DCF valuation
+
+2. Financial Metric Forecast Adjustment:
+   Governance buruk bisa = higher probability of:
+   - Earnings manipulation / accounting irregularities
+   - Value-destroying related-party transactions
+   - Suboptimal capital allocation
+   -&gt; Analis adjust earnings forecasts atau
+      apply valuation discount untuk mencerminkan
+      risiko ini
+
+3. Sensitivity &amp; Scenario Analysis:
+   Model beberapa skenario:
+   - Base: governance tetap lemah
+   - Bull: governance event positif (activist wins,
+     management change, governance reform)
+   - Bear: governance scandal, regulatory action
+      <span class="note">Sumber: CFA Curriculum 2026, LM3 Corporate Governance</span>
+    </div>
+
+    <div class="formula-block">
+      <span class="label">Mekanisme Integrasi Governance dalam Credit Analysis</span>
+1. Credit Spread Adjustment:
+   Governance buruk -&gt; Higher credit spread (WIDER)
+   Governance baik  -&gt; Lower credit spread (TIGHTER)
+   
+   Efek berbeda berdasarkan maturity:
+   - Long-maturity bonds: lebih sensitif terhadap
+     governance risk (risiko bersifat jangka panjang)
+   - Short-maturity bonds: kurang sensitif
+     (governance deterioration butuh waktu untuk
+     memengaruhi near-term solvability)
+
+2. Internal Credit Assessment:
+   Governance factors dimasukkan sebagai
+   qualitative component dalam internal credit model
+
+3. Relative Credit Ranking:
+   Perusahaan dengan governance lebih baik
+   mendapat ranking relatif yang lebih tinggi
+   dibandingkan peers dengan profil keuangan similar
+      <span class="note">Catatan: Untuk stranded assets (aset yang berisiko tidak dapat digunakan karena perubahan regulasi), implikasi governance jangka panjang jauh lebih signifikan pada obligasi bertenor panjang.</span>
+    </div>
+
+    <div class="callout blue">
+      <span class="callout-title">Materialitas dalam Konteks ESG</span>
+      <p>CFA curriculum menekankan konsep <strong>materiality</strong> dalam analisis ESG: analis harus fokus pada faktor ESG yang secara material mempengaruhi operasi, kinerja keuangan, dan valuasi perusahaan. "Material" dalam konteks ESG berarti: jika informasi ini dihilangkan atau keliru dinyatakan, keputusan investasi akan berubah secara signifikan.</p>
+      <p style="margin-top:8px;">Tantangan: perusahaan kadang menggunakan istilah "material" untuk menyoroti informasi ESG yang positif tetapi sebenarnya tidak berdampak signifikan pada keuangan, sementara meminimalkan atau tidak melaporkan informasi ESG negatif yang investor mungkin anggap material. Analis harus kritis dalam mengevaluasi apakah ESG disclosure yang diberikan perusahaan mencerminkan materialitas yang sesungguhnya.</p>
+    </div>
+
+    <div class="kc" id="kc5">
+      <div class="kc-header" onclick="toggleKC('kc5')">
+        <span class="kc-header-title">Knowledge Check 4.1 &mdash; Integrasi Governance dalam Analisis</span>
+        <span class="kc-toggle">&#9660;</span>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">Seorang analis equity sedang mengevaluasi dua perusahaan batu bara Indonesia dengan profil keuangan yang hampir identik: revenue Rp 10 triliun, EBITDA margin 35%, net debt/EBITDA 2.0x. Perusahaan A memiliki controlling family dengan 65% kepemilikan, tiga anggota keluarga dalam dewan, tidak ada audit committee independen, dan governance score rendah. Perusahaan B memiliki dispersed ownership dengan tidak ada pemegang saham di atas 6%, dewan yang 70% independen, audit committee yang sepenuhnya independen, dan governance score baik. Bagaimana analis sebaiknya mencerminkan perbedaan governance ini dalam analisis valuasi mereka?</p>
+        <p class="kc-answer"><strong>Jawaban:</strong> Perbedaan governance harus dicerminkan dalam penyesuaian discount rate (cost of equity): Perusahaan A dengan governance lemah harus mendapatkan governance risk premium tambahan dalam CoE-nya, menghasilkan discount rate yang lebih tinggi dan DCF valuation yang lebih rendah dibandingkan Perusahaan B, meskipun profil keuangan identik. Selain itu, analis bisa melakukan downward adjustment pada earnings forecast Perusahaan A untuk mencerminkan higher probability of: (1) related-party transactions yang tidak arm's length yang mengalihkan value dari pemegang saham publik ke keluarga pengendali; (2) accounting irregularities yang lebih sulit terdeteksi karena lemahnya audit committee. Untuk credit analysis, obligasi Perusahaan A harus mendapatkan credit spread yang lebih lebar karena governance risk, terutama untuk obligasi bertenor panjang. Secara keseluruhan, perbedaan governance akan menciptakan perbedaan valuasi yang signifikan meskipun fundamental keuangan identik &mdash; ini adalah premium/diskon yang rasional untuk kualitas governance.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAPTER 5: Latihan Soal -->
+  <div class="chapter" id="ch5">
+    <div class="chapter-header">
+      <div class="chapter-num">Latihan Soal</div>
+      <h2 class="chapter-title">Item Set Vignette &mdash; 6 Soal</h2>
+    </div>
+
+    <div class="practice-body">
+      <div class="vignette">
+        <div class="vignette-label">Vignette &mdash; PT Nusantara Conglomerate Tbk (NSCG)</div>
+        <div class="vignette-text">
+          <p><strong>Latar Belakang Perusahaan:</strong> PT Nusantara Conglomerate Tbk (NSCG) adalah konglomerat keluarga yang terdaftar di BEI dengan bisnis di perkebunan, properti, dan perbankan. Keluarga Santoso mengendalikan NSCG melalui struktur kepemilikan berlapis: PT Santoso Holding (100% dimiliki keluarga) memegang 52% saham NSCG. Dari 52% tersebut, 35% saham NSCG menggunakan Kelas B shares yang memiliki 3 suara per saham, sementara sisa 17% kepemilikan keluarga (Kelas A, 1 suara per saham) dan 48% investor publik (Kelas A, 1 suara per saham). Total voting power keluarga Santoso dihitung sebagai berikut: (35% x 3) + 17% = 105% + 17% = 122 "weighted votes" dari total "weighted votes" seluruh pemegang saham = (35% x 3) + (17% + 48%) x 1 = 105 + 65 = 170 weighted votes. Voting power keluarga = 122/170 = 71.8%.</p>
+
+          <p style="margin-top:8px;"><strong>Struktur Dewan:</strong> Dewan NSCG terdiri dari 9 anggota: Budi Santoso (Ketua Komisaris, putra tertua pendiri); Dewi Santoso (Komisaris, putri pendiri, merangkap CFO grup); Riko Santoso (Komisaris, putra kedua pendiri); tiga eksekutif senior NSCG yang sudah bekerja 15+ tahun; dan tiga "komisaris independen" yang dipilih melalui nominasi keluarga Santoso. Semua komisaris independen ini juga menjadi advisors berbayar untuk PT Santoso Holding, konsultansi yang dibayar Rp 500 juta per tahun per orang.</p>
+
+          <p style="margin-top:8px;"><strong>Situasi Terkini:</strong> Sembilan bulan lalu, PT Emerald Fund Management, sebuah fund manager asing yang memegang 9.5% saham NSCG (Kelas A), menerbitkan "white paper" yang menyatakan bahwa NSCG undervalued karena governance yang buruk. Mereka mengidentifikasi tiga masalah utama: (1) tiga komisaris "independen" yang sebenarnya tidak independen karena mereka juga menjadi paid advisors Santoso Holding; (2) NSCG menjual lahan perkebunan kepada PT Santoso Agro (100% dimiliki keluarga Santoso) dengan harga 40% di bawah nilai pasar; dan (3) NSCG tidak pernah membayarkan dividen meskipun memiliki kas idle Rp 8.5 triliun.</p>
+
+          <p style="margin-top:8px;">Merespons tekanan ini, keluarga Santoso menawarkan untuk membeli kembali seluruh 9.5% saham Emerald Fund dengan premium 30% di atas harga pasar, dengan syarat Emerald Fund menandatangani non-disparagement agreement dan menjual semua saham NSCG mereka dalam 60 hari. Emerald Fund menolak tawaran tersebut.</p>
+
+          <p style="margin-top:8px;"><strong>Data Keuangan &amp; ESG:</strong> Revenue NSCG Rp 28 triliun, EBITDA Rp 9.8 triliun, net debt Rp 12 triliun. MSCI memberikan ESG score "B" (rata-rata) untuk NSCG; Sustainalytics memberikan "Medium Risk" score 28 (0=best, 100=worst). Sebuah regional peer, PT Agri Internasional Tbk, dengan governance yang jauh lebih baik (majority independent board, no related-party transactions, regular dividends) mendapatkan MSCI score "AA" dan Sustainalytics 12 (Low Risk).</p>
+        </div>
+      </div>
+
+      <div id="quiz-full-container">
+
+        <div class="question-block" data-q="f1" data-correct="C">
+          <div class="q-num">QUESTION 1 OF 6</div>
+          <div class="q-text">Berdasarkan struktur kepemilikan NSCG, di mana keluarga Santoso memiliki voting power 71.8% tetapi kepemilikan ekonomis yang lebih kecil, konflik governance apa yang paling dominan terjadi?</div>
+          <div class="option" data-opt="A">
+            <div class="option-radio"></div>
+            <div class="option-text">A. Principal-agent problem antara keluarga Santoso dan manajemen NSCG yang digaji, karena manajemen bisa mengambil keputusan yang tidak selaras dengan kepentingan keluarga</div>
+          </div>
+          <div class="option" data-opt="B">
+            <div class="option-radio"></div>
+            <div class="option-text">B. Tidak ada konflik governance signifikan karena keluarga Santoso sebagai majority economic owner memiliki incentive natural untuk memaksimalkan nilai perusahaan</div>
+          </div>
+          <div class="option" data-opt="C">
+            <div class="option-radio"></div>
+            <div class="option-text">C. Principal-principal problem antara keluarga Santoso sebagai controlling shareholder (dengan voting power 71.8% yang jauh melebihi kepemilikan ekonomis mereka) dan investor publik Kelas A sebagai minority shareholders</div>
+          </div>
+          <div class="explanation correct">
+            &#10003; <strong>C benar.</strong> Ini adalah textbook principal-principal problem. Keluarga Santoso memiliki voting power 71.8% yang jauh melebihi kepemilikan ekonomis mereka (52%), dicapai melalui dual-class share structure (Kelas B 3x voting rights). Kondisi dispersed economic ownership + concentrated voting power menghasilkan principal-principal problem: controlling voters bisa mengambil keputusan yang menguntungkan mereka sendiri (contoh konkret: penjualan lahan ke PT Santoso Agro dengan diskon 40%) dengan mengorbankan minority shareholders publik yang tidak memiliki cukup voting power untuk menghentikan keputusan tersebut. Ini bukan principal-agent problem karena konfliknya bukan antara owners dan professional managers &mdash; keluarga Santoso sendiri ADALAH manajemen/pemegang kendali.
+          </div>
+          <div class="explanation incorrect">
+            &#10007; Pilihan A salah &mdash; dalam kasus NSCG, keluarga Santoso mengendalikan langsung (Dewi Santoso adalah CFO; anggota keluarga di dewan). Konflik principal-agent biasanya terjadi antara <em>pemilik</em> dan <em>professional managers</em> yang direkrut dari luar &mdash; kondisi yang tidak berlaku di sini karena pemilik IS manajemennya. Pilihan B salah &mdash; meskipun controlling shareholders memiliki incentive partial untuk memaksimalkan nilai total, mereka juga memiliki kemampuan dan terkadang motivasi untuk mengekstraksi value dari minority shareholders melalui tunneling. Penjualan lahan dengan diskon 40% adalah contoh konkret dari perilaku ini.
+          </div>
+        </div>
+
+        <div class="question-block" data-q="f2" data-correct="B">
+          <div class="q-num">QUESTION 2 OF 6</div>
+          <div class="q-text">Tiga komisaris "independen" NSCG yang juga menerima honorarium Rp 500 juta per tahun dari PT Santoso Holding sebagai paid advisors mencerminkan kelemahan governance yang paling tepat digambarkan sebagai:</div>
+          <div class="option" data-opt="A">
+            <div class="option-radio"></div>
+            <div class="option-text">A. Pelanggaran hukum karena komisaris independen dilarang menerima kompensasi apapun selain honorarium dari perusahaan yang mereka duduki di dewan</div>
+          </div>
+          <div class="option" data-opt="B">
+            <div class="option-radio"></div>
+            <div class="option-text">B. Kegagalan board independence sejati: komisaris yang memiliki "material relationship" dengan controlling shareholders (dalam bentuk financial remuneration dari Santoso Holding) tidak memenuhi definisi independen menurut CFA curriculum, sehingga fungsi pengawasan mereka dikompromikan</div>
+          </div>
+          <div class="option" data-opt="C">
+            <div class="option-radio"></div>
+            <div class="option-text">C. Ini bukan masalah governance karena selama komisaris independen secara hukum tidak punya saham di NSCG, mereka memenuhi syarat independensi</div>
+          </div>
+          <div class="explanation correct">
+            &#10003; <strong>B benar.</strong> CFA curriculum mendefinisikan independent board directors sebagai mereka yang tidak memiliki "material relationship" dengan perusahaan terkait employment, ownership, <em>atau remuneration</em>. Menerima Rp 500 juta per tahun dari PT Santoso Holding adalah "material relationship" berdasarkan kriteria remuneration &mdash; ini secara langsung membuat ketiga komisaris tersebut TIDAK memenuhi kriteria independen sesuai standar CFA, meskipun secara formal mereka mungkin berlabel "independen" sesuai persyaratan Bursa Efek Indonesia. Ketika penghasilan komisaris bergantung pada hubungan baik dengan keluarga Santoso, kemampuan mereka untuk mengkritik keputusan keluarga atau membela minority shareholders secara objektif menjadi sangat questionable.
+          </div>
+          <div class="explanation incorrect">
+            &#10007; Pilihan A terlalu absolut &mdash; CFA curriculum tidak menyatakan bahwa independent directors dilarang menerima kompensasi apapun selain honorarium; yang menjadi masalah adalah hubungan financial yang menciptakan dependency pada controlling shareholders. Pilihan C keliru karena kepemilikan saham adalah hanya satu dimensi dari material relationship; remuneration adalah dimensi lain yang sama pentingnya. Seorang komisaris yang menerima Rp 500 juta/tahun dari controlling shareholders tentu memiliki financial dependency yang mengorbankan independensi judgmentnya.
+          </div>
+        </div>
+
+        <div class="question-block" data-q="f3" data-correct="A">
+          <div class="q-num">QUESTION 3 OF 6</div>
+          <div class="q-text">Penjualan lahan perkebunan NSCG ke PT Santoso Agro (100% dimiliki keluarga Santoso) dengan harga 40% di bawah nilai pasar adalah contoh spesifik dari:</div>
+          <div class="option" data-opt="A">
+            <div class="option-radio"></div>
+            <div class="option-text">A. Tunneling &mdash; pengalihan value dari perusahaan publik (dan pemegang saham minoritasnya) kepada controlling shareholders melalui related-party transaction yang tidak arm's length</div>
+          </div>
+          <div class="option" data-opt="B">
+            <div class="option-radio"></div>
+            <div class="option-text">B. Legitimate intra-group synergy &mdash; karena dalam konglomerat keluarga, transaksi antar entitas grup sering dilakukan dengan "transfer pricing" internal yang tidak harus mencerminkan harga pasar</div>
+          </div>
+          <div class="option" data-opt="C">
+            <div class="option-radio"></div>
+            <div class="option-text">C. Normal business discretion &mdash; manajemen NSCG memiliki kewenangan untuk menjual aset perusahaan sesuai judgment mereka tentang value strategis jangka panjang</div>
+          </div>
+          <div class="explanation correct">
+            &#10003; <strong>A benar.</strong> Ini adalah contoh klasik <strong>tunneling</strong> &mdash; mekanisme di mana controlling shareholders mengalihkan sumber daya dari perusahaan yang mereka kendalikan kepada entitas lain yang sepenuhnya mereka miliki, dengan mengorbankan minority shareholders. Dengan menjual lahan kepada PT Santoso Agro (100% keluarga) dengan harga 40% di bawah nilai pasar, keluarga Santoso efektif menerima subsidi dari seluruh pemegang saham NSCG (termasuk 48% public investors) senilai diskon tersebut. Value yang seharusnya dimiliki bersama oleh semua pemegang saham NSCG dialihkan secara eksklusif ke entitas yang 100% dimiliki keluarga. Ini adalah precisely the type of behavior yang CFA curriculum identifikasi sebagai risiko utama dari principal-principal problem.
+          </div>
+          <div class="explanation incorrect">
+            &#10007; Pilihan B mencoba merationalizekan tunneling sebagai "intra-group synergy" &mdash; namun CFA curriculum jelas bahwa related-party transactions yang tidak arm's length (tidak mencerminkan harga pasar) adalah red flag governance yang serius, terlepas dari framing-nya sebagai "synergy." Transfer pricing internal yang legitimate dalam konglomerat seharusnya masih reasonably mencerminkan nilai pasar; diskon 40% jauh dari reasonable. Pilihan C salah karena "judgment manajemen" tidak memberikan license untuk mentransfer value dari pemegang saham publik ke entitas pribadi controlling shareholders &mdash; ini bertentangan dengan fiduciary duty manajemen kepada semua pemegang saham.
+          </div>
+        </div>
+
+        <div class="question-block" data-q="f4" data-correct="B">
+          <div class="q-num">QUESTION 4 OF 6</div>
+          <div class="q-text">Tawaran keluarga Santoso untuk membeli kembali saham Emerald Fund dengan premium 30% disertai persyaratan non-disparagement agreement adalah:</div>
+          <div class="option" data-opt="A">
+            <div class="option-radio"></div>
+            <div class="option-text">A. Tindakan governance yang positif karena menunjukkan kemauan keluarga Santoso untuk bernegosiasi dan menyelesaikan konflik secara damai, menghindari disrupsi bisnis dari proxy contest</div>
+          </div>
+          <div class="option" data-opt="B">
+            <div class="option-radio"></div>
+            <div class="option-text">B. Greenmail &mdash; perusahaan mencoba membeli diam-nya activist shareholder dengan premium khusus yang tidak tersedia bagi pemegang saham lain, menggunakan kas perusahaan untuk melindungi kepentingan keluarga dari akuntabilitas</div>
+          </div>
+          <div class="option" data-opt="C">
+            <div class="option-radio"></div>
+            <div class="option-text">C. Hal ini tidak bisa dikategorikan sebagai greenmail karena tawaran ini dilakukan oleh keluarga Santoso secara pribadi melalui PT Santoso Holding, bukan oleh NSCG sebagai perusahaan</div>
+          </div>
+          <div class="explanation correct">
+            &#10003; <strong>B benar.</strong> Ini adalah greenmail dalam substansinya: upaya untuk membeli keluar activist shareholder dengan premium khusus agar mereka berhenti mengkritik governance. Meskipun secara teknis tawaran ini berasal dari PT Santoso Holding (bukan langsung dari NSCG), substansi ekonominya sama: pemegang saham non-aktivis (48% public investors) tidak mendapat premium 30% tersebut; tujuannya jelas untuk menghentikan tekanan governance dari Emerald Fund; dan non-disparagement agreement adalah kondisi yang dirancang untuk membungkam kritik governance. Non-disparagement agreement khususnya sangat bermasalah karena ini adalah mekanisme untuk menekan informasi yang mungkin material bagi pemegang saham publik NSCG lainnya.
+          </div>
+          <div class="explanation incorrect">
+            &#10007; Pilihan A mengkarakterisasi greenmail sebagai "negosiasi positif" &mdash; namun dari perspektif governance, ini adalah tindakan defensif yang melindungi manajemen dari akuntabilitas yang legitimate. Kesepakatan yang "damai" bagi manajemen bisa sangat merugikan bagi minority shareholders yang kehilangan advocate mereka. Pilihan C mencoba menggunakan argumen teknis bahwa karena tawaran dari Santoso Holding (bukan NSCG langsung), ini bukan greenmail. Namun CFA curriculum menilai substance over form: apapun entitas yang melakukan pembelian, jika tujuannya adalah membeli keluar activist shareholder dengan premium yang tidak tersedia untuk semua pemegang saham, inilah greenmail dalam substansinya.
+          </div>
+        </div>
+
+        <div class="question-block" data-q="f5" data-correct="C">
+          <div class="q-num">QUESTION 5 OF 6</div>
+          <div class="q-text">Setelah ditolak tawaran greenmail-nya, Emerald Fund memutuskan untuk meningkatkan tekanan mereka terhadap keluarga Santoso. Mengingat voting power keluarga Santoso yang 71.8%, strategi aktivisme mana yang memiliki probability tertinggi untuk berhasil mengubah governance NSCG?</div>
+          <div class="option" data-opt="A">
+            <div class="option-radio"></div>
+            <div class="option-text">A. Proxy contest untuk mengganti seluruh dewan NSCG dengan kandidat yang diusung Emerald Fund, memanfaatkan 9.5% kepemilikan saham mereka sebagai leverage</div>
+          </div>
+          <div class="option" data-opt="B">
+            <div class="option-radio"></div>
+            <div class="option-text">B. Mengajukan shareholder proposal dalam RUPS berikutnya untuk menghapus dual-class share structure dan menggantinya dengan one share one vote</div>
+          </div>
+          <div class="option" data-opt="C">
+            <div class="option-radio"></div>
+            <div class="option-text">C. Escalating public campaign dikombinasikan dengan regulatory/legal action: laporkan related-party transaction lahan ke OJK, sambil membangun koalisi dengan institutional investors lain dan melibatkan media bisnis untuk menekan keluarga Santoso melalui reputasi</div>
+          </div>
+          <div class="explanation correct">
+            &#10003; <strong>C benar.</strong> Dengan voting power keluarga Santoso 71.8%, proxy contest dan shareholder proposal apapun akan kalah secara matematis &mdash; keluarga memiliki supermajority yang hampir tidak bisa dikalahkan melalui jalur voting biasa. Strategi yang memiliki probability tertinggi adalah yang tidak bergantung pada voting: (1) Regulatory action melalui OJK &mdash; jika penjualan lahan dengan diskon 40% terbukti melanggar regulasi pasar modal (related-party transaction tanpa persetujuan minority shareholders yang seharusnya), ini bisa menghasilkan sanksi dan perbaikan wajib; (2) Legal action &mdash; shareholder lawsuit atas breach of fiduciary duty; (3) Reputational pressure &mdash; exposure publik yang cukup bisa membuat keluarga Santoso memilih untuk bernegosiasi untuk melindungi reputasi grup bisnis mereka secara keseluruhan; (4) Stewardship: mendorong institutional investors besar untuk menggunakan voting power kolektif mereka.
+          </div>
+          <div class="explanation incorrect">
+            &#10007; Pilihan A (proxy contest) akan gagal secara matematis: dengan 9.5% kepemilikan (Kelas A, 1 suara per saham) vs. keluarga Santoso dengan 71.8% voting power, Emerald Fund tidak memiliki jalur realistis untuk menang dalam voting langsung. Bahkan dengan dukungan dari SEMUA pemegang saham publik lainnya (38.5% sisanya), total voting power pihak non-Santoso masih hanya 28.2%. Pilihan B (shareholder proposal untuk hapus dual-class) juga akan kalah dalam voting dengan kalkulasi yang sama &mdash; keluarga Santoso akan memveto proposal tersebut. Restrukturisasi dual-class shares hampir tidak pernah berhasil melalui shareholder vote biasa ketika controlling shareholders menentangnya.
+          </div>
+        </div>
+
+        <div class="question-block" data-q="f6" data-correct="A">
+          <div class="q-num">QUESTION 6 OF 6</div>
+          <div class="q-text">Seorang credit analyst ingin mengintegrasikan perbedaan governance antara NSCG (MSCI "B", Sustainalytics 28) dan PT Agri Internasional (MSCI "AA", Sustainalytics 12) dalam credit analysis mereka. Keduanya memiliki net debt/EBITDA yang mirip (NSCG: 1.2x; NSCG peer: 1.3x). Pendekatan yang paling tepat adalah:</div>
+          <div class="option" data-opt="A">
+            <div class="option-radio"></div>
+            <div class="option-text">A. NSCG harus mendapat credit spread yang lebih lebar dan rating yang lebih rendah dibandingkan PT Agri Internasional, dengan penalti lebih besar untuk obligasi bertenor panjang &mdash; governance risk bersifat jangka panjang sehingga obligasi jangka panjang lebih terekspos</div>
+          </div>
+          <div class="option" data-opt="B">
+            <div class="option-radio"></div>
+            <div class="option-text">B. Tidak ada penyesuaian yang diperlukan karena MSCI dan Sustainalytics memberikan skor berbeda untuk kedua perusahaan &mdash; inkonsistensi ini menunjukkan bahwa ESG scores tidak dapat diandalkan untuk credit analysis</div>
+          </div>
+          <div class="option" data-opt="C">
+            <div class="option-radio"></div>
+            <div class="option-text">C. Gunakan rata-rata skor dari MSCI dan Sustainalytics untuk keduanya, kemudian terapkan credit spread adjustment yang sama bagi semua perusahaan dengan governance score "average" vs. "above average"</div>
+          </div>
+          <div class="explanation correct">
+            &#10003; <strong>A benar.</strong> Meskipun MSCI dan Sustainalytics mungkin tidak perfectly consistent, kedua vendor <em>setuju</em> bahwa PT Agri Internasional memiliki governance yang jauh lebih baik dari NSCG (MSCI "AA" vs "B"; Sustainalytics 12 vs 28). Dalam credit analysis, governance yang lebih lemah mencerminkan risiko tambahan yang seharusnya dikompensasi dengan credit spread yang lebih lebar. Lebih penting lagi: CFA curriculum menekankan bahwa efek governance pada obligasi bersifat time-horizon dependent &mdash; semakin panjang tenor obligasi, semakin besar eksposur terhadap governance risk karena: (1) dalam jangka panjang, governance buruk (tunneling, poor capital allocation) akan kumulatif menggerogoti kualitas kredit; (2) bondholder jangka panjang harus "menanggung" risiko governance yang akan termanifestasi selama 10-30 tahun ke depan.
+          </div>
+          <div class="explanation incorrect">
+            &#10007; Pilihan B menarik kesimpulan yang terlalu skeptis dari inkonsistensi ESG scores. Meskipun MSCI dan Sustainalytics menggunakan metodologi berbeda, jika keduanya <em>sepakat</em> dalam arah yang sama (keduanya menunjukkan NSCG governance lebih lemah dari Agri), inkonsistensi tersebut tidak merusak kesimpulan kualitatif utama. Analis tetap bisa menggunakan direktional signal dari ESG scores bahkan ketika magnitudenya tidak precise. Pilihan C adalah pendekatan yang terlalu mekanistis dan tidak tepat: merata-ratakan skor dari dua metodologi yang fundamentally berbeda tidak menghasilkan angka yang lebih akurat &mdash; ia hanya menciptakan false precision. Yang lebih baik adalah memahami metodologi masing-masing vendor dan menggunakan judgment untuk sintesis.
+          </div>
+        </div>
+
+        <div id="score-panel-full" class="score-panel">
+          <div class="score-panel-text">Skor Kamu:</div>
+          <div class="score-panel-value" id="score-value-full">0/6</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="CFA_L2_Day35_Full.html" class="nav-btn">&larr; Day 35 Full: Board &amp; Ownership Structure</a>
+    <a href="CFA_L2_Day37_Full.html" class="nav-btn">Day 37 Full: M&amp;A Mechanics &amp; Defense &rarr;</a>
+  </div>
+
+</div>
+
+<script>
+// Knowledge Check Toggle
+function toggleKC(id) {
+  var kc = document.getElementById(id);
+  if (kc) {
+    kc.classList.toggle('open');
+    var body = kc.querySelector('.kc-body');
+    if (body) {
+      body.style.maxHeight = kc.classList.contains('open') ? '2000px' : '0';
+    }
+  }
+}
+
+// Quiz
+(function() {
+  var answers = {};
+  var correct = {};
+  document.querySelectorAll('.question-block').forEach(function(qb) {
+    var q = qb.dataset.q;
+    correct[q] = qb.dataset.correct;
+    qb.querySelectorAll('.option').forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        if (answers[q]) return;
+        answers[q] = opt.dataset.opt;
+        qb.querySelectorAll('.option').forEach(function(o) { o.classList.remove('selected'); });
+        opt.classList.add('selected');
+        var isCorrect = opt.dataset.opt === correct[q];
+        qb.querySelectorAll('.explanation').forEach(function(ex) {
+          ex.style.display = 'none';
+          ex.classList.remove('show');
+        });
+        var expls = qb.querySelectorAll('.explanation');
+        var target = isCorrect ? expls[0] : expls[1];
+        if (target) { target.style.display = 'block'; target.classList.add('show'); }
+        var total = Object.keys(correct).length;
+        var scored = Object.keys(answers).length;
+        if (scored === total) {
+          var score = Object.keys(answers).filter(function(k) { return answers[k] === correct[k]; }).length;
+          var panel = document.getElementById('score-panel-full');
+          if (panel) { panel.classList.add('show'); document.getElementById('score-value-full').textContent = score + '/' + total; }
+        }
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

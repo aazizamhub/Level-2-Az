@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level 2 - Day 28: Insurance Analysis (Analysis of Financial Institutions)</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg:#fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+      --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;--gold:#9a6e1a;--gold2:#7a5010;
+      --gold-bg:rgba(154,110,26,0.08);--blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);
+      --green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);--red:#b83232;--red-bg:rgba(184,50,50,0.08);
+      --amber:#a06010;--amber-bg:rgba(160,96,16,0.08);--r:10px;--r-sm:6px;
+    }
+    body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6; }
+    .page { max-width:900px;margin:0 auto;padding:0 16px; }
+    .topbar { display:flex;justify-content:space-between;align-items:center;padding:12px 0;margin-top:8px;border-bottom:1px solid var(--border);font-size:13px;color:var(--text3); }
+    .breadcrumb { display:flex;gap:8px;align-items:center; }
+    .breadcrumb span { color:var(--text3); }
+    .breadcrumb strong { color:var(--text2);font-weight:600; }
+    .day-badge { background:var(--gold-bg);color:var(--gold2);padding:4px 10px;border-radius:var(--r-sm);font-size:12px;font-weight:600; }
+    .hero { padding:40px 0 32px;border-bottom:1px solid var(--border);margin-bottom:32px; }
+    .hero-tag { color:var(--blue);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px; }
+    .hero-title { font-size:36px;font-weight:700;line-height:1.2;margin-bottom:8px;color:var(--text); }
+    .hero-sub { font-size:16px;color:var(--text2);margin-bottom:16px; }
+    .meta-row { display:flex;gap:12px;flex-wrap:wrap;margin-top:16px; }
+    .meta-pill { background:var(--bg2);border:1px solid var(--border);padding:8px 14px;border-radius:var(--r-sm);font-size:12px;color:var(--text2);font-weight:500; }
+    .section { margin-bottom:40px; }
+    .section-label { font-size:12px;font-weight:700;text-transform:uppercase;color:var(--text3);letter-spacing:0.5px;margin-bottom:16px; }
+    .obj-box { background:var(--blue-bg);border-left:4px solid var(--blue);padding:20px;border-radius:var(--r-sm);margin-bottom:16px; }
+    .obj-box-title { font-size:13px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px; }
+    .obj-list { list-style:none; }
+    .obj-list li { font-size:14px;color:var(--text);margin-bottom:8px;padding-left:20px;position:relative; }
+    .obj-list li:before { content:"✓";position:absolute;left:0;color:var(--blue);font-weight:700; }
+    .concept-grid { display:grid;grid-template-columns:1fr;gap:20px;margin-bottom:24px; }
+    .concept-card { background:white;border:1px solid var(--border2);border-radius:var(--r);padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05); }
+    .concept-card-header { display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border); }
+    .concept-num { display:flex;align-items:center;justify-content:center;width:32px;height:32px;background:var(--gold-bg);color:var(--gold);border-radius:50%;font-weight:700;font-size:14px; }
+    .concept-title { font-size:16px;font-weight:700;color:var(--text);flex:1; }
+    .concept-body { font-size:14px;color:var(--text);line-height:1.7; }
+    .concept-body p { margin-bottom:12px; }
+    .formula { background:var(--bg2);border-left:3px solid var(--gold);padding:12px;border-radius:var(--r-sm);font-family:'Courier New',monospace;font-size:13px;color:var(--text);margin:12px 0;overflow-x:auto; }
+    .insight { background:var(--green-bg);border-left:3px solid var(--green);padding:12px;border-radius:var(--r-sm);font-size:13px;color:var(--text);margin:12px 0; }
+    .trap { background:var(--red-bg);border-left:3px solid var(--red);padding:12px;border-radius:var(--r-sm);font-size:13px;color:var(--text);margin:12px 0; }
+    .trap-label { font-weight:700;color:var(--red);font-size:11px;text-transform:uppercase;margin-bottom:4px; }
+    .assume-table { width:100%;border-collapse:collapse;margin:12px 0;font-size:13px; }
+    .assume-table th { background:var(--bg3);border:1px solid var(--border);padding:10px;text-align:left;font-weight:700;color:var(--text); }
+    .assume-table td { border:1px solid var(--border);padding:10px;color:var(--text2); }
+    .cheat-grid { display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px; }
+    .cheat-item { background:white;border:1px solid var(--border);border-radius:var(--r-sm);padding:14px; }
+    .cheat-key { font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px; }
+    .cheat-val { font-size:13px;color:var(--text);font-weight:500;line-height:1.5; }
+    .practice-header { font-size:12px;font-weight:700;text-transform:uppercase;color:var(--text3);letter-spacing:0.5px;margin-bottom:20px; }
+    .practice-body { background:white;border:1px solid var(--border2);border-radius:var(--r);padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05); }
+    .vignette { background:var(--bg2);padding:16px;border-radius:var(--r-sm);margin-bottom:24px;border-left:3px solid var(--amber); }
+    .vignette-label { font-size:11px;font-weight:700;color:var(--amber);text-transform:uppercase;margin-bottom:8px; }
+    .vignette-text { font-size:13px;color:var(--text);line-height:1.6; }
+    .question-block { margin-bottom:28px; }
+    .q-num { font-size:12px;font-weight:700;color:var(--blue);margin-bottom:8px; }
+    .q-text { font-size:14px;color:var(--text);margin-bottom:12px;line-height:1.6;font-weight:500; }
+    .option { display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;border:1px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:all 0.2s ease;background:white; }
+    .option:hover { border-color:var(--blue);background:var(--blue-bg); }
+    .option-radio { display:flex;align-items:center;justify-content:center;width:18px;height:18px;border:2px solid var(--border2);border-radius:50%;flex-shrink:0;margin-top:2px; }
+    .option.selected .option-radio { border-color:var(--blue);background:var(--blue); }
+    .option.selected .option-radio:after { content:"✓";color:white;font-size:11px;font-weight:700; }
+    .option-text { font-size:13px;color:var(--text); }
+    .explanation { background:var(--bg2);padding:12px;border-radius:var(--r-sm);font-size:12px;color:var(--text2);margin-top:8px;display:none; }
+    .explanation.show { display:block; }
+    .explanation.correct { border-left:3px solid var(--green);background:var(--green-bg);color:var(--text); }
+    .explanation.incorrect { border-left:3px solid var(--red);background:var(--red-bg);color:var(--text); }
+    .score-panel { background:var(--gold-bg);border:1px solid var(--gold);border-radius:var(--r);padding:16px;margin-top:20px;text-align:center;display:none; }
+    .score-panel.show { display:block; }
+    .score-panel-text { font-size:14px;color:var(--text);margin-bottom:8px; }
+    .score-panel-value { font-size:24px;font-weight:700;color:var(--gold2); }
+    .nav-bottom { display:flex;justify-content:space-between;align-items:center;padding:24px 0;margin-top:40px;border-top:1px solid var(--border); }
+    .nav-btn { text-decoration:none;padding:10px 16px;border-radius:var(--r-sm);font-size:13px;font-weight:600;color:var(--blue);border:1px solid var(--border);transition:all 0.2s ease;cursor:pointer; }
+    .nav-btn:hover { border-color:var(--blue);background:var(--blue-bg); }
+    @media (max-width:640px) { .hero-title{font-size:28px;} .cheat-grid{grid-template-columns:1fr;} .meta-row{flex-direction:column;} }
+  </style>
+</head>
+<body>
+<div class="page">
+  <div class="topbar">
+    <div class="breadcrumb">
+      <span>CFA Level II</span><span>·</span><span>FSA</span><span>·</span><strong>LM5</strong>
+    </div>
+    <div class="day-badge">Day 28 of 90</div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Friday, 22 May 2026</div>
+    <h1 class="hero-title">Insurance Analysis</h1>
+    <p class="hero-sub">Analysis of Financial Institutions — Subtopic 2 of 2</p>
+    <div class="meta-row">
+      <div class="meta-pill">60 min total</div>
+      <div class="meta-pill">30 min theory</div>
+      <div class="meta-pill">30 min practice</div>
+      <div class="meta-pill">~12% exam weight</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Learning Objectives</div>
+    <div class="obj-box">
+      <div class="obj-box-title">By the end of this subtopic, you'll be able to:</div>
+      <ul class="obj-list">
+        <li>Bedakan karakteristik dan pendekatan analisis antara perusahaan asuransi P&amp;C (Property &amp; Casualty) dan L&amp;H (Life &amp; Health)</li>
+        <li>Hitung dan interpretasikan loss ratio, expense ratio, combined ratio, dan combined ratio after dividends — serta arti ekonomisnya bagi underwriting profitability</li>
+        <li>Jelaskan pentingnya reserve adequacy (loss reserve roll-forward) dan bagaimana manipulasi cadangan bisa mendistorsi earnings P&amp;C insurer</li>
+        <li>Terapkan konsep IFRS 17 — General Measurement Model, Contractual Service Margin (CSM), dan perbedaannya dari IFRS 4 dalam menganalisis laporan keuangan insurer</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Key Concepts — Theory (30 min)</div>
+    <div class="concept-grid">
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">1</div>
+          <div class="concept-title">Perusahaan Asuransi: Dua Jenis &amp; Model Bisnis Inti</div>
+        </div>
+        <div class="concept-body">
+          <p>Perusahaan asuransi pada dasarnya menjalankan <em>dua bisnis sekaligus</em>: bisnis underwriting (mengelola risiko) dan bisnis investasi (mengelola float). <strong>Float</strong> adalah premi yang sudah diterima tapi belum dibayarkan sebagai klaim — selama jeda ini, insurer menginvestasikan dana tersebut.</p>
+          <table class="assume-table">
+            <thead><tr><th>Dimensi</th><th>P&amp;C (Property &amp; Casualty)</th><th>L&amp;H (Life &amp; Health)</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Durasi Polis</strong></td><td>Pendek, biasanya tahunan</td><td>Panjang, bisa seumur hidup</td></tr>
+              <tr><td><strong>Variabilitas Klaim</strong></td><td>Sangat variabel — bencana, kecelakaan tak terduga</td><td>Lebih prediktabel — berbasis mortalitas aktuarial</td></tr>
+              <tr><td><strong>Strategi Investasi</strong></td><td>Konservatif: dominan fixed income, likuid</td><td>Lebih agresif: bisa lebih banyak ekuitas &amp; real estate</td></tr>
+              <tr><td><strong>Sumber Revenue</strong></td><td>Premi &amp; investment income (float)</td><td>Premi, investment income, &amp; fee dari produk tabungan</td></tr>
+              <tr><td><strong>Rasio Analisis Utama</strong></td><td>Combined ratio, loss reserve analysis</td><td>ROE, ROA, duration mismatch aset–liabilitas</td></tr>
+            </tbody>
+          </table>
+          <div class="insight">
+            💡 Konteks Indonesia: P&amp;C insurer dikenal sebagai "asuransi umum" (contoh: Asuransi Astra, Jasa Raharja, Adira Insurance). L&amp;H dikenal sebagai "asuransi jiwa" (contoh: Prudential Indonesia, Manulife Indonesia, AIA Financial). Regulatornya adalah OJK, bukan BI.
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">2</div>
+          <div class="concept-title">Rasio Underwriting P&amp;C: Loss Ratio, Expense Ratio &amp; Combined Ratio</div>
+        </div>
+        <div class="concept-body">
+          <p>Tiga rasio ini adalah inti analisis profitabilitas P&amp;C insurer. Semua berfokus pada sisi <em>underwriting</em> — mengukur apakah premi yang dikumpulkan cukup menutupi klaim dan biaya operasi.</p>
+          <div class="formula">
+Loss &amp; LAE Ratio = (Losses + Loss Adjustment Expenses) / Net Premiums Earned
+→ Mengukur kualitas underwriting. Lebih rendah = lebih baik.
+→ "LAE" = biaya proses klaim (investigasi, legal fees)
+
+Underwriting Expense Ratio = Underwriting Expenses / Net Premiums Written
+→ Mengukur efisiensi akuisisi bisnis (komisi agen, marketing)
+→ Lebih rendah = lebih efisien
+
+Combined Ratio = Loss &amp; LAE Ratio + Underwriting Expense Ratio
+→ &lt; 100%: underwriting PROFIT (total premi &gt; total biaya)
+→ &gt; 100%: underwriting LOSS (total premi &lt; total biaya)
+→ Insurer masih bisa profitable karena investment income!
+
+Combined Ratio After Dividends =
+  Combined Ratio + (Dividends to Policyholders / Net Premiums Earned)
+→ Ukuran lebih ketat yang memperhitungkan pembagian dividen
+          </div>
+          <p><strong>Penting:</strong> Denominator berbeda — Loss ratio pakai <em>Net Premiums Earned</em>, sedangkan Expense ratio pakai <em>Net Premiums Written</em>. Ini karena premi ditulis (written) di awal tapi diakui (earned) bertahap selama periode polis.</p>
+          <div class="trap">
+            <div class="trap-label">⚠ Exam Trap</div>
+            Combined ratio &gt; 100% TIDAK otomatis berarti insurer rugi. Insurer masih bisa untung secara keseluruhan karena <strong>investment income dari float</strong>. CFA sering menguji pemahaman ini: underwriting loss bisa dikompensasi oleh investment income. Kuncinya: combined ratio hanya mengukur <em>underwriting profitability</em>, bukan total profitability.
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">3</div>
+          <div class="concept-title">Reserve Adequacy: Loss Reserve Roll-Forward</div>
+        </div>
+        <div class="concept-body">
+          <p>Loss reserves adalah liabilitas terbesar P&amp;C insurer — estimasi total klaim yang sudah terjadi tapi belum diselesaikan. Besarnya sangat discretionary dan dapat digunakan untuk memanipulasi earnings.</p>
+          <div class="formula">
+Loss Reserve Roll-Forward:
+
+Ending Reserve = Beginning Reserve
+  + Current Year Incurred Losses (klaim baru tahun ini)
+  − Prior Year Reserve Revisions (up/down)
+  − Payments (klaim yang dibayar)
+
+Sinyal Konservatisme:
+  Downward revision of prior-year reserves → earnings NAIK (positif tapi perlu diwaspadai)
+  Upward revision of prior-year reserves → earnings TURUN (insurer sebelumnya underestimate)
+          </div>
+          <p><strong>Reserve Development</strong> adalah perubahan estimasi reserves untuk tahun-tahun sebelumnya. Favorable development (penurunan) meningkatkan laba, sementara adverse development (kenaikan) menggerus laba. Analis CFA menghitung <strong>% kontribusi favorable development terhadap pre-tax income</strong> sebagai ukuran ketergantungan earnings pada revisi cadangan.</p>
+          <div class="insight">
+            💡 Jika downward revision secara konsisten berkontribusi 15–20% terhadap pre-tax income setiap tahun (seperti kasus Travelers dalam kurikulum), analis harus mempertanyakan: apakah ini cerminan underwriting yang konservatif secara genuine, atau taktik earnings management? Kuncinya adalah konsistensi dan besaran relatifnya.
+          </div>
+          <table class="assume-table">
+            <thead><tr><th>Indikator Reserve</th><th>Sinyal</th><th>Implikasi Analis</th></tr></thead>
+            <tbody>
+              <tr><td>Adverse reserve development berulang</td><td>⚠️ Reserve terlalu rendah sebelumnya</td><td>Earnings tidak sustainable; underwriting pricing bermasalah</td></tr>
+              <tr><td>Favorable development konsisten besar</td><td>📊 Perlu verifikasi</td><td>Bisa konservatif genuine atau earnings management; bandingkan dengan peers</td></tr>
+              <tr><td>Reserve / Net Premium Earned rendah vs peers</td><td>⚠️ Potensi under-reserving</td><td>Risiko adverse development ke depan; provisioning terlalu agresif</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">4</div>
+          <div class="concept-title">L&amp;H Insurance: Investment Returns &amp; Duration Mismatch</div>
+        </div>
+        <div class="concept-body">
+          <p>Untuk L&amp;H insurer, investment income adalah pilar utama profitabilitas. Karena klaim L&amp;H lebih prediktabel dan polis berdurasi panjang, mereka bisa mengelola investasi secara lebih aktif dibanding P&amp;C.</p>
+          <div class="formula">
+Investment Return = Total Investment Income / Average Invested Assets
+
+di mana Total Investment Income mencakup:
+  + Interest income
+  + Dividend income
+  + Rental income (properti investasi)
+  + Realized gains/losses
+  (± Unrealized gains jika dimasukkan)
+
+Return on Equity (ROE) = Net Income / Average Equity
+  → Ukuran profitabilitas keseluruhan L&amp;H insurer
+          </div>
+          <p><strong>Duration Mismatch</strong> adalah risiko kunci L&amp;H insurer: liabilitas polis jangka panjang vs aset investasi yang mungkin lebih pendek. Jika suku bunga turun, nilai PV liabilitas naik lebih cepat dari nilai aset → equity tertekan. Analis membandingkan <em>duration of assets vs duration of liabilities</em>.</p>
+          <table class="assume-table">
+            <thead><tr><th>Skenario Suku Bunga</th><th>Dampak pada L&amp;H Insurer</th></tr></thead>
+            <tbody>
+              <tr><td>Suku bunga turun</td><td>PV liabilitas naik (durasi panjang) → squeeze on equity; reinvestment risk pada aset</td></tr>
+              <tr><td>Suku bunga naik</td><td>PV liabilitas turun (positif untuk equity); tapi nilai aset fixed income juga turun</td></tr>
+            </tbody>
+          </table>
+          <div class="trap">
+            <div class="trap-label">⚠ Exam Trap</div>
+            Untuk P&amp;C, klaim tidak predictable → portofolio investasi HARUS konservatif (dominan investment-grade bonds, sangat likuid). Untuk L&amp;H, klaim lebih predictable → bisa ambil risiko lebih → return lebih tinggi. Jangan balik: P&amp;C TIDAK bisa ambil risiko investasi tinggi karena mereka perlu likuiditas sewaktu-waktu untuk klaim bencana.
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">5</div>
+          <div class="concept-title">IFRS 17: Kerangka Akuntansi Baru untuk Kontrak Asuransi</div>
+        </div>
+        <div class="concept-body">
+          <p>IFRS 17 <em>Insurance Contracts</em> (efektif 1 Januari 2023) menggantikan IFRS 4 — standar yang bersifat sementara dan memperbolehkan perusahaan menggunakan berbagai metode akuntansi yang tidak konsisten. IFRS 17 membawa konsistensi dan transparansi yang lebih besar.</p>
+          <p><strong>Tiga Model Pengukuran IFRS 17:</strong></p>
+          <table class="assume-table">
+            <thead><tr><th>Model</th><th>Penggunaan</th><th>Karakteristik Utama</th></tr></thead>
+            <tbody>
+              <tr><td><strong>General Measurement Model (GMM)</strong> / Building Block Approach</td><td>Default — mayoritas kontrak asuransi</td><td>Tiga blok: PV future cash flows + Risk Adjustment + Contractual Service Margin (CSM)</td></tr>
+              <tr><td><strong>Premium Allocation Approach (PAA)</strong></td><td>Polis jangka pendek (≤1 tahun, seperti P&amp;C)</td><td>Sederhana; mirip metode unearned premium lama; diizinkan jika hasilnya tidak materially different dari GMM</td></tr>
+              <tr><td><strong>Variable Fee Approach (VFA)</strong></td><td>Participating contracts (linked to investment returns)</td><td>Modifikasi GMM; CSM mencerminkan "variable fee" atas underlying items</td></tr>
+            </tbody>
+          </table>
+          <p><strong>Contractual Service Margin (CSM)</strong> adalah konsep kunci IFRS 17. CSM merepresentasikan keuntungan yang belum diakui dari kontrak asuransi — dilepas ke income seiring dengan layanan yang diberikan (coverage period).</p>
+          <div class="formula">
+Pada Pengakuan Awal (GMM):
+
+Jika PV Inflows &gt; PV Outflows + Risk Adjustment:
+  → Selisih masuk ke CSM (deferred profit, bukan income langsung)
+  → CSM dilepas ke P&amp;L secara bertahap seiring coverage diberikan
+
+Jika PV Inflows &lt; PV Outflows + Risk Adjustment:
+  → Kontrak "onerous" → kerugian langsung diakui di P&amp;L (tidak boleh ditunda)
+  → Tidak ada CSM negatif
+
+Implikasi: Day-1 profit recognition dilarang; Day-1 loss recognition wajib.
+          </div>
+          <div class="insight">
+            💡 IFRS 17 vs IFRS 4: Di bawah IFRS 4, insurer membolehkan revenue = premi bruto yang dikumpulkan. Di bawah IFRS 17, "insurance revenue" bukan premi — tapi representasi dari <em>layanan yang diberikan</em> dalam periode tersebut. Ini perubahan fundamental yang membuat laporan keuangan insurer lebih comparable tapi juga lebih kompleks. Investor perlu memahami CSM roll-forward untuk menilai profitabilitas genuine insurer.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Quick Reference Cheat Sheet</div>
+    <div class="cheat-grid">
+      <div class="cheat-item">
+        <div class="cheat-key">Combined Ratio</div>
+        <div class="cheat-val">Loss &amp; LAE Ratio + Expense Ratio → &lt;100% = underwriting profit; &gt;100% = underwriting loss</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Loss &amp; LAE Ratio</div>
+        <div class="cheat-val">(Losses + LAE) / Net Premiums Earned → denominator: EARNED (bukan written)</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Expense Ratio</div>
+        <div class="cheat-val">Underwriting Expenses / Net Premiums Written → denominator: WRITTEN (bukan earned)</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Reserve Adequacy</div>
+        <div class="cheat-val">Favorable development → earnings naik (tapi waspadai earnings management)</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">IFRS 17 CSM</div>
+        <div class="cheat-val">Deferred profit → dilepas ke P&amp;L seiring coverage period; kontrak onerous langsung rugi</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">P&amp;C vs L&amp;H Investasi</div>
+        <div class="cheat-val">P&amp;C = konservatif &amp; likuid (klaim tak terduga); L&amp;H = bisa riskier (klaim prediktabel)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Practice — Item Set (30 min)</div>
+    <div class="practice-body">
+      <div class="vignette">
+        <div class="vignette-label">Vignette — PT Nusantara Proteksi Umum (NPU)</div>
+        <div class="vignette-text">
+          <strong>Konteks:</strong> Budi Santoso, CFA, seorang analis keuangan di PT Trimegah Sekuritas, sedang mengevaluasi PT Nusantara Proteksi Umum (NPU) — perusahaan asuransi umum (P&amp;C) yang terdaftar di Bursa Efek Indonesia (IDX). NPU baru mempublikasikan laporan keuangan tahunan 2025. Budi ingin menilai profitabilitas underwriting dan kualitas cadangan NPU.<br><br>
+          <strong>Data Keuangan NPU (Rp Miliar), Tahun 2025:</strong><br>
+          Net Premiums Written: 4.800 | Net Premiums Earned: 4.620<br>
+          Losses &amp; Loss Adjustment Expenses (LAE): 2.771 | Underwriting Expenses: 1.536<br>
+          Net Investment Income: 480 | Total Revenue: 5.100 | Pre-tax Income: 475<br>
+          Dividends to Policyholders: 92 | Gross Loss Reserves (awal 2025): 3.200<br>
+          Current Year Incurred Losses: 2.820 | Prior Year Favorable Development: (49)<br>
+          Claims Paid: 2.750 | Gross Loss Reserves (akhir 2025): 3.221<br><br>
+          <strong>Data Peer (rata-rata industri asuransi umum Indonesia):</strong><br>
+          Loss &amp; LAE Ratio: 60.5% | Expense Ratio: 34.0% | Combined Ratio: 94.5%
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="q-num">PERTANYAAN 1 dari 4</div>
+        <div class="q-text">Hitung Loss &amp; LAE Ratio, Underwriting Expense Ratio, dan Combined Ratio NPU. Bandingkan dengan rata-rata industri.</div>
+        <div class="option" onclick="selectOption(this, 1, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Loss Ratio = 59.9%, Expense Ratio = 32.0%, Combined = 91.9% — di bawah rata-rata industri (baik), menunjukkan underwriting yang lebih efisien dari peers</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 1, true)">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Loss Ratio = 59.9%, Expense Ratio = 32.0%, Combined = 91.9% — di bawah rata-rata industri (94.5%), menunjukkan underwriting yang profitable dan lebih efisien dari peers</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 1, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Loss Ratio = 60.2%, Expense Ratio = 32.0%, Combined = 92.2% — sedikit di bawah rata-rata industri, underwriting masih menguntungkan</div>
+        </div>
+        <div class="explanation" id="exp-1-A">❌ Perhitungan benar, tapi jawaban A kurang lengkap dalam menyebut bahwa combined ratio &lt;100% berarti underwriting <em>profitable</em> (bukan sekadar "lebih efisien"). Jawaban B lebih tepat karena menyebutkan kedua elemen: (1) profitability underwriting dan (2) kinerja relatif vs peers.</div>
+        <div class="explanation" id="exp-1-B">✅ Loss &amp; LAE Ratio = 2.771/4.620 = 59.97% ≈ 59.9% (denominator: Net Premiums Earned). Expense Ratio = 1.536/4.800 = 32.0% (denominator: Net Premiums Written). Combined Ratio = 59.9% + 32.0% = 91.9%. Ini &lt;100% → underwriting PROFIT. Dibandingkan industri (94.5%), NPU lebih efisien dalam underwriting — terutama dari sisi expense ratio yang lebih rendah (32.0% vs 34.0% industri).</div>
+        <div class="explanation" id="exp-1-C">❌ Loss Ratio yang benar = 2.771/4.620 = 59.97%, bukan 60.2%. Perhatikan denominatornya: Loss ratio menggunakan <strong>Net Premiums Earned</strong> (4.620), bukan Net Premiums Written (4.800). Perbedaan ini sering jadi jebakan ujian.</div>
+      </div>
+
+      <div class="question-block">
+        <div class="q-num">PERTANYAAN 2 dari 4</div>
+        <div class="q-text">Verifikasi loss reserve roll-forward NPU untuk tahun 2025. Apakah angka loss reserve akhir tahun konsisten dengan data yang diberikan?</div>
+        <div class="option" onclick="selectOption(this, 2, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Tidak konsisten — berdasarkan roll-forward, ending reserve seharusnya Rp 3.271 miliar, bukan Rp 3.221 miliar</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 2, true)">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Konsisten — roll-forward menghasilkan ending reserve Rp 3.221 miliar, sama dengan yang dilaporkan (3.200 + 2.820 − 49 − 2.750 = 3.221)</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 2, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Tidak dapat diverifikasi karena data reinsurance recoverable tidak tersedia</div>
+        </div>
+        <div class="explanation" id="exp-2-A">❌ Roll-forward yang benar: 3.200 + 2.820 − 49 − 2.750 = 3.221, bukan 3.271. Perhatikan bahwa favorable development (−49) <strong>mengurangi</strong> cadangan (cadangan prior-year dikurangi karena estimasi sebelumnya terlalu besar).</div>
+        <div class="explanation" id="exp-2-B">✅ Roll-forward: Awal = 3.200 | + Current Year Losses = +2.820 | − Prior Year Favorable Dev = −49 | − Payments = −2.750 | = Akhir 3.221. ✓ Angka konsisten dengan yang dilaporkan. Favorable development Rp 49 miliar berarti NPU merevisi turun estimasi klaim tahun sebelumnya — cadangan awal sudah terlalu besar. Kontribusi ke pre-tax income: 49/475 = 10.3% — relatif moderat, tidak mengindikasikan earnings management yang mengkhawatirkan.</div>
+        <div class="explanation" id="exp-2-C">❌ Data reinsurance tidak dibutuhkan untuk verifikasi dasar ini. Roll-forward diberikan pada level gross reserves dan data yang cukup tersedia. Pilihan ini adalah red herring.</div>
+      </div>
+
+      <div class="question-block">
+        <div class="q-num">PERTANYAAN 3 dari 4</div>
+        <div class="q-text">NPU berencana mengadopsi IFRS 17 mulai tahun 2026. Sebuah kelompok kontrak asuransi baru diterbitkan dengan PV future inflows = Rp 500 M, PV future outflows = Rp 420 M, dan Risk Adjustment = Rp 30 M. Berapa CSM pada pengakuan awal dan bagaimana pengaruhnya terhadap P&amp;L hari pertama?</div>
+        <div class="option" onclick="selectOption(this, 3, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">A. CSM = Rp 80 miliar; langsung diakui sebagai pendapatan di P&amp;L hari pertama</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 3, true)">
+          <div class="option-radio"></div>
+          <div class="option-text">B. CSM = Rp 50 miliar; tidak diakui di P&amp;L hari pertama — dilepas bertahap ke P&amp;L seiring coverage period berlangsung</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 3, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">C. CSM = Rp 50 miliar; langsung diakui sebagai keuntungan di P&amp;L hari pertama sesuai nilai wajar kontrak</div>
+        </div>
+        <div class="explanation" id="exp-3-A">❌ CSM = PV Inflows − PV Outflows − Risk Adjustment = 500 − 420 − 30 = 50, bukan 80. Angka 80 adalah (500 − 420) tanpa mengurangi Risk Adjustment — ingat, Risk Adjustment adalah komponen tersendiri yang harus dikurangi sebelum CSM dihitung. Dan CSM TIDAK langsung masuk P&amp;L — ini adalah prinsip fundamental IFRS 17.</div>
+        <div class="explanation" id="exp-3-B">✅ CSM = PV Inflows − (PV Outflows + Risk Adjustment) = 500 − (420 + 30) = 500 − 450 = 50. Karena hasilnya positif, ini bukan kontrak onerous. Sesuai IFRS 17, day-1 profit TIDAK boleh diakui langsung — profit Rp 50 M masuk ke CSM (liabilitas di neraca) dan akan dilepas ke P&amp;L secara bertahap seiring coverage period diberikan. Ini mencegah perusahaan "front-loading" keuntungan.</div>
+        <div class="explanation" id="exp-3-C">❌ CSM Rp 50 M benar, tapi pengakuan langsung ke P&amp;L salah. Inilah perbedaan mendasar IFRS 17 dari pendekatan lama: day-1 profit recognition dilarang. CSM adalah buffer yang dilepas bertahap. Jika kontrak onerous (CSM negatif), baru kerugian langsung diakui — tapi keuntungan selalu ditunda.</div>
+      </div>
+
+      <div class="question-block">
+        <div class="q-num">PERTANYAAN 4 dari 4</div>
+        <div class="q-text">NPU melaporkan Net Investment Income Rp 480 miliar dari average invested assets Rp 9.600 miliar. Meskipun combined ratio NPU = 91.9%, seorang analis menyatakan: "Keunggulan NPU sebenarnya bukan dari underwriting tapi dari investasi." Apakah pernyataan ini tepat?</div>
+        <div class="option" onclick="selectOption(this, 4, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Tepat — investment income NPU (Rp 480 M) jauh lebih besar dari underwriting profit (combined ratio hanya 91.9%), membuktikan bisnis investasi lebih penting dari underwriting</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 4, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Tidak tepat — combined ratio &lt;100% membuktikan underwriting NPU profitable, dan investment income hanya sekunder</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 4, true)">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Tidak tepat — NPU menghasilkan keuntungan dari KEDUA sumber: underwriting (combined ratio 91.9% → profit ~Rp 392 M) DAN investasi (investment yield 5.0%); pernyataan analis meremehkan kekuatan underwriting NPU yang di atas rata-rata industri</div>
+        </div>
+        <div class="explanation" id="exp-4-A">❌ Perbandingan ini keliru secara metodologi. Underwriting profit bukan "lebih kecil" karena combined ratio 91.9% — angka 8.1% profit margin diterapkan atas Net Premiums Earned 4.620 → estimated underwriting profit ≈ 8.1% × 4.620 ≈ Rp 374 M. Ini sebanding dengan investment income Rp 480 M. Kedua sumber berkontribusi signifikan.</div>
+        <div class="explanation" id="exp-4-B">❌ Mengatakan investment income "hanya sekunder" terlalu dismissive. Investment income 480 M / Total Revenue 5.100 M = 9.4% dari revenue — ini bukan angka kecil. Model bisnis insurer memang bergantung pada keduanya. Yang benar adalah keduanya penting, bukan salah satu mendominasi.</div>
+        <div class="explanation" id="exp-4-C">✅ Investment yield = 480/9.600 = 5.0% — return yang wajar untuk P&amp;C insurer. Underwriting profit dapat diestimasi: (1 − 91.9%) × 4.620 ≈ 8.1% × 4.620 ≈ Rp 374 M. Total dari dua sumber: 374 + 480 = Rp 854 M sebelum biaya lain (vs pre-tax income aktual 475 M setelah biaya lain). Pernyataan analis tidak tepat karena underwriting NPU justru sangat kuat — combined ratio 91.9% vs industri 94.5% menunjukkan NPU adalah underwriter yang di atas rata-rata. P&amp;C insurer terbaik menghasilkan profit dari keduanya.</div>
+      </div>
+
+      <div class="score-panel" id="score-panel">
+        <div class="score-panel-text">Hasil Practice Session Hari Ini</div>
+        <div class="score-panel-value" id="score-value">—</div>
+        <div class="score-panel-text" style="margin-top:8px;font-size:12px;color:var(--text3);" id="score-detail"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="CFA_L2_Day27.html" class="nav-btn">← Day 27: Bank Analysis</a>
+    <a href="CFA_L2_Day28_Full.html" class="nav-btn" style="background:var(--gold-bg);border-color:var(--gold);color:var(--gold2);">📖 Versi Full</a>
+    <a href="CFA_L2_Day29.html" class="nav-btn">Day 29: Earnings &amp; Cash Flow Quality →</a>
+  </div>
+</div>
+
+<script>
+  const answers = {};
+  const totalQ = 4;
+
+  function selectOption(el, qNum, isCorrect) {
+    const qBlock = el.closest('.question-block');
+    const options = qBlock.querySelectorAll('.option');
+    options.forEach(o => { o.classList.remove('selected'); o.style.pointerEvents = 'none'; o.style.opacity = '0.7'; });
+    el.classList.add('selected');
+    el.style.opacity = '1';
+    const optLetter = el.querySelector('.option-text').textContent.trim().charAt(0);
+    const expEl = document.getElementById('exp-' + qNum + '-' + optLetter);
+    if (expEl) { expEl.classList.add('show'); expEl.classList.add(isCorrect ? 'correct' : 'incorrect'); }
+    answers[qNum] = isCorrect;
+    if (Object.keys(answers).length === totalQ) {
+      const score = Object.values(answers).filter(v => v).length;
+      const panel = document.getElementById('score-panel');
+      panel.classList.add('show');
+      document.getElementById('score-value').textContent = score + ' / ' + totalQ;
+      document.getElementById('score-detail').textContent = score === totalQ ? '🎉 Sempurna! Semua konsep dikuasai.'
+        : score >= 3 ? '💪 Hampir sempurna. Review soal yang salah.'
+        : score >= 2 ? '📚 Cukup baik. Ada beberapa konsep yang perlu diperdalam.'
+        : '⚠️ Perlu review materi hari ini sebelum lanjut.';
+    }
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 39 · Valuation Framework</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+  --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;--gold:#9a6e1a;--gold2:#7a5010;--gold-bg:rgba(154,110,26,0.08);
+  --blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);--green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);
+  --red:#b83232;--red-bg:rgba(184,50,50,0.08);--amber:#a06010;--amber-bg:rgba(160,96,16,0.08);
+  --purple:#6a3ab0;--purple-bg:rgba(106,58,176,0.08);--r:10px;--r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.7;min-height:100vh;}
+.page{max-width:820px;margin:0 auto;padding:40px 24px 80px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.hero{margin-bottom:32px;}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:32px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:14px;color:var(--text2);}
+.meta-row{display:flex;gap:16px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+.section{margin-bottom:28px;}
+.section-label{font-size:10px;color:var(--text3);letter-spacing:0.09em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.obj-box{background:var(--gold-bg);border:1px solid rgba(201,168,76,0.25);border-radius:var(--r);padding:16px 18px;margin-bottom:24px;}
+.obj-box-title{font-size:11px;color:var(--gold);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;font-weight:500;}
+.obj-list{list-style:none;}
+.obj-list li{font-size:13px;color:var(--text2);padding:3px 0 3px 16px;position:relative;}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--gold);font-size:11px;top:5px;}
+.concept-grid{display:flex;flex-direction:column;gap:14px;}
+.concept-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+.concept-card-header{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);}
+.concept-num{width:26px;height:26px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--gold);flex-shrink:0;}
+.concept-title{font-size:14px;font-weight:500;color:var(--text);}
+.concept-body{padding:14px 16px;font-size:13px;color:var(--text2);line-height:1.75;}
+.concept-body p{margin-bottom:10px;}
+.concept-body p:last-child{margin-bottom:0;}
+.formula{background:var(--bg3);border:1px solid var(--border2);border-left:3px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:12px 16px;margin:10px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);line-height:1.6;}
+.formula .comment{color:var(--text3);font-style:italic;}
+.assume-table{width:100%;border-collapse:collapse;font-size:13px;}
+.assume-table th{text-align:left;padding:9px 12px;background:var(--bg3);color:var(--text2);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid var(--border2);}
+.assume-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+.assume-table tr:last-child td{border-bottom:none;}
+.assume-table .name{font-weight:500;color:var(--text);}
+.badge{display:inline-flex;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;}
+.badge-blue{background:var(--blue-bg);color:var(--blue);}
+.badge-amber{background:var(--amber-bg);color:var(--amber);}
+.badge-green{background:var(--green-bg);color:var(--green);}
+.badge-red{background:var(--red-bg);color:var(--red);}
+.insight{background:var(--blue-bg);border:1px solid rgba(91,156,246,0.2);border-radius:var(--r);padding:14px 16px;margin:12px 0;font-size:13px;color:var(--text2);}
+.insight strong{color:var(--blue);}
+.trap{background:var(--red-bg);border:1px solid rgba(240,108,108,0.2);border-radius:var(--r);padding:14px 16px;margin:12px 0;}
+.trap-label{font-size:10px;color:var(--red);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:6px;font-weight:500;}
+.trap p{font-size:13px;color:var(--text2);}
+.divider{height:1px;background:var(--border);margin:28px 0;}
+.practice-header{background:var(--gold-bg);border:1px solid rgba(201,168,76,0.2);border-radius:var(--r) var(--r) 0 0;padding:14px 18px;display:flex;align-items:center;gap:12px;}
+.practice-icon{font-size:18px;}
+.practice-header-text{flex:1;}
+.practice-header-title{font-size:15px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);}
+.practice-body{background:var(--bg2);border:1px solid rgba(201,168,76,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:20px;}
+.vignette{background:var(--bg3);border-left:3px solid var(--gold);padding:16px 18px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:24px;font-size:13px;color:var(--text2);line-height:1.8;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;font-weight:500;}
+.question-block{margin-bottom:22px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:5px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:11px;line-height:1.6;}
+.option{display:block;width:100%;text-align:left;padding:10px 14px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:7px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.5;}
+.option:hover:not(:disabled){border-color:var(--border2);color:var(--text);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);margin-top:8px;line-height:1.7;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:24px;margin-top:16px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:48px;margin-bottom:6px;}
+.score-msg{font-size:13px;color:var(--text2);}
+.cheat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:540px){.cheat-grid{grid-template-columns:1fr;}}
+.cheat-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;}
+.cheat-key{font-size:11px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em;}
+.cheat-val{font-size:13px;color:var(--text);font-family:'JetBrains Mono',monospace;}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II &middot; <span>Equity Valuation</span> &middot; LM1</div>
+    <div class="day-badge">Day 39 of 90</div>
+  </div>
+  <div class="hero">
+    <div class="hero-tag">Thursday, 11 June 2026</div>
+    <h1 class="hero-title">Valuation Framework</h1>
+    <p class="hero-sub">Equity Valuation: Applications &amp; Processes &mdash; Subtopic 1 of 2</p>
+    <div class="meta-row">
+      <div class="meta-pill">&#9201; <b>60 min</b> total</div>
+      <div class="meta-pill">&#128218; <b>30 min</b> theory</div>
+      <div class="meta-pill">&#128221; <b>30 min</b> practice</div>
+      <div class="meta-pill">&#9878;&#65039; Exam weight <b>~12%</b></div>
+    </div>
+  </div>
+
+  <div class="obj-box">
+    <div class="obj-box-title">Learning Objectives &mdash; Hari ini lo harus bisa:</div>
+    <ul class="obj-list">
+      <li>Bedakan <em>intrinsic value</em>, <em>going-concern value</em>, <em>liquidation value</em>, <em>fair market value</em>, dan <em>investment value</em> &mdash; dan jelaskan mana yang paling relevan untuk public equity</li>
+      <li>Jelaskan sumber-sumber perceived mispricing: <em>true mispricing</em> (V &minus; P) dan <em>estimation error</em> (V<sub>E</sub> &minus; V)</li>
+      <li>Deskripsikan lima langkah proses valuasi dan bedakan <em>top-down</em> vs <em>bottom-up</em> forecasting approach</li>
+      <li>Terapkan prinsip independensi analis: identifikasi potensi konflik kepentingan dan karakteristik research report yang berkualitas</li>
+    </ul>
+  </div>
+
+  <!-- THEORY -->
+  <div class="section">
+    <div class="section-label">Theory &middot; 30 min</div>
+    <div class="concept-grid">
+
+      <!-- Concept 1 -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">1</div>
+          <div class="concept-title">Definisi Nilai &mdash; Intrinsic, Going-Concern, Liquidation, Fair Market, Investment Value</div>
+        </div>
+        <div class="concept-body">
+          <p>Sebelum bisa memilih model valuasi, lo harus tahu <em>definisi nilai</em> yang paling relevan untuk konteks tertentu. Ada lima konsep kunci:</p>
+          <table class="assume-table">
+            <thead>
+              <tr><th>Konsep Nilai</th><th>Definisi</th><th>Paling Relevan Untuk</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">Intrinsic Value (V)</td>
+                <td>Nilai "sesungguhnya" aset berdasarkan pemahaman lengkap tentang karakteristik investasinya &mdash; tidak bisa diobservasi secara langsung</td>
+                <td><span class="badge badge-green">Public equity valuation</span></td>
+              </tr>
+              <tr>
+                <td class="name">Going-Concern Value</td>
+                <td>Nilai perusahaan dengan asumsi akan terus beroperasi menghasilkan produk/jasa di masa depan secara going-forward</td>
+                <td>Core equity analysis, FCF/DDM models</td>
+              </tr>
+              <tr>
+                <td class="name">Liquidation Value</td>
+                <td>Nilai jika perusahaan dibubarkan dan seluruh asetnya dijual secara individual; umumnya &lt; going-concern value karena kehilangan nilai sinergi dan human capital</td>
+                <td>Distressed companies, bankruptcy analysis</td>
+              </tr>
+              <tr>
+                <td class="name">Fair Market Value</td>
+                <td>Harga yang terbentuk antara willing buyer dan willing seller tanpa compulsion, dengan keduanya memiliki informasi memadai</td>
+                <td>Tax purposes, buy-sell agreements</td>
+              </tr>
+              <tr>
+                <td class="name">Investment Value</td>
+                <td>Nilai bagi pembeli spesifik yang memperhitungkan sinergi dan persyaratan investornya sendiri &mdash; bisa &gt; fair market value jika ada sinergi unik</td>
+                <td>M&amp;A acquirer analysis, strategic buyer</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="insight">
+            <strong>Poin kunci:</strong> Untuk valuasi <em>public equity</em>, definisi yang paling relevan adalah <em>intrinsic value</em> di bawah asumsi <em>going-concern</em>. Perhatikan bahwa going-concern value dan intrinsic value bukan hal yang sama &mdash; intrinsic value adalah konsep yang lebih luas; going-concern adalah <em>asumsi operasional</em> tentang keberlangsungan bisnis yang digunakan saat mengestimasi intrinsic value.
+          </div>
+          <div class="trap">
+            <div class="trap-label">&#9888; Exam Trap</div>
+            <p>Perusahaan yang tidak profitable secara persisten bisa jadi memiliki liquidation value &gt; going-concern value ("lebih berharga mati daripada hidup"). CFA sering menanyakan kapan liquidation value relevan vs going-concern &mdash; jawabannya adalah ketika perusahaan dalam financial distress atau tidak ada harapan recovery operasional.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Concept 2 -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">2</div>
+          <div class="concept-title">Intrinsic Value, Mispricing, dan Sumber Alpha</div>
+        </div>
+        <div class="concept-body">
+          <p>Equity valuation berangkat dari asumsi fundamental: harga pasar (P) bisa berbeda dari intrinsic value (V). Selisih antara harga pasar dan estimasi analis diuraikan menjadi dua komponen:</p>
+          <div class="formula">
+            V<sub>E</sub> &minus; P = (V &minus; P) + (V<sub>E</sub> &minus; V)
+            <br>
+            <span class="comment">// Komponen 1: True mispricing &rarr; sumber alpha jika V &gt; P</span>
+            <span class="comment">// Komponen 2: Estimation error &rarr; kesalahan model atau asumsi analis</span>
+          </div>
+          <p>Di mana: V<sub>E</sub> = estimated intrinsic value oleh analis, P = harga pasar, V = intrinsic value sesungguhnya (tidak observable).</p>
+          <table class="assume-table">
+            <thead><tr><th>Komponen</th><th>Makna</th><th>Bisa Menghasilkan Alpha?</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="name">V &minus; P (True Mispricing)</td>
+                <td>Pasar menetapkan harga yang berbeda dari nilai sesungguhnya &mdash; ini yang jadi dasar active management</td>
+                <td><span class="badge badge-green">Ya, jika V &gt; P dan pasar konvergen</span></td>
+              </tr>
+              <tr>
+                <td class="name">V<sub>E</sub> &minus; V (Estimation Error)</td>
+                <td>Kesalahan model analis: asumsi keliru, data salah, discount rate tidak tepat</td>
+                <td><span class="badge badge-red">Tidak &mdash; ini risiko, bukan alpha</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <p><strong>Grossman-Stiglitz Paradox:</strong> Jika pasar <em>perfectly efficient</em> (P = V selalu), maka tidak ada insentif bagi analis untuk melakukan riset karena tidak ada alpha. Tapi jika tidak ada yang riset, pasar tidak bisa efisien. Paradoks ini menjelaskan mengapa active management tetap eksis: ada equilibrium di mana sebagian investor melakukan riset dan mendapat reward berupa alpha.</p>
+          <div class="insight">
+            <strong>Konvergensi ke nilai intrinsik:</strong> Bahkan jika analis benar (V<sub>E</sub> ≈ V &gt; P), alpha tidak terjamin. Pasar mungkin tidak konvergen dalam investment horizon analis. Oleh karena itu, banyak investor aktif mencari <em>catalyst</em> &mdash; corporate event yang akan mendorong pasar merevaluasi saham dalam jangka pendek.
+          </div>
+        </div>
+      </div>
+
+      <!-- Concept 3 -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">3</div>
+          <div class="concept-title">Lima Langkah Proses Valuasi &mdash; Dari Understanding Business ke Investment Decision</div>
+        </div>
+        <div class="concept-body">
+          <p>CFA mendefinisikan proses valuasi sebagai lima langkah berurutan. Penting untuk memahami urutan dan tujuan setiap langkah:</p>
+          <table class="assume-table">
+            <thead><tr><th>#</th><th>Langkah</th><th>Isi &amp; Tujuan</th></tr></thead>
+            <tbody>
+              <tr><td class="name">1</td><td>Understanding the Business</td><td>Industry &amp; competitive analysis (Porter's 5 Forces, cost leadership vs differentiation vs focus), analisis laporan keuangan historis, ESG assessment, quality of earnings analysis</td></tr>
+              <tr><td class="name">2</td><td>Forecasting Company Performance</td><td>Pro forma analysis: proyeksi sales, earnings, dividends, dan posisi keuangan. Menggunakan top-down atau bottom-up approach.</td></tr>
+              <tr><td class="name">3</td><td>Selecting the Valuation Model</td><td>Memilih antara absolute (DDM, FCF, RI, asset-based) atau relative valuation (P/E, P/B, EV/EBITDA comparables). Bergantung pada karakteristik perusahaan.</td></tr>
+              <tr><td class="name">4</td><td>Converting Forecasts to Valuation</td><td>Memasukkan input ke model, melakukan sensitivity analysis, menyatakan range nilai (bukan satu angka tunggal). Memerlukan <em>judgment</em>, bukan sekadar kalkulasi mekanis.</td></tr>
+              <tr><td class="name">5</td><td>Applying the Valuation Conclusions</td><td>Investment recommendation, fairness opinion, strategic analysis, atau komunikasi dengan manajemen dan shareholders.</td></tr>
+            </tbody>
+          </table>
+          <div class="insight">
+            <strong>Mengapa langkah 1 (Understanding the Business) sangat penting?</strong> Tanpa pemahaman mendalam tentang industri dan bisnis, forecast di langkah 2 hanya ekstrapolasi mekanis. Kualitas valuasi sangat tergantung pada kualitas forecast, dan kualitas forecast tergantung pada pemahaman bisnis. Ini yang membedakan analis hebat dari yang biasa-biasa.
+          </div>
+        </div>
+      </div>
+
+      <!-- Concept 4 -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">4</div>
+          <div class="concept-title">Top-Down vs Bottom-Up Forecasting &mdash; Dua Pendekatan Proyeksi Kinerja</div>
+        </div>
+        <div class="concept-body">
+          <p>Dalam langkah forecasting, analis bisa memulai dari gambaran besar (top-down) atau dari data spesifik perusahaan (bottom-up):</p>
+          <table class="assume-table">
+            <thead><tr><th>Dimensi</th><th>Top-Down</th><th>Bottom-Up</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="name">Titik mulai</td>
+                <td>Makroekonomi global/nasional → industri → perusahaan</td>
+                <td>Data spesifik perusahaan (penjualan per toko, produktivitas per karyawan) → agregasi ke level perusahaan dan industri</td>
+              </tr>
+              <tr>
+                <td class="name">Contoh revenue forecast</td>
+                <td>GDP forecast → industry unit sales forecast → market share perusahaan × unit sales industri → revenue</td>
+                <td>Same-store sales × jumlah toko + proyeksi toko baru berdasarkan sales/sqm toko existing → total revenue</td>
+              </tr>
+              <tr>
+                <td class="name">Kelebihan</td>
+                <td>Memastikan konsistensi dengan kondisi makro; membantu cross-perusahaan dalam industri</td>
+                <td>Lebih granular dan spesifik; lebih akurat untuk perusahaan dengan operasi unik</td>
+              </tr>
+              <tr>
+                <td class="name">Kelemahan</td>
+                <td>Bisa kehilangan nuansa spesifik perusahaan; bergantung pada akurasi forecast makro</td>
+                <td>Bisa miss tren makro besar yang mempengaruhi seluruh industri</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>Dalam praktik, analis yang baik <strong>mengintegrasikan kedua pendekatan</strong>: menggunakan top-down untuk membangun rangka makro dan industri, lalu mengisi dengan bottom-up detail operasional perusahaan. Pendekatan mana yang mendominasi bergantung pada jenis perusahaan dan ketersediaan data.</p>
+        </div>
+      </div>
+
+      <!-- Concept 5 -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">5</div>
+          <div class="concept-title">Independensi Analis &amp; Kualitas Research Report</div>
+        </div>
+        <div class="concept-body">
+          <p>CFA menekankan bahwa analis memiliki kewajiban untuk menjaga <em>independence and objectivity</em>. Ini bukan sekadar etika abstrak, tapi sangat praktis: analis yang tidak independen menghasilkan valuasi yang bias dan merugikan investor.</p>
+          <p><strong>Sumber konflik kepentingan analis:</strong></p>
+          <ul style="list-style:none;margin:8px 0 12px;">
+            <li style="padding:3px 0 3px 16px;position:relative;font-size:13px;color:var(--text2);"><span style="position:absolute;left:0;color:var(--gold);">▸</span> Investment banking relationship &mdash; tekanan untuk memberikan rating positif pada klien IB</li>
+            <li style="padding:3px 0 3px 16px;position:relative;font-size:13px;color:var(--text2);"><span style="position:absolute;left:0;color:var(--gold);">▸</span> Kepemilikan saham pribadi analis di perusahaan yang dicover</li>
+            <li style="padding:3px 0 3px 16px;position:relative;font-size:13px;color:var(--gold2);"><span style="position:absolute;left:0;color:var(--gold);">▸</span> Kompensasi terkait dengan performa saham yang direkomendasikan</li>
+            <li style="padding:3px 0 3px 16px;position:relative;font-size:13px;color:var(--text2);"><span style="position:absolute;left:0;color:var(--gold);">▸</span> Hubungan personal dengan manajemen perusahaan</li>
+          </ul>
+          <p><strong>Karakteristik research report berkualitas tinggi (CFA Standard):</strong></p>
+          <table class="assume-table">
+            <thead><tr><th>Karakteristik</th><th>Penjelasan</th></tr></thead>
+            <tbody>
+              <tr><td class="name">Timely &amp; Clear</td><td>Ditulis dalam bahasa yang jelas dan ringkas; dipublikasikan tepat waktu sehingga investor bisa bertindak</td></tr>
+              <tr><td class="name">Objective &amp; Well-Researched</td><td>Asumsi kunci dinyatakan secara eksplisit; membedakan fakta dari opini; bukan sekadar "echo" konsensus pasar</td></tr>
+              <tr><td class="name">Internally Consistent</td><td>Analisis, forecast, valuasi, dan rekomendasi saling mendukung &mdash; tidak ada kontradiksi internal</td></tr>
+              <tr><td class="name">Critiqueable</td><td>Menyediakan informasi yang cukup agar pembaca bisa mengevaluasi dan mengkritisi metodologi valuasi</td></tr>
+              <tr><td class="name">Disclose Conflicts</td><td>Mengungkapkan semua potensi konflik kepentingan (Standard I(B) CFA: Independence and Objectivity)</td></tr>
+            </tbody>
+          </table>
+          <div class="insight">
+            <strong>"Good company ≠ Good investment":</strong> Salah satu insight terpenting. Perusahaan berkualitas tinggi bisa jadi investasi yang buruk jika harganya sudah mencerminkan semua keunggulan tersebut. Sebaliknya, perusahaan biasa-biasa saja bisa jadi investasi luar biasa jika harganya di bawah intrinsic value. Analis selalu harus memisahkan penilaian tentang kualitas bisnis dari keputusan investasi berbasis harga.
+          </div>
+          <div class="trap">
+            <div class="trap-label">&#9888; Exam Trap</div>
+            <p>Regulation FD di AS melarang perusahaan mengungkapkan material non-public information kepada analis secara selektif tanpa membuka informasi tersebut ke publik. Jika analis menerima informasi material non-publik dari manajemen, dia <strong>tidak boleh</strong> menggunakannya dalam rekomendasi &mdash; ini melanggar Standard II(A) Material Nonpublic Information.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CHEAT SHEET -->
+  <div class="divider"></div>
+  <div class="section">
+    <div class="section-label">Quick Reference Cheat Sheet</div>
+    <div class="cheat-grid">
+      <div class="cheat-item">
+        <div class="cheat-key">Mispricing Formula</div>
+        <div class="cheat-val">V_E - P = (V - P) + (V_E - V)</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Going-Concern vs Liquidation</div>
+        <div class="cheat-val">GC &gt; Liq. value kecuali jika perusahaan unprofitable persisten</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Nilai paling relevan public equity</div>
+        <div class="cheat-val">Intrinsic value under going-concern assumption</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Top-Down Starting Point</div>
+        <div class="cheat-val">Macro → Industry → Company forecast</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">5 Langkah Proses Valuasi</div>
+        <div class="cheat-val">Understand → Forecast → Select model → Convert → Apply</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Good Co. ≠ Good Investment</div>
+        <div class="cheat-val">Return tergantung harga bayar, bukan hanya kualitas bisnis</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRACTICE -->
+  <div class="divider"></div>
+  <div class="practice-header">
+    <div class="practice-icon">&#128221;</div>
+    <div class="practice-header-text">
+      <div class="practice-header-title">Practice &middot; 30 min &mdash; Item Set Vignette</div>
+      <div class="practice-header-sub">Skenario: Analisis PT Mitra Sejahtera Tbk oleh analis Sekuritas Nusantara</div>
+    </div>
+  </div>
+  <div class="practice-body">
+    <div class="vignette">
+      <div class="vignette-label">Vignette</div>
+      <p>Dewi Rahayu, CFA, adalah equity analyst di Sekuritas Nusantara yang mengcover sektor consumer staples di BEI. Ia sedang mengevaluasi PT Mitra Sejahtera Tbk (ticker: MSTR), produsen consumer goods yang memiliki jaringan distribusi luas di seluruh Indonesia.</p>
+      <p>Dalam laporan terbaru, Dewi menyatakan: <em>"Saham MSTR saat ini diperdagangkan pada Rp 4.200. Estimasi nilai intrinsik kami adalah Rp 5.600. Kami memperkirakan pasar mengalami overreaction terhadap berita kenaikan biaya bahan baku yang bersifat sementara."</em></p>
+      <p>Rekan Dewi, Budi Santoso, menggunakan pendekatan yang berbeda. Ia memulai dengan proyeksi GDP Indonesia (5.2% growth), kemudian mengestimasi pertumbuhan industri consumer goods sebesar 6.8%, dan akhirnya mengalokasikan market share MSTR sebesar 12% dari proyeksi industry sales untuk menghasilkan forecast revenue MSTR.</p>
+      <p>Sementara itu, kepala riset Sekuritas Nusantara memperingatkan Dewi bahwa MSTR adalah klien investment banking yang baru saja menggunakan jasa firm untuk rights issue, dan mengisyaratkan agar laporan riset tidak berisi rekomendasi negatif untuk sementara waktu.</p>
+      <p>Dewi juga mengetahui bahwa salah satu anak perusahaan MSTR yang mengalami kerugian terus-menerus selama 5 tahun terakhir sedang dipertimbangkan untuk dibubarkan. Nilai aset anak perusahaan tersebut jika dijual secara individual diestimasi Rp 180 miliar, namun nilai present value FCF proyeksi anak perusahaan tersebut adalah negatif Rp 30 miliar.</p>
+    </div>
+
+    <!-- Q1 -->
+    <div class="question-block" data-q="1" data-correct="C">
+      <div class="q-num">QUESTION 1 OF 4</div>
+      <div class="q-text">Berdasarkan pernyataan Dewi, berapa total perceived mispricing (V<sub>E</sub> &minus; P) dan apa implikasinya terhadap keputusan investasi?</div>
+      <button class="option" data-opt="A">A. Rp 1.400 per saham &mdash; seluruhnya merupakan true mispricing (V &minus; P) karena pasar terbukti keliru</button>
+      <button class="option" data-opt="B">B. Rp 1.400 per saham &mdash; seluruhnya merupakan estimation error (V<sub>E</sub> &minus; V) karena intrinsic value tidak dapat diobservasi</button>
+      <button class="option" data-opt="C">C. Rp 1.400 per saham &mdash; merupakan kombinasi dari true mispricing (V &minus; P) dan estimation error (V<sub>E</sub> &minus; V) yang tidak dapat dipisahkan secara pasti</button>
+      <div class="explanation correct">
+        &#10003; <strong>C adalah jawaban benar.</strong> Perceived mispricing = V<sub>E</sub> &minus; P = Rp 5.600 &minus; Rp 4.200 = Rp 1.400. Namun sesuai formula CFA: V<sub>E</sub> &minus; P = (V &minus; P) + (V<sub>E</sub> &minus; V). Komponen (V &minus; P) adalah true mispricing yang tidak dapat diobservasi karena intrinsic value sesungguhnya (V) tidak pernah diketahui. Komponen (V<sub>E</sub> &minus; V) adalah kesalahan estimasi Dewi &mdash; seberapa jauh estimasinya dari nilai sesungguhnya. Analis tidak bisa memisahkan keduanya; yang bisa dia lakukan hanya meningkatkan kualitas model dan asumsi untuk meminimalkan estimation error.
+      </div>
+      <div class="explanation incorrect">
+        &#10007; Perceived mispricing memang Rp 1.400 (= Rp 5.600 &minus; Rp 4.200), tapi tidak seluruhnya bisa diatribusikan ke salah satu komponen saja. CFA mengajarkan bahwa V<sub>E</sub> &minus; P = (V &minus; P) + (V<sub>E</sub> &minus; V). Karena V tidak observable, tidak ada cara untuk mengetahui berapa porsi yang merupakan true mispricing vs estimation error.
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question-block" data-q="2" data-correct="A">
+      <div class="q-num">QUESTION 2 OF 4</div>
+      <div class="q-text">Pendekatan forecasting yang digunakan Budi Santoso (GDP → industry growth → market share → revenue MSTR) paling tepat diklasifikasikan sebagai:</div>
+      <button class="option" data-opt="A">A. Top-down forecasting approach, karena dimulai dari kondisi makroekonomi dan bergerak menuju proyeksi level perusahaan</button>
+      <button class="option" data-opt="B">B. Bottom-up forecasting approach, karena menggunakan data market share MSTR yang spesifik untuk memproyeksikan revenue</button>
+      <button class="option" data-opt="C">C. Hybrid approach, karena menggabungkan data makro (GDP) dengan data mikro (market share)</button>
+      <div class="explanation correct">
+        &#10003; <strong>A adalah jawaban benar.</strong> Top-down approach bergerak dari gambaran besar ke detail: dimulai dengan proyeksi GDP (level makroekonomi nasional), kemudian memproyeksikan pertumbuhan industri consumer goods dari GDP tersebut, lalu mengestimasi revenue MSTR berdasarkan market share perusahaan dalam proyeksi industri. Ini adalah definisi klasik top-down dalam CFA: macroeconomic forecasts → industry forecasts → individual company forecasts. Bahwa Budi menggunakan data market share MSTR bukan membuat ini "hybrid" &mdash; market share adalah komponen dalam mengaplikasikan top-down, bukan titik awal bottom-up.
+      </div>
+      <div class="explanation incorrect">
+        &#10007; Perhatikan urutan: GDP → industri → perusahaan. Ini adalah pola top-down yang klasik &mdash; dimulai dari level makro terbesar lalu turun ke level yang semakin spesifik. Bottom-up akan dimulai dari data granular level perusahaan (misalnya: jumlah SKU &times; volume penjualan per SKU) yang kemudian diagregasi. Penggunaan data market share tidak mengubah karakter top-down karena market share adalah proporsi dari proyeksi industri, bukan titik awal independen.
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question-block" data-q="3" data-correct="B">
+      <div class="q-num">QUESTION 3 OF 4</div>
+      <div class="q-text">Permintaan kepala riset Sekuritas Nusantara agar Dewi tidak membuat rekomendasi negatif untuk MSTR berkaitan dengan pelanggaran CFA Standard mana yang paling langsung?</div>
+      <button class="option" data-opt="A">A. Standard V(A) &mdash; Diligence and Reasonable Basis, karena analisis Dewi tidak cukup mendalam</button>
+      <button class="option" data-opt="B">B. Standard I(B) &mdash; Independence and Objectivity, karena tekanan dari IB relationship mengancam objektivitas rekomendasi</button>
+      <button class="option" data-opt="C">C. Standard II(A) &mdash; Material Nonpublic Information, karena informasi tentang klien IB bersifat non-publik</button>
+      <div class="explanation correct">
+        &#10003; <strong>B adalah jawaban benar.</strong> Standard I(B) &mdash; Independence and Objectivity &mdash; mengharuskan analis untuk "use reasonable care and judgment to achieve and maintain independence and objectivity." Tekanan dari investment banking relationship yang menyebabkan analis menghindari rekomendasi negatif adalah pelanggaran klasik terhadap standard ini. CFA Institute secara eksplisit menyebutkan konflik antara sell-side research dan IB sebagai salah satu risiko independence yang paling umum. Dewi harus menolak tekanan tersebut dan melaporkannya ke compliance jika diperlukan.
+      </div>
+      <div class="explanation incorrect">
+        &#10007; Masalah utama di sini adalah tekanan terhadap <em>independence</em> analis, bukan kualitas riset (V(A)) atau material nonpublic information (II(A)). Standard I(B) Independence and Objectivity secara spesifik melarang analis menerima atau memberikan "gift, benefit, compensation, or consideration" yang bisa mengkompromikan independensi &mdash; dan tekanan implicit untuk menghindari rekomendasi negatif demi menjaga hubungan IB jelas masuk kategori ini.
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question-block" data-q="4" data-correct="A">
+      <div class="q-num">QUESTION 4 OF 4</div>
+      <div class="q-text">Untuk anak perusahaan MSTR yang rugi persisten (FCF PV = &minus;Rp 30M, nilai aset individual = Rp 180M), konsep nilai mana yang paling relevan, dan apa implikasi keputusannya?</div>
+      <button class="option" data-opt="A">A. Liquidation value (Rp 180M) &gt; going-concern value (negatif Rp 30M) &mdash; perusahaan lebih bernilai "mati daripada hidup" dan pembubaran menciptakan nilai</button>
+      <button class="option" data-opt="B">B. Going-concern value (Rp 180M) &gt; liquidation value (negatif Rp 30M) &mdash; aset lebih baik dioperasikan terus karena menghasilkan value</button>
+      <button class="option" data-opt="C">C. Fair market value adalah yang paling relevan karena anak perusahaan tersebut kemungkinan akan dijual ke pihak ketiga</button>
+      <div class="explanation correct">
+        &#10003; <strong>A adalah jawaban benar.</strong> Ini adalah kasus di mana liquidation value (Rp 180M dari penjualan aset secara individual) jauh lebih tinggi dari going-concern value (negatif Rp 30M, artinya bisnis akan terus merusak nilai). Dalam kondisi ini, mempertahankan anak perusahaan sebagai going-concern justru menghancurkan nilai pemegang saham. Keputusan optimal adalah melikuidasi atau mendivestasi. Ini sesuai dengan poin CFA: "a persistently unprofitable business may be worth more 'dead' than 'alive'." Oleh karena itu, konsep liquidation value adalah yang paling relevan di sini.
+      </div>
+      <div class="explanation incorrect">
+        &#10007; Perhatikan angkanya: FCF PV = negatif Rp 30M (going-concern value), sedangkan nilai aset individual = Rp 180M (liquidation value). Going-concern value yang negatif berarti operasi terus-menerus justru menghancurkan nilai. Fair market value (opsi C) relevan untuk konteks berbeda (misalnya saat menentukan harga jual yang wajar), tapi pertanyaannya adalah konsep nilai mana yang paling relevan dalam konteks keputusan pembubaran vs kelanjutan operasi.
+      </div>
+    </div>
+
+    <div id="score-panel-1" class="score-panel">
+      <div class="score-num" id="score-value-1"></div>
+      <div class="score-msg">Review tiap explanation &mdash; pahami framework-nya, bukan sekadar jawabannya.</div>
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="CFA_L2_Day38.html" class="nav-btn">&larr; Day 38: Synergy Valuation &amp; Restructuring</a>
+    <a href="CFA_L2_Day40.html" class="nav-btn primary">Day 40: Model Selection &rarr;</a>
+  </div>
+</div>
+
+<script>
+(function() {
+  var answers = {};
+  var correct = {};
+  document.querySelectorAll('.question-block').forEach(function(qb) {
+    var q = qb.dataset.q;
+    correct[q] = qb.dataset.correct;
+    qb.querySelectorAll('.option').forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        if (answers[q]) return;
+        answers[q] = opt.dataset.opt;
+        qb.querySelectorAll('.option').forEach(function(o) { o.disabled = true; });
+        var isCorrect = opt.dataset.opt === correct[q];
+        if (isCorrect) {
+          opt.classList.add('correct');
+        } else {
+          opt.classList.add('wrong');
+          qb.querySelectorAll('.option').forEach(function(o) {
+            if (o.dataset.opt === correct[q]) o.classList.add('correct');
+          });
+        }
+        var expls = qb.querySelectorAll('.explanation');
+        var target = isCorrect ? expls[0] : expls[1];
+        if (target) { target.style.display = 'block'; target.classList.add('show'); }
+        var total = Object.keys(correct).length;
+        var scored = Object.keys(answers).length;
+        if (scored === total) {
+          var score = Object.keys(answers).filter(function(k) { return answers[k] === correct[k]; }).length;
+          var panel = document.getElementById('score-panel-1');
+          if (panel) {
+            panel.style.display = 'block';
+            document.getElementById('score-value-1').textContent = score + '/' + total;
+          }
+        }
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

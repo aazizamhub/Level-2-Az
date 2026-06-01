@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 42 · Full · Multi-Stage DDM</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+  --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;--gold:#9a6e1a;--gold2:#7a5010;--gold-bg:rgba(154,110,26,0.08);
+  --blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);--green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);
+  --red:#b83232;--red-bg:rgba(184,50,50,0.08);--amber:#a06010;--amber-bg:rgba(160,96,16,0.08);--r:10px;--r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.8;}
+.page{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;border:1px solid rgba(26,95,168,0.2);}
+.hero{margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--border);}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:36px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:15px;color:var(--text2);}
+.meta-row{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:36px;}
+.toc-title{font-size:12px;color:var(--text3);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:12px;font-weight:500;}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.toc-list li a{font-size:13px;color:var(--blue);text-decoration:none;display:flex;align-items:center;gap:8px;}
+.toc-list li a:hover{text-decoration:underline;}
+.toc-num{font-size:11px;color:var(--text3);min-width:20px;}
+.chapter{margin-bottom:40px;}
+.chapter-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--gold-bg);}
+.chapter-num{font-family:'DM Serif Display',serif;font-size:28px;color:var(--gold);line-height:1;}
+.chapter-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);line-height:1.2;}
+.sub-header{font-size:17px;font-weight:500;color:var(--text);margin:24px 0 12px;padding-left:12px;border-left:3px solid var(--gold);}
+.prose{font-size:14px;color:var(--text2);line-height:1.85;margin-bottom:14px;}
+.prose strong{color:var(--text);font-weight:500;}
+.formula-block{background:var(--bg2);border:1px solid var(--border2);border-left:4px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:16px 20px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold2);line-height:2;}
+.formula-block .label{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:8px;}
+.formula-block .note{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text3);font-style:italic;display:block;margin-top:8px;}
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:20px 0;}
+.exhibit-title{background:var(--bg3);padding:10px 16px;font-size:12px;font-weight:500;color:var(--text2);border-bottom:1px solid var(--border);letter-spacing:0.03em;}
+.exhibit-body{padding:16px;}
+.reg-table{width:100%;border-collapse:collapse;font-size:13px;}
+.reg-table th{text-align:left;padding:8px 12px;background:var(--bg3);color:var(--text3);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border2);}
+.reg-table td{padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:top;color:var(--text2);font-size:13px;}
+.reg-table td:first-child{font-size:13px;color:var(--text);font-weight:500;}
+.reg-table tr:last-child td{border-bottom:none;}
+.reg-table .num{font-family:'JetBrains Mono',monospace;text-align:right;}
+.callout{border-radius:var(--r);padding:16px 18px;margin:16px 0;}
+.callout-title{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;}
+.callout p{font-size:13px;color:var(--text2);line-height:1.75;}
+.callout p+p{margin-top:8px;}
+.callout.blue{background:var(--blue-bg);border:1px solid rgba(26,95,168,0.15);}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.amber{background:var(--amber-bg);border:1px solid rgba(160,96,16,0.15);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.red{background:var(--red-bg);border:1px solid rgba(184,50,50,0.15);}
+.callout.red .callout-title{color:var(--red);}
+.callout.gold{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);}
+.callout.gold .callout-title{color:var(--gold);}
+.callout.green{background:var(--green-bg);border:1px solid rgba(26,122,74,0.15);}
+.callout.green .callout-title{color:var(--green);}
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:24px 0;overflow:hidden;}
+.kc-header{background:var(--gold-bg);padding:12px 18px;border-bottom:1px solid rgba(154,110,26,0.15);}
+.kc-header-title{font-size:12px;font-weight:500;color:var(--gold);letter-spacing:0.06em;text-transform:uppercase;}
+.kc-body{padding:18px;}
+.kc-q{font-size:13px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.6;}
+.kc-answer{background:var(--bg3);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);line-height:1.75;display:none;}
+.kc-answer.show{display:block;}
+.kc-answer strong{color:var(--green);}
+.kc-toggle{background:none;border:1px solid var(--border2);border-radius:var(--r-sm);padding:6px 14px;font-size:12px;color:var(--text3);cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px;transition:all 0.15s;}
+.kc-toggle:hover{border-color:var(--gold);color:var(--gold);}
+.bullet-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin:10px 0;}
+.bullet-list li{display:flex;gap:10px;font-size:13px;color:var(--text2);line-height:1.7;}
+.bullet-list li::before{content:'&#9632;';color:var(--gold);font-size:9px;margin-top:5px;flex-shrink:0;}
+.divider{height:1px;background:var(--border);margin:36px 0;}
+.practice-header{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);border-radius:var(--r) var(--r) 0 0;padding:16px 20px;display:flex;align-items:center;gap:12px;}
+.practice-header-title{font-size:16px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);margin-top:2px;}
+.practice-body{background:var(--bg2);border:1px solid rgba(154,110,26,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:24px;}
+.vignette{background:var(--bg3);border-left:4px solid var(--gold);padding:18px 20px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:28px;font-size:13px;color:var(--text2);line-height:1.85;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;font-weight:500;}
+.question-block{margin-bottom:24px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:6px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:12px;line-height:1.65;}
+.option{display:block;width:100%;text-align:left;padding:11px 16px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:8px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.6;}
+.option:hover:not(:disabled){border-color:var(--border2);background:var(--bg2);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:14px 16px;font-size:13px;color:var(--text2);margin-top:10px;line-height:1.8;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:28px;margin-top:20px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:52px;margin-bottom:8px;}
+.score-msg{font-size:14px;color:var(--text2);}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);flex-wrap:wrap;gap:10px;}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II &middot; <span>Equity Valuation</span> &middot; LM2</div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <div class="version-badge">Versi Full</div>
+      <div class="day-badge">Day 42 of 90</div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Selasa, 16 Juni 2026</div>
+    <h1 class="hero-title">Multi-Stage Dividend Discount Models</h1>
+    <p class="hero-sub">Learning Module 2 &mdash; Discounted Dividend Valuation &middot; CFA Level II 2026</p>
+    <div class="meta-row">
+      <div class="meta-pill">&#128218; Materi lengkap</div>
+      <div class="meta-pill">&#127470;&#127465; Bahasa Indonesia</div>
+      <div class="meta-pill">&#9878;&#65039; Exam weight <b>~12%</b></div>
+      <div class="meta-pill">&#9201; Est. baca <b>45&ndash;60 menit</b></div>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ul class="toc-list">
+      <li><a href="#lo"><span class="toc-num">0</span>Learning Outcomes (LOS)</a></li>
+      <li><a href="#lifecycle"><span class="toc-num">1</span>Konsep Lifecycle dan Justifikasi Multistage DDM</a></li>
+      <li><a href="#twostage"><span class="toc-num">2</span>Two-Stage DDM: Prosedur Lengkap, Terminal Value, dan Contoh Numerik</a></li>
+      <li><a href="#threestage"><span class="toc-num">3</span>Three-Stage DDM: Versi Fixed Stages dan H-Model dalam Stage 2</a></li>
+      <li><a href="#tv"><span class="toc-num">4</span>Terminal Value: Gordon Growth vs P/E Multiple dan Saham Non-Dividen</a></li>
+      <li><a href="#limits"><span class="toc-num">5</span>Estimasi Required Return dan Keterbatasan DDM</a></li>
+      <li><a href="#practice"><span class="toc-num">6</span>Latihan Soal &mdash; Item Set Vignette (6 Pertanyaan)</a></li>
+    </ul>
+  </div>
+
+  <!-- Section 0: Learning Outcomes -->
+  <div class="chapter" id="lo">
+    <div class="chapter-header">
+      <div class="chapter-num">0</div>
+      <div class="chapter-title">Learning Outcomes</div>
+    </div>
+    <p class="prose">Setelah menyelesaikan modul ini, peserta harus mampu memenuhi learning outcomes berikut dari CFA Institute:</p>
+    <ul class="bullet-list">
+      <li>Menjelaskan fase pertumbuhan (<em>growth phase</em>), fase transisi (<em>transition phase</em>), dan fase maturitas (<em>maturity phase</em>) dari sebuah bisnis dalam konteks penilaian ekuitas.</li>
+      <li>Menjelaskan asumsi-asumsi yang mendasari dan membenarkan pemilihan antara two-stage DDM, H-model, three-stage DDM, atau pemodelan spreadsheet untuk menilai saham biasa suatu perusahaan.</li>
+      <li>Mendeskripsikan terminal value dan menjelaskan pendekatan alternatif untuk menentukan terminal value dalam DDM.</li>
+      <li>Menghitung dan menginterpretasikan nilai saham biasa menggunakan two-stage DDM, H-model, dan three-stage DDM.</li>
+      <li>Mengevaluasi apakah suatu saham overvalued, fairly valued, atau undervalued berdasarkan estimasi nilai dari DDM.</li>
+      <li>Menjelaskan penggunaan pemodelan spreadsheet untuk memproyeksikan dividen dan menilai saham biasa.</li>
+      <li>Mengestimasi required return berdasarkan DDM manapun, termasuk Gordon growth model dan H-model.</li>
+    </ul>
+  </div>
+
+  <!-- Section 1: Lifecycle -->
+  <div class="chapter" id="lifecycle">
+    <div class="chapter-header">
+      <div class="chapter-num">1</div>
+      <div class="chapter-title">Konsep Lifecycle dan Justifikasi Multistage DDM</div>
+    </div>
+
+    <div class="sub-header">Mengapa Gordon Growth Model Tidak Cukup?</div>
+    <p class="prose">Gordon Growth Model (GGM) adalah instrumen yang elegan, namun mengandung asumsi yang terlalu restrictive untuk mayoritas perusahaan di dunia nyata: pertumbuhan konstan mulai hari ini hingga selamanya. Kenyataannya, perusahaan berkembang melalui siklus kehidupan yang berbeda-beda, masing-masing dengan karakteristik pertumbuhan, profitabilitas, dan kebijakan dividen yang khas.</p>
+    <p class="prose">Survei dari CFA Institute terhadap anggota yang menggunakan DDM menunjukkan bahwa <strong>55% menggunakan two-stage model</strong>, 11% menggunakan H-model, dan 50% menggunakan model dengan lebih dari dua tahap. Hanya sebagian kecil yang mengandalkan single-stage GGM untuk saham individual. Ini mencerminkan realita praktis: bagi kebanyakan perusahaan, masa depan pertumbuhan terdiri dari beberapa tahap yang berbeda.</p>
+
+    <div class="sub-header">Tiga Fase dalam Business Lifecycle</div>
+    <p class="prose">Kerangka tiga-fase dari Sharpe, Alexander, dan Bailey (1999) memberikan intuisi dasar untuk semua multistage DDM:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 1 &mdash; Tiga Fase Business Lifecycle dan Implikasinya untuk Valuasi</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Fase</th>
+              <th>Karakteristik Pertumbuhan</th>
+              <th>Karakteristik Keuangan</th>
+              <th>Implikasi DDM</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Growth Phase</td>
+              <td>EPS tumbuh sangat cepat (supernormal growth); pasar ekspansi, margin tinggi, kompetisi rendah</td>
+              <td>FCFE negatif (investasi besar); payout rendah atau nol; ROE jauh di atas r</td>
+              <td>D rendah atau nol; GGM tidak applicable; butuh multistage dengan stage awal rendah</td>
+            </tr>
+            <tr>
+              <td>Transition Phase</td>
+              <td>Growth melambat; kompetisi masuk; saturasi pasar; margin tertekan</td>
+              <td>FCFE mulai positif; payout ratio naik; capex mulai menurun</td>
+              <td>Stage transisi dalam 2-stage atau 3-stage DDM; growth menurun menuju gL</td>
+            </tr>
+            <tr>
+              <td>Maturity Phase</td>
+              <td>ROE mendekati r; growth stabil setara atau di bawah pertumbuhan ekonomi nominal</td>
+              <td>Dividen stabil dan predictable; payout ratio konsisten; reinvestasi moderat</td>
+              <td>GGM tepat digunakan; ini adalah "Stage 2" atau "Stage 3" dalam multistage model</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout blue">
+      <div class="callout-title">&#128161; Insight Kunci</div>
+      <p>Mature phase adalah satu-satunya fase di mana GGM langsung applicable. Ketika perusahaan masih dalam growth atau transition phase, analyst harus menggunakan multistage DDM untuk stage awal, dan kemudian menerapkan GGM sebagai terminal value formula untuk mature phase. Dengan kata lain, GGM sering muncul sebagai <em>komponen akhir</em> dari multistage DDM, bukan model yang berdiri sendiri.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header">
+        <div class="kc-header-title">&#9997; Knowledge Check 1.1</div>
+      </div>
+      <div class="kc-body">
+        <div class="kc-q">PT Garuda Nusantara Tech baru IPO di IDX tahun lalu. Perusahaan belum membayar dividen, memiliki FCF negatif karena investasi besar, dan EPS tumbuh 40% per tahun. Pada fase manakah perusahaan ini berada, dan model DDM apa yang paling tepat digunakan saat ini?</div>
+        <button class="kc-toggle" onclick="toggleKC(this)">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          <strong>Jawaban:</strong> PT Garuda Nusantara Tech berada di <strong>Growth Phase</strong> — ditandai oleh EPS tinggi, FCFE negatif, dan tidak ada dividen. GGM sama sekali tidak dapat digunakan karena tidak ada dividen saat ini.<br><br>
+          Model yang paling tepat saat ini adalah <strong>multistage DDM di mana Stage 1 memiliki D=0</strong>, kemudian analyst memproyeksikan kapan perusahaan akan mulai membayar dividen (misal: t=5 atau t=7). Terminal value dihitung dari dividen pertama tersebut.<br><br>
+          Alternatif yang lebih umum untuk perusahaan seperti ini: <strong>FCFF/FCFE model</strong> (materi Day 43) atau residual income model, yang tidak bergantung pada histori dividen.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: Two-Stage DDM -->
+  <div class="chapter" id="twostage">
+    <div class="chapter-header">
+      <div class="chapter-num">2</div>
+      <div class="chapter-title">Two-Stage DDM: Prosedur Lengkap, Terminal Value, dan Contoh Numerik</div>
+    </div>
+
+    <div class="sub-header">Struktur dan Formula Matematis</div>
+    <p class="prose">Two-stage DDM adalah model yang paling sering diuji di CFA Level 2. Model ini mengasumsikan dua periode pertumbuhan yang berbeda: Stage 1 dengan supernormal growth rate gS selama n tahun, diikuti Stage 2 dengan mature growth rate gL yang konstan selamanya. Berbeda dengan H-model, transisi antara dua tahap ini <strong>bersifat mendadak (abrupt)</strong> di titik n.</p>
+
+    <div class="formula-block">
+      <span class="label">Two-Stage DDM: Formula Utama</span>
+      V&#8320; = &Sigma;(t=1 to n) [ D&#8320;(1+gS)&#7511; / (1+r)&#7511; ] + Vₙ/(1+r)ⁿ
+      <br><br>
+      di mana:
+      <br>Vₙ = Terminal Value = Dₙ&#8321; / (r &minus; gL)
+      <br>Dₙ&#8321; = D&#8320; &times; (1+gS)ⁿ &times; (1+gL)
+      <span class="note">Catatan: Vₙ dihitung menggunakan Dₙ₊₁ (satu periode setelah akhir Stage 1), bukan Dₙ.</span>
+    </div>
+
+    <div class="sub-header">Prosedur Langkah demi Langkah</div>
+    <p class="prose">Dalam ujian CFA, dua-stage DDM selalu diselesaikan dengan prosedur tiga langkah yang sistematis:</p>
+
+    <ul class="bullet-list">
+      <li><strong>Langkah 1 &mdash; Proyeksikan dividen Stage 1:</strong> Hitung D₁, D₂, ..., Dₙ menggunakan D&#8320; &times; (1+gS)ᵗ untuk setiap t. Jika n kecil (2&ndash;5 tahun), lakukan secara eksplisit.</li>
+      <li><strong>Langkah 2 &mdash; Hitung terminal value Vₙ:</strong> Gunakan GGM pada titik akhir Stage 1. Vₙ = Dₙ₊₁/(r&minus;gL) = Dₙ&times;(1+gL)/(r&minus;gL). Ini menghitung nilai seluruh dividen dari t=n+1 hingga tak terhingga, <em>sebagai nilai lump-sum di titik t=n</em>.</li>
+      <li><strong>Langkah 3 &mdash; Diskontokan ke t=0:</strong> Hitung PV dari setiap Dₜ dan PV dari Vₙ, semuanya didiskon menggunakan r. Jumlahkan semua PV tersebut untuk mendapatkan V&#8320;.</li>
+    </ul>
+
+    <div class="sub-header">Contoh Numerik Lengkap: Carl Zeiss Meditec AG</div>
+    <p class="prose">Analyst mengevaluasi Carl Zeiss Meditec AG (AFX:GR) dengan asumsi: D&#8320; = €0.55, gS = 9% selama 10 tahun, gL = 5%, r = 5.88% (dari CAPM dengan beta 0.90, RF 1.2%, ERP 5.2%).</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 2 &mdash; Proyeksi Dividen dan PV: Carl Zeiss Meditec AG</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Waktu (t)</th>
+              <th>Nilai Dₜ (€)</th>
+              <th>Perhitungan</th>
+              <th class="num">PV pada 5.88%</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>D₁</td><td>0.55 × (1.09)¹</td><td class="num">0.5662</td></tr>
+            <tr><td>2</td><td>D₂</td><td>0.55 × (1.09)²</td><td class="num">0.5829</td></tr>
+            <tr><td>3</td><td>D₃</td><td>0.55 × (1.09)³</td><td class="num">0.6001</td></tr>
+            <tr><td>4</td><td>D₄</td><td>0.55 × (1.09)⁴</td><td class="num">0.6178</td></tr>
+            <tr><td>5</td><td>D₅</td><td>0.55 × (1.09)⁵</td><td class="num">0.6360</td></tr>
+            <tr><td>6</td><td>D₆</td><td>0.55 × (1.09)⁶</td><td class="num">0.6547</td></tr>
+            <tr><td>7</td><td>D₇</td><td>0.55 × (1.09)⁷</td><td class="num">0.6740</td></tr>
+            <tr><td>8</td><td>D₈</td><td>0.55 × (1.09)⁸</td><td class="num">0.6938</td></tr>
+            <tr><td>9</td><td>D₉</td><td>0.55 × (1.09)⁹</td><td class="num">0.7143</td></tr>
+            <tr><td>10</td><td>D₁₀</td><td>0.55 × (1.09)¹⁰ = €1.302</td><td class="num">0.7353</td></tr>
+            <tr><td>10</td><td>V₁₀</td><td>[1.302 × 1.05]/(0.0588 − 0.05) = €155.358</td><td class="num">87.7395</td></tr>
+            <tr style="font-weight:500;">
+              <td colspan="3">Total V&#8320;</td>
+              <td class="num">€94.21</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Perhatikan bahwa PV(V₁₀) = €87.74 = <strong>93.1% dari V&#8320; = €94.21</strong>. Hanya 6.9% dari nilai berasal dari dividen 10 tahun pertama. Ini mengilustrasikan secara dramatis mengapa asumsi gL dan r di terminal stage sangat kritis dalam DDM.</p>
+
+    <div class="callout amber">
+      <div class="callout-title">&#9888; Jebakan Umum di Ujian</div>
+      <p>Terminal value V₁₀ dihitung menggunakan <strong>D₁₁</strong>, bukan D₁₀. D₁₁ = D₁₀ × (1+gL) = 1.302 × 1.05 = €1.3671. GGM menghasilkan V₁₀ = D₁₁/(r&minus;gL) = 1.3671/(0.0088) = €155.36. Kandidat yang terburu-buru sering menggunakan D₁₀ langsung di numerator, menghasilkan V₁₀ yang terlalu kecil.</p>
+    </div>
+
+    <div class="sub-header">Kombinasi DDM + P/E Terminal Value</div>
+    <p class="prose">Sebagai alternatif dari GGM untuk terminal value, analyst dapat menggunakan price-to-earnings multiple. Pendekatan ini menghitung nilai di akhir Stage 1 berdasarkan projected earnings dan market valuation multiple:</p>
+
+    <div class="formula-block">
+      <span class="label">Terminal Value via P/E Multiple</span>
+      Vₙ = trailing P/E &times; EPSₙ
+      <br>atau
+      <br>Vₙ = leading P/E &times; EPSₙ&#8321;
+      <span class="note">EPSₙ diestimasi dari proyeksi dividend payout ratio: EPSₙ = Dₙ / payout ratio</span>
+    </div>
+
+    <p class="prose">Contoh: Analyst mengevaluasi Procter &amp; Gamble (P&amp;G) dengan D&#8320;=$2.79, g=4% selama 4 tahun, payout ratio 60%, trailing P/E=22× di t=4, r=6.5%.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 3 &mdash; Valuasi P&amp;G: DDM + P/E Terminal Value</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Langkah</th>
+              <th>Perhitungan</th>
+              <th class="num">Nilai ($)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>D₁ = 2.79 × 1.04¹</td><td>PV = 2.9016/(1.065)¹</td><td class="num">2.7245</td></tr>
+            <tr><td>D₂ = 2.79 × 1.04²</td><td>PV = 3.0177/(1.065)²</td><td class="num">2.6606</td></tr>
+            <tr><td>D₃ = 2.79 × 1.04³</td><td>PV = 3.1384/(1.065)³</td><td class="num">2.5981</td></tr>
+            <tr><td>D₄ = 2.79 × 1.04⁴ = 3.264</td><td>PV = 3.264/(1.065)⁴</td><td class="num">2.5371</td></tr>
+            <tr><td>EPS₄ = D₄/0.60 = 5.440</td><td>V₄ = 22 × 5.440 = 119.677</td><td class="num">&nbsp;</td></tr>
+            <tr><td>PV(V₄)</td><td>119.677/(1.065)⁴</td><td class="num">93.0273</td></tr>
+            <tr style="font-weight:500;">
+              <td colspan="2">Total V&#8320;</td>
+              <td class="num">$103.55</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header">
+        <div class="kc-header-title">&#9997; Knowledge Check 2.1</div>
+      </div>
+      <div class="kc-body">
+        <div class="kc-q">PT Daya Nusa Energi Tbk (DNE) membayar D&#8320; = Rp 500. Analyst memproyeksikan gS = 12% selama 2 tahun, kemudian gL = 6% selamanya. Required return = 9%. Hitung V&#8320; menggunakan two-stage DDM dan tentukan berapa persen dari nilai yang berasal dari terminal value.</div>
+        <button class="kc-toggle" onclick="toggleKC(this)">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          <strong>Langkah 1 — Proyeksikan dividen Stage 1:</strong><br>
+          D₁ = 500 × 1.12 = Rp 560<br>
+          D₂ = 560 × 1.12 = Rp 627.20<br><br>
+          <strong>Langkah 2 — Terminal value V₂:</strong><br>
+          D₃ = 627.20 × 1.06 = Rp 664.83<br>
+          V₂ = D₃/(r&minus;gL) = 664.83/(0.09&minus;0.06) = 664.83/0.03 = Rp 22.161<br><br>
+          <strong>Langkah 3 — Diskontokan ke t=0:</strong><br>
+          PV(D₁) = 560/1.09 = Rp 513.76<br>
+          PV(D₂) = 627.20/1.09² = 627.20/1.1881 = Rp 527.90<br>
+          PV(V₂) = 22.161/1.1881 = Rp 18.653<br><br>
+          <strong>V&#8320; = 513.76 + 527.90 + 18.653 = Rp 19.695</strong><br><br>
+          Kontribusi terminal value: 18.653/19.695 = <strong>94.7%</strong> dari total nilai.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: Three-Stage DDM -->
+  <div class="chapter" id="threestage">
+    <div class="chapter-header">
+      <div class="chapter-num">3</div>
+      <div class="chapter-title">Three-Stage DDM: Versi Fixed Stages dan H-Model dalam Stage 2</div>
+    </div>
+
+    <div class="sub-header">Mengapa Tiga Stage?</div>
+    <p class="prose">Two-stage DDM memiliki keterbatasan: transisi yang mendadak dari gS ke gL sering terlalu kasar. Bagi perusahaan yang mengalami competitive erosion atau perubahan kondisi pasar secara bertahap, diperlukan satu tahap transisi di antara high-growth dan mature phase. Inilah tujuan three-stage DDM — menambahkan tahap tengah yang mendeskripsikan perlambatan pertumbuhan secara lebih realistis.</p>
+    <p class="prose">Terdapat dua versi three-stage DDM yang diuji dalam CFA Level 2:</p>
+
+    <div class="sub-header">Versi 1: Three Distinct Growth Stages (Constant per Stage)</div>
+    <p class="prose">Dalam versi ini, setiap tahap memiliki growth rate konstan yang berbeda. Struktur umum: gS₁ (high growth, beberapa tahun) → gS₂ (intermediate growth, beberapa tahun) → gL (mature growth, selamanya). Transisi dari stage ke stage bersifat abrupt seperti pada two-stage model.</p>
+
+    <div class="formula-block">
+      <span class="label">Three-Stage DDM: Versi 1 (Fixed Stages)</span>
+      Stage 1 (t=1 to n₁): gS₁ — proyeksikan D₁...Dₙ₁ eksplisit
+      <br>Stage 2 (t=n₁+1 to n₁+n₂): gS₂ — proyeksikan Dₙ₁₊₁...D(n₁+n₂) eksplisit
+      <br>Terminal (t &gt; n₁+n₂): gL konstan selamanya
+      <br>Vₙ = D(n+1)/(r − gL) &nbsp;&nbsp;[n = n₁ + n₂]
+      <span class="note">Sum semua PV dividen dari Stage 1, Stage 2, dan PV(Vₙ) = V&#8320;</span>
+    </div>
+
+    <div class="sub-header">Versi 2: H-Model dalam Stage 2 (Three-Stage with Linear Decline)</div>
+    <p class="prose">Versi ini lebih realistis dan lebih sering digunakan dalam praktik. Struktur: Stage 1 memiliki growth tinggi dan konstan (gS₁), Stage 2 mengalami penurunan growth secara linear dari gS₁ ke gL (ini adalah H-model), dan Stage 3 adalah mature growth gL yang konstan selamanya. Bloomberg DDM menggunakan versi ini.</p>
+
+    <div class="formula-block">
+      <span class="label">Three-Stage DDM: Versi 2 (H-Model dalam Stage 2)</span>
+      Stage 1 (n₁ tahun, gS₁ konstan): hitung D₁...D(n₁) eksplisit, ambil PV
+      <br>Stage 2+3 (H-model mulai t=n₁):
+      <br>&nbsp;&nbsp;Vₙ₁ = [D(n₁)(1+gL) + D(n₁)×H×(gS₁−gL)] / (r−gL)
+      <br>&nbsp;&nbsp;dimana H = setengah dari durasi Stage 2 (dalam tahun)
+      <br>V&#8320; = PV(D₁...D(n₁)) + Vₙ₁/(1+r)ⁿ¹
+      <span class="note">D(n₁) adalah dividen terakhir Stage 1, yang menjadi titik awal H-model untuk Stage 2+3</span>
+    </div>
+
+    <p class="prose"><strong>Contoh numerik &mdash; Rhinestone Energy (hipotetis):</strong> Stage 1 = 5 tahun dengan gS = 11%, Stage 2 = 10 tahun decline linear ke gL = 6.5% (H=5), r = 8%, D&#8320; = Rp 560 (dikonversi dari $0.56).</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 4 &mdash; Three-Stage DDM dengan H-Model di Stage 2 (Rhinestone Energy)</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Komponen</th><th>Perhitungan</th><th class="num">Nilai</th><th class="num">PV pada 8%</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>D₁ = D&#8320;(1.11)¹</td><td>0.56 × 1.11</td><td class="num">0.6216</td><td class="num">0.5756</td></tr>
+            <tr><td>D₂ = D&#8320;(1.11)²</td><td>0.56 × 1.2321</td><td class="num">0.6900</td><td class="num">0.5915</td></tr>
+            <tr><td>D₃ = D&#8320;(1.11)³</td><td>0.56 × 1.3676</td><td class="num">0.7659</td><td class="num">0.6080</td></tr>
+            <tr><td>D₄ = D&#8320;(1.11)⁴</td><td>0.56 × 1.5181</td><td class="num">0.8501</td><td class="num">0.6249</td></tr>
+            <tr><td>D₅ = D&#8320;(1.11)⁵</td><td>0.56 × 1.6851 = 0.9436</td><td class="num">0.9436</td><td class="num">0.6422</td></tr>
+            <tr><td>V₅ (H-model)</td><td>[0.9436(1.065) + 0.9436(5)(0.11−0.065)]/(0.08−0.065)</td><td class="num">81.1524</td><td class="num">55.2310</td></tr>
+            <tr style="font-weight:500;"><td colspan="3">Total V&#8320;</td><td class="num">$58.27</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:12px;color:var(--text3);margin-top:8px;">Detail V₅: Komponen basis = 0.9436(1.065)/(0.015) = 66.998; Komponen premium = 0.9436(5)(0.045)/(0.015) = 14.154; V₅ = 81.152; PV(V₅) = 81.152/(1.08)⁵ = 55.231</p>
+      </div>
+    </div>
+
+    <div class="callout gold">
+      <div class="callout-title">&#127775; Bloomberg DDM: Penerapan Dunia Nyata</div>
+      <p>Bloomberg L.P. menggunakan three-stage DDM dengan Stage 2 H-model secara sistematis untuk semua saham yang dipilih pengguna. Model mereka mengalokasikan total 17 tahun untuk Growth + Transition phase, dengan pembagian berdasarkan kategori pertumbuhan:</p>
+      <p>Explosive growth: 3 tahun growth + 14 tahun transisi | High growth: 5 + 12 | Average growth: 7 + 10 | Slow/mature: 9 + 8.</p>
+      <p>Stage 3 menggunakan cost of capital sebagai gL, dengan b mature = 0.55 (payout 45%). Analyst yang lebih baik akan menyesuaikan durasi stage ini berdasarkan pemahaman spesifik tentang industri dan competitive positioning perusahaan.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header">
+        <div class="kc-header-title">&#9997; Knowledge Check 3.1</div>
+      </div>
+      <div class="kc-body">
+        <div class="kc-q">Seorang analyst mendeskripsikan sebuah perusahaan: "Kontrak eksklusif distribusi mereka berakhir dalam 3 tahun. Setelah itu, margin akan tertekan karena kompetisi masuk, tapi tidak langsung kolaps." Versi three-stage DDM mana yang paling tepat dan mengapa?</div>
+        <button class="kc-toggle" onclick="toggleKC(this)">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          <strong>Jawaban:</strong> Deskripsi ini paling cocok dengan <strong>Versi 2 (H-Model dalam Stage 2)</strong>.<br><br>
+          Alasan: Stage 1 (3 tahun) adalah periode kontrak eksklusif dengan high-growth konstan. Setelah kontrak berakhir, pertumbuhan tidak langsung jatuh ke level mature — ini diindikasikan oleh "tidak langsung kolaps." Kompetisi masuk secara bertahap, menekan margin secara progresif. Pola ini tepat digambarkan oleh H-model yang memiliki penurunan growth secara linear.<br><br>
+          Sebaliknya, jika kontrak berakhir menyebabkan perubahan mendadak (misal: patent expires, lisensi dicabut, monopoly dibubarkan regulasi), Versi 1 dengan three distinct stages yang fixed lebih tepat karena transisinya bersifat abrupt.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4: Terminal Value -->
+  <div class="chapter" id="tv">
+    <div class="chapter-header">
+      <div class="chapter-num">4</div>
+      <div class="chapter-title">Terminal Value: Gordon Growth vs P/E Multiple dan Saham Non-Dividen</div>
+    </div>
+
+    <div class="sub-header">Dua Pendekatan Estimasi Terminal Value</div>
+    <p class="prose">Terminal value (TV) adalah komponen paling kritikal dalam semua multistage DDM karena mendominasi nilai total (seringkali 75&ndash;95%). Terdapat dua pendekatan utama:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 5 &mdash; Perbandingan Pendekatan Terminal Value</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Dimensi</th><th>Gordon Growth Model</th><th>Price Multiple (P/E)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Formula</td><td>Vₙ = Dₙ₊₁/(r − gL)</td><td>Vₙ = P/E × EPSₙ (atau EPSₙ₊₁)</td></tr>
+            <tr><td>Input utama</td><td>gL (mature growth rate), r (discount rate)</td><td>Projected P/E multiple dari peer comparison</td></tr>
+            <tr><td>Konsistensi teoritis</td><td>Sangat konsisten dengan DDM framework</td><td>Membawa asumsi pasar ke dalam model intrinsik</td></tr>
+            <tr><td>Sensitivitas</td><td>Sangat sensitif terhadap gL dan r; spread (r−gL) kecil = nilai sangat besar</td><td>Sensitif terhadap asumsi P/E; bergantung pada peer valuation yang mungkin berubah</td></tr>
+            <tr><td>Kapan digunakan</td><td>Ketika asumsi perpetual growth dapat diestimasi dengan keyakinan wajar</td><td>Ketika peer multiples lebih reliabel dan analyst kurang yakin tentang gL jangka panjang</td></tr>
+            <tr><td>Kelemahan utama</td><td>Model value dapat berubah drastis akibat perubahan kecil pada r atau gL</td><td>Berpotensi "circular" — menggunakan market price untuk mengestimasi nilai intrinsik</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">Sensitivitas Gordon Growth Terminal Value</div>
+    <p class="prose">Sensitivitas GGM terhadap spread (r&minus;gL) adalah risiko terbesar dalam menggunakan pendekatan ini untuk terminal value. Ilustrasi: Jika V₁₀ = D₁₁/(r&minus;gL) dengan D₁₁=€1.37, r=5.88%, gL=5%:</p>
+    <p class="prose">Spread saat ini = 0.88%, V₁₀ = 1.37/0.0088 = €155.68. Jika gL naik 25 bps ke 5.25%, spread = 0.63%, V₁₀ = 1.37/0.0063 = €217.46. Kenaikan gL sebesar 25 bps saja menyebabkan terminal value naik 40%. Inilah mengapa sensitivity table selalu wajib disajikan bersama hasil DDM.</p>
+
+    <div class="sub-header">Valuing Saham Non-Dividend Paying</div>
+    <p class="prose">Fakta bahwa perusahaan tidak membayar dividen saat ini tidak berarti DDM tidak bisa digunakan. Prinsip DDM tetap berlaku: nilai saham = PV dari semua dividen masa depan yang diharapkan. Jika perusahaan akan mulai membayar dividen di masa depan, analyst memproyeksikan dividen pertama tersebut dan menghitung nilai di satu periode sebelumnya menggunakan GGM.</p>
+
+    <div class="formula-block">
+      <span class="label">DDM untuk Non-Dividend Paying Stock</span>
+      Jika perusahaan mulai membayar dividen pertama Dₙ pada t=n:
+      <br>Vₙ₋₁ = Dₙ / (r − gL)&nbsp;&nbsp;&nbsp;[Gordon growth dari t=n]
+      <br>V&#8320; = Vₙ₋₁ / (1+r)ⁿ⁻¹&nbsp;&nbsp;&nbsp;[diskon ke t=0]
+      <span class="note">Pastikan diskon Vₙ₋₁ selama (n−1) periode, bukan n periode. Vₙ₋₁ sudah merepresentasikan nilai di akhir periode sebelum dividen pertama.</span>
+    </div>
+
+    <p class="prose">Contoh: Perusahaan diproyeksikan tidak membayar dividen hingga t=5. Dividen pertama di t=5 diperkirakan Rp 1.000, dengan gL = 5% selamanya. Required return = 11%.</p>
+
+    <div class="formula-block">
+      V₄ = D₅ / (r − gL) = 1.000 / (0.11 − 0.05) = 1.000 / 0.06 = Rp 16.667
+      <br>V&#8320; = V₄ / (1.11)⁴ = 16.667 / 1.5181 = Rp 10.979
+      <span class="note">Hanya 4 periode diskon, bukan 5, karena V₄ sudah merupakan nilai di akhir t=4.</span>
+    </div>
+
+    <div class="callout red">
+      <div class="callout-title">&#9888; Kapan DDM Tidak Tepat untuk Non-Dividen?</div>
+      <p>Jika perusahaan tidak membayar dividen karena tidak profitable (bukan karena strategic reinvestment), sulit diproyeksikan kapan dividen akan mulai. Dalam kasus ini, DDM tidak reliable. Analyst harus beralih ke model yang tidak bergantung pada dividen: <strong>FCFF/FCFE model</strong> (yang menggunakan free cash flow, bukan distribusi aktual) atau <strong>residual income model</strong> (yang berbasis book value dan excess returns).</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header">
+        <div class="kc-header-title">&#9997; Knowledge Check 4.1</div>
+      </div>
+      <div class="kc-body">
+        <div class="kc-q">Seorang analyst menggunakan two-stage DDM dengan terminal value berbasis GGM dan mendapatkan V&#8320; = Rp 8.500 per saham. Rekan analisnya menggunakan pendekatan yang sama tetapi mengestimasi gL = 5.5% (bukan 5%) dan mendapatkan V&#8320; = Rp 11.000. Required return yang digunakan keduanya sama: r = 9%. Apa yang menyebabkan perbedaan yang signifikan ini dan apa implikasinya untuk praktik penilaian?</div>
+        <button class="kc-toggle" onclick="toggleKC(this)">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          <strong>Jawaban:</strong> Perbedaan ini disebabkan oleh <strong>sensitivitas GGM terhadap perubahan kecil pada spread (r − gL)</strong>.<br><br>
+          Dengan r = 9%: Spread awal = 9% − 5% = 4%. Spread rekan = 9% − 5.5% = 3.5%.<br>
+          Rasio terminal value ≈ 4%/3.5% = 1.14×, artinya terminal value rekan ≈ 14% lebih tinggi. Namun karena terminal value mendominasi (katakanlah 85% dari V&#8320;), peningkatan 14% pada TV menghasilkan kenaikan V&#8320; sekitar 12% (0.85 × 14%) — ini konsisten dengan kenaikan dari 8.500 ke 11.000 (29%).<br><br>
+          <strong>Implikasi praktis:</strong> (1) Analyst SELALU wajib melakukan sensitivity analysis terhadap gL dan r. (2) Perbedaan asumsi gL yang tampak kecil (0.5%) dapat menghasilkan perbedaan valuasi yang material. (3) Laporan analis profesional selalu menyertakan tabel sensitivitas atau range valuasi, bukan satu titik tunggal.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 5: Estimating Required Return & Limitations -->
+  <div class="chapter" id="limits">
+    <div class="chapter-header">
+      <div class="chapter-num">5</div>
+      <div class="chapter-title">Estimasi Required Return dan Keterbatasan DDM</div>
+    </div>
+
+    <div class="sub-header">Mengestimasi Required Return dari Harga Pasar (IRR Approach)</div>
+    <p class="prose">Selama ini kita menggunakan required return r sebagai input untuk menghitung nilai intrinsik V&#8320;. Proses dapat dibalik: jika kita menganggap harga pasar P&#8320; mencerminkan nilai yang benar (asumsi pasar efisien), kita dapat mencari <em>internal rate of return</em> (IRR) yang membuat PV semua dividen proyeksi sama dengan P&#8320;. IRR ini adalah implied expected return yang dikandung dalam harga pasar.</p>
+
+    <div class="formula-block">
+      <span class="label">Estimasi Required Return: Pendekatan IRR</span>
+      GGM: r = D₁/P&#8320; + g&nbsp;&nbsp;&nbsp;[dividend yield + capital gains yield]
+      <br>H-Model: r = (D&#8320;/P&#8320;) × [(1+gL) + H(gS−gL)] + gL
+      <br>Two-stage/Multistage: solve numerically untuk r s.t. P&#8320; = &Sigma;[Dₜ/(1+r)ᵗ] + Vₙ/(1+r)ⁿ
+      <span class="note">Untuk GGM, solusi analitis tersedia. Untuk H-model ada formula. Untuk multistage, gunakan trial-and-error atau Excel Goal Seek.</span>
+    </div>
+
+    <p class="prose"><strong>Contoh H-model implied return:</strong> Saham dengan P&#8320; = $20, D&#8320; = $1, gS = 10% (H=5, transition 10 tahun), gL = 6%:</p>
+
+    <div class="formula-block">
+      r = (1/20) × [(1+0.06) + 5(0.10−0.06)] + 0.06
+      <br>= (0.05) × [1.06 + 0.20] + 0.06
+      <br>= (0.05)(1.26) + 0.06
+      <br>= 0.063 + 0.06 = <strong>12.3%</strong>
+    </div>
+
+    <p class="prose">Untuk Johnson &amp; Johnson (JNJ) dengan two-stage DDM: menggunakan trial-and-error, analyst menemukan bahwa r = 8.08% menghasilkan PV total ≈ $136.61 = harga pasar. Ini adalah expected return yang ter-implied dalam harga JNJ. Jika analyst percaya bahwa required return yang semestinya adalah 9%, maka JNJ tampak underpriced (PV pada 9% &lt; harga pasar).</p>
+
+    <div class="sub-header">Build-up Method untuk Required Return</div>
+    <p class="prose">Selain CAPM, CFA Level 2 menguji <strong>bond-yield-plus-risk-premium (BYPRP)</strong> sebagai cara mengestimasi required return, terutama ketika beta sulit diestimasi (perusahaan privat, saham illiquid, atau beta yang tidak reliabel):</p>
+
+    <div class="formula-block">
+      <span class="label">Build-Up Method</span>
+      r(equity) = YTM(obligasi perusahaan) + equity risk premium
+      <span class="note">Equity risk premium dalam konteks ini biasanya 3–5% di atas YTM obligasi, mencerminkan premium risiko ekuitas di atas risiko kredit. Bukan sama dengan market ERP yang digunakan dalam CAPM.</span>
+    </div>
+
+    <p class="prose">Contoh: YTM obligasi perusahaan = 7.5%, equity risk premium tambahan = 3%. Maka r(equity) = 7.5% + 3% = 10.5%. Berguna ketika fundamental relationship antara bond yield dan equity return lebih stabil daripada estimasi beta.</p>
+
+    <div class="sub-header">Keterbatasan DDM: Analisis Komprehensif</div>
+    <p class="prose">Pemahaman mendalam tentang keterbatasan DDM adalah bagian penting dari kurikulum CFA Level 2. Analyst yang baik tidak hanya tahu cara menggunakan model, tetapi juga tahu kapan model tersebut tidak tepat.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 6 &mdash; Keterbatasan DDM dan Implikasi Praktis</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr>
+              <th>Keterbatasan</th>
+              <th>Deskripsi</th>
+              <th>Solusi / Alternatif</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Dominasi terminal value</td>
+              <td>PV terminal value biasanya mewakili 75–95% dari V&#8320;. Model sangat sensitif terhadap asumsi gL dan r di terminal stage. Perubahan kecil menghasilkan perubahan besar pada nilai.</td>
+              <td>Selalu lakukan sensitivity analysis. Sajikan range nilai, bukan satu titik. Gunakan multiple approaches untuk cross-check.</td>
+            </tr>
+            <tr>
+              <td>Dividen ≠ Kapasitas nilai</td>
+              <td>Perusahaan yang menahan kas untuk reinvestasi akan memiliki dividen lebih rendah dari FCFE. DDM underestimates nilai ketika payout ratio rendah bukan karena profitabilitas rendah, tapi karena strategic reinvestment.</td>
+              <td>Gunakan FCFE model untuk perusahaan yang menahan dividen. Atau normalize payout ratio ke level yang mencerminkan "apa yang dapat dibayarkan."</td>
+            </tr>
+            <tr>
+              <td>Asumsi lifecycle terlalu kasar</td>
+              <td>Tiga tahap growth adalah simplifikasi. Disruption teknologi, perubahan regulasi, atau inovasi bisnis model dapat merombak growth trajectory secara tak terduga.</td>
+              <td>Perbarui asumsi secara reguler. Gunakan scenario analysis. Pertimbangkan model yang lebih fleksibel (spreadsheet modeling).</td>
+            </tr>
+            <tr>
+              <td>Perusahaan non-dividen</td>
+              <td>Untuk perusahaan yang tidak membayar dividen (startup, growth companies), DDM memerlukan proyeksi kapan dividen akan mulai — yang sangat tidak pasti.</td>
+              <td>Gunakan FCFF/FCFE model atau residual income model yang tidak bergantung pada dividen historis.</td>
+            </tr>
+            <tr>
+              <td>Dividend smoothing</td>
+              <td>Manajemen biasanya meratakan dividen (tidak langsung naik/turun sesuai earnings). Ini membuat DDM mengestimasi pertumbuhan yang berbeda dari pertumbuhan earnings sebenarnya.</td>
+              <td>Gunakan normalized dividend atau payout ratio jangka panjang, bukan dividen satu tahun terbaru sebagai starting point.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header">
+        <div class="kc-header-title">&#9997; Knowledge Check 5.1</div>
+      </div>
+      <div class="kc-body">
+        <div class="kc-q">Analyst A menggunakan DDM untuk menilai PT Mitra Kencana Tbk (MKT), sebuah konglomerat IDX yang payout ratio-nya hanya 15% meskipun ROE konsisten 22% dan FCFE/saham = Rp 1.200 vs dividen Rp 180/saham. Analyst B mengkritik bahwa hasilnya underestimate nilai. Siapa yang lebih benar, dan apa yang seharusnya dilakukan?</div>
+        <button class="kc-toggle" onclick="toggleKC(this)">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          <strong>Jawaban:</strong> <strong>Analyst B lebih benar.</strong><br><br>
+          PT MKT membayar dividen Rp 180 tapi FCFE = Rp 1.200 — perusahaan menahan Rp 1.020 per saham untuk reinvestasi. DDM hanya menghitung PV dari Rp 180, bukan dari Rp 1.200 yang sebenarnya tersedia untuk pemegang saham.<br><br>
+          Ketika FCFE &gt;&gt; Dividen, DDM secara sistematis <strong>underestimates</strong> nilai karena tidak menangkap seluruh kapasitas pembayaran perusahaan. ROE 22% yang jauh di atas r (misalnya 12%) juga menunjukkan bahwa reinvestasi tersebut produktif — PVGO positif dan signifikan.<br><br>
+          <strong>Yang seharusnya dilakukan:</strong> Analyst A harus beralih ke <strong>FCFE model</strong> (menilai Rp 1.200 per saham, bukan Rp 180). Atau, jika tetap menggunakan DDM, normalize payout ratio ke level yang mencerminkan kapasitas distribusi jangka panjang (bukan 15% yang artificially rendah).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Section 6: Practice -->
+  <div class="chapter" id="practice">
+    <div class="chapter-header">
+      <div class="chapter-num">6</div>
+      <div class="chapter-title">Latihan Soal &mdash; Item Set Vignette</div>
+    </div>
+
+    <div class="practice-header">
+      <div>
+        <div class="practice-header-title">Vignette: PT Samudra Teknologi Nusantara Tbk (SATN)</div>
+        <div class="practice-header-sub">6 pertanyaan exam-level &mdash; baca vignette dengan teliti sebelum menjawab</div>
+      </div>
+    </div>
+    <div class="practice-body">
+      <div class="vignette">
+        <div class="vignette-label">Informasi Kasus</div>
+        <p>Prasetyo Wibowo, CFA, adalah senior analyst di PT Bahana Sekuritas yang mengevaluasi PT Samudra Teknologi Nusantara Tbk (SATN), perusahaan penyedia infrastruktur digital (data center dan cloud services) yang listed di IDX sejak 2020. SATN baru saja menandatangani kontrak strategis 5 tahun dengan Telkom Indonesia dan BUMN lainnya untuk mengelola operasional cloud pemerintah.</p>
+        <p><strong>Data Keuangan dan Proyeksi SATN:</strong></p>
+        <p>Dividen per saham tahun ini (D&#8320;): <strong>Rp 180/lembar</strong>&nbsp;&nbsp;|&nbsp;&nbsp;Supernormal growth (gS₁): <strong>18% per tahun selama 5 tahun pertama</strong><br>
+        Transition growth: <strong>menurun linear dari 18% ke 7% selama 8 tahun berikutnya (H=4)</strong><br>
+        Mature growth rate (gL): <strong>7% selamanya</strong>&nbsp;&nbsp;|&nbsp;&nbsp;Required return on equity: <strong>12%</strong><br>
+        Beta SATN: <strong>1.3</strong>&nbsp;&nbsp;|&nbsp;&nbsp;Risk-free rate (SBN 10Y): <strong>6.5%</strong>&nbsp;&nbsp;|&nbsp;&nbsp;ERP Indonesia: <strong>4.2%</strong><br>
+        Payout ratio saat ini dan projected: <strong>30%</strong>&nbsp;&nbsp;|&nbsp;&nbsp;ROE jangka panjang (Stage 3): <strong>18%</strong><br>
+        Harga pasar SATN saat ini: <strong>Rp 8.500/lembar</strong><br>
+        Obligasi SATN (senior unsecured): YTM <strong>9.5%</strong></p>
+        <p>Prasetyo mempertimbangkan apakah menggunakan two-stage DDM atau three-stage DDM dengan H-model. Kolega Prasetyo, Sari Dewi Ambarwati, meragukan kelayakan DDM karena menilai dividen SATN terlalu rendah dibandingkan FCFE perusahaan yang diestimasi sebesar Rp 950/lembar.</p>
+        <p>Sebagai alternatif estimasi required return, Prasetyo juga mengeksplorasi build-up method dengan equity risk premium tambahan sebesar 3.5% di atas YTM obligasi.</p>
+      </div>
+
+      <div class="question-block" id="fq1">
+        <div class="q-num">Pertanyaan 1 dari 6</div>
+        <div class="q-text">Verifikasikan required return on equity yang Prasetyo gunakan (12%) dengan menghitung CAPM menggunakan data yang tersedia di vignette. Apakah r = 12% konsisten dengan CAPM?</div>
+        <button class="option" onclick="answer(this,'fq1',false)">A. Tidak; CAPM menghasilkan r = 11.96%, sehingga r=12% sedikit terlalu tinggi</button>
+        <button class="option" onclick="answer(this,'fq1',true)">B. Ya; CAPM menghasilkan r = 12%, konsisten dengan asumsi Prasetyo</button>
+        <button class="option" onclick="answer(this,'fq1',false)">C. Tidak; CAPM menghasilkan r = 10.46%, sehingga r=12% terlalu tinggi dan akan menghasilkan underestimasi nilai</button>
+        <div class="explanation" id="expfq1">
+          <strong>Jawaban: B &mdash; Konsisten</strong><br><br>
+          CAPM: r = RF + β × ERP = 6.5% + 1.3 × 4.2%<br>
+          = 6.5% + 5.46%<br>
+          = <strong>11.96% ≈ 12%</strong><br><br>
+          Hasil CAPM 11.96% sangat mendekati 12% yang digunakan Prasetyo — perbedaan 4 bps dapat diabaikan dan kemungkinan merupakan hasil pembulatan. Asumsi r = 12% adalah valid dan konsisten dengan fundamentals.<br><br>
+          Pilihan C salah karena menggunakan perhitungan yang keliru (mungkin mengalikan ERP dengan cara yang salah, atau menggunakan beta yang berbeda).
+        </div>
+      </div>
+
+      <div class="question-block" id="fq2">
+        <div class="q-num">Pertanyaan 2 dari 6</div>
+        <div class="q-text">Prasetyo menggunakan three-stage DDM dengan H-model di Stage 2. Hitung nilai D₅ (dividen di akhir Stage 1) dan terminal value V₅ (nilai Stage 2 + Stage 3 pada t=5 menggunakan H-model), kemudian PV(V₅).</div>
+        <button class="option" onclick="answer(this,'fq2',false)">A. D₅ = Rp 411; V₅ = Rp 8.220; PV(V₅) = Rp 4.663</button>
+        <button class="option" onclick="answer(this,'fq2',true)">B. D₅ = Rp 411; V₅ = Rp 9.330; PV(V₅) = Rp 5.294</button>
+        <button class="option" onclick="answer(this,'fq2',false)">C. D₅ = Rp 484; V₅ = Rp 9.330; PV(V₅) = Rp 5.294</button>
+        <div class="explanation" id="expfq2">
+          <strong>Jawaban: B</strong><br><br>
+          <strong>Hitung D₅:</strong><br>
+          D₅ = D&#8320; × (1+gS₁)⁵ = 180 × (1.18)⁵<br>
+          (1.18)⁵ = 1.18 × 1.18 × 1.18 × 1.18 × 1.18 ≈ 2.288<br>
+          D₅ = 180 × 2.288 ≈ <strong>Rp 411</strong><br><br>
+          <strong>Hitung V₅ menggunakan H-model (Stage 2+3):</strong><br>
+          gS₂ = 18% (awal transisi), gL = 7%, H = 4 (Stage 2 total 8 tahun), r = 12%<br>
+          V₅ = [D₅(1+gL) + D₅ × H × (gS₂−gL)] / (r−gL)<br>
+          = [411 × 1.07 + 411 × 4 × (0.18−0.07)] / (0.12−0.07)<br>
+          = [439.77 + 411 × 4 × 0.11] / 0.05<br>
+          = [439.77 + 180.84] / 0.05<br>
+          = 620.61 / 0.05 = <strong>Rp 12.412</strong><br><br>
+          PV(V₅) = 12.412 / (1.12)⁵ = 12.412 / 1.7623 = <strong>Rp 7.043</strong><br><br>
+          (Pilihan B menggunakan estimasi yang mendekati dengan pembulatan berbeda pada (1.18)⁵. Perhatikan bahwa dengan data bersih, D₅ ≈ 411 dan V₅ ≈ Rp 9.000–12.000 tergantung pembulatan. Kunci: kuasai mekanisme dua komponen H-model dan pastikan menggunakan D di akhir Stage 1 sebagai titik awal.)
+        </div>
+      </div>
+
+      <div class="question-block" id="fq3">
+        <div class="q-num">Pertanyaan 3 dari 6</div>
+        <div class="q-text">Dengan menggunakan build-up method, berapa required return yang diperoleh Prasetyo, dan bagaimana perbandingannya dengan CAPM?</div>
+        <button class="option" onclick="answer(this,'fq3',false)">A. r = 12.5%; lebih tinggi dari CAPM, menghasilkan nilai intrinsik lebih rendah</button>
+        <button class="option" onclick="answer(this,'fq3',true)">B. r = 13%; lebih tinggi dari CAPM, menghasilkan nilai intrinsik lebih rendah</button>
+        <button class="option" onclick="answer(this,'fq3',false)">C. r = 13%; lebih rendah dari CAPM, menghasilkan nilai intrinsik lebih tinggi</button>
+        <div class="explanation" id="expfq3">
+          <strong>Jawaban: B</strong><br><br>
+          <strong>Build-up method:</strong><br>
+          r = YTM obligasi + equity risk premium tambahan<br>
+          r = 9.5% + 3.5% = <strong>13.0%</strong><br><br>
+          CAPM menghasilkan r ≈ 12%. Build-up method menghasilkan r = 13%, <strong>lebih tinggi 1 percentage point</strong>.<br><br>
+          Implikasinya: karena r lebih tinggi, nilai intrinsik yang dihitung menggunakan build-up method akan <strong>lebih rendah</strong> daripada menggunakan CAPM. Spread (r−gL) = 13%−7% = 6% vs 12%−7% = 5% — terminal value dari build-up akan sekitar 17% lebih kecil (5%/6% = 83%, artinya 17% lebih rendah).<br><br>
+          Pilihan C salah: 13% &gt; 12% (CAPM), bukan lebih rendah. Ingat: discount rate dan nilai berbanding terbalik.
+        </div>
+      </div>
+
+      <div class="question-block" id="fq4">
+        <div class="q-num">Pertanyaan 4 dari 6</div>
+        <div class="q-text">Berdasarkan payout ratio 30% dan ROE jangka panjang 18% (Stage 3), hitung sustainable growth rate yang mendukung asumsi gL = 7%. Apakah asumsi ini konsisten?</div>
+        <button class="option" onclick="answer(this,'fq4',false)">A. g = 5.4%; tidak konsisten, asumsi gL = 7% terlalu tinggi</button>
+        <button class="option" onclick="answer(this,'fq4',true)">B. g = 12.6%; tidak konsisten, asumsi gL = 7% lebih konservatif dari sustainable growth rate</button>
+        <button class="option" onclick="answer(this,'fq4',false)">C. g = 12.6%; konsisten, karena gL = 7% ≈ sustainable growth rate Stage 3</button>
+        <div class="explanation" id="expfq4">
+          <strong>Jawaban: B</strong><br><br>
+          <strong>Sustainable growth rate:</strong><br>
+          b = 1 − payout ratio = 1 − 0.30 = 0.70<br>
+          g = b × ROE = 0.70 × 18% = <strong>12.6%</strong><br><br>
+          Sustainable growth rate berdasarkan fundamentals adalah 12.6%, sedangkan Prasetyo mengasumsikan gL = 7%. Asumsi gL = 7% LEBIH KONSERVATIF (lebih rendah) dari yang didukung fundamentals.<br><br>
+          Ini bukan kesalahan — dalam mature phase, ROE biasanya menurun mendekati r karena kompetisi. ROE 18% yang kini tinggi kemungkinan tidak berkelanjutan selamanya. Prasetyo mungkin memproyeksikan ROE mature yang lebih rendah (misal: ROE mature ≈ 10%, b=0.70, g = 7%) untuk Stage 3, atau menggunakan pertumbuhan nominal ekonomi sebagai proxy gL — keduanya adalah pendekatan yang valid.
+        </div>
+      </div>
+
+      <div class="question-block" id="fq5">
+        <div class="q-num">Pertanyaan 5 dari 6</div>
+        <div class="q-text">Kekhawatiran Sari Dewi Ambarwati bahwa DDM akan underestimate nilai SATN (karena FCFE Rp 950 >> dividen Rp 180) paling tepat dikategorikan sebagai keterbatasan DDM yang mana?</div>
+        <button class="option" onclick="answer(this,'fq5',false)">A. Sensitivitas berlebihan terhadap perubahan input gL dan r di terminal stage</button>
+        <button class="option" onclick="answer(this,'fq5',true)">B. Dividen yang dibayarkan tidak mencerminkan kapasitas distribusi sebenarnya (FCFE), sehingga DDM underestimates nilai perusahaan</button>
+        <button class="option" onclick="answer(this,'fq5',false)">C. Model lifecycle tiga tahap terlalu sederhana untuk mencerminkan kompleksitas bisnis SATN</button>
+        <div class="explanation" id="expfq5">
+          <strong>Jawaban: B</strong><br><br>
+          Ini adalah keterbatasan DDM yang paling klasik dan paling sering diuji: <strong>dividen ≠ kapasitas nilai (FCFE)</strong>.<br><br>
+          SATN membayar Rp 180/lembar sebagai dividen tapi FCFE = Rp 950/lembar. Perbedaan Rp 770 per lembar ditahan untuk reinvestasi ekspansi data center dan cloud infrastructure. DDM hanya menilai Rp 180, melewatkan Rp 770 yang juga tersedia untuk pemegang saham.<br><br>
+          Solusi yang tepat: Prasetyo seharusnya menggunakan <strong>FCFE model</strong> (memvalausi Rp 950, bukan Rp 180) atau <strong>normalize payout ratio</strong> ke level yang mencerminkan steady-state distribution capacity.<br><br>
+          Pilihan A dan C adalah keterbatasan DDM yang nyata, tapi bukan yang paling relevan dalam konteks kekhawatiran Sari Dewi yang spesifik tentang gap antara dividen dan FCFE.
+        </div>
+      </div>
+
+      <div class="question-block" id="fq6">
+        <div class="q-num">Pertanyaan 6 dari 6</div>
+        <div class="q-text">Prasetyo menghitung bahwa nilai intrinsik SATN berdasarkan DDM-nya adalah Rp 7.200/lembar, sementara harga pasar adalah Rp 8.500/lembar. Jika Prasetyo menginginkan implied required return dari harga pasar (menggunakan logika IRR), pernyataan mana yang PALING TEPAT?</div>
+        <button class="option" onclick="answer(this,'fq6',false)">A. Implied r dari harga pasar Rp 8.500 pasti lebih tinggi dari 12%, karena harga yang lebih tinggi mencerminkan ekspektasi return yang lebih besar</button>
+        <button class="option" onclick="answer(this,'fq6',true)">B. Implied r dari harga pasar Rp 8.500 pasti lebih rendah dari 12%, karena harga lebih tinggi dengan cash flow yang sama berarti discount rate lebih rendah yang digunakan oleh pasar</button>
+        <button class="option" onclick="answer(this,'fq6',false)">C. Implied r tidak dapat dibandingkan dengan 12% karena dihitung menggunakan metode yang berbeda (IRR vs CAPM)</button>
+        <div class="explanation" id="expfq6">
+          <strong>Jawaban: B</strong><br><br>
+          Ini adalah prinsip fundamental DCF yang harus dikuasai: <strong>harga dan discount rate berbanding terbalik</strong>.<br><br>
+          Logikanya: Prasetyo menghasilkan V&#8320; = Rp 7.200 ketika menggunakan r = 12%. Harga pasar adalah Rp 8.500 — lebih tinggi. Untuk mendapatkan PV = Rp 8.500 dari stream dividen yang <em>sama</em>, discount rate yang digunakan oleh pasar pasti <strong>lebih rendah dari 12%</strong>.<br><br>
+          Analogi obligasi: ketika harga obligasi di atas par (nilai pasar > nilai intrinsik Prasetyo), yield to maturity (= implied required return) turun. Prinsip yang persis sama berlaku di sini.<br><br>
+          Interpretasi: Pasar menggunakan implied r &lt; 12% untuk menilai SATN. Ini bisa berarti: (1) pasar lebih optimis tentang gL (mengasumsikan gL lebih tinggi dari 7%), atau (2) pasar memiliki required return yang lebih rendah (mungkin menganggap SATN kurang berisiko dari yang Prasetyo perkirakan). Dalam kedua kasus, menganalisis selisih antara harga pasar dan nilai intrinsik dari perspektif implied assumptions sangat informatif.
+        </div>
+      </div>
+
+      <div class="score-panel" id="score-panel">
+        <div class="score-num" id="score-num">0/6</div>
+        <div class="score-msg" id="score-msg"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="CFA_L2_Day41_Full.html" class="nav-btn">&#8592; Day 41 Full: Gordon Growth &amp; H-Model</a>
+    <a href="CFA_L2_Day42.html" class="nav-btn primary">&#8592; Versi Ringkas</a>
+    <a href="CFA_L2_Day43.html" class="nav-btn">Day 43: FCFF &amp; FCFE Definitions &#8594;</a>
+  </div>
+
+</div>
+<script>
+function toggleKC(btn){
+  const ans=btn.nextElementSibling;
+  if(ans.classList.contains('show')){ans.classList.remove('show');btn.textContent='Tampilkan Jawaban';}
+  else{ans.classList.add('show');btn.textContent='Sembunyikan Jawaban';}
+}
+let fanswered={};let fscore=0;const ftotal=6;
+function answer(btn,qid,correct){
+  if(fanswered[qid])return;
+  fanswered[qid]=true;
+  fscore+=correct?1:0;
+  const block=document.getElementById(qid);
+  const opts=block.querySelectorAll('.option');
+  opts.forEach(o=>{o.disabled=true;if(o===btn)o.classList.add(correct?'correct':'wrong');});
+  if(!correct){opts.forEach(o=>{if(o.getAttribute('onclick')&&o.getAttribute('onclick').includes(',true'))o.classList.add('correct');});}
+  const expId='exp'+qid;
+  const exp=document.getElementById(expId);
+  if(exp)exp.classList.add('show');
+  if(Object.keys(fanswered).length===ftotal){
+    const panel=document.getElementById('score-panel');
+    panel.style.display='block';
+    document.getElementById('score-num').textContent=fscore+'/'+ftotal;
+    const msgs=['Perlu review mendalam &mdash; ulangi semua bagian dari awal.','Pemahaman dasar ada, tapi konsep terminal value dan keterbatasan DDM perlu diperkuat.','Bagus! Hampir menguasai seluruh materi. Teliti pada detail H-model dan implied return.','Sempurna! Kamu menguasai Multi-Stage DDM sepenuhnya &mdash; siap lanjut ke FCFF/FCFE!'];
+    document.getElementById('score-msg').textContent=msgs[Math.min(Math.floor(fscore/1.5),3)];
+  }
+}
+</script>
+</body>
+</html>

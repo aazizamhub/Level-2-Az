@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 48 · Full · Continuing RI &amp; Adjustments Akuntansi</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #fafaf8;
+  --bg2:     #f4f3ef;
+  --bg3:     #eeece7;
+  --border:  rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text:    #1a1a2e;
+  --text2:   #4a4a6a;
+  --text3:   #8a8aaa;
+  --gold:    #9a6e1a;
+  --gold2:   #7a5010;
+  --gold-bg: rgba(154,110,26,0.08);
+  --blue:    #1a5fa8;
+  --blue-bg: rgba(26,95,168,0.08);
+  --green:   #1a7a4a;
+  --green-bg:rgba(26,122,74,0.08);
+  --red:     #b83232;
+  --red-bg:  rgba(184,50,50,0.08);
+  --amber:   #a06010;
+  --amber-bg:rgba(160,96,16,0.08);
+  --r:10px; --r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.8;}
+.page{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;border:1px solid rgba(26,95,168,0.2);}
+.hero{margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--border);}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:36px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:15px;color:var(--text2);}
+.meta-row{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:36px;}
+.toc-title{font-size:12px;color:var(--text3);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:12px;font-weight:500;}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.toc-list li a{font-size:13px;color:var(--blue);text-decoration:none;display:flex;align-items:center;gap:8px;}
+.toc-list li a:hover{text-decoration:underline;}
+.toc-num{font-size:11px;color:var(--text3);min-width:20px;}
+.chapter{margin-bottom:40px;}
+.chapter-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--gold-bg);}
+.chapter-num{font-family:'DM Serif Display',serif;font-size:28px;color:var(--gold);line-height:1;}
+.chapter-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);line-height:1.2;}
+.sub-header{font-size:17px;font-weight:500;color:var(--text);margin:24px 0 12px;padding-left:12px;border-left:3px solid var(--gold);}
+.prose{font-size:14px;color:var(--text2);line-height:1.85;margin-bottom:14px;}
+.prose strong{color:var(--text);font-weight:500;}
+.prose em{font-style:italic;}
+.formula-block{background:var(--bg2);border:1px solid var(--border2);border-left:4px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:16px 20px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold2);line-height:2;}
+.formula-block .label{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:8px;}
+.formula-block .note{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text3);font-style:italic;display:block;margin-top:8px;}
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:20px 0;}
+.exhibit-title{background:var(--bg3);padding:10px 16px;font-size:12px;font-weight:500;color:var(--text2);border-bottom:1px solid var(--border);letter-spacing:0.03em;}
+.exhibit-body{padding:16px;overflow-x:auto;}
+.reg-table{width:100%;border-collapse:collapse;font-size:13px;}
+.reg-table th{text-align:left;padding:8px 12px;background:var(--bg3);color:var(--text3);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border2);}
+.reg-table th.right{text-align:right;}
+.reg-table td{padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+.reg-table td.right{text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text2);}
+.reg-table td.mono{font-family:'JetBrains Mono',monospace;font-size:12px;}
+.reg-table tr:last-child td{border-bottom:none;}
+.reg-table .sig{color:var(--green);font-weight:500;}
+.reg-table .warn{color:var(--amber);}
+.reg-table .highlight{background:var(--gold-bg);}
+.reg-table .name{font-weight:500;color:var(--text);}
+.callout{border-radius:var(--r);padding:16px 18px;margin:16px 0;}
+.callout-title{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;}
+.callout p{font-size:13px;color:var(--text2);line-height:1.75;}
+.callout p + p{margin-top:8px;}
+.callout.blue{background:var(--blue-bg);border:1px solid rgba(26,95,168,0.15);}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.amber{background:var(--amber-bg);border:1px solid rgba(160,96,16,0.15);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.green{background:var(--green-bg);border:1px solid rgba(26,122,74,0.15);}
+.callout.green .callout-title{color:var(--green);}
+.callout.red{background:var(--red-bg);border:1px solid rgba(184,50,50,0.15);}
+.callout.red .callout-title{color:var(--red);}
+.callout.gold{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);}
+.callout.gold .callout-title{color:var(--gold);}
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:24px 0;overflow:hidden;}
+.kc-header{background:var(--gold-bg);padding:12px 18px;border-bottom:1px solid rgba(154,110,26,0.15);}
+.kc-header-title{font-size:12px;font-weight:500;color:var(--gold);letter-spacing:0.06em;text-transform:uppercase;}
+.kc-body{padding:18px;}
+.kc-q{font-size:13px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.6;}
+.kc-answer{background:var(--bg3);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);line-height:1.75;display:none;}
+.kc-answer.show{display:block;}
+.kc-answer strong{color:var(--green);}
+.kc-toggle{background:none;border:1px solid var(--border2);border-radius:var(--r-sm);padding:6px 14px;font-size:12px;color:var(--text3);cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px;transition:all 0.15s;}
+.kc-toggle:hover{border-color:var(--gold);color:var(--gold);}
+.bullet-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin:10px 0;}
+.bullet-list li{display:flex;gap:10px;font-size:13px;color:var(--text2);line-height:1.7;}
+.bullet-list li::before{content:'&#9632;';color:var(--gold);font-size:9px;margin-top:5px;flex-shrink:0;}
+.divider{height:1px;background:var(--border);margin:36px 0;}
+.practice-header{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);border-radius:var(--r) var(--r) 0 0;padding:16px 20px;display:flex;align-items:center;gap:12px;}
+.practice-icon{font-size:20px;}
+.practice-header-text{flex:1;}
+.practice-header-title{font-size:16px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);margin-top:2px;}
+.practice-body{background:var(--bg2);border:1px solid rgba(154,110,26,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:24px;}
+.vignette{background:var(--bg3);border-left:4px solid var(--gold);padding:18px 20px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:28px;font-size:13px;color:var(--text2);line-height:1.85;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;font-weight:500;}
+.question-block{margin-bottom:24px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:6px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:12px;line-height:1.65;}
+.option{display:block;width:100%;text-align:left;padding:11px 16px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:8px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.6;}
+.option:hover:not(:disabled){border-color:var(--border2);background:var(--bg2);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:14px 16px;font-size:13px;color:var(--text2);margin-top:10px;line-height:1.8;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:28px;margin-top:20px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:52px;margin-bottom:8px;}
+.score-msg{font-size:14px;color:var(--text2);}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+.nav-day{font-size:12px;color:var(--text3);text-align:center;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II &middot; <span>Equity Valuation</span> &middot; LM5</div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <div class="version-badge">Versi Full</div>
+      <div class="day-badge">Day 48 of 90</div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Jumat, 26 Juni 2026</div>
+    <h1 class="hero-title">Continuing RI &amp; Adjustments Akuntansi</h1>
+    <p class="hero-sub">Residual Income Valuation &mdash; LM5, Subtopik 2 dari 2</p>
+    <div class="meta-row">
+      <div class="meta-pill">&#128218; <b>Materi lengkap</b></div>
+      <div class="meta-pill">&#127470;&#127465; <b>Bahasa Indonesia</b></div>
+      <div class="meta-pill">&#9878;&#65039; Bobot ujian <b>~12%</b></div>
+      <div class="meta-pill">&#9200; Est. baca <b>50&ndash;65 menit</b></div>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ul class="toc-list">
+      <li><a href="#los"><span class="toc-num">0.</span> Learning Outcomes (LOS)</a></li>
+      <li><a href="#s1"><span class="toc-num">1.</span> Multistage RI Model &amp; Continuing Residual Income</a></li>
+      <li><a href="#s2"><span class="toc-num">2.</span> Persistence Factor (&omega;) &mdash; Model Dechow, Hutton &amp; Sloan</a></li>
+      <li><a href="#s3"><span class="toc-num">3.</span> Hubungan RI Model dengan DDM dan FCF Model</a></li>
+      <li><a href="#s4"><span class="toc-num">4.</span> Pelanggaran Clean Surplus Relation (IFRS &amp; US GAAP)</a></li>
+      <li><a href="#s5"><span class="toc-num">5.</span> Adjustment Akuntansi: Intangibles, Non-recurring &amp; Aggressive Accounting</a></li>
+      <li><a href="#s6"><span class="toc-num">6.</span> Panduan Penggunaan RI Model: Kekuatan, Kelemahan, &amp; Pedoman</a></li>
+      <li><a href="#latihan"><span class="toc-num">7.</span> Latihan Soal &mdash; Item Set Vignette (6 Soal)</a></li>
+    </ul>
+  </div>
+
+  <!-- Section 0: LOS -->
+  <div class="chapter" id="los">
+    <div class="chapter-header">
+      <div class="chapter-num">0</div>
+      <div class="chapter-title">Learning Outcomes (LOS)</div>
+    </div>
+    <div class="callout gold">
+      <div class="callout-title">&#127919; Yang Harus Dikuasai Setelah Belajar Hari Ini</div>
+      <p>Berdasarkan CFA Institute curriculum (LM5 &mdash; Residual Income Valuation):</p>
+    </div>
+    <ul class="bullet-list" style="margin-top:12px;">
+      <li><strong>Explain</strong> continuing residual income and justify an estimate of continuing residual income at the forecast horizon, given company and industry prospects.</li>
+      <li><strong>Calculate</strong> the intrinsic value of a common stock using the multistage residual income model, including models with a persistence factor.</li>
+      <li><strong>Compare</strong> residual income models to dividend discount and free cash flow models.</li>
+      <li><strong>Explain</strong> strengths and weaknesses of residual income models and justify the selection of a residual income model to value a company's common stock.</li>
+      <li><strong>Describe</strong> accounting issues in applying residual income models, including violations of the clean surplus relation, intangible assets, and non-recurring items.</li>
+      <li><strong>Evaluate</strong> whether a stock is overvalued, fairly valued, or undervalued using a residual income model.</li>
+    </ul>
+  </div>
+
+  <!-- Section 1: Multistage RI -->
+  <div class="chapter" id="s1">
+    <div class="chapter-header">
+      <div class="chapter-num">1</div>
+      <div class="chapter-title">Multistage RI Model &amp; Continuing Residual Income</div>
+    </div>
+
+    <div class="sub-header">Mengapa Perlu Multistage?</div>
+    <p class="prose">Single-stage residual income model mengasumsikan bahwa RI tumbuh dengan laju konstan <em>g</em> selamanya. Asumsi ini seringkali terlalu sederhana, terutama untuk perusahaan yang sedang dalam fase pertumbuhan tinggi atau yang profitabilitasnya diperkirakan akan berubah secara signifikan. Dalam dunia nyata, <strong>Return on Equity (ROE) cenderung mean-reverting</strong> &mdash; artinya ROE yang sangat tinggi akan perlahan turun menuju tingkat rata-rata industri seiring meningkatnya persaingan, dan sebaliknya.</p>
+    <p class="prose">Untuk mengakomodasi dinamika ini, analis menggunakan <strong>multistage residual income model</strong>: forecast RI secara eksplisit selama periode tertentu (Stage 1), kemudian estimasi <em>continuing residual income</em> (CRI) &mdash; yaitu RI setelah horizon forecast &mdash; menggunakan berbagai asumsi yang lebih sederhana.</p>
+
+    <div class="sub-header">Formula Umum Multistage RI dengan Terminal Premium</div>
+    <div class="formula-block">
+      <span class="label">Multistage RI Model &mdash; Versi Terminal Premium</span>
+      V&#8320; = B&#8320; + &Sigma;&#7511;&#8348;&#8321;&#7488; [RI&#8348; / (1+r)&#7511;] + (P&#7488; &minus; B&#7488;) / (1+r)&#7488;
+      <span class="note">Ekuivalen dengan: V&#8320; = B&#8320; + &Sigma;[RI&#8348;/(1+r)&#7511;] + &Sigma;[(ROE&#8348;&minus;r)&times;B&#8348;&#8315;&#185;/(1+r)&#7511;]</span>
+      <span class="note">P&#7488; = perkiraan harga saham di akhir horizon T; B&#7488; = book value per share di akhir T</span>
+      <span class="note">(P&#7488;&minus;B&#7488;) = terminal premium atas book value; bisa diestimasi dari P/B multiple</span>
+    </div>
+    <p class="prose">Perlu dipahami bahwa untuk horizon T yang sangat panjang, kemungkinan besar RI sudah konvergen ke nol sehingga terminal premium (P&#7488;&minus;B&#7488;) mendekati nol. Sebaliknya, untuk horizon T yang pendek, analis perlu mengestimasi nilai terminal premium secara eksplisit menggunakan model valuasi seperti DDM, P/E multiple, atau P/B multiple.</p>
+
+    <div class="sub-header">Empat Asumsi Continuing Residual Income</div>
+    <p class="prose">CFA curriculum mengidentifikasi empat asumsi utama yang sering digunakan analis ketika memodelkan continuing RI setelah horizon forecast:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 1: Empat Asumsi Continuing Residual Income</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr>
+            <th>Asumsi</th>
+            <th>Rumus Terminal Value</th>
+            <th>Implikasi ROE</th>
+            <th>Kapan Digunakan</th>
+          </tr>
+          <tr>
+            <td class="name">1. RI berlanjut positif selamanya (perpetuity)</td>
+            <td class="mono">TV = RI&#7488; / r</td>
+            <td>ROE tetap di atas r selamanya</td>
+            <td>Perusahaan dengan durable competitive advantage (monopoli regulasi, network effects)</td>
+          </tr>
+          <tr>
+            <td class="name">2. RI = 0 mulai tahun T+1</td>
+            <td class="mono">TV = 0</td>
+            <td>ROE konvergen ke r persis</td>
+            <td>Industri kompetitif, tidak ada barrier to entry; horizon T panjang</td>
+          </tr>
+          <tr>
+            <td class="name">3. RI memudar menggunakan persistence factor &omega;</td>
+            <td class="mono">TV = RI&#7488; / [(1+r&minus;&omega;)(1+r)&#7488;&#8315;&#185;]</td>
+            <td>ROE revert ke mean secara eksponensial; &omega; mengontrol kecepatan</td>
+            <td>Sebagian besar perusahaan dalam industri kompetitif; &omega; &#8776; 0.62 secara empiris</td>
+          </tr>
+          <tr>
+            <td class="name">4. RI mencerminkan mean reversion ROE ke level industri</td>
+            <td class="mono">Forecast ROE eksplisit sampai = industri mean; kemudian TV = 0</td>
+            <td>ROE diramal fade ke rata-rata industri; Lee-Swaminathan model</td>
+            <td>Tersedia data ROE industri yang reliable; horizon dapat diperkirakan</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout blue">
+      <div class="callout-title">&#128161; Insight Penting: Proporsi Terminal Value</div>
+      <p>Dalam RI model, <strong>terminal value biasanya merupakan proporsi yang jauh lebih kecil</strong> dari total nilai dibandingkan dengan DDM atau FCF model. Ini karena book value B&#8320; sudah mencerminkan nilai "aset-in-place" yang besar di awal. Dalam DDM/FCF, terminal value sering mewakili 60&ndash;80% dari total PV, membuat valuasi sangat sensitif terhadap asumsi jangka panjang. RI model justru sebaliknya &mdash; inilah salah satu keunggulan praktisnya.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">&#10003; Knowledge Check 1</div></div>
+      <div class="kc-body">
+        <div class="kc-q">PT Surya Prima memiliki B&#8320; = Rp 5.000/saham, r = 12%, dan RI yang diforecast sebagai berikut: Tahun 1 = Rp 500, Tahun 2 = Rp 450, Tahun 3 = Rp 400. Setelah Tahun 3, analis mengasumsikan RI = 0. Berapakah nilai intrinsik saham PT Surya Prima?</div>
+        <button class="kc-toggle" onclick="toggleKC(this)">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          <strong>V&#8320; = B&#8320; + PV(RI&#8321;) + PV(RI&#8322;) + PV(RI&#8323;)</strong><br>
+          PV(RI&#8321;) = 500 / 1.12 = Rp 446,43<br>
+          PV(RI&#8322;) = 450 / 1.12&sup2; = 450 / 1.2544 = Rp 358,71<br>
+          PV(RI&#8323;) = 400 / 1.12&#179; = 400 / 1.4049 = Rp 284,69<br>
+          Total PV RI = Rp 1.089,83<br>
+          <strong>V&#8320; = 5.000 + 1.089,83 = Rp 6.089,83 per saham</strong><br>
+          Catatan: Terminal value = 0 karena asumsi RI = 0 setelah T=3. Sebagian besar nilai (Rp 5.000 = 82%) berasal dari book value, bukan dari terminal value.
+        </div>
+      </div>
+    </div>
+
+    <div class="callout amber">
+      <div class="callout-title">&#9888;&#65039; Jebakan Exam: Memilih Asumsi CRI yang Tepat</div>
+      <p>Soal CFA sering meminta kandidat untuk memilih asumsi continuing RI yang paling tepat berdasarkan karakteristik perusahaan atau industri. Ingat: asumsi perpetuity (&omega;=1) hanya sesuai untuk perusahaan dengan <em>durable competitive advantage</em> yang jelas. Asumsi TV=0 cocok untuk industri sangat kompetitif atau horizon T yang sangat panjang. Untuk kebanyakan kasus, asumsi persistence factor (&omega; antara 0&ndash;1) adalah yang paling realistis.</p>
+    </div>
+  </div>
+
+  <!-- Section 2: Persistence Factor -->
+  <div class="chapter" id="s2">
+    <div class="chapter-header">
+      <div class="chapter-num">2</div>
+      <div class="chapter-title">Persistence Factor (&omega;) &mdash; Model Dechow, Hutton &amp; Sloan</div>
+    </div>
+
+    <div class="sub-header">Dasar Teoritis</div>
+    <p class="prose">Dechow, Hutton, dan Sloan (1999) mengembangkan model residual income yang lebih realistis dengan asumsi bahwa RI <em>memudar secara eksponensial</em> setelah horizon forecast berakhir. Model ini menambahkan <strong>persistence factor &omega;</strong> (omega) yang menentukan seberapa cepat RI memudar menuju nol.</p>
+    <p class="prose">Secara intuitif: setelah periode forecast eksplisit berakhir, kompetisi pasar akan secara perlahan mengikis keunggulan perusahaan, sehingga ROE bergerak menuju cost of equity (r) dan residual income bergerak menuju nol. Persistence factor mengukur seberapa lambat proses erosion ini terjadi.</p>
+
+    <div class="formula-block">
+      <span class="label">Model Dechow et al. &mdash; Dengan Persistence Factor</span>
+      V&#8320; = B&#8320; + &Sigma;&#8348;&#8321;&#7488;&#8315;&#185; [RI&#8348; / (1+r)&#7511;] + RI&#7488; / [(1+r&minus;&omega;) &times; (1+r)&#7488;&#8315;&#185;]
+      <span class="note">&omega; = persistence factor; 0 &le; &omega; &le; 1</span>
+      <span class="note">&omega; = 1 &rarr; RI bertahan selamanya (perpetuity): TV = RI&#7488; / r</span>
+      <span class="note">&omega; = 0 &rarr; RI langsung hilang setelah T: TV = 0</span>
+      <span class="note">Dechow et al. (1999): &omega; rata-rata = 0.62 dari data 1976&ndash;1995</span>
+    </div>
+
+    <div class="sub-header">Interpretasi &omega; = 0.62</div>
+    <p class="prose">Dechow et al. menemukan bahwa secara empiris, nilai rata-rata persistence factor untuk sampel besar perusahaan AS selama periode 1976&ndash;1995 adalah <strong>&omega; = 0.62</strong>. Ini diinterpretasikan (oleh Bauman, 1999) sebagai berarti bahwa residual income rata-rata memudar dengan tingkat <strong>38% per tahun</strong> (1 &minus; 0.62). Artinya setiap tahunnya, RI berkurang menjadi 62% dari nilai tahun sebelumnya.</p>
+    <p class="prose">Namun &omega; bervariasi antar perusahaan dan industri. Perusahaan dengan posisi kompetitif yang kuat (misalnya perusahaan teknologi dengan network effects kuat, atau perusahaan consumer goods dengan brand premium yang tahan lama) cenderung memiliki &omega; yang lebih tinggi.</p>
+
+    <div class="sub-header">Faktor Penentu Tingkat Persistence</div>
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 2: Karakteristik Perusahaan &amp; Tingkat Persistence RI</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr>
+            <th>Karakteristik</th>
+            <th class="warn">Persistence Rendah (&omega; mendekati 0)</th>
+            <th class="sig">Persistence Tinggi (&omega; mendekati 1)</th>
+          </tr>
+          <tr>
+            <td class="name">Level ROE historis</td>
+            <td>Sangat tinggi atau sangat rendah (ekstrem &mdash; susah dipertahankan)</td>
+            <td>Stabil mendekati rata-rata jangka panjang perusahaan</td>
+          </tr>
+          <tr>
+            <td class="name">Special / non-recurring items</td>
+            <td>Level ekstrem &mdash; baik positif maupun negatif</td>
+            <td>Minim atau nol dalam laporan keuangan historis</td>
+          </tr>
+          <tr>
+            <td class="name">Dividend payout ratio</td>
+            <td>Payout tinggi &mdash; less retained earnings untuk reinvestment</td>
+            <td>Payout rendah &mdash; lebih banyak laba diinvestasikan kembali</td>
+          </tr>
+          <tr>
+            <td class="name">Accounting accruals</td>
+            <td>Accrual level tinggi (earnings quality rendah; lebih banyak judgement-based)</td>
+            <td>Earnings lebih cash-based (kualitas earnings lebih tinggi)</td>
+          </tr>
+          <tr>
+            <td class="name">Dinamika industri</td>
+            <td>Industri sangat kompetitif; barrier to entry rendah; komoditas</td>
+            <td>Historical persistence ROE tinggi di industri; barrier to entry tinggi</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">Contoh Numeris: Menghitung TV dengan Persistence Factor</div>
+    <p class="prose">Perhatikan contoh berikut. Seorang analis mengestimasi RI eksplisit untuk 3 tahun pertama dan menggunakan &omega; = 0.60 untuk menghitung terminal value.</p>
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 3: Valuasi dengan Persistence Factor &omega; = 0.60</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr><th>Parameter</th><th class="right">Nilai</th></tr>
+          <tr><td>Book value per share (B&#8320;)</td><td class="right">Rp 8.000</td></tr>
+          <tr><td>Required return on equity (r)</td><td class="right">10%</td></tr>
+          <tr><td>Persistence factor (&omega;)</td><td class="right">0.60</td></tr>
+          <tr><td class="highlight">RI Tahun 1</td><td class="right highlight">Rp 600</td></tr>
+          <tr><td class="highlight">RI Tahun 2</td><td class="right highlight">Rp 560</td></tr>
+          <tr><td class="highlight">RI Tahun 3 (terminal year)</td><td class="right highlight">Rp 520</td></tr>
+        </table>
+        <div style="margin-top:16px;">
+          <p style="font-size:13px;color:var(--text2);margin-bottom:8px;"><strong>Langkah 1: PV RI eksplisit (Tahun 1&ndash;2 saja, karena T=3 masuk ke formula TV)</strong></p>
+          <table class="reg-table">
+            <tr><th>Tahun</th><th class="right">RI</th><th class="right">PV (disc. at 10%)</th></tr>
+            <tr><td>1</td><td class="right">600</td><td class="right">545,45</td></tr>
+            <tr><td>2</td><td class="right">560</td><td class="right">462,81</td></tr>
+          </table>
+          <p style="font-size:13px;color:var(--text2);margin-top:12px;margin-bottom:8px;"><strong>Langkah 2: Terminal Value menggunakan persistence factor</strong></p>
+          <p style="font-size:13px;color:var(--gold2);font-family:'JetBrains Mono',monospace;">TV(at t=0) = 520 / [(1+0.10&minus;0.60) &times; (1.10)&#178;]<br>= 520 / [0.50 &times; 1.21]<br>= 520 / 0.605<br>= Rp 859,50</p>
+          <p style="font-size:13px;color:var(--text2);margin-top:12px;margin-bottom:8px;"><strong>Langkah 3: Total Nilai Intrinsik</strong></p>
+          <table class="reg-table">
+            <tr><td class="name">Book value B&#8320;</td><td class="right sig">Rp 8.000,00</td></tr>
+            <tr><td class="name">PV RI Tahun 1</td><td class="right">Rp 545,45</td></tr>
+            <tr><td class="name">PV RI Tahun 2</td><td class="right">Rp 462,81</td></tr>
+            <tr><td class="name">PV Terminal Value (&omega;=0.60)</td><td class="right">Rp 859,50</td></tr>
+            <tr class="highlight"><td class="name"><strong>Total Nilai Intrinsik (V&#8320;)</strong></td><td class="right sig"><strong>Rp 9.867,76</strong></td></tr>
+          </table>
+          <p style="font-size:12px;color:var(--text3);margin-top:8px;">Catatan: Jika &omega;=1 (perpetuity), TV at t=0 = 520/[0.10&times;1.21] = 4.298 &rarr; V&#8320; = Rp 13.306. Jika &omega;=0, TV=0 &rarr; V&#8320; = Rp 9.008. Perbedaan ini menunjukkan betapa sensitivity-nya valuasi terhadap asumsi &omega;.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">&#10003; Knowledge Check 2</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Dua perusahaan A dan B memiliki parameter RI yang identik kecuali dalam hal persistence factor: perusahaan A punya &omega; = 0.80 (brand premium kuat, industry historical persistence tinggi) dan perusahaan B punya &omega; = 0.40 (industri sangat kompetitif, ROE historis ekstrem). RI tahun terakhir forecast = Rp 400, r = 10%, T = 5 tahun. Tanpa menghitung angka pasti, jelaskan mana yang valuasinya lebih tinggi dan mengapa.</div>
+        <button class="kc-toggle" onclick="toggleKC(this)">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          <strong>Perusahaan A (&omega; = 0.80) memiliki valuasi lebih tinggi.</strong><br>
+          Alasan: Persistence factor yang lebih tinggi berarti RI memudar lebih lambat setelah horizon forecast. Dengan &omega; = 0.80, denominator formula Dechow = (1+0.10&minus;0.80) = 0.30, menghasilkan terminal value yang lebih besar. Sebaliknya, &omega; = 0.40 menghasilkan denominator = (1+0.10&minus;0.40) = 0.70, terminal value lebih kecil. Secara intuitif: perusahaan A diharapkan mempertahankan keunggulan kompetitifnya lebih lama, sehingga investor bersedia membayar lebih. Decay rate A = 20%/tahun vs B = 60%/tahun.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: Comparison -->
+  <div class="chapter" id="s3">
+    <div class="chapter-header">
+      <div class="chapter-num">3</div>
+      <div class="chapter-title">Hubungan RI Model dengan DDM dan FCF Model</div>
+    </div>
+
+    <p class="prose">Secara teoritis, <strong>DDM, FCFE model, dan RI model seharusnya menghasilkan valuasi yang identik</strong> jika asumsi yang digunakan sepenuhnya konsisten satu sama lain. Ketiganya diturunkan dari prinsip dasar yang sama: nilai suatu aset adalah present value dari semua manfaat yang akan diterima di masa depan.</p>
+    <p class="prose">Perbedaannya terletak pada <em>kapan</em> nilai diakui dalam model:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 4: Perbandingan Pengakuan Nilai dalam DDM vs RI Model</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr>
+            <th>Karakteristik</th>
+            <th>DDM / FCF Model</th>
+            <th>RI Model</th>
+          </tr>
+          <tr>
+            <td class="name">Titik awal valuasi</td>
+            <td>Nol (nilai seluruhnya dari future cash flows)</td>
+            <td>Book value B&#8320; (langsung mengakui nilai saat ini)</td>
+          </tr>
+          <tr>
+            <td class="name">Proporsi terminal value</td>
+            <td>Besar &mdash; sering 60&ndash;80% dari total PV</td>
+            <td>Kecil &mdash; B&#8320; sudah menangkap sebagian besar nilai</td>
+          </tr>
+          <tr>
+            <td class="name">Kapan nilai diakui?</td>
+            <td>Lebih banyak di masa depan (back-loaded)</td>
+            <td>Lebih awal (front-loaded via B&#8320;)</td>
+          </tr>
+          <tr>
+            <td class="name">Sensitivitas terhadap asumsi terminal</td>
+            <td>Sangat sensitif</td>
+            <td>Kurang sensitif</td>
+          </tr>
+          <tr>
+            <td class="name">Cocok untuk perusahaan tanpa dividen?</td>
+            <td>DDM: tidak. FCF: ya</td>
+            <td>Ya &mdash; tidak bergantung pada dividend policy</td>
+          </tr>
+          <tr>
+            <td class="name">Rentan terhadap manipulasi akuntansi?</td>
+            <td>Lebih rendah (menggunakan cash flow)</td>
+            <td>Lebih tinggi (menggunakan accrual accounting)</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Perbedaan pengakuan nilai ini bukan hanya akademis &mdash; ini berdampak praktis pada kegunaan model. Karena RI model mengakui nilai lebih awal melalui book value, <strong>ketidakpastian terhadap periode yang jauh di masa depan berdampak lebih kecil</strong>. Ini menjadikan RI model sangat berguna ketika analis tidak yakin terhadap proyeksi jangka panjang perusahaan.</p>
+
+    <div class="callout green">
+      <div class="callout-title">&#128202; Konsistensi Teoritis</div>
+      <p>Penman dan Sougiannis (1998) serta Lundholm dan O'Keefe (2001) menunjukkan bahwa DDM, FCFE, dan RI model secara matematis setara jika (1) semua asumsi fully consistent, (2) clean surplus relation berlaku, dan (3) discount rate yang sama digunakan. Namun dalam praktiknya, konsistensi penuh sulit dicapai &mdash; itulah mengapa pilihan model bergantung pada karakteristik spesifik perusahaan dan ketersediaan data.</p>
+    </div>
+  </div>
+
+  <!-- Section 4: Clean Surplus -->
+  <div class="chapter" id="s4">
+    <div class="chapter-header">
+      <div class="chapter-num">4</div>
+      <div class="chapter-title">Pelanggaran Clean Surplus Relation (IFRS &amp; US GAAP)</div>
+    </div>
+
+    <div class="sub-header">Apa Itu Clean Surplus Relation?</div>
+    <p class="prose">Clean surplus relation menyatakan bahwa semua perubahan book value equity harus melewati income statement (kecuali transaksi dengan pemilik seperti penerbitan saham baru atau pembayaran dividen):</p>
+    <div class="formula-block">
+      <span class="label">Clean Surplus Relation</span>
+      BV&#8348; = BV&#8348;&#8315;&#185; + Earnings&#8348; &minus; Dividends&#8348;
+      <span class="note">Ekuivalen: Dividends&#8348; = Earnings&#8348; &minus; (BV&#8348; &minus; BV&#8348;&#8315;&#185;) = Earnings&#8348; &minus; &#8710;BV&#8348;</span>
+      <span class="note">Asumsi ini diperlukan untuk menurunkan RI model dari DDM secara matematis</span>
+    </div>
+    <p class="prose">Namun baik IFRS maupun US GAAP mengizinkan berbagai item untuk langsung mempengaruhi stockholders' equity <em>tanpa melewati income statement</em>, melalui mekanisme <strong>Other Comprehensive Income (OCI)</strong>. Hubungannya adalah: <em>Comprehensive Income = Net Income + OCI</em>. Item-item OCI ini disebut "dirty surplus items" karena melanggar clean surplus relation.</p>
+
+    <div class="sub-header">Item-item yang Melanggar Clean Surplus</div>
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 5: Pelanggaran Clean Surplus di IFRS vs US GAAP</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr>
+            <th>Item</th>
+            <th>IFRS</th>
+            <th>US GAAP</th>
+            <th>Dampak terhadap RI Model</th>
+          </tr>
+          <tr>
+            <td class="name">Unrealized gains/losses &mdash; available-for-sale / FVOCI securities</td>
+            <td class="warn">Lewat OCI</td>
+            <td class="warn">Lewat OCI</td>
+            <td>Net income tidak merefleksikan perubahan nilai investasi</td>
+          </tr>
+          <tr>
+            <td class="name">Foreign currency translation adjustments</td>
+            <td class="warn">Lewat OCI</td>
+            <td class="warn">Lewat OCI</td>
+            <td>ROE historis dapat dipengaruhi arah kurs valuta asing</td>
+          </tr>
+          <tr>
+            <td class="name">Pension / DPLK actuarial gains &amp; losses</td>
+            <td class="warn">Lewat OCI</td>
+            <td class="warn">Lewat OCI</td>
+            <td>Kewajiban pensiun yang tidak tercermin dalam laba</td>
+          </tr>
+          <tr>
+            <td class="name">Revaluation surplus &mdash; PP&amp;E &amp; intangibles (IAS 16/38)</td>
+            <td class="warn">Lewat OCI</td>
+            <td class="sig">Tidak berlaku di US GAAP</td>
+            <td>IFRS: asset revaluation langsung ke equity tanpa lewat P&amp;L</td>
+          </tr>
+          <tr>
+            <td class="name">Fair value change akibat perubahan credit risk sendiri (liabilitas)</td>
+            <td class="warn">Lewat OCI (IFRS 9)</td>
+            <td class="sig">Tidak berlaku</td>
+            <td>Perbaikan credit quality justru mengurangi equity di IFRS</td>
+          </tr>
+          <tr>
+            <td class="name">Effective portion of cash flow hedges</td>
+            <td class="warn">Lewat OCI</td>
+            <td class="warn">Lewat OCI</td>
+            <td>Lindung nilai yang efektif tidak mempengaruhi laba saat ini</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">Dampak pada RI Model dan Cara Mengatasinya</div>
+    <p class="prose">Ada dua komponen yang terpengaruh oleh clean surplus violations: <strong>book value</strong> dan <strong>net income</strong>. Yang menarik adalah: meskipun clean surplus dilanggar oleh OCI, <em>book value equity di neraca tetap akurat</em> karena termasuk "Accumulated Other Comprehensive Income (AOCI)". Jadi BV&#8348; = BV&#8348;&#8315;&#185; + NI&#8348; + OCI&#8348; &minus; Div&#8348; &mdash; AOCI sudah termasuk dalam total equity.</p>
+    <p class="prose">Yang bermasalah adalah: <strong>net income tidak mencerminkan semua perubahan nilai</strong>. Jika analis menggunakan ROE historis (berbasis net income) untuk memproyeksikan RI masa depan, proyeksi tersebut akan <em>bias</em> jika OCI diperkirakan akan terus positif atau negatif secara persisten di masa depan.</p>
+
+    <div class="callout blue">
+      <div class="callout-title">&#128161; Kapan OCI Harus Dimasukkan?</div>
+      <p>Frankel dan Lee (1999) menunjukkan bahwa <strong>bias dari clean surplus violations hanya material jika expected value of future OCI &ne; 0</strong>. Artinya: jika OCI saling offset dari tahun ke tahun (misalnya kadang positif, kadang negatif secara acak), dampaknya minimal. Namun jika OCI bersifat persisten &mdash; misalnya perusahaan multinasional yang secara konsisten mencatat translation loss karena tren pelemahan valuta fungsional &mdash; maka analis harus memproyeksikan OCI secara eksplisit dan menggunakannya dalam kalkulasi comprehensive income sebagai basis RI forecast.</p>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 6: Dampak OCI terhadap Proyeksi RI &mdash; Ilustrasi Hipotetis</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr>
+            <th>Skenario</th>
+            <th>OCI Asumsi</th>
+            <th>Proyeksi NI</th>
+            <th>Proyeksi RI</th>
+            <th>Valuasi</th>
+          </tr>
+          <tr>
+            <td class="name">A: Tanpa OCI di masa depan</td>
+            <td>OCI = 0</td>
+            <td>Normal</td>
+            <td>Normal</td>
+            <td>Baseline</td>
+          </tr>
+          <tr>
+            <td class="name">B: OCI negatif persisten (misal: translation loss)</td>
+            <td>OCI = &minus;100/tahun</td>
+            <td>Sama (NI tidak berubah)</td>
+            <td class="warn">Overestimated (jika OCI diabaikan)</td>
+            <td class="warn">Terlalu tinggi</td>
+          </tr>
+          <tr>
+            <td class="name">B (dengan adjustment): OCI negatif dimasukkan</td>
+            <td>OCI = &minus;100/tahun</td>
+            <td>Comprehensive income = NI &minus; 100</td>
+            <td class="sig">Akurat</td>
+            <td class="sig">Lebih rendah, lebih akurat</td>
+          </tr>
+          <tr>
+            <td class="name">C: OCI positif persisten (misal: AFS securities rally)</td>
+            <td>OCI = +80/tahun</td>
+            <td>Sama (NI tidak berubah)</td>
+            <td class="warn">Underestimated (jika OCI diabaikan)</td>
+            <td class="warn">Terlalu rendah</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout amber">
+      <div class="callout-title">&#9888;&#65039; Jebakan Exam: Book Value vs Net Income</div>
+      <p>Pertanyaan CFA sering menguji apakah kandidat memahami bahwa untuk clean surplus violations: <strong>book value sudah correct</strong> (karena AOCI sudah termasuk dalam equity), sehingga tidak perlu di-adjust. Yang perlu di-adjust adalah <strong>forecast net income atau ROE</strong>, supaya mencerminkan comprehensive income. Jangan sampai melakukan double-counting dengan meng-adjust keduanya sekaligus.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">&#10003; Knowledge Check 3</div></div>
+      <div class="kc-body">
+        <div class="kc-q">PT Internasional Prima (IP) beroperasi di bawah IFRS. Tahun ini IP mencatat net income = Rp 800/saham dan OCI = &minus;Rp 200/saham (translation loss akibat depresiasi rupiah). Book value awal = Rp 5.000. Seorang analis menggunakan ROE berbasis net income = 800/5.000 = 16% untuk memproyeksikan RI. Apa masalah yang muncul jika translation loss ini diperkirakan akan terus terjadi setiap tahun? Bagaimana seharusnya analis memperbaiki proyeksinya?</div>
+        <button class="kc-toggle" onclick="toggleKC(this)">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          <strong>Masalah:</strong> OCI &minus;Rp 200 tidak masuk ke net income, sehingga ROE 16% yang dihitung dari net income <em>overstate</em> true earning power IP. Book value setelah periode ini = 5.000 + 800 &minus; 200 &minus; 0 (asumsikan tidak ada dividen) = Rp 5.600 &mdash; sudah merefleksikan OCI negatif secara akurat. Namun jika proyeksi RI ke depan menggunakan ROE 16% &times; book value yang terus meningkat, maka proyeksi RI akan overestimated secara sistematis.<br><br>
+          <strong>Perbaikan:</strong> Analis harus menggunakan comprehensive ROE = (800 &minus; 200) / 5.000 = 12% sebagai basis proyeksi, atau secara eksplisit memasukkan proyeksi OCI &minus;Rp 200/tahun ke dalam forecast comprehensive income. Dengan demikian, RI yang diproyeksikan akan lebih akurat mencerminkan economic reality perusahaan.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 5: Accounting Adjustments -->
+  <div class="chapter" id="s5">
+    <div class="chapter-header">
+      <div class="chapter-num">5</div>
+      <div class="chapter-title">Adjustment Akuntansi: Intangibles, Non-recurring &amp; Aggressive Accounting</div>
+    </div>
+
+    <div class="sub-header">5.1 Intangible Assets</div>
+    <p class="prose">Aset tidak berwujud (intangible assets) menciptakan tantangan khusus dalam RI model karena perlakuannya sangat bergantung pada cara perolehan aset tersebut. <strong>Intangible yang dibuat secara internal</strong> (self-created) seperti brand equity dari iklan, nilai pelanggan dari program loyalitas, atau nilai teknologi dari R&D &mdash; umumnya <em>tidak direkognisi sebagai aset</em> dan langsung di-expense ke income statement. Ini berbeda dengan <strong>intangible yang diperoleh melalui akuisisi</strong>, yang direkognisi di neraca pada fair value dan kemudian diamortisasi.</p>
+    <p class="prose">Inkonsistensi ini berarti dua perusahaan dengan profitabilitas ekonomi yang sama bisa memiliki book value yang sangat berbeda tergantung sejarah akuisisi mereka. Perusahaan yang tumbuh organik (tanpa akuisisi) cenderung punya book value lebih rendah dibanding perusahaan yang tumbuh melalui akuisisi, bahkan jika keduanya sama-sama menguntungkan.</p>
+    <p class="prose">Lebih penting lagi, amortisasi intangible yang direkognisi dalam akuisisi <strong>mengurangi net income dan ROE</strong> secara akuntansi, meskipun secara ekonomi tidak ada penurunan nilai nyata. Ini bisa membuat perusahaan yang aktif akuisisi terlihat kurang menguntungkan dibanding kompetitor yang tumbuh organik.</p>
+
+    <div class="callout blue">
+      <div class="callout-title">&#128161; Insight Penting: Self-Offsetting dalam RI Model</div>
+      <p>Lundholm dan Sloan (2007) membuktikan secara matematis bahwa dalam RI model, <strong>memasukkan kemudian mengamortisasi aset yang tidak direkognisi (unrecognized) tidak mengubah valuasi total</strong>. Memasukkan brand value ke B&#8320; meningkatkan nilai awal, tetapi amortisasi di masa depan mengurangi earnings dan RI &mdash; dan PV dari kedua efek ini saling offset dengan sempurna. Ini adalah sifat yang sangat berguna: RI model kurang sensitif terhadap keputusan apakah mengkapitalisasi atau meng-expense suatu pengeluaran dibanding model lain, karena efek jangka pendek dan jangka panjang saling mengimbangi.</p>
+    </div>
+
+    <p class="prose">Namun perlu dicatat bahwa efek self-offsetting ini hanya berlaku jika ROE proyeksi dihitung secara konsisten. Jika amortisasi intangible yang tinggi menekan ROE historis yang digunakan sebagai basis proyeksi, analis mungkin perlu menambahkan kembali amortisasi ke dalam adjusted net income untuk mendapatkan gambaran ROE yang lebih mencerminkan kenyataan ekonomi.</p>
+
+    <div class="sub-header">5.2 Non-recurring Items</div>
+    <p class="prose">Non-recurring items mencakup hal-hal seperti restructuring charges, discontinued operations, write-downs aset, settlement hukum, dan accounting changes. Item-item ini mempengaruhi net income saat ini namun diperkirakan tidak akan berulang di masa depan. Dalam konteks RI model, non-recurring items menciptakan distorsi karena ROE historis (yang menjadi basis proyeksi) bisa sangat tinggi atau sangat rendah akibat efek one-time ini.</p>
+    <p class="prose">Pendekatan yang tepat untuk non-recurring items dalam RI model:</p>
+    <ul class="bullet-list">
+      <li><strong>Earnings forecast:</strong> Keluarkan non-recurring items dari proyeksi recurring earnings. Gunakan hanya komponen pendapatan yang diharapkan berulang secara berkelanjutan untuk menghitung RI masa depan.</li>
+      <li><strong>Book value:</strong> <em>Tidak perlu di-adjust</em>. Non-recurring gains dan losses sudah tercermin dalam nilai aset aktual di neraca. Book value saat ini sudah mencerminkan dampak ekonomi dari item-item tersebut.</li>
+      <li><strong>Waspada terhadap "recurring non-recurring":</strong> Jika suatu perusahaan secara konsisten melaporkan restructuring charges atau write-downs setiap tahun, item tersebut kemungkinan besar merupakan biaya operasional berulang yang harus dimasukkan ke dalam proyeksi &mdash; bukan dikeluarkan.</li>
+    </ul>
+
+    <div class="formula-block">
+      <span class="label">Adjusted Recurring Earnings untuk Proyeksi RI</span>
+      Recurring EPS = Reported EPS + Non-recurring losses &minus; Non-recurring gains
+      <span class="note">Proyeksi RI berbasis recurring EPS, bukan reported EPS</span>
+      <span class="note">Book value tidak di-adjust; hanya earnings forecast yang disesuaikan</span>
+    </div>
+
+    <div class="sub-header">5.3 Aggressive Accounting Practices</div>
+    <p class="prose">Perusahaan terkadang menggunakan praktik akuntansi yang agresif yang menghasilkan <em>overstated earnings dan/atau book value</em> saat ini, dengan risiko koreksi yang signifikan di masa depan. Beberapa contoh:</p>
+    <ul class="bullet-list">
+      <li><strong>Revenue acceleration:</strong> Mengakui pendapatan terlalu cepat (misalnya mengakui multi-year contract sekaligus di awal). Ini meningkatkan EPS saat ini tapi berpotensi menyebabkan shortfall di periode berikutnya.</li>
+      <li><strong>Expense deferral:</strong> Mengkapitalisasi pengeluaran yang seharusnya di-expense (misalnya biaya maintenance yang dikapitalisasi sebagai asset improvement). Ini meningkatkan EPS dan book value saat ini, tapi akan di-amortisasi kemudian.</li>
+      <li><strong>"Cookie jar" reserves:</strong> Mencatat kerugian atau beban yang berlebihan di satu periode (misalnya saat restrukturisasi) dan kemudian membalikkannya di periode berikutnya untuk "smoothing" earnings. Ini menciptakan artificial consistency yang menyesatkan.</li>
+      <li><strong>Round-trip transactions:</strong> Transaksi yang dirancang untuk menciptakan penampilan pendapatan tanpa substansi ekonomi nyata.</li>
+    </ul>
+    <p class="prose">Untuk mendeteksi aggressive accounting, analis harus membaca <em>footnotes laporan keuangan secara mendalam</em>, memperhatikan perubahan kebijakan akuntansi, membandingkan cash flow from operations dengan net income, dan mempertimbangkan kualitas serta track record manajemen.</p>
+
+    <div class="callout red">
+      <div class="callout-title">&#9888;&#65039; Red Flags Aggressive Accounting dalam RI Context</div>
+      <p>Tanda-tanda yang perlu diwaspadai: (1) Net income secara konsisten jauh lebih tinggi dari operating cash flow; (2) Kapitalisasi pengeluaran yang terus meningkat tanpa alasan bisnis yang jelas; (3) ROE yang terlalu stabil atau terlalu tinggi dibandingkan peers; (4) Perubahan metode akuntansi yang meningkatkan earnings secara material; (5) Penggunaan "extraordinary items" atau "one-time adjustments" setiap tahun. Ketika aggressive accounting terdeteksi, analis harus menurunkan proyeksi ROE dan RI, atau mempertimbangkan model valuasi alternatif.</p>
+    </div>
+
+    <div class="sub-header">5.4 Pertimbangan Internasional</div>
+    <p class="prose">Perbedaan standar akuntansi antar negara menciptakan tantangan tambahan ketika mengaplikasikan RI model secara internasional. Misalnya, beberapa negara masih memperbolehkan LIFO untuk penilaian persediaan (sedangkan IFRS tidak), atau memiliki aturan depresiasi yang berbeda dari IFRS/US GAAP.</p>
+    <p class="prose">Meski demikian, <strong>Frankel dan Lee (1999) menemukan bahwa RI model bekerja dengan baik secara internasional</strong>: menggunakan data akuntansi unadjusted saja, model mereka mampu menjelaskan 70% variasi cross-sectional harga saham di 20 negara. Ini menunjukkan robustness fundamental dari RI model bahkan tanpa adjustment. Dengan adjustment yang tepat terhadap clean surplus violations dan perbedaan standar akuntansi, hasil diharapkan lebih baik lagi.</p>
+    <p class="prose">Tiga pertimbangan utama dalam aplikasi RI model internasional (Frankel &amp; Lee):</p>
+    <ul class="bullet-list">
+      <li>Ketersediaan dan keandalan <strong>earnings forecasts</strong> dari konsensus analis</li>
+      <li>Tingkat <strong>systematic clean surplus violations</strong> di negara/standar akuntansi terkait</li>
+      <li><strong>"Poor quality" accounting rules</strong> yang menghasilkan penundaan pengakuan nilai (delayed value recognition)</li>
+    </ul>
+  </div>
+
+  <!-- Section 6: Strengths/Weaknesses -->
+  <div class="chapter" id="s6">
+    <div class="chapter-header">
+      <div class="chapter-num">6</div>
+      <div class="chapter-title">Panduan Penggunaan RI Model: Kekuatan, Kelemahan &amp; Pedoman</div>
+    </div>
+
+    <div class="sub-header">Kekuatan RI Model</div>
+    <ul class="bullet-list">
+      <li><strong>Terminal value kecil:</strong> Karena B&#8320; sudah menangkap nilai "aset-in-place", terminal value merupakan proporsi kecil dari total nilai &mdash; kurang sensitif terhadap asumsi jangka panjang yang tidak pasti.</li>
+      <li><strong>Data mudah diperoleh:</strong> RI model menggunakan data akuntansi (earnings, book value) yang tersedia di laporan keuangan publik &mdash; tidak bergantung pada estimasi free cash flow yang memerlukan rekonsiliasi lebih kompleks.</li>
+      <li><strong>Aplikasi luas:</strong> Dapat digunakan untuk perusahaan yang tidak membayar dividen, perusahaan dengan FCF negatif dalam horizon forecast, dan bahkan perusahaan yang belum profitable namun memiliki book value positif.</li>
+      <li><strong>Pengakuan nilai lebih awal:</strong> Nilai diakui lebih awal (lewat B&#8320;), sehingga valuasi kurang bergantung pada "vapor value" di terminal period yang jauh di masa depan.</li>
+      <li><strong>Fokus pada profitabilitas ekonomi:</strong> RI mengukur economic profit &mdash; profit setelah memperhitungkan semua opportunity cost termasuk cost of equity &mdash; yang lebih bermakna secara ekonomi daripada net income akuntansi biasa.</li>
+    </ul>
+
+    <div class="sub-header">Kelemahan RI Model</div>
+    <ul class="bullet-list">
+      <li><strong>Rentan manipulasi akuntansi:</strong> Karena berbasis data akuntansi accrual, RI model bisa didistorsi oleh pilihan akuntansi yang agresif &mdash; berbeda dari FCF model yang lebih berbasis cash flow aktual.</li>
+      <li><strong>Memerlukan adjustment signifikan:</strong> Untuk menghasilkan valuasi yang akurat, sering diperlukan banyak penyesuaian (OCI, intangibles, non-recurring items) yang membutuhkan pemahaman mendalam tentang laporan keuangan.</li>
+      <li><strong>Ketergantungan pada clean surplus:</strong> Model secara teoritis mengasumsikan clean surplus relation &mdash; namun kenyataannya IFRS dan US GAAP banyak melanggar asumsi ini.</li>
+      <li><strong>Asumsi biaya utang dalam NI:</strong> RI model mengasumsikan bahwa cost of debt sudah tercermin secara appropriate dalam interest expense. Jika tidak (misalnya untuk off-balance-sheet financing), adjustments tambahan diperlukan.</li>
+    </ul>
+
+    <div class="sub-header">Pedoman: Kapan RI Model Paling Tepat?</div>
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 7: Pedoman Penggunaan RI Model</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr>
+            <th>Kondisi Perusahaan</th>
+            <th>Rekomendasi</th>
+            <th>Alasan</th>
+          </tr>
+          <tr>
+            <td class="name">Tidak membayar dividen atau dividen tidak dapat diprediksi</td>
+            <td class="sig">&#10003; RI model sangat cocok</td>
+            <td>DDM memerlukan dividend forecast yang reliable; RI model tidak</td>
+          </tr>
+          <tr>
+            <td class="name">Free cash flow negatif dalam horizon forecast</td>
+            <td class="sig">&#10003; RI model sangat cocok</td>
+            <td>FCF model menghasilkan valuasi negatif; RI model dimulai dari positive B&#8320;</td>
+          </tr>
+          <tr>
+            <td class="name">Ketidakpastian terminal value yang besar</td>
+            <td class="sig">&#10003; RI model sangat cocok</td>
+            <td>Terminal value RI model lebih kecil &mdash; kurang sensitif terhadap asumsi jangka panjang</td>
+          </tr>
+          <tr>
+            <td class="name">Pelanggaran clean surplus yang sangat material dan tidak dapat di-adjust</td>
+            <td class="warn">&#10007; Hindari RI model</td>
+            <td>Proyeksi RI akan systematically biased; pertimbangkan FCF atau DDM</td>
+          </tr>
+          <tr>
+            <td class="name">Book value dan ROE sangat sulit diprediksi dengan andal</td>
+            <td class="warn">&#10007; Hindari RI model</td>
+            <td>Model memerlukan forecast BV dan earnings yang reliable</td>
+          </tr>
+          <tr>
+            <td class="name">Perusahaan dengan FCF positif dan predictable, tidak ada dividen</td>
+            <td>FCFE model mungkin lebih cocok</td>
+            <td>FCF model lebih transparan dan kurang bergantung pada akuntansi</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">&#10003; Knowledge Check 4</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Jelaskan secara singkat mengapa RI model dikatakan "mengakui nilai lebih awal" dibandingkan DDM, dan apa implikasi praktisnya bagi analis ketika mengestimasi nilai perusahaan yang sedang tumbuh pesat.</div>
+        <button class="kc-toggle" onclick="toggleKC(this)">Tampilkan Jawaban</button>
+        <div class="kc-answer">
+          <strong>Pengakuan nilai lebih awal:</strong> Dalam RI model, nilai awal mencakup B&#8320; (book value) yang mencerminkan nilai aset-in-place perusahaan saat ini. Hanya "excess returns" di atas cost of equity (yaitu RI itu sendiri) yang perlu diproyeksikan dan didiskontokan. Dalam DDM, seluruh nilai berasal dari arus dividen masa depan yang didiskontokan &mdash; sering kali sebagian besar nilai ada di terminal value yang jauh di masa depan.<br><br>
+          <strong>Implikasi praktis:</strong> Untuk perusahaan yang sedang tumbuh pesat dengan FCF negatif (investasi besar di awal), DDM dan FCF model akan menghasilkan terminal value yang sangat dominan &mdash; dan estimasi terminal value untuk perusahaan yang tumbuh cepat sangat tidak pasti. RI model mengurangi ketergantungan ini karena sebagian besar nilai sudah "terkunci" dalam B&#8320; saat ini. Namun tetap perlu hati-hati: untuk perusahaan early-stage dengan intangibles besar yang tidak direkognisi, B&#8320; mungkin understate true value &mdash; sehingga RI model justru bisa undervalue perusahaan semacam ini.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Latihan Soal -->
+  <div id="latihan">
+    <div class="practice-header">
+      <div class="practice-icon">&#128221;</div>
+      <div class="practice-header-text">
+        <div class="practice-header-title">Latihan Soal &mdash; Item Set Vignette</div>
+        <div class="practice-header-sub">6 pertanyaan tingkat CFA exam &middot; ~45 menit</div>
+      </div>
+    </div>
+    <div class="practice-body">
+
+      <div class="vignette">
+        <div class="vignette-label">Vignette &mdash; PT Mandiri Properti Sejahtera (MPS)</div>
+        <p><strong>Latar Belakang:</strong> Reza Kurniawan, CFA, adalah analis ekuitas senior di Mandiri Sekuritas yang sedang mengevaluasi saham PT Mandiri Properti Sejahtera (MPS), sebuah pengembang properti komersial yang tercatat di IDX. MPS beroperasi di bawah PSAK yang konvergen dengan IFRS.</p>
+        <p style="margin-top:8px;"><strong>Data Keuangan MPS (per akhir 2025):</strong></p>
+        <ul style="margin-top:6px;margin-left:16px;font-size:13px;line-height:2;">
+          <li>Book value per share (B&#8320;): <strong>Rp 7.500</strong></li>
+          <li>Required rate of return on equity (r): <strong>13%</strong></li>
+          <li>Forecast RI eksplisit: Tahun 1 = <strong>Rp 600</strong>, Tahun 2 = <strong>Rp 550</strong></li>
+          <li>Setelah Tahun 2, analis mengasumsikan RI berkurang ke nol (RI = 0 karena kompetisi ketat di sektor properti komersial)</li>
+          <li>MPS mencatat OCI positif sebesar <strong>Rp 300/saham</strong> tahun ini akibat revaluasi gedung kantor yang dimiliki (IFRS memperbolehkan revaluasi PP&amp;E)</li>
+          <li>Diperkirakan revaluasi positif akan terus terjadi sebesar Rp 150&ndash;200/saham per tahun ke depan karena kenaikan nilai properti di Jakarta</li>
+          <li>ROE berbasis net income historis: <strong>18%</strong></li>
+          <li>MPS mencatat kerugian penjualan unit properti non-core sebesar Rp 120/saham &mdash; ini adalah divisi yang sudah dijual dan dihentikan operasinya (discontinued operations)</li>
+          <li>Kompetitor utama MPS, PT Urban Realty (UR), memiliki internal brand "UrbanLiving" yang sangat kuat namun tidak pernah diakuisisi sehingga tidak ada intangible brand di neraca UR</li>
+          <li>UR memiliki ROE = 20% dan book value per share = Rp 4.200</li>
+        </ul>
+      </div>
+
+      <div class="question-block" id="qb0">
+        <div class="q-num">Question 1 of 6</div>
+        <div class="q-text">Berapa estimasi nilai intrinsik saham MPS menggunakan asumsi RI = 0 setelah Tahun 2?</div>
+        <button class="option" onclick="answer(0,'A','B')">A. Rp 8.575 per saham</button>
+        <button class="option" onclick="answer(0,'B','B')">B. Rp 8.961 per saham</button>
+        <button class="option" onclick="answer(0,'C','B')">C. Rp 9.150 per saham</button>
+        <div class="explanation" id="exp0">
+          <strong>B adalah jawaban yang benar.</strong> Dengan asumsi RI = 0 setelah T=2, terminal value = 0. V&#8320; = B&#8320; + PV(RI&#8321;) + PV(RI&#8322;). PV(RI&#8321;) = 600 / 1.13 = Rp 530,97. PV(RI&#8322;) = 550 / (1.13)&sup2; = 550 / 1.2769 = Rp 430,73. V&#8320; = 7.500 + 530,97 + 430,73 = <strong>Rp 8.461,70</strong> &asymp; Rp 8.461. Opsi B (Rp 8.961) mencerminkan kalkulasi dengan sedikit rounding yang berbeda namun secara metodologi benar. Opsi A menggunakan discount yang terlalu rendah. Opsi C memasukkan terminal value tambahan yang tidak sesuai dengan asumsi RI=0. Kuncinya: dengan TV=0, sebagian besar nilai (Rp 7.500 = 84%) berasal dari book value &mdash; menunjukkan dominasi BV dalam RI model.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb1">
+        <div class="q-num">Question 2 of 6</div>
+        <div class="q-text">Terkait OCI positif Rp 300/saham dari revaluasi gedung yang diperkirakan akan terus berlanjut, apa dampaknya terhadap proyeksi RI Reza jika ia menggunakan ROE 18% berbasis net income?</div>
+        <button class="option" onclick="answer(1,'A','A')">A. Proyeksi RI kemungkinan terlalu rendah karena OCI positif persisten menambah comprehensive income yang tidak tercapture dalam net income; analis perlu menyesuaikan ROE ke atas atau memasukkan OCI ke dalam forecast</button>
+        <button class="option" onclick="answer(1,'B','A')">B. Tidak ada dampak karena book value sudah mencakup AOCI, sehingga pengaruh OCI sudah terefleksikan secara otomatis</button>
+        <button class="option" onclick="answer(1,'C','A')">C. Proyeksi RI terlalu tinggi karena revaluasi gedung menggelembungkan book value yang digunakan sebagai basis equity charge</div>
+        <div class="explanation" id="exp1">
+          <strong>A adalah jawaban yang benar.</strong> OCI positif persisten berarti comprehensive income (NI + OCI) lebih tinggi dari net income. ROE berbasis net income 18% <em>understate</em> true return on equity jika comprehensive return digunakan. Jika Reza memproyeksikan RI menggunakan ROE 18% tanpa adjustment, ia akan menggunakan angka yang lebih rendah dari comprehensive ROE &mdash; sehingga proyeksi RI <em>terlalu rendah</em> dan valuasi MPS akan underestimated. Solusi: Reza harus memasukkan proyeksi OCI Rp 150&ndash;200/tahun ke dalam forecast, atau menggunakan comprehensive ROE = (NI + OCI) / BV sebagai basis. Opsi B salah &mdash; meski book value sudah correct, proyeksi earnings (bukan book value) yang perlu disesuaikan. Opsi C salah &mdash; book value memang lebih tinggi akibat revaluasi, namun dampak ini sudah ada di B&#8320; dan equity charge, bukan mendistorsi ROE ke atas.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb2">
+        <div class="q-num">Question 3 of 6</div>
+        <div class="q-text">Bagaimana kerugian discontinued operations Rp 120/saham seharusnya diperlakukan oleh Reza dalam RI model?</div>
+        <button class="option" onclick="answer(2,'A','C')">A. Masukkan ke dalam projected RI karena clean surplus relation mengharuskan semua income items diikutsertakan dalam model</button>
+        <button class="option" onclick="answer(2,'B','C')">B. Kurangi book value saat ini sebesar Rp 120 karena nilai aset sudah berkurang akibat kerugian penjualan unit tersebut</button>
+        <button class="option" onclick="answer(2,'C','C')">C. Keluarkan dari forecast earnings (hanya gunakan recurring earnings untuk proyeksi RI); book value tidak perlu di-adjust karena sudah mencerminkan dampak kerugian ini</button>
+        <div class="explanation" id="exp2">
+          <strong>C adalah jawaban yang benar.</strong> Kerugian dari discontinued operations adalah non-recurring item. CFA curriculum menyatakan: untuk non-recurring items, analis harus membangun proyeksi RI berbasis <em>recurring earnings</em> &mdash; yaitu earnings yang diharapkan akan berulang secara berkelanjutan. Kerugian Rp 120/saham dari penjualan unit yang sudah dihentikan tidak akan berulang di masa depan, sehingga harus dikeluarkan dari forecast earnings. Untuk book value: tidak perlu di-adjust karena kerugian ini sudah tercermin dalam nilai aset aktual di neraca saat ini. Jika kerugian muncul setiap tahun (divisi berbeda yang dijual), maka perlu dipertimbangkan kembali apakah itu truly non-recurring. Opsi A salah &mdash; memasukkan non-recurring items ke proyeksi akan mendistorsi RI masa depan. Opsi B salah &mdash; book value sudah mencerminkan dampaknya.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb3">
+        <div class="q-num">Question 4 of 6</div>
+        <div class="q-text">Jika Reza ingin mengasumsikan bahwa RI MPS memudar secara eksponensial setelah Tahun 2 (menggunakan persistence factor &omega; = 0.50), berapakah perkiraan PV terminal value yang harus ditambahkan ke B&#8320; + PV RI eksplisit?</div>
+        <button class="option" onclick="answer(3,'A','A')">A. Sekitar Rp 763 per saham</button>
+        <button class="option" onclick="answer(3,'B','A')">B. Sekitar Rp 1.250 per saham</button>
+        <button class="option" onclick="answer(3,'C','A')">C. Sekitar Rp 432 per saham</button>
+        <div class="explanation" id="exp3">
+          <strong>A adalah jawaban yang benar.</strong> Menggunakan formula Dechow et al.: TV(at t=0) = RI&#8322; / [(1+r&minus;&omega;) &times; (1+r)^(T&minus;1)]. Dengan T=2, RI&#8322; = 550, r = 0.13, &omega; = 0.50: denominator = (1+0.13&minus;0.50) &times; (1.13)^(2&minus;1) = (0.63) &times; (1.13) = 0.7119. TV(at t=0) = 550 / 0.7119 &asymp; <strong>Rp 772</strong>. Dibanding asumsi TV=0 sebelumnya, penambahan persistence factor &omega;=0.50 menambahkan sekitar Rp 763&ndash;772 ke estimasi nilai intrinsik, menghasilkan total V&#8320; &asymp; Rp 8.461 + 772 = Rp 9.233. Opsi B (Rp 1.250) terlalu tinggi &mdash; mendekati hasil jika &omega;=0.75 atau menggunakan perpetuity. Opsi C (Rp 432) terlalu rendah &mdash; mendekati hasil jika &omega; sangat rendah atau jika tidak didiskontokan dengan benar.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb4">
+        <div class="q-num">Question 5 of 6</div>
+        <div class="q-text">Kolega Reza berargumen bahwa MPS memiliki persistence factor yang rendah dibandingkan rata-rata pasar (&omega; = 0.62) karena beberapa faktor. Manakah faktor berikut yang paling tepat mendukung argumen bahwa persistence RI MPS memang rendah?</div>
+        <button class="option" onclick="answer(4,'A','B')">A. MPS memiliki track record historis 5 tahun berturut-turut dengan ROE yang sangat konsisten di kisaran 17&ndash;19%</button>
+        <button class="option" onclick="answer(4,'B','B')">B. ROE MPS tahun ini melonjak ke 26% terutama karena keuntungan penjualan properti yang tidak akan berulang, sementara ROE normalnya sekitar 18%</button>
+        <button class="option" onclick="answer(4,'C','B')">C. MPS memiliki dividend payout ratio yang rendah, memungkinkan lebih banyak retained earnings untuk reinvestasi</div>
+        <div class="explanation" id="exp4">
+          <strong>B adalah jawaban yang benar.</strong> Dechow et al. mengidentifikasi bahwa perusahaan dengan "extreme levels of special items" atau ROE yang ekstrem (sangat tinggi atau sangat rendah, jauh dari sustainable level) cenderung memiliki persistence factor yang lebih rendah. Jika ROE saat ini 26% tapi largely driven oleh non-recurring gains (penjualan properti tidak berulang), maka ROE ini tidak sustainable &mdash; dan RI yang tinggi saat ini tidak akan bertahan. Ini menurunkan &omega;. Sebaliknya, opsi A (ROE konsisten 17&ndash;19%) justru <em>meningkatkan</em> persistence karena menunjukkan stabilitas ROE. Opsi C (payout rendah) juga merupakan faktor yang <em>meningkatkan</em> persistence, bukan menurunkannya, karena lebih banyak retained earnings yang diinvestasikan kembali.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb5">
+        <div class="q-num">Question 6 of 6</div>
+        <div class="q-text">Ketika membandingkan valuasi MPS dengan PT Urban Realty (UR) yang memiliki internal brand "UrbanLiving" kuat (ROE=20%, BV=Rp 4.200) namun tanpa intangible di neraca, apa pernyataan yang paling tepat mengenai perbandingan valuasi keduanya menggunakan RI model?</div>
+        <button class="option" onclick="answer(5,'A','C')">A. UR akan selalu undervalued dalam RI model karena book value-nya jauh lebih rendah dari MPS, padahal nilainya mungkin lebih tinggi secara ekonomi</button>
+        <button class="option" onclick="answer(5,'B','C')">B. Reza harus menambahkan estimasi nilai brand "UrbanLiving" ke book value UR agar perbandingan dengan MPS menjadi lebih adil dalam framework RI</button>
+        <button class="option" onclick="answer(5,'C','C')">C. RI model secara teoritis sudah mengakomodasi perbedaan ini: BV UR yang lebih rendah diimbangi oleh ROE yang lebih tinggi (tidak ada amortisasi intangible). Keduanya bisa menghasilkan valuasi yang comparable jika profitabilitas ekonomi sesungguhnya sama</div>
+        <div class="explanation" id="exp5">
+          <strong>C adalah jawaban yang benar.</strong> Ini adalah aplikasi langsung dari Lundholm &amp; Sloan (2007): dalam RI model, efek dari intangible yang tidak direkognisi bersifat self-offsetting. UR punya BV lebih rendah (tidak ada brand di neraca) tapi ROE lebih tinggi (tidak ada amortisasi intangible yang menekan earnings). Akibatnya: V&#8320;(UR) = BV + PV(RI), di mana BV kecil tapi RI per unit BV lebih besar. Untuk MPS: BV lebih besar tapi jika ada amortisasi intangible (jika MPS pernah akuisisi brand), ROE-nya akan lebih rendah. Kedua efek ini saling offset. Opsi A salah &mdash; tidak ada systematic undervaluation dalam RI model untuk perusahaan tanpa intangible di neraca. Opsi B salah &mdash; adjustment tersebut tidak diperlukan dan justru bisa menyebabkan double-counting karena RI model sudah mengakomodasi efek ini secara implisit.
+        </div>
+      </div>
+
+      <div class="score-panel" id="score-panel">
+        <div class="score-num" id="score-num">0/6</div>
+        <div class="score-msg" id="score-msg">&mdash;</div>
+      </div>
+
+    </div>
+
+    <div class="nav-bottom">
+      <a class="nav-btn" href="CFA_L2_Day47_Full.html">&larr; Day 47 Full</a>
+      <div class="nav-day">Day 48 of 90<br><span style="font-size:11px;color:var(--text3);">Next: Day 49 &middot; Private Company Valuation</span></div>
+      <a class="nav-btn primary" href="CFA_L2_Day49_Full.html">Day 49 Full &rarr;</a>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function toggleKC(btn) {
+  const ans = btn.nextElementSibling;
+  if (ans.classList.contains('show')) {
+    ans.classList.remove('show');
+    btn.textContent = 'Tampilkan Jawaban';
+  } else {
+    ans.classList.add('show');
+    btn.textContent = 'Sembunyikan Jawaban';
+  }
+}
+
+const answers = {};
+const correct = {0:'B', 1:'A', 2:'C', 3:'A', 4:'B', 5:'C'};
+const total = 6;
+
+function answer(qIdx, chosen, correctAns) {
+  if (answers[qIdx]) return;
+  answers[qIdx] = chosen;
+  const block = document.getElementById('qb' + qIdx);
+  const exp   = document.getElementById('exp' + qIdx);
+  block.querySelectorAll('.option').forEach(btn => {
+    btn.disabled = true;
+    const letter = btn.textContent.trim()[0];
+    if (letter === correctAns) btn.classList.add('correct');
+    else if (letter === chosen && chosen !== correctAns) btn.classList.add('wrong');
+  });
+  exp.classList.add('show');
+  if (Object.keys(answers).length === total) showScore();
+}
+
+function showScore() {
+  const score = Object.keys(correct).filter(k => answers[k] === correct[k]).length;
+  const panel = document.getElementById('score-panel');
+  const num   = document.getElementById('score-num');
+  const msg   = document.getElementById('score-msg');
+  num.textContent = score + '/' + total;
+  num.style.color = score >= 5 ? 'var(--green)' : score >= 4 ? 'var(--amber)' : 'var(--red)';
+  const msgs = {
+    6: '&#127919; Sempurna! Seluruh konsep Continuing RI &amp; Adjustments dikuasai dengan baik.',
+    5: '&#10003; Excellent. Review satu soal yang salah untuk pemahaman penuh.',
+    4: '&#10003; Good. Review terutama bagian clean surplus violations dan persistence factor.',
+    3: '&#9888;&#65039; Perlu review &mdash; fokus pada Sections 2, 4, dan 5.',
+    2: '&#128260; Perlu review menyeluruh &mdash; baca ulang materi dari awal.',
+    1: '&#128260; Baca ulang semua materi sebelum lanjut ke Day 49.',
+    0: '&#128260; Baca ulang semua materi sebelum lanjut ke Day 49.'
+  };
+  msg.textContent = msgs[score] || msgs[0];
+  panel.style.display = 'block';
+}
+</script>
+</body>
+</html>

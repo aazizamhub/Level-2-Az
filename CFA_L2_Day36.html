@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level 2 - Day 36: Agency Conflicts &amp; Activism (Corporate Governance)</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg:#fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+      --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;--gold:#9a6e1a;--gold2:#7a5010;
+      --gold-bg:rgba(154,110,26,0.08);--blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);
+      --green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);--red:#b83232;--red-bg:rgba(184,50,50,0.08);
+      --amber:#a06010;--amber-bg:rgba(160,96,16,0.08);--r:10px;--r-sm:6px;
+    }
+    body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6; }
+    .page { max-width:900px;margin:0 auto;padding:0 16px; }
+    .topbar { display:flex;justify-content:space-between;align-items:center;padding:12px 0;margin-top:8px;border-bottom:1px solid var(--border);font-size:13px;color:var(--text3); }
+    .breadcrumb { display:flex;gap:8px;align-items:center; }
+    .breadcrumb span { color:var(--text3); }
+    .breadcrumb strong { color:var(--text2);font-weight:600; }
+    .day-badge { background:var(--gold-bg);color:var(--gold2);padding:4px 10px;border-radius:var(--r-sm);font-size:12px;font-weight:600; }
+    .hero { padding:40px 0 32px;border-bottom:1px solid var(--border);margin-bottom:32px; }
+    .hero-tag { color:var(--blue);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px; }
+    .hero-title { font-size:36px;font-weight:700;line-height:1.2;margin-bottom:8px;color:var(--text); }
+    .hero-sub { font-size:16px;color:var(--text2);margin-bottom:16px; }
+    .meta-row { display:flex;gap:12px;flex-wrap:wrap;margin-top:16px; }
+    .meta-pill { background:var(--bg2);border:1px solid var(--border);padding:8px 14px;border-radius:var(--r-sm);font-size:12px;color:var(--text2);font-weight:500; }
+    .section { margin-bottom:40px; }
+    .section-label { font-size:12px;font-weight:700;text-transform:uppercase;color:var(--text3);letter-spacing:0.5px;margin-bottom:16px; }
+    .obj-box { background:var(--blue-bg);border-left:4px solid var(--blue);padding:20px;border-radius:var(--r-sm);margin-bottom:16px; }
+    .obj-box-title { font-size:13px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px; }
+    .obj-list { list-style:none; }
+    .obj-list li { font-size:14px;color:var(--text);margin-bottom:8px;padding-left:20px;position:relative; }
+    .obj-list li:before { content:"✓";position:absolute;left:0;color:var(--blue);font-weight:700; }
+    .concept-grid { display:grid;grid-template-columns:1fr;gap:20px;margin-bottom:24px; }
+    .concept-card { background:white;border:1px solid var(--border2);border-radius:var(--r);padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05); }
+    .concept-card-header { display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border); }
+    .concept-num { display:flex;align-items:center;justify-content:center;width:32px;height:32px;background:var(--gold-bg);color:var(--gold);border-radius:50%;font-weight:700;font-size:14px; }
+    .concept-title { font-size:16px;font-weight:700;color:var(--text);flex:1; }
+    .concept-body { font-size:14px;color:var(--text);line-height:1.7; }
+    .concept-body p { margin-bottom:12px; }
+    .formula { background:var(--bg2);border-left:3px solid var(--gold);padding:12px;border-radius:var(--r-sm);font-family:'Courier New',monospace;font-size:13px;color:var(--text);margin:12px 0;overflow-x:auto;white-space:pre-wrap; }
+    .insight { background:var(--green-bg);border-left:3px solid var(--green);padding:12px;border-radius:var(--r-sm);font-size:13px;color:var(--text);margin:12px 0; }
+    .trap { background:var(--red-bg);border-left:3px solid var(--red);padding:12px;border-radius:var(--r-sm);font-size:13px;color:var(--text);margin:12px 0; }
+    .trap-label { font-weight:700;color:var(--red);font-size:11px;text-transform:uppercase;margin-bottom:4px; }
+    .assume-table { width:100%;border-collapse:collapse;margin:12px 0;font-size:13px; }
+    .assume-table th { background:var(--bg3);border:1px solid var(--border);padding:10px;text-align:left;font-weight:700;color:var(--text); }
+    .assume-table td { border:1px solid var(--border);padding:10px;color:var(--text2); }
+    .cheat-grid { display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px; }
+    .cheat-item { background:white;border:1px solid var(--border);border-radius:var(--r-sm);padding:14px; }
+    .cheat-key { font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px; }
+    .cheat-val { font-size:13px;color:var(--text);font-weight:500;line-height:1.5; }
+    .practice-body { background:white;border:1px solid var(--border2);border-radius:var(--r);padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05); }
+    .vignette { background:var(--bg2);padding:16px;border-radius:var(--r-sm);margin-bottom:24px;border-left:3px solid var(--amber); }
+    .vignette-label { font-size:11px;font-weight:700;color:var(--amber);text-transform:uppercase;margin-bottom:8px; }
+    .vignette-text { font-size:13px;color:var(--text);line-height:1.6; }
+    .question-block { margin-bottom:28px; }
+    .q-num { font-size:12px;font-weight:700;color:var(--blue);margin-bottom:8px; }
+    .q-text { font-size:14px;color:var(--text);margin-bottom:12px;line-height:1.6;font-weight:500; }
+    .option { display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;border:1px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:all 0.2s ease;background:white; }
+    .option:hover { border-color:var(--blue);background:var(--blue-bg); }
+    .option-radio { display:flex;align-items:center;justify-content:center;width:18px;height:18px;border:2px solid var(--border2);border-radius:50%;flex-shrink:0;margin-top:2px; }
+    .option.selected .option-radio { border-color:var(--blue);background:var(--blue); }
+    .option-text { font-size:13px;color:var(--text); }
+    .explanation { background:var(--bg2);padding:12px;border-radius:var(--r-sm);font-size:12px;color:var(--text2);margin-top:8px;display:none;line-height:1.6; }
+    .explanation.show { display:block; }
+    .explanation.correct { border-left:3px solid var(--green);background:var(--green-bg);color:var(--text); }
+    .explanation.incorrect { border-left:3px solid var(--red);background:var(--red-bg);color:var(--text); }
+    .score-panel { background:var(--gold-bg);border:1px solid var(--gold);border-radius:var(--r);padding:16px;margin-top:20px;text-align:center;display:none; }
+    .score-panel.show { display:block; }
+    .score-panel-text { font-size:14px;color:var(--text);margin-bottom:8px; }
+    .score-panel-value { font-size:24px;font-weight:700;color:var(--gold2); }
+    .nav-bottom { display:flex;justify-content:space-between;align-items:center;padding:24px 0;margin-top:40px;border-top:1px solid var(--border); }
+    .nav-btn { text-decoration:none;padding:10px 16px;border-radius:var(--r-sm);font-size:13px;font-weight:600;color:var(--blue);border:1px solid var(--border);transition:all 0.2s ease;cursor:pointer; }
+    .nav-btn:hover { border-color:var(--blue);background:var(--blue-bg); }
+    @media (max-width:640px) { .hero-title{font-size:28px;} .cheat-grid{grid-template-columns:1fr;} .meta-row{flex-direction:column;} }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">
+      <span>CFA Level II</span><span>&middot;</span><span>Corporate Issuers</span><span>&middot;</span><strong>LM3</strong>
+    </div>
+    <div class="day-badge">Day 36 of 90</div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Friday, 05 June 2026</div>
+    <h1 class="hero-title">Agency Conflicts &amp; Activism</h1>
+    <p class="hero-sub">Corporate Governance &mdash; Subtopic 2 of 2</p>
+    <div class="meta-row">
+      <div class="meta-pill">60 min total</div>
+      <div class="meta-pill">30 min theory</div>
+      <div class="meta-pill">30 min practice</div>
+      <div class="meta-pill">~8% exam weight</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Learning Objectives</div>
+    <div class="obj-box">
+      <div class="obj-box-title">By the end of this subtopic, you'll be able to:</div>
+      <ul class="obj-list">
+        <li>Bedakan principal-agent problem dari principal-principal problem dan identifikasi kondisi struktur kepemilikan yang memunculkan masing-masing konflik</li>
+        <li>Jelaskan karakteristik dan potensi konflik kepentingan dari berbagai jenis pemegang saham berpengaruh (keluarga, SOE, institusional, foreign investors)</li>
+        <li>Uraikan strategi-strategi utama yang digunakan investor aktivis untuk memaksa perusahaan bertindak sesuai kepentingan pemegang saham</li>
+        <li>Terapkan pendekatan penilaian kualitas governance menggunakan ESG/governance scores dari data provider seperti MSCI dan Sustainalytics</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Key Concepts &mdash; Theory (30 min)</div>
+    <div class="concept-grid">
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">1</div>
+          <div class="concept-title">Principal-Agent vs. Principal-Principal: Dua Dimensi Konflik Governance</div>
+        </div>
+        <div class="concept-body">
+          <p>Ada dua jenis fundamental konflik dalam corporate governance yang perlu lo bedain dengan jelas. Keduanya berbeda dalam hal <em>siapa yang berkonflik</em> dan <em>kondisi kepemilikan</em> yang melahirkan konflik tersebut.</p>
+
+          <table class="assume-table">
+            <thead>
+              <tr><th>Dimensi</th><th>Principal-Agent Problem</th><th>Principal-Principal Problem</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Siapa berkonflik?</strong></td>
+                <td>Pemegang saham (principals) vs. manajer/manajemen (agents)</td>
+                <td>Controlling shareholders (principals kuat) vs. minority shareholders (principals lemah)</td>
+              </tr>
+              <tr>
+                <td><strong>Kondisi kepemilikan</strong></td>
+                <td>Dispersed ownership + dispersed voting: <em>weak shareholders, strong managers</em></td>
+                <td>Concentrated ownership + concentrated voting: <em>strong shareholders, weak managers</em></td>
+              </tr>
+              <tr>
+                <td><strong>Risiko utama</strong></td>
+                <td>Manajer menggunakan aset perusahaan untuk kepentingan pribadi (overinvestment, perks, empire-building) tanpa bisa dikontrol pemegang saham</td>
+                <td>Controlling shareholders mengalokasikan sumber daya perusahaan untuk keuntungan pribadi/grup mereka (tunneling, related-party transactions) dengan mengorbankan minority shareholders</td>
+              </tr>
+              <tr>
+                <td><strong>Solusi umum</strong></td>
+                <td>Direktur independen, komite audit, transparansi disclosure, incentive compensation yang align kepentingan manajer dengan pemegang saham</td>
+                <td>Proteksi hak minority shareholders: special voting arrangements, independent directors yang tidak terafiliasi controlling shareholder, pengawasan regulasi ketat</td>
+              </tr>
+              <tr>
+                <td><strong>Contoh yurisdiksi rentan</strong></td>
+                <td>AS, UK, Australia &mdash; kepemilikan tersebar luas, tidak ada controlling shareholder yang bisa monitor manajemen</td>
+                <td>Indonesia, Brasil, China, Korea Selatan &mdash; kepemilikan terkonsentrasi di keluarga atau negara; minority shareholders sering dirugikan related-party transactions</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>Ada juga varian ketiga: <strong>Dispersed ownership + concentrated voting power</strong>. Ini terjadi misalnya saat dual-class shares memberikan voting power besar ke pendiri meski kepemilikan ekonomisnya sudah terdilusi. Hasilnya sama: <em>principal-principal problem</em> karena controlling voters dapat mengeksploitasi economic shareholders.</p>
+
+          <div class="formula">Matriks Konflik Governance:
+
+  Kepemilikan    | Voting Power    | Konflik Dominan
+  -------------- | --------------- | ----------------------
+  Dispersed      | Dispersed       | Principal-AGENT problem
+                 |                 | (weak shareholders,
+                 |                 |  strong managers)
+  Concentrated   | Concentrated    | Principal-PRINCIPAL problem
+                 |                 | (strong controlling SH,
+                 |                 |  weak minority SH)
+  Dispersed      | Concentrated    | Principal-PRINCIPAL problem
+                 |                 | (via dual-class shares /
+                 |                 |  pyramid structures)
+  Concentrated   | Dispersed       | Jarang; terjadi saat ada
+                 |                 | voting caps regulasi
+                 |                 | pemerintah</div>
+
+          <div class="insight">
+            <strong>Dividen dan Konflik Agency:</strong> Pembayaran dividen membantu mengurangi principal-agent conflict karena membatasi free cash flow yang tersedia untuk manajemen melakukan overinvestment. Namun dividen justru dapat memperburuk konflik antara pemegang saham dan bondholders karena mengurangi cash cushion untuk membayar kewajiban utang. Ini dua arah konflik yang berbeda dan sering diuji bersamaan di CFA exam.
+          </div>
+
+          <div class="trap">
+            <div class="trap-label">Exam Trap &mdash; Jangan Balik Arah Hubungan Dividen dan Konflik</div>
+            Dividen mengurangi principal-AGENT conflict tapi memperburuk konflik shareholders vs. bondholders. Soal CFA sering menguji kedua arah ini sekaligus dalam satu vignette. Pastikan lo identifikasi konflik MANA yang sedang ditanyakan sebelum menjawab.
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">2</div>
+          <div class="concept-title">Jenis Pemegang Saham Berpengaruh dan Konflik Kepentingan Spesifik</div>
+        </div>
+        <div class="concept-body">
+          <p>Di berbagai penjuru dunia, jenis pemegang saham yang paling berpengaruh berbeda-beda. Masing-masing membawa <em>motivasi, kepentingan, dan potensi konflik</em> yang unik. Ini penting untuk menilai risiko governance perusahaan secara spesifik.</p>
+
+          <table class="assume-table">
+            <thead>
+              <tr><th>Tipe Pemegang Saham</th><th>Karakteristik &amp; Motivasi</th><th>Potensi Konflik Khas</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Keluarga (Family)</strong></td>
+                <td>Dominan di Amerika Latin, Asia. Sering ada <em>interlocking directorates</em> &mdash; anggota keluarga sama duduk di banyak dewan perusahaan berbeda dalam satu grup</td>
+                <td>Rendahnya transparansi; poor management accountability; <em>modest consideration for minority shareholder rights</em>; kesulitan attract talented outsiders</td>
+              </tr>
+              <tr>
+                <td><strong>State-Owned Enterprise (SOE)</strong></td>
+                <td>Pemerintah sebagai controlling shareholder; model mixed-ownership (sebagian saham di pasar publik). Umumnya di sektor strategis (energi, perbankan, infrastruktur)</td>
+                <td>Mengejar social/public policy goals yang mengorbankan shareholder value; implicit state guarantee mengurangi market scrutiny; manajemen lemah akuntabilitasnya</td>
+              </tr>
+              <tr>
+                <td><strong>Institutional Investors</strong></td>
+                <td>Mutual funds, pension funds, insurance companies, hedge funds. Secara kolektif memiliki proporsi signifikan saham perusahaan publik</td>
+                <td>Umumnya tidak cukup besar untuk qualified sebagai controlling shareholder; namun bisa mendorong good governance dengan meminta akuntabilitas dewan dan manajemen</td>
+              </tr>
+              <tr>
+                <td><strong>Group Companies</strong></td>
+                <td>Horizontal/vertical ownership structures (cross-holdings). Contoh: Samsung (Korea), Sanwa (Jepang), Grupo Carso (Meksiko)</td>
+                <td>Related-party transactions yang menguntungkan grup tapi merugikan minority; long-term cross-shareholding mempersulit transfer kepemilikan ke luar grup</td>
+              </tr>
+              <tr>
+                <td><strong>Foreign Investors</strong></td>
+                <td>Investor dari negara dengan governance standards lebih ketat. Sering dominan di emerging markets</td>
+                <td>Bisa mendorong higher transparency; ketika perusahaan cross-list, local minority shareholders turut diuntungkan dari higher governance standards yang diterapkan</td>
+              </tr>
+              <tr>
+                <td><strong>Private Equity (VC/LBO)</strong></td>
+                <td>Umumnya pegang kontrol mayoritas; terlibat aktif dalam governance. VC: early-stage. LBO: mature companies, go-private</td>
+                <td>Membawa perubahan governance positif (performance-based compensation) tapi horizon investasi terbatas bisa mengorbankan long-term sustainability</td>
+              </tr>
+              <tr>
+                <td><strong>Banks</strong></td>
+                <td>Di Eropa dan Asia, bank sering punya equity investment sekaligus lending relationship dengan perusahaan yang sama</td>
+                <td>Conflict of interest: bank bisa mendorong perusahaan ambil pinjaman lebih banyak (menguntungkan bank sebagai kreditur) meski tidak optimal untuk equity shareholders lain</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="insight">
+            <strong>Keluarga: Dua Sisi Mata Uang Governance</strong><br>
+            CFA curriculum mencatat bahwa family ownership sebenarnya <em>mengurangi</em> principal-agent problem karena keluarga punya concentrated ownership sekaligus management responsibility yang aligned dengan kepentingan perusahaan jangka panjang. Tradeoff-nya: mereka cenderung kurang transparan dan kurang memperhatikan hak minority shareholders. Ini persis kebalikan dari dispersed ownership dimana transparency tinggi tapi manajer tidak aligned dengan pemegang saham.
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">3</div>
+          <div class="concept-title">Shareholder Activism: Strategi dan Mekanisme</div>
+        </div>
+        <div class="concept-body">
+          <p><strong>Shareholder activism</strong> adalah strategi yang digunakan pemegang saham untuk <em>memaksa perusahaan bertindak sesuai keinginan mereka</em>. Aktivisme dimulai ketika investor percaya perusahaan undervalued karena governance yang buruk, strategic mistakes, capital allocation inefisien, atau manajemen yang lemah.</p>
+
+          <table class="assume-table">
+            <thead>
+              <tr><th>Strategi Aktivisme</th><th>Cara Kerja</th><th>Contoh Tujuan</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Engagement &amp; Dialogue</strong></td>
+                <td>Dialog langsung (private atau public) dengan manajemen dan dewan. Cara paling awal dan paling lunak</td>
+                <td>Perubahan strategi, perbaikan disclosure, perubahan arah capital allocation</td>
+              </tr>
+              <tr>
+                <td><strong>Shareholder Proposals</strong></td>
+                <td>Mengajukan resolusi yang dipilih dalam RUPS (Annual General Meeting). Bisa advisory atau binding tergantung yurisdiksi</td>
+                <td>Say-on-pay vote, perubahan charter, penghapusan anti-takeover provisions</td>
+              </tr>
+              <tr>
+                <td><strong>Proxy Contest / Proxy Fight</strong></td>
+                <td>Kampanye untuk mendapatkan dukungan pemegang saham lain agar memilih kandidat direktur alternatif yang diajukan aktivis &mdash; bersaing dengan slate direktur saat ini</td>
+                <td>Ganti komposisi dewan, mendorong penjualan perusahaan, perubahan CEO</td>
+              </tr>
+              <tr>
+                <td><strong>Akuisisi Blok Saham Besar</strong></td>
+                <td>Investor aktivis membangun posisi saham signifikan (misal 5&ndash;15%) untuk mendapat leverage negotiating yang kuat terhadap manajemen</td>
+                <td>Buyback program, strategic review, M&amp;A, pemisahan divisi (divestiture/spin-off)</td>
+              </tr>
+              <tr>
+                <td><strong>Public Campaign</strong></td>
+                <td>Surat terbuka ke manajemen/dewan yang dipublikasikan; presentasi ke investor lain; media campaign untuk membangun koalisi</td>
+                <td>Memberi tekanan reputasi pada manajemen; mendorong corporate governance reform</td>
+              </tr>
+              <tr>
+                <td><strong>Greenmail (Historical)</strong></td>
+                <td>Perusahaan membeli kembali saham aktivis dengan <em>premium</em> secara privat agar aktivis pergi. Dikritik karena merugikan pemegang saham lain</td>
+                <td>Respons defensif perusahaan untuk menghentikan upaya takeover/aktivisme &mdash; bukan strategi aktivis</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="formula">Respons Perusahaan terhadap Aktivisme:
+
+Respons Kooperatif (Umumnya Positif untuk SH):
+  + Dialogue dan negotiated changes
+  + Board seat diberikan ke activist nominee
+  + Strategic review, buyback program
+  + CEO succession planning
+
+Respons Defensif (Berpotensi Merugikan SH):
+  - Greenmail: bayar aktivis premium agar pergi
+    -&gt; merugikan pemegang saham non-aktivis
+       yang tidak mendapat premium yang sama
+  - Poison pill aktivasi
+  - Anti-takeover provisions diperkuat
+  - Litigation terhadap aktivis</div>
+
+          <div class="insight">
+            <strong>Dampak Aktivisme ke Pasar:</strong> Pengumuman posisi activist investor seringkali diikuti kenaikan harga saham jangka pendek karena pasar menginterpretasikan ini sebagai sinyal bahwa undervaluation akan dikoreksi. Namun, dampak jangka panjang lebih diperdebatkan &mdash; tergantung apakah perubahan yang didorong aktivis benar-benar menciptakan nilai operasional atau sekadar financial engineering jangka pendek.
+          </div>
+
+          <div class="trap">
+            <div class="trap-label">Exam Trap &mdash; Shareholder Activism Bukan Hostile Takeover</div>
+            Aktivisme berbeda dari hostile takeover. Activist investors umumnya tidak ingin mengambil alih dan menjalankan perusahaan &mdash; mereka ingin mendorong perubahan tertentu (governance, strategi, capital allocation) sambil tetap menjadi pemegang saham yang profit dari kenaikan harga. Proxy fight adalah tentang mendudukkan direktur baru, bukan mengambil alih 100% kepemilikan.
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">4</div>
+          <div class="concept-title">Governance Scores: ESG Data Providers dan Cara Investor Menggunakannya</div>
+        </div>
+        <div class="concept-body">
+          <p>Faktor corporate governance seringkali sulit dikuantifikasi &mdash; tidak ada "angka" langsung di laporan keuangan untuk kualitas dewan. Ada tiga pendekatan utama investor dalam mengidentifikasi dan mengevaluasi kualitas governance:</p>
+
+          <table class="assume-table">
+            <thead>
+              <tr><th>Pendekatan</th><th>Cara Kerja</th><th>Kelebihan &amp; Keterbatasan</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1. Proprietary / Internal Method</strong></td>
+                <td>Analis menggunakan judgment sendiri atau alat proprietary firma. Meneliti laporan tahunan, proxy reports, regulatory filings (10-K), sustainability reports, news, industry groups</td>
+                <td>+ Fleksibel, bisa disesuaikan konteks spesifik<br>- Time-intensive; tidak scalable untuk universe besar; subyektif</td>
+              </tr>
+              <tr>
+                <td><strong>2. ESG Data Providers (Vendors)</strong></td>
+                <td>Vendor seperti <strong>MSCI</strong> dan <strong>Sustainalytics</strong> mengumpulkan ESG disclosures publik, menerjemahkannya menjadi skor dan/atau ranking individual perusahaan, seringkali dengan penilaian subyektif oleh ESG analysts vendor</td>
+                <td>+ Scalable; coverage luas; mudah untuk screening portofolio<br>- <strong>Elemen subyektif</strong> dalam interpretasi skor; metodologi berbeda antar vendor; inkonsistensi dalam scoring</td>
+              </tr>
+              <tr>
+                <td><strong>3. Not-for-Profit Frameworks</strong></td>
+                <td>GRI, SASB, IIRC, 2DII. Menyediakan framework reporting standar dan materiality maps per industri untuk mendorong standardisasi disclosure</td>
+                <td>+ Mendorong standardisasi dan comparability<br>- Disclosure masih umumnya voluntary; level disclosure bervariasi; materiality assessment berbeda tiap perusahaan</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="formula">Aplikasi Governance Scores dalam Analisis Investasi:
+
+Equity Analysis:
+  -&gt; Adjust discount rate: governance buruk = higher
+     risk premium = lower valuation
+  -&gt; Forecast adjustment: governance buruk bisa
+     indikasikan higher probability earnings manipulation
+     atau related-party transactions
+  -&gt; Sensitivity/scenario analysis: dampak governance
+     event (skandal, aktivisme, CEO change) pada value
+
+Credit Analysis:
+  -&gt; Credit spread adjustment: governance buruk =
+     credit spread WIDER
+  -&gt; Longer-maturity bonds lebih sensitif terhadap
+     governance risk daripada short-maturity bonds
+  -&gt; Internal credit assessment adjustment</div>
+
+          <p><strong>Tantangan ESG Scoring:</strong> Salah satu kelemahan fundamental ESG data providers adalah <strong>inkonsistensi antar vendor</strong>. Skor MSCI dan Sustainalytics untuk perusahaan yang sama bisa sangat berbeda karena metodologi, bobot, dan definisi materiality yang berbeda. Ini berbeda dari credit ratings yang relatif lebih terstandarisasi.</p>
+
+          <div class="insight">
+            <strong>Stewardship Codes:</strong> Banyak negara memperkenalkan voluntary stewardship codes yang mendorong investor institusional untuk aktif memonitor perusahaan investasinya dan menggunakan hak voting secara informed. Di UK, UK Stewardship Code mewajibkan asset managers UK mempublikasikan "comply or explain" statement. Ini menciptakan ekosistem governance yang lebih aktif karena institutional investors yang collectively memiliki porsi besar pasar punya insentif formal untuk terlibat.
+          </div>
+
+          <div class="trap">
+            <div class="trap-label">Exam Trap &mdash; ESG Scores Bukan Data Objektif</div>
+            CFA curriculum secara eksplisit mencatat bahwa ESG scores dari data vendors mengandung "subjective element to the interpretation." Berbeda dari data akuntansi yang punya standar ketat (IFRS, US GAAP), ESG scoring menggunakan judgment. Soal exam sering menguji apakah kandidat mengerti keterbatasan ini &mdash; jangan asumsikan ESG scores dari MSCI atau Sustainalytics adalah ground truth yang objektif.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Quick Reference Cheat Sheet</div>
+    <div class="cheat-grid">
+      <div class="cheat-item">
+        <div class="cheat-key">Principal-Agent Problem</div>
+        <div class="cheat-val">Dispersed ownership &rarr; weak shareholders, strong managers. Manajer bisa self-serving karena tidak bisa dimonitor. Dividen membantu mengurangi konflik ini</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Principal-Principal Problem</div>
+        <div class="cheat-val">Concentrated ownership &rarr; controlling SH vs minority SH. Risiko tunneling &amp; related-party transactions. Dual-class shares juga menghasilkan konflik ini</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Activist Investor Strategies</div>
+        <div class="cheat-val">Engagement &rarr; shareholder proposals &rarr; proxy contest &rarr; public campaign. Tujuan: perbaiki governance, unlock value, dorong buyback/M&amp;A/divestiture</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Greenmail</div>
+        <div class="cheat-val">Perusahaan beli kembali saham aktivis dengan premium privat agar aktivis pergi. Merugikan pemegang saham lain yang tidak mendapat premium tersebut</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">ESG Data Providers</div>
+        <div class="cheat-val">MSCI, Sustainalytics &mdash; skor dan ranking tapi mengandung subjective assessment. Inkonsistensi antar vendor adalah kelemahan fundamental yang disebut eksplisit di CFA curriculum</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Governance &rarr; Cost of Capital</div>
+        <div class="cheat-val">Governance buruk = higher risk premium &rarr; higher cost of equity &rarr; lower valuation &amp; wider credit spread. Analyst adjust risk premium atau credit spread untuk governance assessment</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Practice (30 min)</div>
+    <div class="practice-body">
+
+      <div class="vignette">
+        <div class="vignette-label">Mini Vignette</div>
+        <div class="vignette-text">
+          <p><strong>PT Mahardika Energi Tbk (MHEN)</strong> adalah perusahaan pertambangan batubara yang terdaftar di Bursa Efek Indonesia. Saham perusahaan dipegang oleh banyak investor ritel dan institusional &mdash; tidak ada satu pun pemegang saham yang memiliki lebih dari 4% saham. Namun, tim manajemen puncak MHEN yang dipimpin CEO Andi Wirawan telah menjabat rata-rata 15 tahun dan memiliki track record mengembangkan perusahaan melalui banyak akuisisi. Dalam 3 tahun terakhir, MHEN melakukan 5 akuisisi aset tambang, beberapa di antaranya kemudian ditulis off sebagai impairment losses besar.</p>
+          <p style="margin-top:8px;">PT Garuda Capital, sebuah hedge fund lokal, baru-baru ini mengakuisisi 8% saham MHEN dan mengirimkan surat terbuka kepada dewan yang menyatakan bahwa manajemen MHEN terlalu fokus pada akuisisi empire-building yang merusak nilai pemegang saham. Garuda Capital mengusulkan agar MHEN menghentikan akuisisi baru, mengalokasikan lebih banyak kas untuk buyback dan dividen, dan mengganti dua anggota dewan yang dinilai terlalu dekat dengan CEO Andi.</p>
+          <p style="margin-top:8px;">Merespons tekanan ini, CEO Andi mengusulkan ke dewan bahwa MHEN membeli kembali 8% saham yang dipegang Garuda Capital dengan harga 25% di atas harga pasar saat ini, dengan syarat Garuda Capital menandatangani perjanjian standstill dan tidak melakukan akuisisi saham MHEN selama 5 tahun ke depan. Dewan menyetujui proposal ini dengan suara 7:3.</p>
+          <p style="margin-top:8px;">Seorang analis ESG kemudian mereview laporan sustainability MHEN dan membandingkan ESG scores dari MSCI (skor G: 4.2/10) dan Sustainalytics (skor governance: 68/100 &mdash; low risk). Ia menemukan perbedaan signifikan antara kedua skor tersebut untuk dimensi governance.</p>
+        </div>
+      </div>
+
+      <div id="quiz-container">
+        <div class="question-block" data-q="1" data-correct="B">
+          <div class="q-num">QUESTION 1 OF 4</div>
+          <div class="q-text">Berdasarkan struktur kepemilikan MHEN (tidak ada pemegang saham lebih dari 4%) dan perilaku manajemen yang melakukan multiple acquisitions dengan hasil buruk, konflik governance apa yang paling tepat menggambarkan situasi MHEN?</div>
+          <div class="option" data-opt="A">
+            <div class="option-radio"></div>
+            <div class="option-text">A. Principal-principal problem &mdash; karena ada pemegang saham institusional besar (Garuda Capital) yang berkonflik dengan pemegang saham ritel lainnya mengenai strategi perusahaan</div>
+          </div>
+          <div class="option" data-opt="B">
+            <div class="option-radio"></div>
+            <div class="option-text">B. Principal-agent problem &mdash; karena struktur kepemilikan tersebar (dispersed) menghasilkan weak shareholders dan strong managers, sehingga manajemen dapat mengejar akuisisi empire-building yang merusak nilai pemegang saham</div>
+          </div>
+          <div class="option" data-opt="C">
+            <div class="option-radio"></div>
+            <div class="option-text">C. Bukan konflik governance &mdash; karena akuisisi adalah strategi bisnis yang sah, dan manajemen punya track record panjang yang membuktikan kapabilitas mereka</div>
+          </div>
+          <div class="explanation correct">
+            &#10003; <strong>B adalah jawaban benar.</strong> MHEN memiliki dispersed ownership (tidak ada pemegang saham di atas 4%) yang menghasilkan weak shareholders dan strong managers &mdash; kondisi klasik principal-agent problem. Manajer (CEO Andi dan tim) adalah "agents" yang seharusnya bertindak demi kepentingan pemegang saham, namun justru mengejar multiple acquisitions yang destruktif untuk nilai pemegang saham &mdash; perilaku yang CFA curriculum sebut "empire-building" atau "overinvestment." Karena kepemilikan tersebar, tidak ada satu pun pemegang saham yang punya kekuatan untuk menghentikan manajer sebelum Garuda Capital masuk.
+          </div>
+          <div class="explanation incorrect">
+            &#10007; Pilihan A salah &mdash; principal-principal problem terjadi antara <em>controlling shareholders</em> dan <em>minority shareholders</em>, bukan antara berbagai kelompok minority shareholders yang berbeda pendapat soal strategi. Garuda Capital dengan 8% masih merupakan minority shareholder, bukan controlling shareholder. Pilihan C keliru karena track record panjang manajemen tidak membuat akuisisi destructive menjadi bukan konflik governance &mdash; justru ini adalah tanda khas principal-agent problem: manajer kuat yang tidak terkontrol membangun "empire" bahkan ketika hasilnya buruk secara finansial.
+          </div>
+        </div>
+
+        <div class="question-block" data-q="2" data-correct="A">
+          <div class="q-num">QUESTION 2 OF 4</div>
+          <div class="q-text">Proposal CEO Andi untuk membeli kembali saham Garuda Capital dengan premium 25% agar aktivis tersebut pergi adalah contoh dari praktik apa, dan bagaimana dampaknya terhadap pemegang saham lain?</div>
+          <div class="option" data-opt="A">
+            <div class="option-radio"></div>
+            <div class="option-text">A. Greenmail &mdash; praktik ini merugikan pemegang saham yang tidak menerima premium buyback, dan secara efektif menggunakan kas perusahaan untuk melindungi manajemen dari akuntabilitas shareholder</div>
+          </div>
+          <div class="option" data-opt="B">
+            <div class="option-radio"></div>
+            <div class="option-text">B. Stewardship code compliance &mdash; karena perusahaan sedang berusaha melakukan engagement konstruktif dengan activist investor untuk mencapai resolusi yang menguntungkan semua pihak</div>
+          </div>
+          <div class="option" data-opt="C">
+            <div class="option-radio"></div>
+            <div class="option-text">C. Share repurchase yang valid &mdash; karena perusahaan berhak membeli kembali sahamnya sendiri di pasar seberapapun harganya sesuai kebijakan manajemen</div>
+          </div>
+          <div class="explanation correct">
+            &#10003; <strong>A adalah jawaban benar.</strong> Ini adalah contoh klasik <strong>greenmail</strong> &mdash; perusahaan membeli kembali saham activist investor dengan harga premium secara privat agar aktivis tersebut pergi dan tidak lagi mengancam manajemen. Dampaknya jelas merugikan pemegang saham lain: (1) mereka tidak mendapat premium 25% tersebut; (2) kas perusahaan digunakan untuk melindungi manajemen dari akuntabilitas, bukan untuk menciptakan nilai; (3) "standstill agreement" mencegah potensi tekanan governance yang justru bisa menguntungkan pemegang saham lain di masa depan. CFA curriculum menyebut greenmail sebagai praktik yang "often to the detriment of remaining shareholders."
+          </div>
+          <div class="explanation incorrect">
+            &#10007; Pilihan B sama sekali tidak tepat &mdash; stewardship code mendorong investor institusional untuk aktif memonitor perusahaan, bukan tentang perusahaan membeli keluar activist investor dengan premium. Ini bukan "engagement konstruktif" &mdash; ini adalah tindakan defensif untuk mengenyahkan pengawas. Pilihan C melewatkan poin kritis: meskipun share repurchase secara teknis legal, buyback dengan premium di atas harga pasar ke pemegang saham tertentu saja (bukan pro-rata ke semua pemegang saham) adalah unfair treatment yang merugikan pemegang saham lain &mdash; inilah substansi masalah greenmail.
+          </div>
+        </div>
+
+        <div class="question-block" data-q="3" data-correct="C">
+          <div class="q-num">QUESTION 3 OF 4</div>
+          <div class="q-text">Jika Garuda Capital memutuskan untuk tidak menerima tawaran greenmail dan justru ingin mendorong perubahan dewan direksi MHEN, strategi aktivisme mana yang paling tepat digunakan?</div>
+          <div class="option" data-opt="A">
+            <div class="option-radio"></div>
+            <div class="option-text">A. Menjual seluruh posisi saham MHEN di pasar terbuka dan mengumumkan alasannya secara publik &mdash; ini akan memberi sinyal negatif yang kuat ke pasar</div>
+          </div>
+          <div class="option" data-opt="B">
+            <div class="option-radio"></div>
+            <div class="option-text">B. Mengajukan tawaran hostile takeover untuk mengakuisisi 100% saham MHEN dan mengganti seluruh manajemen sekaligus</div>
+          </div>
+          <div class="option" data-opt="C">
+            <div class="option-radio"></div>
+            <div class="option-text">C. Melakukan proxy contest &mdash; mengajukan kandidat direktur alternatif ke pemegang saham lain dan berkampanye agar pemegang saham memilih kandidat mereka dalam pemilihan dewan berikutnya</div>
+          </div>
+          <div class="explanation correct">
+            &#10003; <strong>C adalah jawaban benar.</strong> Proxy contest adalah mekanisme aktivisme yang tepat untuk mendorong perubahan komposisi dewan. Garuda Capital akan mengajukan kandidat direktur alternatif yang berkomitmen pada governance yang lebih baik dan berkampanye ke pemegang saham lain untuk mendukung kandidat mereka. Dengan 8% kepemilikan, Garuda Capital memiliki credibility dan leverage untuk membangun koalisi dengan institutional investors lain yang mungkin juga tidak puas dengan kinerja manajemen. Ini adalah penggunaan legitimate shareholder rights yang dirancang dalam sistem corporate governance modern.
+          </div>
+          <div class="explanation incorrect">
+            &#10007; Pilihan A adalah exit strategy, bukan activism strategy &mdash; ini melepaskan leverage dan tidak menghasilkan perubahan governance yang konkret. Pilihan B (hostile takeover) adalah tindakan yang jauh lebih ekstrem dari kebutuhan situasi dan memerlukan biaya modal yang sangat besar untuk akuisisi 100% saham. CFA curriculum menjelaskan bahwa activist investors biasanya <em>tidak</em> ingin mengambil alih perusahaan &mdash; mereka ingin mendorong perubahan spesifik sambil tetap menjadi pemegang saham yang profit dari kenaikan harga.
+          </div>
+        </div>
+
+        <div class="question-block" data-q="4" data-correct="B">
+          <div class="q-num">QUESTION 4 OF 4</div>
+          <div class="q-text">Analis ESG menemukan perbedaan signifikan antara governance score MSCI (4.2/10) dan Sustainalytics (68/100 &mdash; low risk) untuk MHEN. Kesimpulan paling tepat yang bisa ditarik dari perbedaan ini adalah:</div>
+          <div class="option" data-opt="A">
+            <div class="option-radio"></div>
+            <div class="option-text">A. Pasti ada kesalahan metodologi di salah satu vendor karena governance perusahaan adalah fakta objektif yang seharusnya menghasilkan skor yang sama dari dua vendor berbeda</div>
+          </div>
+          <div class="option" data-opt="B">
+            <div class="option-radio"></div>
+            <div class="option-text">B. Perbedaan ini mencerminkan elemen subyektif dalam interpretasi ESG scores oleh masing-masing vendor &mdash; metodologi, bobot, dan definisi materiality yang berbeda akan menghasilkan skor berbeda untuk perusahaan yang sama</div>
+          </div>
+          <div class="option" data-opt="C">
+            <div class="option-radio"></div>
+            <div class="option-text">C. Analis harus mengambil rata-rata dari kedua skor tersebut sebagai benchmark governance MHEN yang paling akurat, karena rata-rata akan menghilangkan bias dari masing-masing vendor</div>
+          </div>
+          <div class="explanation correct">
+            &#10003; <strong>B adalah jawaban benar.</strong> CFA curriculum secara eksplisit mencatat bahwa ESG data vendors seperti MSCI dan Sustainalytics mengandung "subjective element to the interpretation of ESG scores and rankings." Berbeda dari data keuangan yang memiliki standar akuntansi (IFRS, US GAAP), tidak ada standar universal untuk ESG scoring. Setiap vendor menggunakan metodologi, bobot, dan definisi materiality yang berbeda untuk dimensi yang sama. Perbedaan besar antara MSCI dan Sustainalytics untuk perusahaan yang sama adalah fitur yang diharapkan, bukan anomali. Investor perlu memahami metodologi vendor yang mereka gunakan, bukan memperlakukan skor sebagai ground truth objektif.
+          </div>
+          <div class="explanation incorrect">
+            &#10007; Pilihan A keliru karena governance assessment bukan kalkulasi matematis yang deterministic &mdash; ia melibatkan judgment tentang bobot berbagai faktor dan interpretasi disclosure yang berbeda. "Kesalahan" bukan kategori yang tepat di sini. Pilihan C menawarkan solusi pragmatis tapi salah secara konseptual &mdash; rata-rata dua skor dengan metodologi fundamental berbeda tidak menghasilkan skor yang "lebih akurat"; ia hanya menciptakan angka baru yang tidak memiliki grounding metodologis yang jelas. Yang benar adalah memahami mengapa keduanya berbeda.
+          </div>
+        </div>
+
+        <div id="score-panel-1" class="score-panel">
+          <div class="score-panel-text">Skor Kamu:</div>
+          <div class="score-panel-value" id="score-value-1">0/4</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="CFA_L2_Day35.html" class="nav-btn">&larr; Day 35: Board &amp; Ownership Structure</a>
+    <a href="CFA_L2_Day37.html" class="nav-btn">Day 37: M&amp;A Mechanics &amp; Defense &rarr;</a>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  var answers = {};
+  var correct = {};
+  document.querySelectorAll('.question-block').forEach(function(qb) {
+    var q = qb.dataset.q;
+    correct[q] = qb.dataset.correct;
+    qb.querySelectorAll('.option').forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        if (answers[q]) return;
+        answers[q] = opt.dataset.opt;
+        qb.querySelectorAll('.option').forEach(function(o) { o.classList.remove('selected'); });
+        opt.classList.add('selected');
+        var isCorrect = opt.dataset.opt === correct[q];
+        qb.querySelectorAll('.explanation').forEach(function(ex) {
+          ex.style.display = 'none';
+          ex.classList.remove('show');
+        });
+        var expls = qb.querySelectorAll('.explanation');
+        var target = isCorrect ? expls[0] : expls[1];
+        if (target) { target.style.display = 'block'; target.classList.add('show'); }
+        var total = Object.keys(correct).length;
+        var scored = Object.keys(answers).length;
+        if (scored === total) {
+          var score = Object.keys(answers).filter(function(k) { return answers[k] === correct[k]; }).length;
+          var panel = document.getElementById('score-panel-1');
+          if (panel) { panel.classList.add('show'); document.getElementById('score-value-1').textContent = score + '/' + total; }
+        }
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

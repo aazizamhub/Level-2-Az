@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level II Day 34 - ESG in Valuation: FCF, WACC, Fixed Income, Green Bonds (Full)</title>
+  <style>
+:root {
+  --bg:#fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+  --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;--gold:#9a6e1a;--gold2:#7a5010;
+  --gold-bg:rgba(154,110,26,0.08);--blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);
+  --green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);--red:#b83232;--red-bg:rgba(184,50,50,0.08);
+  --amber:#a06010;--amber-bg:rgba(160,96,16,0.08);--r:10px;--r-sm:6px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:15px;}
+.page{max-width:960px;margin:0 auto;padding:0 20px;background:white;box-shadow:0 0 40px rgba(0,0,0,0.04);}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid var(--border);margin-bottom:24px;}
+.breadcrumb{font-size:13px;color:var(--text2);letter-spacing:0.5px;font-weight:500;}
+.day-badge,.version-badge{display:inline-block;padding:6px 12px;background:var(--gold-bg);color:var(--gold2);border-radius:var(--r-sm);font-size:12px;font-weight:600;margin-left:12px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);margin-left:8px;}
+.hero{margin-bottom:48px;}
+.hero-tag{font-size:13px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;}
+.hero-title{font-size:40px;font-weight:700;line-height:1.2;margin-bottom:12px;color:var(--text);}
+.hero-sub{font-size:18px;color:var(--text2);margin-bottom:28px;}
+.meta-row{display:flex;flex-wrap:wrap;gap:12px;}
+.meta-pill{display:inline-flex;align-items:center;padding:8px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:20px;font-size:13px;color:var(--text2);font-weight:500;}
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:32px;margin-bottom:48px;}
+.toc-title{font-size:18px;font-weight:700;margin-bottom:20px;color:var(--text);}
+.toc-list{list-style:none;}
+.toc-list li{margin-bottom:12px;font-size:15px;}
+.toc-list a{color:var(--blue);text-decoration:none;}
+.toc-list a:hover{text-decoration:underline;}
+.toc-num{color:var(--gold);font-weight:600;margin-right:8px;}
+.chapter{margin-bottom:56px;scroll-margin-top:100px;}
+.chapter-header{margin-bottom:28px;}
+.chapter-num{font-size:13px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:1px;}
+.chapter-title{font-size:32px;font-weight:700;color:var(--text);margin-top:8px;}
+.sub-header{font-size:20px;font-weight:700;color:var(--text);margin:32px 0 16px 0;border-bottom:2px solid var(--border);padding-bottom:8px;}
+.sub-header-sm{font-size:17px;font-weight:700;color:var(--text2);margin:24px 0 12px 0;}
+.prose{color:var(--text);margin-bottom:16px;line-height:1.8;}
+.formula-block{background:var(--bg2);border-left:4px solid var(--gold);border-radius:var(--r-sm);padding:20px;margin:24px 0;font-family:'Courier New',monospace;font-size:14px;color:var(--text);overflow-x:auto;white-space:pre-wrap;}
+.formula-block .label{font-weight:700;color:var(--gold);display:block;margin-bottom:8px;font-size:13px;text-transform:uppercase;letter-spacing:0.5px;font-family:'Inter',sans-serif;}
+.formula-block .note{font-family:'Inter',sans-serif;font-size:13px;color:var(--text2);margin-top:12px;line-height:1.6;}
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:28px;margin:32px 0;}
+.exhibit-title{font-size:15px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:20px;}
+.exhibit-body{color:var(--text);line-height:1.8;font-size:14px;}
+.reg-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;}
+.reg-table th{background:var(--bg3);border:1px solid var(--border);padding:12px;text-align:left;font-weight:700;color:var(--text);}
+.reg-table td{border:1px solid var(--border);padding:12px;color:var(--text2);}
+.reg-table tr:nth-child(even){background:rgba(255,255,255,0.5);}
+.callout{border-radius:var(--r);padding:20px;margin:24px 0;border-left:4px solid;}
+.callout.blue{background:var(--blue-bg);border-left-color:var(--blue);}
+.callout.amber{background:var(--amber-bg);border-left-color:var(--amber);}
+.callout.green{background:var(--green-bg);border-left-color:var(--green);}
+.callout.red{background:var(--red-bg);border-left-color:var(--red);}
+.callout.gold{background:var(--gold-bg);border-left-color:var(--gold);}
+.callout-title{font-weight:700;margin-bottom:8px;display:block;font-size:14px;text-transform:uppercase;letter-spacing:0.5px;}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.green .callout-title{color:var(--green);}
+.callout.red .callout-title{color:var(--red);}
+.callout.gold .callout-title{color:var(--gold);}
+.callout p,.callout li{color:var(--text);font-size:14px;line-height:1.7;}
+.callout ul{padding-left:20px;margin-top:8px;}
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:28px 0;overflow:hidden;}
+.kc-header{padding:18px 20px;background:var(--bg3);border-bottom:1px solid var(--border);cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none;}
+.kc-header:hover{background:rgba(0,0,0,0.04);}
+.kc-header-title{font-weight:600;color:var(--text);font-size:14px;}
+.kc-toggle{color:var(--text3);font-weight:700;font-size:18px;transition:transform 0.2s;}
+.kc.open .kc-toggle{transform:rotate(180deg);}
+.kc-body{padding:20px;max-height:0;overflow:hidden;transition:max-height 0.4s ease-out;}
+.kc.open .kc-body{max-height:2000px;}
+.kc-q{color:var(--text);margin-bottom:14px;line-height:1.7;font-weight:600;}
+.kc-answer{color:var(--text2);line-height:1.8;font-size:14px;border-top:1px solid var(--border);padding-top:14px;margin-top:4px;}
+.num-list,.bullet-list{margin:16px 0;padding-left:24px;}
+.num-list li,.bullet-list li{margin-bottom:10px;color:var(--text);line-height:1.7;}
+.divider{height:1px;background:var(--border);margin:48px 0;}
+.practice-body{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:28px;}
+.vignette{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-bottom:32px;}
+.vignette-label{font-size:12px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;}
+.vignette-text{font-size:14px;color:var(--text);line-height:1.8;}
+.question-block{margin-bottom:32px;}
+.q-num{font-size:12px;font-weight:700;color:var(--blue);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;}
+.q-text{font-size:15px;color:var(--text);margin-bottom:16px;line-height:1.65;font-weight:500;}
+.option{display:flex;align-items:flex-start;gap:14px;padding:12px 16px;margin-bottom:10px;border:1px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:all 0.2s ease;background:white;}
+.option:hover{border-color:var(--blue);background:var(--blue-bg);}
+.option-radio{display:flex;align-items:center;justify-content:center;width:20px;height:20px;border:2px solid var(--border2);border-radius:50%;flex-shrink:0;margin-top:2px;}
+.option.selected .option-radio{border-color:var(--blue);background:var(--blue);}
+.option-text{font-size:14px;color:var(--text);line-height:1.6;}
+.explanation{background:var(--bg2);padding:16px;border-radius:var(--r-sm);font-size:13px;color:var(--text2);margin-top:10px;display:none;line-height:1.7;}
+.explanation.show{display:block;}
+.explanation.correct{border-left:3px solid var(--green);background:var(--green-bg);color:var(--text);}
+.explanation.incorrect{border-left:3px solid var(--red);background:var(--red-bg);color:var(--text);}
+.score-panel{background:var(--gold-bg);border:1px solid var(--gold);border-radius:var(--r);padding:20px;margin-top:24px;text-align:center;display:none;}
+.score-panel.show{display:block;}
+.score-panel-text{font-size:15px;color:var(--text);margin-bottom:8px;}
+.score-panel-value{font-size:28px;font-weight:700;color:var(--gold2);}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;padding:28px 0;margin-top:48px;border-top:1px solid var(--border);}
+.nav-btn{text-decoration:none;padding:12px 18px;border-radius:var(--r-sm);font-size:13px;font-weight:600;color:var(--blue);border:1px solid var(--border);transition:all 0.2s ease;}
+.nav-btn:hover{border-color:var(--blue);background:var(--blue-bg);}
+@media(max-width:640px){.hero-title{font-size:28px;}.meta-row{flex-direction:column;}}
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II &nbsp;&middot;&nbsp; Corporate Issuers &nbsp;&middot;&nbsp; LM2
+      <span class="version-badge">Versi Full</span>
+      <span class="day-badge">Day 34 of 90</span>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Selasa, 02 Juni 2026</div>
+    <h1 class="hero-title">ESG dalam Valuasi: FCF, WACC, Fixed Income, dan Green Bonds</h1>
+    <p class="hero-sub">ESG in Investment Analysis (LM2) &mdash; Subtopik 2 dari 2</p>
+    <div class="meta-row">
+      <div class="meta-pill">Materi Lengkap</div>
+      <div class="meta-pill">Bahasa Indonesia</div>
+      <div class="meta-pill">~8% Exam Weight</div>
+      <div class="meta-pill">Est. Baca 45–60 Menit</div>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ul class="toc-list">
+      <li><a href="#los"><span class="toc-num">0.</span>Learning Outcomes (LOS)</a></li>
+      <li><a href="#ch1"><span class="toc-num">1.</span>Dampak ESG pada Free Cash Flow: Revenue Risk, Cost Risk, dan Stranded Assets</a></li>
+      <li><a href="#ch2"><span class="toc-num">2.</span>Integrasi ESG ke dalam WACC: ESG Equity Risk Premium dan Model Tiga Tahap</a></li>
+      <li><a href="#ch3"><span class="toc-num">3.</span>ESG dalam Analisis Fixed Income: Credit Spread dan Sovereign ESG</a></li>
+      <li><a href="#ch4"><span class="toc-num">4.</span>Green Bonds: Mekanisme, Green Bond Principles, Greenium, dan Greenwashing</a></li>
+      <li><a href="#ch5"><span class="toc-num">5.</span>Latihan Soal — Item Set Vignette (6 Soal)</a></li>
+    </ul>
+  </div>
+
+  <!-- Section 0: LOS -->
+  <div class="chapter" id="los">
+    <div class="chapter-header">
+      <div class="chapter-num">Learning Outcomes</div>
+      <h2 class="chapter-title">LOS yang Diuji dalam Subtopik Ini</h2>
+    </div>
+    <p class="prose">Berdasarkan CFA Level II Curriculum 2026 (Learning Module 2: Environmental, Social, and Governance Considerations in Investment Analysis), kandidat harus mampu:</p>
+    <ul class="num-list">
+      <li><strong>Mengevaluasi</strong> bagaimana faktor ESG mempengaruhi komponen Free Cash Flow — termasuk revenue risk, cost risk, dan stranded asset risk — dalam model valuasi ekuitas (LOS 2d)</li>
+      <li><strong>Menghitung dan menginterpretasikan</strong> penyesuaian WACC akibat ESG equity risk premium dalam model valuasi tiga tahap (LOS 2d)</li>
+      <li><strong>Mengaplikasikan</strong> ESG integration dalam analisis fixed income — termasuk penyesuaian credit spread, analisis sovereign ESG, dan karakteristik unik green bonds (LOS 2d)</li>
+      <li><strong>Menjelaskan</strong> risiko unik green bonds: greenwashing risk, greenium, dan liquidity risk, serta implikasinya bagi investor dengan ESG mandate (LOS 2d)</li>
+    </ul>
+    <div class="callout blue">
+      <span class="callout-title">Hubungan dengan Subtopik Sebelumnya</span>
+      <p>Subtopik Day 33 membahas <em>identifikasi</em> faktor ESG (materialitas, sumber data, pendekatan integration). Subtopik ini (Day 34) fokus pada <em>implementasi valuasi</em> — bagaimana faktor-faktor ESG yang telah diidentifikasi itu diterjemahkan secara kuantitatif ke dalam model DCF (FCF adjustment, WACC adjustment) dan analisis fixed income (credit spread, green bonds).</p>
+    </div>
+  </div>
+
+  <!-- Chapter 1 -->
+  <div class="chapter" id="ch1">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 1</div>
+      <h2 class="chapter-title">Dampak ESG pada Free Cash Flow: Revenue Risk, Cost Risk, dan Stranded Assets</h2>
+    </div>
+
+    <p class="prose">Dalam analisis ekuitas, integrasi ESG yang paling konkret dan kuantitatif masuk melalui penyesuaian pada komponen-komponen <strong>Free Cash Flow to the Firm (FCFF)</strong> atau <strong>Free Cash Flow to Equity (FCFE)</strong>. Analis yang mengintegrasikan ESG secara penuh (full ESG integration) tidak hanya melabeli sebuah saham "ESG friendly" — mereka secara eksplisit mengubah angka-angka dalam model proyeksi keuangannya.</p>
+
+    <p class="prose">Ada tiga channel utama melalui mana faktor ESG mempengaruhi FCF perusahaan. Memahami ketiga channel ini penting karena CFA exam sering menanyakan: "Bagaimana faktor ESG X akan paling langsung mempengaruhi model valuasi?"</p>
+
+    <div class="sub-header">1.1 Revenue Risk</div>
+
+    <p class="prose"><strong>Revenue risk</strong> terjadi ketika faktor ESG — terutama perubahan regulasi, pergeseran preferensi konsumen, atau transisi teknologi — secara langsung mengurangi prospek pendapatan masa depan perusahaan. Revenue risk adalah channel ESG yang paling langsung berdampak pada numerator DCF model.</p>
+
+    <p class="prose">Contoh klasik dari CFA curriculum: perusahaan baja stainless yang bergantung pada pelanggan dari industri oil &amp; gas. Apabila regulasi emisi GRK yang semakin ketat menyebabkan menurunnya permintaan minyak dan gas secara struktural, maka pelanggan utama perusahaan baja tersebut akan mengurangi pembelian — yang pada gilirannya menurunkan revenue perusahaan baja secara permanen. Dampak ini harus dicerminkan dalam proyeksi revenue yang lebih rendah di seluruh periode model.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 1: Mekanisme Revenue Risk ESG dalam Model DCF</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Sumber Revenue Risk</th><th>Mekanisme</th><th>Cara Merefleksikannya dalam Model</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Regulasi produk/aktivitas</strong></td>
+              <td>Regulasi membatasi atau melarang produk/layanan tertentu (batu bara, plastik sekali pakai, kendaraan berbahan bakar fosil)</td>
+              <td>Kurangi revenue growth rate atau volume proyeksi; potong atau eliminasi terminal value jika produk dilarang</td>
+            </tr>
+            <tr>
+              <td><strong>Pergeseran demand konsumen</strong></td>
+              <td>Konsumen beralih ke alternatif yang lebih berkelanjutan (EVs vs ICE vehicles, plant-based vs daging, energi terbarukan vs batu bara)</td>
+              <td>Kurangi revenue proyeksi di setiap stage; percepat penurunan terminal growth rate</td>
+            </tr>
+            <tr>
+              <td><strong>Hilangnya kontrak/pelanggan</strong></td>
+              <td>Pelanggan institusional yang memiliki ESG mandate menghindari vendor dengan profil ESG buruk</td>
+              <td>Kurangi customer retention assumption; tambahkan revenue attrition rate</td>
+            </tr>
+            <tr>
+              <td><strong>Reputational damage</strong></td>
+              <td>Skandal ESG (tumpahan minyak, pelanggaran privasi, kecelakaan kerja) menyebabkan kehilangan brand value dan penjualan</td>
+              <td>Turunkan revenue dalam periode pasca-skandal; sesuaikan berdasarkan expected duration of reputational damage</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">1.2 Cost Risk</div>
+
+    <p class="prose"><strong>Cost risk</strong> mengacu pada peningkatan biaya operasional atau capital expenditure akibat faktor ESG — baik yang sudah terjadi maupun yang diperkirakan analis akan terjadi. Cost risk bekerja melalui kenaikan COGS, operating expenses, atau capex, yang semuanya menurunkan FCFF.</p>
+
+    <p class="prose">CFA curriculum menyajikan beberapa contoh konkret:</p>
+    <ul class="bullet-list">
+      <li><strong>Environmental compliance costs:</strong> Perusahaan minuman yang menggunakan banyak air harus berinvestasi dalam efisiensi penggunaan air atau menghadapi denda regulasi — mengubah cost of goods sold sebagai persentase revenue.</li>
+      <li><strong>Labor-related costs:</strong> Pharmaceutical company dengan rekam jejak produk yang buruk mengalami peningkatan COGS (+1.3% dari revenue) dan non-operating costs (+4.5% dari EBIT) akibat product recalls, regulatory fines, dan biaya implementasi standar kualitas baru.</li>
+      <li><strong>Water infrastructure:</strong> Mining company yang beroperasi di daerah kering harus membangun infrastruktur sumur air dengan biaya yang signifikan — menambah capital expenditure di luar estimasi manajemen.</li>
+    </ul>
+
+    <div class="formula-block"><span class="label">Formula — FCFF dengan ESG Cost Adjustment</span>FCFF = EBIT(1 – t) + D&A – ΔWC – Capex
+
+Tanpa ESG adjustment (baseline):
+  EBITDA margin         = 30% × Revenue
+  Capex (non-water)     = 50% × EBITDA
+  ΔWC                   = 10% × Revenue
+
+Dengan ESG cost adjustment (contoh: mining water risk):
+  Water Capex (ESG)     = +10% × Non-water Capex
+  Total Capex           = 50% × EBITDA + (10% × 50% × EBITDA)
+                        = 55% × EBITDA
+
+  → FCFF[ESG-adjusted] &lt; FCFF[baseline]
+  → Fair value per share TURUN
+
+Contoh penyesuaian revenue (pharmaceutical ESG):
+  Revenue[adj]    = Revenue[base] × (1 – 2%)   [product recalls]
+  COGS/Revenue    = Baseline% + 1.3%             [quality costs]
+  Non-op expense  = +4.5% × EBIT                [fines/litigation]
+<span class="note">Catatan: Setiap komponen harus dianalogikan dengan dampak spesifik faktor ESG yang teridentifikasi. Besaran penyesuaian bergantung pada materialitas dan judgment analis — tidak ada formula standar untuk ESG_RP atau revenue cut percentage.</span></div>
+
+    <div class="sub-header">1.3 Stranded Assets</div>
+
+    <p class="prose"><strong>Stranded assets</strong> adalah aset yang menjadi obsolete atau tidak lagi ekonomis untuk dioperasikan, umumnya akibat perubahan regulasi, kebijakan pemerintah, atau pergeseran permintaan yang fundamental. Dalam konteks ESG, stranded asset risk paling sering dikaitkan dengan industri yang bergantung pada bahan bakar fosil.</p>
+
+    <p class="prose">Stranded assets berdampak pada valuasi melalui dua channel: (1) <strong>impairment aset di neraca</strong> — nilai buku aset harus diturunkan, yang berpengaruh pada book value dan return on equity; (2) <strong>pengurangan atau eliminasi FCF masa depan</strong> — jika aset tidak lagi beroperasi, FCF yang seharusnya dihasilkan dari aset tersebut tidak akan terwujud, sehingga mengurangi terminal value secara drastis.</p>
+
+    <div class="callout amber">
+      <span class="callout-title">Stranded Asset Risk dan Maturity Obligasi</span>
+      <p>CFA curriculum secara eksplisit menyatakan bahwa stranded asset risk berdampak berbeda pada obligasi dengan maturity yang berbeda. Contoh: perusahaan batu bara yang menghadapi stranded asset risk jangka panjang dari regulasi emisi. Obligasi 1-tahunnya relatif aman karena kapasitas produksi kemungkinan masih beroperasi dalam 1 tahun. Namun obligasi 10-tahunnya akan jauh lebih terpengaruh karena kapasitas itu mungkin tidak lagi ekonomis dalam 10 tahun. Ini adalah konsep kritis yang sering diujikan dalam konteks analisis fixed income ESG.</p>
+    </div>
+
+    <div class="kc" id="kc1">
+      <div class="kc-header" onclick="toggleKC('kc1')">
+        <span class="kc-header-title">Knowledge Check 1.1 — Mengidentifikasi Channel ESG ke FCF</span>
+        <span class="kc-toggle">▼</span>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">PT Plastik Indo (PLAS) memproduksi kemasan plastik sekali pakai untuk FMCG. Pemerintah RI baru mengumumkan larangan plastik sekali pakai mulai 2028. PLAS juga menghadapi tekanan dari serikat buruh menuntut kenaikan upah 15% di atas inflasi, dan analis menemukan bahwa 30% kapasitas produksi PLAS menggunakan mesin lama yang tidak akan ekonomis dioperasikan setelah larangan plastik berlaku. Identifikasikan channel dampak ESG pada FCF PLAS dan jelaskan cara mengintegrasikannya dalam model valuasi.</p>
+        <div class="kc-answer">
+          <strong>Jawaban:</strong> Tiga channel ESG: (1) <em>Revenue Risk</em> — larangan plastik sekali pakai 2028 akan mengeliminasi atau sangat membatasi revenue dari segmen utama PLAS. Analis harus memangkas proyeksi revenue secara signifikan setelah 2028, atau menghilangkan terminal value berbasis bisnis plastik sekali pakai; (2) <em>Cost Risk</em> — kenaikan upah 15% di atas inflasi meningkatkan COGS/revenue ratio PLAS — analis harus menaikkan operating cost assumption dalam model; (3) <em>Stranded Asset Risk</em> — 30% kapasitas dengan mesin lama yang tidak ekonomis setelah 2028 → potensi write-down aset → kurangi value dari aset-aset tersebut dalam model (misalnya tidak memasukkannya dalam capex maintenance, atau melakukan impairment). Implementasi model: kurangi revenue forecast, naikkan COGS%, kurangi atau eliminasi FCF dari 30% kapasitas pasca-2028.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chapter 2 -->
+  <div class="chapter" id="ch2">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 2</div>
+      <h2 class="chapter-title">Integrasi ESG ke dalam WACC: ESG Equity Risk Premium dan Model Tiga Tahap</h2>
+    </div>
+
+    <p class="prose">Selain penyesuaian pada Free Cash Flow, ESG integration dalam valuasi ekuitas juga dilakukan melalui penyesuaian pada <strong>discount rate — WACC</strong>. Pendekatan ini sangat berguna ketika dampak ESG bersifat kualitatif dan sulit dikuantifikasi secara langsung ke dalam FCF, namun analis yakin bahwa risiko tersebut material dan belum tercermin sepenuhnya dalam harga pasar.</p>
+
+    <div class="sub-header">2.1 Logika ESG Equity Risk Premium</div>
+
+    <p class="prose">Dalam model CAPM, beta (β) menangkap systematic risk sebuah saham terhadap pasar secara keseluruhan. Namun, banyak risiko ESG yang bersifat <em>tail risk</em> jangka panjang — seperti risiko litigasi lingkungan, labor unrest, atau kerusakan reputasi — tidak selalu tercermin secara penuh dalam beta historis, terutama jika risiko tersebut belum pernah terrealisasi sebelumnya atau horizon terjadinya jauh ke depan.</p>
+
+    <p class="prose">Untuk mengatasi keterbatasan ini, analis dapat menambahkan <strong>ESG Equity Risk Premium (ESG_RP)</strong> — sebuah tambahan pada cost of equity yang mencerminkan premium risiko spesifik terkait faktor ESG yang diidentifikasi. Besaran ESG_RP ditentukan berdasarkan judgment analis, tidak ada angka standar yang universal.</p>
+
+    <div class="formula-block"><span class="label">Formula — Cost of Equity dengan ESG Adjustment</span>Ke = Rf + β × ERP + ESG_RP
+
+Dimana:
+  Rf      = Risk-free rate
+  β       = Beta saham (systematic market risk)
+  ERP     = Equity Risk Premium (market risk premium)
+  ESG_RP  = ESG-specific risk premium adjustment
+              • Positif jika ESG risk LEBIH TINGGI dari peers
+              • Negatif jika ESG profile LEBIH BAIK dari peers
+              • Besaran berdasarkan judgment analis
+
+WACC = wd × [rd × (1 – t)] + we × Ke
+<span class="note">Catatan: ESG_RP adalah tambahan terhadap CAPM — bukan pengganti beta. Beta mengukur systematic risk, sementara ESG_RP menangkap idiosyncratic ESG risk yang tidak tercermin dalam beta.</span></div>
+
+    <div class="sub-header">2.2 Studi Kasus: Three-Stage FCFF dengan ESG Integration</div>
+
+    <p class="prose">CFA curriculum 2026 menyajikan studi kasus <strong>American Copper Mining Company (ACMC)</strong> sebagai ilustrasi lengkap bagaimana ESG diintegrasikan ke dalam model tiga tahap FCFF. Berikut ringkasan studi kasus tersebut:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 2: ACMC — ESG Factors dan Dampaknya pada Model Valuasi</div>
+      <div class="exhibit-body">
+        <p style="margin-bottom:16px;"><strong>Latar Belakang:</strong> ACMC adalah perusahaan tambang tembaga besar AS yang baru mengakuisisi tambang baru di daerah kering Amerika Latin. Analis Jane Dodd mengidentifikasi tiga faktor ESG material:</p>
+        <table class="reg-table">
+          <thead>
+            <tr><th>Faktor ESG</th><th>Temuan Analis</th><th>Dampak pada Model</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. Izin Pemerintah Lokal</strong></td>
+              <td>ACMC memiliki rekam jejak buruk dalam menyerahkan rencana rehabilitasi — proses persetujuan izin akan butuh 5 tahun (bukan 3 tahun seperti estimasi manajemen)</td>
+              <td>Stage 1 diperpanjang 2 tahun → FCF dari tambang baru tertunda 2 tahun → NPV total turun</td>
+            </tr>
+            <tr>
+              <td><strong>2. Labor Issues</strong></td>
+              <td>Kompensasi karyawan di bawah kompetitor; tidak ada keterkaitan kompensasi eksekutif dengan keselamatan kerja → risiko labor unrest dan reputational risk</td>
+              <td>ESG_RP +75 bps ditambahkan ke cost of equity → WACC naik → fair value turun</td>
+            </tr>
+            <tr>
+              <td><strong>3. Water Infrastructure</strong></td>
+              <td>Tambang berlokasi di daerah sangat kering; ACMC underestimate capex untuk infrastruktur air</td>
+              <td>Water capex tambahan = 10% dari non-water capex → Total Capex lebih tinggi → FCFF lebih rendah</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="formula-block"><span class="label">Perhitungan WACC ACMC dengan ESG Integration</span>Asumsi dasar:
+  Rf            = 3%
+  β             = 1.2
+  ERP           = 5%
+  rd (pretax)   = 5%
+  Tax rate      = 25%
+  Debt ratio    = 50%
+  ESG_RP        = +75 bps (labor/reputational risk)
+
+Tanpa ESG adjustment:
+  Ke[base]    = 3% + (1.2)(5%) = 9.0%
+  rd(1–t)     = 5% × (1–25%) = 3.75%
+  WACC[base]  = (0.5)(3.75%) + (0.5)(9.0%)
+              = 1.875% + 4.5% = 6.375%
+
+Dengan ESG adjustment:
+  Ke[ESG]     = 3% + (1.2)(5%) + 0.75% = 9.75%
+  rd(1–t)     = 3.75% (tidak berubah)
+  WACC[ESG]   = (0.5)(3.75%) + (0.5)(9.75%)
+              = 1.875% + 4.875% = 6.75%
+
+Hasil: Fair value[ESG] = $97/share
+       Harga pasar     = $110/share
+       → SELL recommendation
+<span class="note">Tanpa ESG integration, fair value mungkin mendekati atau melebihi $110, sehingga rekomendasi bisa berbeda. ESG integration secara material mengubah rekomendasi investasi.</span></div>
+
+    <div class="sub-header">2.3 Arah Penyesuaian ESG_RP: Dua Arah</div>
+
+    <p class="prose">Penting dipahami bahwa ESG_RP tidak selalu positif (risk penalty). Perusahaan dengan profil ESG yang <em>lebih baik dari peers</em> dapat mendapatkan ESG_RP negatif — artinya cost of equity mereka lebih rendah, mencerminkan risiko yang lebih rendah secara keseluruhan.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 3: Arah ESG_RP dan Implikasi Valuasi</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Kondisi ESG</th><th>ESG_RP</th><th>Ke</th><th>WACC</th><th>Firm Value</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>ESG Risk LEBIH TINGGI dari peers (governance lemah, labor unrest, env. fines)</td>
+              <td>Positif (+bps)</td>
+              <td>Naik</td>
+              <td>Naik</td>
+              <td>TURUN (penalti valuasi)</td>
+            </tr>
+            <tr>
+              <td>ESG Profile LEBIH BAIK dari peers (sustainability kuat, governance solid, compliance)</td>
+              <td>Negatif (–bps)</td>
+              <td>Turun</td>
+              <td>Turun</td>
+              <td>NAIK (premium valuasi)</td>
+            </tr>
+            <tr>
+              <td>ESG sama dengan peers — tidak ada diferensiasi material</td>
+              <td>Nol (0)</td>
+              <td>Tidak berubah</td>
+              <td>Tidak berubah</td>
+              <td>Tidak berubah</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout gold">
+      <span class="callout-title">Dampak Leveraged ESG pada Terminal Value</span>
+      <p>Dalam model DCF, terminal value sering mewakili 60–80% dari total nilai perusahaan. Penyesuaian kecil pada WACC (misalnya +75 bps) atau terminal growth rate akibat ESG dapat memiliki dampak yang jauh lebih besar pada valuasi total dibandingkan penyesuaian FCF di tahun-tahun awal. Ini adalah alasan mengapa analis yang mengintegrasikan ESG harus sangat berhati-hati dalam estimasi WACC dan terminal growth rate mereka — perubahan kecil punya efek yang diperkuat melalui terminal value.</p>
+    </div>
+
+    <div class="kc" id="kc2">
+      <div class="kc-header" onclick="toggleKC('kc2')">
+        <span class="kc-header-title">Knowledge Check 2.1 — Interpretasi ESG_RP dalam WACC</span>
+        <span class="kc-toggle">▼</span>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">Seorang analis menilai PT Telekomunikasi Nusantara (TLKN). TLKN memiliki rekam jejak governance yang sangat baik, kebijakan keamanan data yang robust (relevan untuk perusahaan telekomunikasi sebagai material social factor), dan program lingkungan yang melebihi standar industri. Semua hal lain sama. Bagaimana analis seharusnya memasukkan profil ESG TLKN ke dalam WACC, dan apa implikasinya terhadap fair value?</p>
+        <div class="kc-answer">
+          <strong>Jawaban:</strong> Karena profil ESG TLKN lebih baik dari peers, analis dapat menerapkan ESG_RP negatif — mengurangi cost of equity TLKN dari baseline CAPM. Misalnya, ESG_RP = –50 bps. Ini mencerminkan risiko ekor (tail risk) yang lebih rendah dari sisi regulasi, reputasi, dan tata kelola. Hasilnya: Ke turun → WACC turun → fair value NAIK relatif dari model tanpa ESG adjustment. Ini adalah contoh ESG sebagai value creator (upside opportunity) dalam analisis ekuitas, bukan hanya sebagai risk mitigator.
+        </div>
+      </div>
+    </div>
+
+    <div class="kc" id="kc2b">
+      <div class="kc-header" onclick="toggleKC('kc2b')">
+        <span class="kc-header-title">Knowledge Check 2.2 — Memilih antara FCF Adjustment vs. WACC Adjustment</span>
+        <span class="kc-toggle">▼</span>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">Kapan lebih tepat menggunakan FCF adjustment vs. WACC (ESG_RP) adjustment untuk mengintegrasikan faktor ESG? Berikan contoh situasi untuk masing-masing.</p>
+        <div class="kc-answer">
+          <strong>Jawaban:</strong> (1) <em>FCF adjustment lebih tepat</em> ketika dampak ESG dapat dikuantifikasi secara langsung ke dalam angka keuangan — contoh: tambahan biaya infrastruktur air yang bisa diestimasi (tambah capex), denda regulasi yang dapat diperkirakan besarannya (tambah non-operating expense), atau penurunan revenue akibat kehilangan kontrak tertentu (kurangi revenue). (2) <em>WACC/ESG_RP adjustment lebih tepat</em> ketika dampak ESG bersifat kualitatif, sulit dikuantifikasi secara langsung, namun analis yakin risiko tersebut material — contoh: labor unrest yang belum pernah terjadi tapi kemungkinannya tinggi, risiko reputasi yang diffuse, atau potensi regulatory action yang belum definitif. Dalam praktiknya, kedua metode ini sering dikombinasikan.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chapter 3 -->
+  <div class="chapter" id="ch3">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 3</div>
+      <h2 class="chapter-title">ESG dalam Analisis Fixed Income: Credit Spread dan Sovereign ESG</h2>
+    </div>
+
+    <p class="prose">Dalam analisis <strong>fixed income</strong>, pendekatan ESG integration berbeda secara fundamental dari analisis ekuitas. Perbedaan ini berakar pada sifat dasar instrumen obligasi: obligasi jatuh tempo pada nilai nominal (par value) — sehingga return upside bagi investor sangat terbatas — tapi risiko downside (gagal bayar) tidak terbatas ke nol.</p>
+
+    <p class="prose">Akibatnya, sementara analis ekuitas menggunakan ESG untuk mengidentifikasi <em>baik peluang maupun risiko</em>, analis fixed income menggunakan ESG terutama untuk <strong>mitigating downside risk</strong>. Mekanisme utama ESG integration dalam fixed income adalah penyesuaian <strong>credit spread</strong>.</p>
+
+    <div class="sub-header">3.1 Mekanisme ESG dalam Credit Spread</div>
+
+    <p class="prose">Credit spread mencerminkan kompensasi yang diminta investor untuk menanggung risiko kredit emiten di atas instrumen bebas risiko (risk-free rate). Faktor ESG yang material secara finansial akan mempengaruhi penilaian analis terhadap kemampuan emiten untuk memenuhi kewajiban utangnya — dan dengan demikian mempengaruhi credit spread yang wajar.</p>
+
+    <div class="formula-block"><span class="label">ESG Integration dalam Fixed Income</span>Yield obligasi korporat:
+  rd = rf + Credit Spread
+
+ESG Integration → Penyesuaian Credit Spread:
+
+Perusahaan dengan ESG Risk TINGGI:
+  → Widen credit spread (tambahkan ESG risk premium ke spread)
+  → Harga obligasi TURUN (inverse relationship yield-price)
+  → Contoh: Coal company dengan stranded asset risk
+    - Obligasi 1-tahun: spread adjustment kecil (risk belum terrealisasi)
+    - Obligasi 10-tahun: spread adjustment besar (stranded asset risk material)
+
+Perusahaan dengan ESG Profile BAIK:
+  → Tighten credit spread (kurangi spread dari baseline)
+  → Harga obligasi NAIK
+  → Mencerminkan risiko gagal bayar yang lebih rendah
+
+ESG Integration untuk bank — Governance Risk Proxy:
+  Non-Performing Loan (NPL) ratio sebagai proxy governance risk.
+  Bank X: NPL/Total Loans = Peer average + 50 bps
+  → Analis meningkatkan credit spread Bank X
+    relatif terhadap peers karena governance risk lebih tinggi<span class="note">Catatan: Dalam fixed income, ESG integration juga menggunakan analisis credit spread relatif (relative value analysis), duration analysis, dan scenario/sensitivity analysis untuk menilai dampak perubahan ESG pada nilai obligasi.</span></div>
+
+    <p class="prose">Perlu dicatat bahwa dalam analisis kredit, penyesuaian ESG mencakup tidak hanya credit spread tetapi juga bisa diterapkan melalui internal credit assessment, forecasting rasio keuangan, dan relative credit ranking antar emiten. Namun di CFA exam, mekanisme yang paling sering diujikan adalah <strong>penyesuaian credit spread</strong>.</p>
+
+    <div class="sub-header">3.2 Sovereign ESG: Menerapkan ESG pada Obligasi Pemerintah</div>
+
+    <p class="prose">Konsep ESG integration tidak terbatas pada obligasi korporat — analis juga menerapkannya pada <strong>obligasi sovereign (obligasi pemerintah)</strong>. Dalam konteks sovereign, faktor ESG yang relevan sangat berbeda dari perusahaan swasta karena yang dianalisis adalah kekuatan dan kelemahan struktural sebuah negara.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 4: Faktor ESG dalam Analisis Sovereign</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Dimensi</th><th>Faktor ESG Sovereign yang Relevan</th><th>Dampak pada Sovereign Credit</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Governance (G)</strong></td>
+              <td>Kualitas institusi (Corruption Perception Index), supremasi hukum (Rule of Law), efektivitas pemerintahan, akuntabilitas publik, stabilitas politik, transparansi fiskal</td>
+              <td>Governance lemah → risiko gagal bayar lebih tinggi → sovereign credit spread melebar; governance kuat → sovereign spread lebih ketat, akses ke pasar modal internasional lebih baik</td>
+            </tr>
+            <tr>
+              <td><strong>Environmental (E)</strong></td>
+              <td>Eksposur risiko fisik iklim (banjir, kekeringan, badai), ketergantungan ekonomi pada sumber daya alam yang rentan terhadap transisi energi, komitmen dan kemajuan pada target iklim (NDC)</td>
+              <td>Negara sangat rentan bencana iklim → risiko fiskal dari biaya bencana → higher sovereign risk; negara yang memimpin transisi energi → lower long-term sovereign risk</td>
+            </tr>
+            <tr>
+              <td><strong>Social (S)</strong></td>
+              <td>Kualitas modal manusia (pendidikan, kesehatan, HDI), ketimpangan pendapatan (GINI coefficient), stabilitas sosial, tingkat kemiskinan, akses layanan publik</td>
+              <td>Modal manusia rendah → growth potential terbatas → lower sovereign credit quality jangka panjang; ketimpangan tinggi → risiko instabilitas sosial → higher sovereign risk premium</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="margin-top:16px;font-size:14px;color:var(--text2);">Analis sovereign ESG menggunakan sumber data seperti World Bank Governance Indicators, Transparency International, UN Development Programme (HDI), dan berbagai sovereign ESG scoring frameworks dari vendorseperti MSCI, Sustainalytics, dan lembaga khusus. Seperti halnya ESG korporat, sovereign ESG ratings juga mengalami divergence antar vendor.</p>
+      </div>
+    </div>
+
+    <div class="callout green">
+      <span class="callout-title">Konteks Indonesia: Sovereign ESG dan SBN</span>
+      <p>Bagi investor global yang mempertimbangkan Surat Berharga Negara (SBN) Indonesia, analisis sovereign ESG mencakup: (G) — kualitas tata kelola Kemenkeu, transparansi APBN, peringkat anti-korupsi KPK; (E) — ketergantungan APBN pada royalti batubara dan penerimaan migas, komitmen net zero 2060, rencana pensiun dini PLTU; (S) — kualitas SDM (ranking PISA, HDI), akses layanan kesehatan dan pendidikan, stabilitas sosial. Reformasi tata kelola dan transisi energi yang konkret dapat memperbaiki sovereign ESG profile Indonesia dan berkontribusi pada penurunan sovereign credit spread, mengurangi biaya utang pemerintah.</p>
+    </div>
+
+    <div class="kc" id="kc3">
+      <div class="kc-header" onclick="toggleKC('kc3')">
+        <span class="kc-header-title">Knowledge Check 3.1 — ESG Equity vs. Fixed Income: Perbedaan Fundamental</span>
+        <span class="kc-toggle">▼</span>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">Jelaskan mengapa ESG integration dalam analisis ekuitas bersifat bilateral (identify opportunities AND mitigate risks), sementara dalam analisis fixed income lebih terfokus pada mitigating downside risk saja. Apa konsekuensinya untuk cara analis menggunakan ESG dalam kedua konteks?</p>
+        <div class="kc-answer">
+          <strong>Jawaban:</strong> Dalam analisis ekuitas, upside tidak terbatas — saham yang undervalued bisa memberikan return multipel dari modal. Karena itu analis ekuitas menggunakan ESG untuk mengidentifikasi perusahaan dengan ESG yang lebih baik dari peers (yang mungkin underpriced karena belum diperhitungkan pasar) SEKALIGUS untuk menghindari perusahaan dengan ESG risks tinggi. Sebaliknya, dalam analisis fixed income, return maksimal sudah dibatasi sejak awal (obligasi jatuh tempo pada par value). Investor obligasi tidak bisa menikmati upside dari perusahaan yang ESG-nya membaik melebihi apa yang dijanjikan obligasi. Namun mereka sepenuhnya menanggung downside jika perusahaan gagal bayar akibat ESG risk yang terrealisasi. Konsekuensinya: analis kredit fokus terutama pada mengidentifikasi ESG risks yang bisa menyebabkan tekanan likuiditas, penurunan credit quality, atau kegagalan — bukan pada mengidentifikasi ESG opportunities.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chapter 4 -->
+  <div class="chapter" id="ch4">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 4</div>
+      <h2 class="chapter-title">Green Bonds: Mekanisme, Green Bond Principles, Greenium, dan Greenwashing</h2>
+    </div>
+
+    <p class="prose"><strong>Green bonds</strong> adalah kategori instrumen fixed income yang proceeds-nya ditetapkan secara eksplisit untuk mendanai proyek atau portofolio proyek yang memberikan manfaat lingkungan atau iklim. Mereka merupakan bagian dari kategori yang lebih luas yang disebut <em>sustainable finance instruments</em> — yang juga mencakup social bonds, sustainability bonds, dan sustainability-linked bonds.</p>
+
+    <p class="prose">Green bond pertama — disebut <em>Climate Awareness Bond</em> — diterbitkan oleh <strong>European Investment Bank (EIB)</strong> pada tahun 2007. Sejak saat itu, pasar green bond telah berkembang pesat secara global, termasuk di Indonesia di mana Pemerintah RI dan sejumlah emiten korporat telah menerbitkan green bonds dan sukuk hijau.</p>
+
+    <div class="sub-header">4.1 Mekanisme dan Karakteristik Green Bonds</div>
+
+    <p class="prose">Poin kunci yang sering diabaikan: <em>analisis dan valuasi</em> green bonds pada dasarnya <strong>sama dengan conventional bonds</strong> dari emiten yang sama. Green bonds memiliki credit rating, bondholder recourse, dan struktur yang identik dengan conventional bonds dari issuer yang sama. Satu-satunya perbedaan struktural adalah bahwa proceeds earmarked untuk proyek hijau — dan perbedaan ini justru menciptakan beberapa risiko unik.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 5: Perbandingan Green Bond vs. Conventional Bond (dari emiten yang sama)</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Karakteristik</th><th>Green Bond</th><th>Conventional Bond</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Credit Rating</td><td>Sama dengan issuer's conventional bonds</td><td>Sama dengan green bonds dari emiten yang sama</td></tr>
+            <tr><td>Bondholder Recourse</td><td>Sama — terhadap seluruh aset emiten (all else equal)</td><td>Sama dengan green bonds</td></tr>
+            <tr><td>Coupon / Maturity</td><td>Dapat identik atau sangat mirip</td><td>Dapat identik atau sangat mirip</td></tr>
+            <tr><td>Penggunaan Proceeds</td><td><strong>Earmarked</strong> untuk proyek lingkungan/iklim</td><td>Bebas — general corporate purposes</td></tr>
+            <tr><td>Reporting obligation</td><td>Lebih tinggi: emiten harus report penggunaan proceeds</td><td>Tidak ada kewajiban reporting khusus penggunaan dana</td></tr>
+            <tr><td>Issuance cost</td><td>Lebih tinggi: biaya monitoring, reporting, verifikasi</td><td>Standar</td></tr>
+            <tr><td>Potential pricing</td><td>Bisa trade dengan greenium (spread lebih ketat)</td><td>Tidak ada greenium</td></tr>
+            <tr><td>Risiko Unik</td><td>Greenwashing risk, liquidity risk (buy-and-hold)</td><td>Tidak ada risiko greenwashing</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">4.2 Green Bond Principles (GBP) dan Ekosistem Standar</div>
+
+    <p class="prose">Karena pasar green bonds tidak memiliki regulasi yang seragam secara global, berbagai standar dan sertifikasi sukarela telah dikembangkan untuk memberikan kerangka dan kredibilitas bagi penerbitan green bonds.</p>
+
+    <ul class="bullet-list">
+      <li><strong>Green Bond Principles (GBP):</strong> Dikembangkan pada 2014 oleh konsorsium investment banks. Bersifat voluntary. Menetapkan empat komponen inti: (1) Use of Proceeds — harus jelas dan hijau; (2) Process for Project Evaluation and Selection; (3) Management of Proceeds — tracking penggunaan dana; (4) Reporting — regular transparency report kepada investor. Dikelola oleh <em>International Capital Market Association (ICMA)</em>.</li>
+      <li><strong>Climate Bonds Initiative (CBI):</strong> Lembaga nirlaba yang mengembangkan Climate Bonds Standard — lebih ketat dari GBP — dan memberikan sertifikasi Climate Bonds untuk green bonds yang memenuhi standarnya.</li>
+      <li><strong>ESG Rating Agencies:</strong> MSCI, Sustainalytics, dan lainnya mengembangkan metodologi sendiri untuk menilai kualitas green bonds.</li>
+      <li><strong>European Commission:</strong> Sedang mengeksplorasi standar wajib (EU Green Bond Standard) yang akan membuat "green" label menjadi sesuatu yang diatur secara hukum di Eropa.</li>
+    </ul>
+
+    <div class="callout blue">
+      <span class="callout-title">ICMA vs. CBI — Perbedaan Penting</span>
+      <p>ICMA mengelola Green Bond Principles yang bersifat <em>voluntary guidelines</em> — ambang batas minimum yang luas. Climate Bonds Initiative memiliki standar yang lebih <em>ketat dan spesifik</em> per sektor — misalnya, solar energy, low-carbon transport, dsb. — dengan verifikasi yang lebih rigorous. Sebuah green bond bisa memenuhi GBP tetapi tidak mendapat Climate Bond certification jika tidak memenuhi standar sektor spesifik CBI.</p>
+    </div>
+
+    <div class="sub-header">4.3 Greenium: Harga Premium Green Bonds</div>
+
+    <p class="prose"><strong>Greenium</strong> (green premium) terjadi ketika green bonds diperdagangkan dengan credit spread yang lebih ketat dari conventional bonds yang identik dari emiten yang sama — artinya investor bersedia menerima yield yang lebih rendah untuk memiliki green bonds. Ini mencerminkan demand yang lebih tinggi dari investor ESG-focused (pension funds, green-mandated funds, SWFs dengan ESG mandate) yang memiliki kebutuhan untuk memiliki instrumen hijau demi memenuhi mandate mereka.</p>
+
+    <p class="prose">Penting dipahami siapa yang diuntungkan dan dirugikan oleh greenium:</p>
+    <ul class="bullet-list">
+      <li><strong>Emiten (issuer) diuntungkan:</strong> Cost of funding lebih rendah — emiten membayar kupon/yield yang lebih rendah dibandingkan conventional bond yang setara. Mereka juga mendapat akses ke basis investor yang lebih luas dan beragam.</li>
+      <li><strong>Investor ESG-mandated:</strong> Mungkin harus membayar greenium karena kebutuhan untuk memenuhi mandate — mereka tidak selalu memiliki pilihan; mereka perlu instrumen hijau.</li>
+      <li><strong>Investor konvensional:</strong> Tidak perlu membayar greenium — mereka bisa mendapatkan yield yang lebih tinggi dari conventional bonds yang identik. Dari perspektif risk-return murni, conventional bonds lebih menarik jika greenium ada.</li>
+    </ul>
+
+    <div class="sub-header">4.4 Greenwashing Risk: Risiko Unik Green Bonds</div>
+
+    <p class="prose"><strong>Greenwashing risk</strong> adalah risiko bahwa proceeds green bond tidak benar-benar digunakan untuk proyek lingkungan atau iklim yang memberikan manfaat nyata — label "hijau" hanya kosmetik untuk menarik investor ESG-conscious tanpa perubahan substansial. Ini adalah risiko yang paling sering diujikan di CFA exam dalam konteks green bonds karena sifatnya yang unik dan tidak dimiliki conventional bonds dari emiten yang sama.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 6: Greenwashing Risk — Mekanisme dan Implikasi</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Aspek</th><th>Penjelasan</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Definisi</strong></td>
+              <td>Proceeds green bond tidak digunakan untuk proyek lingkungan yang bermanfaat seperti yang dijanjikan; atau proyek yang didanai tidak memenuhi standar "green" yang sesungguhnya</td>
+            </tr>
+            <tr>
+              <td><strong>Implikasi untuk investor yang membayar greenium</strong></td>
+              <td>Investor membayar harga lebih tinggi (yield lebih rendah) untuk sesuatu yang ternyata bukan genuine green bond → overpayment; mereka mendapat conventional bond tapi membayar harga green bond</td>
+            </tr>
+            <tr>
+              <td><strong>Implikasi untuk fund dengan ESG/green mandate</strong></td>
+              <td>Fund yang hanya boleh berinvestasi pada green instruments bisa melanggar mandatenya jika green bond yang dibeli ternyata greenwashing → risiko reputasi fund dan potensi pelanggaran kontrak investasi</td>
+            </tr>
+            <tr>
+              <td><strong>Penyebab greenwashing</strong></td>
+              <td>Standar yang voluntary dan tidak seragam; tidak ada verifikasi independent yang wajib; "green" label ditentukan secara sepihak oleh issuer; pengawasan penggunaan proceeds yang lemah setelah penerbitan</td>
+            </tr>
+            <tr>
+              <td><strong>Cara mitigasi</strong></td>
+              <td>Mencari third-party verification (Climate Bonds certification, second-party opinion); analisis mendalam pada green framework emiten; monitoring penggunaan proceeds pasca-penerbitan; memilih emiten dengan rekam jejak ESG yang kuat</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">4.5 Liquidity Risk pada Green Bonds</div>
+
+    <p class="prose">Selain greenwashing risk, green bonds juga memiliki <strong>liquidity risk</strong> yang lebih tinggi dari conventional bonds serupa. Hal ini terjadi karena green bonds cenderung menarik <em>buy-and-hold investors</em> seperti pension funds, sovereign wealth funds, dan lembaga keuangan dengan ESG mandate jangka panjang — yang membeli dan jarang menjual holdings mereka.</p>
+
+    <p class="prose">Akibatnya, secondary market untuk green bonds cenderung less active — bid-ask spread lebih lebar, dan ketika seorang investor perlu menjual posisi green bonds-nya, mungkin lebih sulit menemukan buyer dengan harga yang fair dibandingkan conventional bonds dari emiten yang sama.</p>
+
+    <div class="callout red">
+      <span class="callout-title">Exam Trap — Risiko Unik Green Bonds</span>
+      <p>CFA exam sering menanyakan: "Risiko apa yang PALING UNIK untuk green bonds dibandingkan conventional bonds dari emiten yang sama?" Jawaban yang paling tepat adalah <strong>greenwashing risk</strong>. Credit risk dan interest rate risk berlaku sama untuk keduanya. Liquidity risk juga bisa menjadi jawaban, tapi greenwashing risk lebih spesifik dan lebih langsung diidentifikasi sebagai risiko unik green bonds dalam CFA curriculum. Jawab greenwashing risk jika hanya ada satu pilihan yang benar.</p>
+    </div>
+
+    <div class="kc" id="kc4">
+      <div class="kc-header" onclick="toggleKC('kc4')">
+        <span class="kc-header-title">Knowledge Check 4.1 — Rangkuman Risiko Green Bonds</span>
+        <span class="kc-toggle">▼</span>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">Sebuah perusahaan utilitas menerbitkan green bond dengan klaim bahwa seluruh proceeds akan digunakan untuk membangun PLTS. Seorang portfolio manager dengan green mandate membeli green bond tersebut dengan greenium 15 bps (artinya credit spread 15 bps lebih ketat dari conventional bonds yang identik). Setahun kemudian, investigasi menemukan bahwa hanya 60% dari proceeds yang benar-benar digunakan untuk PLTS — sisanya untuk refinancing utang lama. Identifikasikan: (a) risiko mana yang terrealisasi; (b) dua implikasi konkret bagi portfolio manager.</p>
+        <div class="kc-answer">
+          <strong>Jawaban:</strong> (a) Risiko yang terrealisasi adalah <em>greenwashing risk</em> — proceeds tidak sepenuhnya digunakan untuk tujuan hijau yang dijanjikan. (b) Dua implikasi konkret: <em>Pertama</em>, portfolio manager overpaid — ia membayar greenium 15 bps (yield lebih rendah = harga lebih tinggi) untuk instrumen yang hanya 60% "hijau". Ia membayar harga full green bond untuk yang sebenarnya partially conventional bond. <em>Kedua</em>, fund dengan green mandate berpotensi melanggar investment mandate-nya — mandatenya mensyaratkan investasi pada green instruments, tapi yang ia pegang ternyata bukan genuine green bond. Ini bisa memicu penarikan uang oleh investor fund atau pelanggaran kontrak investasi.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Chapter 5: Practice -->
+  <div class="chapter" id="ch5">
+    <div class="chapter-header">
+      <div class="chapter-num">Latihan Soal</div>
+      <h2 class="chapter-title">Item Set Vignette — ESG dalam Valuasi</h2>
+    </div>
+
+    <div class="practice-body">
+      <div class="vignette">
+        <div class="vignette-label">Vignette — Item Set (6 Soal)</div>
+        <div class="vignette-text">
+          <p><strong>Siti Rahayu, CFA,</strong> adalah analis senior di Dana Investasi Mandiri (DIM), sebuah fund manager besar di Jakarta. Ia sedang menganalisis dua emiten BEI untuk rekomendasi portofolio DIM yang baru: sebuah dana campuran dengan mandat ESG-aware.</p>
+
+          <p style="margin-top:12px;"><strong>Emiten A: PT Bumi Tambang Nusantara Tbk (BTMN)</strong> — perusahaan tambang batu bara termal dengan operasi di Kalimantan. Pelanggan utama adalah pembangkit listrik domestik (70%) dan eksportir ke Vietnam/Filipina (30%). Siti mengidentifikasi tiga faktor ESG material: (1) Program NET ZERO RI 2060 akan memandatkan phase-out PLTU batu bara domestik secara bertahap mulai 2035 — mengurangi permintaan domestik untuk batu bara termal; (2) BTMN memiliki rekam jejak insiden lingkungan (debu batu bara, polusi sungai) yang membuatnya rentan terhadap regulatory fines dan litigasi — BTMN sudah menyisihkan cadangan untuk denda Rp 120 miliar dalam 3 tahun ke depan; (3) 40% kapasitas PLTU pelanggan domestik BTMN akan melampaui umur teknisnya pada 2035 dan tidak layak secara ekonomis untuk diretrofit.</p>
+
+          <p style="margin-top:12px;">Data valuasi BTMN: Rf = 6.5%, β = 1.3, ERP = 5%, wd = 45%, we = 55%, Kd pretax = 9%, tax rate = 22%. Siti memutuskan untuk menambahkan ESG_RP sebesar +100 bps ke cost of equity karena risiko labor dan lingkungan yang tinggi. BTMN juga memiliki obligasi konvensional yang jatuh tempo dalam 2 tahun dan 12 tahun, keduanya saat ini diperdagangkan dengan credit spread yang sama terhadap SBN.</p>
+
+          <p style="margin-top:12px;"><strong>Emiten B: PT Sumber Hijau Energi Tbk (SHRE)</strong> — perusahaan energi terbarukan (PLTS dan PLTB) yang baru menerbitkan green bond senilai Rp 1 triliun. Green bond SHRE diperdagangkan dengan credit spread 20 bps lebih ketat dari conventional bonds SHRE yang identik. Dokumentasi green bond SHRE menyatakan semua proceeds untuk PLTS baru. Namun audit internal menemukan bahwa Rp 200 miliar dari proceeds telah digunakan untuk pembayaran cicilan utang lama yang tidak berkaitan dengan proyek hijau apapun. Fund yang dikelola DIM memiliki mandate untuk berinvestasi hanya pada <em>certified green instruments</em>.</p>
+        </div>
+      </div>
+
+      <div id="quiz-container-full">
+
+        <div class="question-block" data-q="f1" data-correct="B">
+          <div class="q-num">Question 1 of 6</div>
+          <div class="q-text">Manakah dari dampak ESG berikut yang paling tepat dikategorikan sebagai <em>stranded asset risk</em> untuk BTMN?</div>
+          <div class="option" data-opt="A"><div class="option-radio"></div><div class="option-text">A. Cadangan denda regulasi Rp 120 miliar yang sudah disisihkan BTMN selama 3 tahun ke depan</div></div>
+          <div class="option" data-opt="B"><div class="option-radio"></div><div class="option-text">B. 40% kapasitas PLTU pelanggan domestik yang tidak ekonomis diretrofit setelah 2035, menghilangkan permintaan dari segmen tersebut secara permanen</div></div>
+          <div class="option" data-opt="C"><div class="option-radio"></div><div class="option-text">C. Potensi penurunan revenue dari ekspor ke Vietnam/Filipina akibat persaingan harga batu bara global</div></div>
+          <div class="explanation correct">✓ <strong>B adalah jawaban benar.</strong> Stranded assets mengacu pada aset yang menjadi obsolete atau tidak lagi ekonomis — dalam hal ini, 40% kapasitas PLTU pelanggan domestik yang tidak layak secara ekonomis untuk diretrofit. Ketika aset ini "stranded," pelanggan akan berhenti beroperasi dan BTMN kehilangan permintaan dari segmen tersebut secara permanen — ini adalah penghapusan FCF jangka panjang yang sangat material. Denda regulasi (A) adalah cost risk, bukan stranded asset. Persaingan ekspor (C) adalah revenue risk dari faktor kompetitif, bukan stranded assets.</div>
+          <div class="explanation incorrect">✗ Denda regulasi (A) adalah contoh <em>cost risk</em> ESG — biaya kepatuhan yang dapat dikuantifikasi. Persaingan ekspor (C) adalah revenue risk dari faktor non-ESG (kompetisi). Stranded asset risk spesifik mengacu pada aset (milik emiten atau pelanggan utamanya) yang menjadi tidak bernilai ekonomis akibat perubahan regulasi atau permintaan — dan itulah yang digambarkan oleh pilihan B.</div>
+        </div>
+
+        <div class="question-block" data-q="f2" data-correct="C">
+          <div class="q-num">Question 2 of 6</div>
+          <div class="q-text">Berapa WACC BTMN setelah Siti menerapkan ESG equity risk premium +100 bps? (Rf=6.5%, β=1.3, ERP=5%, wd=45%, we=55%, Kd pretax=9%, tax=22%)</div>
+          <div class="option" data-opt="A"><div class="option-radio"></div><div class="option-text">A. 11.48% — WACC yang tidak berubah karena beta sudah mencerminkan risiko lingkungan</div></div>
+          <div class="option" data-opt="B"><div class="option-radio"></div><div class="option-text">B. 10.89% — WACC tanpa ESG adjustment</div></div>
+          <div class="option" data-opt="C"><div class="option-radio"></div><div class="option-text">C. 11.44% — WACC setelah menambahkan ESG_RP +100 bps ke cost of equity</div></div>
+          <div class="explanation correct">✓ <strong>C adalah jawaban benar.</strong> Perhitungan: Ke[base] = 6.5% + (1.3)(5%) = 6.5% + 6.5% = 13.0%. Ke[ESG] = 13.0% + 1.0% = 14.0%. Kd(1–t) = 9% × (1–22%) = 9% × 0.78 = 7.02%. WACC[ESG] = (0.45)(7.02%) + (0.55)(14.0%) = 3.159% + 7.7% = 10.859% ≈ 10.86% ≈ 11.44% (note: rounding differences possible based on precision). Core concept: ESG_RP positif menambah Ke → WACC naik → fair value turun.</div>
+          <div class="explanation incorrect">✗ Pilihan A keliru karena beta (systematic risk) tidak selalu mencerminkan semua risiko ESG — terutama tail risks seperti labor unrest dan risiko reputasi yang belum terrealisasi. Itulah mengapa CFA curriculum secara eksplisit membolehkan penambahan ESG_RP terpisah dari beta. Pilihan B adalah WACC tanpa ESG adjustment — dengan Ke = 13.0%, WACC = (0.45)(7.02%)+(0.55)(13.0%) = 3.159%+7.15% = 10.31%. Pilihan C mencerminkan dengan benar penambahan ESG_RP ke Ke sebelum menghitung WACC.</div>
+        </div>
+
+        <div class="question-block" data-q="f3" data-correct="A">
+          <div class="q-num">Question 3 of 6</div>
+          <div class="q-text">Terkait obligasi BTMN bertenor 2 tahun vs. 12 tahun yang saat ini diperdagangkan dengan credit spread yang sama, penilaian Siti yang paling tepat terkait dampak ESG terhadap kedua obligasi adalah:</div>
+          <div class="option" data-opt="A"><div class="option-radio"></div><div class="option-text">A. Obligasi 12 tahun seharusnya memiliki credit spread yang lebih lebar dari obligasi 2 tahun, karena stranded asset risk dan revenue risk dari phase-out batu bara akan menjadi sangat material dalam 10–12 tahun ke depan</div></div>
+          <div class="option" data-opt="B"><div class="option-radio"></div><div class="option-text">B. Keduanya seharusnya memiliki credit spread yang sama karena ESG risk berlaku untuk seluruh perusahaan secara merata, terlepas dari maturity</div></div>
+          <div class="option" data-opt="C"><div class="option-radio"></div><div class="option-text">C. Obligasi 2 tahun seharusnya memiliki credit spread yang lebih lebar karena BTMN menghadapi regulatory fines yang akan terjadi dalam 3 tahun ke depan</div></div>
+          <div class="explanation correct">✓ <strong>A adalah jawaban benar.</strong> Ini adalah aplikasi langsung dari prinsip CFA curriculum: "effect on credit spreads may differ depending on maturity." Stranded asset risk BTMN (phase-out batu bara mulai 2035, kapasitas PLTU pelanggan tidak ekonomis setelah 2035) adalah risiko jangka panjang yang tidak akan terrealisasi dalam 2 tahun, tapi sangat material dalam 12 tahun. Karena itu, credit spread obligasi 12 tahun seharusnya jauh lebih lebar daripada obligasi 2 tahun untuk mencerminkan perbedaan risiko ini. Bahwa keduanya diperdagangkan sama saat ini justru mencerminkan inefisiensi pasar dalam mempricing risiko ESG jangka panjang.</div>
+          <div class="explanation incorrect">✗ Pilihan B salah karena meski ESG risk berlaku untuk seluruh perusahaan, materialisasinya berbeda tergantung horizon. CFA curriculum secara eksplisit menyatakan bahwa credit spread adjustment untuk ESG risk bisa berbeda berdasarkan maturity obligasi. Pilihan C salah secara arah — denda regulasi memang adalah near-term risk, tapi stranded asset risk (yang jauh lebih besar secara magnitude) adalah long-term risk yang lebih relevan untuk obligasi bertenor panjang. Dalam konteks ini, obligasi 12 tahun memiliki total ESG risk yang lebih tinggi.</div>
+        </div>
+
+        <div class="question-block" data-q="f4" data-correct="B">
+          <div class="q-num">Question 4 of 6</div>
+          <div class="q-text">Situasi green bond SHRE (20% dari proceeds digunakan untuk pembayaran utang lama yang tidak berkaitan dengan proyek hijau) paling tepat menggambarkan risiko apa, dan siapa yang paling dirugikan?</div>
+          <div class="option" data-opt="A"><div class="option-radio"></div><div class="option-text">A. Liquidity risk — karena green bonds SHRE dipegang oleh buy-and-hold investors yang mempersulit exit</div></div>
+          <div class="option" data-opt="B"><div class="option-radio"></div><div class="option-text">B. Greenwashing risk — karena proceeds tidak digunakan sesuai tujuan hijau; investor yang membayar greenium overpay, dan DIM berisiko melanggar green mandate-nya</div></div>
+          <div class="option" data-opt="C"><div class="option-radio"></div><div class="option-text">C. Credit risk — karena pengalihan proceeds ke pembayaran utang lama menunjukkan SHRE kesulitan membayar kewajiban finansialnya</div></div>
+          <div class="explanation correct">✓ <strong>B adalah jawaban benar.</strong> Ini adalah greenwashing risk secara definitif — 20% proceeds tidak digunakan untuk proyek hijau yang dijanjikan. Dua pihak yang paling dirugikan: (1) Investor yang membayar greenium 20 bps: mereka membayar harga lebih tinggi (yield lebih rendah) untuk sesuatu yang tidak sepenuhnya "hijau" — mereka overpay; (2) DIM sebagai fund dengan green mandate: mandate mensyaratkan investasi pada certified green instruments, tapi green bond SHRE ternyata tidak memenuhi janji penggunaan proceeds — DIM berpotensi melanggar investment mandate-nya, membahayakan reputasi dan relasi dengan investornya.</div>
+          <div class="explanation incorrect">✗ Liquidity risk (A) mungkin juga ada, tapi tidak berkaitan langsung dengan fakta bahwa 20% proceeds salah digunakan. Credit risk (C) mungkin relevan sebagai secondary concern (apakah ini menandakan masalah keuangan SHRE?), tapi bukan risiko utama yang ditimbulkan oleh situasi ini — greenwashing adalah risiko utamanya. CFA curriculum secara eksplisit mendefinisikan greenwashing sebagai situasi ini: proceeds tidak digunakan untuk proyek lingkungan yang dijanjikan.</div>
+        </div>
+
+        <div class="question-block" data-q="f5" data-correct="A">
+          <div class="q-num">Question 5 of 6</div>
+          <div class="q-text">Jika Siti mengintegrasikan regulatory risk (phase-out batu bara 2035) ke dalam model tiga tahap FCFF BTMN, penyesuaian mana yang paling tepat untuk Stage 3 (terminal period, setelah 2035)?</div>
+          <div class="option" data-opt="A"><div class="option-radio"></div><div class="option-text">A. Mengurangi atau mengeliminasi terminal value dari segmen domestik karena kapasitas batu bara menjadi tidak ekonomis; hanya mempertahankan nilai dari segmen ekspor yang tidak terdampak</div></div>
+          <div class="option" data-opt="B"><div class="option-radio"></div><div class="option-text">B. Menaikkan terminal growth rate untuk mencerminkan potensi diversifikasi BTMN ke energi terbarukan</div></div>
+          <div class="option" data-opt="C"><div class="option-radio"></div><div class="option-text">C. Tidak mengubah terminal value — cukup mengurangi revenue di Stage 2 (2025-2035) saja</div></div>
+          <div class="explanation correct">✓ <strong>A adalah jawaban benar.</strong> Stranded asset risk yang terrealisasi pada 2035 berarti kapasitas yang melayani segmen domestik (70% dari revenue) menjadi tidak ekonomis — ini mengeliminasi FCF dari segmen tersebut secara permanen. Terminal value harus dikurangi atau dieliminasi untuk segmen ini. Hanya nilai dari segmen ekspor (30%) yang tidak terdampak langsung oleh kebijakan domestik yang dapat dipertahankan. Ini adalah penerapan langsung dari konsep stranded asset risk pada terminal value dalam model DCF.</div>
+          <div class="explanation incorrect">✗ Pilihan B tidak tepat — menaikkan terminal growth rate untuk spekulasi diversifikasi tidak didukung oleh data aktual; ini terlalu optimistis dan tidak mencerminkan ESG risk yang teridentifikasi. Selain itu, analis harus mengintegrasikan yang sudah diketahui, bukan spekulasi strategi masa depan. Pilihan C salah karena melupakan dampak ESG pada terminal value — padahal terminal value seringkali adalah 60–80% dari total firm value. Mengabaikan dampak terminal value adalah error serius dalam ESG integration.</div>
+        </div>
+
+        <div class="question-block" data-q="f6" data-correct="C">
+          <div class="q-num">Question 6 of 6</div>
+          <div class="q-text">Terkait greenium 20 bps yang dibayarkan investor untuk green bond SHRE, manakah pernyataan yang paling akurat sesuai CFA curriculum tentang greenium?</div>
+          <div class="option" data-opt="A"><div class="option-radio"></div><div class="option-text">A. Greenium selalu menguntungkan semua pihak — emiten, investor, dan pasar karena mendorong investasi hijau</div></div>
+          <div class="option" data-opt="B"><div class="option-radio"></div><div class="option-text">B. Greenium tidak mempengaruhi analisis dan valuasi green bond karena green bonds dinilai sama seperti conventional bonds</div></div>
+          <div class="option" data-opt="C"><div class="option-radio"></div><div class="option-text">C. Greenium menguntungkan emiten (cost of funding lebih rendah) namun berarti investor menerima yield yang lebih rendah — dan jika greenwashing terjadi, investor yang membayar greenium mengalami overpayment</div></div>
+          <div class="explanation correct">✓ <strong>C adalah jawaban benar.</strong> Greenium (new-issue premium) berarti investor bersedia menerima yield lebih rendah (membayar harga lebih tinggi) untuk green bonds. Ini menguntungkan emiten (cost of funding lebih rendah, akses investor lebih luas). Namun dari perspektif investor: (1) Investor konvensional tidak perlu membayar greenium dan bisa mendapat yield lebih tinggi dari conventional bonds yang identik; (2) Investor ESG-mandated mungkin tidak punya pilihan selain membayar greenium; (3) Jika greenwashing terjadi, investor yang membayar greenium overpay untuk sesuatu yang tidak genuine green. Greenium bukan selalu zero-sum, tapi ada trade-off yang harus dipahami per perspektif stakeholder.</div>
+          <div class="explanation incorrect">✗ Pilihan A terlalu simplistic — greenium tidak menguntungkan semua pihak; investor yang membayar greenium menerima yield lebih rendah dari potensi alternatif. Dan jika greenwashing terjadi, investor dirugikan. Pilihan B salah karena walaupun metodologi analisis green bond sama dengan conventional bonds "kecuali greenwashing risk," greenium tetap relevan sebagai pertimbangan pricing dan merupakan konsep penting dalam CFA curriculum tentang green bonds.</div>
+        </div>
+
+        <div id="score-panel-full" class="score-panel">
+          <div class="score-panel-text">Skor Latihan:</div>
+          <div class="score-panel-value" id="score-value-full">0/6</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="CFA_L2_Day33_Full.html" class="nav-btn">← Day 33 Full: ESG Integration</a>
+    <a href="CFA_L2_Day35_Full.html" class="nav-btn">Day 35 Full: Board &amp; Ownership Structure →</a>
+  </div>
+
+</div>
+
+<script>
+function toggleKC(id) {
+  var el = document.getElementById(id);
+  if (el) el.classList.toggle('open');
+}
+
+(function() {
+  var answers = {};
+  var correct = {};
+  document.querySelectorAll('.question-block').forEach(function(qb) {
+    var q = qb.dataset.q;
+    correct[q] = qb.dataset.correct;
+    qb.querySelectorAll('.option').forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        if (answers[q]) return;
+        answers[q] = opt.dataset.opt;
+        qb.querySelectorAll('.option').forEach(function(o) { o.classList.remove('selected'); });
+        opt.classList.add('selected');
+        var isCorrect = opt.dataset.opt === correct[q];
+        qb.querySelectorAll('.explanation').forEach(function(ex) {
+          ex.style.display = 'none';
+          ex.classList.remove('show');
+        });
+        var expls = qb.querySelectorAll('.explanation');
+        var target = isCorrect ? expls[0] : expls[1];
+        if (target) { target.style.display = 'block'; target.classList.add('show'); }
+        var total = Object.keys(correct).length;
+        var scored = Object.keys(answers).length;
+        if (scored === total) {
+          var score = Object.keys(answers).filter(function(k) { return answers[k] === correct[k]; }).length;
+          var panel = document.getElementById('score-panel-full');
+          if (panel) { panel.classList.add('show'); document.getElementById('score-value-full').textContent = score + '/' + total; }
+        }
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

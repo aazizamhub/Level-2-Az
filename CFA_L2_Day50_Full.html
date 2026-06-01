@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 50 · Full · Valuasi Privat: DLOC, DLOM &amp; Standar Valuasi</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+  --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;--gold:#9a6e1a;--gold2:#7a5010;
+  --gold-bg:rgba(154,110,26,0.08);--blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);
+  --green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);--red:#b83232;--red-bg:rgba(184,50,50,0.08);
+  --amber:#a06010;--amber-bg:rgba(160,96,16,0.08);--r:10px;--r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.8;}
+.page{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;border:1px solid rgba(26,95,168,0.2);}
+.hero{margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--border);}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:36px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:15px;color:var(--text2);}
+.meta-row{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:36px;}
+.toc-title{font-size:12px;color:var(--text3);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:12px;font-weight:500;}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.toc-list li a{font-size:13px;color:var(--blue);text-decoration:none;display:flex;align-items:center;gap:8px;}
+.toc-list li a:hover{text-decoration:underline;}
+.toc-num{font-size:11px;color:var(--text3);min-width:20px;}
+.chapter{margin-bottom:40px;}
+.chapter-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--gold-bg);}
+.chapter-num{font-family:'DM Serif Display',serif;font-size:28px;color:var(--gold);line-height:1;}
+.chapter-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);line-height:1.2;}
+.sub-header{font-size:17px;font-weight:500;color:var(--text);margin:24px 0 12px;padding-left:12px;border-left:3px solid var(--gold);}
+.prose{font-size:14px;color:var(--text2);line-height:1.85;margin-bottom:14px;}
+.prose strong{color:var(--text);font-weight:500;}
+.formula-block{background:var(--bg2);border:1px solid var(--border2);border-left:4px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:16px 20px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold2);line-height:2;}
+.formula-block .label{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:8px;}
+.formula-block .note{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text3);font-style:italic;display:block;margin-top:8px;}
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:20px 0;}
+.exhibit-title{background:var(--bg3);padding:10px 16px;font-size:12px;font-weight:500;color:var(--text2);border-bottom:1px solid var(--border);letter-spacing:0.03em;}
+.exhibit-body{padding:16px;}
+.reg-table{width:100%;border-collapse:collapse;font-size:13px;}
+.reg-table th{text-align:left;padding:8px 12px;background:var(--bg3);color:var(--text3);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border2);}
+.reg-table td{padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;color:var(--text2);}
+.reg-table td:first-child{font-weight:500;color:var(--text);}
+.reg-table tr:last-child td{border-bottom:none;}
+.reg-table .hl{color:var(--green);font-weight:500;}
+.reg-table .mono{font-family:'JetBrains Mono',monospace;font-size:12px;}
+.callout{border-radius:var(--r);padding:16px 18px;margin:16px 0;}
+.callout-title{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;}
+.callout p{font-size:13px;color:var(--text2);line-height:1.75;}
+.callout p+p{margin-top:8px;}
+.callout.blue{background:var(--blue-bg);border:1px solid rgba(26,95,168,0.15);}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.amber{background:var(--amber-bg);border:1px solid rgba(160,96,16,0.15);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.green{background:var(--green-bg);border:1px solid rgba(26,122,74,0.15);}
+.callout.green .callout-title{color:var(--green);}
+.callout.red{background:var(--red-bg);border:1px solid rgba(184,50,50,0.15);}
+.callout.red .callout-title{color:var(--red);}
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:24px 0;overflow:hidden;}
+.kc-header{background:var(--gold-bg);padding:12px 18px;border-bottom:1px solid rgba(154,110,26,0.15);}
+.kc-header-title{font-size:12px;font-weight:500;color:var(--gold);letter-spacing:0.06em;text-transform:uppercase;}
+.kc-body{padding:18px;}
+.kc-q{font-size:13px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.6;}
+.kc-answer{background:var(--bg3);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);line-height:1.75;display:none;}
+.kc-answer.show{display:block;}
+.kc-answer strong{color:var(--green);}
+.kc-toggle{background:none;border:1px solid var(--border2);border-radius:var(--r-sm);padding:6px 14px;font-size:12px;color:var(--text3);cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px;transition:all 0.15s;}
+.kc-toggle:hover{border-color:var(--gold);color:var(--gold);}
+.divider{height:1px;background:var(--border);margin:36px 0;}
+.practice-header{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);border-radius:var(--r) var(--r) 0 0;padding:16px 20px;}
+.practice-header-title{font-size:16px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);margin-top:2px;}
+.practice-body{background:var(--bg2);border:1px solid rgba(154,110,26,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:24px;}
+.vignette{background:var(--bg3);border-left:4px solid var(--gold);padding:18px 20px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:28px;font-size:13px;color:var(--text2);line-height:1.85;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;font-weight:500;}
+.question-block{margin-bottom:24px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:6px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:12px;line-height:1.6;}
+.option{display:block;width:100%;text-align:left;padding:11px 15px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:8px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.5;}
+.option:hover:not(:disabled){border-color:var(--border2);color:var(--text);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:14px 16px;font-size:13px;color:var(--text2);margin-top:10px;line-height:1.75;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:28px;margin-top:20px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:52px;margin-bottom:8px;}
+.score-msg{font-size:14px;color:var(--text2);}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+.nav-day{font-size:12px;color:var(--text3);text-align:center;}
+.bullet-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin:10px 0;}
+.bullet-list li{display:flex;gap:10px;font-size:13px;color:var(--text2);line-height:1.7;}
+.bullet-list li::before{content:'■';color:var(--gold);font-size:9px;margin-top:5px;flex-shrink:0;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II &middot; <span>Equity Valuation</span> &middot; LM6</div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <div class="version-badge">Versi Full</div>
+      <div class="day-badge">Day 50 of 90</div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Selasa, 30 Juni 2026</div>
+    <h1 class="hero-title">Valuasi Perusahaan Privat: Diskon Kontrol, Marketabilitas &amp; Standar Profesi</h1>
+    <p class="hero-sub">Private Company Valuation (LM6) &mdash; Subtopik 2 dari 2: Asset-Based Approach, DLOC, DLOM, Standar RICS/IVS/AICPA</p>
+    <div class="meta-row">
+      <div class="meta-pill">&#128218; Materi Lengkap</div>
+      <div class="meta-pill">&#127470;&#127465; Bahasa Indonesia</div>
+      <div class="meta-pill">&#9878; Bobot Ujian <b>~12%</b></div>
+      <div class="meta-pill">&#9201; Est. baca <b>50&ndash;60 menit</b></div>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ul class="toc-list">
+      <li><a href="#s0"><span class="toc-num">0.</span> Learning Outcomes (LOS)</a></li>
+      <li><a href="#s1"><span class="toc-num">1.</span> Pendekatan Berbasis Aset (Asset-Based Approach)</a></li>
+      <li><a href="#s2"><span class="toc-num">2.</span> Diskon untuk Kurangnya Kontrol (DLOC)</a></li>
+      <li><a href="#s3"><span class="toc-num">3.</span> Diskon untuk Kurangnya Marketabilitas (DLOM)</a></li>
+      <li><a href="#s4"><span class="toc-num">4.</span> Hierarki Nilai dan Penerapan Total Diskon</a></li>
+      <li><a href="#s5"><span class="toc-num">5.</span> Standar Valuasi Profesional: RICS, IVS, dan AICPA</a></li>
+      <li><a href="#s6"><span class="toc-num">6.</span> Latihan Soal &mdash; Item Set Vignette (6 Pertanyaan)</a></li>
+    </ul>
+  </div>
+
+  <!-- SECTION 0: LOS -->
+  <div class="chapter" id="s0">
+    <div class="chapter-header">
+      <div class="chapter-num">0</div>
+      <div class="chapter-title">Learning Outcomes (LOS)</div>
+    </div>
+    <p class="prose">Setelah mempelajari modul ini, kandidat diharapkan mampu:</p>
+    <ul class="bullet-list">
+      <li>Menjelaskan pendekatan berbasis aset (asset-based approach) dalam valuasi perusahaan privat dan faktor-faktor yang relevan dalam pemilihan pendekatan ini</li>
+      <li>Mengevaluasi dampak diskon dan premi berdasarkan kontrol dan marketabilitas terhadap valuasi perusahaan privat</li>
+      <li>Menghitung Discount for Lack of Control (DLOC) dari data control premium yang tersedia</li>
+      <li>Mengestimasi Discount for Lack of Marketability (DLOM) menggunakan pendekatan restricted stock, pre-IPO, dan put option</li>
+      <li>Menerapkan total diskon (DLOC dan DLOM secara multiplicative) pada nilai perusahaan privat</li>
+      <li>Membedakan standar valuasi profesional yang relevan: RICS, IVS (IVSC), dan AICPA</li>
+    </ul>
+  </div>
+
+  <!-- SECTION 1: ASSET-BASED APPROACH -->
+  <div class="chapter" id="s1">
+    <div class="chapter-header">
+      <div class="chapter-num">1</div>
+      <div class="chapter-title">Pendekatan Berbasis Aset (Asset-Based Approach)</div>
+    </div>
+
+    <p class="prose">Pendekatan berbasis aset menilai sebuah perusahaan dengan cara menghitung <strong>nilai pasar wajar (fair market value / FMV)</strong> seluruh aset perusahaan, kemudian dikurangi FMV seluruh kewajiban. Hasilnya adalah nilai ekuitas perusahaan. Pendekatan ini secara konseptual sederhana, namun implementasinya memerlukan appraisal menyeluruh terhadap setiap item di neraca &mdash; karena nilai buku akuntansi (historical cost less depreciation) hampir selalu berbeda signifikan dari FMV.</p>
+
+    <div class="formula-block">
+      <span class="label">Formula Dasar Asset-Based Approach</span>
+      Equity Value = &sum; FMV Aset &minus; &sum; FMV Kewajiban
+      <span class="note">FMV &ne; book value akuntansi; setiap item harus dinilai ulang ke harga pasar</span>
+    </div>
+
+    <div class="sub-header">Kapan Asset-Based Approach Paling Tepat?</div>
+
+    <p class="prose">Pendekatan ini tidak cocok untuk semua perusahaan. Untuk perusahaan operating dengan intangible assets yang signifikan &mdash; seperti merek, hubungan pelanggan, atau teknologi &mdash; asset-based approach seringkali menghasilkan undervaluation karena intangibles sulit diappraise secara standalone. Sebaliknya, pendekatan ini sangat relevan untuk konteks-konteks berikut:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 1 &mdash; Konteks Penggunaan Asset-Based Approach</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Jenis Perusahaan / Situasi</th><th>Alasan Relevansi</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Investment company / Holding company</td><td>Nilai berasal dari portofolio sekuritas atau kepemilikan di perusahaan lain yang marketable dan dapat dinilai secara langsung</td></tr>
+            <tr><td>Perusahaan sumber daya alam (tambang, minyak, gas)</td><td>Nilai utama berasal dari cadangan yang dapat diappraise menggunakan teknik reserve engineering; earning power bisa berfluktuasi ekstrem</td></tr>
+            <tr><td>Perusahaan properti / real estate</td><td>Aset properti dapat dinilai secara independen oleh appraiser properti bersertifikat</td></tr>
+            <tr><td>Likuidasi atau kebangkrutan</td><td>Going-concern value tidak relevan; nilai aset dalam skenario penjualan lebih meaningful untuk kreditur dan pemegang saham</td></tr>
+            <tr><td>Perusahaan tanpa intangibles signifikan</td><td>Jika nilai hampir sepenuhnya berasal dari aset tangible, pendekatan ini memberikan hasil yang reliable</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">Proses Penyesuaian Adjusted Book Value</div>
+
+    <p class="prose">Analis harus menyesuaikan setiap pos neraca dari nilai buku ke FMV. Penyesuaian ini dapat berdampak besar &mdash; aset yang sudah fully depreciated mungkin masih memiliki FMV yang material, sementara goodwill yang tercatat mungkin sudah tidak lagi mencerminkan nilai ekonomis. Beberapa area penyesuaian yang umum:</p>
+
+    <ul class="bullet-list">
+      <li><strong>Properti dan peralatan:</strong> Gunakan appraisal independen atau comparable sales. Seringkali undervalued di buku karena depresiasi akuntansi.</li>
+      <li><strong>Inventaris:</strong> Nilai ke NRV (net realizable value) atau replacement cost tergantung situasi.</li>
+      <li><strong>Piutang:</strong> Sesuaikan untuk expected credit losses yang realistis.</li>
+      <li><strong>Aset tak berwujud:</strong> Merek, paten, customer lists &mdash; memerlukan teknik penilaian khusus (relief-from-royalty, multi-period excess earnings, dll).</li>
+      <li><strong>Liabilitas:</strong> Mark-to-market utang jangka panjang jika suku bunga pasar berbeda signifikan dari coupon rate.</li>
+    </ul>
+
+    <div class="callout amber">
+      <div class="callout-title">&#9888; Perhatian Penting untuk Ujian</div>
+      <p>Asset-based approach adalah <em>salah satu</em> dari tiga pendekatan utama (income, market, asset-based). Dalam konteks valuasi going concern, pendekatan ini umumnya digunakan sebagai floor value atau cross-check, bukan sebagai pendekatan primer. Ujian CFA seringkali menguji pemahaman tentang <em>kapan</em> masing-masing pendekatan paling tepat digunakan.</p>
+    </div>
+
+    <div class="kc" id="kc1">
+      <div class="kc-header"><div class="kc-header-title">&#128218; Knowledge Check 1</div></div>
+      <div class="kc-body">
+        <div class="kc-q">PT Borneo Energi adalah perusahaan privat yang memiliki konsesi tambang batu bara di Kalimantan dengan cadangan yang sudah tersertifikasi oleh geolog independen. Perusahaan memiliki aset tangible senilai IDR 3 triliun di buku, namun appraisal independen terbaru menunjukkan FMV aset sebesar IDR 5,2 triliun (termasuk cadangan). Total liabilitas FMV adalah IDR 1,5 triliun. Earning power perusahaan sangat fluktuatif mengikuti harga komoditas. Pendekatan valuasi mana yang paling tepat untuk PT Borneo Energi?</div>
+        <button class="kc-toggle" onclick="toggleKC('kca1',this)">Tampilkan Jawaban</button>
+        <div class="kc-answer" id="kca1">
+          <strong>Jawaban: Asset-based approach.</strong> PT Borneo Energi adalah perusahaan sumber daya alam dengan nilai utama berasal dari cadangan yang telah tersertifikasi. Cadangan ini dapat diappraise secara independen menggunakan reserve engineering, sehingga asset-based approach memberikan nilai yang lebih reliable daripada income approach yang sensitif terhadap asumsi harga komoditas jangka panjang. Equity value = IDR 5,2 triliun &minus; IDR 1,5 triliun = IDR 3,7 triliun. Nilai ini jauh berbeda dari book value (IDR 3T &minus; IDR 1,5T = IDR 1,5T), membuktikan pentingnya adjustment ke FMV.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: DLOC -->
+  <div class="chapter" id="s2">
+    <div class="chapter-header">
+      <div class="chapter-num">2</div>
+      <div class="chapter-title">Diskon untuk Kurangnya Kontrol (DLOC)</div>
+    </div>
+
+    <p class="prose">Ketika seorang investor memiliki kepemilikan <strong>minoritas non-pengendali</strong> di perusahaan privat, kepemilikan tersebut nilainya lebih rendah dari kepemilikan pengendali. Ketidakmampuan untuk mengambil keputusan strategis &mdash; menentukan manajemen, mendistribusikan kas, melakukan akuisisi atau divestasi &mdash; merupakan kerugian ekonomis nyata yang harus direfleksikan dalam valuasi.</p>
+
+    <p class="prose">Discount for Lack of Control (DLOC) adalah persentase pengurangan dari nilai pro-rata perusahaan untuk mencerminkan absennya kekuasaan pengendalian tersebut. Dalam praktiknya, DLOC diturunkan dari data control premium yang diobservasi dari transaksi akuisisi perusahaan publik &mdash; karena ketika acquirer mengakuisisi kontrol, mereka membayar premium di atas harga minoritas yang beredar di pasar.</p>
+
+    <div class="formula-block">
+      <span class="label">Formula DLOC dari Control Premium</span>
+      DLOC = 1 &minus; [1 / (1 + Control Premium)]
+      <span class="note">Control Premium = premi yang dibayar di atas harga pasar minoritas untuk mendapatkan kontrol</span>
+    </div>
+
+    <p class="prose">Logika di balik formula ini penting untuk dipahami. Jika harga saham minoritas adalah 100, dan controlling interest bernilai 115 (control premium 15%), maka untuk mengonversi dari controlling (115) ke minority (100), kita perlu diskon sebesar 15/115 = 13%. Formula 1 &minus; 1/(1+CP) mencerminkan konversi perspektif dari controlling ke minority, bukan sekadar membalik control premium.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 2 &mdash; Hubungan Control Premium dan DLOC</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Control Premium (CP)</th><th>DLOC = 1 &minus; 1/(1+CP)</th><th>Nilai Minority (dari 100 Controlling)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>10%</td><td class="mono">9,09%</td><td class="mono">90,9</td></tr>
+            <tr><td>15%</td><td class="mono">13,04%</td><td class="mono">87,0</td></tr>
+            <tr><td>20%</td><td class="mono">16,67%</td><td class="mono">83,3</td></tr>
+            <tr><td>25%</td><td class="mono">20,00%</td><td class="mono">80,0</td></tr>
+            <tr><td>30%</td><td class="mono hl">23,08%</td><td class="mono">76,9</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">Faktor-Faktor yang Mempengaruhi Besar DLOC</div>
+
+    <p class="prose">Besaran DLOC tidak seragam untuk semua perusahaan privat. Beberapa faktor yang mempengaruhi seberapa besar diskon yang tepat:</p>
+
+    <ul class="bullet-list">
+      <li><strong>Perilaku controlling shareholder:</strong> Jika pemegang kendali terbukti mengambil kompensasi di atas pasar, mengalihkan aset, atau melakukan transaksi related-party yang merugikan minoritas, DLOC yang lebih besar mungkin diperlukan.</li>
+      <li><strong>Prospek liquidity event:</strong> Perusahaan yang sedang menuju IPO atau proses penjualan strategis memerlukan DLOC yang lebih kecil karena probabilitas exit lebih tinggi dalam waktu dekat.</li>
+      <li><strong>Hak pemegang saham minoritas:</strong> Perjanjian pemegang saham (shareholders' agreement) yang melindungi hak minoritas &mdash; seperti tag-along rights atau veto atas keputusan tertentu &mdash; dapat mengurangi DLOC.</li>
+      <li><strong>Distribusi kepemilikan:</strong> Semakin terkonsentrasi kontrol pada satu pihak, semakin besar potensi DLOC bagi pihak minoritas.</li>
+    </ul>
+
+    <div class="callout blue">
+      <div class="callout-title">&#128161; Perspektif dalam Valuasi</div>
+      <p>DLOC hanya diterapkan ketika valuasi awal dilakukan dari perspektif <em>controlling interest</em>. Jika valuasi sudah menggunakan GPCM dari harga saham pasar publik (yang secara inheren mencerminkan minority, non-controlling interest), maka DLOC tidak perlu ditambahkan lagi &mdash; karena nilai tersebut sudah mencerminkan perspektif minoritas.</p>
+      <p>Sebaliknya, valuasi dengan income approach (DCF) menggunakan asumsi controlling management &mdash; seperti optimal capital structure dan operating cash flow tanpa distorsi pemilik &mdash; menghasilkan controlling interest value. Dari sinilah DLOC perlu diaplikasikan jika tujuan valuasi adalah menilai minority stake.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">&#128218; Knowledge Check 2</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Andrea Sulistyo menggunakan DCF income approach untuk menilai PT Mitra Abadi, sebuah perusahaan manufaktur privat. Hasilnya adalah IDR 800 miliar sebagai controlling interest value. Data akuisisi perusahaan serupa menunjukkan median control premium sebesar 25%. Berapa DLOC yang tepat, dan berapa nilai kepemilikan 30% minoritas (sebelum DLOM)?</div>
+        <button class="kc-toggle" onclick="toggleKC('kca2',this)">Tampilkan Jawaban</button>
+        <div class="kc-answer" id="kca2">
+          <strong>Jawaban:</strong> DLOC = 1 &minus; 1/(1+0.25) = 1 &minus; 0.80 = 20%. Nilai controlling = IDR 800 miliar. Nilai minority (sebelum DLOM) = IDR 800 miliar &times; (1 &minus; 0.20) = IDR 640 miliar. Nilai 30% stake = 30% &times; IDR 640 miliar = IDR 192 miliar. Perhatikan bahwa DLOC sebesar 20% berbeda dari control premium 25% &mdash; ini karena kita mengonversi dari nilai controlling ke minority, bukan menambahkan premium.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: DLOM -->
+  <div class="chapter" id="s3">
+    <div class="chapter-header">
+      <div class="chapter-num">3</div>
+      <div class="chapter-title">Diskon untuk Kurangnya Marketabilitas (DLOM)</div>
+    </div>
+
+    <p class="prose">Discount for Lack of Marketability (DLOM) adalah diskon yang diterapkan untuk mencerminkan <strong>ketidakmampuan untuk menjual kepemilikan dengan cepat di pasar publik yang liquid</strong>. Bahkan jika dua perusahaan identik dalam semua aspek operasional, saham perusahaan privat akan bernilai lebih rendah dari saham perusahaan publik yang setara karena perbedaan liquidity ini.</p>
+
+    <p class="prose">Biaya ekonomis dari illiquidity bersifat multidimensi: investor tidak dapat mendiversifikasikan portofolio dengan mudah, tidak dapat keluar ketika membutuhkan likuiditas darurat, dan menanggung opportunity cost dari dana yang "terkunci". Besaran DLOM empiris bervariasi luas &mdash; dari sekitar 10% hingga 40% &mdash; tergantung pada karakteristik perusahaan dan prospek liquidity event.</p>
+
+    <div class="sub-header">Tiga Metode Estimasi DLOM</div>
+
+    <p class="prose"><strong>1. Restricted Stock Studies.</strong> Metode ini membandingkan harga saham restricted (yang belum dapat diperdagangkan secara bebas) dengan harga saham bebas dari perusahaan publik yang sama. Perbedaan harga mencerminkan premi likuiditas yang bersedia dibayar investor. Keterbatasan utama: restricted stock akan segera menjadi freely tradeable setelah lock-up period berakhir, sehingga illiquidity-nya jauh lebih terbatas dibandingkan saham perusahaan privat yang mungkin tidak pernah liquid.</p>
+
+    <p class="prose"><strong>2. Pre-IPO Studies.</strong> Membandingkan harga transaksi saham privat sebelum IPO dengan harga IPO itu sendiri. Perbedaan harga diinterpretasikan sebagai marketability discount. Keterbatasan: perusahaan yang mendekati IPO biasanya mengalami kenaikan nilai intrinsik seiring berkurangnya ketidakpastian &mdash; sehingga perbedaan harga tidak seluruhnya merupakan DLOM murni.</p>
+
+    <p class="prose"><strong>3. Put Option Approach.</strong> Menggunakan premi put option sebagai proxy biaya "mengamankan" harga jual saham. Logikanya: jika seorang investor memiliki saham privat yang tidak liquid, mereka memerlukan proteksi harga setara dengan membeli put option. Nilai put option at-the-money mencerminkan seberapa besar "pengorbanan" akibat tidak dapat keluar kapan saja.</p>
+
+    <div class="formula-block">
+      <span class="label">DLOM menggunakan Put Option Approach</span>
+      DLOM = Put Option Premium (ATM) / Harga Saham Saat Ini
+      <br>
+      Strike at-the-money = S &times; e<sup>r<sub>f</sub> &times; T</sup> &nbsp;(continuous) &nbsp;atau&nbsp; S &times; (1 + r<sub>f</sub>)<sup>T</sup>
+      <span class="note">ATM = at-the-money forward; T = periode kepemilikan yang dimodelkan (misal 0.5 untuk 6 bulan)</span>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 3 &mdash; Contoh Numerik DLOM Menggunakan Put Option (PT Everfloat analog)</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Parameter</th><th>Nilai</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Harga saham comparable public company</td><td class="mono">EUR 50</td></tr>
+            <tr><td>Risk-free rate (tahunan, continuous)</td><td class="mono">5,0%</td></tr>
+            <tr><td>Horison waktu</td><td class="mono">6 bulan (T = 0,5)</td></tr>
+            <tr><td>Forward price (strike ATM)</td><td class="mono">50 &times; e<sup>0.025</sup> = EUR 51,27</td></tr>
+            <tr><td>Implied volatility comparable</td><td class="mono">60%</td></tr>
+            <tr><td>Nilai put option ATM (BSM)</td><td class="mono hl">EUR 8,40</td></tr>
+            <tr><td>DLOM = 8,40 / 50</td><td class="mono hl">16,8%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout amber">
+      <div class="callout-title">&#9888; Catatan Penting &mdash; Keterbatasan Put Option Approach</div>
+      <p>Put option memberikan proteksi harga, bukan <em>substitusi</em> untuk likuiditas penuh. Pemegang put option tetap tidak dapat menjual sahamnya; mereka hanya dapat "mengunci" harga jual potensial. Oleh karena itu, ada argumen bahwa put option <em>underestimates</em> DLOM yang sesungguhnya. Di sisi lain, volatilitas yang tinggi akan menghasilkan premi put yang lebih besar &mdash; yang secara intuitif masuk akal karena saham yang lebih volatile lebih "susah" untuk dijual di harga yang diinginkan.</p>
+    </div>
+
+    <div class="sub-header">Faktor-Faktor yang Mempengaruhi Besaran DLOM</div>
+
+    <p class="prose">Besaran DLOM sangat bervariasi dan bergantung pada sejumlah faktor:</p>
+
+    <ul class="bullet-list">
+      <li><strong>Prospek likuiditas jangka dekat:</strong> Jika ada rencana IPO atau M&amp;A dalam 1-2 tahun ke depan, DLOM lebih kecil karena investor dapat mengantisipasi exit.</li>
+      <li><strong>Distribusi dividen:</strong> Perusahaan yang secara konsisten membayar dividen memberikan cash return kepada investor tanpa harus menjual saham, sehingga mengurangi dampak illiquidity.</li>
+      <li><strong>Konsentrasi kepemilikan:</strong> Pool pembeli potensial yang kecil meningkatkan illiquidity dan DLOM.</li>
+      <li><strong>Pembatasan transferabilitas:</strong> Shareholders' agreement yang membatasi kemampuan jual saham secara langsung meningkatkan DLOM.</li>
+      <li><strong>Volatilitas perusahaan:</strong> Perusahaan dengan earnings yang lebih tidak menentu (volatile) memerlukan DLOM yang lebih besar.</li>
+    </ul>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">&#128218; Knowledge Check 3</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Seorang analis menggunakan put option approach untuk mengestimasi DLOM sebuah perusahaan privat. Harga saham comparable public company adalah IDR 10.000 per lembar. Risk-free rate 4% per tahun (continuous). Menggunakan horizon 6 bulan, forward price = IDR 10.000 &times; e<sup>0.02</sup> = IDR 10.202. Dengan BSM dan implied volatility 40%, nilai put option ATM dihitung sebesar IDR 1.200. Berapa DLOM?</div>
+        <button class="kc-toggle" onclick="toggleKC('kca3',this)">Tampilkan Jawaban</button>
+        <div class="kc-answer" id="kca3">
+          <strong>Jawaban: DLOM = 12,0%.</strong> DLOM = Put Premium / Current Stock Price = IDR 1.200 / IDR 10.000 = 12,0%. Perhatikan bahwa denominator menggunakan <em>current stock price</em> (IDR 10.000), bukan forward price (IDR 10.202). Forward price digunakan hanya untuk menentukan strike at-the-money pada put option, bukan sebagai basis DLOM. Angka DLOM 12% ini berarti nilai saham privat ini harus didiskon 12% dari nilai comparable public company untuk mencerminkan illiquiditas-nya.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: HIERARCHY AND TOTAL DISCOUNT -->
+  <div class="chapter" id="s4">
+    <div class="chapter-header">
+      <div class="chapter-num">4</div>
+      <div class="chapter-title">Hierarki Nilai dan Penerapan Total Diskon</div>
+    </div>
+
+    <p class="prose">Salah satu konsep paling fundamental dalam valuasi perusahaan privat adalah hierarki nilai &mdash; bahwa nilai sebuah kepemilikan bergantung pada <strong>level kontrol dan marketabilitas</strong> yang dimiliki oleh pemegang saham tersebut. Dari puncak ke dasar hierarki, nilai menurun seiring berkurangnya kontrol dan likuiditas.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 4 &mdash; Hierarki Nilai Kepemilikan Perusahaan Privat</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Level Nilai</th><th>Deskripsi</th><th>Penyesuaian dari Level di Atasnya</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Strategic / Synergistic Control Value</td><td>Buyer strategis yang dapat merealisasikan synergy &mdash; nilai tertinggi yang mungkin</td><td>+ Synergy control premium (terbesar)</td></tr>
+            <tr><td>Financial Control Value</td><td>Buyer finansial dengan kontrol penuh, tanpa synergy operasional</td><td>+ Financial control premium (lebih kecil)</td></tr>
+            <tr><td>Marketable Minority Interest</td><td>Setara dengan saham perusahaan publik yang diperdagangkan secara bebas</td><td>Baseline &mdash; comparable public company value</td></tr>
+            <tr><td>Non-Marketable Minority Interest</td><td>Kepemilikan minoritas di perusahaan privat tanpa liquidity &mdash; nilai terendah</td><td>&minus; DLOC (dari marketable minority) lalu &minus; DLOM</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">Formula Total Diskon &mdash; Multiplicative, Bukan Additive</div>
+
+    <p class="prose">Ketika kedua diskon (DLOC dan DLOM) diterapkan secara bersamaan, keduanya diterapkan secara berurutan: pertama DLOC (menurunkan dari controlling ke non-controlling), kemudian DLOM (menurunkan dari marketable ke non-marketable). Karena masing-masing diskon diterapkan pada nilai <em>setelah diskon sebelumnya</em>, hasilnya adalah perkalian &mdash; bukan penjumlahan.</p>
+
+    <div class="formula-block">
+      <span class="label">Total Discount (Multiplicative)</span>
+      Total Discount = 1 &minus; (1 &minus; DLOC) &times; (1 &minus; DLOM)
+      <br>
+      Nilai Akhir = Nilai Awal &times; (1 &minus; DLOC) &times; (1 &minus; DLOM)
+      <span class="note">Kesalahan umum: Total Discount &ne; DLOC + DLOM (ini menghasilkan angka yang terlalu besar)</span>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 5 &mdash; Contoh Numerik Total Diskon (Kasus Everfloat)</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Item</th><th>Nilai</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Nilai awal (controlling interest)</td><td class="mono">GBP 1.650 juta</td></tr>
+            <tr><td>Control Premium (dari market data)</td><td class="mono">15%</td></tr>
+            <tr><td>DLOC = 1 &minus; 1/1.15</td><td class="mono">13,0%</td></tr>
+            <tr><td>Nilai setelah DLOC = 1.650 &times; (1&minus;0.13)</td><td class="mono">GBP 1.435,5 juta</td></tr>
+            <tr><td>DLOM (put option approach, 6 bulan, vol 60%)</td><td class="mono">16,8%</td></tr>
+            <tr><td>Nilai setelah DLOM = 1.435,5 &times; (1&minus;0.168)</td><td class="mono">GBP 1.194,3 juta</td></tr>
+            <tr><td>Total Discount = 1 &minus; (0.87)(0.832)</td><td class="mono hl">27,6%</td></tr>
+            <tr><td>Nilai akhir = 1.650 &times; (1&minus;0.276)</td><td class="mono hl">GBP 1.194,6 juta</td></tr>
+            <tr><td>Jika additive (salah): 13% + 16,8% = 29,8%</td><td class="mono" style="color:var(--red);">Overestimate diskon!</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Perbedaan antara pendekatan multiplicative (27,6%) dan additive yang salah (29,8%) mungkin terkesan kecil dalam contoh ini, namun dalam transaksi senilai miliaran, perbedaan ini sangat signifikan. Lebih penting lagi: CFA secara eksplisit menguji pemahaman tentang urutan dan sifat multiplicative dari penerapan diskon ini.</p>
+
+    <div class="callout green">
+      <div class="callout-title">&#9989; Panduan Praktis &mdash; Kapan Menerapkan DLOC vs DLOM?</div>
+      <p><strong>DLOC:</strong> Terapkan ketika valuasi awal dilakukan atas dasar controlling interest (DCF dengan normalized earnings dan optimal capital structure). Jangan terapkan DLOC jika valuasi sudah menggunakan GPCM dari harga pasar publik (sudah mencerminkan minority value).</p>
+      <p><strong>DLOM:</strong> Hampir selalu relevan untuk kepemilikan minoritas di perusahaan privat, kecuali ada prospek liquidity event yang sangat dekat. Bahkan kepemilikan yang sudah berupa minority marketable (comparable public) akan memerlukan DLOM untuk mencerminkan sifat privat perusahaan.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">&#128218; Knowledge Check 4</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Suatu perusahaan privat dinilai menggunakan GPCM (Guideline Public Company Method) dan menghasilkan EV sebesar IDR 2 triliun. Control premium yang relevan adalah 30%, dan DLOM diestimasi 20%. Berapa total diskon yang harus diterapkan untuk sampai pada non-marketable minority interest value, dan berapa nilai akhirnya?</div>
+        <button class="kc-toggle" onclick="toggleKC('kca4',this)">Tampilkan Jawaban</button>
+        <div class="kc-answer" id="kca4">
+          <strong>Jawaban:</strong> Karena GPCM sudah menghasilkan <em>marketable minority interest value</em>, kita tidak perlu menerapkan DLOC lagi &mdash; nilai sudah mencerminkan perspektif minority. Yang perlu diterapkan hanya DLOM sebesar 20%. Nilai akhir = IDR 2 triliun &times; (1 &minus; 0.20) = IDR 1,6 triliun. Catatan: DLOC = 1 &minus; 1/(1+0.30) = 23,08% hanya relevan jika valuasi awal dilakukan dari perspektif controlling interest (misalnya dari DCF). Menggunakan keduanya dalam konteks ini akan double-count diskon kontrol.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: VALUATION STANDARDS -->
+  <div class="chapter" id="s5">
+    <div class="chapter-header">
+      <div class="chapter-num">5</div>
+      <div class="chapter-title">Standar Valuasi Profesional: RICS, IVS, dan AICPA</div>
+    </div>
+
+    <p class="prose">Valuasi perusahaan privat dilakukan dalam berbagai konteks &mdash; transaksi M&amp;A, pelaporan keuangan, perpajakan, litigasi, dan kepatuhan regulasi. Berbagai organisasi profesional telah menetapkan standar praktik yang mengatur bagaimana valuasi harus dilakukan, didokumentasikan, dan dilaporkan. Pemahaman atas standar-standar ini penting bagi kandidat CFA karena standar yang berbeda mendefinisikan <em>standard of value</em> yang berbeda pula.</p>
+
+    <div class="sub-header">Tiga Standar Utama</div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 6 &mdash; Perbandingan Standar Valuasi Profesional</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead>
+            <tr><th>Organisasi</th><th>Nama Standar</th><th>Fokus &amp; Lingkup</th><th>Konteks Penggunaan</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>RICS<br><small style="color:var(--text3);">Royal Institution of Chartered Surveyors</small></td>
+              <td>Red Book<br><small style="color:var(--text3);">RICS Valuation &ndash; Professional Standards</small></td>
+              <td>Berbasis di UK, diadopsi secara internasional; terutama mencakup valuasi properti, real estate, dan aset fisik</td>
+              <td>Laporan keuangan berbasis IFRS, kepatuhan regulasi, transaksi properti, valuasi untuk fund/REIT</td>
+            </tr>
+            <tr>
+              <td>IVSC<br><small style="color:var(--text3);">International Valuation Standards Council</small></td>
+              <td>IVS<br><small style="color:var(--text3);">International Valuation Standards</small></td>
+              <td>Standar global untuk semua kelas aset; memberikan prinsip-prinsip umum yang berlaku lintas yurisdiksi; basis bagi banyak standar nasional</td>
+              <td>Transaksi lintas batas, pelaporan keuangan internasional, digunakan sebagai referensi oleh berbagai badan regulasi</td>
+            </tr>
+            <tr>
+              <td>AICPA<br><small style="color:var(--text3);">American Institute of Certified Public Accountants</small></td>
+              <td>SSVS No.1<br><small style="color:var(--text3);">Statement on Standards for Valuation Services</small></td>
+              <td>Spesifik untuk business valuations di AS; mengatur definisi nilai, scope of work, independence, dan format laporan valuasi</td>
+              <td>Business valuations untuk keperluan pajak, estate planning, litigasi, dan pelaporan keuangan di Amerika Serikat</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">Definisi Standard of Value yang Berbeda</div>
+
+    <p class="prose">Salah satu sumber perbedaan terpenting antar standar adalah definisi <em>standard of value</em> yang digunakan. Nilai yang sama objeknya bisa menghasilkan angka yang sangat berbeda tergantung pada definisi mana yang dipakai:</p>
+
+    <ul class="bullet-list">
+      <li><strong>Fair Market Value (FMV) &mdash; AICPA / US Tax:</strong> Harga hipotetis yang akan disepakati antara <em>willing buyer</em> dan <em>willing seller</em>, keduanya memiliki informasi yang memadai (informed) dan tidak berada di bawah tekanan (not compelled). Ini adalah definisi yang paling sering digunakan dalam konteks perpajakan AS dan sengketa hukum.</li>
+      <li><strong>Fair Value &mdash; IFRS / US GAAP:</strong> Harga yang akan diterima untuk menjual aset dalam transaksi orderly antara market participants pada tanggal pengukuran (exit price). Ini adalah definisi akuntansi, bukan definisi valuasi transaksional.</li>
+      <li><strong>Investment Value:</strong> Nilai bagi seorang investor atau buyer tertentu yang memiliki synergy atau keunggulan unik. Investment value bisa jauh melebihi FMV karena mencerminkan manfaat spesifik pembeli.</li>
+      <li><strong>Intrinsic Value:</strong> Nilai berdasarkan karakteristik fundamental perusahaan itu sendiri, terlepas dari kondisi pasar saat ini. Ini yang paling sering digunakan dalam analisis sekuritas CFA.</li>
+    </ul>
+
+    <div class="callout blue">
+      <div class="callout-title">&#128161; Relevansi untuk Ujian CFA</div>
+      <p>CFA tidak menguji detail teknis setiap standar secara mendalam. Yang penting dipahami adalah: (1) standar-standar ini eksis dan mengatur praktik valuasi; (2) definisi standard of value berbeda-beda; (3) valuasi yang sama dapat menghasilkan angka berbeda tergantung standar yang digunakan. Ketika soal menyebut konteks "compliance dengan IFRS" atau "tax reporting di AS", kandidat harus mampu mengidentifikasi standar yang relevan dan definisi nilai yang berlaku.</p>
+    </div>
+
+    <div class="sub-header">Area Praktik Valuasi Privat</div>
+
+    <p class="prose">Profesional valuasi perusahaan privat biasanya mengkhususkan diri di salah satu dari tiga area utama, dan standar yang berlaku seringkali berbeda per area:</p>
+
+    <ul class="bullet-list">
+      <li><strong>Transaksi (Transactions):</strong> M&amp;A, IPO, pembiayaan PE/VC, management buyout. Investment banker dan analis PE sangat dominan di sini. Pendekatan yang digunakan biasanya income approach dan market approach.</li>
+      <li><strong>Kepatuhan (Compliance):</strong> Pelaporan keuangan (goodwill impairment testing per IFRS 3/ASC 350), perpajakan (estate &amp; gift tax, transfer pricing), dan share-based compensation valuation. Memerlukan pengetahuan mendalam tentang standar akuntansi dan pajak.</li>
+      <li><strong>Litigasi (Litigation):</strong> Sengketa pemegang saham, kerugian usaha, perceraian, atau pelanggaran kontrak yang memerlukan expert testimony valuasi di pengadilan. Memerlukan kemampuan komunikasi dan argumentasi hukum.</li>
+    </ul>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">&#128218; Knowledge Check 5</div></div>
+      <div class="kc-body">
+        <div class="kc-q">Seorang analis diminta menghitung goodwill impairment untuk laporan keuangan sebuah perusahaan publik yang mengikuti IFRS. Standar valuasi mana yang paling relevan, dan definisi nilai apa yang harus digunakan untuk pengujian impairment?</div>
+        <button class="kc-toggle" onclick="toggleKC('kca5',this)">Tampilkan Jawaban</button>
+        <div class="kc-answer" id="kca5">
+          <strong>Jawaban:</strong> Untuk goodwill impairment testing berdasarkan IFRS (IAS 36), definisi yang digunakan adalah <em>fair value less costs of disposal</em> dibandingkan dengan <em>value in use</em> (present value of expected future cash flows). Standar yang paling relevan adalah <strong>IVS (International Valuation Standards)</strong> karena berlaku secara internasional dan diakui untuk kepatuhan IFRS. RICS Red Book juga dapat relevan jika melibatkan properti. AICPA SSVS lebih relevan untuk konteks US GAAP. Definisi "fair value" di sini adalah definisi akuntansi (IFRS 13 &mdash; exit price), bukan Fair Market Value dalam konteks transaksional.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 6: PRACTICE -->
+  <div id="s6">
+    <div class="practice-header">
+      <div class="practice-header-title">&#128221; Latihan Soal &mdash; Item Set Vignette (6 Pertanyaan)</div>
+      <div class="practice-header-sub">PT Kusuma Persada &middot; Valuasi Kepemilikan Minoritas &amp; Standar Valuasi</div>
+    </div>
+    <div class="practice-body">
+      <div class="vignette">
+        <div class="vignette-label">Vignette</div>
+        <p><strong>PT Kusuma Persada (KP)</strong> adalah perusahaan holding privat yang dimiliki oleh dua keluarga. Keluarga Baskara menguasai 65% saham (controlling), sementara Keluarga Wijaya memiliki 35% saham minoritas. KP memiliki tiga entitas bisnis utama: divisi properti komersial di Jakarta, divisi perkebunan sawit di Sumatera, dan divisi distribusi produk konsumen.</p><br>
+        <p><strong>Data Valuasi:</strong> Firm value KP menggunakan income approach (DCF berbasis controlling interest dengan WACC optimal) = IDR 4,8 triliun. Data akuisisi perusahaan holding serupa menunjukkan median control premium 22% (financial buyer) dan 35% (strategic buyer). Untuk estimasi DLOM, analis menggunakan put option approach: saham comparable IDR 8.000, risk-free rate 5% p.a. (continuous), horizon 6 bulan. Forward price = IDR 8.000 &times; e<sup>0.025</sup> = IDR 8.202. Dengan BSM dan implied volatility 45%, nilai put ATM = IDR 1.040.</p><br>
+        <p><strong>Asset-Based Data:</strong> FMV properti komersial = IDR 2,1 triliun; FMV perkebunan dan aset biologis = IDR 1,6 triliun; FMV aset operasional distribusi = IDR 400 miliar; piutang dan kas = IDR 300 miliar; total FMV liabilitas = IDR 1,2 triliun.</p><br>
+        <p>Keluarga Wijaya ingin mengetahui fair value kepemilikan mereka untuk keperluan estate planning. Penasihat hukum menyarankan menggunakan standar yang paling sesuai dengan konteks internasional. Analis Farah Dewanti ditugaskan memberikan opini valuasi.</p>
+      </div>
+
+      <div class="question-block" id="fq1">
+        <div class="q-num">Pertanyaan 1 dari 6</div>
+        <div class="q-text">Farah menghitung DLOC menggunakan control premium financial buyer (22%). Berapa DLOC yang tepat?</div>
+        <button class="option" onclick="fanswer(this,'fq1',false)">A. 22,0% &mdash; DLOC sama dengan control premium</button>
+        <button class="option" onclick="fanswer(this,'fq1',true)">B. 18,0% &mdash; DLOC = 1 &minus; 1/(1+22%)</button>
+        <button class="option" onclick="fanswer(this,'fq1',false)">C. 18,0% &mdash; DLOC = CP/(1+CP) = 22%/1.22</button>
+        <div class="explanation" id="fexp1">
+          <strong>Jawaban: B.</strong> DLOC = 1 &minus; 1/(1+0.22) = 1 &minus; 0.8197 = 18,03% &approx; 18,0%. Opsi A salah &mdash; control premium dan DLOC berbeda karena pergeseran perspektif. Opsi C kebetulan menghasilkan angka yang sama (22/1.22 = 18,0%) dan matematisnya benar, namun framing formula yang lebih tepat adalah 1 &minus; 1/(1+CP). Keduanya ekuivalen secara matematis: 1 &minus; 1/(1+CP) = CP/(1+CP).
+        </div>
+      </div>
+
+      <div class="question-block" id="fq2">
+        <div class="q-num">Pertanyaan 2 dari 6</div>
+        <div class="q-text">Berapa DLOM menggunakan put option approach berdasarkan data yang diberikan?</div>
+        <button class="option" onclick="fanswer(this,'fq2',false)">A. 12,68% &mdash; DLOM = 1.040 / 8.202 (put / forward price)</button>
+        <button class="option" onclick="fanswer(this,'fq2',true)">B. 13,0% &mdash; DLOM = 1.040 / 8.000 (put / current price)</button>
+        <button class="option" onclick="fanswer(this,'fq2',false)">C. 10,0% &mdash; DLOM tidak dapat dihitung dari put option karena hanya memberi proteksi harga, bukan likuiditas</button>
+        <div class="explanation" id="fexp2">
+          <strong>Jawaban: B.</strong> DLOM = Put Premium / Current Stock Price = IDR 1.040 / IDR 8.000 = 13,0%. Denominator yang benar adalah <em>current stock price</em> (IDR 8.000), bukan forward price (IDR 8.202). Forward price digunakan untuk menentukan strike at-the-money saja. Opsi C salah &mdash; meskipun benar bahwa put option tidak memberikan likuiditas penuh, put option approach tetap merupakan metode yang diakui dalam kurikulum CFA untuk mengestimasi DLOM.
+        </div>
+      </div>
+
+      <div class="question-block" id="fq3">
+        <div class="q-num">Pertanyaan 3 dari 6</div>
+        <div class="q-text">Menggunakan DLOC 18% dan DLOM 13%, berapa total diskon dan nilai 35% kepemilikan Keluarga Wijaya (dari firm value DCF IDR 4,8 triliun)?</div>
+        <button class="option" onclick="fanswer(this,'fq3',false)">A. Total diskon 31%; nilai 35% = IDR 1.159 miliar</button>
+        <button class="option" onclick="fanswer(this,'fq3',true)">B. Total diskon 28,66%; nilai 35% = IDR 1.199 miliar</button>
+        <button class="option" onclick="fanswer(this,'fq3',false)">C. Total diskon 28,66%; nilai 35% = IDR 2.040 miliar</button>
+        <div class="explanation" id="fexp3">
+          <strong>Jawaban: B.</strong> Total Discount = 1 &minus; (1&minus;0.18)(1&minus;0.13) = 1 &minus; (0.82)(0.87) = 1 &minus; 0.7134 = 28,66%. Nilai 35% stake (sebelum diskon) = 35% &times; IDR 4,8T = IDR 1,68T. Setelah total diskon: IDR 1,68T &times; (1&minus;0.2866) = IDR 1,68T &times; 0.7134 = IDR 1.199 miliar. Opsi A menggunakan additive approach (18%+13%=31%) yang salah. Opsi C menggunakan diskon yang benar tapi menerapkannya ke seluruh firm value, bukan 35% stake.
+        </div>
+      </div>
+
+      <div class="question-block" id="fq4">
+        <div class="q-num">Pertanyaan 4 dari 6</div>
+        <div class="q-text">Farah juga menghitung nilai KP menggunakan asset-based approach. Berapa equity value berdasarkan data yang diberikan?</div>
+        <button class="option" onclick="fanswer(this,'fq4',false)">A. IDR 3,2 triliun &mdash; tidak termasuk piutang dan kas</button>
+        <button class="option" onclick="fanswer(this,'fq4',true)">B. IDR 3,2 triliun &mdash; total FMV aset IDR 4,4T dikurangi liabilitas IDR 1,2T</button>
+        <button class="option" onclick="fanswer(this,'fq4',false)">C. IDR 4,8 triliun &mdash; sama dengan DCF value karena KP adalah holding company</button>
+        <div class="explanation" id="fexp4">
+          <strong>Jawaban: B.</strong> Total FMV Aset = IDR 2,1T (properti) + IDR 1,6T (perkebunan) + IDR 400M (distribusi) + IDR 300M (piutang&amp;kas) = IDR 4,4 triliun. Equity Value = IDR 4,4T &minus; IDR 1,2T (liabilitas) = IDR 3,2 triliun. Ini sedikit lebih rendah dari DCF value IDR 4,8T, yang mengisyaratkan bahwa KP memiliki nilai going-concern di atas nilai asetnya (termasuk intangibles dan earning power yang tidak tercermin dalam asset-based approach). Opsi C salah &mdash; kedua pendekatan tidak harus sama hasilnya.
+        </div>
+      </div>
+
+      <div class="question-block" id="fq5">
+        <div class="q-num">Pertanyaan 5 dari 6</div>
+        <div class="q-text">Apakah asset-based approach lebih tepat dari income approach untuk menilai KP secara keseluruhan? Pertimbangkan nature bisnis KP.</div>
+        <button class="option" onclick="fanswer(this,'fq5',true)">A. Asset-based bisa digunakan sebagai cross-check yang valuable, karena KP adalah holding company dengan aset yang dapat diappraise (properti dan perkebunan), namun income approach lebih komprehensif karena mencakup earning power seluruh bisnis</button>
+        <button class="option" onclick="fanswer(this,'fq5',false)">B. Asset-based selalu lebih tepat untuk holding company karena nilai utamanya berasal dari aset</button>
+        <button class="option" onclick="fanswer(this,'fq5',false)">C. Asset-based tidak relevan sama sekali karena KP memiliki divisi operasional (distribusi)</button>
+        <div class="explanation" id="fexp5">
+          <strong>Jawaban: A.</strong> KP adalah hybrid &mdash; memiliki elemen holding company (properti, perkebunan) yang cocok dengan asset-based, sekaligus memiliki bisnis operasional (distribusi) yang lebih baik dinilai dengan income/market approach. Pendekatan terbaik adalah menggunakan keduanya sebagai triangulation. Asset-based memberikan floor value berdasarkan tangible assets, sementara income approach menangkap nilai going-concern termasuk intangibles. Discrepancy antara keduanya (IDR 4,8T vs IDR 3,2T) mencerminkan nilai intangibles dan earning power yang tidak terlihat di neraca.
+        </div>
+      </div>
+
+      <div class="question-block" id="fq6">
+        <div class="q-num">Pertanyaan 6 dari 6</div>
+        <div class="q-text">Penasihat hukum Keluarga Wijaya menyarankan valuasi untuk estate planning menggunakan standar internasional. Standar mana yang paling tepat, dan definisi nilai apa yang sebaiknya digunakan?</div>
+        <button class="option" onclick="fanswer(this,'fq6',false)">A. RICS Red Book dengan definisi "fair value" akuntansi (IFRS 13)</button>
+        <button class="option" onclick="fanswer(this,'fq6',false)">B. AICPA SSVS No.1 dengan definisi Fair Market Value (FMV)</button>
+        <button class="option" onclick="fanswer(this,'fq6',true)">C. IVS (International Valuation Standards) memberikan framework paling netral secara internasional; definisi yang umum digunakan untuk estate planning adalah Fair Market Value atau Fair Value tergantung yurisdiksi</button>
+        <div class="explanation" id="fexp6">
+          <strong>Jawaban: C.</strong> Karena penasihat menyarankan standar internasional dan KP adalah perusahaan Indonesia (bukan US), AICPA SSVS (Opsi B) kurang tepat karena ini standar US-specific. RICS Red Book (Opsi A) lebih fokus pada properti bukan business valuation, dan definisi "fair value akuntansi IFRS 13" adalah exit price &mdash; bukan standar transaksional. IVS (IVSC) adalah standar global yang paling netral dan berlaku untuk business valuation lintas yurisdiksi. Untuk estate planning di Indonesia dengan shareholders internasional, IVS memberikan framework yang paling widely recognized.
+        </div>
+      </div>
+
+      <div class="score-panel" id="fscorePanel">
+        <div class="score-num" id="fscoreNum"></div>
+        <div class="score-msg" id="fscoreMsg"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="CFA_L2_Day49_Full.html" class="nav-btn">&larr; Day 49 Full: Income &amp; Market Approach</a>
+    <div class="nav-day">Day 50 of 90 &mdash; Versi Full</div>
+    <a href="CFA_L2_Day51_Full.html" class="nav-btn primary">Day 51 Full: Term Structure &rarr;</a>
+  </div>
+
+</div>
+<script>
+// Knowledge checks
+function toggleKC(id,btn){
+  const el=document.getElementById(id);
+  if(el.classList.contains('show')){el.classList.remove('show');btn.textContent='Tampilkan Jawaban';}
+  else{el.classList.add('show');btn.textContent='Sembunyikan Jawaban';}
+}
+
+// Quiz
+const fanswers={};let fscore=0;const ftotal=6;
+function fanswer(btn,qid,correct){
+  if(fanswers[qid])return;
+  fanswers[qid]=true;
+  const block=document.getElementById(qid);
+  const opts=block.querySelectorAll('.option');
+  opts.forEach(o=>{o.disabled=true;});
+  if(correct){btn.classList.add('correct');fscore++;}
+  else{
+    btn.classList.add('wrong');
+    opts.forEach(o=>{if(o.getAttribute('onclick').includes('true'))o.classList.add('correct');});
+  }
+  const expNum=qid.replace('fq','');
+  const exp=document.getElementById('fexp'+expNum);
+  if(exp)exp.classList.add('show');
+  if(Object.keys(fanswers).length===ftotal){
+    const panel=document.getElementById('fscorePanel');
+    panel.style.display='block';
+    document.getElementById('fscoreNum').textContent=fscore+'/'+ftotal;
+    const msgs={
+      1:'Perlu review mendalam &mdash; pelajari kembali semua konsep DLOC, DLOM, asset-based, dan standar valuasi.',
+      2:'Masih banyak yang perlu diperbaiki. Fokus ke formula DLOC dan multiplicative discount.',
+      3:'Cukup baik. Perhatikan detail penerapan total diskon dan konteks standar valuasi.',
+      4:'Bagus! Hampir menguasai semua materi. Review bagian standar valuasi.',
+      5:'Sangat bagus! Hanya satu yang perlu disempurnakan.',
+      6:'Sempurna! Lo menguasai DLOC, DLOM, asset-based approach, dan standar valuasi profesional!'
+    };
+    document.getElementById('fscoreMsg').textContent=msgs[fscore]||msgs[1];
+  }
+}
+</script>
+</body>
+</html>

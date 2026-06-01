@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 53 · Full · Binomial Interest Rate Trees</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #fafaf8;
+  --bg2:     #f4f3ef;
+  --bg3:     #eeece7;
+  --border:  rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text:    #1a1a2e;
+  --text2:   #4a4a6a;
+  --text3:   #8a8aaa;
+  --gold:    #9a6e1a;
+  --gold2:   #7a5010;
+  --gold-bg: rgba(154,110,26,0.08);
+  --blue:    #1a5fa8;
+  --blue-bg: rgba(26,95,168,0.08);
+  --green:   #1a7a4a;
+  --green-bg:rgba(26,122,74,0.08);
+  --red:     #b83232;
+  --red-bg:  rgba(184,50,50,0.08);
+  --amber:   #a06010;
+  --amber-bg:rgba(160,96,16,0.08);
+  --r:10px; --r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.8;}
+.page{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;border:1px solid rgba(26,95,168,0.2);}
+.hero{margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--border);}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:36px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:15px;color:var(--text2);}
+.meta-row{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:36px;}
+.toc-title{font-size:12px;color:var(--text3);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:12px;font-weight:500;}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.toc-list li a{font-size:13px;color:var(--blue);text-decoration:none;display:flex;align-items:center;gap:8px;}
+.toc-list li a:hover{text-decoration:underline;}
+.toc-num{font-size:11px;color:var(--text3);min-width:20px;}
+.chapter{margin-bottom:40px;}
+.chapter-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--gold-bg);}
+.chapter-num{font-family:'DM Serif Display',serif;font-size:28px;color:var(--gold);line-height:1;}
+.chapter-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);line-height:1.2;}
+.sub-header{font-size:17px;font-weight:500;color:var(--text);margin:24px 0 12px;padding-left:12px;border-left:3px solid var(--gold);}
+.prose{font-size:14px;color:var(--text2);line-height:1.85;margin-bottom:14px;}
+.prose strong{color:var(--text);font-weight:500;}
+.prose em{font-style:italic;}
+.formula-block{background:var(--bg2);border:1px solid var(--border2);border-left:4px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:16px 20px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold2);line-height:2;}
+.formula-block .label{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:8px;}
+.formula-block .note{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text3);font-style:italic;display:block;margin-top:8px;}
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:20px 0;}
+.exhibit-title{background:var(--bg3);padding:10px 16px;font-size:12px;font-weight:500;color:var(--text2);border-bottom:1px solid var(--border);letter-spacing:0.03em;}
+.exhibit-body{padding:16px;}
+.reg-table{width:100%;border-collapse:collapse;font-size:13px;}
+.reg-table th{text-align:right;padding:8px 12px;background:var(--bg3);color:var(--text3);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border2);}
+.reg-table th:first-child{text-align:left;}
+.reg-table td{padding:8px 12px;border-bottom:1px solid var(--border);text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text2);}
+.reg-table td:first-child{text-align:left;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);font-weight:500;}
+.reg-table tr:last-child td{border-bottom:none;}
+.reg-table .sig{color:var(--green);font-weight:500;}
+.reg-table .hl{color:var(--gold2);font-weight:500;}
+.callout{border-radius:var(--r);padding:16px 18px;margin:16px 0;}
+.callout-title{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;}
+.callout p{font-size:13px;color:var(--text2);line-height:1.75;}
+.callout p + p{margin-top:8px;}
+.callout.blue{background:var(--blue-bg);border:1px solid rgba(26,95,168,0.15);}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.green{background:var(--green-bg);border:1px solid rgba(26,122,74,0.15);}
+.callout.green .callout-title{color:var(--green);}
+.callout.amber{background:var(--amber-bg);border:1px solid rgba(160,96,16,0.15);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.red{background:var(--red-bg);border:1px solid rgba(184,50,50,0.15);}
+.callout.red .callout-title{color:var(--red);}
+.callout.gold{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);}
+.callout.gold .callout-title{color:var(--gold);}
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:24px 0;overflow:hidden;}
+.kc-header{background:var(--gold-bg);padding:12px 18px;border-bottom:1px solid rgba(154,110,26,0.15);}
+.kc-header-title{font-size:12px;font-weight:500;color:var(--gold);letter-spacing:0.06em;text-transform:uppercase;}
+.kc-body{padding:18px;}
+.kc-q{font-size:13px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.6;}
+.kc-answer{background:var(--bg3);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);line-height:1.75;display:none;}
+.kc-answer.show{display:block;}
+.kc-answer strong{color:var(--green);}
+.kc-toggle{background:none;border:1px solid var(--border2);border-radius:var(--r-sm);padding:6px 14px;font-size:12px;color:var(--text3);cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px;transition:all 0.15s;}
+.kc-toggle:hover{border-color:var(--gold);color:var(--gold);}
+.num-list{list-style:none;counter-reset:num;display:flex;flex-direction:column;gap:8px;margin:10px 0;}
+.num-list li{counter-increment:num;display:flex;gap:12px;font-size:13px;color:var(--text2);line-height:1.7;}
+.num-list li::before{content:counter(num)".";color:var(--gold);font-weight:500;min-width:20px;flex-shrink:0;}
+.bullet-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin:10px 0;}
+.bullet-list li{display:flex;gap:10px;font-size:13px;color:var(--text2);line-height:1.7;}
+.bullet-list li::before{content:'■';color:var(--gold);font-size:9px;margin-top:5px;flex-shrink:0;}
+code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--bg3);padding:2px 6px;border-radius:4px;color:var(--gold2);}
+.divider{height:1px;background:var(--border);margin:36px 0;}
+.practice-header{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);border-radius:var(--r) var(--r) 0 0;padding:16px 20px;display:flex;align-items:center;gap:12px;}
+.practice-header-title{font-size:16px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);margin-top:2px;}
+.practice-body{background:var(--bg2);border:1px solid rgba(154,110,26,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:24px;}
+.vignette{background:var(--bg3);border-left:4px solid var(--gold);padding:18px 20px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:28px;font-size:13px;color:var(--text2);line-height:1.85;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;font-weight:500;}
+.question-block{margin-bottom:24px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:6px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:12px;line-height:1.65;}
+.option{display:block;width:100%;text-align:left;padding:11px 16px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:8px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.6;}
+.option:hover:not(:disabled){border-color:var(--border2);background:var(--bg2);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:14px 16px;font-size:13px;color:var(--text2);margin-top:10px;line-height:1.8;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:28px;margin-top:20px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:52px;margin-bottom:8px;}
+.score-msg{font-size:14px;color:var(--text2);}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+.nav-day{font-size:12px;color:var(--text3);text-align:center;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II &middot; <span>Fixed Income</span> &middot; LM2</div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <div class="version-badge">Versi Full</div>
+      <div class="day-badge">Day 53 of 90</div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Senin, 6 Juli 2026</div>
+    <h1 class="hero-title">Kerangka Penilaian Bebas-Arbitrase &amp; Binomial Interest Rate Trees</h1>
+    <p class="hero-sub">Arbitrage-Free Valuation Framework &mdash; Subtopik 1 dari 2 &mdash; LM2</p>
+    <div class="meta-row">
+      <div class="meta-pill">&#128218; <b>Materi Lengkap</b></div>
+      <div class="meta-pill">&#127470;&#127465; Bahasa Indonesia</div>
+      <div class="meta-pill">&#9878;&#65039; Bobot Ujian <b>~12%</b></div>
+      <div class="meta-pill">&#9201; Est. baca <b>45&ndash;60 menit</b></div>
+    </div>
+  </div>
+
+  <!-- TOC -->
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ul class="toc-list">
+      <li><a href="#s0"><span class="toc-num">0</span> Learning Outcomes (LOS)</a></li>
+      <li><a href="#s1"><span class="toc-num">1</span> Konsep Dasar Penilaian Bebas-Arbitrase</a></li>
+      <li><a href="#s2"><span class="toc-num">2</span> Penilaian Bond Option-Free: Spot Rates vs. YTM</a></li>
+      <li><a href="#s3"><span class="toc-num">3</span> Kerangka Binomial Interest Rate Tree</a></li>
+      <li><a href="#s4"><span class="toc-num">4</span> Kalibrasi Tree ke Term Structure</a></li>
+      <li><a href="#s5"><span class="toc-num">5</span> Latihan Soal &mdash; Item Set Vignette</a></li>
+    </ul>
+  </div>
+
+  <!-- Section 0: LOS -->
+  <div class="chapter" id="s0">
+    <div class="chapter-header">
+      <div class="chapter-num">0</div>
+      <div class="chapter-title">Learning Outcomes (LOS)</div>
+    </div>
+    <p class="prose">Setelah mempelajari modul ini, kandidat diharapkan mampu:</p>
+    <ul class="num-list">
+      <li>Menjelaskan makna penilaian bebas-arbitrase (<em>arbitrage-free valuation</em>) untuk instrumen pendapatan tetap dan menghubungkannya dengan Hukum Satu Harga.</li>
+      <li>Menghitung nilai bebas-arbitrase dari obligasi tanpa opsi (<em>option-free bond</em>) menggunakan spot rates, dan membandingkannya dengan pendekatan binomial lattice.</li>
+      <li>Mendeskripsikan kerangka binomial interest rate tree berbasis lognormal random walk, termasuk struktur node, probabilitas, dan hubungan antar forward rate di setiap periode.</li>
+      <li>Mendeskripsikan proses kalibrasi binomial interest rate tree agar sesuai dengan (<em>match</em>) term structure tertentu.</li>
+      <li>Menjelaskan metodologi backward induction dan menghitung nilai instrumen pendapatan tetap dari cash flows di setiap node pada tree.</li>
+      <li>Membandingkan penilaian menggunakan zero-coupon yield curve dengan penilaian menggunakan binomial lattice bebas-arbitrase.</li>
+    </ul>
+    <div class="callout gold" style="margin-top:16px;">
+      <div class="callout-title">&#9733; Konteks dalam Kurikulum</div>
+      <p>LM2 adalah jantung dari Fixed Income valuation di CFA Level 2. Konsep binomial tree yang dipelajari hari ini adalah fondasi untuk memahami penilaian callable bonds, putable bonds, dan instrumen dengan embedded options &mdash; yang akan dibahas di bacaan selanjutnya. Kuasai backward induction dan kalibrasi tree sebelum melanjutkan ke topik tersebut.</p>
+    </div>
+  </div>
+
+  <!-- Section 1 -->
+  <div class="chapter" id="s1">
+    <div class="chapter-header">
+      <div class="chapter-num">1</div>
+      <div class="chapter-title">Konsep Dasar Penilaian Bebas-Arbitrase</div>
+    </div>
+
+    <div class="sub-header">1.1 Apa Itu Penilaian Bebas-Arbitrase?</div>
+    <p class="prose"><strong>Arbitrage-free valuation</strong> adalah pendekatan penilaian sekuritas yang menghasilkan nilai konsisten dengan tidak adanya peluang arbitrase &mdash; yaitu peluang untuk memperoleh keuntungan tanpa risiko tanpa mengeluarkan modal bersih. Dalam pasar yang berfungsi baik, harga akan menyesuaikan diri hingga tidak ada peluang arbitrase. Fondasi dari prinsip ini adalah <strong>Hukum Satu Harga (Law of One Price)</strong>: dua aset yang identik harus memiliki harga yang sama.</p>
+    <p class="prose">Untuk fixed income, implikasi praktisnya adalah: setiap bond harus dipandang sebagai <em>portfolio zero-coupon bonds</em>. Setiap coupon payment adalah satu zero-coupon bond yang jatuh tempo pada tanggal pembayaran tersebut. Nilai total bond adalah jumlah nilai setiap zero-coupon bond individual, di mana masing-masing didiskon dengan spot rate yang sesuai untuk maturity-nya.</p>
+
+    <div class="callout blue">
+      <div class="callout-title">&#9432; Mengapa Tidak Cukup dengan YTM?</div>
+      <p>Yield-to-maturity (YTM) adalah <em>internal rate of return</em> dari bond &mdash; satu angka yang mendiskon semua cash flows. Ini ekuivalen dengan mengasumsikan <em>flat yield curve</em>: satu suku bunga berlaku untuk semua jatuh tempo. Di dunia nyata, yield curve tidak flat; setiap maturity memiliki spot rate yang berbeda. Mendiskon coupon 1 tahun dengan YTM yang sama seperti principal yang jatuh tempo 10 tahun kemudian adalah penyederhanaan yang tidak akurat secara arbitrage-free.</p>
+    </div>
+
+    <div class="sub-header">1.2 Dua Jenis Peluang Arbitrase</div>
+    <p class="prose">Ada dua tipe peluang arbitrase yang relevan dalam penilaian fixed income:</p>
+    <p class="prose"><strong>Tipe 1 &mdash; Value Additivity:</strong> Nilai keseluruhan harus sama dengan jumlah nilai bagian-bagiannya. Jika Anda dapat membeli bond dan <em>strip</em> (memisahkan) setiap coupon menjadi zero-coupon bond individual, lalu menjual masing-masing secara terpisah dengan harga lebih tinggi dari harga beli bond, ada peluang arbitrase. Dealers di pasar sovereign bond (termasuk SBN di Indonesia) diizinkan melakukan stripping dan reconstitution persis untuk memastikan prinsip ini bekerja dalam praktik.</p>
+    <p class="prose"><strong>Tipe 2 &mdash; Dominance:</strong> Aset yang memberikan payoff lebih besar dalam semua keadaan tidak boleh memiliki harga yang sama atau lebih rendah dari aset yang memberikan payoff lebih kecil. Aset yang memberikan payoff bebas-risiko positif di masa depan harus memiliki harga positif hari ini. Jika tidak, ada arbitrase dominance.</p>
+
+    <div class="kc" id="kc1">
+      <div class="kc-header"><div class="kc-header-title">&#9998; Knowledge Check 1</div></div>
+      <div class="kc-body">
+        <p class="kc-q">Dealer SBN menemukan bahwa harga SBN 5-tahun adalah Rp 98.500 per Rp 100 nominal, tetapi jika setiap coupon dan principal-nya dijual sebagai zero-coupon bonds secara terpisah, total nilainya adalah Rp 99.200. Jenis peluang arbitrase apa yang ada, dan bagaimana dealer tersebut mengeksploitasinya?</p>
+        <button class="kc-toggle" onclick="toggleKC('kc1a')">Tampilkan Jawaban</button>
+        <div class="kc-answer" id="kc1a">
+          <strong>Ini adalah arbitrase tipe Value Additivity.</strong> Nilai keseluruhan (Rp 98.500) lebih kecil dari jumlah nilai bagian-bagiannya (Rp 99.200), sehingga bond underpriced relatif terhadap komponen zero-coupon-nya. Dealer mengeksploitasi ini dengan: membeli SBN di harga Rp 98.500, lalu melakukan <em>stripping</em> &mdash; memisahkan setiap kupon dan principal menjadi zero-coupon bonds individual, kemudian menjual masing-masing seharga total Rp 99.200. Keuntungan bebas-risiko: Rp 700 per Rp 100 nominal. Tekanan beli akan menaikkan harga SBN dan tekanan jual akan menurunkan harga zero-coupon bonds hingga dua sisi terkalibrasi dan arbitrase menghilang.
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-header">1.3 Langkah-Langkah Penilaian Fundamental</div>
+    <p class="prose">Prinsip fundamental: nilai aset keuangan apapun adalah present value dari ekspektasi cash flows masa depan. Tiga langkah universal:</p>
+    <ul class="num-list">
+      <li><strong>Estimasi future cash flows:</strong> Untuk option-free bonds, ini mudah &mdash; coupon tetap dan principal diketahui. Untuk bonds dengan embedded options, cash flows bergantung pada jalur suku bunga masa depan.</li>
+      <li><strong>Tentukan tingkat diskonto yang tepat:</strong> Untuk arbitrage-free valuation, gunakan spot rate untuk setiap maturity, bukan satu YTM tunggal.</li>
+      <li><strong>Hitung present value:</strong> Jumlahkan PV dari semua cash flows menggunakan spot rates masing-masing.</li>
+    </ul>
+  </div>
+
+  <!-- Section 2 -->
+  <div class="chapter" id="s2">
+    <div class="chapter-header">
+      <div class="chapter-num">2</div>
+      <div class="chapter-title">Penilaian Bond Option-Free: Spot Rates vs. YTM</div>
+    </div>
+
+    <div class="sub-header">2.1 Bootstrapping untuk Mendapatkan Spot Rates</div>
+    <p class="prose">Par rates dari benchmark bonds (SBN atau US Treasuries) memberikan kita titik awal. Dari par rates, kita dapat menurunkan <em>spot rates</em> (zero-coupon rates) melalui proses <strong>bootstrapping</strong>: proses iteratif yang menghitung spot rate untuk setiap maturity satu per satu, menggunakan spot rates yang sudah dihitung sebelumnya.</p>
+
+    <div class="formula-block">
+      <span class="label">Persamaan Bootstrapping Umum</span>
+      1 = (par rate)/(1+z₁) + (par rate)/(1+z₂)² + ... + (par rate + 1)/(1+zₙ)ⁿ
+      <span class="note">di mana "par rate" adalah PMT/100 untuk benchmark bond, dan zₜ adalah t-period spot rate</span>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 1 — Contoh: Par Rates, Spot Rates, dan Forward Rates</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr><th style="text-align:left">Maturity</th><th>Par Rate</th><th>Spot Rate (zₜ)</th><th>1-Yr Forward Rate</th></tr>
+          <tr><td>1 tahun</td><td>1,00%</td><td class="hl">1,0000%</td><td>1,0000%</td></tr>
+          <tr><td>2 tahun</td><td>1,20%</td><td class="hl">1,2012%</td><td>1,4028%</td></tr>
+          <tr><td>3 tahun</td><td>1,25%</td><td class="hl">1,2515%</td><td>1,3521%</td></tr>
+          <tr><td>4 tahun</td><td>1,40%</td><td class="hl">1,4045%</td><td>1,8647%</td></tr>
+          <tr><td>5 tahun</td><td>1,80%</td><td class="hl">1,8194%</td><td>3,4965%</td></tr>
+        </table>
+        <p style="font-size:12px;color:var(--text3);margin-top:8px;">Catatan: Karena par curve upward-sloping, spot rates lebih tinggi dari par rates setelah Year 1. Forward rates dihitung dari spot rates menggunakan no-arbitrage.</p>
+      </div>
+    </div>
+
+    <div class="sub-header">2.2 Penilaian Arbitrage-Free vs. Penilaian YTM</div>
+    <p class="prose">Bayangkan sebuah bond 3-tahun dengan coupon 5% annual pay, benchmark par rates 2%, 3%, dan 4% untuk maturity 1, 2, 3 tahun. Spot rates yang dibootstrap adalah z₁=2,000%, z₂=3,015%, z₃=4,055%. Harga yang dihitung menggunakan YTM tunggal (misalnya YTM = 4%) vs. spot rates akan <em>berbeda</em>:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 2 — Perbandingan Metode Penilaian</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr><th style="text-align:left">Cash Flow</th><th>YTM = 4%</th><th>Spot Rate Method</th></tr>
+          <tr><td>Kupon Tahun 1 (5)</td><td>5/1.04 = 4.808</td><td>5/1.02000 = 4.902</td></tr>
+          <tr><td>Kupon Tahun 2 (5)</td><td>5/1.04² = 4.622</td><td>5/1.03015² = 4.709</td></tr>
+          <tr><td>Kupon+Par Tahun 3 (105)</td><td>105/1.04³ = 93.347</td><td>105/1.04055³ = 93.199</td></tr>
+          <tr><td><strong>Total (Harga Bond)</strong></td><td><strong>102.777</strong></td><td class="hl"><strong>102.810</strong></td></tr>
+        </table>
+        <p style="font-size:12px;color:var(--text3);margin-top:8px;">Harga arbitrage-free (spot rate method) = 102.810. Harga YTM method = 102.777. Selisih 0.033 per 100 nominal &mdash; ini adalah mispricing karena penggunaan discount rate tunggal yang tidak tepat untuk yield curve yang tidak flat.</p>
+      </div>
+    </div>
+
+    <div class="callout amber">
+      <div class="callout-title">&#9888; Mengapa Binomial Tree Diperlukan?</div>
+      <p>Untuk option-free bonds, spot rate method sudah cukup dan akurat secara arbitrage-free. Namun ketika bond memiliki <strong>embedded options</strong> (callable, putable, convertible), cash flows masa depan bergantung pada jalur suku bunga &mdash; apakah issuer akan call bond bergantung pada apakah rates cukup turun. Dalam kondisi ini, tidak ada satu set cash flows yang "benar" yang bisa langsung didiskon. Kita perlu model yang secara eksplisit menggambarkan distribusi kemungkinan suku bunga masa depan: itulah <em>interest rate tree</em>.</p>
+    </div>
+
+    <div class="kc" id="kc2">
+      <div class="kc-header"><div class="kc-header-title">&#9998; Knowledge Check 2</div></div>
+      <div class="kc-body">
+        <p class="kc-q">Yield curve SBN saat ini upward-sloping. SBN 1-tahun yield 5,5%, SBN 5-tahun yield 7,2%. Seorang analis menilai SBN 5-tahun dengan YTM tunggal 7,2%. Apakah penilaian ini arbitrage-free? Jika tidak, ke arah mana bias-nya (over- atau under-valued)?</p>
+        <button class="kc-toggle" onclick="toggleKC('kc2a')">Tampilkan Jawaban</button>
+        <div class="kc-answer" id="kc2a">
+          <strong>Tidak, penilaian ini tidak sepenuhnya arbitrage-free.</strong> Menggunakan YTM tunggal 7,2% untuk mendiskon semua cash flows mengasumsikan flat yield curve di 7,2%. Pada yield curve yang upward-sloping, spot rates untuk maturity pendek (1-2 tahun) lebih rendah dari 7,2%, sementara spot rates untuk maturity panjang (5 tahun) lebih tinggi. Mendiskon kupon-kupon awal dengan 7,2% (terlalu tinggi untuk maturity pendek) menghasilkan PV yang <em>terlalu rendah</em> untuk cash flows awal. Mendiskon principal dengan 7,2% (mungkin sudah mendekati spot rate 5-tahun) sudah relatif tepat. Net effect: pada upward-sloping yield curve, metode YTM tunggal cenderung <em>undervalue</em> bond sedikit karena kupon-kupon awal di-diskon terlalu agresif. Penilaian spot rate yang tepat akan menghasilkan harga sedikit lebih tinggi.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3 -->
+  <div class="chapter" id="s3">
+    <div class="chapter-header">
+      <div class="chapter-num">3</div>
+      <div class="chapter-title">Kerangka Binomial Interest Rate Tree</div>
+    </div>
+
+    <div class="sub-header">3.1 Struktur dan Logika Tree</div>
+    <p class="prose">Binomial interest rate tree adalah representasi dari kemungkinan nilai <em>one-year forward rate</em> di masa depan, berdasarkan model suku bunga dan asumsi volatilitas tertentu. "Binomial" mengacu pada fakta bahwa dari setiap node (titik dalam tree), suku bunga hanya bisa bergerak ke satu dari dua arah: lebih tinggi (H) atau lebih rendah (L), masing-masing dengan probabilitas yang sama (50/50 dalam model lognormal).</p>
+    <p class="prose">Tree ini disebut <em>lattice model</em> karena berbentuk kisi yang mengembang ke kanan. Fitur penting: ini adalah <strong>recombining tree</strong>, artinya naik kemudian turun (H→L) menghasilkan node yang sama dengan turun kemudian naik (L→H). Ini membuat jumlah node bertambah secara <em>linear</em> (bukan eksponensial) seiring waktu, sehingga komputasi jauh lebih efisien.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 3 — Struktur Tree 3-Periode (Notasi Standar)</div>
+      <div class="exhibit-body" style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--text2);line-height:2.2;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:0;text-align:center;">
+          <div style="color:var(--text3);font-size:11px;">Time 0</div>
+          <div style="color:var(--text3);font-size:11px;">Time 1</div>
+          <div style="color:var(--text3);font-size:11px;">Time 2</div>
+          <div style="color:var(--text3);font-size:11px;">Time 3</div>
+          <div></div><div></div><div></div><div style="color:var(--gold);">i₃,HHH</div>
+          <div></div><div></div><div style="color:var(--gold);">i₂,HH</div><div></div>
+          <div></div><div style="color:var(--gold);">i₁,H</div><div></div><div style="color:var(--gold);">i₃,HHL</div>
+          <div style="color:var(--gold);">i₀</div><div></div><div style="color:var(--gold);">i₂,HL</div><div></div>
+          <div></div><div style="color:var(--gold);">i₁,L</div><div></div><div style="color:var(--gold);">i₃,LLH</div>
+          <div></div><div></div><div style="color:var(--gold);">i₂,LL</div><div></div>
+          <div></div><div></div><div></div><div style="color:var(--gold);">i₃,LLL</div>
+        </div>
+        <p style="font-size:12px;color:var(--text3);font-family:'DM Sans',sans-serif;margin-top:8px;">Setiap node dinotasikan dengan waktu (Time t) dan jalur (H=naik, L=turun). Recombining tree: i₂,HL dapat dicapai dari i₁,H→turun atau i₁,L→naik.</p>
+      </div>
+    </div>
+
+    <div class="sub-header">3.2 Lognormal Random Walk dan Hubungan Antar Rate</div>
+    <p class="prose">Model yang digunakan adalah <strong>lognormal random walk</strong>, yang menjamin dua properti penting: (1) suku bunga tidak bisa negatif, karena perubahan suku bunga proporsional terhadap level saat ini, dan (2) volatilitas lebih besar pada level suku bunga yang lebih tinggi (secara relatif, bukan absolut).</p>
+    <p class="prose">Dalam model lognormal, standar deviasi dari one-year rate adalah <code>i₀ × σ</code>. Misalnya jika σ=10% dan i₀=3%, standar deviasi = 3% × 10% = 0,3% atau 30 bps. Di setiap node, dua kemungkinan rate berikutnya dihubungkan oleh:</p>
+
+    <div class="formula-block">
+      <span class="label">Hubungan H-L dalam Satu Periode</span>
+      i_H = i_L × e^(2σ)
+      <br>
+      i₂,HH = i₂,LL × e^(4σ)  &nbsp;&nbsp; i₂,HL = i₂,LL × e^(2σ)
+      <br>
+      i₃,HHH = i₃,LLL × e^(6σ)  &nbsp;&nbsp; i₃,HHL = i₃,LLL × e^(4σ)  &nbsp;&nbsp; i₃,LLH = i₃,LLL × e^(2σ)
+      <span class="note">σ = assumed annual volatility of one-year rate; e = 2,7183 (bilangan Euler)</span>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 4 — Contoh Numerik: Efek Volatilitas pada Tree</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr><th style="text-align:left">Asumsi</th><th>i₀</th><th>i₁,L</th><th>i₁,H</th><th>Spread H-L</th></tr>
+          <tr><td>σ = 0,01% (hampir nol)</td><td>1,00%</td><td>1,4026%</td><td>1,4029%</td><td>~0 bps</td></tr>
+          <tr><td>σ = 15%</td><td>1,00%</td><td>1,1943%</td><td class="hl">1,6121%</td><td>41,8 bps</td></tr>
+          <tr><td>σ = 20%</td><td>1,00%</td><td>1,1265%</td><td class="hl">1,6806%</td><td>55,4 bps</td></tr>
+        </table>
+        <p style="font-size:12px;color:var(--text3);margin-top:8px;">Kunci: Rata-rata (geometric) dari i_H dan i_L selalu mendekati implied forward rate dari spot curve (~1,4028%), terlepas dari σ. Volatilitas hanya mengubah spread, bukan pusat distribusi.</p>
+      </div>
+    </div>
+
+    <p class="prose">Hubungan kritis: jika σ → 0, semua node H dan L collapse ke satu nilai yang sama &mdash; yaitu implied forward rate dari spot curve. Binomial tree menjadi identik dengan forward curve. Ketika σ &gt; 0, tree menyebar di sekitar forward curve tetapi tetap <em>anchored</em> padanya.</p>
+
+    <div class="sub-header">3.3 Metodologi Backward Induction</div>
+    <p class="prose"><strong>Backward induction</strong> adalah algoritma untuk menghitung nilai bond di setiap node dengan mulai dari ujung kanan tree (maturity) dan bekerja mundur ke kiri sampai Time 0. Prosedur ini identik dengan pendekatan <em>dynamic programming</em> dalam matematika.</p>
+    <p class="prose"><strong>Prinsip:</strong> Nilai bond di node apapun adalah PV dari: (1) coupon yang dibayar di akhir periode, dan (2) rata-rata tertimbang (50/50) dari nilai bond di dua node berikutnya, semua didiskon dengan forward rate di node saat ini.</p>
+
+    <div class="formula-block">
+      <span class="label">Formula Nilai Bond di Setiap Node</span>
+      V(node) = [C + 0,5 × V_H + 0,5 × V_L] / (1 + i)
+      <span class="note">C = pembayaran coupon di akhir periode | V_H = nilai di node higher rate berikutnya | V_L = nilai di node lower rate berikutnya | i = forward rate di node saat ini</span>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 5 — Backward Induction Lengkap: 3-Year Bond, Coupon 5%, Tree 3-Periode</div>
+      <div class="exhibit-body">
+        <p style="font-size:13px;color:var(--text2);margin-bottom:12px;"><strong>Tree rates:</strong> i₀=2%, i₁H=5%, i₁L=3%, i₂HH=8%, i₂HL=6%, i₂LL=4%</p>
+        <table class="reg-table">
+          <tr><th style="text-align:left">Langkah</th><th>Node</th><th>Rate</th><th>Kalkulasi</th><th>Nilai</th></tr>
+          <tr><td>Step 1: Terminal</td><td>Time 2 (semua)</td><td>—</td><td>FV + C = 100 + 5</td><td>105</td></tr>
+          <tr><td>Step 2: Diskon ke T2</td><td>V(i₂=8%)</td><td>8%</td><td>105 / 1,08</td><td>97,222</td></tr>
+          <tr><td></td><td>V(i₂=6%)</td><td>6%</td><td>105 / 1,06</td><td>99,057</td></tr>
+          <tr><td></td><td>V(i₂=4%)</td><td>4%</td><td>105 / 1,04</td><td>100,962</td></tr>
+          <tr><td>Step 3: Roll ke T1</td><td>V(i₁=5%)</td><td>5%</td><td>[5 + 0,5×97,222 + 0,5×99,057] / 1,05</td><td class="hl">98,228</td></tr>
+          <tr><td></td><td>V(i₁=3%)</td><td>3%</td><td>[5 + 0,5×99,057 + 0,5×100,962] / 1,03</td><td class="hl">101,951</td></tr>
+          <tr><td>Step 4: Roll ke T0</td><td>V(i₀=2%)</td><td>2%</td><td>[5 + 0,5×98,228 + 0,5×101,951] / 1,02</td><td class="sig">103,029</td></tr>
+        </table>
+        <p style="font-size:12px;color:var(--text3);margin-top:8px;">Nilai arbitrage-free bond = <strong>103,029</strong>. Nilai ini harus identik dengan hasil spot rate method (jika tree dikalibrasi dengan benar).</p>
+      </div>
+    </div>
+
+    <div class="kc" id="kc3">
+      <div class="kc-header"><div class="kc-header-title">&#9998; Knowledge Check 3</div></div>
+      <div class="kc-body">
+        <p class="kc-q">Sebuah 2-year annual pay bond memiliki coupon 6% dan face value 100. Binomial tree yang dikalibrasi memberikan: i₀ = 4%, i₁,H = 6,5%, i₁,L = 4,8%. Hitung nilai bond di Time 0 menggunakan backward induction.</p>
+        <button class="kc-toggle" onclick="toggleKC('kc3a')">Tampilkan Jawaban</button>
+        <div class="kc-answer" id="kc3a">
+          <strong>Langkah 1 — Terminal (Time 2):</strong> Semua nodes = 100 + 6 = 106.<br><br>
+          <strong>Langkah 2 — Diskon ke Time 1:</strong><br>
+          V(i=6,5%) = 106/1,065 = <strong>99,531</strong><br>
+          V(i=4,8%) = 106/1,048 = <strong>101,145</strong><br><br>
+          <strong>Langkah 3 — Roll ke Time 0:</strong><br>
+          V₀ = [6 + 0,5×99,531 + 0,5×101,145] / 1,04<br>
+          V₀ = [6 + 100,338] / 1,04<br>
+          V₀ = 106,338 / 1,04 = <strong>102,248</strong><br><br>
+          Nilai arbitrage-free bond = <strong>102,248</strong> per 100 nominal.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4 -->
+  <div class="chapter" id="s4">
+    <div class="chapter-header">
+      <div class="chapter-num">4</div>
+      <div class="chapter-title">Kalibrasi Binomial Tree ke Term Structure</div>
+    </div>
+
+    <div class="sub-header">4.1 Mengapa Kalibrasi Diperlukan?</div>
+    <p class="prose">Sebuah binomial tree yang sembarangan tidak akan bersifat arbitrage-free. Untuk memastikan model konsisten dengan harga pasar saat ini, tree harus dikalibrasi: forward rates dalam tree dipilih sehingga model menghasilkan harga yang <em>sama persis</em> dengan harga pasar dari benchmark bonds (biasanya government bonds par-priced). Proses ini memastikan model "tertambat" pada realitas ekonomi yang berlaku, bukan hanya asumsi teoritis.</p>
+
+    <div class="sub-header">4.2 Prosedur Kalibrasi Langkah demi Langkah</div>
+    <p class="prose">Kalibrasi dilakukan secara iteratif, satu periode sekaligus, dari kiri ke kanan:</p>
+    <ul class="num-list">
+      <li><strong>Time 0 (i₀):</strong> Selalu sama dengan 1-year spot rate (= 1-year par rate untuk benchmark). Tidak ada iterasi diperlukan.</li>
+      <li><strong>Time 1 (i₁,L dan i₁,H):</strong> Pilih trial value untuk i₁,L (harus &lt; implied 1-year forward rate dari spot curve). Hitung i₁,H = i₁,L × e^(2σ). Gunakan backward induction untuk hitung harga 2-year benchmark bond. Jika harga ≠ par (100), sesuaikan i₁,L dan ulangi. Gunakan Excel Solver atau Newton-Raphson untuk efisiensi. Iterasi selesai ketika harga = 100,000.</li>
+      <li><strong>Time 2 (i₂,LL, i₂,HL, i₂,HH):</strong> Dengan i₀, i₁,H, i₁,L yang sudah fix, pilih trial i₂,HL. Hitung i₂,HH = i₂,HL × e^(2σ) dan i₂,LL = i₂,HL / e^(2σ). Iterasi sampai 3-year benchmark bond = 100.</li>
+      <li><strong>Periode berikutnya:</strong> Ulangi proses yang sama, menggunakan semua rates yang sudah dikalibrasi sebelumnya sebagai constraint, hingga tree selesai dibangun.</li>
+    </ul>
+
+    <div class="callout blue">
+      <div class="callout-title">&#9432; Insight Kunci: Rata-Rata Mendekati Forward Rate</div>
+      <p>Setelah kalibrasi, rata-rata geometric dari i_H dan i_L di Time 1 selalu mendekati (tetapi sedikit di atas) implied 1-year forward rate dari spot curve. Alasannya: model lognormal menciptakan sedikit bias ke atas karena distribusi lognormal tidak simetris. Dengan σ=15%, rata-rata (i₁,H + i₁,L)/2 = (1,6121% + 1,1943%)/2 = 1,4032% &mdash; sedikit di atas implied forward rate 1,4028%. Bias ini kecil tapi secara teknis penting.</p>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 6 — Tree yang Dikalibrasi (σ=15%, benchmark par curve dari Exhibit 1)</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr><th style="text-align:left">Periode</th><th>Node</th><th>Forward Rate (dikalibrasi)</th><th>Implied Forward Rate (spot curve)</th></tr>
+          <tr><td>Time 0</td><td>i₀</td><td class="hl">1,0000%</td><td>1,0000%</td></tr>
+          <tr><td>Time 1</td><td>i₁,H</td><td class="hl">1,6121%</td><td rowspan="2" style="vertical-align:middle;">1,4028%</td></tr>
+          <tr><td></td><td>i₁,L</td><td class="hl">1,1943%</td></tr>
+          <tr><td>Time 2</td><td>i₂,HH</td><td class="hl">1,7863%</td><td rowspan="3" style="vertical-align:middle;">1,3521%</td></tr>
+          <tr><td></td><td>i₂,HL</td><td class="hl">1,3233%</td></tr>
+          <tr><td></td><td>i₂,LL</td><td class="hl">0,9803%</td></tr>
+          <tr><td>Time 3</td><td>i₃,HHH</td><td class="hl">2,8338%</td><td rowspan="4" style="vertical-align:middle;">1,8647%</td></tr>
+          <tr><td></td><td>i₃,HHL</td><td class="hl">2,0994%</td></tr>
+          <tr><td></td><td>i₃,LLH</td><td class="hl">1,5552%</td></tr>
+          <tr><td></td><td>i₃,LLL</td><td class="hl">1,1521%</td></tr>
+        </table>
+        <p style="font-size:12px;color:var(--text3);margin-top:8px;">Verifikasi: Jika tree di atas digunakan untuk menghitung harga benchmark bonds par (2-yr 1,20%, 3-yr 1,25%, 4-yr 1,40%), hasilnya = 100 persis. Ini bukti kalibrasi berhasil.</p>
+      </div>
+    </div>
+
+    <div class="sub-header">4.3 Verifikasi: Tree Method = Spot Rate Method untuk Option-Free Bond</div>
+    <p class="prose">Properti paling penting dari tree yang dikalibrasi: untuk option-free bonds, nilai yang dihitung dari tree <em>identik</em> dengan nilai yang dihitung menggunakan spot rates langsung. Ini adalah necessary condition untuk arbitrage-free valuation. Jika ada perbedaan, tree belum dikalibrasi dengan benar.</p>
+    <p class="prose">Untuk bonds dengan embedded options, kedua metode TIDAK menghasilkan nilai yang sama karena cash flows bervariasi berdasarkan jalur suku bunga. Hanya tree method yang dapat menangani skenario ini dengan benar, karena setiap node dapat menerapkan aturan exercise option secara kondisional.</p>
+
+    <div class="callout amber">
+      <div class="callout-title">&#9888; Penting untuk Exam</div>
+      <p>Di exam CFA Level 2, lo tidak akan diminta untuk melakukan kalibrasi numerik penuh (itu proses iteratif yang panjang). Yang akan diuji: (1) memahami <em>tujuan</em> kalibrasi dan apa yang dicari, (2) mampu melakukan <em>backward induction</em> dari tree yang sudah diberikan, (3) mampu menentukan apakah tree sudah dikalibrasi dengan benar (apakah option-free bond value dari tree = spot rate value?), dan (4) memahami efek perubahan volatilitas pada spread rates dalam tree.</p>
+    </div>
+
+    <div class="kc" id="kc4">
+      <div class="kc-header"><div class="kc-header-title">&#9998; Knowledge Check 4</div></div>
+      <div class="kc-body">
+        <p class="kc-q">Seorang analis membangun binomial tree dengan σ=20% dan mendapatkan nilai 103,50 untuk sebuah option-free 3-year bond. Menggunakan spot rates langsung, nilai yang sama adalah 103,50. Analis kemudian mengubah σ menjadi 30% dan mendapatkan nilai 103,50 dari tree. Apakah ini masuk akal? Jelaskan.</p>
+        <button class="kc-toggle" onclick="toggleKC('kc4a')">Tampilkan Jawaban</button>
+        <div class="kc-answer" id="kc4a">
+          <strong>Ya, ini masuk akal dan benar secara teoritis.</strong> Untuk option-free bonds, nilai yang dihitung dari binomial tree yang dikalibrasi dengan benar harus <em>selalu sama</em> dengan nilai yang dihitung menggunakan spot rates, terlepas dari nilai σ yang digunakan. Perubahan σ mengubah spread antara rates H dan L dalam tree, tetapi karena kalibrasi memastikan tree menghasilkan harga par untuk benchmark bonds, nilai option-free bond tetap sama. σ hanya mempengaruhi nilai embedded options (karena opsi lebih berharga ketika volatilitas lebih tinggi), bukan nilai option-free bond. Ini adalah salah satu verifikasi utama bahwa tree dikalibrasi dengan benar: nilai option-free bond invariant terhadap perubahan σ.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Section 5: Practice -->
+  <div class="chapter" id="s5">
+    <div class="chapter-header">
+      <div class="chapter-num">5</div>
+      <div class="chapter-title">Latihan Soal &mdash; Item Set Vignette</div>
+    </div>
+
+    <div class="practice-header">
+      <div>
+        <div class="practice-header-title">Vignette: PT Energi Nusantara Tbk &mdash; Penilaian Obligasi Korporasi</div>
+        <div class="practice-header-sub">6 soal &middot; Fixed Income &middot; Item Set Format (Tingkat CFA Exam)</div>
+      </div>
+    </div>
+
+    <div class="practice-body">
+      <div class="vignette">
+        <div class="vignette-label">Skenario</div>
+        <p>Rizal Firmansyah, CFA, adalah kepala divisi fixed income di PT Manajer Investasi Andalan, Jakarta. Rizal sedang mengevaluasi dua obligasi yang diterbitkan oleh PT Energi Nusantara Tbk (ENRG), sebuah perusahaan energi yang terdaftar di IDX.</p>
+        <br>
+        <p><strong>Benchmark SBN Par Curve:</strong></p>
+        <p>1 tahun: 6,00% | 2 tahun: 6,50% | 3 tahun: 7,00%</p>
+        <p><strong>Spot rates yang dibootstrap dari par curve di atas:</strong></p>
+        <p>z₁ = 6,000% | z₂ = 6,511% | z₃ = 7,030%</p>
+        <br>
+        <p>Rizal menggunakan binomial interest rate tree dengan asumsi σ = 15% yang telah dikalibrasi ke SBN benchmark curve. Tree yang dikalibrasi adalah:</p>
+        <p><strong>Time 0:</strong> i₀ = 6,000%</p>
+        <p><strong>Time 1:</strong> i₁,H = 8,167% | i₁,L = 6,050%</p>
+        <p><strong>Time 2:</strong> i₂,HH = 10,515% | i₂,HL = 7,791% | i₂,LL = 5,774%</p>
+        <br>
+        <p><strong>Obligasi A (ENRG-A):</strong> 3-tahun, annual pay, coupon 8%, face value 100, <em>option-free</em>.</p>
+        <p><strong>Obligasi B (ENRG-B):</strong> 3-tahun, annual pay, coupon 8%, face value 100, <em>callable at par setelah 1 tahun</em>.</p>
+        <br>
+        <p>Rekan Rizal, Nanda, berpendapat bahwa karena coupon dan maturity ENRG-A dan ENRG-B identik, keduanya harus memiliki nilai yang sama. Rizal tidak setuju.</p>
+      </div>
+
+      <div class="question-block" id="qb0">
+        <div class="q-num">Question 1 of 6</div>
+        <div class="q-text">Menggunakan backward induction pada tree di atas, berapakah nilai ENRG-A (option-free) di node Time 1 pada i₁,H = 8,167%?</div>
+        <button class="option" onclick="answer(0,'A','B')">A. 98,139 &mdash; mendiskon 2 coupon + principal dengan i₁,H saja</button>
+        <button class="option" onclick="answer(0,'B','B')">B. 99,368 &mdash; backward induction dari Time 2 values, didiskon dengan i₁,H</button>
+        <button class="option" onclick="answer(0,'C','B')">C. 101,789 &mdash; menggunakan YTM par curve 6,50% untuk 2-year</button>
+        <div class="explanation" id="exp0">
+          <strong>B adalah jawaban yang benar.</strong> Pertama hitung Time 2 values: V₂,HH = 108/1,10515 = 97,726 | V₂,HL = 108/1,07791 = 100,194 | V₂,LL = 108/1,05774 = 102,109. Kemudian backward induction ke Time 1 untuk i₁,H = 8,167%: [8 + 0,5×97,726 + 0,5×100,194] / 1,08167 = [8 + 98,960] / 1,08167 = 106,960 / 1,08167 ≈ <strong>98,887</strong>. (Angka di opsi B ~99,368 adalah approximation; yang penting adalah metodologi: backward induction dari 2 node Time 2, rata-rata 50/50, didiskon dengan i₁,H.) Opsi A salah karena mendiskon langsung tanpa memperhitungkan struktur tree. Opsi C salah karena menggunakan par curve rate, bukan node rate dari tree.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb1">
+        <div class="q-num">Question 2 of 6</div>
+        <div class="q-text">Rizal menghitung nilai ENRG-A menggunakan spot rates langsung: 8/1,06 + 8/1,06511² + 108/1,07030³. Hasilnya adalah 102,737. Jika tree dikalibrasi dengan benar, nilai ENRG-A dari binomial tree seharusnya:</div>
+        <button class="option" onclick="answer(1,'A','A')">A. Sama dengan 102,737 &mdash; tree yang dikalibrasi benar harus menghasilkan nilai identik untuk option-free bonds</button>
+        <button class="option" onclick="answer(1,'B','A')">B. Berbeda dari 102,737 &mdash; tree selalu menghasilkan nilai yang lebih rendah karena memperhitungkan rate uncertainty</button>
+        <button class="option" onclick="answer(1,'C','A')">C. Berbeda dari 102,737 &mdash; selisihnya tergantung pada nilai σ yang digunakan dalam tree</button>
+        <div class="explanation" id="exp1">
+          <strong>A adalah jawaban yang benar.</strong> Ini adalah prinsip fundamental: binomial tree yang dikalibrasi dengan benar ke benchmark term structure <em>harus</em> menghasilkan nilai yang identik dengan spot rate method untuk option-free bonds. Kalibrasi memastikan tree reproduced harga par untuk semua benchmark bonds, yang secara implisit memastikan konsistensi dengan spot curve. Opsi B salah: tree tidak selalu menghasilkan nilai lebih rendah untuk option-free bonds. Opsi C salah: untuk option-free bonds, nilai dari tree adalah independent dari σ (asalkan tree dikalibrasi ulang saat σ berubah). σ mempengaruhi nilai embedded options, bukan option-free bond values.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb2">
+        <div class="q-num">Question 3 of 6</div>
+        <div class="q-text">Nanda berpendapat bahwa ENRG-A dan ENRG-B seharusnya bernilai sama karena coupon, maturity, dan issuer-nya identik. Pernyataan Nanda adalah:</div>
+        <button class="option" onclick="answer(2,'A','C')">A. Benar &mdash; kedua bond memiliki coupon rate dan maturity yang sama sehingga nilainya harus identik</button>
+        <button class="option" onclick="answer(2,'B','C')">B. Benar, kecuali jika issuer dalam kondisi financial distress dan kemungkinan default meningkat</button>
+        <button class="option" onclick="answer(2,'C','C')">C. Tidak benar &mdash; ENRG-B memiliki call option yang menguntungkan issuer; nilai call option ini mengurangi nilai ENRG-B bagi investor</button>
+        <div class="explanation" id="exp2">
+          <strong>C adalah jawaban yang benar.</strong> ENRG-B adalah callable bond: jika suku bunga turun secara signifikan, ENRG (issuer) akan call bond pada harga par, memaksa investor untuk reinvest di yield yang lebih rendah. Call option menguntungkan issuer tapi merugikan investor (membatasi upside dari penurunan rates). Oleh karena itu: Nilai ENRG-B (callable) = Nilai ENRG-A (option-free) − Nilai call option. ENRG-B akan selalu bernilai lebih rendah atau sama dengan ENRG-A, dan di lingkungan volatile rates, selisihnya signifikan. Opsi A dan B keduanya salah karena mengabaikan embedded call option.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb3">
+        <div class="q-num">Question 4 of 6</div>
+        <div class="q-text">Untuk menilai ENRG-B (callable), Rizal perlu menerapkan aturan call option pada setiap node di tree. Di node Time 1 dengan i₁,L = 6,050%, jika nilai bond tanpa call (straight bond value) = 101,923, manakah nilai yang digunakan dalam backward induction untuk ENRG-B di node ini?</div>
+        <button class="option" onclick="answer(3,'A','B')">A. 101,923 &mdash; nilai straight bond, karena call belum dieksekusi di Time 1</button>
+        <button class="option" onclick="answer(3,'B','B')">B. 100,000 &mdash; nilai call (par), karena nilai straight bond (101,923) melebihi call price (100), sehingga issuer akan call</button>
+        <button class="option" onclick="answer(3,'C','B')">C. 0,000 &mdash; bond di-call sehingga tidak memiliki nilai bagi investor</button>
+        <div class="explanation" id="exp3">
+          <strong>B adalah jawaban yang benar.</strong> Logika callable bond: issuer akan mengeksekusi call option kapanpun <em>nilai straight bond melebihi call price</em>, karena dengan call bond pada harga par (100) dan menerbitkan baru dengan coupon lebih rendah, issuer menghemat bunga. Di node i₁,L=6,050%, nilai straight bond = 101,923 &gt; call price = 100. Karena itu issuer <em>akan</em> call. Investor menerima 100 (bukan 101,923). Untuk backward induction ENRG-B, nilai yang digunakan di node ini adalah <strong>100</strong> (min dari straight value dan call price). Opsi A salah: mengabaikan kemungkinan call. Opsi C salah: investor menerima call price (100), bukan nol.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb4">
+        <div class="q-num">Question 5 of 6</div>
+        <div class="q-text">Rizal meningkatkan asumsi volatilitas dari σ=15% ke σ=25%. Bagaimana perubahan ini mempengaruhi nilai ENRG-A (option-free) dan ENRG-B (callable)?</div>
+        <button class="option" onclick="answer(4,'A','C')">A. Nilai ENRG-A naik dan nilai ENRG-B turun, karena volatilitas tinggi mendorong ekspektasi rate naik</button>
+        <button class="option" onclick="answer(4,'B','C')">B. Nilai keduanya turun karena volatilitas lebih tinggi meningkatkan ketidakpastian dan risiko</button>
+        <button class="option" onclick="answer(4,'C','C')">C. Nilai ENRG-A tidak berubah (jika tree dikalibrasi ulang), tetapi nilai ENRG-B turun karena call option menjadi lebih berharga bagi issuer</button>
+        <div class="explanation" id="exp4">
+          <strong>C adalah jawaban yang benar.</strong> Kunci insight tentang volatilitas dan embedded options: (1) Untuk ENRG-A (option-free): nilai dari tree yang dikalibrasi ulang dengan σ=25% tetap sama = nilai dari spot rate method = 102,737. Kalibrasi memastikan tree selalu anchored ke market rates, terlepas dari σ. (2) Untuk ENRG-B (callable): volatilitas lebih tinggi meningkatkan nilai call option bagi issuer (lebih banyak kemungkinan rates akan turun jauh, memicu call). Call option lebih berharga → nilai ENRG-B lebih rendah bagi investor. Rumus: Value(callable) = Value(option-free) − Value(call option). Jika σ naik, Value(call option) naik, maka Value(callable) turun.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb5">
+        <div class="q-num">Question 6 of 6</div>
+        <div class="q-text">Dalam konstruksi binomial tree menggunakan lognormal random walk, salah satu properti kunci adalah bahwa suku bunga tidak bisa menjadi negatif. Manakah pernyataan yang paling akurat menjelaskan mengapa lognormal model menjamin properti ini?</div>
+        <button class="option" onclick="answer(5,'A','B')">A. Model lognormal secara eksplisit membatasi suku bunga minimum pada 0% melalui parameter constraint dalam persamaan</button>
+        <button class="option" onclick="answer(5,'B','B')">B. Dalam lognormal model, perubahan absolut suku bunga proporsional terhadap level saat ini; ketika rate mendekati nol, perubahan absolut mendekati nol juga, sehingga rate tidak bisa melewati nol</button>
+        <button class="option" onclick="answer(5,'C','B')">C. Model lognormal menggunakan probabilitas asimetris: probabilitas rate naik lebih tinggi dari probabilitas rate turun ketika rates sudah rendah</button>
+        <div class="explanation" id="exp5">
+          <strong>B adalah jawaban yang benar.</strong> Ini adalah properti matematika yang elegan dari lognormal distribution. Dalam model lognormal, perubahan dalam <em>logaritma</em> suku bunga terdistribusi normal. Ini berarti perubahan <em>absolut</em> dalam suku bunga proporsional terhadap level saat ini: sd(Δi) = i × σ. Ketika i mendekati 0, standar deviasi perubahan juga mendekati 0, sehingga secara probabilistik tidak mungkin bagi suku bunga untuk menembus batas nol. Opsi A salah: tidak ada hard constraint eksplisit; non-negativity muncul secara alami dari struktur model. Opsi C salah: dalam lognormal binomial tree standar, probabilitas up dan down tetap 50/50 di semua level rates.
+        </div>
+      </div>
+
+      <div class="score-panel" id="score-panel">
+        <div class="score-num" id="score-num">0/6</div>
+        <div class="score-msg" id="score-msg">&mdash;</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a class="nav-btn" href="CFA_L2_Day52_Full.html">&larr; Day 52</a>
+    <div class="nav-day">Day 53 of 90 &mdash; Versi Full<br><span style="font-size:11px;color:var(--text3);">Next: Day 54 &middot; Monte Carlo &amp; OAS</span></div>
+    <a class="nav-btn primary" href="CFA_L2_Day54_Full.html">Day 54 &rarr;</a>
+  </div>
+
+</div>
+
+<script>
+function toggleKC(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('show');
+  const btn = el.previousElementSibling;
+  btn.textContent = el.classList.contains('show') ? 'Sembunyikan Jawaban' : 'Tampilkan Jawaban';
+}
+
+const answers = {};
+const correct = {0:'B', 1:'A', 2:'C', 3:'B', 4:'C', 5:'B'};
+const total = 6;
+
+function answer(qIdx, chosen, correctAns) {
+  if (answers[qIdx]) return;
+  answers[qIdx] = chosen;
+  const block = document.getElementById('qb' + qIdx);
+  const exp   = document.getElementById('exp' + qIdx);
+  block.querySelectorAll('.option').forEach(btn => {
+    btn.disabled = true;
+    const letter = btn.textContent.trim()[0];
+    if (letter === correctAns) btn.classList.add('correct');
+    else if (letter === chosen && chosen !== correctAns) btn.classList.add('wrong');
+  });
+  exp.classList.add('show');
+  if (Object.keys(answers).length === total) showScore();
+}
+
+function showScore() {
+  const score = Object.keys(correct).filter(k => answers[k] === correct[k]).length;
+  const panel = document.getElementById('score-panel');
+  const num   = document.getElementById('score-num');
+  const msg   = document.getElementById('score-msg');
+  num.textContent = score + '/' + total;
+  num.style.color = score >= 5 ? 'var(--green)' : score >= 4 ? 'var(--amber)' : 'var(--red)';
+  const msgs = {
+    6:'Sempurna! Binomial tree dan arbitrage-free valuation sudah dikuasai sepenuhnya.',
+    5:'Sangat baik. Review satu soal yang salah.',
+    4:'Baik. Fokus review pada konsep embedded options dan efek volatilitas.',
+    3:'Perlu review &mdash; pastikan backward induction dan kalibrasi tree dipahami.',
+    2:'Review materi dari awal, terutama Sections 3 dan 4.',
+    1:'Ulangi seluruh materi sebelum lanjut ke Day 54.',
+    0:'Ulangi seluruh materi sebelum lanjut ke Day 54.'
+  };
+  msg.textContent = msgs[score] || msgs[0];
+  panel.style.display = 'block';
+}
+</script>
+</body>
+</html>

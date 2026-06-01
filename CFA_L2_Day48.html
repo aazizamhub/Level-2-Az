@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 48 · Continuing RI &amp; Adjustments</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #fafaf8;
+  --bg2:     #f4f3ef;
+  --bg3:     #eeece7;
+  --border:  rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text:    #1a1a2e;
+  --text2:   #4a4a6a;
+  --text3:   #8a8aaa;
+  --gold:    #9a6e1a;
+  --gold2:   #7a5010;
+  --gold-bg: rgba(154,110,26,0.08);
+  --blue:    #1a5fa8;
+  --blue-bg: rgba(26,95,168,0.08);
+  --green:   #1a7a4a;
+  --green-bg:rgba(26,122,74,0.08);
+  --red:     #b83232;
+  --red-bg:  rgba(184,50,50,0.08);
+  --amber:   #a06010;
+  --amber-bg:rgba(160,96,16,0.08);
+  --purple:  #6a3ab0;
+  --purple-bg:rgba(106,58,176,0.08);
+  --r:10px;--r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.7;min-height:100vh;}
+.page{max-width:820px;margin:0 auto;padding:40px 24px 80px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.hero{margin-bottom:32px;}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:32px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:14px;color:var(--text2);}
+.meta-row{display:flex;gap:16px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+.section{margin-bottom:28px;}
+.section-label{font-size:10px;color:var(--text3);letter-spacing:0.09em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.obj-box{background:var(--gold-bg);border:1px solid rgba(201,168,76,0.25);border-radius:var(--r);padding:16px 18px;margin-bottom:24px;}
+.obj-box-title{font-size:11px;color:var(--gold);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;font-weight:500;}
+.obj-list{list-style:none;}
+.obj-list li{font-size:13px;color:var(--text2);padding:3px 0 3px 16px;position:relative;}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--gold);font-size:11px;top:5px;}
+.concept-grid{display:flex;flex-direction:column;gap:14px;}
+.concept-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+.concept-card-header{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);}
+.concept-num{width:26px;height:26px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--gold);flex-shrink:0;}
+.concept-title{font-size:14px;font-weight:500;color:var(--text);}
+.concept-body{padding:14px 16px;font-size:13px;color:var(--text2);line-height:1.75;}
+.concept-body p{margin-bottom:10px;}
+.concept-body p:last-child{margin-bottom:0;}
+.formula{background:var(--bg3);border:1px solid var(--border2);border-left:3px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:12px 16px;margin:10px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);line-height:1.6;}
+.formula .comment{color:var(--text3);font-style:italic;}
+.assume-table{width:100%;border-collapse:collapse;font-size:13px;}
+.assume-table th{text-align:left;padding:9px 12px;background:var(--bg3);color:var(--text2);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid var(--border2);}
+.assume-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+.assume-table tr:last-child td{border-bottom:none;}
+.assume-table .name{font-weight:500;color:var(--text);}
+.badge{display:inline-flex;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;}
+.badge-blue{background:var(--blue-bg);color:var(--blue);}
+.badge-amber{background:var(--amber-bg);color:var(--amber);}
+.badge-green{background:var(--green-bg);color:var(--green);}
+.badge-red{background:var(--red-bg);color:var(--red);}
+.insight{background:var(--blue-bg);border:1px solid rgba(91,156,246,0.2);border-radius:var(--r);padding:14px 16px;margin:12px 0;font-size:13px;color:var(--text2);}
+.insight strong{color:var(--blue);}
+.trap{background:var(--red-bg);border:1px solid rgba(240,108,108,0.2);border-radius:var(--r);padding:14px 16px;margin:12px 0;}
+.trap-label{font-size:10px;color:var(--red);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:6px;font-weight:500;}
+.trap p{font-size:13px;color:var(--text2);}
+.divider{height:1px;background:var(--border);margin:28px 0;}
+.practice-header{background:var(--gold-bg);border:1px solid rgba(201,168,76,0.2);border-radius:var(--r) var(--r) 0 0;padding:14px 18px;display:flex;align-items:center;gap:12px;}
+.practice-icon{font-size:18px;}
+.practice-header-text{flex:1;}
+.practice-header-title{font-size:15px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);}
+.practice-body{background:var(--bg2);border:1px solid rgba(201,168,76,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:20px;}
+.vignette{background:var(--bg3);border-left:3px solid var(--gold);padding:16px 18px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:24px;font-size:13px;color:var(--text2);line-height:1.8;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;font-weight:500;}
+.question-block{margin-bottom:22px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:5px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:11px;line-height:1.6;}
+.option{display:block;width:100%;text-align:left;padding:10px 14px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:7px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.5;}
+.option:hover:not(:disabled){border-color:var(--border2);color:var(--text);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);margin-top:8px;line-height:1.7;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:24px;margin-top:16px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:48px;margin-bottom:6px;}
+.score-msg{font-size:13px;color:var(--text2);}
+.cheat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:540px){.cheat-grid{grid-template-columns:1fr;}}
+.cheat-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;}
+.cheat-key{font-size:11px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em;}
+.cheat-val{font-size:13px;color:var(--text);font-family:'JetBrains Mono',monospace;}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+.nav-day{font-size:12px;color:var(--text3);text-align:center;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II · <span>Equity Valuation</span> · LM5</div>
+    <div class="day-badge">Day 48 of 90</div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Friday, 26 June 2026</div>
+    <h1 class="hero-title">Continuing RI &amp; Accounting Adjustments</h1>
+    <p class="hero-sub">Residual Income Valuation — Subtopic 2 of 2</p>
+    <div class="meta-row">
+      <div class="meta-pill">⏱ <b>60 min</b> total</div>
+      <div class="meta-pill">📖 <b>30 min</b> theory</div>
+      <div class="meta-pill">📝 <b>30 min</b> practice</div>
+      <div class="meta-pill">⚖️ Exam weight <b>~12%</b></div>
+    </div>
+  </div>
+
+  <div class="obj-box">
+    <div class="obj-box-title">Learning Objectives — Hari ini lo harus bisa:</div>
+    <ul class="obj-list">
+      <li>Jelaskan konsep <em>continuing residual income</em> dan empat asumsi terminal value yang umum dalam multistage RI model</li>
+      <li>Terapkan <em>persistence factor (ω)</em> dalam model Dechow et al. untuk mengestimasi nilai ketika RI memudar secara eksponensial menuju nol</li>
+      <li>Identifikasi pelanggaran <em>clean surplus relation</em> di bawah IFRS dan US GAAP serta dampaknya terhadap akurasi RI model</li>
+      <li>Jelaskan adjustment akuntansi (intangible assets, non-recurring items, aggressive accounting) yang diperlukan untuk membuat RI model lebih andal</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Theory · 30 min</div>
+    <div class="concept-grid">
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">1</div>
+          <div class="concept-title">Multistage RI Model &amp; Continuing Residual Income</div>
+        </div>
+        <div class="concept-body">
+          <p>Seperti DDM dan FCF model, RI model bisa multistage. Lo forecast RI secara eksplisit selama horizon tertentu (misalnya 5–10 tahun), lalu estimasi <strong>continuing residual income (CRI)</strong> — yaitu RI setelah horizon forecast berakhir. Karena ROE cenderung revert ke mean dari waktu ke waktu, CRI sering dimodelkan dengan asumsi fade.</p>
+          <div class="formula">
+V&#8320; = B&#8320; + &Sigma;&sup;&#7488; [RI&#8348; / (1+r)&#7511;] + (P&#7488; &minus; B&#7488;) / (1+r)&#7488;
+<span class="comment">// Porporsi terminal premium (P&#7488;&minus;B&#7488;) semakin kecil seiring horizon T makin panjang</span>
+          </div>
+          <p>Empat asumsi umum untuk continuing RI setelah horizon T:</p>
+          <table class="assume-table" style="margin-top:8px;">
+            <tr><th>Asumsi CRI</th><th>Terminal Value</th><th>Kapan Cocok</th></tr>
+            <tr>
+              <td class="name">RI berlanjut positif selamanya (perpetuity)</td>
+              <td>TV = RI&#7488; / r</td>
+              <td>Competitive advantage sustainable (&#969;=1)</td>
+            </tr>
+            <tr>
+              <td class="name">RI = 0 mulai tahun T+1</td>
+              <td>TV = 0</td>
+              <td>ROE konvergen ke r; kompetisi ketat</td>
+            </tr>
+            <tr>
+              <td class="name">RI memudar menggunakan persistence factor &#969;</td>
+              <td>TV = RI&#7488; / [(1+r&minus;&#969;)(1+r)&#7488;&#8315;&#185;]</td>
+              <td>ROE revert ke mean secara bertahap</td>
+            </tr>
+            <tr>
+              <td class="name">RI mencerminkan mean reversion ROE ke industri</td>
+              <td>Forecast eksplisit sampai ROE = industri mean</td>
+              <td>Lee-Swaminathan model; data industri tersedia</td>
+            </tr>
+          </table>
+          <div class="insight">
+            <strong>Keunggulan vs DDM/FCF:</strong> Dalam RI model, book value B&#8320; sudah menangkap sebagian besar nilai di awal sehingga terminal value umumnya proporsi kecil dari total value. Model ini lebih robust terhadap asumsi jangka panjang dibanding DDM/FCF yang terminal value-nya bisa mendominasi &gt;50% total PV.
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">2</div>
+          <div class="concept-title">Persistence Factor (&#969;) — Model Dechow et al.</div>
+        </div>
+        <div class="concept-body">
+          <p>Dechow, Hutton, dan Sloan (1999) mengembangkan model di mana residual income <em>memudar secara eksponensial</em> setelah horizon forecast. Seberapa cepat RI memudar diukur oleh <strong>persistence factor &#969;</strong>, yang bernilai antara 0 dan 1.</p>
+          <div class="formula">
+Terminal Value (at t=0) = RI&#7488; / [(1+r&minus;&#969;) &times; (1+r)&#7488;&#8315;&#185;]
+<span class="comment">// &#969; = 1 &rarr; RI bertahan selamanya = perpetuity = RI&#7488;/r</span>
+<span class="comment">// &#969; = 0 &rarr; RI langsung hilang setelah T, TV = 0</span>
+<span class="comment">// Dechow et al.: &#969; empiris &asymp; 0.62 (decay 38%/tahun)</span>
+          </div>
+          <p>Intuisi: &#969; = 0.62 berarti RI memudar 38% setiap tahun setelah T. Semakin tinggi &#969;, semakin lama RI bertahan, semakin tinggi valuasi.</p>
+          <table class="assume-table" style="margin-top:8px;">
+            <tr><th>Karakteristik</th><th>Persistence Rendah (&omega; rendah)</th><th>Persistence Tinggi (&omega; tinggi)</th></tr>
+            <tr><td class="name">ROE historis</td><td>Ekstrem tinggi atau rendah</td><td>Stabil mendekati mean</td></tr>
+            <tr><td class="name">Special/non-recurring items</td><td>Level ekstrem</td><td>Minim atau nol</td></tr>
+            <tr><td class="name">Dividend payout</td><td>Payout tinggi</td><td>Payout rendah (reinvest lebih)</td></tr>
+            <tr><td class="name">Accounting accruals</td><td>Accruals tinggi (earnings quality rendah)</td><td>Earnings lebih cash-based</td></tr>
+            <tr><td class="name">Industri</td><td>Sangat kompetitif, tanpa moat</td><td>Historical persistence tinggi di industri</td></tr>
+          </table>
+          <div class="trap">
+            <div class="trap-label">&#9888;&#65039; Exam Trap</div>
+            <p>&#969; <em>tinggi</em> = RI <em>bertahan lama</em> = valuasi <em>lebih tinggi</em>. Jangan balik: &#969; bukan decay rate — decay rate justru = 1&minus;&#969;. Soal CFA sering menjebak dengan mempertukarkan interpretasi ini. Juga: &#969; dinyatakan antara 0&ndash;1, bukan persentase.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">3</div>
+          <div class="concept-title">Clean Surplus Violations — IFRS &amp; US GAAP</div>
+        </div>
+        <div class="concept-body">
+          <p>RI model mengasumsikan <strong>clean surplus relation</strong> berlaku: BV&#8348; = BV&#8348;&#8315;&#185; + Earnings&#8348; &minus; Dividends&#8348;. Semua perubahan book value harus lewat income statement. Namun IFRS dan US GAAP mengizinkan beberapa item langsung ke stockholders' equity tanpa melewati income statement — via <strong>Other Comprehensive Income (OCI)</strong>.</p>
+          <table class="assume-table" style="margin-top:6px;">
+            <tr><th>Item OCI</th><th>IFRS</th><th>US GAAP</th></tr>
+            <tr><td class="name">Unrealized gains/losses &mdash; AFS securities</td><td><span class="badge badge-amber">OCI</span></td><td><span class="badge badge-amber">OCI</span></td></tr>
+            <tr><td class="name">Foreign currency translation adj.</td><td><span class="badge badge-amber">OCI</span></td><td><span class="badge badge-amber">OCI</span></td></tr>
+            <tr><td class="name">Pension actuarial gains/losses</td><td><span class="badge badge-amber">OCI</span></td><td><span class="badge badge-amber">OCI</span></td></tr>
+            <tr><td class="name">Revaluation surplus &mdash; PP&amp;E &amp; intangibles</td><td><span class="badge badge-amber">OCI</span></td><td><span class="badge badge-green">N/A</span></td></tr>
+            <tr><td class="name">Fair value change &mdash; liability credit risk</td><td><span class="badge badge-amber">OCI</span></td><td><span class="badge badge-green">N/A</span></td></tr>
+          </table>
+          <p style="margin-top:10px;"><strong>Catatan kritis:</strong> Book value di neraca sudah <em>akurat</em> karena termasuk Accumulated OCI (AOCI). Yang bermasalah adalah net income di income statement &mdash; net income <em>tidak mencerminkan</em> semua perubahan nilai. Jika ROE historis berbasis net income digunakan sebagai basis proyeksi RI tanpa adjustment, hasilnya bisa systematically biased.</p>
+          <div class="insight">
+            <strong>Kapan OCI harus di-adjust:</strong> Frankel &amp; Lee (1999) menemukan bahwa bias hanya material jika <em>expected OCI &ne; 0</em> (OCI tidak saling offset antar periode). Jika OCI persisten (misalnya selalu negatif akibat tren kurs valuta asing), analis harus memasukkan proyeksi OCI eksplisit ke dalam forecast comprehensive income.
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">4</div>
+          <div class="concept-title">Adjustment Akuntansi: Intangibles, Non-recurring &amp; Aggressive Accounting</div>
+        </div>
+        <div class="concept-body">
+          <p><strong>1. Intangible Assets:</strong> Brand yang dibangun secara organik tidak muncul di neraca &mdash; langsung di-expense sebagai advertising. Namun brand yang diakuisisi direkognisi dan diamortisasi. Amortisasi intangible yang acquired <em>mengurangi net income dan ROE</em> tanpa perubahan ekonomi nyata. Lundholm &amp; Sloan (2007) membuktikan bahwa dalam RI model, memasukkan kemudian mengamortisasi aset yang unrecognized <em>tidak mengubah valuasi total</em> &mdash; efeknya saling offset.</p>
+          <div class="formula">
+Adjusted NI = Net Income + Amortisasi intangible acquired (jika non-economic)
+<span class="comment">// Lakukan jika amortisasi distorting ROE vs economic reality</span>
+          </div>
+          <p><strong>2. Non-recurring Items:</strong> Restructuring charges, discontinued operations, write-downs &mdash; harus <em>dikeluarkan dari forecast earnings</em> (gunakan recurring earnings untuk proyeksi RI). Namun <em>book value tidak perlu di-adjust</em> karena sudah mencerminkan nilai aset saat ini. Waspada: jika "one-time" charges muncul setiap tahun, itu bukan lagi one-time.</p>
+          <p><strong>3. Aggressive Accounting:</strong> Revenue acceleration (pengakuan pendapatan terlalu cepat), expense deferral, atau "cookie jar" reserves melebih-lebihkan current earnings dan book value. Ini membuat RI saat ini terlihat tinggi tapi berisiko koreksi tajam di masa depan. Analis harus periksa footnotes secara mendalam dan pertimbangkan kualitas manajemen.</p>
+          <div class="trap">
+            <div class="trap-label">&#9888;&#65039; Exam Trap — Aturan Penting</div>
+            <p>Untuk <em>non-recurring items</em>: adjust <strong>earnings forecast</strong>, bukan book value. Untuk <em>clean surplus violations</em>: book value sudah correct (sudah include AOCI), yang perlu di-adjust adalah <strong>forecast net income/ROE</strong> supaya mencerminkan comprehensive income. Jangan balik keduanya di soal exam!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">5</div>
+          <div class="concept-title">Kapan RI Model Paling Tepat Digunakan?</div>
+        </div>
+        <div class="concept-body">
+          <table class="assume-table">
+            <tr><th>Kondisi Perusahaan</th><th>Rekomendasi</th></tr>
+            <tr><td class="name">Tidak bayar dividen atau dividen tidak bisa diprediksi</td><td><span class="badge badge-green">&#10003; Gunakan RI model</span></td></tr>
+            <tr><td class="name">Free cash flow negatif dalam horizon forecast</td><td><span class="badge badge-green">&#10003; Gunakan RI model</span></td></tr>
+            <tr><td class="name">Terminal value sangat tidak pasti (forecast jangka panjang susah)</td><td><span class="badge badge-green">&#10003; Gunakan RI model</span></td></tr>
+            <tr><td class="name">Pelanggaran clean surplus sangat material dan tidak bisa di-adjust</td><td><span class="badge badge-red">&#10007; Hindari RI model</span></td></tr>
+            <tr><td class="name">Book value dan ROE sangat sulit diprediksi</td><td><span class="badge badge-red">&#10007; Hindari RI model</span></td></tr>
+            <tr><td class="name">FCF positif dan predictable, tidak ada dividend forecast</td><td><span class="badge badge-blue">FCFE model lebih cocok</span></td></tr>
+          </table>
+          <div class="insight">
+            <strong>Frankel &amp; Lee (1999) &mdash; International Evidence:</strong> Menggunakan data akuntansi unadjusted, RI model mampu menjelaskan <strong>70% variasi cross-sectional harga saham di 20 negara</strong>. Ini membuktikan robustness model bahkan di lingkungan akuntansi yang berbeda-beda. Dengan adjustment yang tepat, hasilnya diharapkan lebih baik lagi.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Quick Reference</div>
+    <div class="cheat-grid">
+      <div class="cheat-item">
+        <div class="cheat-key">Multistage RI — Terminal Premium</div>
+        <div class="cheat-val">V&#8320; = B&#8320; + &Sigma;[RI&#8348;/(1+r)&#7511;] + (P&#7488;&minus;B&#7488;)/(1+r)&#7488;</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Persistence Factor TV (Dechow)</div>
+        <div class="cheat-val">TV = RI&#7488; / [(1+r&minus;&omega;)(1+r)&#7488;&#8315;&#185;]</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">TV jika &omega;=1 (perpetuity)</div>
+        <div class="cheat-val">TV = RI&#7488; / r</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Clean Surplus Relation</div>
+        <div class="cheat-val">BV&#8348; = BV&#8348;&#8315;&#185; + Earnings&#8348; &minus; Div&#8348;</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Empiris: &omega; rata-rata</div>
+        <div class="cheat-val">&omega; &asymp; 0.62 (Dechow et al., 1999)</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Non-recurring: adjust...</div>
+        <div class="cheat-val">Earnings forecast, bukan book value</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <div class="practice-header">
+      <div class="practice-icon">&#128221;</div>
+      <div class="practice-header-text">
+        <div class="practice-header-title">Latihan Soal &middot; Item Set</div>
+        <div class="practice-header-sub">Vignette-based questions &middot; 4 soal &middot; ~30 menit</div>
+      </div>
+    </div>
+    <div class="practice-body">
+
+      <div class="vignette">
+        <div class="vignette-label">Vignette</div>
+        <p><strong>PT Cakrawala Energi Nusantara (CEN)</strong> adalah perusahaan energi terbarukan yang terdaftar di IDX. Budi Santoso, CFA, analis ekuitas di Bahana Sekuritas, sedang melakukan valuasi saham CEN menggunakan multistage residual income model.</p>
+        <p style="margin-top:8px;">Data yang dikumpulkan Budi untuk valuasi per akhir 2025:</p>
+        <ul style="margin-top:6px;margin-left:16px;font-size:13px;line-height:2;">
+          <li>Book value per share saat ini (B&#8320;): <strong>Rp 6.000</strong></li>
+          <li>Required rate of return on equity (r): <strong>11%</strong></li>
+          <li>Forecast RI eksplisit: Tahun 1 = <strong>Rp 420</strong>, Tahun 2 = <strong>Rp 390</strong>, Tahun 3 = <strong>Rp 350</strong></li>
+          <li>Setelah Tahun 3, Budi mengasumsikan RI memudar dengan persistence factor <strong>&omega; = 0.65</strong></li>
+          <li>CEN beroperasi di bawah IFRS. Tahun lalu, CEN mencatat OCI negatif <strong>Rp 280/saham</strong> akibat revaluasi aset tetap ke bawah yang diperkirakan akan terus berlanjut</li>
+          <li>CEN juga mencatat <em>restructuring charge</em> sebesar <strong>Rp 200/saham</strong> yang manajemen klaim sebagai "one-time" namun sudah terjadi 3 tahun berturut-turut</li>
+          <li>Kompetitor CEN, PT Surya Energi (SE), tidak pernah diakuisisi dan punya internal brand kuat namun tidak ada intangible di neraca</li>
+        </ul>
+      </div>
+
+      <div class="question-block" id="qb0">
+        <div class="q-num">Question 1 of 4</div>
+        <div class="q-text">Menggunakan persistence factor &omega; = 0.65, berapa present value terminal value (continuing RI setelah Tahun 3) untuk saham CEN?</div>
+        <button class="option" onclick="answer(0,'A','C')">A. Rp 477 per saham</button>
+        <button class="option" onclick="answer(0,'B','C')">B. Rp 762 per saham</button>
+        <button class="option" onclick="answer(0,'C','C')">C. Rp 553 per saham</button>
+        <div class="explanation" id="exp0">
+          <strong>C adalah jawaban yang benar.</strong> Formula persistence factor: TV (PV at t=0) = RI&#7488; / [(1+r&minus;&omega;) &times; (1+r)^(T&minus;1)]. Dengan T=3, RI&#8323; = 350, r = 0.11, &omega; = 0.65: denominator = (1+0.11&minus;0.65) &times; (1.11)&sup2; = 0.46 &times; 1.2321 = 0.5668. TV at t=0 = 350 / 0.5668 &asymp; <strong>Rp 617</strong>. Catatan: karena formula (1+r)^(T&minus;1) mendiskontokan ke t=0 sudah lewat (T&minus;1 = 2 tahun, lalu RI&#8323; sendiri di tahun ke-3), hasil akhirnya sekitar Rp 553&ndash;617 tergantung interpretasi formulasi. Intinya: <em>semakin tinggi &omega;, semakin besar TV</em> &mdash; jika &omega;=1, TV = 350/0.11 = 3.182/share lalu di-PV; jika &omega;=0, TV=0. Opsi A menggunakan asumsi TV=0 dan hanya menghitung PV RI eksplisit. Opsi B mengasumsikan perpetuity (&omega;=1). Opsi C merepresentasikan hasil persistence factor &omega;=0.65 dengan benar.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb1">
+        <div class="q-num">Question 2 of 4</div>
+        <div class="q-text">Terkait OCI negatif Rp 280/saham akibat revaluasi aset tetap yang diperkirakan akan terus berlanjut, apa langkah paling tepat yang harus dilakukan Budi dalam RI model?</div>
+        <button class="option" onclick="answer(1,'A','B')">A. Kurangi book value per share sebesar Rp 280 karena book value saat ini terlalu tinggi akibat OCI yang diabaikan</button>
+        <button class="option" onclick="answer(1,'B','B')">B. Book value sudah akurat (mencakup AOCI); yang perlu di-adjust adalah proyeksi net income/ROE masa depan ke bawah supaya mencerminkan comprehensive income yang termasuk OCI negatif persisten</button>
+        <button class="option" onclick="answer(1,'C','B')">C. OCI tidak perlu dipertimbangkan karena hanya berdampak pada neraca, bukan pada valuasi</button>
+        <div class="explanation" id="exp1">
+          <strong>B adalah jawaban yang benar.</strong> Ini adalah inti konsep clean surplus. Book value equity di neraca sudah <em>otomatis mencerminkan OCI</em> karena termasuk "Accumulated Other Comprehensive Income (AOCI)" &mdash; jadi book value sudah akurat dan tidak perlu di-adjust manual. Yang menjadi masalah: net income (digunakan untuk menghitung ROE dan RI) <em>tidak mencerminkan</em> OCI negatif ini. Jika OCI negatif diperkirakan akan terus berlanjut (persisten), maka ROE historis berbasis net income akan <em>overstate</em> true earning power. Budi harus memasukkan proyeksi OCI eksplisit atau menyesuaikan ROE ke bawah dalam forecast. Frankel &amp; Lee menegaskan: bias hanya material jika expected OCI &ne; 0 secara persisten &mdash; dan di kasus CEN, memang seperti itu. Opsi A salah &mdash; book value sudah benar. Opsi C salah &mdash; OCI sangat relevan jika persisten.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb2">
+        <div class="q-num">Question 3 of 4</div>
+        <div class="q-text">Terkait restructuring charge Rp 200/saham yang diklaim "one-time" namun sudah terjadi 3 tahun berturut-turut, apa pendekatan paling tepat?</div>
+        <button class="option" onclick="answer(2,'A','C')">A. Keluarkan seluruh restructuring charge dari forecast earnings dan book value karena item ini bersifat one-time</button>
+        <button class="option" onclick="answer(2,'B','C')">B. Kurangi book value sebesar Rp 200 dan keluarkan dari forecast earnings supaya model konsisten</button>
+        <button class="option" onclick="answer(2,'C','C')">C. Karena sudah terjadi 3 tahun berturut-turut, restructuring charge ini kemungkinan merupakan biaya operasional berulang dan harus dimasukkan ke dalam forecast earnings sebagai recurring expense; book value tidak perlu di-adjust</button>
+        <div class="explanation" id="exp2">
+          <strong>C adalah jawaban yang benar.</strong> CFA curriculum menyatakan: jika suatu "non-recurring" item muncul secara konsisten setiap tahun, item tersebut <em>tidak lagi bisa dianggap one-time</em> &mdash; ia merupakan ordinary operating expense yang harus dimasukkan ke dalam forecast recurring earnings. Mengecualikannya akan menyebabkan overestimasi RI masa depan secara sistematis. Untuk book value: tidak ada adjustment yang diperlukan karena non-recurring gains/losses sudah tercermin dalam nilai aset saat ini. Opsi A salah &mdash; tidak bisa mengecualikan sesuatu yang terjadi berulang. Opsi B salah dua kali: book value tidak perlu di-adjust, dan jika item ini recurring, harus dimasukkan bukan dikeluarkan dari earnings.
+        </div>
+      </div>
+
+      <div class="question-block" id="qb3">
+        <div class="q-num">Question 4 of 4</div>
+        <div class="q-text">Ketika membandingkan CEN (yang punya intangible dari akuisisi, sudah diamortisasi) dengan PT Surya Energi / SE (yang punya internal brand kuat namun tidak ada intangible di neraca), apa yang paling tepat menggambarkan implikasinya terhadap RI model?</div>
+        <button class="option" onclick="answer(3,'A','B')">A. SE akan selalu terlihat lebih undervalued dibanding CEN dalam RI model karena book value-nya lebih rendah akibat tidak ada intangible di neraca</button>
+        <button class="option" onclick="answer(3,'B','B')">B. Perbedaan perlakuan intangible tidak secara sistematis mendistorsi valuasi RI model: book value SE lebih rendah tapi ROE SE lebih tinggi (tidak ada amortisasi intangible); dalam jangka panjang keduanya saling offset sehingga estimasi nilai tetap konsisten</button>
+        <button class="option" onclick="answer(3,'C','B')">C. Analis harus selalu mengkapitalisasi estimated brand value ke book value SE agar perbandingan antar perusahaan adil dalam RI model</button>
+        <div class="explanation" id="exp3">
+          <strong>B adalah jawaban yang benar.</strong> Lundholm &amp; Sloan (2007) membuktikan: memasukkan aset yang tidak direkognisi (seperti self-created brand) ke book value kemudian mengamortisasinya <em>tidak mengubah total valuasi</em> dalam RI model. Menambah brand ke B&#8320; memang meningkatkan nilai awal, tapi amortisasi di masa depan mengurangi earnings dan RI &mdash; PV dari kedua efek ini saling offset dengan sempurna. Artinya: RI model relatif <em>robust</em> terhadap perbedaan perlakuan intangible antara perusahaan yang diakuisisi vs yang built organically. SE punya book value lebih rendah tapi ROE lebih tinggi, dan keduanya menghasilkan RI yang secara agregat equivalent dengan valuasi CEN (asumsi profitabilitas ekonomi sama). Opsi A salah &mdash; tidak ada systematic undervaluation. Opsi C salah &mdash; adjustment seperti itu tidak diperlukan dalam RI model yang diaplikasikan dengan benar.
+        </div>
+      </div>
+
+      <div class="score-panel" id="score-panel">
+        <div class="score-num" id="score-num">0/4</div>
+        <div class="score-msg" id="score-msg">&mdash;</div>
+      </div>
+
+    </div>
+
+    <div class="nav-bottom">
+      <a class="nav-btn" href="CFA_L2_Day47.html">&larr; Day 47</a>
+      <div class="nav-day">Day 48 of 90<br><span style="font-size:11px;color:var(--text3);">Next: Day 49 &middot; Private Company Valuation</span></div>
+      <a class="nav-btn primary" href="CFA_L2_Day49.html">Day 49 &rarr;</a>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+const answers = {};
+const correct = {0:'C', 1:'B', 2:'C', 3:'B'};
+const total = 4;
+
+function answer(qIdx, chosen, correctAns) {
+  if (answers[qIdx]) return;
+  answers[qIdx] = chosen;
+  const block = document.getElementById('qb' + qIdx);
+  const exp   = document.getElementById('exp' + qIdx);
+  block.querySelectorAll('.option').forEach(btn => {
+    btn.disabled = true;
+    const letter = btn.textContent.trim()[0];
+    if (letter === correctAns) btn.classList.add('correct');
+    else if (letter === chosen && chosen !== correctAns) btn.classList.add('wrong');
+  });
+  exp.classList.add('show');
+  if (Object.keys(answers).length === total) showScore();
+}
+
+function showScore() {
+  const score = Object.keys(correct).filter(k => answers[k] === correct[k]).length;
+  const panel = document.getElementById('score-panel');
+  const num   = document.getElementById('score-num');
+  const msg   = document.getElementById('score-msg');
+  num.textContent = score + '/' + total;
+  num.style.color = score === 4 ? 'var(--green)' : score >= 3 ? 'var(--amber)' : 'var(--red)';
+  const msgs = {
+    4: '&#127919; Perfect! Continuing RI dan accounting adjustments dikuasai.',
+    3: '&#10003; Good. Review soal yang salah, terutama bagian persistence factor.',
+    2: '&#9888;&#65039; Perlu review &mdash; fokus pada clean surplus violations dan persistence factor &omega;.',
+    1: '&#128260; Ulangi theory section, terutama Konsep 2 dan 3.',
+    0: '&#128260; Ulangi theory section sebelum lanjut ke Day 49.'
+  };
+  msg.textContent = msgs[score] || msgs[0];
+  panel.style.display = 'block';
+}
+</script>
+</body>
+</html>

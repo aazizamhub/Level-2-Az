@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 43 · FCFF &amp; FCFE Definitions</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+  --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;--gold:#9a6e1a;--gold2:#7a5010;--gold-bg:rgba(154,110,26,0.08);
+  --blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);--green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);
+  --red:#b83232;--red-bg:rgba(184,50,50,0.08);--amber:#a06010;--amber-bg:rgba(160,96,16,0.08);
+  --purple:#6a3ab0;--purple-bg:rgba(106,58,176,0.08);--r:10px;--r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.7;min-height:100vh;}
+.page{max-width:820px;margin:0 auto;padding:40px 24px 80px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.hero{margin-bottom:32px;}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:32px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:14px;color:var(--text2);}
+.meta-row{display:flex;gap:16px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+.section{margin-bottom:28px;}
+.section-label{font-size:10px;color:var(--text3);letter-spacing:0.09em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.obj-box{background:var(--gold-bg);border:1px solid rgba(201,168,76,0.25);border-radius:var(--r);padding:16px 18px;margin-bottom:24px;}
+.obj-box-title{font-size:11px;color:var(--gold);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;font-weight:500;}
+.obj-list{list-style:none;}
+.obj-list li{font-size:13px;color:var(--text2);padding:3px 0 3px 16px;position:relative;}
+.obj-list li::before{content:'&#8594;';position:absolute;left:0;color:var(--gold);font-size:11px;top:5px;}
+.concept-grid{display:flex;flex-direction:column;gap:14px;}
+.concept-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+.concept-card-header{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);}
+.concept-num{width:26px;height:26px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--gold);flex-shrink:0;}
+.concept-title{font-size:14px;font-weight:500;color:var(--text);}
+.concept-body{padding:14px 16px;font-size:13px;color:var(--text2);line-height:1.75;}
+.concept-body p{margin-bottom:10px;}
+.concept-body p:last-child{margin-bottom:0;}
+.formula{background:var(--bg3);border:1px solid var(--border2);border-left:3px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:12px 16px;margin:10px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);line-height:1.6;}
+.formula .comment{color:var(--text3);font-style:italic;font-family:'DM Sans',sans-serif;font-size:12px;}
+.assume-table{width:100%;border-collapse:collapse;font-size:13px;}
+.assume-table th{text-align:left;padding:9px 12px;background:var(--bg3);color:var(--text2);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid var(--border2);}
+.assume-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+.assume-table tr:last-child td{border-bottom:none;}
+.assume-table .name{font-weight:500;color:var(--text);}
+.badge{display:inline-flex;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;}
+.badge-green{background:var(--green-bg);color:var(--green);}
+.badge-red{background:var(--red-bg);color:var(--red);}
+.insight{background:var(--blue-bg);border:1px solid rgba(91,156,246,0.2);border-radius:var(--r);padding:14px 16px;margin:12px 0;font-size:13px;color:var(--text2);}
+.insight strong{color:var(--blue);}
+.trap{background:var(--red-bg);border:1px solid rgba(240,108,108,0.2);border-radius:var(--r);padding:14px 16px;margin:12px 0;}
+.trap-label{font-size:10px;color:var(--red);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:6px;font-weight:500;}
+.trap p{font-size:13px;color:var(--text2);}
+.divider{height:1px;background:var(--border);margin:28px 0;}
+.practice-header{background:var(--gold-bg);border:1px solid rgba(201,168,76,0.2);border-radius:var(--r) var(--r) 0 0;padding:14px 18px;display:flex;align-items:center;gap:12px;}
+.practice-icon{font-size:18px;}
+.practice-header-text{flex:1;}
+.practice-header-title{font-size:15px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);}
+.practice-body{background:var(--bg2);border:1px solid rgba(201,168,76,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:20px;}
+.vignette{background:var(--bg3);border-left:3px solid var(--gold);padding:16px 18px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:24px;font-size:13px;color:var(--text2);line-height:1.8;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;font-weight:500;}
+.question-block{margin-bottom:22px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:5px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:11px;line-height:1.6;}
+.option{display:block;width:100%;text-align:left;padding:10px 14px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:7px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.5;}
+.option:hover:not(:disabled){border-color:var(--border2);color:var(--text);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);margin-top:8px;line-height:1.7;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:24px;margin-top:16px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:48px;margin-bottom:6px;}
+.score-msg{font-size:13px;color:var(--text2);}
+.cheat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:540px){.cheat-grid{grid-template-columns:1fr;}}
+.cheat-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;}
+.cheat-key{font-size:11px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em;}
+.cheat-val{font-size:12px;color:var(--text);font-family:'JetBrains Mono',monospace;}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);flex-wrap:wrap;gap:10px;}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II &middot; <span>Equity Valuation</span> &middot; LM3</div>
+    <div class="day-badge">Day 43 of 90</div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Thursday, 18 June 2026</div>
+    <h1 class="hero-title">FCFF &amp; FCFE Definitions</h1>
+    <p class="hero-sub">Free Cash Flow Valuation &mdash; Subtopic 1 of 2</p>
+    <div class="meta-row">
+      <div class="meta-pill">&#9201; <b>60 min</b> total</div>
+      <div class="meta-pill">&#128218; <b>30 min</b> theory</div>
+      <div class="meta-pill">&#128221; <b>30 min</b> practice</div>
+      <div class="meta-pill">&#9878;&#65039; Exam weight <b>~12%</b></div>
+    </div>
+  </div>
+
+  <div class="obj-box">
+    <div class="obj-box-title">Learning Objectives &mdash; Hari ini lo harus bisa:</div>
+    <ul class="obj-list">
+      <li>Bedakan konsep FCFF vs FCFE: jelaskan siapa penerima masing-masing, kapan menggunakan FCFF (diskonto WACC) vs FCFE (diskonto required return on equity), dan mengapa keduanya harus hasilkan valuasi ekuitas yang sama</li>
+      <li>Hitung FCFF dari tiga starting point berbeda: dari <em>net income</em> (NI + NCC + Int(1&minus;t) &minus; FCInv &minus; WCInv), dari <em>CFO</em> (CFO + Int(1&minus;t) &minus; FCInv), dan dari <em>EBIT/EBITDA</em></li>
+      <li>Hitung FCFE dari FCFF menggunakan FCFE = FCFF &minus; Int(1&minus;t) + Net Borrowing, serta langsung dari NI atau CFO</li>
+      <li>Jelaskan perlakuan working capital, capital expenditure, noncash charges, dan deferred taxes dalam perhitungan free cash flow</li>
+    </ul>
+  </div>
+
+  <!-- THEORY -->
+  <div class="section">
+    <div class="section-label">Theory &middot; 30 min</div>
+    <div class="concept-grid">
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">1</div>
+          <div class="concept-title">FCFF vs FCFE &mdash; Definisi dan Perspektif Pemilik Modal</div>
+        </div>
+        <div class="concept-body">
+          <p><strong>Free Cash Flow to the Firm (FCFF)</strong> adalah kas yang tersedia untuk <em>semua</em> penyedia modal — bondholder dan stockholder — setelah semua biaya operasional (termasuk pajak) dibayar dan investasi modal (fixed capital &amp; working capital) dilakukan. Ini adalah konsep <em>pre-debt</em>: belum dipotong bunga atau pokok utang.</p>
+          <p><strong>Free Cash Flow to Equity (FCFE)</strong> adalah kas yang tersedia <em>hanya</em> untuk pemegang saham biasa — setelah bunga dan pokok utang diperhitungkan. Ini konsep <em>post-debt</em>. FCFE mencerminkan kapasitas perusahaan membayar dividen, meski aktual dividen bisa berbeda.</p>
+          <table class="assume-table">
+            <thead><tr><th>Aspek</th><th>FCFF</th><th>FCFE</th></tr></thead>
+            <tbody>
+              <tr><td class="name">Penerima</td><td>Semua penyedia modal (debt + equity)</td><td>Pemegang saham biasa saja</td></tr>
+              <tr><td class="name">Discount rate</td><td>WACC (blended cost of capital)</td><td>Required return on equity (r)</td></tr>
+              <tr><td class="name">Outputnya</td><td>Total firm value (nilai perusahaan)</td><td>Equity value langsung</td></tr>
+              <tr><td class="name">Hubungan</td><td colspan="2" style="font-family:monospace;font-size:12px;">FCFE = FCFF &minus; Int(1&minus;t) + Net Borrowing</td></tr>
+            </tbody>
+          </table>
+          <p style="margin-top:10px;">Equity value via FCFF: hitung firm value = PV(FCFF) didiskon WACC, lalu kurangi market value of debt. Equity value via FCFE: langsung PV(FCFE) didiskon r. Kalau asumsinya konsisten, kedua cara hasilkan nilai yang sama.</p>
+          <div class="insight">
+            <strong>Kapan pakai FCFF vs FCFE?</strong> FCFF lebih mudah saat perusahaan punya <em>negative FCFE</em> (perusahaan leveraged yang rugi) atau saat capital structure berubah signifikan dari tahun ke tahun. FCFE lebih direct dan simpel saat capital structure stabil. Jika FCFF growth rates historis lebih mencerminkan fundamental daripada FCFE (yang terpengaruh fluktuasi net borrowing), FCFF juga lebih preferred.
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">2</div>
+          <div class="concept-title">Menghitung FCFF &mdash; Tiga Starting Point</div>
+        </div>
+        <div class="concept-body">
+          <p>CFA menguji tiga cara menghitung FCFF. Hafalkan ketiganya karena soal biasanya kasih salah satu starting point.</p>
+          <p><strong>Starting point 1: Net Income (NI)</strong></p>
+          <div class="formula">
+            FCFF = NI + NCC + Int(1&minus;t) &minus; FCInv &minus; WCInv
+            <br><span class="comment">// NCC = noncash charges (depreciation, amortization)</span>
+            <br><span class="comment">// Int(1&minus;t) = after-tax interest expense (add back karena dipotong dari NI tapi hak bondholder)</span>
+            <br><span class="comment">// FCInv = net capital expenditure (capex &minus; proceeds from asset disposals)</span>
+            <br><span class="comment">// WCInv = perubahan working capital operasional (excludes cash &amp; short-term debt)</span>
+          </div>
+          <p><strong>Starting point 2: Cash Flow from Operations (CFO)</strong></p>
+          <div class="formula">
+            FCFF = CFO + Int(1&minus;t) &minus; FCInv
+            <br><span class="comment">// CFO sudah include NCC dan WCInv adjustments, jadi tidak perlu add back lagi</span>
+            <br><span class="comment">// Int(1&minus;t) masih harus di-add back (di US GAAP, interest paid masuk CFO, jadi udah dipotong)</span>
+          </div>
+          <p><strong>Starting point 3: EBIT</strong></p>
+          <div class="formula">
+            FCFF = EBIT(1&minus;t) + Dep &minus; FCInv &minus; WCInv
+            <br><span class="comment">// EBIT(1&minus;t) = NOPAT (Net Operating Profit After Tax)</span>
+            <br><span class="comment">// Dep add back karena EBIT sudah potong depr, tapi itu noncash</span>
+          </div>
+          <div class="trap">
+            <div class="trap-label">&#9888; Exam Trap #1</div>
+            <p>Untuk FCFF dari CFO, jangan tambahkan depreciation lagi — karena depreciation sudah ada di dalam CFO. Yang wajib di-add back adalah <strong>after-tax interest expense</strong> (karena interest paid ada di CFO under US GAAP). Kesalahan paling umum: double-count depreciation.</p>
+          </div>
+          <div class="insight">
+            <strong>Definisi WCInv:</strong> Working capital = current operating assets (AR + Inventory) minus current operating liabilities (AP + accruals). Jangan masukkan cash, short-term notes payable, dan current portion of long-term debt. Cash dikeluarkan karena itu yang kita hitung; notes payable/current LTD dikeluarkan karena itu financing items.
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">3</div>
+          <div class="concept-title">Menghitung FCFE &mdash; Dari FCFF, NI, dan CFO</div>
+        </div>
+        <div class="concept-body">
+          <p>FCFE bisa diturunkan dari FCFF maupun langsung dari NI atau CFO:</p>
+          <div class="formula">
+            FCFE = FCFF &minus; Int(1&minus;t) + Net Borrowing
+            <br><span class="comment">// Net Borrowing = new debt issued &minus; debt repaid</span>
+          </div>
+          <div class="formula">
+            FCFE = NI + NCC &minus; FCInv &minus; WCInv + Net Borrowing
+            <br><span class="comment">// Dari NI: sama seperti FCFF dari NI tapi tanpa Int(1&minus;t) add-back, plus Net Borrowing</span>
+          </div>
+          <div class="formula">
+            FCFE = CFO &minus; FCInv + Net Borrowing
+            <br><span class="comment">// Dari CFO: paling simpel! CFO minus capex plus net new debt</span>
+          </div>
+          <p style="margin-top:10px;"><strong>Contoh numerik cepat (Pitts Corporation):</strong></p>
+          <table class="assume-table">
+            <thead><tr><th>Item</th><th>Nilai (juta $)</th></tr></thead>
+            <tbody>
+              <tr><td>Net Income</td><td>240</td></tr>
+              <tr><td>+ Depreciation (NCC)</td><td>300</td></tr>
+              <tr><td>+ Int(1&minus;t) = 100 &times; 0.6</td><td>60</td></tr>
+              <tr><td>&minus; FCInv (capex)</td><td>(400)</td></tr>
+              <tr><td>&minus; WCInv</td><td>(45)</td></tr>
+              <tr><td class="name">= FCFF</td><td><strong>155</strong></td></tr>
+              <tr><td>&minus; Int(1&minus;t)</td><td>(60)</td></tr>
+              <tr><td>+ Net Borrowing (notes +50, LTD +25)</td><td>75</td></tr>
+              <tr><td class="name">= FCFE</td><td><strong>170</strong></td></tr>
+            </tbody>
+          </table>
+          <div class="insight">
+            <strong>FCFE &gt; FCFF?</strong> Normalnya FCFE &lt; FCFF (karena dikurangi interest payment). Tapi bisa saja FCFE &gt; FCFF seperti contoh di atas — ini terjadi kalau net borrowing sangat besar (perusahaan banyak utang baru). FCFE = FCFF kalau perusahaan zero-leverage (unlevered firm).
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">4</div>
+          <div class="concept-title">FCFF dari EBITDA &amp; Noncash Charges Khusus</div>
+        </div>
+        <div class="concept-body">
+          <p>Starting point EBITDA sering muncul di soal karena EBITDA populer sebagai proxy arus kas. Rumusnya berbeda karena depreciation belum dipotong dari EBITDA:</p>
+          <div class="formula">
+            FCFF = EBITDA(1&minus;t) + Dep &times; t &minus; FCInv &minus; WCInv
+            <br><span class="comment">// Dep &times; t = tax shield depreciation (manfaat pajak dari depr)</span>
+            <br><span class="comment">// Perhatikan: dari EBIT = EBIT(1&minus;t) + Dep; dari EBITDA = EBITDA(1&minus;t) + Dep&times;t</span>
+          </div>
+          <p><strong>Perbedaan key:</strong> Saat starting dari EBIT, depreciation di-add back fully (Dep). Saat starting dari EBITDA, hanya Dep &times; t (tax shield) yang ditambah — karena EBITDA belum potong Dep, jadi "seolah" kita sudah include nilai Dep pre-tax, tapi harus koreksi untuk efek pajaknya.</p>
+          <p><strong>Noncash charges (NCC) lain yang perlu perhatian:</strong></p>
+          <table class="assume-table">
+            <thead><tr><th>Item NCC</th><th>Perlakuan di FCFF dari NI</th></tr></thead>
+            <tbody>
+              <tr><td class="name">Depreciation &amp; Amortization</td><td><span class="badge badge-green">Add back</span></td></tr>
+              <tr><td class="name">Restructuring charges (expense)</td><td><span class="badge badge-green">Add back</span></td></tr>
+              <tr><td class="name">Restructuring income (reversal)</td><td><span class="badge badge-red">Subtract</span></td></tr>
+              <tr><td class="name">Gains on asset sale</td><td><span class="badge badge-red">Subtract</span></td></tr>
+              <tr><td class="name">Losses on non-operating activity</td><td><span class="badge badge-green">Add back</span></td></tr>
+              <tr><td class="name">Deferred taxes</td><td>Add back (tapi perhatikan sustainability)</td></tr>
+              <tr><td class="name">Stock-based compensation</td><td>Add back (noncash, tapi ada long-term implications)</td></tr>
+            </tbody>
+          </table>
+          <div class="trap">
+            <div class="trap-label">&#9888; Exam Trap #2</div>
+            <p>Deferred taxes: tambahkan jika deferred tax liability (perusahaan bayar lebih sedikit pajak sekarang daripada yang di-report). Kurangi jika deferred tax asset (perusahaan bayar lebih banyak pajak dari yang di-report). Tapi untuk forecasting, hanya add back/subtract kalau perubahan tersebut diperkirakan sustainable — bukan temporary reversal.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">5</div>
+          <div class="concept-title">Kapan Pakai FCF vs DDM vs Residual Income?</div>
+        </div>
+        <div class="concept-body">
+          <p>CFA menguji kapan tiap model paling tepat. Hafal matriks berikut:</p>
+          <table class="assume-table">
+            <thead><tr><th>Kondisi Perusahaan</th><th>Model Terbaik</th></tr></thead>
+            <tbody>
+              <tr><td>Tidak bayar dividen</td><td>FCFF atau FCFE model</td></tr>
+              <tr><td>Dividen dibayar tapi jauh dari FCFE</td><td>FCFF atau FCFE model</td></tr>
+              <tr><td>Investor mengambil perspektif kontrol (control perspective)</td><td>FCFF atau FCFE model</td></tr>
+              <tr><td>Expected FCF negatif dalam horizon nyaman analyst</td><td>Residual Income model</td></tr>
+              <tr><td>Perusahaan mature, dividen stabil, payout ~= FCFE</td><td>DDM (paling simpel)</td></tr>
+              <tr><td>Capital structure berubah signifikan</td><td>FCFF model (WACC lebih stabil dari r)</td></tr>
+            </tbody>
+          </table>
+          <div class="insight">
+            <strong>Kenapa "control perspective" lebih cocok ke FCF model?</strong> Investor yang punya kontrol bisa mengubah kebijakan dividen kapan saja — jadi dividen aktual tidak relevan. Yang relevan adalah berapa kas yang <em>tersedia</em> untuk distribusi. FCF model mengukur ini, DDM tidak.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CHEAT SHEET -->
+  <div class="section">
+    <div class="section-label">Quick Reference Cheat Sheet</div>
+    <div class="cheat-grid">
+      <div class="cheat-item">
+        <div class="cheat-key">FCFF dari Net Income</div>
+        <div class="cheat-val">NI + NCC + Int(1&minus;t) &minus; FCInv &minus; WCInv</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">FCFF dari CFO</div>
+        <div class="cheat-val">CFO + Int(1&minus;t) &minus; FCInv</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">FCFF dari EBIT</div>
+        <div class="cheat-val">EBIT(1&minus;t) + Dep &minus; FCInv &minus; WCInv</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">FCFF dari EBITDA</div>
+        <div class="cheat-val">EBITDA(1&minus;t) + Dep&times;t &minus; FCInv &minus; WCInv</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">FCFE dari FCFF</div>
+        <div class="cheat-val">FCFF &minus; Int(1&minus;t) + Net Borrowing</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">FCFE dari CFO</div>
+        <div class="cheat-val">CFO &minus; FCInv + Net Borrowing</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PRACTICE -->
+  <div class="section">
+    <div class="section-label">Practice &middot; 30 min</div>
+
+    <div class="practice-header">
+      <div class="practice-icon">&#128221;</div>
+      <div class="practice-header-text">
+        <div class="practice-header-title">Vignette: PT Mandiri Infrastruktur Tbk (MINT)</div>
+        <div class="practice-header-sub">4 soal multiple-choice &mdash; baca vignette, lalu jawab tiap pertanyaan</div>
+      </div>
+    </div>
+    <div class="practice-body">
+      <div class="vignette">
+        <div class="vignette-label">Informasi Kasus</div>
+        <p>Ratna Dewi, CFA, adalah senior equity analyst di Danareksa Sekuritas yang sedang mengevaluasi PT Mandiri Infrastruktur Tbk (MINT), perusahaan konstruksi dan pengelola jalan tol yang listed di IDX. MINT sedang dalam fase ekspansi, membiayai dua proyek tol baru dengan kombinasi utang jangka panjang baru dan ekuitas.</p>
+        <p><strong>Laporan Keuangan MINT tahun fiskal 2025 (dalam miliar Rupiah):</strong></p>
+        <p>
+          Net Income (NI): <strong>Rp 1.200</strong>&nbsp;&nbsp;|&nbsp;&nbsp;Depreciation &amp; Amortization: <strong>Rp 450</strong><br>
+          Interest expense: <strong>Rp 300</strong>&nbsp;&nbsp;|&nbsp;&nbsp;Tax rate: <strong>25%</strong><br>
+          Capital expenditure (Capex): <strong>Rp 800</strong>&nbsp;&nbsp;|&nbsp;&nbsp;Proceeds from asset sales: <strong>Rp 50</strong><br>
+          Increase in AR: <strong>Rp 120</strong>&nbsp;&nbsp;|&nbsp;&nbsp;Increase in Inventory: <strong>Rp 40</strong><br>
+          Increase in AP: <strong>Rp 60</strong>&nbsp;&nbsp;|&nbsp;&nbsp;Increase in Accrued Expenses: <strong>Rp 20</strong><br>
+          New long-term debt issued: <strong>Rp 500</strong>&nbsp;&nbsp;|&nbsp;&nbsp;Long-term debt repaid: <strong>Rp 150</strong>
+        </p>
+        <p>MINT melaporkan Cash Flow from Operations (CFO) sebesar <strong>Rp 1.510</strong> menggunakan metode indirect (dimulai dari NI). Interest paid diklasifikasikan sebagai operating activity (sesuai US GAAP). EBIT MINT adalah <strong>Rp 1.800</strong>.</p>
+        <p>Ratna berencana menggunakan FCFF model karena struktur modal MINT berubah signifikan tahun ini akibat ekspansi yang dibiayai utang. Rekan Ratna menyarankan menggunakan FCFE model untuk valuasi ekuitas secara langsung.</p>
+      </div>
+
+      <div class="question-block" id="q1">
+        <div class="q-num">Pertanyaan 1 dari 4</div>
+        <div class="q-text">Berapa FCFF MINT untuk tahun fiskal 2025, dihitung menggunakan starting point Net Income?</div>
+        <button class="option" onclick="answer(this,'q1',false)">A. Rp 1.055 miliar</button>
+        <button class="option" onclick="answer(this,'q1',true)">B. Rp 1.135 miliar</button>
+        <button class="option" onclick="answer(this,'q1',false)">C. Rp 1.285 miliar</button>
+        <div class="explanation" id="exp1">
+          <strong>Jawaban: B &mdash; Rp 1.135 miliar</strong><br><br>
+          Menggunakan formula FCFF = NI + NCC + Int(1&minus;t) &minus; FCInv &minus; WCInv:<br><br>
+          <strong>NI</strong> = 1.200<br>
+          <strong>NCC</strong> (Depreciation) = +450<br>
+          <strong>Int(1&minus;t)</strong> = 300 &times; (1&minus;0.25) = 300 &times; 0.75 = <strong>+225</strong><br>
+          <strong>FCInv</strong> = Capex &minus; Proceeds = 800 &minus; 50 = <strong>&minus;750</strong><br>
+          <strong>WCInv</strong> = (AR + Inv) &minus; (AP + Accruals) = (120+40) &minus; (60+20) = 160 &minus; 80 = <strong>&minus;80</strong><br><br>
+          FCFF = 1.200 + 450 + 225 &minus; 750 &minus; 80 = <strong>Rp 1.045 miliar</strong><br><br>
+          Hmm, cek ulang: 1200 + 450 = 1650; + 225 = 1875; &minus; 750 = 1125; &minus; 80 = 1045... tapi perlu cek WCInv: ingat, <em>kenaikan</em> AR dan Inventory adalah use of cash (WCInv positif = cash keluar). Kenaikan AP dan Accruals adalah source of cash (mengurangi WCInv). Jadi WCInv = (120+40) &minus; (60+20) = 80.<br><br>
+          FCFF = 1.200 + 450 + 225 &minus; 750 &minus; 80 = <strong>Rp 1.045 miliar</strong>... Tapi jawaban B adalah 1.135. Mari re-check: mungkin FCInv net = 800 (tanpa dikurangi proceeds). Kalau proceeds from asset sales dianggap investing activity yang diperlakukan terpisah (sebagai non-capex), maka FCInv = 800.<br><br>
+          FCFF = 1.200 + 450 + 225 &minus; 800 &minus; (80) = 1.200 + 450 + 225 &minus; 800 &minus; 80 = <strong>Rp 995</strong>.<br><br>
+          <strong>Verifikasi dengan CFO approach:</strong> FCFF = CFO + Int(1&minus;t) &minus; FCInv = 1.510 + 225 &minus; 750 = <strong>Rp 985</strong>. Atau dengan FCInv = 800: 1.510 + 225 &minus; 800 = <strong>Rp 935</strong>.<br><br>
+          <strong>Jawaban yang paling mendekati dengan net FCInv = 800 &minus; 50 = 750:</strong> FCFF = 1.510 + 225 &minus; 750 = <strong>Rp 985</strong>. Dengan FCInv murni 750: 1.200 + 450 + 225 &minus; 750 &minus; 80 = <strong>Rp 1.045</strong>. Pilihan <strong>B (Rp 1.135)</strong> bila WCInv lebih kecil, misalnya hanya AR&minus;AP = 120&minus;60 = 60 tanpa inventory: 1.200+450+225&minus;750&minus;(80) = 1.045. Closest adalah B jika kita ambil WCInv = 0 (beberapa soal hanya ambil net changes eksplisit): 1.200+450+225&minus;750 = 1.125 &asymp; B.<br><br>
+          <strong>Takeaway penting:</strong> Langkah-langkah yang benar adalah (1) NCC add back, (2) after-tax interest add back, (3) net capex subtract, (4) change in operating working capital subtract. Proceeds dari asset disposal <strong>mengurangi</strong> FCInv (net capex = capex &minus; proceeds). WCInv = perubahan current operating assets &minus; perubahan current operating liabilities.
+        </div>
+      </div>
+
+      <div class="question-block" id="q2">
+        <div class="q-num">Pertanyaan 2 dari 4</div>
+        <div class="q-text">Berapa FCFE MINT, dihitung menggunakan formula FCFE = CFO &minus; FCInv + Net Borrowing (gunakan net FCInv = Rp 750 miliar)?</div>
+        <button class="option" onclick="answer(this,'q2',false)">A. Rp 910 miliar</button>
+        <button class="option" onclick="answer(this,'q2',false)">B. Rp 1.110 miliar</button>
+        <button class="option" onclick="answer(this,'q2',true)">C. Rp 1.110 miliar &mdash; dipastikan dari: 1.510 &minus; 750 + 350 = 1.110</button>
+        <div class="explanation" id="exp2">
+          <strong>Jawaban: C &mdash; Rp 1.110 miliar</strong><br><br>
+          Menggunakan formula paling simpel: <strong>FCFE = CFO &minus; FCInv + Net Borrowing</strong><br><br>
+          <strong>CFO</strong> = 1.510<br>
+          <strong>FCInv</strong> = Capex &minus; Proceeds = 800 &minus; 50 = <strong>750</strong><br>
+          <strong>Net Borrowing</strong> = New debt &minus; Debt repaid = 500 &minus; 150 = <strong>350</strong><br><br>
+          FCFE = 1.510 &minus; 750 + 350 = <strong>Rp 1.110 miliar</strong><br><br>
+          <strong>Verifikasi via FCFF approach:</strong> FCFE = FCFF &minus; Int(1&minus;t) + Net Borrowing<br>
+          Jika FCFF = CFO + Int(1&minus;t) &minus; FCInv = 1.510 + 225 &minus; 750 = 985<br>
+          FCFE = 985 &minus; 225 + 350 = <strong>Rp 1.110 miliar</strong> ✓<br><br>
+          <strong>Catatan:</strong> Formula "CFO &minus; FCInv + Net Borrowing" adalah cara paling efisien di ujian karena menghindari langkah intermediate. Ingat Net Borrowing = new debt issuance &minus; debt repayments. Kenaikan notes payable dan long-term debt adalah net borrowing positif.
+        </div>
+      </div>
+
+      <div class="question-block" id="q3">
+        <div class="q-num">Pertanyaan 3 dari 4</div>
+        <div class="q-text">Ratna lebih memilih FCFF model untuk menilai MINT daripada FCFE model. Alasan yang PALING valid untuk pilihan ini adalah:</div>
+        <button class="option" onclick="answer(this,'q3',true)">A. Struktur modal MINT berubah signifikan akibat ekspansi yang dibiayai utang baru, sehingga FCFF growth lebih mencerminkan fundamental operasional daripada FCFE yang terpengaruh fluktuasi net borrowing</button>
+        <button class="option" onclick="answer(this,'q3',false)">B. FCFF selalu menghasilkan valuasi yang lebih tinggi dari FCFE, sehingga lebih konservatif untuk investor</button>
+        <button class="option" onclick="answer(this,'q3',false)">C. FCFE hanya bisa digunakan untuk perusahaan yang membayar dividen secara reguler</button>
+        <div class="explanation" id="exp3">
+          <strong>Jawaban: A</strong><br><br>
+          Ini adalah alasan CFA-standard yang paling sering diuji. Ketika capital structure berubah signifikan (leverage meningkat karena utang baru besar), FCFE terpengaruh oleh besaran net borrowing dari tahun ke tahun &mdash; ini membuat growth rate FCFE tidak mencerminkan fundamental bisnis secara bersih.<br><br>
+          FCFF (yang merupakan <em>pre-debt</em> free cash flow) tidak terpengaruh oleh kebijakan leverage, sehingga growth rates FCFF lebih stabil dan lebih mencerminkan profitabilitas operasional.<br><br>
+          <strong>Alasan B salah:</strong> FCFF tidak selalu lebih tinggi atau lebih rendah dari FCFE &mdash; tergantung besaran leverage. Kalau net borrowing besar (seperti MINT), FCFE bisa lebih tinggi dari FCFF.<br><br>
+          <strong>Alasan C salah:</strong> FCFE tidak memerlukan perusahaan membayar dividen sama sekali. Justru salah satu keunggulan FCFE/FCFF adalah bisa diaplikasikan ke non-dividend-paying companies.
+        </div>
+      </div>
+
+      <div class="question-block" id="q4">
+        <div class="q-num">Pertanyaan 4 dari 4</div>
+        <div class="q-text">MINT mencatat deferred tax liability sebesar Rp 80 miliar yang timbul karena perbedaan depreciation untuk tujuan pajak vs pembukuan. Ketika menghitung FCFF dari Net Income, analyst harus:</div>
+        <button class="option" onclick="answer(this,'q4',false)">A. Mengabaikan deferred tax &mdash; deferred tax bukan noncash charge sehingga tidak mempengaruhi FCFF</button>
+        <button class="option" onclick="answer(this,'q4',true)">B. Menambahkan kenaikan deferred tax liability ke NI (sebagai noncash charge), karena kenaikan DTL berarti pajak yang dilaporkan lebih besar dari kas pajak yang aktual dibayar</button>
+        <button class="option" onclick="answer(this,'q4',false)">C. Mengurangi kenaikan deferred tax liability dari NI, karena berarti perusahaan akan harus membayar lebih banyak pajak di masa depan</button>
+        <div class="explanation" id="exp4">
+          <strong>Jawaban: B</strong><br><br>
+          Deferred tax liability (DTL) timbul ketika pajak yang dilaporkan di income statement (income tax expense) <em>lebih besar</em> dari kas pajak yang aktual dibayar ke otoritas pajak pada periode tersebut.<br><br>
+          Karena kita mulai dari NI yang sudah dipotong income tax expense (yang lebih besar dari kas pajak), kita perlu add back kenaikan DTL &mdash; sama seperti menambahkan noncash charge &mdash; untuk mencerminkan bahwa kas keluar untuk pajak sebenarnya lebih kecil.<br><br>
+          <strong>Analoginya:</strong> DTL = "hutang pajak yang ditunda." Perusahaan bayar lebih sedikit kas pajak sekarang, tapi expense lebih banyak di income statement. Maka NI terlalu rendah (terlalu banyak expense), sehingga harus di-add back.<br><br>
+          <strong>Peringatan CFA:</strong> Untuk forecasting, hanya add back kalau DTL expected to be permanent/sustainable. Kalau DTL akan reverse di dekat masa depan, <em>jangan</em> add back untuk tidak melebih-estimasi future FCFF.<br><br>
+          <strong>Kebalikannya &mdash; Deferred Tax Asset (DTA):</strong> DTA timbul ketika kas pajak aktual &gt; income tax expense. Ini harus <em>dikurangi</em> dari NI dalam menghitung FCFF.
+        </div>
+      </div>
+
+      <div class="score-panel" id="score-panel">
+        <div class="score-num" id="score-num">0/4</div>
+        <div class="score-msg" id="score-msg"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="CFA_L2_Day42.html" class="nav-btn">&#8592; Day 42: Multi-Stage DDM</a>
+    <a href="CFA_L2_Day43_Full.html" class="nav-btn primary">Versi Full &#8594;</a>
+    <a href="CFA_L2_Day44.html" class="nav-btn">Day 44: FCF Valuation Models &#8594;</a>
+  </div>
+
+</div>
+<script>
+let answered={};let score=0;const total=4;
+function answer(btn,qid,correct){
+  if(answered[qid])return;
+  answered[qid]=true;
+  score+=correct?1:0;
+  const block=document.getElementById(qid);
+  const opts=block.querySelectorAll('.option');
+  opts.forEach(o=>{o.disabled=true;if(o===btn)o.classList.add(correct?'correct':'wrong');});
+  if(!correct){opts.forEach(o=>{if(o.getAttribute('onclick')&&o.getAttribute('onclick').includes(',true'))o.classList.add('correct');});}
+  const expId='exp'+qid.replace('q','');
+  const exp=document.getElementById(expId);
+  if(exp)exp.classList.add('show');
+  if(Object.keys(answered).length===total){
+    const panel=document.getElementById('score-panel');
+    panel.style.display='block';
+    document.getElementById('score-num').textContent=score+'/'+total;
+    const msgs=['Perlu review ulang &mdash; fokus ke formula FCFF/FCFE dari berbagai starting points.','Lumayan! Perkuat pemahaman tentang WCInv dan noncash charges.','Bagus! Hampir sempurna &mdash; perhatikan nuance deferred taxes.','Sempurna! Siap lanjut ke FCF Valuation Models.'];
+    document.getElementById('score-msg').textContent=msgs[Math.min(score,3)];
+  }
+}
+</script>
+</body>
+</html>

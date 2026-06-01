@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level 2 - Day 29: Earnings & Cash Flow Quality (Evaluating Quality of Financial Reports)</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg:#fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+      --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;--gold:#9a6e1a;--gold2:#7a5010;
+      --gold-bg:rgba(154,110,26,0.08);--blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);
+      --green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);--red:#b83232;--red-bg:rgba(184,50,50,0.08);
+      --amber:#a06010;--amber-bg:rgba(160,96,16,0.08);--r:10px;--r-sm:6px;
+    }
+    body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6; }
+    .page { max-width:900px;margin:0 auto;padding:0 16px; }
+    .topbar { display:flex;justify-content:space-between;align-items:center;padding:12px 0;margin-top:8px;border-bottom:1px solid var(--border);font-size:13px;color:var(--text3); }
+    .breadcrumb { display:flex;gap:8px;align-items:center; }
+    .breadcrumb span { color:var(--text3); }
+    .breadcrumb strong { color:var(--text2);font-weight:600; }
+    .day-badge { background:var(--gold-bg);color:var(--gold2);padding:4px 10px;border-radius:var(--r-sm);font-size:12px;font-weight:600; }
+    .hero { padding:40px 0 32px;border-bottom:1px solid var(--border);margin-bottom:32px; }
+    .hero-tag { color:var(--blue);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px; }
+    .hero-title { font-size:36px;font-weight:700;line-height:1.2;margin-bottom:8px;color:var(--text); }
+    .hero-sub { font-size:16px;color:var(--text2);margin-bottom:16px; }
+    .meta-row { display:flex;gap:12px;flex-wrap:wrap;margin-top:16px; }
+    .meta-pill { background:var(--bg2);border:1px solid var(--border);padding:8px 14px;border-radius:var(--r-sm);font-size:12px;color:var(--text2);font-weight:500; }
+    .section { margin-bottom:40px; }
+    .section-label { font-size:12px;font-weight:700;text-transform:uppercase;color:var(--text3);letter-spacing:0.5px;margin-bottom:16px; }
+    .obj-box { background:var(--blue-bg);border-left:4px solid var(--blue);padding:20px;border-radius:var(--r-sm);margin-bottom:16px; }
+    .obj-box-title { font-size:13px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px; }
+    .obj-list { list-style:none; }
+    .obj-list li { font-size:14px;color:var(--text);margin-bottom:8px;padding-left:20px;position:relative; }
+    .obj-list li:before { content:"✓";position:absolute;left:0;color:var(--blue);font-weight:700; }
+    .concept-grid { display:grid;grid-template-columns:1fr;gap:20px;margin-bottom:24px; }
+    .concept-card { background:white;border:1px solid var(--border2);border-radius:var(--r);padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05); }
+    .concept-card-header { display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border); }
+    .concept-num { display:flex;align-items:center;justify-content:center;width:32px;height:32px;background:var(--gold-bg);color:var(--gold);border-radius:50%;font-weight:700;font-size:14px; }
+    .concept-title { font-size:16px;font-weight:700;color:var(--text);flex:1; }
+    .concept-body { font-size:14px;color:var(--text);line-height:1.7; }
+    .concept-body p { margin-bottom:12px; }
+    .formula { background:var(--bg2);border-left:3px solid var(--gold);padding:12px;border-radius:var(--r-sm);font-family:'Courier New',monospace;font-size:13px;color:var(--text);margin:12px 0;overflow-x:auto;white-space:pre-wrap; }
+    .insight { background:var(--green-bg);border-left:3px solid var(--green);padding:12px;border-radius:var(--r-sm);font-size:13px;color:var(--text);margin:12px 0; }
+    .trap { background:var(--red-bg);border-left:3px solid var(--red);padding:12px;border-radius:var(--r-sm);font-size:13px;color:var(--text);margin:12px 0; }
+    .trap-label { font-weight:700;color:var(--red);font-size:11px;text-transform:uppercase;margin-bottom:4px; }
+    .assume-table { width:100%;border-collapse:collapse;margin:12px 0;font-size:13px; }
+    .assume-table th { background:var(--bg3);border:1px solid var(--border);padding:10px;text-align:left;font-weight:700;color:var(--text); }
+    .assume-table td { border:1px solid var(--border);padding:10px;color:var(--text2); }
+    .cheat-grid { display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px; }
+    .cheat-item { background:white;border:1px solid var(--border);border-radius:var(--r-sm);padding:14px; }
+    .cheat-key { font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px; }
+    .cheat-val { font-size:13px;color:var(--text);font-weight:500;line-height:1.5; }
+    .practice-body { background:white;border:1px solid var(--border2);border-radius:var(--r);padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05); }
+    .vignette { background:var(--bg2);padding:16px;border-radius:var(--r-sm);margin-bottom:24px;border-left:3px solid var(--amber); }
+    .vignette-label { font-size:11px;font-weight:700;color:var(--amber);text-transform:uppercase;margin-bottom:8px; }
+    .vignette-text { font-size:13px;color:var(--text);line-height:1.6; }
+    .question-block { margin-bottom:28px; }
+    .q-num { font-size:12px;font-weight:700;color:var(--blue);margin-bottom:8px; }
+    .q-text { font-size:14px;color:var(--text);margin-bottom:12px;line-height:1.6;font-weight:500; }
+    .option { display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;border:1px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:all 0.2s ease;background:white; }
+    .option:hover { border-color:var(--blue);background:var(--blue-bg); }
+    .option-radio { display:flex;align-items:center;justify-content:center;width:18px;height:18px;border:2px solid var(--border2);border-radius:50%;flex-shrink:0;margin-top:2px; }
+    .option.selected .option-radio { border-color:var(--blue);background:var(--blue); }
+    .option.selected .option-radio:after { content:"✓";color:white;font-size:11px;font-weight:700; }
+    .option-text { font-size:13px;color:var(--text); }
+    .explanation { background:var(--bg2);padding:12px;border-radius:var(--r-sm);font-size:12px;color:var(--text2);margin-top:8px;display:none;line-height:1.6; }
+    .explanation.show { display:block; }
+    .explanation.correct { border-left:3px solid var(--green);background:var(--green-bg);color:var(--text); }
+    .explanation.incorrect { border-left:3px solid var(--red);background:var(--red-bg);color:var(--text); }
+    .score-panel { background:var(--gold-bg);border:1px solid var(--gold);border-radius:var(--r);padding:16px;margin-top:20px;text-align:center;display:none; }
+    .score-panel.show { display:block; }
+    .score-panel-text { font-size:14px;color:var(--text);margin-bottom:8px; }
+    .score-panel-value { font-size:24px;font-weight:700;color:var(--gold2); }
+    .nav-bottom { display:flex;justify-content:space-between;align-items:center;padding:24px 0;margin-top:40px;border-top:1px solid var(--border); }
+    .nav-btn { text-decoration:none;padding:10px 16px;border-radius:var(--r-sm);font-size:13px;font-weight:600;color:var(--blue);border:1px solid var(--border);transition:all 0.2s ease;cursor:pointer; }
+    .nav-btn:hover { border-color:var(--blue);background:var(--blue-bg); }
+    @media (max-width:640px) { .hero-title{font-size:28px;} .cheat-grid{grid-template-columns:1fr;} .meta-row{flex-direction:column;} }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">
+      <span>CFA Level II</span><span>&middot;</span><span>FSA</span><span>&middot;</span><strong>LM6</strong>
+    </div>
+    <div class="day-badge">Day 29 of 90</div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Monday, 25 May 2026</div>
+    <h1 class="hero-title">Earnings &amp; Cash Flow Quality</h1>
+    <p class="hero-sub">Evaluating Quality of Financial Reports &mdash; Subtopic 1 of 2</p>
+    <div class="meta-row">
+      <div class="meta-pill">60 min total</div>
+      <div class="meta-pill">30 min theory</div>
+      <div class="meta-pill">30 min practice</div>
+      <div class="meta-pill">~12% exam weight</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Learning Objectives</div>
+    <div class="obj-box">
+      <div class="obj-box-title">By the end of this subtopic, you'll be able to:</div>
+      <ul class="obj-list">
+        <li>Bedakan recurring vs non-recurring items dan jelaskan mengapa pemisahan ini krusial dalam menilai persistensi earnings untuk forecasting dan valuation</li>
+        <li>Jelaskan konsep accruals ratio (balance-sheet-based dan cash-flow-based) serta kaitannya dengan mean reversion in earnings</li>
+        <li>Hitung Cash Conversion Cycle (DSO, DIO, DPO) dan gunakan perubahannya untuk mendeteksi potensi working capital manipulation</li>
+        <li>Terapkan CFO quality indicators untuk mengidentifikasi manipulasi melalui statement of cash flows, termasuk perbedaan antara CFO &lt;&lt; NI vs CFO &gt;&gt; NI</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Key Concepts &mdash; Theory (30 min)</div>
+    <div class="concept-grid">
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">1</div>
+          <div class="concept-title">Recurring vs Non-Recurring Items: Fondasi Earnings Quality</div>
+        </div>
+        <div class="concept-body">
+          <p>Inti dari analisis earnings quality adalah memisahkan laba yang <em>sustainable</em> dari laba yang bersifat <em>one-off</em>. Untuk forecasting dan valuation, lo hanya mau pakai earnings yang benar-benar mencerminkan kemampuan bisnis menghasilkan uang secara berkelanjutan di masa depan.</p>
+          <p><strong>Mengapa ini penting?</strong> Dalam earnings-based valuation, equity value bergantung pada <em>expected future earnings</em>. Jika analis salah memasukkan non-recurring gains sebagai bagian dari recurring earnings, maka proyeksi akan overstated dan valuasi terlalu tinggi.</p>
+          <table class="assume-table">
+            <thead><tr><th>Tipe Item</th><th>Contoh</th><th>Perlakuan Analis</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Recurring (Core)</strong></td><td>Revenue operasi utama, COGS, SG&amp;A rutin, interest expense normal</td><td>Masukkan penuh dalam forecast earnings</td></tr>
+              <tr><td><strong>Non-Recurring Gains</strong></td><td>Gain on asset sale, litigation settlement received, insurance proceeds, gain on equity issuance by subsidiary</td><td>Keluarkan dari normalized earnings; verifikasi apakah benar one-off</td></tr>
+              <tr><td><strong>Non-Recurring Charges</strong></td><td>Restructuring charges, goodwill impairment, asset write-downs, M&amp;A transaction costs</td><td>Periksa apakah benar non-recurring &mdash; beberapa perusahaan &ldquo;selalu&rdquo; punya restructuring tiap tahun (classification shifting)</td></tr>
+              <tr><td><strong>Discontinued Operations</strong></td><td>Laba/rugi dari segmen yang akan dijual atau dihentikan</td><td>Wajib disajikan terpisah di income statement; selalu keluarkan dari forecasting model</td></tr>
+            </tbody>
+          </table>
+          <div class="insight">
+            <strong>Kasus Enron:</strong> Income statement Enron menampilkan "gains on sales of non-merchant assets" dan "equity in earnings of unconsolidated affiliates" sebagai bagian dari Other Income yang membuat total pre-tax income terlihat smooth dan selalu naik &mdash; padahal operating income sangat volatile. Di tahun 1999, non-recurring/non-operating items mewakili 52% dari total pre-tax income! Analis yang tidak memisahkan ini akan sangat mislead dalam forecasting.
+          </div>
+          <div class="trap">
+            <div class="trap-label">Exam Trap &mdash; Classification Shifting</div>
+            "Classification shifting" adalah memindahkan <em>operating expenses biasa</em> ke kategori "special items" atau "restructuring charges" untuk menggelembungkan core/recurring earnings &mdash; tanpa mengubah total net income. Ini bisa tetap GAAP-compliant tapi sangat menyesatkan. Contoh: Borden (SEC) memindahkan $146 juta SG&amp;A ke restructuring. Analis perlu skeptis terhadap perusahaan yang <em>selalu</em> punya special charges tiap tahun.
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">2</div>
+          <div class="concept-title">Accruals Ratio &amp; Earnings Persistence: Dua Formula Kunci</div>
+        </div>
+        <div class="concept-body">
+          <p>Earnings bisa dipecah menjadi dua komponen: <strong>cash component</strong> (lebih persistent) dan <strong>accruals component</strong> (kurang persistent). Riset Sloan (1996) membuktikan bahwa earnings dengan accruals besar cenderung <em>mean-revert lebih cepat</em> &mdash; artinya tidak sustainable untuk dijadikan input forecasting jangka panjang.</p>
+          <div class="formula">Earnings = Cash Flow Component + Accruals Component
+
+Semakin besar porsi cash flow dalam earnings → lebih sustainable
+Semakin besar porsi accruals → cenderung mean-revert → lower quality
+
+Mean Reversion in Earnings:
+  Earnings ekstrem (sangat tinggi atau rendah) cenderung kembali ke rata-rata
+  karena: kompetisi menggerus abnormal profits, perusahaan rugi restrukturisasi
+  Accruals tinggi MEMPERCEPAT mean reversion ini</div>
+
+          <p><strong>Dua Accruals Ratio yang diuji di CFA L2:</strong></p>
+          <div class="formula">1. Balance-Sheet-Based Accruals Ratio:
+   = (NOA_t - NOA_(t-1)) / [(NOA_t + NOA_(t-1)) / 2]
+
+   NOA = Net Operating Assets
+       = (Total Assets - Cash & ST Investments)
+         - (Total Liabilities - Total Debt)
+
+2. Cash-Flow-Based Accruals Ratio:
+   = [NI - (CFO + CFI)] / [(NOA_t + NOA_(t-1)) / 2]
+
+   NI = Net Income; CFO = Cash from Operations; CFI = Cash from Investing
+
+Interpretasi:
+  Rasio mendekati 0  → earnings didominasi cash flows → HIGH quality
+  Rasio tinggi/naik  → accruals besar → LOWER quality
+  Perhatikan trend: stabil rendah = baik; terus meningkat = perlu investigasi</div>
+
+          <div class="insight">
+            Catatan penting: Accruals ratio NEGATIF tidak otomatis berarti earnings berkualitas rendah &mdash; bisa berarti NOA menyusut (misal: divestitures, utang naik). Yang paling mengkhawatirkan adalah rasio yang <em>tinggi secara absolut</em> dan <em>terus naik</em> dari tahun ke tahun, mengindikasikan earnings makin bertopang pada accruals yang tidak sustainable.
+          </div>
+          <div class="trap">
+            <div class="trap-label">Exam Trap &mdash; Denominator Accruals Ratio</div>
+            Denominator accruals ratio adalah <strong>Average NOA</strong> (rata-rata NOA awal dan akhir periode) &mdash; BUKAN total assets atau equity. Ini membuat rasio comparable across periods dan companies. Jangan salah pakai total assets sebagai denominator.
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">3</div>
+          <div class="concept-title">Cash Conversion Cycle &amp; Working Capital Manipulation</div>
+        </div>
+        <div class="concept-body">
+          <p>Cash Conversion Cycle (CCC) mengukur berapa hari dibutuhkan perusahaan untuk mengkonversi investasi dalam inventory dan piutang menjadi kas bersih. CCC adalah alat deteksi manipulasi working capital yang sangat powerful untuk analis.</p>
+          <div class="formula">Days Sales Outstanding (DSO)  = AR / (Revenue / 365)
+  Makin tinggi = makin lama collect receivables
+  Sinyal: revenue recognition agresif, channel stuffing
+
+Days Inventory on Hand (DIO)  = Inventory / (COGS / 365)
+  Makin tinggi = inventory menumpuk
+  Sinyal: demand melambat, atau channel stuffing belum terealisir
+
+Days Payables Outstanding (DPO) = AP / (Purchases / 365)
+  Makin tinggi = perusahaan tunda bayar supplier
+  Bisa: negosiasi leverage ATAU cash squeeze
+
+Cash Conversion Cycle = DSO + DIO - DPO
+
+CCC negatif (contoh: Nestle -8 hari) = kas masuk SEBELUM bayar supplier
+  = kekuatan negosiasi/operasional sangat kuat</div>
+
+          <table class="assume-table">
+            <thead><tr><th>Red Flag</th><th>Sinyal Manipulasi</th><th>Mekanisme</th></tr></thead>
+            <tbody>
+              <tr><td>DSO meningkat signifikan</td><td>Revenue recognition agresif / channel stuffing</td><td>Barang dikirim ke distributor yang belum siap &rarr; AR naik, cash belum masuk</td></tr>
+              <tr><td>AR tumbuh &gt;&gt; Revenue</td><td>Premature revenue recognition</td><td>Kasus Sunbeam: AR +38.5% vs Revenue +18.7% di 1997</td></tr>
+              <tr><td>DPO naik tiba-tiba drastis</td><td>Boost OCF jangka pendek</td><td>Tunda bayar supplier &rarr; payables naik &rarr; OCF meningkat artifisial</td></tr>
+              <tr><td>DIO turun tapi DSO naik</td><td>Bill-and-hold / channel stuffing</td><td>Inventory diakui "terjual" sebelum benar-benar diterima buyer</td></tr>
+            </tbody>
+          </table>
+          <div class="insight">
+            <strong>Kasus Sunbeam (Chainsaw Al Dunlap):</strong> Channel stuffing, bill-and-hold sales, dan program diskon agresif mendorong DSO dari 77.7 hari (1995) ke 92.3 hari (1997). Sementara median industri stabil ~50 hari. Setelah rekonstruksi penuh (termasuk AR yang dijual/disekuritisasi senilai $59 juta), DSO sebenarnya 110.8 hari &mdash; 60 hari di atas rata-rata industri!
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">4</div>
+          <div class="concept-title">CFO Quality Indicators: Mendeteksi Manipulasi via Arus Kas</div>
+        </div>
+        <div class="concept-body">
+          <p>CFO umumnya lebih sulit dimanipulasi dibanding net income &mdash; tapi bukan berarti imun. Ada beberapa mekanisme manipulasi CFO yang penting dipahami analis.</p>
+          <table class="assume-table">
+            <thead><tr><th>Situasi</th><th>Indikasi</th><th>Contoh Kasus</th></tr></thead>
+            <tbody>
+              <tr><td><strong>NI positif + CFO negatif persisten</strong></td><td>Earnings berbasis accruals tidak sustainable; kemungkinan revenue fiktif atau receivables/inventory manipulasi</td><td>Allou Health &amp; Beauty: NI positif 3 tahun berturut-turut, CFO negatif semua &mdash; terbukti fraud inventory/revenue</td></tr>
+              <tr><td><strong>CFO &gt;&gt; NI secara misterius</strong></td><td>Opex yang dikapitalisasi jadi capex, memindahkan cash outflow dari CFO ke CFI</td><td>WorldCom: "line costs" (opex) dikapitalisasi &rarr; CFO $8B tapi NI hanya $1.5B di 2001. CFO tampak kuat tapi semu.</td></tr>
+              <tr><td><strong>CFO naik karena jual AR</strong></td><td>Peningkatan OCF bersifat one-off dan tidak sustainable; DSO turun artifisial</td><td>Sunbeam: jual AR $59 juta di akhir 1997 &rarr; DSO yang dilapor tampak lebih baik dari realita</td></tr>
+              <tr><td><strong>Cash flow klasifikasi misterius</strong></td><td>Manajemen memindahkan item dari CFO ke CFI (atau sebaliknya) untuk memanipulasi operating metrics</td><td>WorldCom: line costs = operating expense &rarr; salah diklasifikasi sebagai capital expenditure</td></tr>
+            </tbody>
+          </table>
+          <div class="formula">Karakteristik High-Quality CFO (untuk perusahaan established):
+  1. Positif secara konsisten
+  2. Dari sumber sustainable (operasi bisnis inti)
+  3. Cukup untuk cover capex, dividen, dan debt repayments
+  4. Volatilitas relatif rendah vs peers industry
+  5. CFO mendekati NI (tanpa perbedaan ekstrem yang unexplained)</div>
+
+          <div class="trap">
+            <div class="trap-label">Exam Trap &mdash; CFO &gt;&gt; NI bukan selalu "good"</div>
+            Model konvensional: CFO &gt; NI = high quality. Tapi WorldCom membuktikan sebaliknya: CFO bisa jauh melebihi NI karena <em>kapitalisasi opex</em>. Opex yang seharusnya ada di CFO dipindah ke CFI sebagai capex &mdash; sehingga CFO tampak lebih tinggi dari realitasnya. CFA exam SERING menguji pemahaman ini. Selalu investigasi alasan di balik divergensi besar CFO vs NI.
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">5</div>
+          <div class="concept-title">Quality Spectrum &amp; Indikator Eksternal Earnings Quality Rendah</div>
+        </div>
+        <div class="concept-body">
+          <p>CFA LM6 menyajikan sebuah <strong>Quality Spectrum</strong> dari laporan keuangan, dari yang terbaik ke yang terburuk. Penting untuk memahami di mana perusahaan berada dalam spektrum ini.</p>
+          <table class="assume-table">
+            <thead><tr><th>Level Spektrum</th><th>Deskripsi</th><th>Contoh</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Level 1 (Terbaik)</strong></td><td>GAAP-compliant, decision-useful, sustainable, adequate returns</td><td>High-quality companies dengan transparent disclosure</td></tr>
+              <tr><td><strong>Level 2</strong></td><td>GAAP-compliant, decision-useful, tapi earnings tidak sustainable / low quality</td><td>Perusahaan profitable karena siklus &mdash; bukan competitive advantage</td></tr>
+              <tr><td><strong>Level 3</strong></td><td>Within GAAP, tapi biased choices yang mengurangi decision-usefulness</td><td>Aggressive revenue recognition; classification shifting</td></tr>
+              <tr><td><strong>Level 4</strong></td><td>Within GAAP, tapi earnings management (Real EM atau Accounting EM)</td><td>Channel stuffing (Real EM); cookie-jar reserves (Accounting EM)</td></tr>
+              <tr><td><strong>Level 5</strong></td><td>Non-compliant accounting &mdash; melanggar GAAP</td><td>Enron related-party transactions, WorldCom capitalization</td></tr>
+              <tr><td><strong>Level 6 (Terburuk)</strong></td><td>Fictitious transactions &mdash; pure fabrication</td><td>Satyam: bank statements palsu, revenue fiktif</td></tr>
+            </tbody>
+          </table>
+          <p><strong>Indikator Eksternal Poor Earnings Quality:</strong></p>
+          <div class="insight">
+            <strong>1. SEC/OJK Enforcement Actions:</strong> Regulator mengumumkan investigasi atau sanksi. Biasanya baru diketahui setelah fakta &mdash; kurang berguna untuk deteksi dini, tapi sinyal ini wajib segera memicu re-evaluasi posisi.<br><br>
+            <strong>2. Restatements:</strong> Perusahaan merevisi laporan keuangan historis. Restatement adalah sinyal keras bahwa earnings historis tidak dapat diandalkan. Cek apakah restatement berulang &mdash; pola ini sangat mengkhawatirkan.<br><br>
+            <strong>3. Beating Benchmarks secara Konsisten dan Tipis:</strong> Perusahaan yang selalu "tepat" memenuhi atau sedikit melampaui consensus forecast bisa mengindikasikan earnings management. Academic research menemukan clustering anomali di tepat atas zero-benchmark. Interpretasi ini kontroversial tapi patut diperhatikan.<br><br>
+            <strong>4. Kasus James Chanos &amp; Enron:</strong> Short position November 2000 &mdash; 13 bulan sebelum kebangkrutan &mdash; murni berbasis FSA: return on capital &lt; cost of capital, revenue recognition agresif, related-party disclosure tidak transparan, one-time gains berulang, insider selling.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Quick Reference Cheat Sheet</div>
+    <div class="cheat-grid">
+      <div class="cheat-item">
+        <div class="cheat-key">Accruals Ratio (CF-Based)</div>
+        <div class="cheat-val">[NI &minus; (CFO + CFI)] / Avg NOA &rarr; tinggi = accruals besar = lower earnings quality</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Accruals Ratio (BS-Based)</div>
+        <div class="cheat-val">(NOA_t &minus; NOA_t-1) / Avg NOA &rarr; perubahan NOA besar perlu diinvestigasi penyebabnya</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Cash Conversion Cycle</div>
+        <div class="cheat-val">DSO + DIO &minus; DPO &rarr; CCC negatif = efisiensi tinggi; DSO naik &gt;&gt; revenue = red flag besar</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">CFO Red Flag #1</div>
+        <div class="cheat-val">NI positif + CFO negatif persisten &rarr; earnings berbasis accruals tidak sustainable (lihat: Allou)</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">CFO Red Flag #2</div>
+        <div class="cheat-val">CFO &gt;&gt; NI secara misterius &rarr; cek apakah ada kapitalisasi opex jadi capex (lihat: WorldCom)</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Classification Shifting</div>
+        <div class="cheat-val">Opex rutin direklasifikasi ke "special items" &rarr; total NI sama, tapi core earnings tampak lebih bersih (GAAP-compliant tapi misleading)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Practice &mdash; Item Set (30 min)</div>
+    <div class="practice-body">
+      <div class="vignette">
+        <div class="vignette-label">Vignette &mdash; PT Mitra Sejahtera Teknologi (MST)</div>
+        <div class="vignette-text">
+          <strong>Konteks:</strong> Dewi Rahayu, CFA, seorang equity analyst di PT BRI Danareksa Sekuritas, sedang mengevaluasi PT Mitra Sejahtera Teknologi (MST) &mdash; perusahaan software dan layanan IT yang listing di Bursa Efek Indonesia (IDX). MST melaporkan pertumbuhan revenue yang konsisten selama 3 tahun dan selalu "beat" consensus analyst forecast dengan margin yang sangat tipis. Dewi mengumpulkan data berikut:<br><br>
+          <strong>Data Keuangan MST (dalam Rp Miliar):</strong><br>
+          <em>FY2025:</em> Revenue 2.800 | Net Income 420 | CFO &minus;85 | CFI &minus;320<br>
+          Total Assets 4.200 | Cash &amp; ST Investments 450 | Total Liabilities 2.100 | Total Debt 800<br>
+          Accounts Receivable 680 | Inventory 140<br><br>
+          <em>FY2024:</em> Revenue 2.200 | Net Income 310 | CFO +180 | CFI &minus;280<br>
+          Total Assets 3.800 | Cash &amp; ST Investments 380 | Total Liabilities 1.900 | Total Debt 720<br>
+          Accounts Receivable 480 | Inventory 110<br><br>
+          <em>FY2023:</em> Total Assets 3.400 | Cash &amp; ST Investments 310 | Total Liabilities 1.700 | Total Debt 640<br><br>
+          <strong>Informasi Tambahan FY2025:</strong><br>
+          &bull; "Gains on sale of investment properties" Rp 95 miliar dimasukkan dalam Other Income.<br>
+          &bull; MST memperpanjang payment terms pelanggan enterprise dari Net 30 menjadi Net 75 efektif Q3 2025.<br>
+          &bull; Restructuring charges Rp 35 miliar dilaporkan di FY2025 (tahun ketiga berturut-turut).
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="q-num">PERTANYAAN 1 dari 4</div>
+        <div class="q-text">Hitung Cash-Flow-Based Accruals Ratio MST untuk FY2025. Apa kesimpulan yang paling tepat tentang earnings quality MST berdasarkan hasil ini?</div>
+        <div class="option" onclick="selectOption(this, 1, 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Accruals Ratio sekitar +18%; earnings berkualitas rendah karena accruals cukup tinggi, namun CFO positif di tahun sebelumnya menunjukkan pola yang tidak konsisten.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 1, 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Accruals Ratio sekitar +35%; earnings berkualitas sangat rendah &mdash; NI positif besar sementara CFO negatif adalah red flag paling kuat bahwa laba tidak didukung cash dan mungkin berbasis accruals manipulatif.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 1, 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Accruals Ratio sekitar &minus;8%; earnings berkualitas baik karena NOA menyusut, mengindikasikan earnings didominasi cash flows, bukan accruals.</div>
+        </div>
+        <div class="explanation correct" id="exp-1-correct" style="display:none;">
+          JAWABAN BENAR: B<br><br>
+          Kalkulasi langkah demi langkah:<br>
+          NOA_2025 = (4.200 &minus; 450) &minus; (2.100 &minus; 800) = 3.750 &minus; 1.300 = 2.450<br>
+          NOA_2024 = (3.800 &minus; 380) &minus; (1.900 &minus; 720) = 3.420 &minus; 1.180 = 2.240<br>
+          NOA_2023 = (3.400 &minus; 310) &minus; (1.700 &minus; 640) = 3.090 &minus; 1.060 = 2.030<br>
+          Avg NOA_2025 = (2.450 + 2.240) / 2 = 2.345<br>
+          CF-Based Accruals Ratio = [NI &minus; (CFO + CFI)] / Avg NOA<br>
+          = [420 &minus; (&minus;85 + &minus;320)] / 2.345<br>
+          = [420 &minus; (&minus;405)] / 2.345<br>
+          = 825 / 2.345 = 35.2%<br><br>
+          Ini sangat tinggi. Yang paling mengkhawatirkan: NI positif Rp 420 miliar tapi CFO NEGATIF Rp &minus;85 miliar. Ini red flag utama &mdash; persis seperti kasus Allou Health &amp; Beauty Care di kurikulum CFA. Perusahaan melaporkan laba tapi tidak menghasilkan kas dari operasi. Perpanjangan payment terms ke Net 75 memperkuat kecurigaan bahwa revenue diakui lebih awal dari seharusnya.
+        </div>
+        <div class="explanation incorrect" id="exp-1-wrong" style="display:none;">
+          Jawaban yang benar adalah B. Kalkulasi: NOA_2025 = (4.200&minus;450)&minus;(2.100&minus;800) = 2.450. NOA_2024 = (3.800&minus;380)&minus;(1.900&minus;720) = 2.240. Avg NOA = 2.345. CF-Accruals Ratio = [420&minus;(&minus;85+&minus;320)] / 2.345 = 825/2.345 = 35.2% &mdash; sangat tinggi. Ditambah fakta bahwa NI positif (+420) sementara CFO negatif (&minus;85) adalah red flag paling keras dalam earnings quality analysis.
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="q-num">PERTANYAAN 2 dari 4</div>
+        <div class="q-text">Hitung DSO MST untuk FY2025 dan FY2024. Apa implikasi perubahan DSO ini mengingat informasi perpanjangan payment terms?</div>
+        <div class="option" onclick="selectOption(this, 2, 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. DSO FY2025 = 88.6 hari, FY2024 = 79.6 hari. Kenaikan 9 hari wajar mengingat pertumbuhan revenue signifikan; tidak ada red flag material.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 2, 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. DSO FY2025 = 79.6 hari, FY2024 = 88.6 hari. DSO justru turun &mdash; berarti MST lebih efisien dalam collection dan revenue quality membaik.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 2, 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. DSO FY2025 = 88.6 hari, FY2024 = 79.6 hari. Kenaikan DSO bersamaan dengan perpanjangan payment terms ke Net 75 mengindikasikan revenue recognition agresif &mdash; MST mungkin pull forward sales dengan memberikan credit terms yang lebih longgar, mirip taktik channel stuffing Sunbeam.</div>
+        </div>
+        <div class="explanation correct" id="exp-2-correct" style="display:none;">
+          JAWABAN BENAR: C<br><br>
+          DSO FY2025 = AR / (Revenue/365) = 680 / (2.800/365) = 680 / 7.671 = 88.6 hari<br>
+          DSO FY2024 = 480 / (2.200/365) = 480 / 6.027 = 79.6 hari<br>
+          Kenaikan +9 hari (~11%) patut diperhatikan &mdash; apalagi MST secara eksplisit memperpanjang payment terms dari Net 30 ke Net 75 (2.5x lipat lebih panjang).<br><br>
+          Dalam konteks earnings manipulation: perpanjangan credit terms digunakan untuk mendorong pelanggan memesan lebih banyak sekarang (pull-forward sales). Revenue diakui saat pengiriman meski pelanggan punya 75 hari untuk bayar &rarr; AR naik drastis, revenue naik, tapi cash tidak masuk segera. Persis taktik yang digunakan Sunbeam sebelum skandalnya terungkap.
+        </div>
+        <div class="explanation incorrect" id="exp-2-wrong" style="display:none;">
+          Jawaban yang benar adalah C. DSO FY2025 = 680/(2.800/365) = 88.6 hari. DSO FY2024 = 480/(2.200/365) = 79.6 hari. DSO meningkat, bukan turun. Dan kenaikan ini dikombinasikan dengan perpanjangan payment terms dari Net 30 ke Net 75 adalah sinyal potensial revenue recognition agresif atau channel stuffing.
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="q-num">PERTANYAAN 3 dari 4</div>
+        <div class="q-text">MST melaporkan "gains on sale of investment properties" Rp 95 miliar dan restructuring charges Rp 35 miliar (tahun ketiga berturut-turut). Bagaimana Dewi sebaiknya memperlakukan kedua item ini dalam normalized earnings analysis?</div>
+        <div class="option" onclick="selectOption(this, 3, 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Kedua item adalah non-recurring. Adjusted NI = 420 &minus; 95 (hapus gain) + 35 (add back restructuring) = Rp 360 miliar.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 3, 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Gain on property sale harus dikeluarkan sebagai one-off. Restructuring yang berulang 3 tahun justru mencurigakan sebagai classification shifting &mdash; kemungkinan operating expense biasa yang disembunyikan dalam "special items" untuk menggelembungkan core earnings.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 3, 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Tidak perlu penyesuaian &mdash; GAAP mengharuskan disclosure yang cukup sehingga investor bisa menilai sendiri. Analyst tidak perlu intervensi lebih lanjut.</div>
+        </div>
+        <div class="explanation correct" id="exp-3-correct" style="display:none;">
+          JAWABAN BENAR: B<br><br>
+          Gain on sale of investment properties (Rp 95 miliar) jelas one-off: menjual properti investasi bukan aktivitas utama bisnis software/IT. Harus dikeluarkan dari normalized earnings.<br><br>
+          Restructuring charges yang berulang 3 tahun berturut-turut adalah sinyal classic classification shifting. Oleh definisi, "restructuring" seharusnya non-recurring. Jika terjadi tiap tahun, ini bukan extraordinary event &mdash; ini operating expense biasa yang menyamar. Preseden dari kurikulum CFA: Borden (SEC enforcement), AmeriServe (bankruptcy examiner), IBM (SEC scrutiny). Semua kasus ini melibatkan reklasifikasi beban operasi biasa ke "special items."<br><br>
+          Adjusted NI untuk normalized: 420 &minus; 95 (hapus gain) = 325. Dan mungkin juga harus +35 (add back restructuring jika dianggap recurring opex) = 360. Dengan demikian normalized NI bisa antara 325&ndash;360 vs reported 420.
+        </div>
+        <div class="explanation incorrect" id="exp-3-wrong" style="display:none;">
+          Jawaban yang benar adalah B. Jawaban A tidak tepat karena asumsi bahwa restructuring adalah non-recurring patut dipertanyakan ketika terjadi 3 tahun berturut-turut. Jawaban C salah karena GAAP-compliance tidak menjamin earnings quality &mdash; inilah inti dari LM6.
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="q-num">PERTANYAAN 4 dari 4</div>
+        <div class="q-text">Berdasarkan semua indikator (accruals ratio ~35%, CFO negatif, DSO naik + credit terms dilonggarkan, restructuring berulang, one-off gain), di mana MST paling tepat ditempatkan dalam Quality Spectrum of Financial Reports?</div>
+        <div class="option" onclick="selectOption(this, 4, 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Level 1 &mdash; GAAP-compliant, decision-useful, sustainable, adequate returns. MST memenuhi standar pelaporan tertinggi.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 4, 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Level 5&ndash;6 &mdash; Non-compliant accounting atau fictitious transactions. MST terbukti melanggar GAAP dengan praktek-praktek yang teridentifikasi.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 4, 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Level 3&ndash;4 &mdash; Within GAAP, tapi dengan biased choices dan potential earnings management. Earnings mungkin GAAP-compliant tapi tidak faithfully representasikan economic reality, sehingga decision-usefulness terganggu.</div>
+        </div>
+        <div class="explanation correct" id="exp-4-correct" style="display:none;">
+          JAWABAN BENAR: C<br><br>
+          MST menunjukkan pattern konsisten yang menempatkannya di area "Within GAAP, biased choices / earnings management" dalam Quality Spectrum:<br><br>
+          (1) Accruals ratio ~35% &rarr; earnings tidak didukung cash, persistensi dipertanyakan<br>
+          (2) NI positif + CFO negatif &rarr; laba bersumber dari accruals, bukan cash generation<br>
+          (3) DSO naik + credit terms relaksasi &rarr; potential revenue pull-forward / channel stuffing<br>
+          (4) Restructuring berulang &rarr; classification shifting (GAAP-compliant tapi misleading)<br>
+          (5) One-off gains &rarr; menyembunyikan underperformance operasional<br><br>
+          Belum ada bukti MST melanggar GAAP secara formal (Level 5&ndash;6). Tapi earning management melalui accounting choices (Level 3&ndash;4) sangat terindikasi. Dewi harus men-discount valuasi MST, gunakan normalized earnings yang disesuaikan, dan monitor closely untuk deteriorasi lebih lanjut.
+        </div>
+        <div class="explanation incorrect" id="exp-4-wrong" style="display:none;">
+          Jawaban yang benar adalah C. Dengan setidaknya 5 red flag yang teridentifikasi, MST jelas tidak berada di Level 1. Namun juga belum terbukti melanggar GAAP (Level 5&ndash;6). MST paling tepat di Level 3&ndash;4: GAAP-compliant tapi dengan biased choices dan potential earnings management yang mengurangi decision-usefulness laporan keuangannya.
+        </div>
+      </div>
+
+      <div class="score-panel" id="score-panel">
+        <div class="score-panel-text">Skor kamu:</div>
+        <div class="score-panel-value" id="score-value">0 / 4</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="CFA_L2_Day28.html" class="nav-btn">&larr; Day 28: Insurance Analysis</a>
+    <a href="CFA_L2_Day30.html" class="nav-btn">Day 30: Balance Sheet &amp; Footnotes &rarr;</a>
+  </div>
+
+</div>
+
+<script>
+  const answers = {};
+  const correct_answers = { 1: 'B', 2: 'C', 3: 'B', 4: 'C' };
+  let totalQ = 4;
+
+  function selectOption(el, qNum, choice) {
+    const block = el.closest('.question-block');
+    const opts = block.querySelectorAll('.option');
+    opts.forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+
+    block.querySelectorAll('.explanation').forEach(e => {
+      e.style.display = 'none';
+    });
+
+    const isCorrect = (choice === correct_answers[qNum]);
+    const expId = isCorrect ? 'exp-' + qNum + '-correct' : 'exp-' + qNum + '-wrong';
+    const exp = document.getElementById(expId);
+    if (exp) exp.style.display = 'block';
+
+    answers[qNum] = choice;
+
+    const answered = Object.keys(answers).length;
+    if (answered === totalQ) {
+      const score = Object.entries(answers).filter(([q, a]) => a === correct_answers[q]).length;
+      const panel = document.getElementById('score-panel');
+      document.getElementById('score-value').textContent = score + ' / ' + totalQ;
+      panel.classList.add('show');
+    }
+  }
+</script>
+</body>
+</html>

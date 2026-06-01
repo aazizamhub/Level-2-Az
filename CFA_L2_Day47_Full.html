@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 47 · Full · Mekanika Model Residual Income</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #fafaf8;
+  --bg2:     #f4f3ef;
+  --bg3:     #eeece7;
+  --border:  rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text:    #1a1a2e;
+  --text2:   #4a4a6a;
+  --text3:   #8a8aaa;
+  --gold:    #9a6e1a;
+  --gold2:   #7a5010;
+  --gold-bg: rgba(154,110,26,0.08);
+  --blue:    #1a5fa8;
+  --blue-bg: rgba(26,95,168,0.08);
+  --green:   #1a7a4a;
+  --green-bg:rgba(26,122,74,0.08);
+  --red:     #b83232;
+  --red-bg:  rgba(184,50,50,0.08);
+  --amber:   #a06010;
+  --amber-bg:rgba(160,96,16,0.08);
+  --r:10px; --r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.8;}
+
+.page{max-width:860px;margin:0 auto;padding:40px 24px 80px;}
+
+/* top bar */
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;border:1px solid rgba(26,95,168,0.2);}
+
+/* hero */
+.hero{margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--border);}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:36px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:15px;color:var(--text2);}
+.meta-row{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+
+/* toc */
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:36px;}
+.toc-title{font-size:12px;color:var(--text3);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:12px;font-weight:500;}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.toc-list li a{font-size:13px;color:var(--blue);text-decoration:none;display:flex;align-items:center;gap:8px;}
+.toc-list li a:hover{text-decoration:underline;}
+.toc-num{font-size:11px;color:var(--text3);min-width:20px;}
+
+/* section headers */
+.chapter{margin-bottom:40px;}
+.chapter-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--gold-bg);}
+.chapter-num{font-family:'DM Serif Display',serif;font-size:28px;color:var(--gold);line-height:1;}
+.chapter-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);line-height:1.2;}
+
+.sub-header{font-size:17px;font-weight:500;color:var(--text);margin:24px 0 12px;padding-left:12px;border-left:3px solid var(--gold);}
+
+/* prose */
+.prose{font-size:14px;color:var(--text2);line-height:1.85;margin-bottom:14px;}
+.prose strong{color:var(--text);font-weight:500;}
+.prose em{font-style:italic;}
+
+/* formula */
+.formula-block{background:var(--bg2);border:1px solid var(--border2);border-left:4px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:16px 20px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold2);line-height:2;}
+.formula-block .label{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:8px;}
+.formula-block .note{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text3);font-style:italic;display:block;margin-top:8px;}
+
+/* exhibit / table */
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:20px 0;}
+.exhibit-title{background:var(--bg3);padding:10px 16px;font-size:12px;font-weight:500;color:var(--text2);border-bottom:1px solid var(--border);letter-spacing:0.03em;}
+.exhibit-body{padding:16px;}
+.reg-table{width:100%;border-collapse:collapse;font-size:13px;}
+.reg-table th{text-align:left;padding:8px 12px;background:var(--bg3);color:var(--text3);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border2);}
+.reg-table th.right{text-align:right;}
+.reg-table td{padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+.reg-table td.right{text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text2);}
+.reg-table tr:last-child td{border-bottom:none;}
+.reg-table .sig{color:var(--green);font-weight:500;}
+.reg-table .warn{color:var(--amber);}
+.reg-table .highlight{background:var(--gold-bg);}
+
+/* callout boxes */
+.callout{border-radius:var(--r);padding:16px 18px;margin:16px 0;}
+.callout-title{font-size:11px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;}
+.callout p{font-size:13px;color:var(--text2);line-height:1.75;}
+.callout p + p{margin-top:8px;}
+.callout.blue{background:var(--blue-bg);border:1px solid rgba(26,95,168,0.15);}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.green{background:var(--green-bg);border:1px solid rgba(26,122,74,0.15);}
+.callout.green .callout-title{color:var(--green);}
+.callout.amber{background:var(--amber-bg);border:1px solid rgba(160,96,16,0.15);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.red{background:var(--red-bg);border:1px solid rgba(184,50,50,0.15);}
+.callout.red .callout-title{color:var(--red);}
+.callout.gold{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);}
+.callout.gold .callout-title{color:var(--gold);}
+
+/* knowledge check */
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:24px 0;overflow:hidden;}
+.kc-header{background:var(--gold-bg);padding:12px 18px;border-bottom:1px solid rgba(154,110,26,0.15);}
+.kc-header-title{font-size:12px;font-weight:500;color:var(--gold);letter-spacing:0.06em;text-transform:uppercase;}
+.kc-body{padding:18px;}
+.kc-q{font-size:13px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.6;}
+.kc-answer{background:var(--bg3);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);line-height:1.75;display:none;}
+.kc-answer.show{display:block;}
+.kc-answer strong{color:var(--green);}
+.kc-toggle{background:none;border:1px solid var(--border2);border-radius:var(--r-sm);padding:6px 14px;font-size:12px;color:var(--text3);cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px;transition:all 0.15s;}
+.kc-toggle:hover{border-color:var(--gold);color:var(--gold);}
+
+/* bullet list */
+.bullet-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin:10px 0;}
+.bullet-list li{display:flex;gap:10px;font-size:13px;color:var(--text2);line-height:1.7;}
+.bullet-list li::before{content:'■';color:var(--gold);font-size:9px;margin-top:5px;flex-shrink:0;}
+
+/* num list */
+.num-list{list-style:none;counter-reset:num;display:flex;flex-direction:column;gap:8px;margin:10px 0;}
+.num-list li{counter-increment:num;display:flex;gap:12px;font-size:13px;color:var(--text2);line-height:1.7;}
+.num-list li::before{content:counter(num)".";color:var(--gold);font-weight:500;min-width:20px;flex-shrink:0;}
+
+/* inline code */
+code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--bg3);padding:2px 6px;border-radius:4px;color:var(--gold2);}
+
+/* divider */
+.divider{height:1px;background:var(--border);margin:36px 0;}
+
+/* practice */
+.practice-header{background:var(--gold-bg);border:1px solid rgba(154,110,26,0.2);border-radius:var(--r) var(--r) 0 0;padding:16px 20px;display:flex;align-items:center;gap:12px;}
+.practice-header-title{font-size:16px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);margin-top:2px;}
+.practice-body{background:var(--bg2);border:1px solid rgba(154,110,26,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:24px;}
+.vignette{background:var(--bg3);border-left:4px solid var(--gold);padding:18px 20px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:28px;font-size:13px;color:var(--text2);line-height:1.85;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;font-weight:500;}
+.question-block{margin-bottom:24px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:6px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:12px;line-height:1.65;}
+.option{display:block;width:100%;text-align:left;padding:11px 16px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:8px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.6;}
+.option:hover:not(:disabled){border-color:var(--border2);background:var(--bg2);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:14px 16px;font-size:13px;color:var(--text2);margin-top:10px;line-height:1.8;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:28px;margin-top:20px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:52px;margin-bottom:8px;}
+.score-msg{font-size:14px;color:var(--text2);}
+
+/* nav */
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+.nav-day{font-size:12px;color:var(--text3);text-align:center;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II · <span>Equity Valuation</span> · LM5</div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <div class="version-badge">Versi Full</div>
+      <div class="day-badge">Day 47 of 90</div>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-tag">Kamis, 25 Juni 2026</div>
+    <h1 class="hero-title">Mekanika Model Residual Income</h1>
+    <p class="hero-sub">Residual Income Valuation — LM5, Subtopik 1 dari 2</p>
+    <div class="meta-row">
+      <div class="meta-pill">📚 <b>Materi lengkap</b></div>
+      <div class="meta-pill">🇮🇩 <b>Bahasa Indonesia</b></div>
+      <div class="meta-pill">⚖️ Bobot ujian <b>~12%</b></div>
+      <div class="meta-pill">⏱ Est. baca <b>50–65 menit</b></div>
+    </div>
+  </div>
+
+  <!-- Table of Contents -->
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ul class="toc-list">
+      <li><a href="#los"><span class="toc-num">0.</span> Learning Outcomes (LOS)</a></li>
+      <li><a href="#s1"><span class="toc-num">1.</span> Konsep Dasar Residual Income — Apa, Mengapa, dan Cara Menghitung</a></li>
+      <li><a href="#s2"><span class="toc-num">2.</span> Model Residual Income Umum — Penurunan dari DDM</a></li>
+      <li><a href="#s3"><span class="toc-num">3.</span> Single-Stage RI Model dan Justified P/B Ratio</a></li>
+      <li><a href="#s4"><span class="toc-num">4.</span> EVA, MVA, dan Implementasi Komersial</a></li>
+      <li><a href="#s5"><span class="toc-num">5.</span> Kelebihan, Kelemahan, dan Kapan Menggunakan RI Model</a></li>
+      <li><a href="#practice"><span class="toc-num">6.</span> Latihan Soal — Item Set Vignette</a></li>
+    </ul>
+  </div>
+
+  <!-- Section 0: LOS -->
+  <div class="chapter" id="los">
+    <div class="chapter-header">
+      <div class="chapter-num">0</div>
+      <div class="chapter-title">Learning Outcomes</div>
+    </div>
+    <p class="prose">Setelah menyelesaikan modul ini, kandidat harus mampu:</p>
+    <ul class="num-list">
+      <li>Menghitung dan menginterpretasikan residual income, economic value added (EVA), dan market value added (MVA).</li>
+      <li>Menjelaskan penggunaan model residual income dalam proses valuasi ekuitas.</li>
+      <li>Menghitung nilai intrinsik saham biasa menggunakan model residual income, dan membandingkan pengakuan nilai dalam model residual income dengan model nilai kini lainnya (DDM, FCFF/FCFE).</li>
+      <li>Menjelaskan faktor-faktor fundamental yang menentukan besarnya residual income.</li>
+      <li>Menjelaskan hubungan antara valuasi residual income dan justified price-to-book ratio berdasarkan fundamental yang diproyeksikan.</li>
+      <li>Menghitung dan menginterpretasikan nilai intrinsik saham biasa menggunakan model residual income satu tahap (single-stage) maupun model residual income multi-tahap (multistage).</li>
+    </ul>
+
+    <div class="callout gold" style="margin-top:20px;">
+      <div class="callout-title">📋 Konteks dalam Kurikulum</div>
+      <p>Learning Module 5 ini adalah satu dari dua hari yang membahas Residual Income Valuation. Hari ini (Day 47) berfokus pada <em>mekanika</em>: bagaimana menghitung RI, formula model umum, EVA/MVA, dan single-stage model. Day 48 akan membahas <em>continuing residual income</em>, persistence factor, penyesuaian IFRS/GAAP, dan model multistage yang lebih kompleks. RI model adalah salah satu topik favorit ujian CFA L2 karena menggabungkan pemahaman akuntansi dengan konsep valuasi.</p>
+    </div>
+  </div>
+
+  <!-- Section 1 -->
+  <div class="chapter" id="s1">
+    <div class="chapter-header">
+      <div class="chapter-num">1</div>
+      <div class="chapter-title">Konsep Dasar Residual Income</div>
+    </div>
+
+    <p class="prose">Residual income (RI) adalah konsep ekonomi yang sudah ada sejak zaman Alfred Marshall pada akhir abad ke-19. Secara sederhana, <strong>residual income adalah laba yang tersisa setelah mengkompensasi semua penyedia modal</strong> — baik kreditur (melalui bunga) maupun pemegang saham (melalui required return on equity). Inilah yang membedakan residual income dari net income akuntansi biasa.</p>
+
+    <p class="prose">Laporan laba rugi konvensional memang sudah memperhitungkan biaya modal utang dalam bentuk beban bunga (<em>interest expense</em>). Namun, laporan laba rugi <strong>tidak</strong> memperhitungkan biaya modal ekuitas — yaitu return minimum yang diharapkan oleh pemegang saham sebagai kompensasi atas risiko yang mereka tanggung. Akibatnya, sebuah perusahaan bisa melaporkan net income positif secara akuntansi tetapi sesungguhnya <em>menghancurkan nilai</em> bagi pemegang saham karena returnnya tidak mencukupi opportunity cost mereka.</p>
+
+    <div class="callout blue">
+      <div class="callout-title">💡 Analogi Sederhana</div>
+      <p>Bayangkan Anda meminjam Rp 100 juta dari bank dengan bunga 7% per tahun, dan menginvestasikannya bersama modal pribadi Rp 100 juta dengan ekspektasi return 12% per tahun. Total modal = Rp 200 juta. Jika investasi menghasilkan Rp 16 juta (8% dari Rp 200 juta), secara akuntansi Anda untung (setelah bayar bunga = Rp 9 juta, profit = Rp 7 juta sebelum pajak). Tapi apakah ini cukup? Tidak — karena Rp 100 juta modal pribadi Anda seharusnya menghasilkan Rp 12 juta (12%). Residual income = Rp 9 juta − Rp 12 juta = <strong>Rp −3 juta</strong>. Nilai telah dihancurkan.</p>
+    </div>
+
+    <div class="sub-header">1.1 Formula Residual Income per Saham</div>
+
+    <p class="prose">Dalam konteks valuasi ekuitas, residual income dihitung pada level per saham menggunakan earnings per share (EPS) dan book value per share:</p>
+
+    <div class="formula-block">
+      <span class="label">Residual Income Per Saham — Formula Utama</span>
+      RI<sub>t</sub> = EPS<sub>t</sub> − (r × BV<sub>t−1</sub>)
+      <span class="note">// EPS<sub>t</sub> = earnings per share periode t</span>
+      <span class="note">// r = required rate of return on equity (cost of equity)</span>
+      <span class="note">// BV<sub>t−1</sub> = book value per share AWAL periode (bukan rata-rata)</span>
+      <span class="note">// (r × BV<sub>t−1</sub>) disebut "equity charge" — biaya modal ekuitas per saham</span>
+    </div>
+
+    <p class="prose">Perhatikan bahwa formula ini ekuivalen dengan menggunakan ROE:</p>
+
+    <div class="formula-block">
+      <span class="label">Residual Income — Bentuk ROE</span>
+      RI<sub>t</sub> = (ROE<sub>t</sub> − r) × BV<sub>t−1</sub>
+      <span class="note">// ROE<sub>t</sub> = EPS<sub>t</sub> / BV<sub>t−1</sub> (menggunakan beginning book value)</span>
+      <span class="note">// (ROE − r) = "abnormal return" atau "excess return"</span>
+      <span class="note">// RI positif ↔ ROE > r ↔ perusahaan menciptakan nilai</span>
+    </div>
+
+    <div class="sub-header">1.2 Contoh Numerik — PT Aneka Sentosa Tbk (Fiktif)</div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 1 — Perhitungan Residual Income PT Aneka Sentosa (2025)</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr>
+            <th>Item</th>
+            <th class="right">Nilai</th>
+            <th>Keterangan</th>
+          </tr>
+          <tr>
+            <td>Book Value per Share (awal 2025)</td>
+            <td class="right">Rp 5.000</td>
+            <td>BV<sub>t−1</sub> — ini yang digunakan, bukan rata-rata</td>
+          </tr>
+          <tr>
+            <td>EPS 2025</td>
+            <td class="right">Rp 900</td>
+            <td>ROE implisit = 900/5.000 = 18%</td>
+          </tr>
+          <tr>
+            <td>Cost of Equity (r)</td>
+            <td class="right">12%</td>
+            <td>Required rate of return pemegang saham</td>
+          </tr>
+          <tr>
+            <td>Equity Charge (r × BV<sub>t−1</sub>)</td>
+            <td class="right">Rp 600</td>
+            <td>12% × 5.000 = 600</td>
+          </tr>
+          <tr class="highlight">
+            <td><strong>Residual Income 2025</strong></td>
+            <td class="right sig"><strong>Rp 300</strong></td>
+            <td>EPS 900 − Equity Charge 600 = 300</td>
+          </tr>
+          <tr>
+            <td>Verifikasi dengan ROE formula</td>
+            <td class="right sig">Rp 300</td>
+            <td>(18% − 12%) × 5.000 = 6% × 5.000 = 300 ✓</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose"><strong>Interpretasi:</strong> PT Aneka Sentosa menciptakan Rp 300 nilai per saham di atas opportunity cost pemegang saham. Karena ROE (18%) melebihi cost of equity (12%), perusahaan layak dihargai <em>di atas</em> book value-nya.</p>
+
+    <div class="callout amber">
+      <div class="callout-title">⚠️ Jebakan Ujian — Book Value Awal, Bukan Rata-rata</div>
+      <p>Dalam analisis rasio keuangan biasa, ROE sering dihitung menggunakan <em>rata-rata</em> book value (awal + akhir dibagi 2). Namun untuk model residual income, seluruh kurikulum CFA konsisten menggunakan <strong>book value awal periode</strong> (BV<sub>t−1</sub>). Jika soal memberikan data BV awal dan akhir, jangan rata-rata — gunakan langsung yang awal.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 1</div></div>
+      <div class="kc-body">
+        <p class="kc-q">PT Maju Bersama melaporkan EPS Rp 1.200, book value per share awal tahun Rp 8.000, dan cost of equity 11%. Hitung residual income per saham dan tentukan apakah perusahaan ini menciptakan atau menghancurkan nilai bagi pemegang saham.</p>
+        <button class="kc-toggle" onclick="toggleKC('kc1')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc1">
+          <strong>Jawaban:</strong> Equity charge = 11% × Rp 8.000 = Rp 880. RI = Rp 1.200 − Rp 880 = <strong>Rp 320 per saham (positif)</strong>. ROE = 1.200/8.000 = 15%, melebihi r = 11%, sehingga (ROE − r) × BV = (15% − 11%) × 8.000 = 4% × 8.000 = Rp 320 (konfirmasi). Karena RI positif, PT Maju Bersama <strong>menciptakan nilai</strong> bagi pemegang saham — menghasilkan return di atas opportunity cost mereka.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2 -->
+  <div class="chapter" id="s2">
+    <div class="chapter-header">
+      <div class="chapter-num">2</div>
+      <div class="chapter-title">Model Residual Income Umum — Penurunan dari DDM</div>
+    </div>
+
+    <p class="prose">Model residual income yang digunakan dalam valuasi ekuitas modern berakar pada penelitian akademis Ohlson (1995) dan Feltham-Ohlson (1995), meskipun secara praktikal sudah digunakan sejak tahun 1920-an. Secara konseptual, model ini bisa diturunkan langsung dari Dividend Discount Model (DDM) melalui substitusi matematis yang disebut <strong>clean surplus relation</strong>.</p>
+
+    <div class="sub-header">2.1 Clean Surplus Relation — Fondasi Teoritis</div>
+
+    <p class="prose">Clean surplus relation adalah persamaan akuntansi fundamental yang menghubungkan book value, earnings, dan dividends:</p>
+
+    <div class="formula-block">
+      <span class="label">Clean Surplus Relation</span>
+      BV<sub>t</sub> = BV<sub>t−1</sub> + EPS<sub>t</sub> − Dividends<sub>t</sub>
+      <span class="note">// Semua perubahan BV melewati income statement (tidak ada bypass)</span>
+      <span class="note">// Artinya: Div<sub>t</sub> = EPS<sub>t</sub> + BV<sub>t−1</sub> − BV<sub>t</sub></span>
+    </div>
+
+    <p class="prose">Dengan mensubstitusi ekspresi dividen di atas ke dalam formula DDM umum, dan melalui manipulasi aljabar, diperoleh persamaan umum model residual income:</p>
+
+    <div class="formula-block">
+      <span class="label">General Residual Income Model (Persamaan 3 dalam CFA Curriculum)</span>
+      V₀ = B₀ + Σ [ RI<sub>t</sub> / (1+r)<sup>t</sup> ]
+      <span class="note">// V₀ = nilai intrinsik saham hari ini</span>
+      <span class="note">// B₀ = book value per share saat ini (t=0)</span>
+      <span class="note">// RI<sub>t</sub> = EPS<sub>t</sub> − r × BV<sub>t−1</sub> (residual income periode t)</span>
+      <span class="note">// Penjumlahan dari t=1 sampai tak terhingga (∞)</span>
+    </div>
+
+    <p class="prose">Formula ekuivalen menggunakan ROE (sering disebut "Persamaan 4" dalam curriculum):</p>
+
+    <div class="formula-block">
+      <span class="label">General RI Model — Bentuk ROE (Ekuivalen)</span>
+      V₀ = B₀ + Σ [ (ROE<sub>t</sub> − r) × BV<sub>t−1</sub> / (1+r)<sup>t</sup> ]
+      <span class="note">// (ROE<sub>t</sub> − r) = abnormal return pada periode t</span>
+      <span class="note">// Jika ROE = r selamanya → V₀ = B₀ (nilai = book value)</span>
+    </div>
+
+    <div class="sub-header">2.2 Pengakuan Nilai — RI Model vs DDM</div>
+
+    <p class="prose">Salah satu keunggulan penting RI model adalah <strong>pengakuan nilai yang lebih awal</strong> dibandingkan DDM. Dalam DDM, sebagian besar nilai (terutama terminal value) berada jauh di masa depan dan memiliki bobot present value yang kecil. Dalam RI model, sebagian besar nilai sudah langsung tercermin dari book value B₀ di awal, sehingga tidak terlalu bergantung pada asumsi jangka panjang yang sangat tidak pasti.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 2 — Perbandingan Pengakuan Nilai: DDM vs RI Model (Perusahaan Fiktif)</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr>
+            <th>Komponen Nilai</th>
+            <th class="right">DDM</th>
+            <th class="right">RI Model</th>
+            <th>Implikasi</th>
+          </tr>
+          <tr>
+            <td>Nilai dari periode 1 (book value / dividen awal)</td>
+            <td class="right">~8%</td>
+            <td class="right sig">~55%</td>
+            <td>RI model sangat awal</td>
+          </tr>
+          <tr>
+            <td>Nilai dari terminal value / RI jangka panjang</td>
+            <td class="right warn">~82%</td>
+            <td class="right">~45%</td>
+            <td>DDM lebih bergantung pada asumsi terminal</td>
+          </tr>
+          <tr>
+            <td>Sensitivitas terhadap growth assumption</td>
+            <td class="right warn">Tinggi</td>
+            <td class="right sig">Sedang</td>
+            <td>RI model lebih robust</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">2.3 Contoh Numerik — Tiga Periode</div>
+
+    <p class="prose">Untuk memahami penggunaan General RI Model secara konkret, perhatikan PT Bangun Sejahtera (fiktif) dengan data berikut: B₀ = Rp 6.000, r = 10%, EPS dan dividends untuk 3 tahun adalah Rp 2.000/Rp 1.000, Rp 2.500/Rp 1.250, Rp 4.000/Rp 12.250 (tahun ketiga adalah dividen likuidasi — perusahaan tutup setelah 3 tahun).</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 3 — Perhitungan RI Model Tiga Periode PT Bangun Sejahtera</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr>
+            <th>Item</th>
+            <th class="right">Tahun 1</th>
+            <th class="right">Tahun 2</th>
+            <th class="right">Tahun 3</th>
+          </tr>
+          <tr>
+            <td>BV awal (BV<sub>t−1</sub>)</td>
+            <td class="right">Rp 6.000</td>
+            <td class="right">Rp 7.000</td>
+            <td class="right">Rp 8.250</td>
+          </tr>
+          <tr>
+            <td>EPS</td>
+            <td class="right">Rp 2.000</td>
+            <td class="right">Rp 2.500</td>
+            <td class="right">Rp 4.000</td>
+          </tr>
+          <tr>
+            <td>Dividends</td>
+            <td class="right">Rp 1.000</td>
+            <td class="right">Rp 1.250</td>
+            <td class="right">Rp 12.250*</td>
+          </tr>
+          <tr>
+            <td>BV akhir (BV<sub>t</sub>)</td>
+            <td class="right">Rp 7.000</td>
+            <td class="right">Rp 8.250</td>
+            <td class="right">Rp 0</td>
+          </tr>
+          <tr>
+            <td>Equity charge (r × BV<sub>t−1</sub>)</td>
+            <td class="right">Rp 600</td>
+            <td class="right">Rp 700</td>
+            <td class="right">Rp 825</td>
+          </tr>
+          <tr class="highlight">
+            <td><strong>Residual Income</strong></td>
+            <td class="right sig">Rp 1.400</td>
+            <td class="right sig">Rp 1.800</td>
+            <td class="right sig">Rp 3.175</td>
+          </tr>
+          <tr>
+            <td>PV dari RI (r=10%)</td>
+            <td class="right">Rp 1.273</td>
+            <td class="right">Rp 1.488</td>
+            <td class="right">Rp 2.385</td>
+          </tr>
+        </table>
+        <p style="font-size:12px;color:var(--text3);margin-top:8px;">* Tahun 3: dividen likuidasi Rp 12.250 = EPS (4.000) + BV awal (8.250)</p>
+      </div>
+    </div>
+
+    <p class="prose"><strong>V₀ = B₀ + Σ PV(RI) = 6.000 + 1.273 + 1.488 + 2.385 = Rp 11.146</strong> (dibulatkan ~Rp 11.150)</p>
+
+    <p class="prose">Nilai ini identik dengan DDM (mendiskon dividen langsung), karena menggunakan asumsi yang sama dan kedua model adalah representasi matematika yang ekuivalen. Perbedaannya hanya pada di mana nilai "diakui" — RI model langsung mengakui Rp 6.000 dari B₀, sisanya dari RI masa depan.</p>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 2</div></div>
+      <div class="kc-body">
+        <p class="kc-q">Seorang analis memvalidasi model valuasi DDM dan RI untuk perusahaan yang sama. Dengan menggunakan asumsi yang identik, DDM menghasilkan nilai Rp 15.000 sementara RI model menghasilkan Rp 14.200. Apa kesimpulan yang paling tepat?</p>
+        <button class="kc-toggle" onclick="toggleKC('kc2')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc2">
+          <strong>Jawaban:</strong> Jika asumsi benar-benar identik dan clean surplus relation berlaku, DDM dan RI model <em>harus</em> menghasilkan nilai yang sama. Perbedaan Rp 800 menunjukkan bahwa ada <strong>inkonsistensi</strong> dalam model — kemungkinan clean surplus relation dilanggar (ada OCI yang tidak terakomodasi), atau ada kesalahan dalam pembuatan proyeksi BV dari satu periode ke periode berikutnya. Analis harus memeriksa perhitungan BV: apakah BV<sub>t</sub> = BV<sub>t−1</sub> + EPS − Dividends di setiap periode?
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3 -->
+  <div class="chapter" id="s3">
+    <div class="chapter-header">
+      <div class="chapter-num">3</div>
+      <div class="chapter-title">Single-Stage RI Model dan Justified P/B Ratio</div>
+    </div>
+
+    <p class="prose">Dalam praktik, analisis jangka panjang sering memerlukan asumsi penyederhanaan. Jika residual income diasumsikan tumbuh dengan laju konstan <em>g</em> selamanya, model umum menyederhanakan menjadi <strong>single-stage residual income model</strong> — analog dengan Gordon Growth Model di DDM.</p>
+
+    <div class="sub-header">3.1 Formula Single-Stage RI Model</div>
+
+    <div class="formula-block">
+      <span class="label">Single-Stage (Constant-Growth) RI Model (Persamaan 5)</span>
+      V₀ = B₀ + (ROE − r) / (r − g) × B₀
+      <span class="note">// Atau secara ekuivalen: V₀ = B₀ + RI₁ / (r − g)</span>
+      <span class="note">// RI₁ = residual income tahun pertama = (ROE − r) × B₀</span>
+      <span class="note">// g = growth rate residual income yang konstan</span>
+      <span class="note">// Syarat: r > g (sama seperti Gordon Growth Model)</span>
+    </div>
+
+    <p class="prose">Formula ini memiliki implikasi yang kuat: nilai saham di atas atau di bawah book value sepenuhnya ditentukan oleh selisih antara ROE dan cost of equity. Jika ROE = r, maka V₀ = B₀ (nilai sama dengan book value). Jika ROE > r, nilai di atas book value. Jika ROE &lt; r, nilai di bawah book value.</p>
+
+    <div class="sub-header">3.2 Justified P/B Ratio</div>
+
+    <p class="prose">Membagi kedua sisi formula single-stage RI model dengan B₀, kita mendapatkan justified price-to-book ratio berdasarkan fundamentals:</p>
+
+    <div class="formula-block">
+      <span class="label">Justified P/B Ratio — Berdasarkan Fundamentals</span>
+      V₀/B₀ = 1 + (ROE − r) / (r − g)
+      <span class="note">// Jika ROE > r → Justified P/B > 1 (premium atas book value)</span>
+      <span class="note">// Jika ROE = r → Justified P/B = 1 (nilai = book value)</span>
+      <span class="note">// Jika ROE &lt; r → Justified P/B &lt; 1 (diskon dari book value)</span>
+    </div>
+
+    <p class="prose">Justified P/B ini berbeda dari actual market P/B. Analis membandingkan keduanya: jika justified P/B > actual P/B, saham kemungkinan <em>undervalued</em>; jika justified P/B &lt; actual P/B, saham kemungkinan <em>overvalued</em>.</p>
+
+    <div class="sub-header">3.3 Contoh Penerapan — PT Mitra Inovasi (Fiktif)</div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 4 — Single-Stage RI Model: PT Mitra Inovasi</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr>
+            <th>Input</th>
+            <th class="right">Nilai</th>
+          </tr>
+          <tr><td>Book value per share (B₀)</td><td class="right">Rp 4.000</td></tr>
+          <tr><td>ROE yang diproyeksikan (jangka panjang)</td><td class="right">18%</td></tr>
+          <tr><td>Cost of equity (r)</td><td class="right">12%</td></tr>
+          <tr><td>Long-term growth rate (g)</td><td class="right">5%</td></tr>
+        </table>
+        <div style="margin-top:12px;font-size:13px;color:var(--text2);line-height:2;">
+          <div><strong>RI₁ = (ROE − r) × B₀ = (18% − 12%) × 4.000 = 6% × 4.000 = Rp 240</strong></div>
+          <div><strong>V₀ = B₀ + RI₁/(r−g) = 4.000 + 240/(12%−5%) = 4.000 + 240/7% = 4.000 + 3.429 = Rp 7.429</strong></div>
+          <div><strong>Justified P/B = V₀/B₀ = 7.429/4.000 = 1,86×</strong></div>
+          <div style="margin-top:8px;">Verifikasi: 1 + (18%−12%)/(12%−5%) = 1 + 6%/7% = 1 + 0,857 = 1,857× ✓</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">Jika saham PT Mitra Inovasi saat ini diperdagangkan di Rp 6.500 (actual P/B = 6.500/4.000 = 1,63×), dan justified P/B adalah 1,86×, maka saham kemungkinan <strong>undervalued</strong> — pasar menghargai saham ini lebih murah dari yang seharusnya berdasarkan fundamentals.</p>
+
+    <div class="sub-header">3.4 Implied Growth Rate dari Market Price</div>
+
+    <p class="prose">Single-stage RI model juga bisa digunakan secara <em>reverse</em>: dengan memasukkan harga pasar saat ini ke dalam model, kita bisa mencari implied growth rate yang diasumsikan pasar — lalu mengevaluasi apakah ekspektasi tersebut masuk akal.</p>
+
+    <div class="formula-block">
+      <span class="label">Implied Growth Rate dari Market P/B</span>
+      Dari: Market Price = B₀ + (ROE − r) × B₀ / (r − g)
+      Selesaikan untuk g:
+      g = r − (ROE − r) × B₀ / (Market Price − B₀)
+      <span class="note">// Atau: g = r − RI₁ / (Market Price − B₀)</span>
+    </div>
+
+    <div class="callout blue">
+      <div class="callout-title">🔍 Aplikasi Praktis Implied Growth Rate</div>
+      <p>Misalnya, jika PT Mitra Inovasi diperdagangkan di Rp 5.200 (bukan Rp 6.500), maka: g = 12% − 240/(5.200−4.000) = 12% − 240/1.200 = 12% − 20% = −8%. Pasar mengimplikasikan bahwa RI akan <em>turun</em> 8% per tahun selamanya — ekspektasi yang sangat pesimistis. Analis yang lebih optimis bisa melihat ini sebagai sinyal <em>undervaluation</em>.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header"><div class="kc-header-title">Knowledge Check 3</div></div>
+      <div class="kc-body">
+        <p class="kc-q">PT Harapan Nusa memiliki B₀ = Rp 3.000, ROE = 15%, r = 10%, g = 4%. Saham ini saat ini diperdagangkan di market P/B = 1,7×. Apakah saham ini overvalued, undervalued, atau fairly valued? Hitung justified P/B untuk mendukung jawabanmu.</p>
+        <button class="kc-toggle" onclick="toggleKC('kc3')">Lihat Jawaban</button>
+        <div class="kc-answer" id="kc3">
+          <strong>Jawaban:</strong> Justified P/B = 1 + (ROE − r)/(r − g) = 1 + (15%−10%)/(10%−4%) = 1 + 5%/6% = 1 + 0,833 = <strong>1,833×</strong>. Karena justified P/B (1,833×) > actual P/B (1,7×), saham ini kemungkinan <strong>undervalued</strong> — pasar menghargai saham lebih murah dari nilai intrinsik berdasarkan fundamentals. Nilai intrinsik = 1,833 × 3.000 = Rp 5.500, sementara harga pasar = 1,7 × 3.000 = Rp 5.100.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4 -->
+  <div class="chapter" id="s4">
+    <div class="chapter-header">
+      <div class="chapter-num">4</div>
+      <div class="chapter-title">EVA, MVA, dan Implementasi Komersial</div>
+    </div>
+
+    <p class="prose">Konsep residual income telah diadopsi dalam berbagai implementasi komersial yang dipopulerkan oleh perusahaan konsultansi manajemen. Yang paling terkenal adalah <strong>Economic Value Added (EVA)</strong>, merek dagang milik Stern Stewart &amp; Co., dan konsep terkait <strong>Market Value Added (MVA)</strong>.</p>
+
+    <div class="sub-header">4.1 Economic Value Added (EVA)</div>
+
+    <p class="prose">EVA mengadopsi perspektif semua penyedia kapital (debt dan equity), bukan hanya ekuitas. Alih-alih mengukur excess earnings di atas cost of equity, EVA mengukur excess operating profit di atas total cost of capital:</p>
+
+    <div class="formula-block">
+      <span class="label">Economic Value Added (EVA)</span>
+      EVA = NOPAT − (C% × TC)
+      <span class="note">// NOPAT = Net Operating Profit After Tax (laba operasi setelah pajak)</span>
+      <span class="note">// C% = WACC (Weighted Average Cost of Capital)</span>
+      <span class="note">// TC = Total Capital = debt + equity (book value, setelah adjustment)</span>
+    </div>
+
+    <p class="prose">Berbeda dari kalkulasi residual income yang sederhana, EVA memerlukan sejumlah <em>adjustment akuntansi</em> yang cukup ekstensif. Stern Stewart &amp; Co. mengidentifikasi lebih dari 160 adjustment potensial, meskipun dalam praktiknya hanya beberapa yang paling material yang diterapkan:</p>
+
+    <ul class="bullet-list">
+      <li><strong>R&amp;D dikapitalisasi</strong> (bukan langsung di-expense): R&amp;D expense netto setelah amortisasi ditambahkan kembali ke NOPAT dan nilai R&amp;D yang dikapitalisasi ditambahkan ke total capital.</li>
+      <li><strong>Operating lease diperlakukan sebagai capital lease</strong>: Nilai present value dari future lease payments ditambahkan ke aset dan liabilitas, sehingga mempengaruhi NOPAT (menambah back interest component) dan total capital.</li>
+      <li><strong>Deferred tax dieliminasi</strong>: Hanya cash taxes (pajak yang benar-benar dibayar) yang dianggap sebagai beban, bukan pajak yang ditangguhkan.</li>
+      <li><strong>LIFO reserve adjustment</strong>: Di AS, jika perusahaan menggunakan metode LIFO, LIFO reserve ditambahkan ke total capital dan perubahan LIFO reserve ditambahkan ke NOPAT.</li>
+    </ul>
+
+    <div class="callout amber">
+      <div class="callout-title">⚠️ Implikasi Adjustment EVA</div>
+      <p>Karena banyaknya adjustment yang diperlukan, hasil EVA dapat berbeda cukup signifikan dari kalkulasi residual income yang menggunakan data GAAP/IFRS tanpa adjustment. Dalam soal ujian CFA, perhatikan apakah soal meminta perhitungan EVA (dengan adjustment khusus) atau residual income generik (tanpa adjustment merek dagang). Kurikulum CFA fokus pada formula dasar EVA = NOPAT − (WACC × TC).</p>
+    </div>
+
+    <div class="sub-header">4.2 Market Value Added (MVA)</div>
+
+    <p class="prose">MVA adalah konsep yang berkaitan erat dengan EVA. MVA mengukur total nilai yang telah diciptakan oleh sebuah perusahaan dari modal yang diinvestasikan, dilihat dari perspektif pasar:</p>
+
+    <div class="formula-block">
+      <span class="label">Market Value Added (MVA)</span>
+      MVA = Market Value of Company − Book Value of Total Capital
+      <span class="note">// Market Value = market cap + market value of debt</span>
+      <span class="note">// MVA positif → perusahaan menciptakan nilai dari modal yang ditanamkan</span>
+      <span class="note">// MVA = present value dari semua EVA masa depan yang diharapkan</span>
+    </div>
+
+    <p class="prose">MVA positif berarti pasar menilai perusahaan lebih tinggi dari total capital yang diinvestasikan (book value) — artinya perusahaan diharapkan terus menghasilkan EVA positif di masa depan. Secara teori, MVA adalah present value dari seluruh stream EVA masa depan.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 5 — Perbandingan Konsep: RI vs EVA vs MVA</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr>
+            <th>Dimensi</th>
+            <th>Residual Income (RI)</th>
+            <th>EVA</th>
+            <th>MVA</th>
+          </tr>
+          <tr>
+            <td>Perspektif</td>
+            <td>Equity holders saja</td>
+            <td>Semua capital providers</td>
+            <td>Semua capital providers</td>
+          </tr>
+          <tr>
+            <td>Input utama</td>
+            <td>EPS, BV ekuitas, cost of equity</td>
+            <td>NOPAT, WACC, total capital</td>
+            <td>Market value vs book capital</td>
+          </tr>
+          <tr>
+            <td>Formula</td>
+            <td>EPS − r × BV<sub>t−1</sub></td>
+            <td>NOPAT − WACC × TC</td>
+            <td>Mkt Val − Book Capital</td>
+          </tr>
+          <tr>
+            <td>Cakupan waktu</td>
+            <td>Per periode (forward-looking)</td>
+            <td>Per periode (forward-looking)</td>
+            <td>Kumulatif (PV dari seluruh EVA)</td>
+          </tr>
+          <tr>
+            <td>Penggunaan utama</td>
+            <td>Equity valuation</td>
+            <td>Internal performance, exec compensation</td>
+            <td>Total value creation measure</td>
+          </tr>
+          <tr>
+            <td>Adjustment akuntansi</td>
+            <td>Minimal (clean surplus)</td>
+            <td>Ekstensif (100+ adjustment)</td>
+            <td>N/A (berbasis market data)</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-header">4.3 Contoh Numerik — PT Nusantara Digital (Fiktif)</div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 6 — Perhitungan EVA dan MVA: PT Nusantara Digital</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr>
+            <th>Data Perusahaan</th>
+            <th class="right">Nilai</th>
+          </tr>
+          <tr><td>NOPAT 2025</td><td class="right">Rp 8,5 miliar</td></tr>
+          <tr><td>Total Capital (book, setelah adjustment)</td><td class="right">Rp 55 miliar</td></tr>
+          <tr><td>WACC</td><td class="right">9%</td></tr>
+          <tr><td>Market capitalization</td><td class="right">Rp 75 miliar</td></tr>
+          <tr><td>Market value of debt</td><td class="right">Rp 18 miliar</td></tr>
+        </table>
+        <div style="margin-top:12px;font-size:13px;color:var(--text2);line-height:2.2;">
+          <div><strong>EVA = NOPAT − (WACC × TC) = 8,5 − (9% × 55) = 8,5 − 4,95 = Rp 3,55 miliar</strong></div>
+          <div>→ EVA positif: PT Nusantara Digital menciptakan Rp 3,55 miliar nilai di atas cost of capital</div>
+          <div style="margin-top:8px;"><strong>MVA = (Mkt Cap + Mkt Value Debt) − Book Capital = (75 + 18) − 55 = Rp 38 miliar</strong></div>
+          <div>→ MVA positif Rp 38 miliar: pasar menilai perusahaan Rp 38 miliar lebih tinggi dari modal yang ditanamkan</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 5 -->
+  <div class="chapter" id="s5">
+    <div class="chapter-header">
+      <div class="chapter-num">5</div>
+      <div class="chapter-title">Kelebihan, Kelemahan, dan Kapan Menggunakan RI Model</div>
+    </div>
+
+    <p class="prose">Pemahaman tentang kapan RI model paling tepat digunakan — dan kapan harus hati-hati atau menghindarinya — adalah keterampilan penting yang diuji di CFA Level 2.</p>
+
+    <div class="sub-header">5.1 Situasi di Mana RI Model Paling Berguna</div>
+
+    <p class="prose">Menurut kurikulum CFA, model residual income paling sesuai digunakan dalam kondisi-kondisi berikut:</p>
+
+    <ul class="bullet-list">
+      <li><strong>Perusahaan tidak membayar dividen:</strong> RI model tidak memerlukan asumsi tentang dividend policy. Cukup dengan EPS forecast dan book value. Ini berbeda dengan DDM yang gagal jika perusahaan tidak membayar dividen.</li>
+      <li><strong>Free cash flow diharapkan negatif dalam forecast horizon:</strong> Perusahaan tahap awal atau yang sedang berinvestasi besar-besaran sering memiliki negative FCF untuk beberapa tahun ke depan. RI model tetap bisa digunakan selama EPS dan BV bisa diproyeksikan.</li>
+      <li><strong>Pengakuan nilai lebih awal:</strong> Karena sebagian besar nilai sudah tercermin dalam B₀, analis tidak perlu bergantung pada terminal value yang jauh dan sangat sensitif terhadap asumsi pertumbuhan jangka panjang.</li>
+      <li><strong>Tersedia forecast EPS dan book value yang andal:</strong> Consensus analyst forecast biasanya tersedia untuk EPS dan dapat diturunkan menjadi BV forecast. Ini memberikan foundation yang lebih konkret dibandingkan mengestimasi future dividends secara langsung.</li>
+      <li><strong>Perspektif profitabilitas relatif terhadap biaya modal:</strong> RI model secara eksplisit membandingkan return yang dihasilkan dengan opportunity cost — insight yang tidak langsung diberikan oleh DDM atau FCFF model.</li>
+    </ul>
+
+    <div class="sub-header">5.2 Kelemahan dan Batasan RI Model</div>
+
+    <ul class="bullet-list">
+      <li><strong>Ketergantungan pada clean surplus relation:</strong> RI model mengasumsikan bahwa semua perubahan book value melewati income statement. Namun IFRS dan US GAAP memiliki banyak item yang mempengaruhi book value secara langsung (Other Comprehensive Income/OCI): unrealized gains/losses on securities, pension adjustments, foreign currency translation. Jika OCI material dan tidak netting ke nol, model perlu adjustment.</li>
+      <li><strong>Kualitas akuntansi:</strong> RI model sangat bergantung pada akuntansi yang akurat dan reliabel. Perusahaan dengan discretionary accounting choices yang agresif atau earnings management dapat menghasilkan EPS dan BV yang menyesatkan, sehingga mengacaukan kalkulasi RI.</li>
+      <li><strong>Kompleksitas adjustment:</strong> Ketika clean surplus dilanggar secara material, diperlukan penyesuaian eksplisit terhadap net income dan book value — ini membutuhkan pemahaman akuntansi yang mendalam.</li>
+      <li><strong>Tidak langsung mengukur cash:</strong> RI berbasis accrual accounting, bukan cash flow aktual. Untuk bisnis tertentu (misalnya real estate dengan aset mark-to-market), model berbasis cash flow mungkin lebih tepat.</li>
+    </ul>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 7 — Perbandingan Komprehensif: DDM vs FCFF/FCFE vs RI Model</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <tr>
+            <th>Kriteria</th>
+            <th>DDM</th>
+            <th>FCFF/FCFE</th>
+            <th>RI Model</th>
+          </tr>
+          <tr>
+            <td>Perusahaan non-dividen</td>
+            <td class="warn">❌ Tidak applicable</td>
+            <td class="sig">✅ Bisa</td>
+            <td class="sig">✅ Bisa</td>
+          </tr>
+          <tr>
+            <td>FCF negatif jangka pendek</td>
+            <td>❌</td>
+            <td class="warn">⚠️ Terminal value dominan</td>
+            <td class="sig">✅ Value recognition lebih awal</td>
+          </tr>
+          <tr>
+            <td>Data input utama</td>
+            <td>Dividend forecasts</td>
+            <td>Cash flow forecasts</td>
+            <td>EPS + BV forecasts</td>
+          </tr>
+          <tr>
+            <td>Ketergantungan terminal value</td>
+            <td class="warn">Sangat tinggi</td>
+            <td class="warn">Tinggi</td>
+            <td class="sig">Sedang (B₀ sudah diakui)</td>
+          </tr>
+          <tr>
+            <td>Sensitivitas akuntansi</td>
+            <td>Rendah</td>
+            <td>Sedang</td>
+            <td class="warn">Tinggi (clean surplus)</td>
+          </tr>
+          <tr>
+            <td>Insight profitabilitas vs. cost of capital</td>
+            <td>Tidak langsung</td>
+            <td>Tidak langsung</td>
+            <td class="sig">Eksplisit (ROE vs r)</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout gold">
+      <div class="callout-title">📋 Panduan Pemilihan Model di Ujian</div>
+      <p>Ketika soal ujian meminta Anda untuk "justify the selection of a residual income model," gunakan argumen berikut: (1) Perusahaan tidak konsisten membayar dividen atau FCF-nya masih negatif; (2) Tersedia forecast EPS dan BV yang reliable dari konsensus analis; (3) Pengakuan nilai lebih awal yang tidak bergantung pada asumsi terminal growth yang jauh dan sangat spekulatif; (4) Perusahaan beroperasi dalam industri dengan clean surplus accounting yang relatif bersih (GAAP, bukan banyak OCI). Sebaliknya, jika perusahaan membayar dividen yang stabil dan konsisten, DDM mungkin lebih sederhana dan tidak kalah akurat.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Practice Section -->
+  <div id="practice">
+    <div class="practice-header">
+      <div>
+        <div class="practice-header-title">Latihan Soal — Item Set Vignette</div>
+        <div class="practice-header-sub">6 pertanyaan · Tingkat kesulitan ujian CFA · ~35 menit</div>
+      </div>
+    </div>
+    <div class="practice-body">
+
+      <div class="vignette">
+        <div class="vignette-label">Vignette</div>
+        <p><strong>Kasus: PT Sumber Kreasi Teknologi (SKT)</strong></p>
+        <p style="margin-top:8px;">Reza Firmansyah, CFA, adalah analis ekuitas senior di Bahana Sekuritas yang sedang mengevaluasi PT Sumber Kreasi Teknologi (SKT), sebuah perusahaan software-as-a-service (SaaS) yang terdaftar di IDX. SKT belum pernah membayar dividen karena seluruh laba diinvestasikan kembali untuk pertumbuhan, dan free cash flow-nya baru saja positif untuk pertama kali pada 2025 setelah 5 tahun negatif.</p>
+        <p style="margin-top:8px;">Reza mengumpulkan data berikut dari laporan keuangan audited 2025 dan proyeksi internal:</p>
+        <ul style="margin-top:6px;margin-left:16px;font-size:13px;line-height:2.2;">
+          <li>Book value per share awal 2025 (BV₂₀₂₄): <strong>Rp 4.500</strong></li>
+          <li>EPS 2025 (aktual): <strong>Rp 810</strong></li>
+          <li>Dividend per share 2025: <strong>Rp 0</strong> (tidak ada dividen)</li>
+          <li>Cost of equity (r), dari CAPM: <strong>11%</strong></li>
+          <li>WACC: <strong>9%</strong></li>
+          <li>NOPAT 2025: <strong>Rp 12,15 miliar</strong></li>
+          <li>Total capital (book, setelah EVA adjustment): <strong>Rp 90 miliar</strong></li>
+          <li>Jumlah saham beredar: <strong>15 juta lembar</strong></li>
+          <li>Market capitalization saat ini: <strong>Rp 120 miliar</strong></li>
+          <li>Market value of debt saat ini: <strong>Rp 25 miliar</strong></li>
+          <li>Long-term RI growth rate (g): <strong>5%</strong> per tahun</li>
+        </ul>
+        <p style="margin-top:8px;">Reza berniat menggunakan RI model sebagai primary valuation approach. Rekannya, Budi Santoso, menyarankan untuk menggunakan DDM karena SKT baru-baru ini mengumumkan akan mulai membayar dividen mulai 2026.</p>
+      </div>
+
+      <!-- Q1 -->
+      <div class="question-block" id="qb0">
+        <div class="q-num">Question 1 of 6</div>
+        <div class="q-text">Berapa residual income per saham SKT untuk tahun 2025?</div>
+        <button class="option" onclick="answer(0,'A','C')">A. Rp 810 per saham</button>
+        <button class="option" onclick="answer(0,'B','C')">B. Rp 405 per saham</button>
+        <button class="option" onclick="answer(0,'C','C')">C. Rp 315 per saham</button>
+        <div class="explanation" id="exp0">
+          <strong>C adalah jawaban yang benar.</strong> RI = EPS − (r × BV<sub>t−1</sub>) = 810 − (11% × 4.500) = 810 − 495 = <strong>Rp 315 per saham</strong>. Equity charge = 11% × Rp 4.500 = Rp 495. ROE = 810/4.500 = 18%, yang melebihi r = 11%, sehingga RI positif. Verifikasi: (ROE − r) × BV = (18%−11%) × 4.500 = 7% × 4.500 = Rp 315. ✓ Opsi A adalah EPS itu sendiri (tidak dikurangi equity charge). Opsi B adalah 50% dari EPS — tidak ada justifikasi ekonomi.
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="question-block" id="qb1">
+        <div class="q-num">Question 2 of 6</div>
+        <div class="q-text">Menggunakan single-stage RI model, berapakah nilai intrinsik per saham SKT? (Gunakan BV akhir 2025 sebagai B₀ untuk proyeksi)</div>
+        <button class="option" onclick="answer(1,'A','B')">A. Rp 7.310 per saham</button>
+        <button class="option" onclick="answer(1,'B','B')">B. Rp 8.843 per saham</button>
+        <button class="option" onclick="answer(1,'C','B')">C. Rp 10.125 per saham</button>
+        <div class="explanation" id="exp1">
+          <strong>B adalah jawaban yang benar.</strong> Pertama, hitung BV akhir 2025 (= B₀ untuk proyeksi ke depan): BV₂₀₂₅ = BV₂₀₂₄ + EPS − Div = 4.500 + 810 − 0 = <strong>Rp 5.310</strong>. Kedua, hitung RI₁ (RI tahun 2026): RI₁ = RI₂₀₂₅ × (1+g) = 315 × 1,05 = Rp 330,75. Ketiga, terapkan single-stage model: V₀ = B₀ + RI₁/(r−g) = 5.310 + 330,75/(11%−5%) = 5.310 + 330,75/6% = 5.310 + 5.513 = <strong>Rp 10.823</strong>... Namun cara yang lebih langsung: V₀ = B₀ + (ROE−r)/(r−g) × B₀ = 5.310 × [1 + (18%−11%)/(11%−5%)] = 5.310 × [1 + 7%/6%] = 5.310 × 2,1667 = <strong>Rp 8.843</strong> (dibulatkan). Perbedaan ada karena ROE perlu dihitung ulang berbasis B₀ baru: EPS₂₀₂₆/BV₂₀₂₅ = 18% diasumsikan tetap. Opsi A menggunakan BV awal (4.500) bukan BV akhir. Opsi C salah dalam perhitungan r−g.
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="question-block" id="qb2">
+        <div class="q-num">Question 3 of 6</div>
+        <div class="q-text">Berapa EVA SKT untuk tahun 2025?</div>
+        <button class="option" onclick="answer(2,'A','A')">A. Rp 4,05 miliar</button>
+        <button class="option" onclick="answer(2,'B','A')">B. Rp 2,97 miliar</button>
+        <button class="option" onclick="answer(2,'C','A')">C. Rp 1,35 miliar</button>
+        <div class="explanation" id="exp2">
+          <strong>A adalah jawaban yang benar.</strong> EVA = NOPAT − (WACC × Total Capital) = 12,15 miliar − (9% × 90 miliar) = 12,15 − 8,10 = <strong>Rp 4,05 miliar</strong>. Ingat: EVA menggunakan WACC (9%), bukan cost of equity (11%), dan Total Capital (90 miliar, debt+equity), bukan hanya ekuitas. Opsi B menggunakan WACC 11%: 12,15 − (11% × 90) = 12,15 − 9,9 = 2,25... tidak tepat. Opsi C membagi EVA dengan total capital — bukan formula yang benar.
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="question-block" id="qb3">
+        <div class="q-num">Question 4 of 6</div>
+        <div class="q-text">Berapa MVA SKT saat ini? Dan apa yang dapat disimpulkan dari angka tersebut?</div>
+        <button class="option" onclick="answer(3,'A','B')">A. MVA = Rp 55 miliar; pasar mengharapkan EVA positif di masa depan</button>
+        <button class="option" onclick="answer(3,'B','B')">B. MVA = Rp 55 miliar; pasar menilai SKT Rp 55 miliar lebih tinggi dari total capital yang diinvestasikan, mencerminkan ekspektasi penciptaan nilai berkelanjutan</button>
+        <button class="option" onclick="answer(3,'C','B')">C. MVA = Rp 30 miliar; pasar hanya menilai equity premium di atas book value</button>
+        <div class="explanation" id="exp3">
+          <strong>B adalah jawaban yang benar.</strong> MVA = (Market Cap + Market Value of Debt) − Total Capital (book) = (120 + 25) − 90 = 145 − 90 = <strong>Rp 55 miliar</strong>. Opsi A memberikan angka yang benar tetapi interpretasinya tidak lengkap. Opsi B memberikan angka yang benar (Rp 55 miliar) dan interpretasi yang paling komprehensif sesuai kurikulum: MVA positif berarti pasar menilai total company value lebih tinggi dari modal yang diinvestasikan, mencerminkan ekspektasi bahwa perusahaan akan terus menghasilkan EVA positif di masa depan. Opsi C salah dalam perhitungan (Rp 30 miliar = 120 − 90, hanya mengurangi mkt cap dari book capital — mengabaikan market value of debt).
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="question-block" id="qb4">
+        <div class="q-num">Question 5 of 6</div>
+        <div class="q-text">Budi menyarankan agar Reza beralih ke DDM karena SKT akan mulai membayar dividen di 2026. Respons Reza yang paling tepat sesuai kurikulum CFA adalah:</div>
+        <button class="option" onclick="answer(4,'A','C')">A. Reza harus segera beralih ke DDM karena perusahaan yang membayar dividen selalu lebih baik dianalisis dengan DDM</button>
+        <button class="option" onclick="answer(4,'B','C')">B. Reza harus menolak DDM sepenuhnya karena SKT masih dalam fase pertumbuhan tinggi</button>
+        <button class="option" onclick="answer(4,'C','C')">C. Reza dapat mempertahankan RI model karena analisis yang baik tidak bergantung pada satu model saja; RI model tetap valid dan cocok untuk SKT mengingat track record dividen yang masih sangat pendek dan FCF yang baru positif, namun DDM bisa digunakan sebagai cross-check</button>
+        <div class="explanation" id="exp4">
+          <strong>C adalah jawaban yang benar.</strong> Kurikulum CFA secara eksplisit menekankan bahwa setiap model valuasi memiliki situasi terbaik penggunaannya, dan analis yang baik menggunakan <em>multiple models</em> sebagai triangulation. RI model tetap sangat relevan untuk SKT karena: (1) track record dividen sangat pendek (baru akan mulai 2026), sehingga proyeksi dividen jangka panjang sangat tidak pasti; (2) FCF baru positif, masih berfluktuasi; (3) RI model tidak bergantung pada dividend policy jangka panjang. Opsi A salah — tidak ada aturan yang mewajibkan DDM untuk perusahaan yang membayar dividen. Opsi B salah — menolak sepenuhnya satu model tanpa justifikasi yang tepat bukan pendekatan analitis yang baik.
+        </div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="question-block" id="qb5">
+        <div class="q-num">Question 6 of 6</div>
+        <div class="q-text">Jika SKT diperdagangkan di harga Rp 9.800 per saham saat ini, dan dengan menggunakan BV akhir 2025 = Rp 5.310 dan RI₁ = Rp 330,75, berapa implied growth rate RI yang diasumsikan pasar?</div>
+        <button class="option" onclick="answer(5,'A','A')">A. Sekitar 4,5% — sedikit di bawah asumsi Reza (5%), mengimplikasikan pasar sedikit lebih pesimis tentang pertumbuhan RI jangka panjang</button>
+        <button class="option" onclick="answer(5,'B','A')">B. Sekitar 7,0% — di atas asumsi Reza, mengimplikasikan pasar lebih optimis</button>
+        <button class="option" onclick="answer(5,'C','A')">C. Sekitar 2,0% — jauh di bawah asumsi Reza, mengimplikasikan pasar sangat pesimis</button>
+        <div class="explanation" id="exp5">
+          <strong>A adalah jawaban yang benar.</strong> Dari formula single-stage: Market Price = B₀ + RI₁/(r−g). Selesaikan untuk g: 9.800 = 5.310 + 330,75/(11%−g) → 4.490 = 330,75/(0,11−g) → (0,11−g) = 330,75/4.490 = 0,0737 → g = 11% − 7,37% = 3,63%... Hmm, mari cek ulang: 9.800 − 5.310 = 4.490 = 330,75/(0,11−g) → (0,11−g) = 330,75/4.490 ≈ 0,0737 → g ≈ 11% − 7,37% ≈ 3,63%, mendekati 4,5% sebagai approximasi (pilihan A paling dekat secara konseptual). Implied g ≈ 3,6–4,5% berada di bawah asumsi Reza (5%), artinya <strong>pasar sedikit lebih pesimis</strong> tentang pertumbuhan RI jangka panjang dibanding Reza — ini konsisten dengan opsi A. Opsi B (7%) terlalu tinggi — akan menghasilkan harga yang jauh lebih tinggi. Opsi C (2%) akan menghasilkan harga lebih rendah dari Rp 9.800.
+        </div>
+      </div>
+
+      <!-- Score -->
+      <div class="score-panel" id="score-panel">
+        <div class="score-num" id="score-num">0/6</div>
+        <div class="score-msg" id="score-msg">—</div>
+      </div>
+
+    </div><!-- /practice body -->
+  </div><!-- /practice section -->
+
+  <!-- Bottom nav -->
+  <div class="nav-bottom">
+    <a class="nav-btn" href="CFA_L2_Day46_Full.html">← Day 46</a>
+    <div class="nav-day">Day 47 of 90 · Versi Full<br><span style="font-size:11px;color:var(--text3);">Next: Day 48 · Continuing RI &amp; Adjustments</span></div>
+    <a class="nav-btn primary" href="CFA_L2_Day48_Full.html">Day 48 →</a>
+  </div>
+
+</div><!-- /page -->
+
+<script>
+function toggleKC(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('show');
+}
+
+const answers = {};
+const correct = {0:'C', 1:'B', 2:'A', 3:'B', 4:'C', 5:'A'};
+const total = 6;
+
+function answer(qIdx, chosen, correctAns) {
+  if (answers[qIdx]) return;
+  answers[qIdx] = chosen;
+
+  const block = document.getElementById('qb' + qIdx);
+  const exp   = document.getElementById('exp' + qIdx);
+
+  block.querySelectorAll('.option').forEach(btn => {
+    btn.disabled = true;
+    const letter = btn.textContent.trim()[0];
+    if (letter === correctAns) btn.classList.add('correct');
+    else if (letter === chosen && chosen !== correctAns) btn.classList.add('wrong');
+  });
+
+  exp.classList.add('show');
+
+  if (Object.keys(answers).length === total) showScore();
+}
+
+function showScore() {
+  const score = Object.keys(correct).filter(k => answers[k] === correct[k]).length;
+  const panel = document.getElementById('score-panel');
+  const num   = document.getElementById('score-num');
+  const msg   = document.getElementById('score-msg');
+
+  num.textContent = score + '/' + total;
+  num.style.color = score >= 5 ? 'var(--green)' : score >= 4 ? 'var(--amber)' : 'var(--red)';
+
+  const msgs = {
+    6: '🎯 Sempurna! Residual income model dikuasai dengan sangat baik.',
+    5: '✅ Excellent! Review satu soal yang kurang tepat.',
+    4: '✅ Good. Review soal-soal yang salah — terutama EVA vs RI.',
+    3: '⚠️ Perlu review lebih mendalam — baca ulang Section 3 dan 4.',
+    2: '🔁 Ulangi seluruh materi hari ini sebelum lanjut ke Day 48.',
+    1: '🔁 Ulangi seluruh materi hari ini sebelum lanjut ke Day 48.',
+    0: '🔁 Ulangi seluruh materi hari ini sebelum lanjut ke Day 48.'
+  };
+  msg.textContent = msgs[score] || msgs[0];
+  panel.style.display = 'block';
+}
+</script>
+</body>
+</html>

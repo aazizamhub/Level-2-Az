@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level II Day 27 - Bank Analysis: Analysis of Financial Institutions (Full)</title>
+  <style>
+:root {
+  --bg:#fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+  --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;--gold:#9a6e1a;--gold2:#7a5010;
+  --gold-bg:rgba(154,110,26,0.08);--blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);
+  --green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);--red:#b83232;--red-bg:rgba(184,50,50,0.08);
+  --amber:#a06010;--amber-bg:rgba(160,96,16,0.08);--r:10px;--r-sm:6px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:15px;}
+.page{max-width:960px;margin:0 auto;padding:0 20px;background:white;box-shadow:0 0 40px rgba(0,0,0,0.04);}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid var(--border);margin-bottom:24px;}
+.breadcrumb{font-size:13px;color:var(--text2);letter-spacing:0.5px;font-weight:500;}
+.day-badge,.version-badge{display:inline-block;padding:6px 12px;background:var(--gold-bg);color:var(--gold2);border-radius:var(--r-sm);font-size:12px;font-weight:600;margin-left:12px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);margin-left:8px;}
+.hero{margin-bottom:48px;}
+.hero-tag{font-size:13px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;}
+.hero-title{font-size:42px;font-weight:700;line-height:1.2;margin-bottom:12px;color:var(--text);}
+.hero-sub{font-size:18px;color:var(--text2);margin-bottom:28px;}
+.meta-row{display:flex;flex-wrap:wrap;gap:12px;}
+.meta-pill{display:inline-flex;align-items:center;padding:8px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:20px;font-size:13px;color:var(--text2);font-weight:500;}
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:32px;margin-bottom:48px;}
+.toc-title{font-size:18px;font-weight:700;margin-bottom:20px;color:var(--text);}
+.toc-list{list-style:none;}
+.toc-list li{margin-bottom:12px;font-size:15px;}
+.toc-list a{color:var(--blue);text-decoration:none;}
+.toc-list a:hover{text-decoration:underline;}
+.toc-num{color:var(--gold);font-weight:600;margin-right:8px;}
+.chapter{margin-bottom:56px;scroll-margin-top:100px;}
+.chapter-header{margin-bottom:28px;}
+.chapter-num{font-size:13px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:1px;}
+.chapter-title{font-size:32px;font-weight:700;color:var(--text);margin-top:8px;}
+.sub-header{font-size:18px;font-weight:700;color:var(--text);margin:28px 0 16px 0;}
+.prose{color:var(--text);margin-bottom:16px;line-height:1.75;}
+.formula-block{background:var(--bg2);border-left:4px solid var(--gold);border-radius:var(--r-sm);padding:20px;margin:24px 0;font-family:'Courier New',monospace;font-size:14px;color:var(--text);overflow-x:auto;}
+.formula-block .label{font-weight:700;color:var(--gold);display:block;margin-bottom:8px;font-size:13px;text-transform:uppercase;letter-spacing:0.5px;font-family:'Inter',sans-serif;}
+.formula-block .note{font-family:'Inter',sans-serif;font-size:13px;color:var(--text2);margin-top:12px;line-height:1.6;}
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:28px;margin:32px 0;}
+.exhibit-title{font-size:15px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:20px;}
+.exhibit-body{color:var(--text);line-height:1.8;font-size:14px;}
+.reg-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;}
+.reg-table th{background:var(--bg3);border:1px solid var(--border);padding:12px;text-align:left;font-weight:700;color:var(--text);}
+.reg-table td{border:1px solid var(--border);padding:12px;color:var(--text2);}
+.reg-table tr:nth-child(even){background:rgba(255,255,255,0.5);}
+.callout{border-radius:var(--r);padding:20px;margin:24px 0;border-left:4px solid;}
+.callout.blue{background:var(--blue-bg);border-left-color:var(--blue);}
+.callout.amber{background:var(--amber-bg);border-left-color:var(--amber);}
+.callout.green{background:var(--green-bg);border-left-color:var(--green);}
+.callout.red{background:var(--red-bg);border-left-color:var(--red);}
+.callout.gold{background:var(--gold-bg);border-left-color:var(--gold);}
+.callout-title{font-weight:700;margin-bottom:8px;display:block;font-size:14px;text-transform:uppercase;letter-spacing:0.5px;}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.green .callout-title{color:var(--green);}
+.callout.red .callout-title{color:var(--red);}
+.callout.gold .callout-title{color:var(--gold);}
+.callout p,.callout li{color:var(--text);font-size:14px;line-height:1.7;}
+.callout ul{padding-left:20px;margin-top:8px;}
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:28px 0;overflow:hidden;}
+.kc-header{padding:18px 20px;background:var(--bg3);border-bottom:1px solid var(--border);cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none;}
+.kc-header:hover{background:rgba(0,0,0,0.04);}
+.kc-header-title{font-weight:600;color:var(--text);font-size:14px;}
+.kc-toggle{color:var(--text3);font-weight:700;font-size:18px;transition:transform 0.2s;}
+.kc.open .kc-toggle{transform:rotate(180deg);}
+.kc-body{padding:20px;max-height:0;overflow:hidden;transition:max-height 0.3s ease-out;}
+.kc.open .kc-body{max-height:1200px;}
+.kc-q{color:var(--text);margin-bottom:16px;line-height:1.7;font-weight:500;}
+.kc-answer{color:var(--text2);line-height:1.8;font-size:14px;}
+.num-list,.bullet-list{margin:16px 0;padding-left:24px;}
+.num-list li,.bullet-list li{margin-bottom:10px;color:var(--text);line-height:1.7;}
+.divider{height:1px;background:var(--border);margin:40px 0;}
+.practice-body{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:28px;}
+.vignette{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-bottom:32px;}
+.vignette-label{font-size:12px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;}
+.vignette-text{font-size:14px;color:var(--text);line-height:1.75;}
+.question-block{margin-bottom:32px;}
+.q-num{font-size:12px;font-weight:700;color:var(--blue);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;}
+.q-text{font-size:15px;color:var(--text);margin-bottom:16px;line-height:1.65;font-weight:500;}
+.option{display:flex;align-items:flex-start;gap:14px;padding:12px 16px;margin-bottom:10px;border:1px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:all 0.2s ease;background:white;}
+.option:hover{border-color:var(--blue);background:var(--blue-bg);}
+.option-radio{display:flex;align-items:center;justify-content:center;width:20px;height:20px;border:2px solid var(--border2);border-radius:50%;flex-shrink:0;margin-top:2px;}
+.option.selected .option-radio{border-color:var(--blue);background:var(--blue);}
+.option.selected .option-radio:after{content:"✓";color:white;font-size:12px;font-weight:700;}
+.option-text{font-size:14px;color:var(--text);line-height:1.6;}
+.explanation{background:var(--bg2);padding:16px;border-radius:var(--r-sm);font-size:13px;color:var(--text2);margin-top:10px;display:none;line-height:1.7;}
+.explanation.show{display:block;}
+.explanation.correct{border-left:3px solid var(--green);background:var(--green-bg);color:var(--text);}
+.explanation.incorrect{border-left:3px solid var(--red);background:var(--red-bg);color:var(--text);}
+.score-panel{background:var(--gold-bg);border:1px solid var(--gold);border-radius:var(--r);padding:20px;margin-top:24px;text-align:center;display:none;}
+.score-panel.show{display:block;}
+.score-panel-text{font-size:15px;color:var(--text);margin-bottom:8px;}
+.score-panel-value{font-size:28px;font-weight:700;color:var(--gold2);}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;padding:28px 0;margin-top:48px;border-top:1px solid var(--border);}
+.nav-btn{text-decoration:none;padding:12px 18px;border-radius:var(--r-sm);font-size:13px;font-weight:600;color:var(--blue);border:1px solid var(--border);transition:all 0.2s ease;}
+.nav-btn:hover{border-color:var(--blue);background:var(--blue-bg);}
+@media(max-width:640px){.hero-title{font-size:30px;}.meta-row{flex-direction:column;}}
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II &nbsp;·&nbsp; FSA &nbsp;·&nbsp; LM5
+      <span class="version-badge">Versi Full</span>
+      <span class="day-badge">Day 27 of 90</span>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Kamis, 21 Mei 2026</div>
+    <h1 class="hero-title">Analisis Bank: CAMELS, Rasio Kunci &amp; IFRS 9</h1>
+    <p class="hero-sub">Analysis of Financial Institutions (LM5) — Subtopik 1 dari 2</p>
+    <div class="meta-row">
+      <div class="meta-pill">📚 Materi Lengkap</div>
+      <div class="meta-pill">🇮🇩 Bahasa Indonesia</div>
+      <div class="meta-pill">~12% Bobot Ujian</div>
+      <div class="meta-pill">⏱ Est. Baca 50–60 Menit</div>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ol class="toc-list">
+      <li><span class="toc-num">0.</span><a href="#los">Learning Outcomes (LOS)</a></li>
+      <li><span class="toc-num">1.</span><a href="#bab1">Mengapa Bank Berbeda: Systemic Risk &amp; Regulasi</a></li>
+      <li><span class="toc-num">2.</span><a href="#bab2">Kerangka CAMELS: Enam Dimensi Analisis Bank</a></li>
+      <li><span class="toc-num">3.</span><a href="#bab3">Capital Adequacy: Basel III &amp; Risk-Weighted Assets</a></li>
+      <li><span class="toc-num">4.</span><a href="#bab4">Asset Quality: NPL, Allowance, &amp; IFRS 9 ECL</a></li>
+      <li><span class="toc-num">5.</span><a href="#bab5">Earnings: NIM, Komposisi Pendapatan &amp; Kualitas Laba</a></li>
+      <li><span class="toc-num">6.</span><a href="#bab6">Likuiditas: LCR, NSFR &amp; Faktor Non-CAMELS</a></li>
+      <li><span class="toc-num">7.</span><a href="#latihan">Latihan Soal — Item Set Vignette (6 Soal)</a></li>
+    </ol>
+  </div>
+
+  <!-- SECTION 0: LOS -->
+  <div class="chapter" id="los">
+    <div class="chapter-header">
+      <div class="chapter-num">Learning Outcomes</div>
+      <div class="chapter-title">Apa yang Harus Dikuasai</div>
+    </div>
+    <p class="prose">Setelah menyelesaikan Learning Module 5 — Analysis of Financial Institutions (subtopik Bank Analysis), kandidat CFA Level 2 diharapkan mampu:</p>
+    <ul class="bullet-list">
+      <li><strong>Mendeskripsikan perbedaan fundamental</strong> antara bank dan perusahaan non-keuangan, termasuk systemic importance, predominantly financial assets, dan implikasi regulatoris yang mengikutinya</li>
+      <li><strong>Mendeskripsikan aspek kunci regulasi keuangan</strong> untuk lembaga keuangan — khususnya kerangka Basel III beserta minimum capital requirements, LCR, dan NSFR</li>
+      <li><strong>Menjelaskan pendekatan CAMELS</strong> untuk menganalisis bank, termasuk rasio kunci untuk setiap komponen dan keterbatasan metodologi ini</li>
+      <li><strong>Menganalisis bank berdasarkan laporan keuangan</strong> — menghitung dan menginterpretasikan CET1 ratio, Tier 1 ratio, Total Capital ratio, NPL ratio, NPL coverage ratio, NIM, LCR, dan NSFR</li>
+      <li><strong>Mendeskripsikan faktor non-CAMELS</strong> yang penting dalam analisis bank: dukungan pemerintah, kepemilikan pemerintah, misi bank, dan budaya perusahaan</li>
+      <li><strong>Menjelaskan IFRS 9 Expected Credit Loss model</strong> — tiga tahap (Stage 1, 2, 3), perbedaannya dari model incurred loss, dan dampaknya terhadap timing pengakuan provision</li>
+    </ul>
+    <div class="callout blue">
+      <span class="callout-title">Posisi dalam Kurikulum CFA</span>
+      <p>LM5 adalah learning module terakhir dalam blok FSA CFA Level 2. Setelah memahami cara memanipulasi dan mengevaluasi kualitas laporan keuangan (LM3–LM4), kini kita mempelajari bagaimana menganalisis entitas keuangan yang memiliki struktur laporan keuangan yang sangat berbeda. Hari ini (Day 27) berfokus pada bank; Day 28 akan membahas perusahaan asuransi. Bersama-sama, keduanya membentuk kompetensi analisis financial institutions yang komprehensif.</p>
+    </div>
+  </div>
+
+  <!-- BAB 1 -->
+  <div class="chapter" id="bab1">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 1</div>
+      <div class="chapter-title">Mengapa Bank Berbeda: Systemic Risk &amp; Regulasi</div>
+    </div>
+
+    <p class="prose">Sebelum kita bisa menganalisis bank dengan benar, kita perlu memahami mengapa bank memerlukan kerangka analisis yang berbeda dari perusahaan pada umumnya. Ada dua ciri khas bank yang mendasari segalanya.</p>
+
+    <div class="sub-header">1.1 Systemic Importance dan Financial Contagion</div>
+    <p class="prose">Bank adalah intermediary — mereka mengambil deposit dari pihak yang kelebihan dana dan menyalurkannya sebagai kredit kepada pihak yang membutuhkan modal. Fungsi intermediasi ini menciptakan jaringan keterkaitan keuangan yang sangat luas di seluruh ekonomi: household, korporasi, pemerintah, dan bank lainnya semuanya terhubung melalui sistem perbankan.</p>
+    <p class="prose">Jaringan inter-linkages ini adalah pedang bermata dua. Saat ekonomi sehat, jaringan ini memungkinkan modal mengalir efisien ke berbagai penjuru. Namun saat satu bank besar gagal, efeknya bisa menyebar seperti wabah — inilah yang disebut <strong>financial contagion</strong>. Kegagalan Lehman Brothers pada September 2008 membekukan pasar kredit global dalam hitungan hari karena luasnya keterkaitan Lehman dengan institusi keuangan lain di seluruh dunia.</p>
+    <p class="prose">Konsep "systemic importance" kemudian melahirkan kategori bank khusus: <strong>Systemically Important Financial Institutions (SIFIs)</strong> atau di Indonesia dikenal sebagai Bank Sistemik. Bank kategori ini mendapat pengawasan lebih ketat dan persyaratan modal tambahan (capital surcharge) karena potensi dampak kegagalan mereka yang sangat luas.</p>
+
+    <div class="callout amber">
+      <span class="callout-title">Kasus Nyata: Bank Run dan Financial Contagion</span>
+      <p>Satu mekanisme contagion yang paling mendasar adalah bank run. Ketika deposan — bahkan yang rasional — mendengar isu bahwa sebuah bank mungkin tidak bisa memenuhi kewajibannya, mereka akan berusaha menarik dana lebih awal dari pesaing mereka. Jika cukup banyak deposan melakukan ini secara bersamaan, bank yang bahkan masih solvent bisa mengalami krisis likuiditas. Inilah mengapa deposit insurance (penjaminan simpanan) ada — di Indonesia melalui LPS (Lembaga Penjamin Simpanan) yang menjamin simpanan hingga Rp 2 miliar per deposan per bank.</p>
+    </div>
+
+    <div class="sub-header">1.2 Predominantly Financial Assets</div>
+    <p class="prose">Perbedaan kedua adalah komposisi aset. Perusahaan manufaktur memiliki pabrik, mesin, dan persediaan. Bank memiliki pinjaman, obligasi, dan instrumen keuangan lainnya. Ini menciptakan tantangan analisis yang berbeda:</p>
+    <ul class="bullet-list">
+      <li><strong>Credit Risk</strong>: Peminjam bisa gagal bayar — inilah risiko terbesar bank</li>
+      <li><strong>Market Risk</strong>: Nilai sekuritas berfluktuasi dengan suku bunga dan harga pasar</li>
+      <li><strong>Liquidity Risk</strong>: Bank meminjam jangka pendek (deposit) namun meminjamkan jangka panjang (kredit) — maturity mismatch ini menciptakan risiko likuiditas struktural</li>
+      <li><strong>Interest Rate Risk</strong>: Perubahan suku bunga mempengaruhi NIM (net interest margin) bank</li>
+    </ul>
+    <p class="prose">Karena semua risiko ini berjalan bersamaan, regulasi bank jauh lebih ketat dan menyeluruh dibandingkan sektor lain.</p>
+
+    <div class="sub-header">1.3 Kerangka Regulasi: Basel III</div>
+    <p class="prose">Setelah krisis keuangan 2008, Basel Committee on Banking Supervision (yang bermarkas di Bank for International Settlements/BIS di Basel, Swiss) mengembangkan <strong>Basel III</strong> — kerangka regulasi perbankan global yang paling komprehensif hingga saat ini. Basel III memperkuat standar yang ada dalam Basel I dan II dengan tiga fokus utama:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 1 — Tiga Pilar Utama Basel III</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Pilar</th><th>Tujuan</th><th>Standar Minimum</th><th>Rasio Kunci</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Capital Adequacy</strong></td><td>Memastikan bank punya modal yang cukup untuk absorbsi kerugian tanpa mengancam sistem</td><td>CET1 ≥ 4.5% RWA<br>Tier 1 ≥ 6.0% RWA<br>Total Capital ≥ 8.0% RWA</td><td>CET1 Ratio, Tier 1 Ratio, Total Capital Ratio</td></tr>
+            <tr><td><strong>Short-term Liquidity (LCR)</strong></td><td>Memastikan bank bisa bertahan 30 hari dalam skenario stres likuiditas tanpa bantuan eksternal</td><td>LCR ≥ 100%</td><td>Liquidity Coverage Ratio</td></tr>
+            <tr><td><strong>Long-term Funding (NSFR)</strong></td><td>Memastikan struktur pendanaan bank stabil dalam horizon 1 tahun — tidak terlalu bergantung pada pendanaan jangka sangat pendek</td><td>NSFR ≥ 100%</td><td>Net Stable Funding Ratio</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Di Indonesia, Bank Indonesia dan OJK mengadopsi Basel III secara bertahap. Bank-bank besar Indonesia (BBCA, BMRI, BBRI, BBNI) umumnya memiliki capital ratio yang jauh di atas minimum — CET1 ratio mereka berkisar 20–27%, dibandingkan minimum 4.5%. Ini mencerminkan budaya perbankan Indonesia yang konservatif dan persyaratan regulator lokal yang cenderung lebih ketat dari minimum Basel.</p>
+
+    <div class="kc">
+      <div class="kc-header">
+        <span class="kc-header-title">Knowledge Check 1 — Mengapa Basel III diperkenalkan setelah Basel II?</span>
+        <span class="kc-toggle">▼</span>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">Krisis keuangan 2008 terjadi meskipun Basel II sudah berlaku. Apa kelemahan mendasar Basel II yang kemudian diperbaiki oleh Basel III?</p>
+        <p class="kc-answer">Basel II terbukti tidak memadai karena: (1) <strong>Capital buffer terlalu tipis</strong> — minimum 8% Total Capital ternyata tidak cukup menyerap kerugian besar-besaran dari CDO dan MBS yang mengalami default massal; (2) <strong>Tidak ada liquidity standard</strong> — Basel II tidak mengatur likuiditas secara eksplisit, sehingga bank yang masih solvent (modal cukup) bisa mengalami krisis likuiditas akut seperti yang terjadi pada Northern Rock (Inggris); (3) <strong>Capital quality rendah</strong> — Basel II memperbolehkan berbagai instrumen hybrid yang kualitasnya dipertanyakan masuk sebagai Tier 1 Capital. Basel III memperkuat ketiganya: menaikan minimum, menambahkan conservation buffer, menetapkan standar LCR dan NSFR, serta mewajibkan CET1 (Common Equity) sebagai komponen dominan Tier 1.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- BAB 2 -->
+  <div class="chapter" id="bab2">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 2</div>
+      <div class="chapter-title">Kerangka CAMELS: Enam Dimensi Analisis Bank</div>
+    </div>
+
+    <p class="prose">CAMELS adalah akronim untuk enam komponen analisis bank yang awalnya dikembangkan oleh FDIC (Federal Deposit Insurance Corporation) Amerika Serikat dan kemudian diadopsi secara luas oleh analis keuangan global. Setiap komponen diberi rating 1 (terbaik) hingga 5 (terburuk).</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 2 — CAMELS: Enam Komponen &amp; Indikator Kunci</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Komponen</th><th>Fokus Analisis</th><th>Rasio &amp; Indikator Kunci</th><th>Pertanyaan Evaluasi</th></tr></thead>
+          <tbody>
+            <tr><td><strong>C</strong> — Capital Adequacy</td><td>Kecukupan modal vs risiko yang ditanggung</td><td>CET1 ratio, Tier 1 ratio, Total Capital ratio</td><td>Apakah modal cukup untuk menyerap kerugian besar?</td></tr>
+            <tr><td><strong>A</strong> — Asset Quality</td><td>Kualitas kredit portofolio; adequacy provisioning</td><td>NPL ratio, NPL coverage ratio, net charge-off rate</td><td>Seberapa banyak pinjaman bermasalah? Apakah cadangan memadai?</td></tr>
+            <tr><td><strong>M</strong> — Management</td><td>Governance, risk culture, compliance, operasional</td><td>Kualitatif: proxy via opini audit, insider transactions, restatement</td><td>Apakah manajemen kompeten dan berintegritas?</td></tr>
+            <tr><td><strong>E</strong> — Earnings</td><td>Profitabilitas dan sustainability pendapatan</td><td>NIM, ROA, ROE, komposisi revenue</td><td>Seberapa tinggi dan sustainable pendapatan bank?</td></tr>
+            <tr><td><strong>L</strong> — Liquidity</td><td>Kemampuan memenuhi kewajiban jangka pendek dan panjang</td><td>LCR, NSFR, loan-to-deposit ratio, maturity mismatch</td><td>Apakah bank bisa bertahan krisis likuiditas?</td></tr>
+            <tr><td><strong>S</strong> — Sensitivity to Market Risk</td><td>Eksposur terhadap suku bunga, FX, ekuitas, komoditas</td><td>NII sensitivity analysis, VaR, duration gap</td><td>Seberapa rentan earnings terhadap perubahan pasar?</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Penting untuk dipahami bahwa <strong>CAMELS composite rating bukan rata-rata aritmatik</strong> dari enam komponen. Bobot setiap komponen ditentukan oleh judgment examiner atau analis — dua analis bisa memberikan rating identik untuk setiap komponen namun menghasilkan composite yang berbeda. Ini adalah keterbatasan metodologis CAMELS yang sering diuji dalam soal CFA.</p>
+
+    <p class="prose">Selain itu, urutan huruf dalam CAMELS tidak mencerminkan urutan kepentingan. Menurut Basel III sendiri, C (Capital) dan L (Liquidity) sama pentingnya — keduanya menjadi fokus regulasi global pasca-2008. Tidak ada hierarki yang pasti.</p>
+
+    <div class="sub-header">2.1 Faktor Non-CAMELS yang Juga Penting</div>
+    <p class="prose">CAMELS tidak mencakup semua faktor relevan dalam analisis bank. Ada beberapa dimensi penting yang perlu dipertimbangkan secara terpisah:</p>
+    <ul class="bullet-list">
+      <li><strong>Government Support</strong>: Bank yang dianggap "too big to fail" cenderung mendapat dukungan pemerintah dalam krisis. Analis perlu mempertimbangkan apakah bank cukup besar dan sistemis untuk mendapat bailout. Bank sistemik seperti BBRI dan BMRI di Indonesia memiliki implied government support yang significant.</li>
+      <li><strong>Government Ownership</strong>: Kepemilikan pemerintah di bank bisa menjadi faktor keamanan tambahan bagi investor debt karena pemerintah kemungkinan besar akan menghindari kegagalan bank miliknya.</li>
+      <li><strong>Mission of Banking Entity</strong>: Bank komunitas (community bank) punya risiko konsentrasi yang lebih tinggi karena bergantung pada satu ekonomi lokal, sedangkan bank global lebih terdiversifikasi namun punya risiko operasional yang lebih kompleks.</li>
+      <li><strong>Corporate Culture</strong>: Budaya perusahaan yang terlalu risk-seeking (agresif mengejar return) bisa mengakibatkan boom-bust, sedangkan yang terlalu risk-averse mungkin tidak memberikan return yang memadai kepada pemegang saham.</li>
+    </ul>
+
+    <div class="kc">
+      <div class="kc-header">
+        <span class="kc-header-title">Knowledge Check 2 — Keterbatasan CAMELS</span>
+        <span class="kc-toggle">▼</span>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">Sebutkan dua keterbatasan utama pendekatan CAMELS dalam analisis bank, dan jelaskan mengapa hal ini penting bagi analis investasi.</p>
+        <p class="kc-answer">Dua keterbatasan utama CAMELS: (1) <strong>Composite rating bukan rata-rata matematis</strong> — subjektivitas examiner dalam pembobotan membuat composite rating sulit dibandingkan antar bank secara objektif. Dua bank dengan rating komponen identik bisa mendapat composite berbeda tergantung judgment examiner. (2) <strong>CAMELS tidak mencakup faktor eksternal penting</strong> seperti dukungan pemerintah (government support), kepemilikan pemerintah, dan budaya perusahaan — faktor-faktor yang bisa sangat menentukan dalam krisis namun tidak tercermin dalam enam komponen CAMELS. Bagi analis investasi, ini berarti CAMELS hanya boleh digunakan sebagai kerangka awal, bukan satu-satunya basis analisis.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- BAB 3 -->
+  <div class="chapter" id="bab3">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 3</div>
+      <div class="chapter-title">Capital Adequacy: Basel III &amp; Risk-Weighted Assets</div>
+    </div>
+
+    <p class="prose">Capital adequacy adalah fondasi analisis bank. Modal yang cukup memastikan bank bisa menyerap kerugian (loan defaults, investment write-downs) tanpa mengancam kemampuannya untuk terus beroperasi. Basel III mengklasifikasikan modal bank ke dalam hierarki berdasarkan kemampuannya menyerap kerugian (loss-absorption capacity).</p>
+
+    <div class="sub-header">3.1 Hierarki Modal: CET1, Additional Tier 1, Tier 2</div>
+    <p class="prose">Modal berkualitas tertinggi adalah <strong>Common Equity Tier 1 (CET1)</strong> — ini adalah modal "asli" yang paling mampu menyerap kerugian karena pemegang saham biasa adalah pihak yang paling pertama menanggung kerugian (first loss).</p>
+
+    <div class="formula-block">
+      <span class="label">Komposisi Modal Basel III</span>
+CET1 Capital (Tier 1 Kualitas Tertinggi):
+  + Common stock (saham biasa)
+  + Share premium / issuance surplus (dari penerbitan saham biasa)
+  + Retained earnings (laba ditahan)
+  + Accumulated Other Comprehensive Income (AOCI)
+  − Goodwill dan intangible assets lainnya
+  − Deferred Tax Assets dari kerugian operasional
+  − Investasi signifikan di entitas keuangan lain
+
+Additional Tier 1 Capital:
+  + Instrumen modal subordinated tanpa maturity tetap
+  + Tanpa hak pembayaran dividend/coupon yang wajib
+  (contoh: Perpetual bonds, AT1 bonds/CoCos)
+
+Tier 2 Capital:
+  + Instrumen subordinated dengan maturity min. 5 tahun
+  + Porsi terbatas dari Allowance for Loan Losses
+  + Instrumen modal hibrid tertentu
+
+      <span class="note">Total Capital = CET1 + Additional Tier 1 + Tier 2. Makin "bawah" dalam hierarki, makin lemah kemampuan loss-absorbing-nya.</span>
+    </div>
+
+    <div class="sub-header">3.2 Risk-Weighted Assets (RWA): Mengapa Tidak Cukup Total Aset</div>
+    <p class="prose">Basel III tidak menggunakan total aset sebagai denominantor rasio modal — melainkan <strong>Risk-Weighted Assets (RWA)</strong>. Ini karena berbeda jenis aset memiliki tingkat risiko yang berbeda: kas di brankas hampir tidak berisiko, sementara pinjaman kepada perusahaan spekulatif sangat berisiko.</p>
+    <p class="prose">Setiap jenis aset diberi <strong>risk weight</strong>: persentase yang menunjukkan seberapa besar aset tersebut berkontribusi ke RWA. Semakin tinggi risk weight, semakin banyak modal yang dibutuhkan untuk mendukung aset tersebut.</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 3 — Contoh Risk Weights Standar (Basel III Standard Approach)</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Jenis Aset</th><th>Risk Weight</th><th>Alasan</th></tr></thead>
+          <tbody>
+            <tr><td>Cash &amp; Central Bank reserves</td><td>0%</td><td>Hampir tidak ada risiko kredit</td></tr>
+            <tr><td>Sovereign bonds (rated AAA–AA-)</td><td>0%</td><td>Pemerintah rating tinggi dianggap risk-free</td></tr>
+            <tr><td>Sovereign bonds (unrated / low-rated)</td><td>100–150%</td><td>Risiko kredit negara tinggi</td></tr>
+            <tr><td>Residential mortgages (LTV rendah)</td><td>35%</td><td>Dijamin properti, histori default rendah</td></tr>
+            <tr><td>Corporate loans (standard)</td><td>100%</td><td>Risiko kredit korporasi standar</td></tr>
+            <tr><td>Non-performing loans (&gt;90 hari past due)</td><td>150%</td><td>Sudah menunjukkan tanda-tanda gagal bayar</td></tr>
+            <tr><td>Equity investments (non-listed)</td><td>150–250%</td><td>Sangat volatil, tidak liquid</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="formula-block">
+      <span class="label">Perhitungan RWA dan Capital Ratios</span>
+RWA = Σ (Nilai Aset × Risk Weight)
+
+Contoh bank dengan 3 aset:
+  Cash: Rp 100 M × 0% = Rp 0 M
+  Corporate Loans: Rp 1.000 M × 100% = Rp 1.000 M
+  NPL (&gt;90 hari): Rp 50 M × 150% = Rp 75 M
+  RWA Total = Rp 1.075 M
+
+CET1 Ratio = CET1 Capital / RWA ≥ 4.5%
+Tier 1 Ratio = (CET1 + Additional Tier 1) / RWA ≥ 6.0%
+Total Capital Ratio = (Tier 1 + Tier 2) / RWA ≥ 8.0%
+
+      <span class="note">Selain minimum requirements, Basel III juga mensyaratkan Capital Conservation Buffer tambahan sebesar 2.5% dari RWA, sehingga effective CET1 minimum adalah 7.0%. Bank yang melanggar buffer ini terkena pembatasan distribusi dividen dan buyback.</span>
+    </div>
+
+    <div class="callout gold">
+      <span class="callout-title">Implikasi Praktis RWA bagi Analis</span>
+      <p>Bank bisa meningkatkan capital ratio bukan hanya dengan menambah modal, tapi juga dengan mengubah komposisi aset ke yang memiliki risk weight lebih rendah. Misalnya, menjual corporate loans dan membeli sovereign bonds. Analis harus waspada terhadap "capital optimization" seperti ini — rasio meningkat bukan karena bank lebih kuat, tapi karena asetnya lebih konservatif (yang mungkin juga berarti pendapatan lebih rendah).</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header">
+        <span class="kc-header-title">Knowledge Check 3 — Mengapa CET1 lebih penting dari Total Capital Ratio?</span>
+        <span class="kc-toggle">▼</span>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">Sebuah bank memiliki Total Capital Ratio 12% (di atas minimum 8%), namun CET1 Ratio hanya 3.5% (di bawah minimum 4.5%). Apakah ini masalah? Jelaskan.</p>
+        <p class="kc-answer">Ya, ini masalah serius. CET1 adalah komponen modal yang paling murni dan paling mampu menyerap kerugian (common shareholders menerima kerugian pertama kali). CET1 di bawah 4.5% berarti bank kekurangan modal berkualitas tinggi — meskipun Total Capital cukup, sebagian besar modal kemungkinan berasal dari instrumen Tier 2 yang kurang mampu menyerap kerugian secara real-time. Dalam skenario stres, Tier 2 capital instruments mungkin tidak bisa di-convert menjadi equity dengan cepat. Regulator akan mewajibkan bank tersebut untuk meningkatkan CET1 secara spesifik — biasanya melalui right issue atau penghentian dividen. Analis harus selalu memeriksa CET1, bukan hanya Total Capital.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- BAB 4 -->
+  <div class="chapter" id="bab4">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 4</div>
+      <div class="chapter-title">Asset Quality: NPL, Allowance &amp; IFRS 9 ECL</div>
+    </div>
+
+    <p class="prose">Asset quality adalah komponen CAMELS yang paling langsung mencerminkan risiko kredit bank. Pinjaman (loans) biasanya merupakan aset terbesar bank — seringkali 50–70% dari total aset — sehingga kualitas portofolio kredit sangat menentukan kesehatan bank secara keseluruhan.</p>
+
+    <div class="sub-header">4.1 Rasio Non-Performing Loans (NPL)</div>
+    <p class="prose">Non-performing loans (NPL) adalah pinjaman yang sudah tidak membayar pokok dan/atau bunga sesuai jadwal yang disepakati — umumnya didefinisikan sebagai pinjaman yang sudah lebih dari 90 hari past due. NPL merupakan ukuran yang lebih objektif dari kualitas kredit dibandingkan allowance for loan losses yang bersifat discretionary.</p>
+
+    <div class="formula-block">
+      <span class="label">Rasio-Rasio Asset Quality</span>
+NPL Ratio = Non-Performing Loans / Total Gross Loans
+→ Semakin rendah, semakin baik kualitas kredit portofolio
+→ Bandingkan dengan rata-rata industri dan tren historis
+
+NPL Coverage Ratio = Allowance for Loan Losses / Non-Performing Loans
+→ &gt;100%: cadangan melebihi total NPL (konservatif/positif)
+→ &lt;100%: jika semua NPL jadi loss, cadangan tidak cukup (concern)
+→ Rata-rata global: 80–150% tergantung sektor dan negara
+
+Net Charge-off Rate = Net Charge-offs / Average Total Loans
+  dimana Net Charge-offs = Actual Charge-offs − Recoveries
+→ Lebih objektif dari allowance karena mencerminkan kerugian aktual yang direalisasi
+
+      <span class="note">Allowance for Loan Losses adalah contra-asset account di neraca. Provision for Loan Losses adalah expense di income statement. Roll-forward: Ending Allowance = Beginning Allowance + Provision − Net Charge-offs.</span>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 4 — Tiga Rasio Allowance Analysis yang Diuji CFA</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Rasio</th><th>Formula</th><th>Interpretasi</th></tr></thead>
+          <tbody>
+            <tr><td>Allowance/NPL (NPL Coverage)</td><td>Allowance ÷ NPL</td><td>Naik → manajemen makin konservatif; turun → concern kekurangan cadangan</td></tr>
+            <tr><td>Allowance/Net Charge-offs</td><td>Allowance ÷ Net Charge-offs</td><td>Berapa tahun charge-offs bisa ditanggung dari cadangan yang ada</td></tr>
+            <tr><td>Provision/Net Charge-offs</td><td>Provision ÷ Net Charge-offs</td><td>&gt;1: bank building reserves (konservatif); &lt;1: cadangan berkurang (concern)</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:13px;color:var(--text2);margin-top:12px;">Dalam ketiga rasio ini, sisi kiri (allowance, provision) adalah discretionary — dipengaruhi oleh judgment manajemen. Sisi kanan (NPL, net charge-offs) lebih objektif — berdasarkan fakta aktual. Membandingkan discretionary vs non-discretionary membantu analis menilai seberapa konservatif (atau agresif) manajemen dalam provisioning.</p>
+      </div>
+    </div>
+
+    <div class="sub-header">4.2 IFRS 9 Expected Credit Loss: Perubahan Paradigma</div>
+    <p class="prose">IFRS 9 (berlaku efektif 1 Januari 2018) menggantikan IAS 39 dengan perubahan fundamental pada cara bank mengakui kerugian kredit. Model lama (IAS 39) menggunakan <strong>incurred loss model</strong> — bank baru mengakui kerugian ketika ada "bukti objektif" bahwa penurunan nilai sudah terjadi. Ini terbukti terlambat: bank baru membuat provision besar-besaran ketika krisis sudah berlangsung.</p>
+    <p class="prose">IFRS 9 menggantinya dengan <strong>expected credit loss (ECL) model</strong> — bank harus mengakui proyeksi kerugian masa depan sejak pinjaman diberikan, berdasarkan informasi forward-looking yang tersedia (economic outlook, probability of default, loss given default).</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 5 — IFRS 9 Three-Stage ECL Model</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Stage</th><th>Kondisi Kredit</th><th>ECL yang Diakui</th><th>Bunga Dihitung Atas</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Stage 1</strong><br>(Performing)</td><td>Tidak ada perubahan signifikan dalam credit risk sejak pengakuan awal. Kredit normal, pembayaran lancar.</td><td><strong>12-month ECL</strong>: proyeksi kerugian akibat default dalam 12 bulan ke depan saja</td><td>Gross carrying amount (nilai penuh)</td></tr>
+            <tr><td><strong>Stage 2</strong><br>(Under-performing)</td><td>Ada significant increase in credit risk (SICR) — deteriorasi kredit signifikan, tapi belum default. Contoh: rating turun jauh, industri terdampak krisis.</td><td><strong>Lifetime ECL</strong>: proyeksi kerugian selama sisa tenor pinjaman penuh</td><td>Gross carrying amount (nilai penuh)</td></tr>
+            <tr><td><strong>Stage 3</strong><br>(Credit-impaired / NPL)</td><td>Kredit sudah credit-impaired: default aktual, restrukturisasi distress, atau kemungkinan bankruptcy tinggi. Ini setara NPL di rezim lama.</td><td><strong>Lifetime ECL</strong>: sama seperti Stage 2, tapi diakui atas dasar yang lebih confirmed</td><td>Net carrying amount (nilai bersih setelah allowance)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Perbedaan paling penting antara Stage 2 dan Stage 3 bukan pada jumlah ECL yang diakui (keduanya Lifetime ECL), melainkan pada <strong>cara menghitung bunga</strong>: Stage 2 masih menghitung bunga atas gross amount, Stage 3 menghitung atas net amount. Ini berdampak pada interest income yang dilaporkan — Stage 3 akan menghasilkan interest income yang lebih rendah.</p>
+
+    <div class="callout red">
+      <span class="callout-title">Dampak Priklonis IFRS 9: Pro-Cyclicality</span>
+      <p>Salah satu kritik utama terhadap ECL model adalah pro-cyclicality: ketika economic outlook memburuk, estimasi ECL meningkat, provision naik, earnings turun, dan modal bank tergerus — tepat pada saat yang paling buruk. Ini bisa memperburuk siklus ekonomi. Saat COVID-19, bank IFRS membukukan provision yang sangat besar di Q1 2020 karena model ECL langsung mengekstrak dampak ekonomi terburuk ke dalam allowance. Regulator kemudian mengizinkan beberapa relief measures untuk meredam volatilitas ini.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header">
+        <span class="kc-header-title">Knowledge Check 4 — Dampak Perpindahan Stage 1 ke Stage 2</span>
+        <span class="kc-toggle">▼</span>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">Bank Mandiri Nusantara (MN) memiliki kredit korporasi Rp 500 miliar yang masih dalam Stage 1 dengan 12-month ECL sebesar 0.5% (Rp 2.5 miliar). Akibat pemburukan kondisi sektor yang signifikan, kredit ini pindah ke Stage 2. Lifetime ECL diestimasi sebesar 8% dari outstanding. Apa dampak perpindahan ini terhadap laporan keuangan MN?</p>
+        <p class="kc-answer">Dampak perpindahan Stage 1 → Stage 2: (1) <strong>Allowance for loan losses (neraca) naik</strong> dari Rp 2.5 miliar menjadi Rp 40 miliar (8% × Rp 500 M) — kenaikan Rp 37.5 miliar. (2) <strong>Provision for loan losses (income statement) naik</strong> sebesar Rp 37.5 miliar untuk mengisi kenaikan allowance, sehingga (3) <strong>Net income turun</strong> Rp 37.5 miliar × (1 − tax rate). Kredit masih tercatat penuh di neraca (tidak di-write off). Suku bunga masih dihitung atas gross carrying amount. Ini menunjukkan betapa sensitifnya earnings bank IFRS terhadap staging migration — bahkan tanpa ada default aktual.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- BAB 5 -->
+  <div class="chapter" id="bab5">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 5</div>
+      <div class="chapter-title">Earnings: NIM, Komposisi Pendapatan &amp; Kualitas Laba</div>
+    </div>
+
+    <p class="prose">Analisis earnings bank berbeda dari perusahaan biasa. Komponen pendapatan utama bank — net interest income — berkaitan langsung dengan manajemen aset dan liabilitas. Analis harus memahami struktur pendapatan bank untuk menilai sustainability-nya.</p>
+
+    <div class="sub-header">5.1 Net Interest Margin (NIM): Ukuran Efisiensi Intermediasi</div>
+    <p class="prose">NIM adalah rasio yang paling mencerminkan efisiensi bank dalam mengelola spread antara bunga yang diterima dari aset dan bunga yang dibayarkan ke liabilitas. Ini adalah "gross margin" bank — analoginya seperti gross profit margin pada perusahaan manufaktur.</p>
+
+    <div class="formula-block">
+      <span class="label">Net Interest Margin (NIM)</span>
+NIM = Net Interest Income / Average Interest-Earning Assets
+
+dimana:
+  Net Interest Income = Interest Income − Interest Expense
+  Interest-Earning Assets = Loans + Securities + Interbank Placements
+  (TIDAK termasuk cash, fixed assets, goodwill)
+
+Contoh:
+  Bank A: Interest Income = Rp 20T, Interest Expense = Rp 8T
+  Avg Interest-Earning Assets = Rp 240T
+  NIM = (20 − 8) / 240 = 12/240 = 5.0%
+
+      <span class="note">NIM yang lebih tinggi umumnya lebih baik, namun harus dikontekstualisasikan: bank dengan NIM tinggi mungkin mengambil lebih banyak risiko kredit atau memiliki lebih banyak consumer loans yang memang memiliki spread lebih besar. Bandingkan NIM dengan peer banks dalam segmen yang sama.</span>
+    </div>
+
+    <div class="sub-header">5.2 Komposisi Pendapatan dan Implikasi Kualitas</div>
+    <p class="prose">Pendapatan bank bersumber dari tiga area utama. Kualitas dan sustainability masing-masing berbeda signifikan:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 6 — Komposisi Pendapatan Bank &amp; Implikasi Kualitas</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Sumber Pendapatan</th><th>Deskripsi</th><th>Kualitas</th><th>Red Flag</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Net Interest Income</strong></td><td>Bunga dari loans &amp; securities dikurangi bunga yang dibayar ke deposan. Sumber utama untuk bank retail.</td><td>🟢 Tinggi — berulang, predictable, linear dengan volume bisnis</td><td>NIM menurun trengline multi-tahun → pricing power melemah atau risiko naik</td></tr>
+            <tr><td><strong>Fee &amp; Service Income</strong></td><td>Pendapatan dari transaction banking, wealth management, trade finance, bancassurance. Tidak tergantung suku bunga.</td><td>🟢 Tinggi — diversifikasi pendapatan, berulang</td><td>Fee income yang tumbuh jauh lebih cepat dari aset → mungkin ada one-time items</td></tr>
+            <tr><td><strong>Trading Income</strong></td><td>Mark-to-market gains dari treasury portfolio dan derivatives. Sangat volatile.</td><td>🔴 Rendah — tidak predictable, tidak berulang, bergantung pada kondisi pasar</td><td>Trading income sebagai % revenue yang terus meningkat → earnings lebih volatile dan kurang reliable</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="prose">Dalam analisis earnings quality bank, analis harus memeriksa apakah pertumbuhan earnings berasal dari sumber yang sustainable (NII dan fee income) atau dari sumber yang volatile (trading income dan penurunan provision). Earnings yang didorong oleh penurunan provision — bukan oleh pertumbuhan pendapatan bisnis — harus dilihat dengan skeptis.</p>
+
+    <div class="sub-header">5.3 Analisis Average Balance Sheet: Menggali NIM Secara Dalam</div>
+    <p class="prose">Untuk memahami NIM secara mendalam, analis menggunakan analisis <strong>average balance sheet</strong> — tabel yang menunjukkan rata-rata saldo setiap kategori aset dan liabilitas sepanjang tahun, beserta interest income/expense dan average rate yang terealisasi.</p>
+    <p class="prose">Dengan analisis ini, analis dapat mengidentifikasi:</p>
+    <ul class="bullet-list">
+      <li>Kategori aset mana yang menghasilkan yield tertinggi dan bagaimana tren yield-nya</li>
+      <li>Kategori liabilitas mana yang paling murah dan seberapa banyak manajemen mengandalkannya</li>
+      <li>Apakah NIM berubah karena perubahan volume (lebih banyak/sedikit aset) atau perubahan rate (yield naik/turun)</li>
+      <li>Seberapa sensitif NIM terhadap perubahan suku bunga (asset-sensitive vs liability-sensitive)</li>
+    </ul>
+
+    <div class="callout blue">
+      <span class="callout-title">Asset-Sensitive vs Liability-Sensitive Bank</span>
+      <p>Bank yang <strong>asset-sensitive</strong> memiliki aset dengan repricing lebih cepat dari liabilitas. Saat suku bunga naik, NIM mereka akan naik karena interest income naik lebih cepat dari interest expense. Bank retail yang banyak memberi kredit floating-rate (KPR dengan bunga variable) biasanya asset-sensitive. Sebaliknya, bank yang <strong>liability-sensitive</strong> memiliki liabilitas yang repricing lebih cepat — saat suku bunga naik, NIM mereka akan tertekan. Ini adalah dimensi S (Sensitivity to Market Risk) dalam CAMELS yang berkaitan erat dengan dimensi E (Earnings).</p>
+    </div>
+  </div>
+
+  <!-- BAB 6 -->
+  <div class="chapter" id="bab6">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 6</div>
+      <div class="chapter-title">Likuiditas: LCR, NSFR &amp; Faktor Non-CAMELS</div>
+    </div>
+
+    <p class="prose">Likuiditas adalah kemampuan bank untuk memenuhi kewajibannya ketika jatuh tempo. Ini berbeda dari solvency (apakah modal cukup): bank yang solvent bisa mengalami krisis likuiditas jika tidak bisa mengkonversi aset menjadi kas dengan cukup cepat. Itulah yang terjadi pada beberapa bank selama krisis 2008 — mereka masih solvent secara teknis, namun tidak bisa membayar kewajiban jangka pendek.</p>
+
+    <div class="sub-header">6.1 Liquidity Coverage Ratio (LCR): Ketahanan 30 Hari</div>
+    <p class="prose">LCR mengukur apakah bank memiliki aset likuid berkualitas tinggi yang cukup untuk menutupi net cash outflows selama skenario stres 30 hari. Skenario stres yang digunakan adalah kombinasi dari stres idiosyncratic (spesifik bank) dan stres market-wide (seluruh pasar).</p>
+
+    <div class="formula-block">
+      <span class="label">Liquidity Coverage Ratio (LCR)</span>
+LCR = High-Quality Liquid Assets (HQLA) / Net Cash Outflows (30-day stress)
+Minimum: ≥ 100%
+
+HQLA mencakup (Level 1 — tidak ada haircut):
+  + Cash, central bank reserves
+  + Government bonds dari sovereigns berrating tinggi
+
+HQLA (Level 2A — haircut 15%):
+  + Agency bonds, highly-rated corporate bonds
+  + Covered bonds
+
+Net Cash Outflows = Total Expected Outflows − Min(Inflows, 75% × Outflows)
+  Expected Outflows: diestimasi berdasarkan jenis deposan dan jenis produk
+  (retail deposits: 5–10% outflow rate; wholesale: bisa 25–100%)
+
+Interpretasi:
+  LCR = 120% → bank bisa survive stres 36 hari (120% × 30)
+  LCR = 100% → tepat memenuhi minimum
+  LCR &lt; 100% → kekurangan likuiditas — violation regulasi
+
+      <span class="note">LCR berfokus pada jangka pendek (30 hari). Ini adalah pelajaran langsung dari krisis 2008 di mana beberapa bank kehabisan likuiditas dalam hitungan minggu meskipun secara fundamental masih baik.</span>
+    </div>
+
+    <div class="sub-header">6.2 Net Stable Funding Ratio (NSFR): Struktur Pendanaan Jangka Panjang</div>
+    <p class="prose">NSFR mengukur apakah struktur pendanaan bank stabil untuk horizon 1 tahun — tidak terlalu bergantung pada pendanaan jangka sangat pendek (overnight, interbank) yang bisa menghilang tiba-tiba dalam kondisi stres. NSFR adalah komplemen LCR: LCR untuk stres jangka sangat pendek, NSFR untuk stabilitas jangka menengah.</p>
+
+    <div class="formula-block">
+      <span class="label">Net Stable Funding Ratio (NSFR)</span>
+NSFR = Available Stable Funding (ASF) / Required Stable Funding (RSF)
+Minimum: ≥ 100%
+
+Available Stable Funding (ASF) — Sisi Pendanaan:
+  Bobot 100%: Tier 1 &amp; Tier 2 Capital, liabilitas &gt;1 tahun
+  Bobot 95%: Retail deposits stabil (deposito berjangka, tabungan berjangka)
+  Bobot 90%: Less stable retail deposits
+  Bobot 50%: Wholesale deposits &lt;1 tahun dari non-financial corporate
+  Bobot 0%: Interbank borrowings &lt;6 bulan, derivatives liabilitas bersih
+
+Required Stable Funding (RSF) — Sisi Aset:
+  0%: Cash, reserves, HQLA pendek
+  5%: Government bonds
+  50%: Corporate bonds, residential mortgages
+  100%: Loans to individuals &gt;1 tahun, illiquid assets
+
+      <span class="note">Pendanaan yang lebih stabil (tenor panjang, retail) mendapat ASF factor tinggi. Aset yang kurang liquid mendapat RSF factor tinggi. NSFR tinggi berarti pendanaan stabil melebihi kebutuhan — positif dari perspektif risiko likuiditas jangka panjang.</span>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Exhibit 7 — Perbandingan LCR vs NSFR</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Dimensi</th><th>LCR</th><th>NSFR</th></tr></thead>
+          <tbody>
+            <tr><td>Horizon</td><td>30 hari (jangka pendek)</td><td>1 tahun (jangka menengah)</td></tr>
+            <tr><td>Fokus</td><td>Aset likuid vs outflows stres</td><td>Stable funding vs kebutuhan funding aset</td></tr>
+            <tr><td>Minimum Basel III</td><td>≥ 100%</td><td>≥ 100%</td></tr>
+            <tr><td>Tujuan utama</td><td>Survive bank run jangka pendek</td><td>Hindari structural liquidity mismatch</td></tr>
+            <tr><td>Risiko yang di-address</td><td>Sudden deposit withdrawal, loss of wholesale funding</td><td>Excessive maturity transformation (borrow short, lend long)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout amber">
+      <span class="callout-title">Kasus HSBC Bank China: LCR 253%, NSFR 49%</span>
+      <p>Data HSBC 2016 menunjukkan HSBC Bank China memiliki LCR 253% (sangat tinggi) namun NSFR hanya 49% (jauh di bawah minimum 100%). Ini anomali: jangka pendek sangat aman, tapi jangka panjang sangat bermasalah. Kemungkinan penjelasannya adalah kontrol modal RMB di China yang menciptakan banyak kas lokal yang tidak bisa di-transfer keluar (sehingga LCR tinggi), namun struktur pendanaan jangka panjangnya terganggu oleh regulasi lokal yang membatasi instrumen tertentu. Ini menunjukkan bahwa LCR dan NSFR harus selalu dilihat bersama-sama, dan interpretasi harus mempertimbangkan konteks regulasi lokal.</p>
+    </div>
+
+    <div class="kc">
+      <div class="kc-header">
+        <span class="kc-header-title">Knowledge Check 5 — Maturity Mismatch dan Risiko Likuiditas</span>
+        <span class="kc-toggle">▼</span>
+      </div>
+      <div class="kc-body">
+        <p class="kc-q">Mengapa maturity mismatch (meminjam jangka pendek, meminjamkan jangka panjang) adalah strategi yang menguntungkan namun berisiko? Jelaskan dalam konteks yield curve normal.</p>
+        <p class="kc-answer">Dalam yield curve normal (upward sloping), suku bunga jangka panjang lebih tinggi dari jangka pendek. Bank yang meminjam jangka pendek (membayar bunga rendah ke deposan) dan meminjamkan jangka panjang (menerima bunga tinggi dari peminjam) menikmati spread yang lebar — NIM-nya tinggi. Ini menguntungkan selama kondisi normal. Namun risikonya: jika depositor menarik dana (bisa dalam hitungan hari/minggu), bank harus mencari pendanaan pengganti. Jika pasar sedang stres, pendanaan pengganti sangat mahal atau bahkan tidak tersedia — mengancam likuiditas bank meski bank masih solvent. NSFR dirancang untuk mencegah bank mengambil maturity mismatch yang berlebihan dengan mensyaratkan bahwa aset jangka panjang harus didanai dengan liabilitas yang juga stabil/jangka panjang.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- LATIHAN SOAL -->
+  <div class="chapter" id="latihan">
+    <div class="chapter-header">
+      <div class="chapter-num">Latihan Soal</div>
+      <div class="chapter-title">Item Set Vignette — Level CFA Exam</div>
+    </div>
+
+    <div class="practice-body">
+      <div class="vignette">
+        <div class="vignette-label">Vignette — PT Bank Maju Bersama (BMB)</div>
+        <div class="vignette-text">
+          <strong>Latar Belakang:</strong> Rizky Pratama, CFA, adalah analis senior di Bahana Sekuritas yang sedang menyiapkan research note untuk PT Bank Maju Bersama Tbk (BMB) — bank swasta Indonesia yang terdaftar di IDX dengan kode saham BMJB. BMB melaporkan laporan keuangan tahunan 2025 per tanggal 31 Desember 2025.<br><br>
+          <strong>Neraca Terpilih BMB (Rp Miliar, per 31 Des 2025):</strong><br>
+          Total Assets: 350.000 | Total Gross Loans: 220.000 | Average Interest-Earning Assets (2025): 295.000<br>
+          Cash &amp; Central Bank Reserves: 42.000 | High-Quality Securities: 38.000<br>
+          Non-Performing Loans: 9.900 | Allowance for Loan Losses: 10.890<br>
+          Charge-offs (gross, 2025): 4.200 | Recoveries (2025): 700<br>
+          CET1 Capital: 38.500 | Additional Tier 1: 5.250 | Tier 2 Capital: 7.700<br>
+          Risk-Weighted Assets: 192.500<br><br>
+          <strong>Laporan Laba Rugi Terpilih (Rp Miliar, 2025):</strong><br>
+          Interest Income: 24.500 | Interest Expense: 9.100 | Net Interest Income: 15.400<br>
+          Fee &amp; Service Income: 4.200 | Trading Income: 2.800 | Total Revenue: 22.400<br>
+          Provision for Loan Losses: 5.600 | Net Income: 4.480<br><br>
+          <strong>Data Likuiditas (Rp Miliar, per 31 Des 2025):</strong><br>
+          HQLA: 65.000 | Net Cash Outflows (30-day stress): 55.000<br>
+          Available Stable Funding: 182.000 | Required Stable Funding: 165.000<br><br>
+          <strong>Catatan Tambahan:</strong><br>
+          1. BMB menggunakan IFRS 9. Di Q4 2025, BMB memindahkan kredit sektor properti Rp 8.000 miliar dari Stage 1 (12-month ECL = 1% = Rp 80 miliar) ke Stage 2 (Lifetime ECL = 12% = Rp 960 miliar).<br>
+          2. Rata-rata industri (peer banks): NPL Ratio = 2.9%, NPL Coverage = 125%, NIM = 4.6%, CET1 Ratio = 19.5%, LCR = 130%.<br>
+          3. Manajemen menyampaikan bahwa kenaikan NPL di sektor properti bersifat temporary dan tidak mencerminkan penurunan kualitas underwriting.
+        </div>
+      </div>
+
+      <!-- Q1 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 1 dari 6</div>
+        <div class="q-text">Hitung CET1 Ratio, Tier 1 Capital Ratio, dan Total Capital Ratio BMB. Dibandingkan dengan standar minimum Basel III, bagaimana posisi BMB?</div>
+        <div class="option" onclick="selectOption(this, 1, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">A. CET1 = 17.0%, Tier 1 = 19.7%, Total Capital = 23.7% — tidak memenuhi minimum Basel III untuk CET1</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 1, true)">
+          <div class="option-radio"></div>
+          <div class="option-text">B. CET1 = 20.0%, Tier 1 = 22.7%, Total Capital = 26.7% — memenuhi semua minimum Basel III dengan buffer yang sangat signifikan</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 1, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">C. CET1 = 20.0%, Tier 1 = 22.7%, Total Capital = 24.7% — Tier 2 tidak termasuk dalam Total Capital untuk keperluan perhitungan ini</div>
+        </div>
+        <div class="explanation" id="fexp-1-A">❌ CET1 = 38.500/192.500 = 20.0%, bukan 17.0%. Pastikan menggunakan RWA (192.500) bukan Total Assets (350.000) sebagai denominantor. Inilah exam trap klasik — menggunakan total assets bukannya risk-weighted assets.</div>
+        <div class="explanation" id="fexp-1-B">✅ CET1 = 38.500/192.500 = 20.0% (min 4.5% ✓ — buffer sangat besar). Tier 1 = (38.500+5.250)/192.500 = 43.750/192.500 = 22.7% (min 6.0% ✓). Total Capital = (43.750+7.700)/192.500 = 51.450/192.500 = 26.7% (min 8.0% ✓). BMB memenuhi semua minimum Basel III dengan buffer yang sangat besar — posisi capital sangat kuat. Dibandingkan peer (CET1 industri 19.5%), BMB sedikit di atas rata-rata industri.</div>
+        <div class="explanation" id="fexp-2-C">❌ Total Capital mencakup semua tier — Tier 1 + Tier 2. Total Capital = 43.750 + 7.700 = 51.450. Tier 2 Capital (yang biasanya berupa subordinated debt dan partial allowance) tetap dimasukkan ke dalam Total Capital sesuai definisi Basel III.</div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 2 dari 6</div>
+        <div class="q-text">Hitung NPL Ratio dan NPL Coverage Ratio BMB. Dibandingkan dengan rata-rata industri, apa assessment asset quality BMB yang paling tepat?</div>
+        <div class="option" onclick="selectOption(this, 2, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">A. NPL Ratio = 4.3%, NPL Coverage = 110% — asset quality di bawah rata-rata industri pada kedua metrik</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 2, true)">
+          <div class="option-radio"></div>
+          <div class="option-text">B. NPL Ratio = 4.5%, NPL Coverage = 110% — NPL lebih tinggi dari industri (concern) namun coverage di bawah rata-rata (double concern), menunjukkan asset quality yang relatif lemah</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 2, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">C. NPL Ratio = 4.5%, NPL Coverage = 130% — NPL lebih tinggi dari industri namun coverage di atas rata-rata, menunjukkan provisioning yang konservatif</div>
+        </div>
+        <div class="explanation" id="fexp-2-A">❌ NPL Ratio = 9.900/220.000 = 4.5%, bukan 4.3%. Periksa kembali pembagi yang digunakan — Total Gross Loans = 220.000, bukan Total Assets.</div>
+        <div class="explanation" id="fexp-2-B">✅ NPL Ratio = 9.900/220.000 = 4.5% (industri: 2.9% → BMB jauh di atas, concern signifikan). NPL Coverage = 10.890/9.900 = 110% (industri: 125% → BMB di bawah rata-rata, concern tambahan). Double concern: tidak hanya NPL yang tinggi, tapi cadangannya pun relatif kurang dibanding peer. Ini adalah assessment asset quality yang paling akurat — BMB memiliki kelemahan di kedua sisi metrik asset quality.</div>
+        <div class="explanation" id="fexp-2-C">❌ NPL Coverage = 10.890/9.900 = 110%, bukan 130%. 130% adalah rata-rata industri yang lebih baik — BMB justru ada di bawah angka itu. Jika coverage 130%, itu malah positif; kenyataannya BMB kurang dari itu.</div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 3 dari 6</div>
+        <div class="q-text">Hitung NIM BMB dan bandingkan dengan rata-rata industri. Lalu hitung persentase trading income terhadap total revenue. Apa implikasi kedua temuan ini terhadap earnings quality BMB?</div>
+        <div class="option" onclick="selectOption(this, 3, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">A. NIM = 5.2%, Trading Income = 12.5% — NIM baik, trading income moderat; earnings quality baik secara keseluruhan</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 3, true)">
+          <div class="option-radio"></div>
+          <div class="option-text">B. NIM = 5.2%, Trading Income = 12.5% dari total revenue — NIM di atas rata-rata industri (positif), namun ketergantungan pada trading income yang volatile perlu diperhatikan</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 3, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">C. NIM = 4.7%, Trading Income = 15.0% — NIM di bawah rata-rata industri; earnings quality lemah</div>
+        </div>
+        <div class="explanation" id="fexp-3-A">❌ Perhitungan angkanya benar (NIM 5.2%, Trading Income 12.5%), namun kesimpulan "earnings quality baik secara keseluruhan" terlalu optimistik. Ketergantungan 12.5% dari total revenue pada trading income — yang sangat volatile — memang perlu diperhatikan dan tidak bisa diabaikan begitu saja.</div>
+        <div class="explanation" id="fexp-3-B">✅ NIM = Net Interest Income / Avg Interest-Earning Assets = 15.400/295.000 = 5.22% ≈ 5.2% (industri: 4.6% → BMB di atas rata-rata, positif untuk earnings quality). Trading Income / Total Revenue = 2.800/22.400 = 12.5% — porsi yang tidak kecil. Trading income sangat volatile: bisa tinggi saat pasar bullish dan anjlok saat pasar bear. Kebergantungan 12.5% pada komponen ini membuat earnings BMB lebih volatile dibanding bank yang lebih mengandalkan NII dan fee income. Kesimpulan: NIM bagus, tapi komposisi pendapatan perlu dimonitor.</div>
+        <div class="explanation" id="fexp-3-C">❌ NIM = 15.400/295.000 = 5.2%, bukan 4.7%. Pastikan menggunakan Net Interest Income (bukan Total Revenue) di pembilang, dan Avg Interest-Earning Assets (bukan Total Assets) di penyebut.</div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 4 dari 6</div>
+        <div class="q-text">Hitung LCR dan NSFR BMB. Bandingkan LCR dengan rata-rata industri (130%) dan simpulkan posisi likuiditas BMB secara keseluruhan.</div>
+        <div class="option" onclick="selectOption(this, 4, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">A. LCR = 118%, NSFR = 110% — kedua rasio memenuhi Basel III, namun LCR di bawah rata-rata industri; posisi likuiditas lemah</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 4, true)">
+          <div class="option-radio"></div>
+          <div class="option-text">B. LCR = 118%, NSFR = 110% — kedua rasio memenuhi Basel III; LCR di bawah rata-rata industri adalah perhatian, namun posisi likuiditas secara keseluruhan masih memadai</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 4, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">C. LCR = 110%, NSFR = 118% — memenuhi Basel III; NSFR di atas industri adalah positif dan mengkompensasi LCR yang lebih rendah</div>
+        </div>
+        <div class="explanation" id="fexp-4-A">❌ LCR dan NSFR sudah tepat dihitung (118% dan 110%), namun menyebut posisi likuiditas "lemah" adalah kesimpulan yang berlebihan. LCR 118% masih di atas minimum 100% dengan buffer 18 persentase poin. "Di bawah rata-rata industri" memang menjadi perhatian, namun tidak serta-merta berarti posisi lemah — harus dinilai dalam konteks yang lebih luas.</div>
+        <div class="explanation" id="fexp-4-B">✅ LCR = HQLA/Net Cash Outflows = 65.000/55.000 = 118% (≥100% ✓ memenuhi Basel III, tapi di bawah rata-rata industri 130% → perlu monitoring). NSFR = ASF/RSF = 182.000/165.000 = 110% (≥100% ✓ memenuhi Basel III). Kesimpulan seimbang: kedua rasio memenuhi minimum regulasi dan bank tidak dalam kondisi distress likuiditas, namun LCR yang lebih rendah dari peers menunjukkan bahwa buffer likuiditas jangka pendek BMB relatif lebih tipis — ini adalah area yang perlu diperhatikan, bukan alarm bahaya.</div>
+        <div class="explanation" id="fexp-4-C">❌ LCR = 65.000/55.000 = 118%, NSFR = 182.000/165.000 = 110%. Kedua angka dalam opsi C terbalik — LCR yang benar adalah 118%, NSFR yang benar adalah 110%.</div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 5 dari 6</div>
+        <div class="q-text">Perpindahan kredit properti Rp 8.000 miliar dari Stage 1 ke Stage 2 (menurut IFRS 9) yang terjadi di Q4 2025 memerlukan kenaikan allowance. Berapa tambahan provision yang harus diakui di income statement sebagai akibat perpindahan staging ini, dan apa dampaknya?</div>
+        <div class="option" onclick="selectOption(this, 5, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Tambahan provision = Rp 80 miliar (12-month ECL yang sudah ada sebelum perpindahan Stage)</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 5, true)">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Tambahan provision = Rp 880 miliar (selisih Lifetime ECL Rp 960 miliar dikurangi 12-month ECL Rp 80 miliar yang sudah diakui)</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 5, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Tidak ada tambahan provision karena perpindahan staging hanya perubahan klasifikasi, bukan pengakuan kerugian aktual</div>
+        </div>
+        <div class="explanation" id="fexp-5-A">❌ Rp 80 miliar adalah 12-month ECL Stage 1 yang sudah diakui sebelum perpindahan. Ini bukan tambahan — ini sudah ada. Tambahan provision adalah selisih antara Lifetime ECL (Stage 2) dan 12-month ECL (Stage 1) yang sudah diakui.</div>
+        <div class="explanation" id="fexp-5-B">✅ Saat kredit pindah dari Stage 1 ke Stage 2, basis ECL berubah dari 12-month menjadi Lifetime ECL. Allowance yang dibutuhkan naik dari Rp 80 M (1% × 8.000) menjadi Rp 960 M (12% × 8.000). Tambahan allowance = 960 − 80 = Rp 880 miliar. Untuk mengisi kenaikan allowance ini, provision for loan losses (income statement expense) harus naik Rp 880 miliar. Ini menurunkan pretax income sebesar Rp 880 miliar — efek yang signifikan hanya dari satu staging migration. Ini menjelaskan mengapa earnings bank IFRS bisa sangat volatile saat terjadi deteriorasi ekonomi sektoral.</div>
+        <div class="explanation" id="fexp-5-C">❌ Perpindahan staging bukan sekadar reklasifikasi — ini memiliki dampak nyata pada besaran allowance yang diakui. Perubahan dari 12-month ECL ke Lifetime ECL mengharuskan kenaikan allowance yang signifikan, yang harus diisi melalui kenaikan provision expense di income statement. Tidak ada "netting out" atau penundaan pengakuan ini.</div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="question-block">
+        <div class="q-num">Pertanyaan 6 dari 6</div>
+        <div class="q-text">Manajemen BMB menyatakan bahwa kenaikan NPL di sektor properti "bersifat temporary dan tidak mencerminkan penurunan kualitas underwriting." Berdasarkan analisis keseluruhan yang telah dilakukan Rizky, apakah pernyataan manajemen ini seharusnya diterima atau dipertanyakan lebih lanjut?</div>
+        <div class="option" onclick="selectOption(this, 6, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Pernyataan manajemen harus diterima karena NPL Coverage Ratio BMB masih di atas 100%, menunjukkan cadangan yang memadai untuk menanggung NPL yang ada</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 6, true)">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Pernyataan manajemen harus dipertanyakan lebih lanjut: NPL Ratio jauh di atas rata-rata industri, NPL Coverage di bawah rata-rata peers, dan staging migration Rp 880 miliar menunjukkan deteriorasi yang lebih sistemik dari yang diklaim manajemen</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 6, false)">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Pernyataan manajemen tidak relevan karena CAMELS approach bersifat kuantitatif dan hanya menggunakan angka-angka yang ada di laporan keuangan</div>
+        </div>
+        <div class="explanation" id="fexp-6-A">❌ NPL Coverage 110% hanya sedikit di atas 100% — ini tidak memberikan banyak cushion, apalagi dibandingkan rata-rata industri yang 125%. Fakta bahwa coverage masih di atas 100% tidak cukup untuk menerima pernyataan manajemen begitu saja, terutama mengingat besaran staging migration yang terjadi.</div>
+        <div class="explanation" id="fexp-6-B">✅ Analis yang baik mengevaluasi klaim manajemen terhadap data yang ada. Data menunjukkan: (1) NPL Ratio 4.5% jauh di atas rata-rata industri 2.9% — bukan hanya sedikit lebih tinggi; (2) NPL Coverage 110% di bawah peers 125% — cadangan relatif tipis; (3) Staging migration Rp 8.000 miliar ke Stage 2 dengan kenaikan provision Rp 880 miliar menunjukkan bahwa model internal BMB sendiri (IFRS 9 ECL) sudah mendeteksi deteriorasi yang significant. Jika penurunan benar-benar "temporary", seharusnya staging migration tidak perlu terjadi. Rizky seharusnya meminta data lebih detail: tren NPL per kuartal, breakdown sektor, LTV distribusi portofolio properti, dan pipeline restrukturisasi.</div>
+        <div class="explanation" id="fexp-6-C">❌ CAMELS approach memang berbasis kuantitatif, namun komponen M (Management) secara eksplisit bersifat kualitatif dan mencakup evaluasi terhadap governance dan komunikasi manajemen. Selain itu, analis bertanggung jawab untuk mengevaluasi konsistensi antara narasi manajemen dan data keuangan — menerima begitu saja klaim manajemen tanpa verifikasi adalah malpraktik analisis.</div>
+      </div>
+
+      <div class="score-panel" id="score-panel-full">
+        <div class="score-panel-text">Hasil Latihan Soal Full — Day 27</div>
+        <div class="score-panel-value" id="score-value-full">—</div>
+        <div class="score-panel-text" style="margin-top:8px;font-size:13px;color:var(--text3);" id="score-detail-full"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="CFA_L2_Day26_Full.html" class="nav-btn">← Day 26: Balance Sheet &amp; Red Flags (Full)</a>
+    <a href="CFA_L2_Day27.html" class="nav-btn" style="background:var(--gold-bg);border-color:var(--gold);color:var(--gold2);">📋 Versi Summary</a>
+    <a href="CFA_L2_Day28_Full.html" class="nav-btn">Day 28: Insurance Analysis (Full) →</a>
+  </div>
+
+</div>
+
+<script>
+  document.querySelectorAll('.kc').forEach(kc => {
+    kc.addEventListener('click', function(e) {
+      if (!e.target.closest('.kc-body')) {
+        this.classList.toggle('open');
+      }
+    });
+  });
+
+  const fanswers = {};
+  const ftotal = 6;
+
+  function selectOption(el, qNum, isCorrect) {
+    const qBlock = el.closest('.question-block');
+    const options = qBlock.querySelectorAll('.option');
+    options.forEach(o => { o.classList.remove('selected'); o.style.pointerEvents = 'none'; o.style.opacity = '0.7'; });
+    el.classList.add('selected');
+    el.style.opacity = '1';
+    const optLetter = el.querySelector('.option-text').textContent.trim().charAt(0);
+    const expEl = document.getElementById('fexp-' + qNum + '-' + optLetter);
+    if (expEl) { expEl.classList.add('show'); expEl.classList.add(isCorrect ? 'correct' : 'incorrect'); }
+    fanswers[qNum] = isCorrect;
+    if (Object.keys(fanswers).length === ftotal) {
+      const score = Object.values(fanswers).filter(v => v).length;
+      const panel = document.getElementById('score-panel-full');
+      panel.classList.add('show');
+      document.getElementById('score-value-full').textContent = score + ' / ' + ftotal;
+      document.getElementById('score-detail-full').textContent = score === ftotal
+        ? '🎉 Luar biasa! Penguasaan materi sudah sangat baik — siap untuk ujian!'
+        : score >= 5 ? '💪 Hampir sempurna. Review 1 soal yang salah.'
+        : score >= 4 ? '📚 Baik. Ada 2 konsep yang perlu diperdalam.'
+        : score >= 3 ? '⚠️ Cukup. Review materi CAMELS, capital ratios, dan IFRS 9 staging.'
+        : '🔄 Perlu review menyeluruh — ulangi baca materi sebelum latihan lagi.';
+    }
+  }
+</script>
+</body>
+</html>

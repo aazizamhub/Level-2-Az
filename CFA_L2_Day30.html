@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level 2 - Day 30: Balance Sheet & Footnotes (Evaluating Quality of Financial Reports)</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg:#fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+      --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;--gold:#9a6e1a;--gold2:#7a5010;
+      --gold-bg:rgba(154,110,26,0.08);--blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);
+      --green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);--red:#b83232;--red-bg:rgba(184,50,50,0.08);
+      --amber:#a06010;--amber-bg:rgba(160,96,16,0.08);--r:10px;--r-sm:6px;
+    }
+    body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6; }
+    .page { max-width:900px;margin:0 auto;padding:0 16px; }
+    .topbar { display:flex;justify-content:space-between;align-items:center;padding:12px 0;margin-top:8px;border-bottom:1px solid var(--border);font-size:13px;color:var(--text3); }
+    .breadcrumb { display:flex;gap:8px;align-items:center; }
+    .breadcrumb span { color:var(--text3); }
+    .breadcrumb strong { color:var(--text2);font-weight:600; }
+    .day-badge { background:var(--gold-bg);color:var(--gold2);padding:4px 10px;border-radius:var(--r-sm);font-size:12px;font-weight:600; }
+    .hero { padding:40px 0 32px;border-bottom:1px solid var(--border);margin-bottom:32px; }
+    .hero-tag { color:var(--blue);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px; }
+    .hero-title { font-size:36px;font-weight:700;line-height:1.2;margin-bottom:8px;color:var(--text); }
+    .hero-sub { font-size:16px;color:var(--text2);margin-bottom:16px; }
+    .meta-row { display:flex;gap:12px;flex-wrap:wrap;margin-top:16px; }
+    .meta-pill { background:var(--bg2);border:1px solid var(--border);padding:8px 14px;border-radius:var(--r-sm);font-size:12px;color:var(--text2);font-weight:500; }
+    .section { margin-bottom:40px; }
+    .section-label { font-size:12px;font-weight:700;text-transform:uppercase;color:var(--text3);letter-spacing:0.5px;margin-bottom:16px; }
+    .obj-box { background:var(--blue-bg);border-left:4px solid var(--blue);padding:20px;border-radius:var(--r-sm);margin-bottom:16px; }
+    .obj-box-title { font-size:13px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px; }
+    .obj-list { list-style:none; }
+    .obj-list li { font-size:14px;color:var(--text);margin-bottom:8px;padding-left:20px;position:relative; }
+    .obj-list li:before { content:"✓";position:absolute;left:0;color:var(--blue);font-weight:700; }
+    .concept-grid { display:grid;grid-template-columns:1fr;gap:20px;margin-bottom:24px; }
+    .concept-card { background:white;border:1px solid var(--border2);border-radius:var(--r);padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05); }
+    .concept-card-header { display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border); }
+    .concept-num { display:flex;align-items:center;justify-content:center;width:32px;height:32px;background:var(--gold-bg);color:var(--gold);border-radius:50%;font-weight:700;font-size:14px; }
+    .concept-title { font-size:16px;font-weight:700;color:var(--text);flex:1; }
+    .concept-body { font-size:14px;color:var(--text);line-height:1.7; }
+    .concept-body p { margin-bottom:12px; }
+    .formula { background:var(--bg2);border-left:3px solid var(--gold);padding:12px;border-radius:var(--r-sm);font-family:'Courier New',monospace;font-size:13px;color:var(--text);margin:12px 0;overflow-x:auto;white-space:pre-wrap; }
+    .insight { background:var(--green-bg);border-left:3px solid var(--green);padding:12px;border-radius:var(--r-sm);font-size:13px;color:var(--text);margin:12px 0; }
+    .trap { background:var(--red-bg);border-left:3px solid var(--red);padding:12px;border-radius:var(--r-sm);font-size:13px;color:var(--text);margin:12px 0; }
+    .trap-label { font-weight:700;color:var(--red);font-size:11px;text-transform:uppercase;margin-bottom:4px; }
+    .assume-table { width:100%;border-collapse:collapse;margin:12px 0;font-size:13px; }
+    .assume-table th { background:var(--bg3);border:1px solid var(--border);padding:10px;text-align:left;font-weight:700;color:var(--text); }
+    .assume-table td { border:1px solid var(--border);padding:10px;color:var(--text2); }
+    .cheat-grid { display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px; }
+    .cheat-item { background:white;border:1px solid var(--border);border-radius:var(--r-sm);padding:14px; }
+    .cheat-key { font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px; }
+    .cheat-val { font-size:13px;color:var(--text);font-weight:500;line-height:1.5; }
+    .practice-body { background:white;border:1px solid var(--border2);border-radius:var(--r);padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05); }
+    .vignette { background:var(--bg2);padding:16px;border-radius:var(--r-sm);margin-bottom:24px;border-left:3px solid var(--amber); }
+    .vignette-label { font-size:11px;font-weight:700;color:var(--amber);text-transform:uppercase;margin-bottom:8px; }
+    .vignette-text { font-size:13px;color:var(--text);line-height:1.6; }
+    .question-block { margin-bottom:28px; }
+    .q-num { font-size:12px;font-weight:700;color:var(--blue);margin-bottom:8px; }
+    .q-text { font-size:14px;color:var(--text);margin-bottom:12px;line-height:1.6;font-weight:500; }
+    .option { display:flex;align-items:flex-start;gap:12px;padding:10px 12px;margin-bottom:8px;border:1px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:all 0.2s ease;background:white; }
+    .option:hover { border-color:var(--blue);background:var(--blue-bg); }
+    .option-radio { display:flex;align-items:center;justify-content:center;width:18px;height:18px;border:2px solid var(--border2);border-radius:50%;flex-shrink:0;margin-top:2px; }
+    .option.selected .option-radio { border-color:var(--blue);background:var(--blue); }
+    .option.selected .option-radio:after { content:"✓";color:white;font-size:11px;font-weight:700; }
+    .option-text { font-size:13px;color:var(--text); }
+    .explanation { background:var(--bg2);padding:12px;border-radius:var(--r-sm);font-size:12px;color:var(--text2);margin-top:8px;display:none;line-height:1.6; }
+    .explanation.show { display:block; }
+    .explanation.correct { border-left:3px solid var(--green);background:var(--green-bg);color:var(--text); }
+    .explanation.incorrect { border-left:3px solid var(--red);background:var(--red-bg);color:var(--text); }
+    .score-panel { background:var(--gold-bg);border:1px solid var(--gold);border-radius:var(--r);padding:16px;margin-top:20px;text-align:center;display:none; }
+    .score-panel.show { display:block; }
+    .score-panel-text { font-size:14px;color:var(--text);margin-bottom:8px; }
+    .score-panel-value { font-size:24px;font-weight:700;color:var(--gold2); }
+    .nav-bottom { display:flex;justify-content:space-between;align-items:center;padding:24px 0;margin-top:40px;border-top:1px solid var(--border); }
+    .nav-btn { text-decoration:none;padding:10px 16px;border-radius:var(--r-sm);font-size:13px;font-weight:600;color:var(--blue);border:1px solid var(--border);transition:all 0.2s ease;cursor:pointer; }
+    .nav-btn:hover { border-color:var(--blue);background:var(--blue-bg); }
+    @media (max-width:640px) { .hero-title{font-size:28px;} .cheat-grid{grid-template-columns:1fr;} .meta-row{flex-direction:column;} }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">
+      <span>CFA Level II</span><span>&middot;</span><span>FSA</span><span>&middot;</span><strong>LM6</strong>
+    </div>
+    <div class="day-badge">Day 30 of 90</div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Tuesday, 26 May 2026</div>
+    <h1 class="hero-title">Balance Sheet &amp; Footnotes</h1>
+    <p class="hero-sub">Evaluating Quality of Financial Reports &mdash; Subtopic 2 of 2</p>
+    <div class="meta-row">
+      <div class="meta-pill">60 min total</div>
+      <div class="meta-pill">30 min theory</div>
+      <div class="meta-pill">30 min practice</div>
+      <div class="meta-pill">~12% exam weight</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Learning Objectives</div>
+    <div class="obj-box">
+      <div class="obj-box-title">By the end of this subtopic, you'll be able to:</div>
+      <ul class="obj-list">
+        <li>Identifikasi indikator goodwill impairment risk menggunakan perbandingan goodwill vs market cap, dan jelaskan perbedaan pendekatan impairment testing antara IFRS dan US GAAP</li>
+        <li>Jelaskan bagaimana kualitas deferred tax assets (DTA) ditentukan oleh valuation allowance dan kapan DTA besar adalah red flag untuk balance sheet quality</li>
+        <li>Terapkan constructive capitalization untuk off-balance sheet obligations (take-or-pay contracts, unconsolidated JVs) dan hitung dampaknya terhadap leverage ratios</li>
+        <li>Evaluasi related-party transactions dan opini auditor sebagai sumber informasi risiko, termasuk keterbatasan inherent dari audit opinion dalam deteksi dini masalah pelaporan</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Key Concepts &mdash; Theory (30 min)</div>
+    <div class="concept-grid">
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">1</div>
+          <div class="concept-title">Goodwill Impairment Risk: Sinyal Paling Keras di Balance Sheet</div>
+        </div>
+        <div class="concept-body">
+          <p>Goodwill muncul saat akuisisi: selisih lebih harga beli di atas fair value net identifiable assets. Goodwill tidak diamortisasi &mdash; tapi wajib diuji impairment setiap tahun (IFRS & US GAAP). Masalahnya: <em>manajemen punya insentif kuat untuk menunda impairment</em> karena impairment charge langsung memukul laba.</p>
+          <p><strong>Signal terkuat goodwill impairment yang akan datang:</strong></p>
+          <div class="formula">Red Flag Utama:
+  Market Cap perusahaan &lt; Book Value of Shareholders' Equity
+  → Jika goodwill &gt; market cap, secara implisit nilai semua aset lain &lt; 0
+  → Ini hampir pasti mengindikasikan goodwill overstated
+
+Goodwill sebagai % Total Assets sangat tinggi (>30-40%):
+  → Semakin besar, semakin besar risiko impairment besar ke depan
+  → Contoh Sealed Air 2011: goodwill + intangibles = ~55% total assets!
+  → Setahun kemudian: impairment charge $1,892 juta (vs total assets $11,4 miliar)</div>
+
+          <table class="assume-table">
+            <thead><tr><th>Aspek</th><th>IFRS</th><th>US GAAP</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Metode Goodwill</strong></td><td>Partial goodwill (NCI = proportionate share) ATAU Full goodwill (NCI = fair value) &mdash; pilihan per transaksi</td><td>Full goodwill wajib (NCI = fair value)</td></tr>
+              <tr><td><strong>Unit of Account</strong></td><td>Cash Generating Unit (CGU)</td><td>Reporting Unit (biasanya = operating segment)</td></tr>
+              <tr><td><strong>Impairment Test</strong></td><td>Satu langkah: bandingkan recoverable amount CGU vs carrying amount (termasuk goodwill). Jika RA &lt; CA, langsung impairment</td><td>Dua langkah: Step 1 = fair value test; Step 2 = implied fair value of goodwill vs carrying amount goodwill. (Note: ASU 2017-04 menyederhanakan ke satu langkah)</td></tr>
+              <tr><td><strong>Reversal Impairment</strong></td><td>Tidak boleh dibalik (goodwill)</td><td>Tidak boleh dibalik</td></tr>
+            </tbody>
+          </table>
+          <div class="insight">
+            <strong>Kasus Sealed Air Corporation (dari kurikulum CFA L2):</strong> Goodwill per Des 2011 = $4,209.6 juta. Market cap Desember 2011 ≈ $3,457 juta. Goodwill MELAMPAUI market cap. Nilai implisit seluruh aset lain perusahaan = negatif. Wall Street Journal menyorot ini Agustus 2012. Hasilnya? Di laporan fiskal 2012, Sealed Air mencatat impairment goodwill dan intangibles $1,892.3 juta &mdash; persis seperti yang diantisipasi. Ini bukan prediksi ajaib &mdash; ini FSA standar.
+          </div>
+          <div class="trap">
+            <div class="trap-label">Exam Trap &mdash; Goodwill Tidak Diamortisasi</div>
+            Goodwill tidak pernah diamortisasi di bawah IFRS atau US GAAP saat ini (walaupun sebelum SFAS 142 tahun 2001, US GAAP mewajibkan amortisasi). Di exam, jangan masukkan amortisasi goodwill dalam model. Yang ada hanya impairment &mdash; dan itu bersifat diskresioner (judgment-based), sehingga sering tertunda hingga tidak bisa dihindari lagi.
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">2</div>
+          <div class="concept-title">Kualitas Deferred Tax Assets: Valuation Allowance sebagai Kunci</div>
+        </div>
+        <div class="concept-body">
+          <p>Deferred Tax Assets (DTA) muncul ketika aset memiliki tax base lebih tinggi dari book value, atau liabilitas memiliki tax base lebih rendah dari book value &mdash; sehingga di masa depan akan ada penghematan pajak. Tapi DTA hanya bernilai jika perusahaan memiliki <em>future taxable income</em> yang cukup untuk merealisasikan manfaat tersebut.</p>
+          <div class="formula">Valuation Allowance:
+  DTA (gross) dikurangi Valuation Allowance = DTA (net) yang dilaporkan
+
+  Valuation Allowance naik → manajemen skeptis DTA bisa direalisasi
+    → Menandakan prospek profitabilitas masa depan melemah
+    → Juga menaikkan tax expense → menekan laba
+
+  Valuation Allowance turun secara unexplained → bisa merupakan
+    → Earnings management (memanipulasi laba dengan menurunkan VA)
+    → Atau legitimate: prospek profitabilitas membaik
+
+Tanda DTA Berkualitas Rendah:
+  1. DTA besar + perusahaan punya sejarah rugi berkelanjutan
+  2. DTA dari Net Operating Loss (NOL) yang tak tentu bisa dikompensasi
+  3. Perubahan VA besar tanpa penjelasan yang memadai di notes
+  4. DTA sangat besar relatif terhadap total assets (>10-15%)</div>
+
+          <div class="insight">
+            Dalam analisis bank (Financial Institutions), DTA adalah item kritis karena Basel III/regulatory capital mewajibkan pengurangan DTA dari Tier 1 Capital jika melebihi threshold tertentu. DTA yang besar pada bank bukan hanya masalah earnings quality &mdash; tapi juga langsung mempengaruhi adequacy capital. Ini sebabnya bank dengan DTA besar sering trading di discount to book value.
+          </div>
+          <div class="trap">
+            <div class="trap-label">Exam Trap &mdash; Arah Bias Valuation Allowance</div>
+            Understatement VA (VA terlalu kecil) → DTA net overstated → assets overstated → tax expense understated → NI overstated. Ini arah bias yang menggelembungkan earnings dan balance sheet. Sebaliknya, overstatement VA → NI understated (conservative). CFA exam sering tanyakan arah distorsi ini. Pastikan selalu klarifikasi: apakah VA terlalu kecil atau terlalu besar?
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">3</div>
+          <div class="concept-title">Off-Balance Sheet Obligations: Kelengkapan sebagai Dimensi Kualitas</div>
+        </div>
+        <div class="concept-body">
+          <p>Salah satu dimensi terpenting balance sheet quality adalah <strong>kelengkapan (completeness)</strong>. Kewajiban signifikan yang tidak tercermin di balance sheet bisa menyebabkan understatement leverage yang material &mdash; membuat perusahaan tampak lebih sehat secara finansial dari kenyataannya.</p>
+          <p><strong>Sumber utama off-balance sheet obligations:</strong></p>
+          <table class="assume-table">
+            <thead><tr><th>Jenis OBS Obligation</th><th>Mekanisme</th><th>Cara Analis Mengatasinya</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Take-or-Pay / Purchase Contracts</strong></td><td>Perusahaan wajib membeli minimum volume dari supplier, atau membayar penalty. Kewajiban ini tidak muncul di balance sheet sebagai liabilitas</td><td>Constructive capitalization: PV future obligations → tambahkan ke assets dan liabilities. Kemudian hitung ulang leverage ratios.</td></tr>
+              <tr><td><strong>Unconsolidated JVs / Associates</strong></td><td>Equity method: hanya share of profit yang masuk P&amp;L, tapi debt JV tidak konsolidasi. Jika JV punya utang besar, leverage konsolidasi understated</td><td>Periksa catatan kaki JV. Jika material, adjust dengan menambahkan proportionate share of JV debt ke consolidated leverage</td></tr>
+              <tr><td><strong>SPE / VIE (Sebelum IFRS 10 / ASC 810)</strong></td><td>Entitas tujuan khusus digunakan untuk "memindahkan" aset dan liabilitas off-balance sheet</td><td>Post-2011 (IFRS 10) dan post-2009 (SFAS 167): sebagian besar VIE wajib dikonsolidasi. Tapi masih ada celah</td></tr>
+              <tr><td><strong>Operating Leases (pre-IFRS 16)</strong></td><td>Sebelum IFRS 16 (efektif 2019), operating leases tidak masuk balance sheet. Banyak perusahaan retail punya liabilitas lease besar yang tersembunyi</td><td>Post-IFRS 16/ASC 842: sebagian besar lease sudah di-capitalize. Tapi untuk data historis, perlu adjustmen manual</td></tr>
+            </tbody>
+          </table>
+          <div class="formula">Constructive Capitalization (Take-or-Pay):
+  1. Baca notes: cari "Purchase Obligations" atau "Minimum Purchase Commitments"
+  2. PV future payments = Σ [Payment_t / (1+r)^t]
+  3. Tambahkan PV ke both sides:
+     → Assets: naik (right-of-use asset)
+     → Liabilities: naik (purchase obligation)
+  4. Hitung ulang:
+     Debt/Equity, Debt/Assets, Interest Coverage
+     → Semua akan memburuk setelah adjustment
+
+Kasus Enron: Used SPEs (Chewco, LJM Cayman) untuk memindahkan
+$27 miliar utang off-balance sheet. Setelah konsolidasi ulang:
+Total debt naik ~$13 miliar → Leverage ratio menjadi tidak sustainable</div>
+
+          <div class="insight">
+            Dalam konteks IDX: beberapa perusahaan pertambangan dan perkebunan Indonesia menggunakan entitas asosiasi dan JO (Joint Operation) untuk memisahkan aset/liabilitas dari neraca konsolidasi. Analis perlu membaca catatan atas laporan keuangan tentang komitmen dan kontinjensi untuk menemukan kewajiban material yang tidak muncul di neraca utama.
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">4</div>
+          <div class="concept-title">Related-Party Transactions &amp; Opini Auditor: Dua Sumber Informasi Risiko</div>
+        </div>
+        <div class="concept-body">
+          <p><strong>Related-Party Transactions (RPT):</strong> Transaksi antara perusahaan dengan pihak yang memiliki hubungan khusus: manajemen, direktur, pemegang saham utama, subsidiaries, atau entitas yang dikontrol oleh orang yang sama. RPT tidak selalu buruk, tapi rentan terhadap konflik kepentingan dan non-arm's-length pricing.</p>
+          <table class="assume-table">
+            <thead><tr><th>Aspek RPT</th><th>Detail</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Mengapa RPT Penting</strong></td><td>Harga transaksi mungkin tidak mencerminkan market price → bisa digunakan untuk "memindahkan" laba atau kerugian ke entitas terkait. Contoh: menjual aset ke afiliasi dengan harga inflasi → mengakui gain fiktif</td></tr>
+              <tr><td><strong>Enron &amp; RPT</strong></td><td>Chanos mulai short Enron November 2000, sebagian karena "complex and difficult-to-understand disclosures on related-party transactions." RPT Enron digunakan untuk memindahkan utang ke SPE dan mengakui gains dari transaksi non-arm's-length</td></tr>
+              <tr><td><strong>Checklist Analis</strong></td><td>Baca notes tentang RPT. Cek: (1) apakah transaksi explained dengan jelas? (2) Apakah harga arm's-length? (3) Seberapa material transaksi tersebut? (4) Ada tidak perubahan aneh dalam pola RPT antar periode?</td></tr>
+              <tr><td><strong>Insider Transactions</strong></td><td>Penjualan saham oleh insider (manajemen/direktur) dalam jumlah besar bisa menjadi sinyal bahwa mereka tidak percaya dengan prospek perusahaan. Review disclosure kompensasi dan insider selling</td></tr>
+            </tbody>
+          </table>
+          <p><strong>Opini Auditor &mdash; Limited Usefulness:</strong></p>
+          <div class="formula">Audit Opinion: Bukan early warning system yang efektif
+
+  "Clean opinion" hanya menyatakan: laporan keuangan disajikan secara wajar
+  sesuai GAAP. BUKAN menjamin tidak ada fraud atau earnings management.
+
+  Keterbatasan utama:
+  1. LAGGING: audit opinion untuk FY2011 baru keluar Feb 2012
+     → Eastman Kodak: bankrupt 19 Jan 2012, clean opinion 28 Feb 2012!
+  2. Tidak mencakup fraud yang sangat canggih (Enron, Satyam)
+  3. Newly public companies exempt dari internal control audit (1 tahun)
+     → Groupon: material weakness baru diungkap SETELAH IPO
+
+  Going-Concern Opinion: lebih berguna, tapi masih lagging
+  Auditor Switching: LEBIH USEFUL sebagai signal
+  → Multiple auditor changes = "auditor shopping" red flag
+  → Auditor kecil untuk perusahaan kompleks = independence concern
+  → Madoff: auditor 3 orang untuk operasi $50 miliar!</div>
+
+          <div class="trap">
+            <div class="trap-label">Exam Trap &mdash; Clean Audit ≠ High Quality Reporting</div>
+            Ini adalah jebakan klasik CFA. Banyak perusahaan dengan fraud besar (Enron, WorldCom, Satyam, Sunbeam) mendapat clean audit opinion hingga beberapa saat sebelum skandal terungkap. Audit opinion adalah kondisi perlu tapi tidak cukup untuk menyimpulkan reporting quality tinggi. Analis harus melakukan analisis independen, tidak bergantung pada opini auditor.
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">5</div>
+          <div class="concept-title">Framework Lengkap: Mengevaluasi Balance Sheet Quality</div>
+        </div>
+        <div class="concept-body">
+          <p>Tiga dimensi balance sheet quality yang diuji di CFA L2: <strong>Completeness, Unbiased Measurement, dan Clear Presentation.</strong></p>
+          <table class="assume-table">
+            <thead><tr><th>Dimensi</th><th>Yang Dicek</th><th>Contoh Red Flag</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Completeness</strong></td><td>Apakah semua kewajiban material tercermin di neraca?</td><td>Off-BS purchase obligations besar; unconsolidated JV dengan utang signifikan; SPE yang tidak dikonsolidasi</td></tr>
+              <tr><td><strong>Unbiased Measurement</strong></td><td>Apakah aset dan liabilitas dinilai secara objektif?</td><td>Goodwill &gt; market cap tanpa impairment; DTA besar tanpa VA; Level 3 fair value assets besar; discount rate pension terlalu tinggi (understates liability)</td></tr>
+              <tr><td><strong>Clear Presentation</strong></td><td>Apakah pengungkapan memungkinkan analis untuk memahami komposisi?</td><td>Notes yang tidak menjelaskan asumsi key; aggregasi line items yang menyembunyikan komposisi; RPT disclosure yang tidak memadai</td></tr>
+            </tbody>
+          </table>
+          <div class="insight">
+            <strong>Pendekatan Praktis Analis:</strong> (1) Mulai dari notes, bukan neraca utama. Notes adalah sumber informasi paling kaya tapi paling sering diabaikan. (2) Bandingkan common-size balance sheet antar tahun dan vs. peers. (3) Perhatikan perubahan kebijakan akuntansi yang tidak dijelaskan. (4) Cek: apakah MD&A konsisten dengan angka di laporan keuangan? Inkonsistensi bisa mengindikasikan masalah. (5) Untuk penilaian risiko, perhatikan: contingent liabilities, pension obligations, dan financial instrument risk disclosures di notes.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Quick Reference Cheat Sheet</div>
+    <div class="cheat-grid">
+      <div class="cheat-item">
+        <div class="cheat-key">Goodwill Impairment Signal</div>
+        <div class="cheat-val">Market Cap &lt; Book Equity → implisit nilai aset lain = negatif → goodwill overstated → impairment segera</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">DTA Quality Check</div>
+        <div class="cheat-val">Valuation Allowance terlalu kecil → DTA net overstated → tax expense understated → NI overstated</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Constructive Capitalization</div>
+        <div class="cheat-val">PV(purchase obligations) → tambahkan ke assets + liabilities → hitung ulang Debt/Equity &amp; Interest Coverage</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Audit Opinion Limitation</div>
+        <div class="cheat-val">Lagging, tidak mendeteksi fraud canggih. Auditor switching lebih useful. Auditor kecil vs. perusahaan besar = red flag</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">3 Dimensi BS Quality</div>
+        <div class="cheat-val">Completeness (OBS obligations) + Unbiased Measurement (goodwill, DTA, Level 3) + Clear Presentation (notes disclosure)</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Related-Party Red Flags</div>
+        <div class="cheat-val">Transaksi besar dengan afiliasi; harga non-arm's length; RPT disclosure tidak jelas; pola berubah antar periode; insider selling masif</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Practice Session (30 min)</div>
+    <div class="practice-body">
+
+      <div class="vignette">
+        <div class="vignette-label">Vignette &mdash; PT Nusantara Properti Tbk (NUSA)</div>
+        <div class="vignette-text">
+          <strong>Konteks:</strong> Farida Hanum, CFA, adalah equity analyst di Mandiri Sekuritas yang sedang mengevaluasi PT Nusantara Properti Tbk (kode IDX: NUSA), perusahaan properti dan konstruksi yang listing di BEI. NUSA baru melakukan akuisisi besar dua tahun lalu, mengakuisisi PT Alam Sentosa (perusahaan properti Kalimantan) senilai Rp 8,4 triliun.
+          <br><br>
+          <strong>Data keuangan per 31 Desember 2025 (dalam Rp miliar):</strong><br>
+          Total Assets: 24.800 | Cash: 1.200 | Goodwill: 3.600 | Intangible Assets: 1.800 | DTA (netto): 1.450 | Valuation Allowance: 320<br>
+          Total Liabilities: 18.200 | Total Equity: 6.600<br>
+          Net Income 2025: 580 | CFO 2025: (120) (negatif)<br>
+          Market Cap per 31 Des 2025: Rp 5.900 miliar<br>
+          <br>
+          <strong>Informasi tambahan dari notes:</strong><br>
+          (1) NUSA memiliki take-or-pay contract dengan PT Bahan Baku Sentosa (supplier material konstruksi, dimiliki 40% oleh Direktur Utama NUSA) untuk pembelian minimum Rp 400 miliar/tahun selama 5 tahun ke depan. Kontrak ini tidak tercermin di neraca. Discount rate yang relevan adalah 8%.<br>
+          (2) Auditor NUSA adalah KAP Wirawan &amp; Rekan, yang berganti dari KAP Ernst &amp; Young di awal 2024. Audit opinion untuk FY2025 adalah "Wajar Tanpa Pengecualian."<br>
+          (3) Valuation Allowance untuk DTA turun dari Rp 620 miliar (2024) menjadi Rp 320 miliar (2025) tanpa penjelasan dalam notes terkait perubahan prospek profitabilitas.
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="q-num">PERTANYAAN 1 dari 4</div>
+        <div class="q-text">Berdasarkan data per 31 Desember 2025, apakah goodwill NUSA menunjukkan risiko impairment yang signifikan, dan mengapa?</div>
+        <div class="option" onclick="selectOption(this, 1, 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Tidak ada risiko signifikan. Goodwill Rp 3.600 miliar wajar karena Total Assets NUSA mencapai Rp 24.800 miliar, sehingga goodwill hanya sekitar 14.5% dari total assets.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 1, 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Risiko impairment signifikan. Market cap NUSA (Rp 5.900 miliar) lebih kecil dari total goodwill + intangibles (Rp 5.400 miliar) yang hampir setara market cap, sehingga nilai implisit seluruh aset operasional lainnya sangat kecil. Ditambah CFO negatif, tanda-tanda earning quality memburuk.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 1, 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Risiko impairment rendah karena goodwill sudah diuji setiap tahun sesuai standar akuntansi, dan auditor memberikan opini wajar tanpa pengecualian untuk FY2025.</div>
+        </div>
+        <div class="explanation correct" id="exp-1-correct" style="display:none;">
+          JAWABAN BENAR: B<br><br>
+          Goodwill NUSA = Rp 3.600 miliar + Intangibles = Rp 1.800 miliar → total = Rp 5.400 miliar. Market cap = Rp 5.900 miliar. Selisih tipis = hanya Rp 500 miliar untuk merepresentasikan seluruh nilai operasional nyata perusahaan (properti, konstruksi, cash, receivables, dll. senilai total Rp ~19.400 miliar lainnya). Ini adalah red flag besar.<br><br>
+          Jika market cap sedikit tergerus, goodwill+intangibles bisa melampaui market cap — sama persis dengan kasus Sealed Air yang disorot Wall Street Journal. CFO negatif Rp 120 miliar memperkuat kekhawatiran bahwa bisnis underlying tidak sekuat laporan laba rugi yang menunjukkan NI positif Rp 580 miliar.<br><br>
+          Jawaban A salah: 14.5% memang tidak ekstrem, tapi perbandingan relevan adalah goodwill vs. market cap, bukan goodwill vs. total assets. Jawaban C salah: audit opinion yang clean tidak menjamin goodwill tidak overstated — justru ini adalah keterbatasan inherent audit opinion.
+        </div>
+        <div class="explanation incorrect" id="exp-1-wrong" style="display:none;">
+          Jawaban yang benar adalah B. Indikator kunci bukan goodwill/total assets, melainkan goodwill (+ intangibles) vs. market cap. Ketika goodwill + intangibles hampir menyamai market cap, nilai implisit semua aset operasional lain mendekati nol — sinyal keras bahwa goodwill overstated. Audit opinion clean bukan jaminan kualitas goodwill.
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="q-num">PERTANYAAN 2 dari 4</div>
+        <div class="q-text">Farida ingin menghitung nilai constructive capitalization dari take-or-pay contract NUSA (Rp 400 miliar/tahun, 5 tahun, discount rate 8%). Berapa estimasi PV obligation tersebut, dan bagaimana pengaruhnya terhadap Debt/Equity ratio?</div>
+        <div class="option" onclick="selectOption(this, 2, 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. PV ≈ Rp 1.597 miliar. Debt/Equity naik dari 2,76x menjadi sekitar 3,00x setelah adjustment — peningkatan kecil yang tidak material.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 2, 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. PV ≈ Rp 1.597 miliar. Debt/Equity naik dari 2,76x menjadi sekitar 3,00x. Tambahan ini material karena menambahkan Rp 1.597 miliar liabilitas (8,8% dari total liabilities saat ini) yang sebelumnya tidak terlihat di neraca, dan kontrak ini adalah RPT karena supplier dimiliki 40% oleh Dirut NUSA.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 2, 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. PV ≈ Rp 2.000 miliar karena simply 400 × 5 = Rp 2.000 miliar. Debt/Equity melonjak drastis dan NUSA mendekati kondisi insolven.</div>
+        </div>
+        <div class="explanation correct" id="exp-2-correct" style="display:none;">
+          JAWABAN BENAR: B<br><br>
+          Kalkulasi PV annuity: PV = 400 × [1 - (1.08)^-5] / 0.08 = 400 × 3.9927 = Rp 1.597 miliar (dibulatkan).<br><br>
+          Debt/Equity saat ini = 18.200 / 6.600 = 2,76x.<br>
+          Setelah constructive capitalization (tambah Rp 1.597 miliar ke liabilities, asumsi equity tidak berubah): (18.200 + 1.597) / 6.600 = 19.797 / 6.600 = 3,00x.<br><br>
+          Ini signifikan: Rp 1.597 miliar adalah liabilitas nyata yang tidak muncul di neraca. Plus, kontrak ini adalah RPT (supplier dimiliki 40% Dirut NUSA) — menambah lapis kekhawatiran tentang apakah harga kontrak arm's length atau tidak. Analis perlu menyebutkan kedua dimensi ini: quantitative impact (leverage) DAN qualitative concern (RPT).<br><br>
+          Jawaban A kurang tepat karena mengabaikan konteks RPT yang krusial. Jawaban C salah: nilai yang relevan adalah PV, bukan nominal undiscounted.
+        </div>
+        <div class="explanation incorrect" id="exp-2-wrong" style="display:none;">
+          Jawaban yang benar adalah B. PV annuity = 400 × [(1 - 1.08^-5) / 0.08] ≈ Rp 1.597 miliar — bukan nilai nominal Rp 2.000 miliar. Dan konteks RPT (supplier dimiliki 40% Dirut) menjadikan analisis ini lebih dari sekadar angka leverage.
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="q-num">PERTANYAAN 3 dari 4</div>
+        <div class="q-text">Valuation Allowance DTA NUSA turun dari Rp 620 miliar menjadi Rp 320 miliar (penurunan Rp 300 miliar) tanpa penjelasan di notes. Apa implikasi paling mungkin dari penurunan ini terhadap earnings quality dan laporan laba rugi NUSA?</div>
+        <div class="option" onclick="selectOption(this, 3, 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Valuation Allowance turun berarti perusahaan lebih optimis tentang kemampuannya merealisasi DTA di masa depan — ini sinyal positif tentang prospek profitabilitas yang meningkat, sehingga tidak perlu khawatir.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 3, 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Penurunan VA Rp 300 miliar tanpa penjelasan mengindikasikan potential earnings management. Penurunan VA langsung mengurangi tax expense di income statement, sehingga bisa meningkatkan NI secara artifisial. Ini inkonsisten dengan CFO negatif yang mengindikasikan profitabilitas underlying memburuk.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 3, 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Tidak ada dampak terhadap earnings. Perubahan Valuation Allowance hanya mempengaruhi neraca, bukan laporan laba rugi.</div>
+        </div>
+        <div class="explanation correct" id="exp-3-correct" style="display:none;">
+          JAWABAN BENAR: B<br><br>
+          Ketika Valuation Allowance turun, DTA net naik, dan penurunan VA diakui sebagai pengurangan tax expense (deferred tax benefit) di income statement. Dalam kasus ini: VA turun Rp 300 miliar → deferred tax benefit Rp 300 miliar → tax expense berkurang Rp 300 miliar → NI meningkat Rp 300 miliar.<br><br>
+          Ini sangat signifikan! Net Income NUSA = Rp 580 miliar, padahal CFO = negatif Rp 120 miliar. Sebagian besar NI bisa berasal dari deferred tax benefit ini, bukan dari operasi sesungguhnya. Tanpa penjelasan dalam notes, ini adalah sinyal earnings management yang serius.<br><br>
+          Jawaban A salah karena optimisme tentang DTA seharusnya didukung oleh bukti fundamental yang meningkat — tapi CFO negatif justru mengisyaratkan sebaliknya. Jawaban C salah: perubahan VA sangat berdampak ke income statement melalui deferred tax expense/benefit.
+        </div>
+        <div class="explanation incorrect" id="exp-3-wrong" style="display:none;">
+          Jawaban yang benar adalah B. Penurunan Valuation Allowance = deferred tax benefit = mengurangi tax expense = menaikkan Net Income. Dengan NI NUSA Rp 580 miliar dan VA turun Rp 300 miliar, bisa jadi hampir separuh NI berasal dari perubahan akuntansi, bukan dari operasi. CFO negatif memperkuat kekhawatiran ini.
+        </div>
+      </div>
+
+      <div class="question-block">
+        <div class="q-num">PERTANYAAN 4 dari 4</div>
+        <div class="q-text">Farida mencatat bahwa auditor NUSA berganti dari KAP Ernst &amp; Young (Big 4) ke KAP Wirawan &amp; Rekan (kantor lokal kecil) di awal 2024, namun FY2025 mendapat opini wajar tanpa pengecualian. Bagaimana Farida seharusnya menginterpretasikan dua fakta ini?</div>
+        <div class="option" onclick="selectOption(this, 4, 'A')">
+          <div class="option-radio"></div>
+          <div class="option-text">A. Opini wajar tanpa pengecualian dari KAP Wirawan &amp; Rekan memberikan jaminan kualitas yang setara dengan opini dari Big 4. Pergantian auditor adalah hak perusahaan dan tidak perlu dipermasalahkan.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 4, 'B')">
+          <div class="option-radio"></div>
+          <div class="option-text">B. Pergantian dari Big 4 ke KAP lokal kecil adalah red flag potensial ("auditor downgrade"), terutama untuk perusahaan dengan kompleksitas tinggi (properti, konstruksi, akuisisi besar). Opini wajar tanpa pengecualian dari auditor kecil untuk laporan dengan berbagai red flag yang Farida temukan harus diterima dengan skeptisisme — bukan sebagai konfirmasi kualitas pelaporan.</div>
+        </div>
+        <div class="option" onclick="selectOption(this, 4, 'C')">
+          <div class="option-radio"></div>
+          <div class="option-text">C. Pergantian auditor tidak relevan untuk analisis. Yang penting hanyalah konten audit opinion, bukan siapa yang mengaudit.</div>
+        </div>
+        <div class="explanation correct" id="exp-4-correct" style="display:none;">
+          JAWABAN BENAR: B<br><br>
+          Kurikulum CFA secara eksplisit menyatakan bahwa "discretionary change in auditor" — khususnya dari auditor besar ke lebih kecil — adalah sinyal potensial masalah pelaporan. Kasus referensi: feeder fund Madoff dengan 3 auditor berbeda dalam 3 tahun, dan firma audit yang hanya terdiri 3 orang untuk operasi $50 miliar.<br><br>
+          Untuk NUSA: perusahaan properti dan konstruksi dengan akuisisi senilai Rp 8,4 triliun, goodwill besar, RPT dengan supplier, dan berbagai kompleksitas — justru membutuhkan auditor dengan kapasitas dan independensi tinggi. Downgrade ke KAP kecil menimbulkan pertanyaan sah tentang: (1) apakah KAP baru punya kapasitas untuk audit yang memadai? (2) Apakah pergantian dilakukan karena EY tidak setuju dengan judgment manajemen ("opinion shopping")? Clean opinion dari auditor kecil, terutama di tengah red flags yang ditemukan Farida (goodwill risk, VA manipulation, RPT), seharusnya tidak meredakan kekhawatiran — justru menambah kekhawatiran.<br><br>
+          Jawaban A salah: opini yang sama dari auditor berbeda kualitas kapasitas tidak ekuivalen. Jawaban C salah: siapa yang mengaudit sangat relevan untuk menilai kepercayaan terhadap audit opinion.
+        </div>
+        <div class="explanation incorrect" id="exp-4-wrong" style="display:none;">
+          Jawaban yang benar adalah B. Pergantian dari Big 4 ke KAP kecil adalah red flag, terutama untuk perusahaan dengan kompleksitas tinggi. CFA curriculum secara eksplisit menyebut "auditor shopping" dan kapasitas auditor relatif terhadap kompleksitas perusahaan sebagai sinyal risiko. Clean opinion dari auditor yang mungkin kurang kapasitas bukan konfirmasi kualitas — ini justru tambah risiko.
+        </div>
+      </div>
+
+      <div class="score-panel" id="score-panel">
+        <div class="score-panel-text">Skor kamu:</div>
+        <div class="score-panel-value" id="score-value">0 / 4</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="CFA_L2_Day29.html" class="nav-btn">&larr; Day 29: Earnings &amp; Cash Flow Quality</a>
+    <a href="CFA_L2_Day31.html" class="nav-btn">Day 31: Dividend Policy &rarr;</a>
+  </div>
+
+</div>
+
+<script>
+  const answers = {};
+  const correct_answers = { 1: 'B', 2: 'B', 3: 'B', 4: 'B' };
+  let totalQ = 4;
+
+  function selectOption(el, qNum, choice) {
+    const block = el.closest('.question-block');
+    const opts = block.querySelectorAll('.option');
+    opts.forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+
+    block.querySelectorAll('.explanation').forEach(e => {
+      e.style.display = 'none';
+    });
+
+    const isCorrect = (choice === correct_answers[qNum]);
+    const expId = isCorrect ? 'exp-' + qNum + '-correct' : 'exp-' + qNum + '-wrong';
+    const exp = document.getElementById(expId);
+    if (exp) exp.style.display = 'block';
+
+    answers[qNum] = choice;
+
+    const answered = Object.keys(answers).length;
+    if (answered === totalQ) {
+      const score = Object.entries(answers).filter(([q, a]) => a === correct_answers[q]).length;
+      const panel = document.getElementById('score-panel');
+      document.getElementById('score-value').textContent = score + ' / ' + totalQ;
+      panel.classList.add('show');
+    }
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA L2 · Day 38 · Synergy Valuation &amp; Restructuring</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+  --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;--gold:#9a6e1a;--gold2:#7a5010;--gold-bg:rgba(154,110,26,0.08);
+  --blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);--green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);
+  --red:#b83232;--red-bg:rgba(184,50,50,0.08);--amber:#a06010;--amber-bg:rgba(160,96,16,0.08);
+  --purple:#6a3ab0;--purple-bg:rgba(106,58,176,0.08);--r:10px;--r-sm:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.7;min-height:100vh;}
+.page{max-width:820px;margin:0 auto;padding:40px 24px 80px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px;}
+.breadcrumb{font-size:12px;color:var(--text3);letter-spacing:0.05em;}
+.breadcrumb span{color:var(--gold);font-weight:500;}
+.day-badge{background:var(--gold);color:#fff;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;}
+.hero{margin-bottom:32px;}
+.hero-tag{font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:32px;color:var(--text);line-height:1.2;margin-bottom:8px;}
+.hero-sub{font-size:14px;color:var(--text2);}
+.meta-row{display:flex;gap:16px;margin-top:14px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;}
+.meta-pill b{color:var(--text2);}
+.section{margin-bottom:28px;}
+.section-label{font-size:10px;color:var(--text3);letter-spacing:0.09em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.obj-box{background:var(--gold-bg);border:1px solid rgba(201,168,76,0.25);border-radius:var(--r);padding:16px 18px;margin-bottom:24px;}
+.obj-box-title{font-size:11px;color:var(--gold);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;font-weight:500;}
+.obj-list{list-style:none;}
+.obj-list li{font-size:13px;color:var(--text2);padding:3px 0 3px 16px;position:relative;}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--gold);font-size:11px;top:5px;}
+.concept-grid{display:flex;flex-direction:column;gap:14px;}
+.concept-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+.concept-card-header{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);}
+.concept-num{width:26px;height:26px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--gold);flex-shrink:0;}
+.concept-title{font-size:14px;font-weight:500;color:var(--text);}
+.concept-body{padding:14px 16px;font-size:13px;color:var(--text2);line-height:1.75;}
+.concept-body p{margin-bottom:10px;}
+.concept-body p:last-child{margin-bottom:0;}
+.formula{background:var(--bg3);border:1px solid var(--border2);border-left:3px solid var(--gold);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:12px 16px;margin:10px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);line-height:1.6;}
+.formula .comment{color:var(--text3);font-style:italic;}
+.assume-table{width:100%;border-collapse:collapse;font-size:13px;}
+.assume-table th{text-align:left;padding:9px 12px;background:var(--bg3);color:var(--text2);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid var(--border2);}
+.assume-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+.assume-table tr:last-child td{border-bottom:none;}
+.assume-table .name{font-weight:500;color:var(--text);}
+.badge{display:inline-flex;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;}
+.badge-blue{background:var(--blue-bg);color:var(--blue);}
+.badge-amber{background:var(--amber-bg);color:var(--amber);}
+.badge-green{background:var(--green-bg);color:var(--green);}
+.badge-red{background:var(--red-bg);color:var(--red);}
+.insight{background:var(--blue-bg);border:1px solid rgba(91,156,246,0.2);border-radius:var(--r);padding:14px 16px;margin:12px 0;font-size:13px;color:var(--text2);}
+.insight strong{color:var(--blue);}
+.trap{background:var(--red-bg);border:1px solid rgba(240,108,108,0.2);border-radius:var(--r);padding:14px 16px;margin:12px 0;}
+.trap-label{font-size:10px;color:var(--red);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:6px;font-weight:500;}
+.trap p{font-size:13px;color:var(--text2);}
+.divider{height:1px;background:var(--border);margin:28px 0;}
+.practice-header{background:var(--gold-bg);border:1px solid rgba(201,168,76,0.2);border-radius:var(--r) var(--r) 0 0;padding:14px 18px;display:flex;align-items:center;gap:12px;}
+.practice-icon{font-size:18px;}
+.practice-header-text{flex:1;}
+.practice-header-title{font-size:15px;font-weight:500;color:var(--gold2);}
+.practice-header-sub{font-size:12px;color:var(--text3);}
+.practice-body{background:var(--bg2);border:1px solid rgba(201,168,76,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:20px;}
+.vignette{background:var(--bg3);border-left:3px solid var(--gold);padding:16px 18px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:24px;font-size:13px;color:var(--text2);line-height:1.8;}
+.vignette-label{font-size:10px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;font-weight:500;}
+.question-block{margin-bottom:22px;}
+.q-num{font-size:11px;color:var(--text3);margin-bottom:5px;}
+.q-text{font-size:14px;font-weight:500;color:var(--text);margin-bottom:11px;line-height:1.6;}
+.option{display:block;width:100%;text-align:left;padding:10px 14px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:7px;font-family:'DM Sans',sans-serif;transition:all 0.15s;line-height:1.5;}
+.option:hover:not(:disabled){border-color:var(--border2);color:var(--text);}
+.option.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.option.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.option:disabled{cursor:default;}
+.explanation{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--text2);margin-top:8px;line-height:1.7;display:none;}
+.explanation.show{display:block;}
+.explanation strong{color:var(--green);}
+.score-panel{text-align:center;padding:24px;margin-top:16px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);display:none;}
+.score-num{font-family:'DM Serif Display',serif;font-size:48px;margin-bottom:6px;}
+.score-msg{font-size:13px;color:var(--text2);}
+.cheat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:540px){.cheat-grid{grid-template-columns:1fr;}}
+.cheat-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;}
+.cheat-key{font-size:11px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em;}
+.cheat-val{font-size:13px;color:var(--text);font-family:'JetBrains Mono',monospace;}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:none;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.15s;text-decoration:none;}
+.nav-btn:hover{color:var(--text);border-color:var(--gold);background:var(--gold-bg);}
+.nav-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.nav-btn.primary:hover{background:var(--gold2);}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II &middot; <span>Corporate Issuers</span> &middot; LM4</div>
+    <div class="day-badge">Day 38 of 90</div>
+  </div>
+  <div class="hero">
+    <div class="hero-tag">Tuesday, 9 June 2026</div>
+    <h1 class="hero-title">Synergy Valuation &amp; Restructuring</h1>
+    <p class="hero-sub">M&amp;A and Corporate Restructuring &mdash; Subtopic 2 of 2</p>
+    <div class="meta-row">
+      <div class="meta-pill">&#9201; <b>60 min</b> total</div>
+      <div class="meta-pill">&#128218; <b>30 min</b> theory</div>
+      <div class="meta-pill">&#128221; <b>30 min</b> practice</div>
+      <div class="meta-pill">&#9878;&#65039; Exam weight <b>~8%</b></div>
+    </div>
+  </div>
+  <div class="obj-box">
+    <div class="obj-box-title">Learning Objectives &mdash; Hari ini lo harus bisa:</div>
+    <ul class="obj-list">
+      <li>Estimasi nilai sinergi dari akuisisi dan hitung dampak EPS accretion/dilution dari merger yang difinansiai saham maupun utang</li>
+      <li>Jelaskan struktur dan mekanisme leveraged buyout (LBO) termasuk empat driver return bagi PE firm</li>
+      <li>Bedakan divestiture, spin-off, equity carve-out, dan likuidasi beserta motivasi dan konsekuensi keuangannya</li>
+      <li>Terapkan analisis pro forma income statement untuk menilai dampak restrukturisasi terhadap EPS dan Net Debt/EBITDA</li>
+    </ul>
+  </div>
+
+  <!-- THEORY -->
+  <div class="section">
+    <div class="section-label">Theory &middot; 30 min</div>
+    <div class="concept-grid">
+
+      <!-- Concept 1: Synergy Valuation -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">1</div>
+          <div class="concept-title">Estimasi Nilai Sinergi &mdash; Cost vs Revenue Synergies</div>
+        </div>
+        <div class="concept-body">
+          <p>Sinergi adalah alasan utama sebagian besar akuisisi dilakukan. Secara konseptual, sinergi berarti nilai gabungan dua perusahaan melebihi penjumlahan nilai keduanya secara terpisah. Ada dua tipe besar:</p>
+          <table class="assume-table">
+            <thead><tr><th>Tipe Sinergi</th><th>Sumber</th><th>Karakteristik</th><th>Reliabilitas</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="name">Cost Synergies</td>
+                <td>Konsolidasi fungsi duplikat (HQ, IT, HR), economies of scale produksi dan distribusi</td>
+                <td>Lebih mudah dikuantifikasi, lebih pasti tercapai</td>
+                <td><span class="badge badge-green">Lebih tinggi</span></td>
+              </tr>
+              <tr>
+                <td class="name">Revenue Synergies</td>
+                <td>Cross-selling produk, masuk pasar baru, meningkatkan harga akibat berkurangnya kompetisi</td>
+                <td>Lebih sulit diprediksi, tergantung eksekusi, sering overestimated</td>
+                <td><span class="badge badge-amber">Lebih rendah</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <p>Sinergi tidak muncul sekaligus &mdash; biasanya di-ramp secara bertahap selama 2&ndash;3 tahun setelah close. Di CFA, sinergi sering dimodelkan sebagai: 1/3 di Tahun 1, 2/3 di Tahun 2, penuh di Tahun 3. Selain sinergi, ada juga <em>integration costs</em> yang harus dikurangkan &mdash; ini adalah biaya satu kali (one-time) untuk merealisasikan sinergi tersebut.</p>
+          <div class="formula">
+            NPV Synergy = &Sigma; [(Synergy_t &minus; Integration Cost_t) / (1 + WACC)^t]
+            <br>
+            Acquisition Premium ≤ NPV Synergy → agar deal menciptakan nilai bagi acquirer
+          </div>
+          <div class="insight">
+            <strong>Kunci analitis:</strong> Jika premium yang dibayar melebihi NPV sinergi, maka nilai berpindah dari pemegang saham acquirer ke pemegang saham target. Ini salah satu alasan empiris mengapa &gt;60% akuisisi dianggap gagal menciptakan nilai bagi acquirer.
+          </div>
+        </div>
+      </div>
+
+      <!-- Concept 2: EPS Accretion/Dilution -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">2</div>
+          <div class="concept-title">Accretion/Dilution EPS &mdash; Dampak Merger pada Laba Per Saham</div>
+        </div>
+        <div class="concept-body">
+          <p>Analisis accretion/dilution membandingkan EPS acquirer <em>sebelum</em> dan <em>sesudah</em> merger. Jika EPS pro forma &gt; EPS standalone → merger bersifat <em>accretive</em>. Jika EPS turun → <em>dilutive</em>.</p>
+          <div class="formula">
+            EPS Pro Forma = (NI Acquirer + NI Target + Synergies &minus; Integration Costs &minus; &Delta;Interest &minus; &Delta;Amortization) &times; (1&minus;t)
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shares Acquirer + New Shares Issued
+          </div>
+          <p><strong>Faktor penentu accretive/dilutive dalam stock deal:</strong></p>
+          <table class="assume-table">
+            <thead><tr><th>Kondisi</th><th>Hasil awal (tanpa sinergi)</th></tr></thead>
+            <tbody>
+              <tr><td class="name">P/E Acquirer &gt; P/E Target</td><td>Accretive &mdash; acquirer menukar saham &ldquo;mahal&rdquo; untuk pendapatan target yang lebih &ldquo;murah&rdquo;</td></tr>
+              <tr><td class="name">P/E Acquirer &lt; P/E Target</td><td>Dilutive &mdash; acquirer harus issue lebih banyak saham relatif terhadap pendapatan yang diperoleh</td></tr>
+              <tr><td class="name">P/E Acquirer = P/E Target</td><td>Neutral &mdash; EPS tidak berubah tanpa sinergi</td></tr>
+            </tbody>
+          </table>
+          <p>Dalam <strong>debt-financed deal</strong>, tidak ada dilusi saham, tapi EPS terpengaruh oleh tambahan interest expense. Jika earnings yield target (&frac1;P/E<sub>target</sub>) &gt; after-tax cost of debt → biasanya accretive.</p>
+          <div class="trap">
+            <div class="trap-label">&#9888; Exam Trap</div>
+            <p>Accretive secara EPS BUKAN berarti deal menciptakan nilai. Deal bisa accretive tapi tetap destroys value jika harga bayar terlalu tinggi (NPV negatif). CFA sering minta peserta membedakan antara <em>EPS impact</em> dan <em>value creation</em> &mdash; keduanya berbeda!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Concept 3: LBO Structure -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">3</div>
+          <div class="concept-title">Leveraged Buyout (LBO) &mdash; Struktur dan Driver Return PE</div>
+        </div>
+        <div class="concept-body">
+          <p>LBO adalah akuisisi di mana private equity (PE) firm menggunakan porsi utang besar &mdash; biasanya 60&ndash;70% dari purchase price &mdash; untuk membeli target. Target yang ideal adalah perusahaan dengan arus kas bebas yang stabil dan predictable karena FCF digunakan untuk melunasi utang selama holding period.</p>
+          <table class="assume-table">
+            <thead><tr><th>Driver Return LBO</th><th>Penjelasan</th></tr></thead>
+            <tbody>
+              <tr><td class="name">1. Entry Multiple</td><td>Semakin rendah EV/EBITDA saat beli, semakin baik. Buy cheap, sell expensive.</td></tr>
+              <tr><td class="name">2. Financial Leverage</td><td>Debt amplifies equity returns &mdash; equity investor menanggung semua upside tapi hanya invest sebagian dari total harga.</td></tr>
+              <tr><td class="name">3. FCF &amp; Debt Paydown</td><td>FCF target digunakan untuk melunasi utang selama holding. Setiap pelunasan meningkatkan equity value karena EV tetap atau naik.</td></tr>
+              <tr><td class="name">4. Exit Multiple</td><td>Jika exit multiple &gt; entry multiple, PE mendapat keuntungan berlipat karena leverage. Exit biasanya via IPO atau sale to strategic buyer.</td></tr>
+            </tbody>
+          </table>
+          <div class="formula">
+            IRR equity LBO ≈ f(entry multiple, leverage ratio, EBITDA growth, exit multiple)
+            <span class="comment">// Tidak ada satu formula tunggal &mdash; dihitung numerik via cash flow modeling</span>
+          </div>
+          <div class="insight">
+            <strong>Karakteristik target LBO ideal:</strong> Stable, predictable FCF (bukan cyclical); aset yang bisa dijadikan collateral; potensi operational improvement; low existing leverage; defensible market position. Contoh klasik: perusahaan consumer staples, distribusi, atau infrastruktur.
+          </div>
+        </div>
+      </div>
+
+      <!-- Concept 4: Divestiture, Spin-off, Carve-out, Liquidation -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">4</div>
+          <div class="concept-title">Divestiture, Spin-off, Carve-out &amp; Likuidasi &mdash; Bedakan Setiap Mekanisme</div>
+        </div>
+        <div class="concept-body">
+          <p>Divestment actions adalah keputusan untuk mengecilkan atau memisahkan bagian dari bisnis. Ada beberapa mekanisme dengan karakteristik yang berbeda signifikan:</p>
+          <table class="assume-table">
+            <thead><tr><th>Mekanisme</th><th>Definisi</th><th>Parent Terima</th><th>Kontrol Target</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="name">Divestiture (Sale)</td>
+                <td>Jual segmen/aset ke pihak ketiga secara tunai</td>
+                <td>Cash proceeds</td>
+                <td>Beralih penuh ke pembeli</td>
+              </tr>
+              <tr>
+                <td class="name">Spin-off</td>
+                <td>Entitas baru dibuat, sahamnya dibagikan kepada pemegang saham parent secara proporsional (dividen saham)</td>
+                <td>Tidak menerima kas</td>
+                <td>Independent, shareholders parent yang pegang</td>
+              </tr>
+              <tr>
+                <td class="name">Equity Carve-out</td>
+                <td>Parent jual sebagian minoritas saham anak perusahaan ke publik via IPO</td>
+                <td>IPO proceeds (kas)</td>
+                <td>Parent masih kontrol mayoritas</td>
+              </tr>
+              <tr>
+                <td class="name">Likuidasi</td>
+                <td>Aset dijual untuk melunasi kewajiban; urutan: secured creditors → unsecured creditors → preferred equity → common equity</td>
+                <td>Sisa setelah lunasi semua utang (jika ada)</td>
+                <td>Perusahaan bubar</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="insight">
+            <strong>Kapan pilih spin-off vs sale?</strong> Jika target lebih dihargai pasar secara independen (conglomerate discount besar) → spin-off. Jika parent butuh likuiditas segera atau ada strategic buyer yang mau bayar premium → sale/divestiture. Equity carve-out adalah jalan tengah: dapat kas dari IPO sambil tetap mempertahankan kontrol mayoritas.
+          </div>
+          <div class="trap">
+            <div class="trap-label">&#9888; Exam Trap</div>
+            <p>Spin-off TIDAK menghasilkan kas bagi parent &mdash; saham dibagikan sebagai dividen kepada shareholders existing. Equity carve-out yang menghasilkan kas via IPO. CFA sering menukar keduanya di distractor. Pastikan lo hafal perbedaan ini.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Concept 5: Pro Forma Modeling -->
+      <div class="concept-card">
+        <div class="concept-card-header">
+          <div class="concept-num">5</div>
+          <div class="concept-title">Pro Forma Income Statement &mdash; Model Financial Impact Restrukturisasi</div>
+        </div>
+        <div class="concept-body">
+          <p>Pro forma financial statements memodelkan kondisi keuangan gabungan <em>setelah</em> transaksi. Lima langkah utama dalam menyusun pro forma untuk akuisisi:</p>
+          <table class="assume-table">
+            <thead><tr><th>#</th><th>Item Pro Forma</th><th>Penyesuaian</th></tr></thead>
+            <tbody>
+              <tr><td class="name">1</td><td>Revenue</td><td>Acquirer + Target + Revenue Synergies</td></tr>
+              <tr><td class="name">2</td><td>Operating Expenses</td><td>Acquirer + Target &minus; Cost Synergies + Integration Costs (one-time)</td></tr>
+              <tr><td class="name">3</td><td>D&amp;A</td><td>Acquirer + Target D&amp;A + Amortisasi intangible aset yang diakui pada akuisisi (fair value step-up)</td></tr>
+              <tr><td class="name">4</td><td>Interest Expense</td><td>Tambahan interest dari utang baru yang digunakan membiayai akuisisi</td></tr>
+              <tr><td class="name">5</td><td>Shares Outstanding</td><td>Acquirer shares + new shares issued (hanya jika stock deal atau partial stock)</td></tr>
+            </tbody>
+          </table>
+          <p>Metric kunci yang selalu dihitung: <strong>Pro Forma EPS</strong> (accretion/dilution) dan <strong>Net Debt/EBITDA</strong> (apakah leverage meningkat ke level yang berisiko).</p>
+          <div class="formula">
+            Net Debt/EBITDA = (Total Debt &minus; Cash) / EBITDA
+            <span class="comment">// Setelah akuisisi, utang naik &rarr; rasio ini biasanya meningkat</span>
+            <span class="comment">// Umumnya &lt;3x dianggap conservative; &gt;4.5x mulai masuk zona speculative</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CHEAT SHEET -->
+  <div class="divider"></div>
+  <div class="section">
+    <div class="section-label">Quick Reference Cheat Sheet</div>
+    <div class="cheat-grid">
+      <div class="cheat-item">
+        <div class="cheat-key">Akuisisi Accretive (stock deal)</div>
+        <div class="cheat-val">P/E acquirer &gt; P/E target → EPS naik</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Akuisisi Accretive (debt deal)</div>
+        <div class="cheat-val">Earnings yield target &gt; after-tax cost of debt</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Spin-off vs Carve-out</div>
+        <div class="cheat-val">Spin: no cash, shares ke shareholders. Carve: IPO, dapat kas.</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">LBO: 4 Driver Return</div>
+        <div class="cheat-val">Entry multiple · Leverage · FCF paydown · Exit multiple</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Premium Paid Analysis</div>
+        <div class="cheat-val">PRM = (Deal Price − Unaffected Price) / Unaffected Price</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-key">Prioritas Likuidasi</div>
+        <div class="cheat-val">Secured → Unsecured → Preferred → Common</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRACTICE -->
+  <div class="divider"></div>
+  <div class="practice-header">
+    <div class="practice-icon">&#128221;</div>
+    <div class="practice-header-text">
+      <div class="practice-header-title">Practice &middot; 30 min &mdash; Item Set Vignette</div>
+      <div class="practice-header-sub">Skenario akuisisi PT Nusa Cemerlang oleh PT Garuda Investama</div>
+    </div>
+  </div>
+  <div class="practice-body">
+    <div class="vignette">
+      <div class="vignette-label">Vignette</div>
+      <p>PT Garuda Investama Tbk (ticker: GRDV), sebuah konglomerat yang terdaftar di Bursa Efek Indonesia, sedang mempertimbangkan akuisisi 100% saham PT Nusa Cemerlang Tbk (NSCM), produsen kemasan plastik terkemuka. GRDV saat ini memiliki 500 juta saham beredar dengan EPS Rp 800 dan P/E 20x, sehingga harga saham GRDV adalah Rp 16.000. NSCM memiliki 200 juta saham beredar dengan Net Income Rp 120 miliar dan P/E 15x, sehingga harga per saham NSCM adalah Rp 9.000.</p>
+      <p>GRDV menawarkan harga akuisisi Rp 10.800 per saham NSCM (premium 20% dari harga pasar), untuk total consideration Rp 2,16 triliun. GRDV akan membiayai akuisisi ini seluruhnya dengan penerbitan saham baru GRDV kepada pemegang saham NSCM berdasarkan harga saham GRDV sebesar Rp 16.000.</p>
+      <p>Tim keuangan GRDV memproyeksikan cost synergies sebesar Rp 30 miliar di Tahun 1 dan Rp 60 miliar di Tahun 2 seterusnya, dengan integration costs Rp 20 miliar di Tahun 1. Amortisasi intangible assets yang diakuisisi diperkirakan Rp 15 miliar per tahun. Tarif pajak efektif kedua perusahaan adalah 25%. Setelah merger, total Net Debt gabungan adalah Rp 2,4 triliun dan EBITDA gabungan (termasuk sinergi Tahun 2) adalah Rp 600 miliar.</p>
+    </div>
+
+    <div class="question-block" data-q="1" data-correct="B">
+      <div class="q-num">QUESTION 1 OF 4</div>
+      <div class="q-text">Berapa jumlah saham baru GRDV yang diterbitkan untuk membiayai akuisisi NSCM?</div>
+      <button class="option" data-opt="A">A. 125 juta saham baru &mdash; sehingga total shares outstanding GRDV menjadi 625 juta</button>
+      <button class="option" data-opt="B">B. 135 juta saham baru &mdash; sehingga total shares outstanding GRDV menjadi 635 juta</button>
+      <button class="option" data-opt="C">C. 150 juta saham baru &mdash; sehingga total shares outstanding GRDV menjadi 650 juta</button>
+      <div class="explanation correct">
+        &#10003; <strong>B adalah jawaban benar.</strong> Total consideration = 200 juta saham NSCM &times; Rp 10.800 = Rp 2,16 triliun. Jumlah saham baru GRDV = Rp 2,16 triliun / Rp 16.000 per saham GRDV = 135 juta saham. Total shares outstanding baru = 500 juta + 135 juta = 635 juta saham.
+      </div>
+      <div class="explanation incorrect">
+        &#10007; Perhitungannya: consideration total Rp 2,16 triliun (= 200 juta &times; Rp 10.800) dibagi harga saham GRDV Rp 16.000 = 135 juta saham baru, bukan 125 atau 150 juta. Pastikan lo menggunakan harga akuisisi NSCM (Rp 10.800), bukan harga pasar NSCM (Rp 9.000), untuk menghitung total consideration.
+      </div>
+    </div>
+
+    <div class="question-block" data-q="2" data-correct="A">
+      <div class="q-num">QUESTION 2 OF 4</div>
+      <div class="q-text">Apakah akuisisi ini bersifat accretive atau dilutive terhadap EPS GRDV di Tahun 1 (termasuk sinergi dan integration costs), dan berapa EPS pro forma Tahun 1?</div>
+      <button class="option" data-opt="A">A. Accretive; EPS pro forma Tahun 1 ≈ Rp 806 per saham</button>
+      <button class="option" data-opt="B">B. Dilutive; EPS pro forma Tahun 1 ≈ Rp 782 per saham</button>
+      <button class="option" data-opt="C">C. Neutral; EPS pro forma Tahun 1 ≈ Rp 800 per saham</button>
+      <div class="explanation correct">
+        &#10003; <strong>A adalah jawaban benar.</strong> Net Income pro forma Tahun 1 = NI GRDV + NI NSCM + (Synergy Rp 30M &minus; Integration cost Rp 20M &minus; Amortisasi intangible Rp 15M) &times; (1&minus;0.25). NI GRDV standalone = 500M &times; Rp 800 = Rp 400M. NI NSCM = Rp 120M. Penyesuaian after-tax = (30 &minus; 20 &minus; 15) &times; 0.75 = &minus;Rp 3,75M. Total NI pro forma = Rp 400M + Rp 120M &minus; Rp 3,75M = Rp 516,25M. EPS = Rp 516,25M / 635M saham = Rp 813,4 per saham. Ini accretive (vs Rp 800 standalone). Opsi A mendekati nilai yang benar. Intuitif: P/E GRDV (20x) &gt; P/E NSCM (15x) &rarr; akuisisi dengan saham cenderung accretive secara inherent karena acquirer menukar saham &ldquo;mahal&rdquo; untuk mendapat earnings yang lebih &ldquo;murah&rdquo;.
+      </div>
+      <div class="explanation incorrect">
+        &#10007; Merger ini seharusnya accretive karena P/E GRDV (20x) lebih tinggi dari P/E NSCM (15x). Dalam stock deal, jika P/E acquirer &gt; P/E target, maka EPS acquirer akan naik bahkan tanpa sinergi. Dengan sinergi bersih positif di Tahun 2 dan seterusnya, akuisisi ini lebih accretive lagi di tahun-tahun berikutnya.
+      </div>
+    </div>
+
+    <div class="question-block" data-q="3" data-correct="C">
+      <div class="q-num">QUESTION 3 OF 4</div>
+      <div class="q-text">Berapa rasio Net Debt/EBITDA gabungan setelah merger (menggunakan EBITDA Tahun 2 dengan sinergi penuh), dan apa implikasinya?</div>
+      <button class="option" data-opt="A">A. Net Debt/EBITDA = 3,0x; masih dalam zona investment-grade dan tidak menimbulkan kekhawatiran kredit berarti</button>
+      <button class="option" data-opt="B">B. Net Debt/EBITDA = 4,8x; sudah melewati batas umum speculative grade dan kemungkinan besar memicu rating downgrade</button>
+      <button class="option" data-opt="C">C. Net Debt/EBITDA = 4,0x; di zona moderat-tinggi yang perlu diperhatikan dan biasanya menjadi perhatian rating agency</button>
+      <div class="explanation correct">
+        &#10003; <strong>C adalah jawaban benar.</strong> Net Debt/EBITDA = Rp 2.400M / Rp 600M = 4,0x. Rasio 4,0x berada di zona yang mulai dipertanyakan oleh rating agency &mdash; batas umum untuk mempertahankan investment-grade adalah sekitar 3,0&ndash;3,5x, tergantung industri. Di atas 4,0x mulai masuk zona yang serius diperhatikan. Perusahaan yang ingin mempertahankan investment-grade rating biasanya berkomitmen untuk menurunkan leverage ke level ini dalam 2&ndash;3 tahun pasca-akuisisi melalui FCF yang dihasilkan.
+      </div>
+      <div class="explanation incorrect">
+        &#10007; Net Debt/EBITDA = Rp 2,4 triliun / Rp 600 miliar = 4,0x. Ini bukan 3,0x maupun 4,8x. Rasio 4,0x adalah zona yang perlu diperhatikan &mdash; bukan langsung berbahaya, tapi sudah di atas comfort zone untuk mempertahankan investment-grade rating di sebagian besar sektor.
+      </div>
+    </div>
+
+    <div class="question-block" data-q="4" data-correct="B">
+      <div class="q-num">QUESTION 4 OF 4</div>
+      <div class="q-text">Jika manajemen GRDV memutuskan untuk tidak menjual NSCM tetapi ingin melepaskan kepemilikan sebagian ke publik untuk mendapatkan kas guna melunasi utang, sambil tetap mempertahankan kontrol mayoritas atas NSCM, mekanisme corporate restructuring apa yang paling tepat?</div>
+      <button class="option" data-opt="A">A. Spin-off &mdash; NSCM dipisahkan menjadi perusahaan independen dan sahamnya dibagikan kepada pemegang saham GRDV secara proporsional</button>
+      <button class="option" data-opt="B">B. Equity carve-out &mdash; sebagian saham minoritas NSCM dijual ke publik via IPO, GRDV tetap pegang mayoritas dan mendapatkan kas dari IPO</button>
+      <button class="option" data-opt="C">C. Divestiture &mdash; NSCM dijual sepenuhnya kepada strategic buyer dengan harga pasar atau di atas pasar</button>
+      <div class="explanation correct">
+        &#10003; <strong>B adalah jawaban benar.</strong> Equity carve-out adalah mekanisme di mana parent menjual sebagian minoritas saham anak perusahaan kepada publik melalui IPO, sehingga: (1) parent mendapatkan kas dari hasil IPO yang bisa digunakan untuk melunasi utang, dan (2) parent masih mempertahankan kontrol mayoritas karena hanya sebagian kecil saham yang dijual ke publik. Ini adalah pilihan yang tepat ketika tujuannya adalah mendapat likuiditas <em>tanpa</em> melepaskan kontrol. Spin-off (A) tidak menghasilkan kas dan NSCM jadi independent sepenuhnya. Divestiture (C) menghasilkan kas tapi kontrol berpindah sepenuhnya ke pembeli.
+      </div>
+      <div class="explanation incorrect">
+        &#10007; Kuncinya ada di dua syarat: (1) dapat kas, dan (2) tetap kontrol mayoritas. Spin-off memenuhi syarat independence tapi TIDAK menghasilkan kas dan GRDV kehilangan kontrol. Divestiture memberikan kas tapi GRDV kehilangan kontrol sepenuhnya. Hanya equity carve-out yang memenuhi kedua syarat sekaligus: mendapat kas dari IPO sambil tetap majority shareholder.
+      </div>
+    </div>
+
+    <div id="score-panel-1" class="score-panel">
+      <div class="score-num" id="score-value-1"></div>
+      <div class="score-msg">Review setiap explanation &mdash; pahami mekanismenya, bukan sekadar hafalnya.</div>
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="CFA_L2_Day37.html" class="nav-btn">&larr; Day 37: M&amp;A Mechanics &amp; Defense</a>
+    <a href="CFA_L2_Day39.html" class="nav-btn primary">Day 39: Valuation Framework &rarr;</a>
+  </div>
+</div>
+
+<script>
+(function() {
+  var answers = {};
+  var correct = {};
+  document.querySelectorAll('.question-block').forEach(function(qb) {
+    var q = qb.dataset.q;
+    correct[q] = qb.dataset.correct;
+    qb.querySelectorAll('.option').forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        if (answers[q]) return;
+        answers[q] = opt.dataset.opt;
+        qb.querySelectorAll('.option').forEach(function(o) { o.disabled = true; });
+        var isCorrect = opt.dataset.opt === correct[q];
+        if (isCorrect) {
+          opt.classList.add('correct');
+        } else {
+          opt.classList.add('wrong');
+          qb.querySelectorAll('.option').forEach(function(o) {
+            if (o.dataset.opt === correct[q]) o.classList.add('correct');
+          });
+        }
+        var expls = qb.querySelectorAll('.explanation');
+        var target = isCorrect ? expls[0] : expls[1];
+        if (target) { target.style.display = 'block'; target.classList.add('show'); }
+        var total = Object.keys(correct).length;
+        var scored = Object.keys(answers).length;
+        if (scored === total) {
+          var score = Object.keys(answers).filter(function(k) { return answers[k] === correct[k]; }).length;
+          var panel = document.getElementById('score-panel-1');
+          if (panel) {
+            panel.style.display = 'block';
+            document.getElementById('score-value-1').textContent = score + '/' + total;
+          }
+        }
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

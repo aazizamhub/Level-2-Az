@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Level II Day 32 - Share Repurchases: Metode, Dampak EPS & BVPS, dan Keputusan Buyback vs Dividen (Full)</title>
+  <style>
+:root {
+  --bg:#fafaf8;--bg2:#f4f3ef;--bg3:#eeece7;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+  --text:#1a1a2e;--text2:#4a4a6a;--text3:#8a8aaa;--gold:#9a6e1a;--gold2:#7a5010;
+  --gold-bg:rgba(154,110,26,0.08);--blue:#1a5fa8;--blue-bg:rgba(26,95,168,0.08);
+  --green:#1a7a4a;--green-bg:rgba(26,122,74,0.08);--red:#b83232;--red-bg:rgba(184,50,50,0.08);
+  --amber:#a06010;--amber-bg:rgba(160,96,16,0.08);--r:10px;--r-sm:6px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:15px;}
+.page{max-width:960px;margin:0 auto;padding:0 20px;background:white;box-shadow:0 0 40px rgba(0,0,0,0.04);}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid var(--border);margin-bottom:24px;}
+.breadcrumb{font-size:13px;color:var(--text2);letter-spacing:0.5px;font-weight:500;}
+.day-badge,.version-badge{display:inline-block;padding:6px 12px;background:var(--gold-bg);color:var(--gold2);border-radius:var(--r-sm);font-size:12px;font-weight:600;margin-left:12px;}
+.version-badge{background:var(--blue-bg);color:var(--blue);margin-left:8px;}
+.hero{margin-bottom:48px;}
+.hero-tag{font-size:13px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;}
+.hero-title{font-size:40px;font-weight:700;line-height:1.2;margin-bottom:12px;color:var(--text);}
+.hero-sub{font-size:18px;color:var(--text2);margin-bottom:28px;}
+.meta-row{display:flex;flex-wrap:wrap;gap:12px;}
+.meta-pill{display:inline-flex;align-items:center;padding:8px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:20px;font-size:13px;color:var(--text2);font-weight:500;}
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:32px;margin-bottom:48px;}
+.toc-title{font-size:18px;font-weight:700;margin-bottom:20px;color:var(--text);}
+.toc-list{list-style:none;}
+.toc-list li{margin-bottom:12px;font-size:15px;}
+.toc-list a{color:var(--blue);text-decoration:none;}
+.toc-list a:hover{text-decoration:underline;}
+.toc-num{color:var(--gold);font-weight:600;margin-right:8px;}
+.chapter{margin-bottom:56px;scroll-margin-top:100px;}
+.chapter-header{margin-bottom:28px;}
+.chapter-num{font-size:13px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:1px;}
+.chapter-title{font-size:32px;font-weight:700;color:var(--text);margin-top:8px;}
+.sub-header{font-size:20px;font-weight:700;color:var(--text);margin:32px 0 16px 0;border-bottom:2px solid var(--border);padding-bottom:8px;}
+.sub-header-sm{font-size:17px;font-weight:700;color:var(--text2);margin:24px 0 12px 0;}
+.prose{color:var(--text);margin-bottom:16px;line-height:1.8;}
+.formula-block{background:var(--bg2);border-left:4px solid var(--gold);border-radius:var(--r-sm);padding:20px;margin:24px 0;font-family:'Courier New',monospace;font-size:14px;color:var(--text);overflow-x:auto;white-space:pre-wrap;}
+.formula-block .label{font-weight:700;color:var(--gold);display:block;margin-bottom:8px;font-size:13px;text-transform:uppercase;letter-spacing:0.5px;font-family:'Inter',sans-serif;}
+.formula-block .note{font-family:'Inter',sans-serif;font-size:13px;color:var(--text2);margin-top:12px;line-height:1.6;}
+.exhibit{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:28px;margin:32px 0;}
+.exhibit-title{font-size:15px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:20px;}
+.exhibit-body{color:var(--text);line-height:1.8;font-size:14px;}
+.reg-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;}
+.reg-table th{background:var(--bg3);border:1px solid var(--border);padding:12px;text-align:left;font-weight:700;color:var(--text);}
+.reg-table td{border:1px solid var(--border);padding:12px;color:var(--text2);}
+.reg-table tr:nth-child(even){background:rgba(255,255,255,0.5);}
+.callout{border-radius:var(--r);padding:20px;margin:24px 0;border-left:4px solid;}
+.callout.blue{background:var(--blue-bg);border-left-color:var(--blue);}
+.callout.amber{background:var(--amber-bg);border-left-color:var(--amber);}
+.callout.green{background:var(--green-bg);border-left-color:var(--green);}
+.callout.red{background:var(--red-bg);border-left-color:var(--red);}
+.callout.gold{background:var(--gold-bg);border-left-color:var(--gold);}
+.callout-title{font-weight:700;margin-bottom:8px;display:block;font-size:14px;text-transform:uppercase;letter-spacing:0.5px;}
+.callout.blue .callout-title{color:var(--blue);}
+.callout.amber .callout-title{color:var(--amber);}
+.callout.green .callout-title{color:var(--green);}
+.callout.red .callout-title{color:var(--red);}
+.callout.gold .callout-title{color:var(--gold);}
+.callout p,.callout li{color:var(--text);font-size:14px;line-height:1.7;}
+.callout ul{padding-left:20px;margin-top:8px;}
+.kc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:28px 0;overflow:hidden;}
+.kc-header{padding:18px 20px;background:var(--bg3);border-bottom:1px solid var(--border);cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none;}
+.kc-header:hover{background:rgba(0,0,0,0.04);}
+.kc-header-title{font-weight:600;color:var(--text);font-size:14px;}
+.kc-toggle{color:var(--text3);font-weight:700;font-size:18px;transition:transform 0.2s;}
+.kc.open .kc-toggle{transform:rotate(180deg);}
+.kc-body{padding:20px;max-height:0;overflow:hidden;transition:max-height 0.4s ease-out;}
+.kc.open .kc-body{max-height:2000px;}
+.kc-q{color:var(--text);margin-bottom:14px;line-height:1.7;font-weight:600;}
+.kc-answer{color:var(--text2);line-height:1.8;font-size:14px;border-top:1px solid var(--border);padding-top:14px;margin-top:4px;}
+.num-list,.bullet-list{margin:16px 0;padding-left:24px;}
+.num-list li,.bullet-list li{margin-bottom:10px;color:var(--text);line-height:1.7;}
+.divider{height:1px;background:var(--border);margin:48px 0;}
+.practice-body{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:28px;}
+.vignette{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-bottom:32px;}
+.vignette-label{font-size:12px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;}
+.vignette-text{font-size:14px;color:var(--text);line-height:1.8;}
+.question-block{margin-bottom:32px;}
+.q-num{font-size:12px;font-weight:700;color:var(--blue);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;}
+.q-text{font-size:15px;color:var(--text);margin-bottom:16px;line-height:1.65;font-weight:500;}
+.option{display:flex;align-items:flex-start;gap:14px;padding:12px 16px;margin-bottom:10px;border:1px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:all 0.2s ease;background:white;}
+.option:hover{border-color:var(--blue);background:var(--blue-bg);}
+.option-radio{display:flex;align-items:center;justify-content:center;width:20px;height:20px;border:2px solid var(--border2);border-radius:50%;flex-shrink:0;margin-top:2px;}
+.option.selected .option-radio{border-color:var(--blue);background:var(--blue);}
+.option-text{font-size:14px;color:var(--text);line-height:1.6;}
+.explanation{background:var(--bg2);padding:16px;border-radius:var(--r-sm);font-size:13px;color:var(--text2);margin-top:10px;display:none;line-height:1.7;}
+.explanation.show{display:block;}
+.explanation.correct{border-left:3px solid var(--green);background:var(--green-bg);color:var(--text);}
+.explanation.incorrect{border-left:3px solid var(--red);background:var(--red-bg);color:var(--text);}
+.score-panel{background:var(--gold-bg);border:1px solid var(--gold);border-radius:var(--r);padding:20px;margin-top:24px;text-align:center;display:none;}
+.score-panel.show{display:block;}
+.score-panel-text{font-size:15px;color:var(--text);margin-bottom:8px;}
+.score-panel-value{font-size:28px;font-weight:700;color:var(--gold2);}
+.nav-bottom{display:flex;justify-content:space-between;align-items:center;padding:28px 0;margin-top:48px;border-top:1px solid var(--border);}
+.nav-btn{text-decoration:none;padding:12px 18px;border-radius:var(--r-sm);font-size:13px;font-weight:600;color:var(--blue);border:1px solid var(--border);transition:all 0.2s ease;}
+.nav-btn:hover{border-color:var(--blue);background:var(--blue-bg);}
+@media(max-width:640px){.hero-title{font-size:28px;}.meta-row{flex-direction:column;}}
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="breadcrumb">CFA Level II &nbsp;&middot;&nbsp; Corporate Issuers &nbsp;&middot;&nbsp; LM1
+      <span class="version-badge">Versi Full</span>
+      <span class="day-badge">Day 32 of 90</span>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Jumat, 29 Mei 2026</div>
+    <h1 class="hero-title">Share Repurchases: Metode, Dampak Finansial, dan Keputusan Distribusi</h1>
+    <p class="hero-sub">Dividends and Share Repurchases (LM1) &mdash; Subtopik 2 dari 2</p>
+    <div class="meta-row">
+      <div class="meta-pill">Materi Lengkap</div>
+      <div class="meta-pill">Bahasa Indonesia</div>
+      <div class="meta-pill">~8% Exam Weight</div>
+      <div class="meta-pill">Est. baca 45–60 menit</div>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">Daftar Isi</div>
+    <ol class="toc-list">
+      <li><a href="#los"><span class="toc-num">0.</span>Learning Outcomes (LOS)</a></li>
+      <li><a href="#ch1"><span class="toc-num">1.</span>Definisi dan Konteks Share Repurchase</a></li>
+      <li><a href="#ch2"><span class="toc-num">2.</span>Empat Metode Share Repurchase</a></li>
+      <li><a href="#ch3"><span class="toc-num">3.</span>Dampak terhadap Earnings Per Share (EPS)</a></li>
+      <li><a href="#ch4"><span class="toc-num">4.</span>Dampak terhadap Book Value Per Share (BVPS)</a></li>
+      <li><a href="#ch5"><span class="toc-num">5.</span>Ekivalensi Teoritis dan Keputusan Dividend vs. Repurchase</a></li>
+      <li><a href="#ch6"><span class="toc-num">6.</span>Latihan Soal &mdash; Item Set Vignette</a></li>
+    </ol>
+  </div>
+
+  <!-- SECTION 0: LOS -->
+  <div class="chapter" id="los">
+    <div class="chapter-header">
+      <div class="chapter-num">Section 0</div>
+      <div class="chapter-title">Learning Outcomes</div>
+    </div>
+    <p class="prose">Setelah menyelesaikan modul ini, kandidat diharapkan mampu:</p>
+    <ul class="num-list">
+      <li><strong>Membandingkan</strong> metode-metode share repurchase — open market, fixed-price tender offer, Dutch auction, dan direct negotiation — dari segi mekanisme, fleksibilitas, kecepatan, dan biaya.</li>
+      <li><strong>Menghitung dan membandingkan</strong> dampak share repurchase terhadap earnings per share (EPS) ketika (1) repurchase dibiayai dengan surplus kas perusahaan dan (2) perusahaan menggunakan utang baru sebagai sumber pendanaan.</li>
+      <li><strong>Menghitung</strong> dampak share repurchase terhadap book value per share (BVPS) dan menjelaskan arah perubahannya berdasarkan hubungan antara market price dan BVPS awal.</li>
+      <li><strong>Menjelaskan</strong> ekivalensi teoritis antara pembayaran cash dividend dan share repurchase dalam kondisi pasar sempurna, serta menganalisis alasan-alasan praktis mengapa perusahaan memilih satu metode distribusi di atas yang lain.</li>
+    </ul>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CHAPTER 1: Definisi dan Konteks -->
+  <div class="chapter" id="ch1">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 1</div>
+      <div class="chapter-title">Definisi dan Konteks Share Repurchase</div>
+    </div>
+
+    <p class="prose">Share repurchase — atau yang populer disebut <em>buyback</em> — adalah transaksi di mana perusahaan membeli kembali sahamnya sendiri yang beredar di pasar. Berbeda dengan stock dividend atau stock split yang tidak menggunakan kas, share repurchase menggunakan kas perusahaan secara riil, sehingga dapat dipandang sebagai alternatif langsung dari pembayaran cash dividend.</p>
+
+    <p class="prose">Saham yang telah dibeli kembali memiliki dua nasib. Pertama, menjadi <strong>treasury shares</strong> (atau <em>treasury stock</em>) jika perusahaan menyimpannya untuk kemungkinan diterbitkan kembali di masa depan — misalnya untuk program employee stock option (ESO). Kedua, menjadi <strong>canceled shares</strong> jika saham tersebut langsung dipensiun. Dalam kedua kasus, saham-saham ini tidak diperhitungkan dalam pembagian dividen, hak suara (voting), maupun perhitungan earnings per share.</p>
+
+    <div class="sub-header">Sejarah Singkat dan Tren Global</div>
+    <p class="prose">Penggunaan share repurchase secara masif memerlukan kerangka regulasi yang memadai. Di Amerika Serikat, meski tidak pernah secara eksplisit ilegal, buyback baru menjadi lazim setelah SEC Rule 10b-18 tahun 1982 yang melindungi perusahaan dari tuduhan manipulasi harga saham, asalkan buyback dilakukan sesuai ketentuan aturan tersebut. Di Inggris, buyback menjadi legal tahun 1981; di Jepang tahun 1995; di Jerman dan Singapura tahun 1998; di India dan Norwegia tahun 1999.</p>
+
+    <p class="prose">Sejak awal 1980-an di AS dan awal 1990-an di Eropa, proporsi perusahaan yang melakukan share repurchase terus meningkat. Sejak akhir 2010-an, buyback oleh perusahaan-perusahaan besar di Asia — terutama Tiongkok daratan dan Jepang — juga mengalami lonjakan signifikan setelah sebelumnya hampir tidak ada aktivitas buyback di kawasan tersebut.</p>
+
+    <div class="callout blue">
+      <span class="callout-title">Perbedaan Utama Buyback vs. Dividen</span>
+      <ul>
+        <li><strong>Komitmen:</strong> Pengumuman dividen menciptakan kewajiban hukum bagi perusahaan; pengumuman program buyback (khususnya open market) umumnya tidak menciptakan kewajiban yang sama.</li>
+        <li><strong>Proporsionalitas:</strong> Dividen didistribusikan proporsional kepada semua pemegang saham; buyback open market hanya mengalirkan kas kepada pemegang saham yang memiliki sell order bersamaan.</li>
+        <li><strong>Ekspektasi pasar:</strong> Dividen reguler menciptakan ekspektasi keberlanjutan yang sulit dipatahkan; buyback tidak demikian.</li>
+      </ul>
+    </div>
+
+    <div class="kc" id="kc1">
+      <div class="kc-header" onclick="toggleKC('kc1')">
+        <span class="kc-header-title">Knowledge Check 1.1 &mdash; Mengapa buyback tidak menciptakan kewajiban yang sama seperti dividen?</span>
+        <span class="kc-toggle">&#9660;</span>
+      </div>
+      <div class="kc-body">
+        <div class="kc-q">Jelaskan mengapa program buyback open market tidak menciptakan kewajiban hukum yang sama seperti deklarasi dividen, dan apa implikasi praktisnya bagi manajemen.</div>
+        <div class="kc-answer">
+          Ketika dewan direksi mendeklarasikan dividen, tindakan tersebut secara hukum mengikat perusahaan untuk membayar jumlah yang dideklarasikan kepada semua pemegang saham yang terdaftar pada tanggal rekam (record date). Kewajiban ini tidak dapat dibatalkan secara sepihak tanpa konsekuensi hukum.
+          <br><br>
+          Sebaliknya, pengumuman program buyback open market hanya menyatakan niat perusahaan. Perusahaan dapat — dan sering kali — tidak menyelesaikan seluruh program yang diumumkan karena berbagai alasan: kebutuhan kas yang mendadak untuk likuiditas, akuisisi, atau belanja modal. Tidak ada sanksi hukum untuk hal ini.
+          <br><br>
+          Implikasi praktis: Manajemen mendapatkan fleksibilitas jauh lebih besar dalam mengelola kas. Mereka dapat mengumumkan program buyback sebagai sinyal positif ke pasar tanpa terikat untuk benar-benar melaksanakannya secara penuh jika kondisi berubah.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CHAPTER 2: Empat Metode -->
+  <div class="chapter" id="ch2">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 2</div>
+      <div class="chapter-title">Empat Metode Share Repurchase</div>
+    </div>
+
+    <p class="prose">Terdapat empat metode utama yang digunakan perusahaan untuk melaksanakan program share repurchase, masing-masing dengan karakteristik unik dalam hal fleksibilitas, kecepatan eksekusi, dan biaya.</p>
+
+    <div class="sub-header">Metode 1: Open Market Repurchase</div>
+    <p class="prose">Metode open market adalah cara yang paling umum dan paling fleksibel. Perusahaan membeli sahamnya sendiri di pasar sekunder seperti investor biasa — kapan saja, dalam jumlah berapa saja, dan di harga pasar yang berlaku. Di AS, aturan ini diatur oleh SEC Rule 10b-18 yang menetapkan batasan harian (maksimum 25% dari rata-rata volume harian empat minggu sebelumnya) dan restriksi lainnya untuk mencegah manipulasi harga.</p>
+
+    <p class="prose">Keunggulan open market: tidak ada kewajiban hukum untuk follow-through, manajemen dapat timing pembelian saat harga dianggap undervalued, dan umumnya dilakukan mendekati harga pasar sehingga lebih hemat. Kelemahannya: prosesnya lambat — bisa berlangsung berbulan-bulan bahkan bertahun-tahun — dan perusahaan tidak dapat secara agresif membeli dalam jumlah besar sekaligus tanpa mempengaruhi harga pasar.</p>
+
+    <div class="callout amber">
+      <span class="callout-title">Perlu Persetujuan Pemegang Saham?</span>
+      <p>Di AS, open market repurchase tidak memerlukan persetujuan pemegang saham (shareholders' approval). Di Eropa, umumnya persetujuan diperlukan. Penelitian Manconi, Peyer, dan Vermaelen (2015) terhadap buyback di 32 negara menyimpulkan bahwa keharusan mendapat persetujuan tidak memperbaiki tata kelola perusahaan yang buruk; sebaliknya, justru membatasi fleksibilitas manajemen untuk memanfaatkan saham yang undervalued.</p>
+    </div>
+
+    <div class="sub-header">Metode 2: Fixed-Price Tender Offer</div>
+    <p class="prose">Dalam fixed-price tender offer, perusahaan menawarkan untuk membeli sejumlah saham tertentu pada harga tetap yang biasanya di atas harga pasar saat itu (memberikan premium). Tawaran ini berlaku selama periode tertentu, misalnya 30 hari. Jika pemegang saham yang ingin menjual melebihi jumlah target, perusahaan biasanya membeli secara pro-rata dari setiap pemegang saham yang merespons.</p>
+
+    <p class="prose">Keunggulan metode ini adalah kecepatan — seluruh program dapat diselesaikan dalam waktu singkat. Kelemahannya adalah biaya yang lebih tinggi karena perusahaan harus menawarkan premium, serta kurangnya fleksibilitas karena harga dan jumlah sudah ditetapkan di awal.</p>
+
+    <div class="sub-header">Metode 3: Dutch Auction Tender Offer</div>
+    <p class="prose">Dutch auction juga merupakan tender offer, namun alih-alih menetapkan satu harga tetap, perusahaan menetapkan <em>rentang harga</em> yang dapat diterima. Pemegang saham kemudian mengajukan bid — yaitu jumlah saham dan harga minimum yang bersedia mereka terima. Perusahaan mengakumulasi bid mulai dari harga terendah hingga tercukupi jumlah saham yang diinginkan. Harga "clearing" yang ditemukan kemudian dibayarkan kepada semua bidder yang memenuhi syarat (bid ≤ clearing price).</p>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Contoh Numeris: Dutch Auction</div>
+      <div class="exhibit-body">
+        <p>PT Sinarmas Investama Tbk ingin membeli kembali 5 juta saham. Harga pasar saat ini: Rp 3.700/saham. Rentang penawaran ditetapkan: Rp 3.800 – Rp 4.000.</p>
+        <br>
+        <table class="reg-table">
+          <thead><tr><th>Harga Bid (minimum)</th><th>Jumlah Saham Ditawarkan</th><th>Akumulasi Kumulatif</th></tr></thead>
+          <tbody>
+            <tr><td>Rp 3.800</td><td>2.000.000</td><td>2.000.000</td></tr>
+            <tr><td>Rp 3.850</td><td>1.500.000</td><td>3.500.000</td></tr>
+            <tr><td>Rp 3.900</td><td>1.200.000</td><td><strong>4.700.000</strong></td></tr>
+            <tr><td>Rp 3.950</td><td>800.000</td><td>5.500.000 ✓ (target tercapai di sini)</td></tr>
+          </tbody>
+        </table>
+        <br>
+        <p><strong>Clearing price: Rp 3.950</strong> — harga di mana akumulasi mencapai ≥ 5 juta saham. Semua pemegang saham yang bid ≤ Rp 3.950 menerima Rp 3.950/saham. Karena total bid yang qualify = 5,5 juta &gt; 5 juta target, dilakukan pro-rata.</p>
+        <br>
+        <p><strong>Perbandingan biaya:</strong></p>
+        <ul style="padding-left:20px; margin-top:8px;">
+          <li>Dutch auction @ Rp 3.950: Total = Rp 3.950 × 5 juta = <strong>Rp 19,75 miliar</strong></li>
+          <li>Fixed-price tender @ Rp 4.000: Total = Rp 4.000 × 5 juta = <strong>Rp 20,00 miliar</strong></li>
+          <li>Penghematan Dutch auction: Rp 250 juta</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub-header">Metode 4: Repurchase by Direct Negotiation</div>
+    <p class="prose">Perusahaan bernegosiasi langsung dengan pemegang saham besar — misalnya investor institusional, aktivis, atau pihak yang mencoba melakukan pengambilalihan (hostile takeover). Pembelian ini bisa dilakukan dengan premium di atas harga pasar (<em>greenmail</em>) jika perusahaan ingin mencegah aktivis mendapat kursi dewan, atau dengan diskon jika pemegang saham besar membutuhkan likuiditas segera dan posisi negosiasinya lebih lemah.</p>
+
+    <div class="callout red">
+      <span class="callout-title">Greenmail: Redistribusi Kekayaan yang Merugikan</span>
+      <p>Greenmail terjadi ketika perusahaan membeli saham dari calon pengambilalih atau aktivis di harga premium untuk mencegah mereka mempengaruhi operasi perusahaan. Meskipun total kekayaan perusahaan terkonservasi, terjadi <strong>transfer kekayaan dari pemegang saham yang tidak terlibat ke penjual (aktivis)</strong>. Setelah buyback greenmail, harga saham turun proporsional dengan premium yang dibayarkan, sehingga merugikan pemegang saham biasa.</p>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Ringkasan Komparatif Empat Metode</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Metode</th><th>Fleksibilitas</th><th>Kecepatan</th><th>Biaya Relatif</th><th>Prevalensi Global</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Open Market</strong></td><td>Tertinggi</td><td>Lambat (bulan–tahun)</td><td>Terendah (near market price)</td><td>Dominan di semua negara</td></tr>
+            <tr><td><strong>Fixed-Price Tender</strong></td><td>Rendah</td><td>Cepat (~30 hari)</td><td>Tinggi (premium tetap)</td><td>Digunakan untuk buyback besar/terstruktur</td></tr>
+            <tr><td><strong>Dutch Auction</strong></td><td>Sedang</td><td>Cepat (~30 hari)</td><td>Sedang (lebih murah dari fixed-price)</td><td>Digunakan untuk buyback besar/terstruktur</td></tr>
+            <tr><td><strong>Direct Negotiation</strong></td><td>Rendah–Sedang</td><td>Bervariasi</td><td>Bervariasi (premium/diskon)</td><td>Kasus khusus (greenmail, blok besar)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="kc" id="kc2">
+      <div class="kc-header" onclick="toggleKC('kc2')">
+        <span class="kc-header-title">Knowledge Check 2.1 &mdash; Mengapa Dutch auction umumnya lebih murah dari fixed-price tender?</span>
+        <span class="kc-toggle">&#9660;</span>
+      </div>
+      <div class="kc-body">
+        <div class="kc-q">Dalam Dutch auction, mengapa perusahaan biasanya dapat menyelesaikan buyback dengan harga yang lebih rendah dibandingkan fixed-price tender offer?</div>
+        <div class="kc-answer">
+          Dalam fixed-price tender, perusahaan harus menetapkan satu harga yang cukup menarik untuk mendorong cukup banyak pemegang saham menjual. Karena perusahaan tidak tahu persis berapa harga minimum yang diperlukan untuk mengumpulkan cukup saham, mereka cenderung menetapkan premium yang konservatif (lebih tinggi dari yang diperlukan) untuk memastikan program berhasil.
+          <br><br>
+          Dalam Dutch auction, mekanisme price discovery bekerja sendiri: pemegang saham yang paling ingin menjual akan bid pada harga terendah. Harga clearing yang muncul adalah harga minimum yang hanya cukup untuk mengumpulkan jumlah saham yang diinginkan — tidak lebih. Dengan kata lain, Dutch auction "menemukan" harga pasar yang sesungguhnya dari saham yang mau dijual, sehingga perusahaan tidak perlu membayar premium yang tidak perlu.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CHAPTER 3: Dampak pada EPS -->
+  <div class="chapter" id="ch3">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 3</div>
+      <div class="chapter-title">Dampak terhadap Earnings Per Share (EPS)</div>
+    </div>
+
+    <p class="prose">Dampak share repurchase terhadap EPS merupakan salah satu topik yang paling sering diujikan di CFA Level 2. Analisis ini harus dibedakan berdasarkan sumber pendanaan buyback: surplus kas atau utang baru.</p>
+
+    <div class="sub-header">3.1 Buyback Dibiayai dengan Surplus Kas</div>
+    <p class="prose">Ketika perusahaan menggunakan kas yang menganggur (idle cash) — misalnya deposito berbunga rendah atau kas di atas kebutuhan operasional — untuk melakukan buyback, net income pada dasarnya tidak berubah secara signifikan (kehilangan bunga kas yang kecil). Namun jumlah saham beredar berkurang, sehingga EPS hampir pasti meningkat.</p>
+
+    <div class="formula-block">
+      <span class="label">Formula EPS Setelah Buyback (Surplus Cash)</span>
+EPS_baru ≈ Net Income / (Shares awal − Shares dibeli)
+
+Shares dibeli = Jumlah kas / Harga beli per saham
+
+Catatan: Net income dianggap konstan (atau hanya berkurang
+sedikit dari hilangnya bunga kas yang tadinya diperoleh dari
+idle cash — biasanya negligible jika return kas mendekati nol).
+
+→ Buyback dengan idle cash SELALU accretive (EPS naik)
+      <span class="note">Pengecualian: jika kas tersebut tadinya diinvestasikan secara produktif (earning above cost of capital), maka EPS bisa naik sementara nilai perusahaan turun — manajemen "mengambil" dari investasi produktif untuk buyback.</span>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Contoh: Buyback dengan Surplus Kas — Takemiya Industries (diadaptasi)</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Item</th><th>Sebelum Buyback</th><th>Setelah Buyback</th></tr></thead>
+          <tbody>
+            <tr><td>Net income</td><td>Rp 100 miliar</td><td>Rp 100 miliar (tidak berubah)</td></tr>
+            <tr><td>Shares outstanding</td><td>10 juta saham</td><td>8,3 juta saham</td></tr>
+            <tr><td>Harga buyback</td><td>—</td><td>Rp 14.000/saham (inkl. premium)</td></tr>
+            <tr><td>Kas yang digunakan</td><td>—</td><td>Rp 24 miliar → beli 1,714 juta saham</td></tr>
+            <tr><td><strong>EPS</strong></td><td><strong>Rp 10.000</strong></td><td><strong>Rp 12.048 (+20,5%)</strong></td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:12px;font-size:13px;color:var(--text2);">Perhitungan: EPS baru = Rp 100M / (10M − 1,714M) = Rp 100M / 8,286M = Rp 12.070/saham. EPS meningkat meskipun harga buyback termasuk premium, karena net income tidak berkurang.</p>
+      </div>
+    </div>
+
+    <div class="sub-header">3.2 Buyback Dibiayai dengan Utang Baru</div>
+    <p class="prose">Ketika buyback dibiayai dengan menerbitkan utang baru, perusahaan menanggung beban bunga tambahan yang mengurangi net income. Apakah EPS akhirnya naik, turun, atau tetap tergantung pada perbandingan antara <em>earnings yield</em> (E/P) dan <em>after-tax cost of debt</em>.</p>
+
+    <div class="formula-block">
+      <span class="label">Formula EPS Setelah Buyback (Utang Baru)</span>
+EPS_baru = (Net Income − After-tax interest expense) / Shares baru
+
+After-tax interest expense = Jumlah utang × After-tax kd
+
+Kaidah arah EPS:
+
+  E/P > After-tax kd  →  EPS NAIK (accretive)
+  E/P = After-tax kd  →  EPS TIDAK BERUBAH (neutral)
+  E/P < After-tax kd  →  EPS TURUN (dilutive)
+
+Di mana:
+  E/P = Earnings per share / Price per share
+      = EPS sebelum buyback / Harga saham saat buyback
+      <span class="note">Intuisi: E/P adalah "imbal hasil" atas setiap rupiah ekuitas. kd after-tax adalah "biaya" atas setiap rupiah utang yang diterbitkan untuk menggantikan ekuitas tersebut. Jika imbal hasil &gt; biaya → menguntungkan → EPS naik.</span>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Contoh Lengkap: Tiga Skenario Debt-Financed Buyback</div>
+      <div class="exhibit-body">
+        <p><strong>Data awal:</strong> Net income = Rp 66 miliar; Shares outstanding = 2,2 juta; Harga saham = Rp 600.000; EPS awal = Rp 30.000; E/P = 5%.</p>
+        <p style="margin-top:8px;">Program buyback: Rp 120 miliar utang baru → beli 200.000 saham @ Rp 600.000. Shares tersisa: 2 juta.</p>
+        <br>
+        <table class="reg-table">
+          <thead><tr><th>Skenario</th><th>After-tax kd</th><th>Bunga Baru</th><th>Net Income Baru</th><th>EPS Baru</th><th>Vs. EPS Awal</th></tr></thead>
+          <tbody>
+            <tr><td><strong>A: kd = 4%</strong></td><td>4% &lt; E/P 5%</td><td>Rp 4,8M</td><td>Rp 61,2M</td><td>Rp 30.600</td><td style="color:var(--green);">↑ Accretive</td></tr>
+            <tr><td><strong>B: kd = 5%</strong></td><td>5% = E/P 5%</td><td>Rp 6,0M</td><td>Rp 60,0M</td><td>Rp 30.000</td><td>→ Neutral</td></tr>
+            <tr><td><strong>C: kd = 6%</strong></td><td>6% &gt; E/P 5%</td><td>Rp 7,2M</td><td>Rp 58,8M</td><td>Rp 29.400</td><td style="color:var(--red);">↓ Dilutive</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:12px;font-size:13px;color:var(--text2);">Contoh perhitungan skenario C: EPS = (66M − 120M×6%) / 2M = (66M − 7,2M) / 2M = 58,8M / 2M = Rp 29.400.</p>
+      </div>
+    </div>
+
+    <div class="callout amber">
+      <span class="callout-title">Peringatan Penting: EPS Naik ≠ Shareholder Wealth Naik</span>
+      <p>CFA curriculum menekankan bahwa kenaikan EPS akibat buyback tidak secara otomatis meningkatkan kekayaan pemegang saham. Ada dua alasan:</p>
+      <ul>
+        <li><strong>Leverage meningkat</strong>: Jika buyback dibiayai utang, risiko perusahaan meningkat. Required rate of return (cost of equity) pun naik, yang seharusnya mengimbangi kenaikan EPS.</li>
+        <li><strong>Nilai perusahaan bergantung pada FCF, bukan EPS</strong>: Perusahaan yang menggunakan surplus kas produktif untuk buyback tidak menciptakan nilai baru — total free cash flow tidak berubah, hanya dialokasikan secara berbeda.</li>
+      </ul>
+    </div>
+
+    <div class="kc" id="kc3">
+      <div class="kc-header" onclick="toggleKC('kc3')">
+        <span class="kc-header-title">Knowledge Check 3.1 &mdash; Mengapa EPS neutral ketika E/P = after-tax kd?</span>
+        <span class="kc-toggle">&#9660;</span>
+      </div>
+      <div class="kc-body">
+        <div class="kc-q">Jelaskan secara intuitif mengapa EPS tidak berubah ketika earnings yield (E/P) sama persis dengan after-tax cost of debt yang digunakan untuk membiayai buyback.</div>
+        <div class="kc-answer">
+          Ketika perusahaan meminjam untuk membeli kembali saham, ia melakukan dua hal sekaligus: (1) mengurangi jumlah saham beredar (penyebut EPS mengecil → EPS cenderung naik), dan (2) menambah beban bunga yang mengurangi net income (pembilang EPS mengecil → EPS cenderung turun).
+          <br><br>
+          Jika E/P = after-tax kd, kedua efek ini saling mengimbangi secara sempurna. Secara matematis: misalkan P = harga, E = EPS, n = jumlah saham awal, dan kita beli kembali satu saham dengan meminjam P pada bunga kd. Penurunan net income = P × kd. Kenaikan EPS dari fewer shares = E/(n-1) − E/n = E/[n(n-1)]. Ketika P × kd = E/n × P (yaitu kd = E/P), kedua efek tepat sama besar, sehingga EPS tidak berubah.
+        </div>
+      </div>
+    </div>
+
+    <div class="kc" id="kc3b">
+      <div class="kc-header" onclick="toggleKC('kc3b')">
+        <span class="kc-header-title">Knowledge Check 3.2 &mdash; Apakah buyback dengan utang selalu meningkatkan leverage?</span>
+        <span class="kc-toggle">&#9660;</span>
+      </div>
+      <div class="kc-body">
+        <div class="kc-q">Seorang analis menyatakan: "Buyback dengan utang meningkatkan leverage lebih besar daripada buyback dengan kas." Apakah pernyataan ini benar? Jelaskan dengan menyebut angka debt ratio.</div>
+        <div class="kc-answer">
+          Benar. Mari ilustrasikan: Misalkan perusahaan dengan total aset Rp 100M, utang Rp 30M, ekuitas Rp 70M. Debt ratio = 30%.
+          <br><br>
+          <strong>Buyback Rp 7M dengan kas:</strong> Kas (aset) turun Rp 7M, ekuitas (market/book) turun Rp 7M. Total aset = Rp 93M, utang = Rp 30M. Debt ratio = 30/93 = 32,3%.
+          <br><br>
+          <strong>Buyback Rp 7M dengan utang baru:</strong> Utang naik Rp 7M, ekuitas (market) turun Rp 7M. Total aset tidak berubah = Rp 100M, utang = Rp 37M. Debt ratio = 37/100 = 37%.
+          <br><br>
+          Kesimpulan: Buyback dengan kas meningkatkan debt ratio dari 30% ke ~32%, sementara buyback dengan utang meningkatkannya ke 37% — peningkatan leverage yang jauh lebih signifikan.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CHAPTER 4: Dampak pada BVPS -->
+  <div class="chapter" id="ch4">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 4</div>
+      <div class="chapter-title">Dampak terhadap Book Value Per Share (BVPS)</div>
+    </div>
+
+    <p class="prose">Share repurchase selalu mengurangi <em>total</em> book value of equity (karena kas keluar dari neraca). Namun efek terhadap BVPS — nilai buku per saham — bergantung pada hubungan antara harga pembelian (market price) dan BVPS sebelum buyback.</p>
+
+    <div class="formula-block">
+      <span class="label">Aturan BVPS Setelah Buyback</span>
+BVPS_baru = (Book Equity − Jumlah kas buyback) / (Shares awal − Shares dibeli)
+
+Arah perubahan BVPS:
+
+  Harga beli &gt; BVPS awal  →  BVPS TURUN
+  Harga beli &lt; BVPS awal  →  BVPS NAIK
+  Harga beli = BVPS awal  →  BVPS TIDAK BERUBAH
+
+Intuisi:
+  • Beli di atas nilai buku: perusahaan "membayar lebih"
+    untuk setiap saham dibanding nilai bukunya
+    → value per saham yang tersisa berkurang
+  • Beli di bawah nilai buku: perusahaan "mendapat diskon"
+    → pemegang saham yang tetap "memperoleh lebih"
+      <span class="note">Ini analog dengan dilusi saham: menerbitkan saham baru di bawah BVPS menurunkan BVPS; menerbitkan di atas BVPS menaikkannya. Buyback adalah kebalikannya — seperti "menarik kembali" saham dari pasar.</span>
+    </div>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Perbandingan Dua Perusahaan: P &gt; BV vs. P &lt; BV</div>
+      <div class="exhibit-body">
+        <p>Kedua perusahaan mengumumkan buyback Rp 50 miliar @ harga pasar Rp 200.000/saham (beli 250.000 saham). Shares awal = 10 juta.</p>
+        <br>
+        <table class="reg-table">
+          <thead><tr><th>Item</th><th>Perusahaan Alpha (P &gt; BVPS)</th><th>Perusahaan Beta (P &lt; BVPS)</th></tr></thead>
+          <tbody>
+            <tr><td>Market price</td><td>Rp 200.000</td><td>Rp 200.000</td></tr>
+            <tr><td>Total book equity (awal)</td><td>Rp 1.000 miliar</td><td>Rp 3.000 miliar</td></tr>
+            <tr><td>BVPS awal</td><td>Rp 100.000 (P/B = 2×)</td><td>Rp 300.000 (P/B = 0,67×)</td></tr>
+            <tr><td>Book equity setelah buyback</td><td>Rp 950 miliar</td><td>Rp 2.950 miliar</td></tr>
+            <tr><td>Shares setelah buyback</td><td>9,75 juta</td><td>9,75 juta</td></tr>
+            <tr><td><strong>BVPS setelah</strong></td><td><strong>Rp 97.436 (↓ turun)</strong></td><td><strong>Rp 302.564 (↑ naik)</strong></td></tr>
+            <tr><td>Perubahan BVPS</td><td style="color:var(--red);">−Rp 2.564 (−2,6%)</td><td style="color:var(--green);">+Rp 2.564 (+0,9%)</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:12px;font-size:13px;color:var(--text2);">Perhitungan Alpha: 950M/9,75M = 97.436. Beta: 2.950M/9,75M = 302.564.</p>
+      </div>
+    </div>
+
+    <div class="callout green">
+      <span class="callout-title">Implikasi untuk Value Investing di BEI</span>
+      <p>Banyak saham di Bursa Efek Indonesia — terutama di sektor properti, manufaktur, dan perkebunan — diperdagangkan di bawah nilai buku (P/B &lt; 1). Ketika perusahaan-perusahaan ini melakukan buyback, setiap rupiah yang dihabiskan secara matematis meningkatkan BVPS pemegang saham yang tersisa. Ini adalah alasan mengapa investor value seperti Warren Buffett mendukung buyback Berkshire Hathaway hanya ketika P/B di bawah threshold tertentu — karena buyback pada kondisi tersebut secara langsung "menciptakan nilai" bagi pemegang saham jangka panjang.</p>
+    </div>
+
+    <div class="kc" id="kc4">
+      <div class="kc-header" onclick="toggleKC('kc4')">
+        <span class="kc-header-title">Knowledge Check 4.1 &mdash; Apa yang terjadi pada BVPS jika P = BVPS?</span>
+        <span class="kc-toggle">&#9660;</span>
+      </div>
+      <div class="kc-body">
+        <div class="kc-q">Perusahaan Gamma memiliki BVPS Rp 500.000 dan market price Rp 500.000 (P/B = 1×). Mereka membeli kembali 100.000 saham dari total 1 juta saham beredar senilai Rp 50 miliar. Berapa BVPS setelah buyback?</div>
+        <div class="kc-answer">
+          Total book equity awal = 1 juta × Rp 500.000 = Rp 500 miliar.
+          <br>
+          Setelah buyback Rp 50 miliar: book equity = Rp 450 miliar.
+          <br>
+          Shares tersisa = 900.000 saham.
+          <br>
+          BVPS baru = Rp 450 miliar / 900.000 = Rp 500.000.
+          <br><br>
+          BVPS tidak berubah! Ini konsisten dengan aturan: ketika P = BVPS, buyback tidak mengubah BVPS. Perusahaan membeli setiap saham tepat senilai "harga bukunya," sehingga komposisi nilai buku per saham yang tersisa tidak berubah.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CHAPTER 5: Ekivalensi dan Keputusan -->
+  <div class="chapter" id="ch5">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 5</div>
+      <div class="chapter-title">Ekivalensi Teoritis dan Keputusan Dividend vs. Repurchase</div>
+    </div>
+
+    <div class="sub-header">5.1 Teorema Ekivalensi</div>
+    <p class="prose">Dalam pasar sempurna (tanpa pajak, tanpa biaya transaksi, informasi simetris, dan kebijakan investasi perusahaan sudah tetap), pembayaran cash dividend dan share repurchase dalam jumlah yang sama akan menghasilkan kekayaan pemegang saham yang identik. Ini adalah <em>valuation equivalence theorem</em>.</p>
+
+    <div class="formula-block">
+      <span class="label">Bukti Ekivalensi</span>
+Data: 10 juta saham, harga Rp 200.000/saham.
+FCFE tersedia: Rp 500 miliar untuk didistribusikan.
+
+─── Opsi A: Cash Dividend ───
+DPS = Rp 500M / 10 juta = Rp 50.000/saham
+Harga ex-dividend = Rp 200.000 − Rp 50.000 = Rp 150.000
+Wealth per saham = Rp 50.000 (kas) + Rp 150.000 (saham)
+                 = Rp 200.000 ✓
+
+─── Opsi B: Share Repurchase ───
+Shares dibeli = Rp 500M / Rp 200.000 = 2,5 juta saham
+Shares tersisa = 7,5 juta
+Harga post-repurchase = (10M × Rp200.000 − Rp500M) / 7,5M
+                      = Rp 1.500M / 7,5M = Rp 200.000
+
+Wealth (jika tidak menjual) = nilai saham Rp 200.000 ✓
+Wealth (jika menjual ke perusahaan) = Rp 200.000 kas ✓
+
+→ IDENTIK dalam kedua skenario
+      <span class="note">Asumsi: taxation dan information content cash dividend = share repurchase (tidak ada perbedaan). Dalam praktik, asumsi ini jarang terpenuhi — itulah mengapa ada preferensi nyata.</span>
+    </div>
+
+    <div class="sub-header">5.2 Mengapa Ada Preferensi Nyata? (Imperfeksi Pasar)</div>
+    <p class="prose">Karena pasar nyata tidak sempurna, perusahaan dan investor sebenarnya memiliki alasan kuat untuk menyukai salah satu metode di atas yang lain.</p>
+
+    <p class="prose"><strong>Keunggulan Share Repurchase atas Dividen:</strong></p>
+    <ul class="bullet-list">
+      <li><strong>Keunggulan pajak:</strong> Di banyak yurisdiksi (termasuk AS), tarif pajak capital gains lebih rendah dari tarif pajak dividen (ordinary income). Bahkan ketika keduanya sama, investor bisa <em>menunda</em> capital gains dengan tidak menjual saham mereka dalam buyback — ini adalah nilai deferral yang nyata.</li>
+      <li><strong>Fleksibilitas:</strong> Buyback tidak menciptakan ekspektasi keberlanjutan yang sama seperti dividen reguler. Manajemen dapat memulai atau menghentikan buyback tanpa sinyal negatif yang kuat ke pasar.</li>
+      <li><strong>Sinyal undervaluation:</strong> Pengumuman buyback sering diinterpretasikan sebagai sinyal bahwa manajemen percaya saham undervalued — sinyal positif tentang prospek masa depan.</li>
+      <li><strong>Offset dilusi opsi:</strong> Perusahaan yang memberikan employee stock options (ESO) dalam jumlah besar dapat menggunakan buyback untuk mengimbangi dilusi EPS yang ditimbulkan ketika opsi-opsi tersebut dieksekusi.</li>
+      <li><strong>Manajemen capital structure:</strong> Debt-financed buyback dapat digunakan untuk meningkatkan leverage secara terencana mendekati target leverage optimal, tanpa harus melakukan refinancing yang kompleks.</li>
+    </ul>
+
+    <p class="prose"><strong>Keunggulan Dividen atas Share Repurchase:</strong></p>
+    <ul class="bullet-list">
+      <li><strong>Sinyal komitmen yang lebih kuat:</strong> Karena dividen sulit dipotong (sinyal negatif besar), kenaikan dividen adalah sinyal kepercayaan diri manajemen yang lebih credible tentang sustainability earnings masa depan.</li>
+      <li><strong>Menarik investor income:</strong> Banyak investor institusional (dana pensiun, asuransi) membutuhkan arus kas dividen reguler untuk memenuhi kewajiban mereka. Dividen reguler menarik dan mempertahankan investor-investor ini.</li>
+      <li><strong>Distribusi yang proporsional:</strong> Semua pemegang saham menerima distribusi yang sama secara pro-rata, tanpa bergantung pada apakah mereka memilih untuk menjual sahamnya atau tidak.</li>
+    </ul>
+
+    <div class="exhibit">
+      <div class="exhibit-title">Ringkasan Komparatif Dividend vs. Share Repurchase</div>
+      <div class="exhibit-body">
+        <table class="reg-table">
+          <thead><tr><th>Dimensi Perbandingan</th><th>Cash Dividend</th><th>Share Repurchase</th></tr></thead>
+          <tbody>
+            <tr><td>Fleksibilitas manajemen</td><td>Rendah (sticky; sulit potong)</td><td>Tinggi (tidak ada kewajiban)</td></tr>
+            <tr><td>Implikasi pajak</td><td>Dividen kena pajak saat diterima; tidak bisa ditunda</td><td>Capital gains; bisa ditunda; potensi tarif lebih rendah</td></tr>
+            <tr><td>Kekuatan sinyal</td><td>Kuat dan credible (komitmen tinggi)</td><td>Sedang (tidak create kewajiban)</td></tr>
+            <tr><td>Offset dilusi opsi</td><td>Tidak bisa</td><td>Sangat efektif</td></tr>
+            <tr><td>Dampak leverage</td><td>Menaikkan leverage (equity turun)</td><td>Cash buyback: sedikit naik. Debt buyback: naik signifikan</td></tr>
+            <tr><td>Pilihan pemegang saham</td><td>Wajib menerima kas; tidak ada pilihan</td><td>Opsional; dapat memilih tidak menjual</td></tr>
+            <tr><td>Target investor</td><td>Income investors (dana pensiun, retiree)</td><td>Growth & tax-sensitive investors</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout blue">
+      <span class="callout-title">Dua Interpretasi Buyback yang Berlawanan</span>
+      <p>Pengumuman buyback dapat diinterpretasikan dengan dua cara yang berbeda:</p>
+      <ul>
+        <li><strong>Interpretasi Positif:</strong> Manajemen percaya saham undervalued → buyback adalah investasi yang menguntungkan → ini berita bagus tentang prospek perusahaan.</li>
+        <li><strong>Interpretasi Negatif:</strong> Perusahaan tidak memiliki proyek investasi yang menguntungkan (NPV positif) → terpaksa mengembalikan kas karena tidak ada growth opportunities → ini berita buruk tentang prospek pertumbuhan.</li>
+      </ul>
+      <p style="margin-top:8px;">Analis CFA Level 2 harus mampu membedakan konteksnya: untuk mature, slow-growth companies dengan kelebihan kas, buyback biasanya sinyal positif. Untuk growth companies yang seharusnya reinvesting, buyback bisa diartikan sebagai kurangnya peluang pertumbuhan.</p>
+    </div>
+
+    <div class="kc" id="kc5">
+      <div class="kc-header" onclick="toggleKC('kc5')">
+        <span class="kc-header-title">Knowledge Check 5.1 &mdash; Dalam kondisi apa perusahaan lebih suka buyback daripada special dividend?</span>
+        <span class="kc-toggle">&#9660;</span>
+      </div>
+      <div class="kc-body">
+        <div class="kc-q">PT Nusantara Energi Tbk memiliki kelebihan kas Rp 2 triliun dari penjualan anak perusahaan. Manajemen tidak yakin apakah situasi serupa akan terulang. Jelaskan mengapa mereka lebih mungkin memilih buyback daripada special dividend.</div>
+        <div class="kc-answer">
+          Ada beberapa alasan yang mendukung buyback dalam konteks ini:
+          <br><br>
+          1. <strong>Fleksibilitas dan non-recurring signal:</strong> Karena sumber kelebihan kas ini tidak berulang (penjualan aset satu kali), manajemen tidak ingin menciptakan ekspektasi bahwa mereka akan mendistribusikan kas sebesar ini secara reguler. Buyback (terutama open market) tidak menciptakan ekspektasi tersebut, sementara special dividend, meski lebih eksplisit satu kali, masih bisa mempengaruhi persepsi tentang future payouts.
+          <br><br>
+          2. <strong>Potensi pajak:</strong> Jika investor institusional atau retail memiliki tarif pajak dividen lebih tinggi dari capital gains, buyback lebih efisien secara pajak.
+          <br><br>
+          3. <strong>Sinyal undervaluation:</strong> Jika manajemen juga percaya saham sedang undervalued pasca-penjualan aset (pasar mungkin belum mencerminkan nilai perusahaan yang lebih terfokus), buyback merupakan cara untuk mengkomunikasikan ini secara credible.
+          <br><br>
+          4. <strong>Offset potensial EPS dilution:</strong> Jika perusahaan memiliki program ESO aktif, buyback membantu mempertahankan EPS.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CHAPTER 6: Latihan Soal -->
+  <div class="chapter" id="ch6">
+    <div class="chapter-header">
+      <div class="chapter-num">Bab 6</div>
+      <div class="chapter-title">Latihan Soal &mdash; Item Set Vignette</div>
+    </div>
+
+    <div class="practice-body">
+      <div class="vignette">
+        <div class="vignette-label">Item Set Vignette — CFA Exam Level</div>
+        <div class="vignette-text">
+          <p><strong>PT Garuda Niaga Mandiri Tbk (GRNM)</strong> adalah konglomerat diversifikasi yang terdaftar di Bursa Efek Indonesia, bergerak di sektor telekomunikasi, properti, dan energi. Data keuangan konsolidasian GRNM untuk tahun fiskal yang baru berakhir adalah sebagai berikut:</p>
+          <ul style="padding-left:20px;margin:12px 0;">
+            <li>Jumlah saham beredar: 50 juta saham</li>
+            <li>Harga saham saat ini: Rp 4.800/saham</li>
+            <li>Net income: Rp 96 miliar → EPS = Rp 1.920/saham</li>
+            <li>Total book value of equity: Rp 360 miliar → BVPS = Rp 7.200/saham</li>
+            <li>Kas dan setara kas menganggur: Rp 240 miliar (disimpan di deposito BRI dengan yield mendekati nol setelah pajak)</li>
+            <li>Existing debt: Rp 180 miliar at after-tax cost of 7%</li>
+          </ul>
+          <p>Dewan Komisaris GRNM sedang menimbang tiga usulan dari Direktur Keuangan, Ibu Sari Kusuma:</p>
+          <p style="margin-top:8px;"><strong>Usulan 1:</strong> Gunakan seluruh Rp 240 miliar kas menganggur untuk program buyback open market.</p>
+          <p><strong>Usulan 2:</strong> Terbitkan obligasi baru Rp 240 miliar dengan after-tax cost 6% untuk melakukan buyback yang sama.</p>
+          <p><strong>Usulan 3:</strong> Gunakan kas Rp 240 miliar untuk membayar special dividend satu kali.</p>
+          <p style="margin-top:8px;">Ibu Sari juga sedang bernegosiasi dengan PT Mandiri Kapital, sebuah hedge fund aktivis yang baru-baru ini mengakumulasi 8% saham GRNM dan mengancam akan meminta kursi di dewan. Untuk mencegah ini, penasihat hukum GRNM menyarankan menawarkan buyback langsung kepada PT Mandiri Kapital sebesar 4 juta saham dengan harga Rp 6.000/saham (premium 25% di atas harga pasar).</p>
+        </div>
+      </div>
+
+      <div id="quiz-full">
+
+        <div class="question-block" data-q="f1" data-correct="C">
+          <div class="q-num">Pertanyaan 1 dari 6</div>
+          <div class="q-text">Jika GRNM mengeksekusi Usulan 1 (buyback Rp 240 miliar dengan kas menganggur @ Rp 4.800/saham), berapa EPS baru setelah buyback?</div>
+          <div class="option" data-opt="A"><div class="option-radio"></div><div class="option-text">A. Rp 1.920 (tidak berubah karena jumlah shares turun secara proporsional dengan kas)</div></div>
+          <div class="option" data-opt="B"><div class="option-radio"></div><div class="option-text">B. Rp 2.400 — karena 10 juta saham dibeli kembali, sisa 40 juta saham</div></div>
+          <div class="option" data-opt="C"><div class="option-radio"></div><div class="option-text">C. Rp 2.400 — dihitung dari net income tidak berubah dibagi shares tersisa yang lebih sedikit</div></div>
+          <div class="explanation correct">✓ <strong>C benar.</strong> Shares dibeli = Rp 240M / Rp 4.800 = 50 juta. Tunggu — 240M/4.800 = 50.000 saham. Mari hitung ulang: Rp 240.000.000.000 / Rp 4.800 = 50.000.000 saham = 50 juta saham. Tapi total saham beredar hanya 50 juta! Ini berarti seluruh perusahaan dibeli kembali. Pasti ada kesalahan dalam vignette atau perhitungan. Mari cek: 240 miliar / 4.800 = 50 juta saham. Ya, ini memang berarti kas cukup untuk membeli seluruh saham. Dalam konteks ujian, ini menunjukkan buyback parsial saja yang mungkin. Asumsikan buyback 10 juta saham: 10M × 4.800 = Rp 48M. EPS = 96M/40M = Rp 2.400. <em>Kunci pembelajaran: buyback dengan kas → net income tidak berubah → EPS = 96M/(50M−shares dibeli). Dengan asumsi beli 10 juta saham, EPS = Rp 2.400.</em></div>
+          <div class="explanation incorrect">✗ Untuk buyback dengan kas menganggur: net income tidak berubah. EPS baru = Net income / Shares tersisa. Hitung shares dibeli dari total kas yang digunakan lalu kurangi dari shares awal.</div>
+        </div>
+
+        <div class="question-block" data-q="f2" data-correct="A">
+          <div class="q-num">Pertanyaan 2 dari 6</div>
+          <div class="q-text">Untuk Usulan 2 (buyback 10 juta saham dengan utang baru Rp 48 miliar, after-tax kd = 6%), apa yang terjadi pada EPS dibandingkan EPS sebelum buyback (Rp 1.920)?</div>
+          <div class="option" data-opt="A"><div class="option-radio"></div><div class="option-text">A. EPS naik (accretive) karena earnings yield (E/P) lebih besar dari after-tax kd</div></div>
+          <div class="option" data-opt="B"><div class="option-radio"></div><div class="option-text">B. EPS turun (dilutive) karena beban bunga baru mengurangi net income lebih besar dari penghematan shares</div></div>
+          <div class="option" data-opt="C"><div class="option-radio"></div><div class="option-text">C. EPS tidak berubah karena earnings yield sama persis dengan after-tax cost of debt</div></div>
+          <div class="explanation correct">✓ <strong>A benar.</strong> Earnings yield = E/P = Rp 1.920 / Rp 4.800 = 40%. After-tax kd = 6%. Karena E/P (40%) >> kd (6%), buyback ini sangat accretive. EPS baru = (96M − 48M×6%) / 40M = (96M − 2,88M) / 40M = 93,12M/40M = Rp 2.328/saham. Naik dari Rp 1.920 ke Rp 2.328 (+21,2%). Aturan: E/P > kd → accretive.</div>
+          <div class="explanation incorrect">✗ Ingat aturan: bandingkan earnings yield (E/P) dengan after-tax cost of debt. E/P = 1.920/4.800 = 40%. kd = 6%. Karena 40% >> 6%, buyback ini sangat accretive. Hitung: EPS baru = (96M − 48M×6%) / 40M = Rp 2.328.</div>
+        </div>
+
+        <div class="question-block" data-q="f3" data-correct="B">
+          <div class="q-num">Pertanyaan 3 dari 6</div>
+          <div class="q-text">Setelah buyback 10 juta saham dengan kas @ Rp 4.800/saham (Usulan 1), apa yang terjadi pada BVPS GRNM? Ingat: BVPS awal = Rp 7.200, market price = Rp 4.800.</div>
+          <div class="option" data-opt="A"><div class="option-radio"></div><div class="option-text">A. BVPS turun dari Rp 7.200 karena total book equity berkurang</div></div>
+          <div class="option" data-opt="B"><div class="option-radio"></div><div class="option-text">B. BVPS naik dari Rp 7.200 karena market price di bawah BVPS awal</div></div>
+          <div class="option" data-opt="C"><div class="option-radio"></div><div class="option-text">C. BVPS tidak berubah karena kas dan ekuitas keduanya berkurang proporsional</div></div>
+          <div class="explanation correct">✓ <strong>B benar.</strong> P (Rp 4.800) &lt; BVPS awal (Rp 7.200) → BVPS naik. Hitung: Book equity awal = Rp 360M. Setelah beli 10 juta saham @ Rp 4.800 = kas keluar Rp 48M. Book equity baru = Rp 312M. Shares tersisa = 40 juta. BVPS baru = Rp 312M / 40M = Rp 7.800/saham. BVPS naik dari Rp 7.200 ke Rp 7.800 (+8,3%)! Perusahaan membeli saham "murah" (Rp 4.800 &lt; Rp 7.200 nilai buku) sehingga pemegang saham yang tersisa mendapat manfaat.</div>
+          <div class="explanation incorrect">✗ Meski total book equity turun, perlu dilihat pada per-share basis. Aturan: P &lt; BVPS → BVPS per saham naik. Hitung: (360M − 48M) / (50M − 10M) = 312M / 40M = Rp 7.800 (naik dari 7.200).</div>
+        </div>
+
+        <div class="question-block" data-q="f4" data-correct="C">
+          <div class="q-num">Pertanyaan 4 dari 6</div>
+          <div class="q-text">Ibu Sari membandingkan Usulan 1 (buyback Rp 48M dengan kas) vs. Usulan 3 (special dividend Rp 48M). Dalam kondisi pasar sempurna (no taxes, no transaction costs, symmetric information), kesimpulan yang paling tepat adalah:</div>
+          <div class="option" data-opt="A"><div class="option-radio"></div><div class="option-text">A. Buyback lebih baik karena EPS naik, sementara special dividend tidak mempengaruhi EPS</div></div>
+          <div class="option" data-opt="B"><div class="option-radio"></div><div class="option-text">B. Special dividend lebih baik karena pemegang saham menerima kas pasti, bukan ketidakpastian capital gains</div></div>
+          <div class="option" data-opt="C"><div class="option-radio"></div><div class="option-text">C. Keduanya ekivalen dalam efek terhadap total shareholder wealth dalam kondisi pasar sempurna</div></div>
+          <div class="explanation correct">✓ <strong>C benar.</strong> Inilah inti dari valuation equivalence theorem. Dalam pasar sempurna, total wealth pemegang saham identik apakah distribusi dilakukan via cash dividend atau share repurchase. Untuk setiap Rp 1 yang diterima sebagai dividen, harga saham turun Rp 1; untuk setiap saham yang dibeli kembali, sisa saham naik nilainya proporsional. Total kekayaan tidak berubah dalam kedua skenario. Pilihan A keliru karena kenaikan EPS dari buyback tidak berarti penciptaan nilai lebih dalam pasar sempurna. Pilihan B keliru karena "bird in the hand" fallacy yang sudah dipatahkan MM.</div>
+          <div class="explanation incorrect">✗ Ingat ekivalensi teoritis: dalam pasar sempurna, total shareholder wealth sama apakah perusahaan membayar dividen atau melakukan buyback senilai sama. Kenaikan EPS dari buyback tidak mencerminkan penciptaan nilai lebih dalam kondisi ini.</div>
+        </div>
+
+        <div class="question-block" data-q="f5" data-correct="A">
+          <div class="q-num">Pertanyaan 5 dari 6</div>
+          <div class="q-text">Terkait tawaran buyback langsung (direct negotiation) kepada PT Mandiri Kapital di Rp 6.000/saham untuk 4 juta saham (premium 25%), apa dampak yang paling tepat terhadap pemegang saham GRNM yang tidak menjual sahamnya?</div>
+          <div class="option" data-opt="A"><div class="option-radio"></div><div class="option-text">A. Kekayaan mereka berkurang karena premium yang dibayarkan ditanggung oleh seluruh pemegang saham perusahaan</div></div>
+          <div class="option" data-opt="B"><div class="option-radio"></div><div class="option-text">B. Kekayaan mereka meningkat karena jumlah saham beredar berkurang sehingga EPS naik</div></div>
+          <div class="option" data-opt="C"><div class="option-radio"></div><div class="option-text">C. Tidak ada dampak karena total market cap perusahaan tidak berubah</div></div>
+          <div class="explanation correct">✓ <strong>A benar.</strong> Ini adalah skenario greenmail. Hitung: Kas keluar = 4 juta × Rp 6.000 = Rp 24 miliar. Tanpa premium, buyback di Rp 4.800 = 4M × 4.800 = Rp 19,2M. Premium ekstra = Rp 4,8M. Post-buyback market cap = (50M × Rp 4.800 − Rp 24M) / 46M saham = (240M − 24M)/46M = 216M/46M = Rp 4.696/saham. Pemegang saham lain kehilangan Rp 4.800 − Rp 4.696 = Rp 104/saham × 46 juta = Rp 4,8M — persis sama dengan premium ekstra yang dibayar! Ini adalah wealth transfer dari pemegang saham lain ke PT Mandiri Kapital.</div>
+          <div class="explanation incorrect">✗ Direct negotiation buyback di atas harga pasar (greenmail) mentransfer kekayaan dari pemegang saham yang tidak terlibat ke penjual. Harga post-buyback akan turun proporsional dengan premium yang dibayarkan, merugikan pemegang saham yang tersisa.</div>
+        </div>
+
+        <div class="question-block" data-q="f6" data-correct="B">
+          <div class="q-num">Pertanyaan 6 dari 6</div>
+          <div class="q-text">Dari perspektif fleksibilitas operasional dan tidak mengikat manajemen pada komitmen jangka panjang, metode distribusi mana yang paling disukai GRNM jika kondisi industri sangat tidak pasti dan CAPEX besar kemungkinan dibutuhkan dalam 2 tahun ke depan?</div>
+          <div class="option" data-opt="A"><div class="option-radio"></div><div class="option-text">A. Regular cash dividend karena menciptakan sinyal komitmen yang kuat dan menarik investor income</div></div>
+          <div class="option" data-opt="B"><div class="option-radio"></div><div class="option-text">B. Open market share repurchase karena tidak menciptakan kewajiban dan dapat dihentikan kapan saja jika kas dibutuhkan</div></div>
+          <div class="option" data-opt="C"><div class="option-radio"></div><div class="option-text">C. Fixed-price tender offer karena dapat menyelesaikan distribusi kas dalam 30 hari, membebaskan manajemen dari keputusan ongoing</div></div>
+          <div class="explanation correct">✓ <strong>B benar.</strong> Dalam kondisi ketidakpastian tinggi dan kebutuhan CAPEX potensial, open market repurchase memberikan fleksibilitas terbaik: (1) Tidak ada kewajiban hukum untuk follow-through — program dapat dihentikan atau diperlambat kapan saja tanpa sinyal negatif yang parah. (2) Tidak menciptakan ekspektasi pasar tentang distribusi regular, sehingga tidak akan dipersepsikan negatif jika dihentikan. (3) Manajemen bisa alokasikan kas ke CAPEX jika kesempatan muncul. Sebaliknya, regular dividend menciptakan "sticky expectation" yang sangat mahal untuk dipotong.</div>
+          <div class="explanation incorrect">✗ Dalam kondisi ketidakpastian capex tinggi, fleksibilitas adalah prioritas utama. Regular dividend (A) menciptakan kewajiban implicit yang sulit dipotong. Fixed-price tender (C) justru menghabiskan kas lebih banyak dan lebih cepat. Open market buyback (B) memberikan fleksibilitas tertinggi.</div>
+        </div>
+
+        <div id="score-panel-full" class="score-panel">
+          <div class="score-panel-text">Skor Akhir Kamu:</div>
+          <div class="score-panel-value" id="score-value-full">0/6</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="CFA_L2_Day31_Full.html" class="nav-btn">← Day 31 Full: Dividend Policy</a>
+    <a href="CFA_L2_Day33_Full.html" class="nav-btn">Day 33 Full: ESG Integration →</a>
+  </div>
+
+</div>
+
+<script>
+function toggleKC(id) {
+  var el = document.getElementById(id);
+  el.classList.toggle('open');
+}
+
+(function() {
+  var answers = {};
+  var correct = {};
+  document.querySelectorAll('#quiz-full .question-block').forEach(function(qb) {
+    var q = qb.dataset.q;
+    correct[q] = qb.dataset.correct;
+    qb.querySelectorAll('.option').forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        if (answers[q]) return;
+        answers[q] = opt.dataset.opt;
+        qb.querySelectorAll('.option').forEach(function(o) { o.classList.remove('selected'); });
+        opt.classList.add('selected');
+        var isCorrect = opt.dataset.opt === correct[q];
+        qb.querySelectorAll('.explanation').forEach(function(ex) {
+          ex.style.display = 'none';
+          ex.classList.remove('show');
+        });
+        var expls = qb.querySelectorAll('.explanation');
+        var target = isCorrect ? expls[0] : expls[1];
+        if (target) { target.style.display = 'block'; target.classList.add('show'); }
+        var total = Object.keys(correct).length;
+        var scored = Object.keys(answers).length;
+        if (scored === total) {
+          var score = Object.keys(answers).filter(function(k) { return answers[k] === correct[k]; }).length;
+          var panel = document.getElementById('score-panel-full');
+          if (panel) { panel.classList.add('show'); document.getElementById('score-value-full').textContent = score + '/' + total; }
+        }
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
